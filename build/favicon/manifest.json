@@ -1,0 +1,20 @@
+{
+  "name": "Tutorbook",
+  "short_name": "Tutorbook",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [{
+    "src": "android-chrome-192x192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },{
+    "src": "android-chrome-512x512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "theme_color": "#6200EE",
+  "background_color": "#6200EE",
+  "gcm_sender_id": "103953800507",
+  "description": "App designed to optimize the process required to get a student with an appropriate tutor."
+}

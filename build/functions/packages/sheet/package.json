@@ -1,0 +1,20 @@
+{
+  "name": "sheet",
+  "version": "1.0.0",
+  "description": "Service hour Google Sheet tracking for the Tutorbook web app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Tutorbook"
+  ],
+  "author": "Nicholas Chiang",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "firebase-admin": "^8.6.0",
+    "firebase-functions": "^3.2.0",
+    "googleapis": "^43.0.0"
+  }
+}

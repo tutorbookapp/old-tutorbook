@@ -1,0 +1,58 @@
+@import "@material/list/mdc-list";
+@import "@material/top-app-bar/mdc-top-app-bar";
+@import "@material/ripple/mdc-ripple";
+@import "@material/dialog/mdc-dialog";
+@import "@material/snackbar/mdc-snackbar";
+@import "@material/menu-surface/mdc-menu-surface";
+@import "@material/select/mdc-select";
+@import "@material/button/mdc-button";
+
+.search_results {
+  height: 800px;
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: top left;
+  background-image: url(../img/learning_img_bg.png);
+}
+
+.search_results .main {
+  margin: 150px auto 0 auto;
+  width: 95%;
+  max-height: 500px;
+  max-width: 1000px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  overflow-y: scroll;
+}
+
+.search_results .main .results-container {
+  padding: 25px;
+}
+
+.search_results .mdc-top-app-bar {
+  position: relative;
+}
+
+.paid-icon {
+  font-size: 24px;
+  vertical-align: middle;
+  color: #018782;
+  transform: translateY(-1.5px);
+  -ms-transform: translateY(-1.5px);
+}
+
+.rate {
+  font-size: 0;
+}
+
+.rate .hr {
+  font-size: 0.75rem;
+}
+
+.rate .charge {
+  /* From mdc-list-item__text-secondary */
+  font-size: 0.875rem;
+  line-height: normal;
+}

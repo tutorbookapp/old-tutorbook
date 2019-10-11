@@ -1,0 +1,32 @@
+{
+  "hosting": {
+    "site": "tutorbook-779d8",
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "functions"
+  },
+  "emulators": {
+    "firestore": {
+      "port": 8080
+    }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

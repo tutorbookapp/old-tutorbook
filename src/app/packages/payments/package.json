@@ -1,0 +1,19 @@
+{
+  "name": "payments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "card": "^1.0.0",
+    "data": "^1.0.0",
+    "dialogs": "^1.0.0",
+    "schedule": "^1.0.0",
+    "utils": "^1.0.0"
+  }
+}

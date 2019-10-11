@@ -1,0 +1,41 @@
+.payments .mdc-list-item__graphic {
+  border-radius: 100%;
+}
+
+.payments .mdc-list-item {
+  border-top-left-radius: 36px;
+  border-bottom-left-radius: 36px;
+};
+
+.payments .mdc-list-item button {
+  background-color: #fff;
+  color: #018786;
+}
+
+.payments #history ul .mdc-list-item:last-child {
+  margin-bottom: 150px; /* This is so that you can read all of the transactions
+  (Otherwise, they get covered by the fab) */
+}
+
+#Method {
+  height: 90px !important;
+}
+
+#Method #card-input {
+  padding: 20px;
+  width: 100%;
+}
+
+#Method .helper-wrapper {
+  width: 100%;
+}
+
+.payments #withdraw {
+  bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
+}
+
+@media(min-width: 1024px) {
+  .payments #withdraw {
+    bottom: calc(3rem + 48px) !important; /* Adjust for existing mdc-fab */
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "tutorbook",
+  "version": "0.0.1",
+  "description": "App designed to optimize the process required to get a pupil with an appropriate tutor.",
+  "devDependencies": {
+    "@firebase/testing": "^0.13.0",
+    "filesystem": "1.0.1",
+    "mocha": "^6.2.0"
+  },
+  "scripts": {
+    "test": "mocha --timeout=10000 --color=false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicholaschiang/tutorbook.git"
+  },
+  "keywords": [
+    "tutorbook"
+  ],
+  "author": "Nicholas Chiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicholaschiang/tutorbook/issues"
+  },
+  "homepage": "https://github.com/nicholaschiang/tutorbook#readme"
+}

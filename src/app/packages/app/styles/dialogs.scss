@@ -1,0 +1,52 @@
+@import "@material/dialog/mdc-dialog";
+
+.dialog-input .mdc-list-divider {
+  margin-bottom: 20px;
+}
+
+.dialog-input .action-list-divider button {
+  float: right;
+  background-color: #fff;
+  color: #018786;
+}
+
+/* Ensures that input-list-items completely wrap around inputs and don't cut
+them (or their floating labels) off short. */
+.input-list-item {
+  height: 80px !important;
+}
+
+.input-list-item .mdc-select {
+  width: 100% !important;
+}
+
+.input-list-item .mdc-text-field {
+  width: 100% !important;
+}
+
+.mdc-dialog .material-icons {
+  background-color: rgba(0, 0, 0, 0.38);
+  color: #fff;
+}
+
+#dialog-form .mdc-dialog__surface {
+  min-width: 50vw !important;
+}
+
+#dialog-form .mdc-select {
+  width: 100% !important;
+}
+
+#dialog-form .mdc-text-field {
+  width: 100% !important;
+}
+
+.dialog-code-signup .mdc-text-field {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.dialog-form__content {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}

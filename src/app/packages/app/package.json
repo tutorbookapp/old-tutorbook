@@ -1,0 +1,32 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scripts/Tutorbook.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chats": "^1.0.0",
+    "dashboard": "^1.0.0",
+    "data": "^1.0.0",
+    "dialogs": "^1.0.0",
+    "feedback": "^1.0.0",
+    "intercom": "^1.0.0",
+    "listener": "^1.0.0",
+    "login": "^1.0.0",
+    "matching": "^1.0.0",
+    "navigation": "^1.0.0",
+    "notify": "^1.0.0",
+    "payments": "^1.0.0",
+    "profile": "^1.0.0",
+    "render": "^1.0.0",
+    "schedule": "^1.0.0",
+    "search": "^1.0.0",
+    "snackbar": "^1.0.0",
+    "utils": "^1.0.0"
+  }
+}

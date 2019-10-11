@@ -1,0 +1,63 @@
+@import "@material/card/mdc-card";
+@import "@material/typography/mdc-typography";
+@import "@material/chips/mdc-chips";
+
+.dashboard-card__primary {
+  padding: 1rem;
+}
+
+.dashboard-card__title {
+  margin: 0;
+}
+
+.dashboard-card__subtitle {
+  color: rgba(0, 0, 0, 0.54);
+  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));
+  margin: 0;
+}
+
+.dashboard-card__secondary {
+  color: rgba(0, 0, 0, 0.54);
+  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));
+  padding: 0 1rem 8px 1rem;
+}
+
+.dashboard-card-shaped {
+  border-radius: 24px 8px;
+}
+[dir=rtl] .dashboard-card-shaped, .dashboard-card-shaped[dir=rtl] {
+  border-radius: 8px 24px;
+}
+
+.location-card__primary {
+  padding: 1rem;
+}
+
+.location-card__title {
+  margin: 0;
+}
+
+.location-card__subtitle {
+  color: rgba(0, 0, 0, 0.54);
+  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));
+  margin: 0;
+}
+
+.location-card__secondary {
+  color: rgba(0, 0, 0, 0.54);
+  color: var(--mdc-theme-text-secondary-on-background, rgba(0, 0, 0, 0.54));
+  padding: 0 1rem 8px 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.location-card-shaped {
+  border-radius: 24px 8px;
+}
+[dir=rtl] .location-card-shaped, .location-card-shaped[dir=rtl] {
+  border-radius: 8px 24px;
+}
+
+.location-card__hours {
+  margin: 1rem;
+}

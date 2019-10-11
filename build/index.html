@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tutorbook</title>
+
+    <!-- Disable tap highlight on IE -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon//favicon-16x16.png">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#6200EE">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="/favicon/manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Tutorbook">
+    <meta name="theme-color" content="#6200EE">
+    <meta name="description" content="App designed to optimize the process required to get a student with a qualified tutor.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tutorbook">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#6200EE">
+
+    <link rel="stylesheet" href="/index.css" type="text/css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1152123171216113",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+
+<body>
+    <div id="loader">
+        <div class="loader">
+            <svg viewBox="0 0 32 32" width="32" height="32">
+                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-146872354-1');
+    </script>
+
+    <script src="/__/firebase/6.0.2/firebase-app.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-auth.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-firestore.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- This script checks to see if there is a user signed in. If there is, we
+	    redirect straight to the app. If there isn't we show the site. -->
+    <script src="/index.js"></script>
+</body>
+
+</html>

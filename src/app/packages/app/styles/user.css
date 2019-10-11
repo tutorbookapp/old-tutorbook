@@ -1,0 +1,34 @@
+/* These are styles to ensure that the the list items fit the info they 
+ * hold. TODO: Make these less concrete and more cross-platform adaptable. */
+.user-view #basic-info .mdc-list-item {
+  height: auto !important;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.user-view #reviews .mdc-list-group__subheader {
+  margin-top: 10px;
+}
+
+.user-view-list-divider .mdc-list-group__subheader {
+  color: #018786 !important; /* or #3700B3 */
+  font-weight: 500;
+}
+
+.user-view .description {
+  font-size: 0.812rem;
+  padding: 16px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.user-view #request-button {
+  bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
+}
+
+@media(min-width: 1024px) {
+  .user-view #request-button {
+    bottom: calc(3rem + 48px) !important; /* Adjust for existing mdc-fab */
+  }
+}
+
+

@@ -1,0 +1,232 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tutorbook</title>
+
+    <!-- Disable tap highlight on IE -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon//favicon-16x16.png">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#6200EE">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="/favicon/manifest.json">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Tutorbook">
+    <meta name="theme-color" content="#6200EE">
+    <meta name="description" content="App designed to optimize the process required to get a student with a qualified tutor.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tutorbook">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#6200EE">
+
+    <!-- Tile icon for Win8 -->
+    <!-- <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F"> -->
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <!-- App Styling -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="styles/bundle.min.css" type="text/css">
+
+    <!-- For CodePen chat: https://codepen.io/Momciloo/pen/bEdbxY -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1152123171216113",
+            enable_page_level_ads: true
+        });
+    </script>
+</head>
+
+<body>
+
+    <!--
+   -Welcome to...
+   -╔════╗╔╗─╔╗╔════╗╔═══╗╔═══╗╔══╗─╔═══╗╔═══╗╔╗╔═╗
+   -║╔╗╔╗║║║─║║║╔╗╔╗║║╔═╗║║╔═╗║║╔╗║─║╔═╗║║╔═╗║║║║╔╝
+   -╚╝║║╚╝║║─║║╚╝║║╚╝║║─║║║╚═╝║║╚╝╚╗║║─║║║║─║║║╚╝╝─
+   -──║║──║║─║║──║║──║║─║║║╔╗╔╝║╔═╗║║║─║║║║─║║║╔╗║─
+   -──║║──║╚═╝║──║║──║╚═╝║║║║╚╗║╚═╝║║╚═╝║║╚═╝║║║║╚╗
+   -──╚╝──╚═══╝──╚╝──╚═══╝╚╝╚═╝╚═══╝╚═══╝╚═══╝╚╝╚═╝
+   -Taking a look under the hood? We'd love to have you on the team.
+   -Email hiring@tutorbook.app for more info.
+   -->
+
+    <div id="loader">
+        <div class="loader">
+            <svg viewBox="0 0 32 32" width="32" height="32">
+                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <!-- NOTE: These divs have to be above everything else, or they won't function
+	    properly. -->
+    <aside id="nav-drawer" class="mdc-drawer mdc-drawer--modal">
+        <div class="mdc-drawer__header">
+            <h3 class="mdc-drawer__title">Tutorbook</h3>
+            <h6 class="mdc-drawer__subtitle">Mentor Matching</h6>
+        </div>
+        <div class="mdc-drawer__content">
+        </div>
+    </aside>
+
+    <div class="mdc-drawer-scrim"></div>
+
+    <div class="mdc-snackbar" id="snackbar">
+        <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label" role="status" aria-live="polite">
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button class="mdc-icon-button material-icons mdc-snackbar__dismiss">close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN VIEWS: these are what the user actually sees at any given point
+	    in time` -->
+    <div class="dialogs"></div>
+
+    <header class="header"></header>
+
+    <main class="main mdc-top-app-bar--fixed-adjust"></main>
+
+
+    <!-- DIALOGS -->
+
+    <!-- Confirmation Dialog -->
+    <aside id="dialog-confirmation" class="mdc-dialog dialog-confirmation">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 class="mdc-dialog__title" data-fir-content="title">Confirm action?</h2>
+                <div class="mdc-dialog__content" data-fir-content="summary">
+                    Are you sure you want to continue this action?
+                </div>
+                <footer class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+                        <span class="mdc-button__label">No</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                        <span class="mdc-button__label">Yes</span>
+                    </button>
+                </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </aside>
+
+    <!-- Get Paid Dialog -->
+    <aside id="dialog-get-paid" class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 class="mdc-dialog__title">Get Paid</h2>
+                <div class="mdc-dialog__content">
+                    We'll send you your money directly through PayPal with no hidden fees (besides
+                    our 10% commission) or 2-business-day waits. Just hit that button and you'll
+                    have access to your funds (via a PayPal notification) in under a minute.
+                </div>
+                <footer class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
+                        <span class="mdc-button__label">Cancel</span>
+                    </button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
+                        <span class="mdc-button__label">PayPal Me</span>
+                    </button>
+                </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </aside>
+
+    <!-- SCRIPTS: these are the core of the app, responsible for responding to
+	    user interaction. -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-146872354-1');
+    </script>
+
+    <!-- Sandbox Credentials -->
+    <!--
+       -<script src="https://www.paypal.com/sdk/js?client-id=AetgnSWbAKZ8u9tZlePZlPwy-mTvaZ9b_agcYXUA_uC_Y381k-AzQPvQKDWN1kFXSjVBJZ5swd6g2z_G&intent=authorize"></script>
+       -->
+    <!-- Live Credentials -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AZrZ1jR-z_6xSWZEMMqJJV9b_NSyHjFvsRPTTVXIjgSS9uZJcwhYbL_vK13GZrWiG_FUedkZWszKj_oe&intent=authorize"></script>
+
+    <!-- Stripe Paymemts Integration -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script src="/__/firebase/6.0.2/firebase-app.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-auth.js"></script>
+    <script src="/__/firebase/6.4.0/firebase-storage.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-firestore.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
+
+    <script src="scripts/bundle.min.js"></script>
+
+    <script>
+        window.intercomSettings = {
+            app_id: "faz7lcyb",
+            hide_default_launcher: true,
+        };
+    </script>
+    <script>
+        (function() {
+            var w = window;
+            var ic = w.Intercom;
+            if (typeof ic === "function") {
+                ic('reattach_activator');
+                ic('update', w.intercomSettings);
+            } else {
+                var d = document;
+                var i = function() {
+                    i.c(arguments);
+                };
+                i.q = [];
+                i.c = function(args) {
+                    i.q.push(args);
+                };
+                w.Intercom = i;
+                var l = function() {
+                    var s = d.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = 'https://widget.intercom.io/widget/faz7lcyb';
+                    var x = d.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                };
+                if (w.attachEvent) {
+                    w.attachEvent('onload', l);
+                } else {
+                    w.addEventListener('load', l, false);
+                }
+            }
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+@import "@material/list/mdc-list";
+
+.schedule h1 {
+  text-align: center;
+}
+
+.schedule ul {
+  padding-top: 0 !important;
+  margin-left: 100px;
+}	
+
+.schedule hr {
+  margin-left: -100px;
+  margin-top: 10px;
+}
+
+.schedule .date-list-divider:first-child hr {
+  margin-top: 0 !important;
+}
+
+.schedule .date-label {
+  margin-left: -90px;
+  height: 0px;
+  margin-top: 10px;
+}
+
+.schedule .mdc-list-item__graphic {
+  border-radius: 100%;
+}
+
+.schedule .mdc-list-item {
+  border-top-left-radius: 36px;
+  border-bottom-left-radius: 36px;
+};
+
+.mdc-list-item button {
+  background-color: #fff !important;
+  color: #018786 !important;
+}

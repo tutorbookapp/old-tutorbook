@@ -1,0 +1,262 @@
+rules_version = '2'; // We must opt into version 2 to use collectionGroup queries
+// NOTE: We use collectionGroup queries for the admin dashboard to show all app
+// activity.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /feedback/{id} {
+      allow create: if request.auth.uid != null;
+    }
+    match /auth/{document=**} {
+      allow read: if request.auth.uid != null;
+    }
+    match /processingPayments/{id} {
+      allow read, create: if request.auth.token.email == id;
+    }
+    match /users/{user} {
+      // TODO: Ensure that the client can't change the user.authenticated field
+      // to become an admin or supervisor without actually knowing the code.
+      allow read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null
+	&& request.resource.data.payments.currentBalance == 0
+	&& request.resource.data.payments.currentBalanceString == "$0.00"
+	&& request.resource.data.secondsPupiled == 0
+	&& request.resource.data.secondsTutored == 0;
+      allow delete: if request.auth.token.email == user
+	|| (request.auth.token.email in resource.data.proxy
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+      allow update: if (request.auth.token.email == user
+	|| (request.auth.token.email in resource.data.proxy
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated))
+	&& (
+	  !("currentBalance" in request.resource.data.payments) 
+	  || ("currentBalance" in request.resource.data.payments && request.resource.data.payments.currentBalance == resource.data.payments.currentBalance)
+	)
+	&& (
+	  !("currentBalanceString" in request.resource.data.payments) 
+	  || ("currentBalanceString" in request.resource.data.payments && request.resource.data.payments.currentBalanceString == resource.data.payments.currentBalanceString)
+	)
+	&& (
+	  !("secondsPupiled" in request.resource.data) 
+	  || ("secondsPupiled" in request.resource.data && request.resource.data.secondsPupiled == resource.data.secondsPupiled)
+	)
+	&& (
+	  !("secondsTutored" in request.resource.data) 
+	  || ("secondsTutored" in request.resource.data && request.resource.data.secondsTutored == resource.data.secondsTutored)
+	);
+    }
+    match /users/{user}/{subcollection}/{document=**} {
+      allow read: if request.auth.token.email == user;
+      allow write: if request.auth.token.email == user
+	&& subcollection != "pendingPayments"
+	&& subcollection != "authorizedPayments"
+	&& subcollection != "pastPayments"
+	&& subcollection != "pastAppointments"
+	&& subcollection != "activeAppointments";
+      // NOTE: The condition below does not restrict creation in all of the other
+      // profile doc subcollections. Rather, the above condition allows creation,
+      // deletion, and updating of all subcollections besides the 3 payment ones.
+      // And this condition just allows creation in the authorizedPayments one.
+      allow create: if request.auth.token.email == user
+	&& subcollection == "authorizedPayments";
+      allow read, write: if (request.auth.token.email in get(/databases/$(database)/documents/users/$(user)).data.proxy
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+      // In the case where you were a proxy for one user (let's say the toUser)
+      // but weren't the proxy to the otherUser, we still want supervisor's to
+      // be able to manipulate the documents that their proxyUser is on. So we
+      // add rules for each subcollection based on their document's data
+      // structures.
+      allow read, write: if (subcollection == "appointments"
+	|| subcollection == "pastAppointments"
+	|| subcollection == "activeAppointments")
+	&& ((request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.attendees[0].email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.attendees[1].email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+      allow read, write: if (subcollection == "requestsOut"
+	|| subcollection == "requestsIn")
+	&& ((request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.fromUser.email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.toUser.email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+      allow read, write: if (subcollection == "canceledAppointments")
+	&& ((request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.original.attendees[0].email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.original.attendees[1].email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+      allow read, write: if (subcollection == "modifiedAppointments"
+	|| subcollection == "modifiedRequestsOut"
+	|| subcollection == "modifiedRequestsIn")
+	&& ((request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.current.fromUser.email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.current.toUser.email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+      allow read, write: if (subcollection == "canceledRequestsIn"
+	|| subcollection == "rejectedRequestsOut"
+	|| subcollection == "approvedRequestsOut")
+	&& ((request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.for.fromUser.email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.for.toUser.email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated);
+    }
+    match /{path=**}/requestsIn/{requestDoc} {
+      allow create: if request.auth.uid != null;
+      // NOTE: We don't have to specify toUser as well (b/c they already have access to all documents within any of their subcollections).
+      allow write, read: if request.auth.token.email == resource.data.fromUser.email;
+    }
+    match /{path=**}/canceledRequestsIn/{requestDoc} {
+      // TODO: Only allow creation if the given user already has a requestsIn
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.for.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+    }
+    match /{path=**}/modifiedRequestsIn/{requestDoc} {
+      // TODO: Only allow creation if the given user already has a requestsIn
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.current.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+    }
+    match /{path=**}/requestsOut/{requestDoc} {
+      // NOTE: We don't have to specify fromUser as well (b/c they already have access to all documents within any of their subcollections).
+      allow write, read: if request.auth.token.email == resource.data.toUser.email;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+    }
+    match /{path=**}/modifiedRequestsOut/{requestDoc} {
+      // TODO: Only allow creation if the given user already has a requestsOut
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.current.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+    }
+    match /{path=**}/rejectedRequestsOut/{requestDoc} {
+      // TODO: Only allow creation if the given user already has a requestsOut
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.for.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+    }
+    match /{path=**}/approvedRequestsOut/{requestDoc} {
+      // TODO: Only allow creation if the given user already has a requestsOut
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.for.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+    }
+    match /{path=**}/appointments/{appt} {
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+      allow read, write: if (request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.attendees[0].email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.attendees[1].email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated;
+      allow write, read: if request.auth.token.email == resource.data.attendees[0].email || request.auth.token.email == resource.data.attendees[1].email;
+    }
+    match /{path=**}/modifiedAppointments/{appt} {
+      // TODO: Only allow creation if the given user already has a appointments
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow update: if request.auth.token.email == resource.data.attendees[0].email 
+	|| request.auth.token.email == resource.data.attendees[1].email;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.current.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+      allow read, write: if (request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.current.fromUser.email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.current.toUser.email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated;
+    }
+    match /{path=**}/canceledAppointments/{appt} {
+      // TODO: Only allow creation if the given user already has a appointments
+      // document in that user's subcollection.
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.original.location.id)).data.supervisors
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor';
+      allow read, write: if (request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.original.attendees[0].email)).data.proxy
+	|| request.auth.token.email in get(/databases/$(database)/documents/users/$(resource.data.original.attendees[1].email)).data.proxy)
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor'
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated;
+    }
+    match /{path=**}/activeAppointments/{appt} {
+      // Only allow creation if the given user is a supervisor and the user is 
+      // the supervisor for the location the appt is located at.
+      allow read, write: if request.auth.uid != null 
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor' 
+	&& (request.auth.token.email in get(/databases/$(database)/documents/locations/$(request.resource.data.location.id)).data.supervisors 
+	|| request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.location.id)).data.supervisors);
+    }
+    match /{path=**}/pastAppointments/{appt} {
+      // Only allow creation if the given user is a supervisor and the user is 
+      // the supervisor for the location the appt is located at.
+      allow read, write: if request.auth.uid != null 
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor' 
+	&& (request.auth.token.email in get(/databases/$(database)/documents/locations/$(request.resource.data.location.id)).data.supervisors 
+	|| request.auth.token.email in get(/databases/$(database)/documents/locations/$(resource.data.location.id)).data.supervisors);
+    }
+    match /{path=**}/pendingClockIns/{appt} {
+      // TODO: Only allow creation if the given user already has a appointment
+      // document in the supervisor's location's subcollection.
+      allow create: if request.auth.uid != null;
+    }
+    match /{path=**}/rejectedClockIns/{appt} {
+      // TODO: Only allow creation if the given user already has a appointment
+      // document in the supervisor's location's subcollection.
+      allow read: if request.auth.token.email == resource.data.sentBy.email;
+    }
+    match /{path=**}/pendingClockOuts/{appt} {
+      // TODO: Only allow creation if the given user already has a approvedClockIn
+      // document in the supervisor's subcollections.
+      allow create: if request.auth.uid != null;
+    }
+    match /{path=**}/rejectedClockOuts/{appt} {
+      // TODO: Only allow creation if the given user already has a appointment
+      // document in the supervisor's location's subcollection.
+      allow read: if request.auth.token.email == resource.data.sentBy.email;
+    }
+    match /locations/{location} {
+      allow read: if request.auth.uid != null;
+      allow create: if get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Supervisor' 
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.authenticated; 
+      allow write: if request.auth.token.email in resource.data.supervisors;
+        match /{document=**} {
+	  // TODO: Can we write this in a way that we can access the location
+	  // document resource data? (i.e. to check if the user is a supervisor)
+	  allow read, write: if request.auth.token.email in get(/databases/$(database)/documents/locations/$(location)).data.supervisors;
+	}
+    }
+  }
+}
+
+// FIRESTORE RULES (in plain english): 
+// 1) All auth users can read all user and location docs (i.e. user searching).
+// 2) All auth users can create documents in other user's (all subcollections
+// except for requestsOut, approvedClockIns/Outs, and pastAppointments):
+// - requestsIn
+// - modifiedRequestsIn
+// - canceledRequestsIn
+// - modifiedRequestsOut
+// - rejectedRequestsOut
+// - approvedRequestsOut
+// - appointments
+// - modifiedAppointments
+// - canceledAppointments
+// 3) All auth users can write documents that they are on (e.g. their email is part of the toUser or attendees arrays)
+// in other users profile documents IF they are on the document's `authorized` list.
+// (e.g. all docs in requestsOut, requestsIn, appointments, and reviews have these)
+// 4) Admins can read and write the entire database (except the `admins` document,
+// which must be changed directly from the Firebase console).
+// 5) All auth users can write their own profile document and subcollections.
+// (e.g. to change their profile or dismiss a notification card).

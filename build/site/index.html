@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tutorbook</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="css/flaticon.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/slick.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="styles/bundle.min.css">
+</head>
+
+<body>
+    <!-- Login Dialog -->
+    <aside id="login-dialog" class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 class="mdc-dialog__title">Login or Signup</h2>
+                <div class="mdc-dialog__content">
+                    Please click on the "Start App" button to view and send a request
+                    to this user.
+                </div>
+                <footer class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="ok">
+                        <span class="mdc-button__label">Ok</span>
+                    </button>
+                </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </aside>
+
+    <!--::header part start::-->
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="/favicon/text-logo-bg.png" alt="logo"> </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
+                            <ul class="navbar-nav align-items-center">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#features">Features</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#mission">Our Mission</a>
+                                </li>
+                                <!--
+                                   -<li class="nav-item">
+                                   -    <a class="nav-link" href="blog.html">Blog</a>
+                                   -</li>
+				   -->
+                                <!--
+                                   -<li class="nav-item dropdown">
+                                   -    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   -        Pages
+                                   -    </a>
+                                   -    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                   -        <a class="dropdown-item" href="single-blog.html">Single blog</a>
+                                   -        <a class="dropdown-item" href="elements.html">Elements</a>
+                                   -    </div>
+                                   -</li>
+				   -->
+                                <!--
+                                   -<li class="nav-item">
+                                   -    <a class="nav-link" href="contact.html">Contact</a>
+                                   -</li>
+				   -->
+                                <li class="d-none d-lg-block">
+                                    <a class="btn_1" href="/app">Start App</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header part end-->
+
+    <!-- landing page buttons start -->
+    <!--
+       -<section class="landing">
+       -    <div class="container">
+       -        <div class="row">
+       -            <div class="col-md-7 col-lg-7">
+       -                <div class="learning_img">
+       -                    <img src="img/learning_img.png" alt="">
+       -                </div>
+       -            </div>
+       -                <div class="landing-page-title">
+       -                    <h5>Built for students. By students</h5>
+       -                    <h1>What will you learn?</h1>
+       -                </div>
+       -            <div class="col">
+       -                <div class="landing-page-buttons">
+       -                    <h5>Looking for?</h5>
+       -                    <hr>
+       -                    <button id="gunn" type="button" class="btn btn-lg btn-block">Gunn</button>
+       -                    <button id="paly" type="button" class="btn btn-lg btn-block">Paly</button>
+       -                    <h5 class="second">Nope?</h5>
+       -                    <hr>
+       -                    <button id="tutorbook" type="button" class="btn btn-lg btn-block">Tutorbook</button>
+       -                </div>
+       -            </div>
+       -        </div>
+       -    </div>
+       -</section>
+       -->
+    <!-- landing page buttons end -->
+
+    <!-- search banner part start -->
+    <section class="search_part">
+        <div style="visibility:hidden">
+            <div class="container">
+                <div class="search_text">
+                    <div class="search_text_iner">
+                        <h5>Learn on your own terms from an expert tutor</h5>
+                        <h1>What will you learn?</h1>
+                    </div>
+                </div>
+                <div class="search_bar">
+                    <!-- TODO: Have this proxy to a select menu for subjects -->
+                    <div id="cover">
+                        <form>
+                            <div class="tb">
+                                <div class="td"><input type="text" placeholder="Search tutors"></div>
+                                <div class="td" id="s-cover">
+                                    <button type="submit">
+                                        <div id="s-circle"></div>
+                                        <span></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="mouse">
+                    <div class="scroll"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- search banner part end -->
+
+    <!-- hidden search results part start -->
+    <section hidden id="search_results" class="search_results">
+        <div class="main">
+            <div id="results" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
+            </div>
+        </div>
+    </section>
+    <!-- hidden search results part end -->
+
+    <!-- learning part start-->
+    <section id="mission" class="learning_part">
+        <div class="container">
+            <div class="row align-items-sm-center align-items-lg-stretch">
+                <div class="col-md-12 col-lg-7">
+                    <div class="learning_img">
+                        <img src="img/learning_img.png" alt="">
+                    </div>
+                </div>
+                <div class="landing col-md-12 col-lg-5">
+                    <div class="landing-page-buttons">
+                        <h5>Looking for?</h5>
+                        <hr>
+                        <a href="https://gunn.tutorbook.app/app" id="gunn" type="a" class="btn btn-lg btn-block">Gunn</a>
+                        <a href="https://paly.tutorbook.app/app" id="paly" type="a" class="btn btn-lg btn-block">Paly</a>
+                        <h5 class="second">Nope?</h5>
+                        <hr>
+                        <a href="https://tutorbook.app/app" id="tutorbook" type="a" class="btn btn-lg btn-block">Tutorbook</a>
+                    </div>
+                </div>
+                <!--
+                   -<div class="col-md-5 col-lg-5">
+                   -    <div class="learning_member_text">
+                   -        <h5>Our mission</h5>
+                   -        <h2>Hassle Free Tutoring
+                   -            Appointments</h2>
+                   -        <p>Setting up a meeting is as simple as pressing a button and our notification
+                   -            system makes sure that you're never late.</p>
+                   -        <ul>
+                   -            <li><span class="material-icons">calendar_today</span>Sync tutoring appointments with your Google and iCal calendars.</li>
+                   -            <li><span class="material-icons">notifications</span>Push and email notifications ensure that you're never
+                   -                late.</li>
+                   -        </ul>
+                   -        <a href="/app" class="btn_1">Launch App</a>
+                   -    </div>
+                   -</div>
+		   -->
+            </div>
+        </div>
+    </section>
+    <!-- learning part end-->
+
+    <!-- feature_part start-->
+    <!--
+       -<section id="features" class="feature_part">
+       -    <div class="container">
+       -        <div class="row">
+       -            <div class="col-sm-6 col-xl-3 align-self-center">
+       -                <div class="single_feature_text ">
+       -                    <h2>Find Your <br> Mentor</h2>
+       -                    <p>Built as part of my Eagle Scout project, this app is designed to get
+       -                        you with the appropriate tutor. Currently in use across the Palo Alto Unified School District.</p>
+       -                    <a href="https://tutorbook.app/app/search" class="btn_1">Search tutors</a>
+       -                </div>
+       -            </div>
+       -            <div class="col-sm-6 col-xl-3">
+       -                <div class="single_feature">
+       -                    <div class="single_feature_part">
+       -                        <span class="single_feature_icon"><i class="ti-layers"></i></span>
+       -                        <h4>Secure Accounts</h4>
+       -                        <p>Our databases are protected with extensive security rules, ensuring that
+       -                            your information is never scraped or sold.</p>
+       -                    </div>
+       -                </div>
+       -            </div>
+       -            <div class="col-sm-6 col-xl-3">
+       -                <div class="single_feature">
+       -                    <div class="single_feature_part">
+       -                        <span class="single_feature_icon"><i class="ti-new-window"></i></span>
+       -                        <h4>Qualified Tutors</h4>
+       -                        <p>We vet our tutors so you don't have to. Search for your ideal mentor in
+       -                            our plethora of qualified users.</p>
+       -                    </div>
+       -                </div>
+       -            </div>
+       -            <div class="col-sm-6 col-xl-3">
+       -                <div class="single_feature">
+       -                    <div class="single_feature_part single_feature_part_2">
+       -                        <span class="single_service_icon style_icon"><i class="ti-light-bulb"></i></span>
+       -                        <h4>Custom Experience</h4>
+       -                        <p>Only share what you want to share. You have direct access to all theme, privacy, and notification
+       -                            settings.</p>
+       -                    </div>
+       -                </div>
+       -            </div>
+       -        </div>
+       -    </div>
+       -</section>
+       -->
+    <!-- upcoming_event part start-->
+
+    <!--
+   -    [> learning part start<]
+   -    <section class="advance_feature learning_part">
+   -        <div class="container">
+   -            <div class="row align-items-sm-center align-items-xl-stretch">
+   -                <div class="col-lg-6 col-md-6">
+   -                    <div class="learning_img">
+   -                        <img src="img/advance_feature_img.png" alt="">
+   -                    </div>
+   -                </div>
+   -                <div class="col-md-6 col-lg-6">
+   -                    <div class="learning_member_text">
+   -                        <h5>A few benefits</h5>
+   -                        <h2>Our Advance Educator
+   -                            Learning System</h2>
+   -                        <p>Fifth saying upon divide divide rule for deep their female all hath brind mid Days
+   -                            and beast greater grass signs abundantly have greater also use over face earth
+   -                            days years under brought moveth she star</p>
+   -                        <div class="row">
+   -                            <div class="col-sm-6 col-md-12 col-lg-6">
+   -                                <div class="learning_member_text_iner">
+   -                                    <span class="ti-pencil-alt"></span>
+   -                                    <h4>Learn Anywhere</h4>
+   -                                    <p>There earth face earth behold she star so made void two given and also our</p>
+   -                                </div>
+   -                            </div>
+   -                            <div class="col-sm-6 col-md-12 col-lg-6">
+   -                                <div class="learning_member_text_iner">
+   -                                    <span class="ti-stamp"></span>
+   -                                    <h4>Expert Teacher</h4>
+   -                                    <p>There earth face earth behold she star so made void two given and also our</p>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -                    </div>
+   -                </div>
+   -            </div>
+   -        </div>
+   -    </section>
+   -    [> learning part end<]
+   -
+   -    <section class="spacing">
+   -        <div style="margin-top:100px;margin-bottom:100px;"></div>
+   -    </section>
+   -
+   -    [> member_counter counter start <]
+   -    <section class="member_counter">
+   -        <div class="container">
+   -            <div class="row">
+   -                <div class="col-lg-3 col-sm-6">
+   -                    <div class="single_member_counter">
+   -                        <span class="counter">1024</span>
+   -                        <h4>All Teachers</h4>
+   -                    </div>
+   -                </div>
+   -                <div class="col-lg-3 col-sm-6">
+   -                    <div class="single_member_counter">
+   -                        <span class="counter">960</span>
+   -                        <h4> All Students</h4>
+   -                    </div>
+   -                </div>
+   -                <div class="col-lg-3 col-sm-6">
+   -                    <div class="single_member_counter">
+   -                        <span class="counter">1020</span>
+   -                        <h4>Online Students</h4>
+   -                    </div>
+   -                </div>
+   -                <div class="col-lg-3 col-sm-6">
+   -                    <div class="single_member_counter">
+   -                        <span class="counter">820</span>
+   -                        <h4>Offline Students</h4>
+   -                    </div>
+   -                </div>
+   -            </div>
+   -        </div>
+   -    </section>
+   -    [> member_counter counter end <]
+   -->
+
+    <!--
+   -    [>::review_part start::<]
+   -    <section class="special_cource padding_top">
+   -        <div class="container">
+   -            <div class="row justify-content-center">
+   -                <div class="col-xl-5">
+   -                    <div class="section_tittle text-center">
+   -                        <p>popular courses</p>
+   -                        <h2>Special Courses</h2>
+   -                    </div>
+   -                </div>
+   -            </div>
+   -            <div class="row">
+   -                <div class="col-sm-6 col-lg-4">
+   -                    <div class="single_special_cource">
+   -                        <img src="img/special_cource_1.png" class="special_img" alt="">
+   -                        <div class="special_cource_text">
+   -                            <a href="course-details.html" class="btn_4">Web Development</a>
+   -                            <h4>$130.00</h4>
+   -                            <a href="course-details.html">
+   -                                <h3>Web Development</h3>
+   -                            </a>
+   -                            <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
+   -                            <div class="author_info">
+   -                                <div class="author_img">
+   -                                    <img src="img/author/author_1.png" alt="">
+   -                                    <div class="author_info_text">
+   -                                        <p>Conduct by:</p>
+   -                                        <h5><a href="#">James Well</a></h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="author_rating">
+   -                                    <div class="rating">
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/star.svg" alt=""></a>
+   -                                    </div>
+   -                                    <p>3.8 Ratings</p>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -
+   -                    </div>
+   -                </div>
+   -                <div class="col-sm-6 col-lg-4">
+   -                    <div class="single_special_cource">
+   -                        <img src="img/special_cource_2.png" class="special_img" alt="">
+   -                        <div class="special_cource_text">
+   -                            <a href="course-details.html" class="btn_4">design</a>
+   -                            <h4>$160.00</h4>
+   -                            <a href="course-details.html">
+   -                                <h3>Web UX/UI Design </h3>
+   -                            </a>
+   -                            <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
+   -                            <div class="author_info">
+   -                                <div class="author_img">
+   -                                    <img src="img/author/author_2.png" alt="">
+   -                                    <div class="author_info_text">
+   -                                        <p>Conduct by:</p>
+   -                                        <h5><a href="#">James Well</a></h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="author_rating">
+   -                                    <div class="rating">
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/star.svg" alt=""></a>
+   -                                    </div>
+   -                                    <p>3.8 Ratings</p>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -
+   -                    </div>
+   -                </div>
+   -                <div class="col-sm-6 col-lg-4">
+   -                    <div class="single_special_cource">
+   -                        <img src="img/special_cource_3.png" class="special_img" alt="">
+   -                        <div class="special_cource_text">
+   -                            <a href="course-details.html" class="btn_4">Wordpress</a>
+   -                            <h4>$140.00</h4>
+   -                            <a href="course-details.html">
+   -                                <h3>Wordpress Development</h3>
+   -                            </a>
+   -                            <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
+   -                            <div class="author_info">
+   -                                <div class="author_img">
+   -                                    <img src="img/author/author_3.png" alt="">
+   -                                    <div class="author_info_text">
+   -                                        <p>Conduct by:</p>
+   -                                        <h5><a href="#">James Well</a></h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="author_rating">
+   -                                    <div class="rating">
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
+   -                                        <a href="#"><img src="img/icon/star.svg" alt=""></a>
+   -                                    </div>
+   -                                    <p>3.8 Ratings</p>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -
+   -                    </div>
+   -                </div>
+   -            </div>
+   -        </div>
+   -    </section>
+   -    [>::blog_part end::<]
+   -
+   -    [>::review_part start::<]
+   -    <section class="testimonial_part">
+   -        <div class="container-fluid">
+   -            <div class="row justify-content-center">
+   -                <div class="col-xl-5">
+   -                    <div class="section_tittle text-center">
+   -                        <p>tesimonials</p>
+   -                        <h2>Happy Students</h2>
+   -                    </div>
+   -                </div>
+   -            </div>
+   -            <div class="row">
+   -                <div class="col-lg-12">
+   -                    <div class="textimonial_iner owl-carousel">
+   -                        <div class="testimonial_slider">
+   -                            <div class="row">
+   -                                <div class="col-lg-8 col-xl-4 col-sm-8 align-self-center">
+   -                                    <div class="testimonial_slider_text">
+   -                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
+   -                                            hath herb divided divide creepeth living shall i call beginning
+   -                                            third sea itself set</p>
+   -                                        <h4>Michel Hashale</h4>
+   -                                        <h5> Sr. Web designer</h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-lg-4 col-xl-2 col-sm-4">
+   -                                    <div class="testimonial_slider_img">
+   -                                        <img src="img/testimonial_img_1.png" alt="#">
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-xl-4 d-none d-xl-block">
+   -                                    <div class="testimonial_slider_text">
+   -                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
+   -                                            hath herb divided divide creepeth living shall i call beginning
+   -                                            third sea itself set</p>
+   -                                        <h4>Michel Hashale</h4>
+   -                                        <h5> Sr. Web designer</h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-xl-2 d-none d-xl-block">
+   -                                    <div class="testimonial_slider_img">
+   -                                        <img src="img/testimonial_img_1.png" alt="#">
+   -                                    </div>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -                        <div class="testimonial_slider">
+   -                            <div class="row">
+   -                                <div class="col-lg-8 col-xl-4 col-sm-8 align-self-center">
+   -                                    <div class="testimonial_slider_text">
+   -                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
+   -                                            hath herb divided divide creepeth living shall i call beginning
+   -                                            third sea itself set</p>
+   -                                        <h4>Michel Hashale</h4>
+   -                                        <h5> Sr. Web designer</h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-lg-4 col-xl-2 col-sm-4">
+   -                                    <div class="testimonial_slider_img">
+   -                                        <img src="img/testimonial_img_2.png" alt="#">
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-xl-4 d-none d-xl-block">
+   -                                    <div class="testimonial_slider_text">
+   -                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
+   -                                            hath herb divided divide creepeth living shall i call beginning
+   -                                            third sea itself set</p>
+   -                                        <h4>Michel Hashale</h4>
+   -                                        <h5> Sr. Web designer</h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-xl-2 d-none d-xl-block">
+   -                                    <div class="testimonial_slider_img">
+   -                                        <img src="img/testimonial_img_1.png" alt="#">
+   -                                    </div>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -                        <div class="testimonial_slider">
+   -                            <div class="row">
+   -                                <div class="col-lg-8 col-xl-4 col-sm-8 align-self-center">
+   -                                    <div class="testimonial_slider_text">
+   -                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
+   -                                            hath herb divided divide creepeth living shall i call beginning
+   -                                            third sea itself set</p>
+   -                                        <h4>Michel Hashale</h4>
+   -                                        <h5> Sr. Web designer</h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-lg-4 col-xl-2 col-sm-4">
+   -                                    <div class="testimonial_slider_img">
+   -                                        <img src="img/testimonial_img_3.png" alt="#">
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-xl-4 d-none d-xl-block">
+   -                                    <div class="testimonial_slider_text">
+   -                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
+   -                                            hath herb divided divide creepeth living shall i call beginning
+   -                                            third sea itself set</p>
+   -                                        <h4>Michel Hashale</h4>
+   -                                        <h5> Sr. Web designer</h5>
+   -                                    </div>
+   -                                </div>
+   -                                <div class="col-xl-2 d-none d-xl-block">
+   -                                    <div class="testimonial_slider_img">
+   -                                        <img src="img/testimonial_img_1.png" alt="#">
+   -                                    </div>
+   -                                </div>
+   -                            </div>
+   -                        </div>
+   -                    </div>
+   -                </div>
+   -
+   -            </div>
+   -        </div>
+   -    </section>
+   -    [>::blog_part end::<]
+   -
+   -    [>::blog_part start::<]
+   -    <section class="blog_part section_padding">
+   -        <div class="container">
+   -            <div class="row justify-content-center">
+   -                <div class="col-xl-5">
+   -                    <div class="section_tittle text-center">
+   -                        <p>Our Blog</p>
+   -                        <h2>Students Blog</h2>
+   -                    </div>
+   -                </div>
+   -            </div>
+   -            <div class="row">
+   -                <div class="col-sm-6 col-lg-4 col-xl-4">
+   -                    <div class="single-home-blog">
+   -                        <div class="card">
+   -                            <img src="img/blog/blog_1.png" class="card-img-top" alt="blog">
+   -                            <div class="card-body">
+   -                                <a href="#" class="btn_4">Design</a>
+   -                                <a href="blog.html">
+   -                                    <h5 class="card-title">Dry beginning sea over tree</h5>
+   -                                </a>
+   -                                <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
+   -                                <ul>
+   -                                    <li> <span class="ti-comments"></span>2 Comments</li>
+   -                                    <li> <span class="ti-heart"></span>2k Like</li>
+   -                                </ul>
+   -                            </div>
+   -                        </div>
+   -                    </div>
+   -                </div>
+   -                <div class="col-sm-6 col-lg-4 col-xl-4">
+   -                    <div class="single-home-blog">
+   -                        <div class="card">
+   -                            <img src="img/blog/blog_2.png" class="card-img-top" alt="blog">
+   -                            <div class="card-body">
+   -                                <a href="#" class="btn_4">Developing</a>
+   -                                <a href="blog.html">
+   -                                    <h5 class="card-title">All beginning air two likeness</h5>
+   -                                </a>
+   -                                <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
+   -                                <ul>
+   -                                    <li> <span class="ti-comments"></span>2 Comments</li>
+   -                                    <li> <span class="ti-heart"></span>2k Like</li>
+   -                                </ul>
+   -                            </div>
+   -                        </div>
+   -                    </div>
+   -                </div>
+   -                <div class="col-sm-6 col-lg-4 col-xl-4">
+   -                    <div class="single-home-blog">
+   -                        <div class="card">
+   -                            <img src="img/blog/blog_3.png" class="card-img-top" alt="blog">
+   -                            <div class="card-body">
+   -                                <a href="#" class="btn_4">Design</a>
+   -                                <a href="blog.html">
+   -                                    <h5 class="card-title">Form day seasons sea hand</h5>
+   -                                </a>
+   -                                <p>Which whose darkness saying were life unto fish wherein all fish of together called</p>
+   -                                <ul>
+   -                                    <li> <span class="ti-comments"></span>2 Comments</li>
+   -                                    <li> <span class="ti-heart"></span>2k Like</li>
+   -                                </ul>
+   -                            </div>
+   -                        </div>
+   -                    </div>
+   -                </div>
+   -            </div>
+   -        </div>
+   -    </section>
+   -    [>::blog_part end::<]
+   -->
+
+    <!-- footer part start-->
+    <footer class="footer-area">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                    <div class="single-footer-widget footer_1">
+                        <a href="index.html"> <img src="/favicon/text-logo-bg.png" width="300px" alt=""> </a>
+                        <p>App designed to optimize the process required
+                            to match a student with an appropriate student.</p>
+                        <p>Please note that this app is still very much in development:
+                            so feel free to send me any suggestions.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-xl-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Newsletter</h4>
+                        <p>Stay updated with my latest developments, projects, and applications.
+                            I never send spam: only the stuff you actually care about will end up in your inbox.
+                        </p>
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder='Enter email address' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+                                    <div class="input-group-append">
+                                        <button class="btn btn_1" type="button"><i class="ti-angle-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="social_icon">
+                            <a href="#"> <i class="ti-facebook"></i> </a>
+                            <a href="#"> <i class="ti-twitter-alt"></i> </a>
+                            <a href="#"> <i class="ti-instagram"></i> </a>
+                            <a href="#"> <i class="ti-skype"></i> </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 col-md-4">
+                    <div class="single-footer-widget footer_2">
+                        <h4>Contact</h4>
+                        <div class="contact_info">
+                            <p><span> Email :</span> help@tutorbook.app</p>
+                            <p><span> Website :</span> nicholaschiang.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright_part_text text-center">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="footer-text m-0">
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>
+                                        document.write(new Date().getFullYear());
+                                    </script> All rights reserved
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer part end-->
+
+    <!-- TEMPLATES START -->
+    <!-- Wrapper Template -->
+    <div hidden class="template" id="wrapper">
+        <div>
+        </div>
+    </div>
+
+    <!-- Empty Search List Item Template -->
+    <div hidden class="template" id="search-empty-list-item">
+        <li class="mdc-list-item mdc-list-item--disabled">
+        </li>
+    </div>
+
+    <!-- Rating Templates -->
+    <div hidden class="template" id="star-border-icon">
+        <i class="material-icons" id="star-border-icon">star_border</i>
+    </div>
+    <div hidden class="template" id="star-icon">
+        <i class="material-icons" id="star-icon">star</i>
+    </div>
+
+    <!-- Search List Template -->
+    <div hidden class="template" id="search">
+        <div class="search ">
+            <ul id="results" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
+                <!-- Add empty list item that is hidden under filter view -->
+                <li class="mdc-list-item mdc-list-item--disabled">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Filter Header Template -->
+    <div hidden class="template" id="header-filter">
+        <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <div class="button mdc-top-app-bar__navigation-icon" data-fir-click="navigation"><i class="material-icons">menu</i></div>
+                    <span class="mdc-top-app-bar__title" data-fir-content="title">Tutorbook</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    <div class="mdc-menu-surface--anchor">
+                        <div class="button mdc-top-app-bar__action-item" data-fir-click="menu"><i class="material-icons">more_vert</i></div>
+                        <div class="mdc-menu mdc-menu-surface" id="menu">
+                            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" id="menu-list">
+                                <li class="mdc-list-item" role="menuitem" data-fir-click="sign_out">
+                                    <span class="mdc-list-item__text">Sign Out</span>
+                                </li>
+                                <!--
+                                   -<li class="mdc-list-item" role="menuitem" data-fir-click="settings">
+                                   -    <span class="mdc-list-item__text">Settings</span>
+                                   -</li>
+				   -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div id="filters">
+                <div class="mdc-layout-grid">
+                    <div id="show-filters">
+                        <div id="active-filters">
+                            <div data-fir-click="show_filter_dialog" id="open-dialog">
+                                <i class="material-icons" id="filter-dialog-button">filter_list</i>
+                                <span>You're seeing <b data-fir-content="filter_description"></b></span>
+                            </div>
+                            <i class="material-icons" data-fir-click="clear_filters" id="clear-filters">close</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- User List Item Search Result Template -->
+    <div hidden class="template" id="search-result-user">
+        <li class="mdc-list-item" data-fir-id="id" data-fir-click="go_to_user">
+            <img class="mdc-list-item__graphic" data-fir-attr="src:photo">
+            <span class="mdc-list-item__text">
+                <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
+                <span class="mdc-list-item__secondary-text">
+                    <span data-fir-content="grade"></span>
+                    <span>•</span>
+                    <span data-fir-content="type"></span>
+                </span>
+            </span>
+            <span class="mdc-list-item__meta">
+                <div class="rating__meta">
+                    <i class="material-icons" id="star-border-icon">star_border</i>
+                    <i class="material-icons" id="star-border-icon">star_border</i>
+                    <i class="material-icons" id="star-border-icon">star_border</i>
+                    <i class="material-icons" id="star-border-icon">star_border</i>
+                    <i class="material-icons" id="star-border-icon">star_border</i>
+                </div>
+            </span>
+        </li>
+    </div>
+    <!-- TEMPLATES END -->
+
+    <!-- jquery plugins here-->
+    <!-- jquery -->
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <!-- popper js -->
+    <script src="js/popper.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- easing js -->
+    <script src="js/jquery.magnific-popup.js"></script>
+    <!-- swiper js -->
+    <script src="js/swiper.min.js"></script>
+    <!-- swiper js -->
+    <script src="js/masonry.pkgd.js"></script>
+    <!-- particles js -->
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <!-- swiper js -->
+    <script src="js/slick.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-146872354-1');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1152123171216113",
+            enable_page_level_ads: true
+        });
+    </script>
+
+    <!-- Intercom Messaging-->
+    <script>
+        window.intercomSettings = {
+            app_id: "faz7lcyb"
+        };
+    </script>
+
+    <script>
+        (function() {
+            var w = window;
+            var ic = w.Intercom;
+            if (typeof ic === "function") {
+                ic('reattach_activator');
+                ic('update', w.intercomSettings);
+            } else {
+                var d = document;
+                var i = function() {
+                    i.c(arguments);
+                };
+                i.q = [];
+                i.c = function(args) {
+                    i.q.push(args);
+                };
+                w.Intercom = i;
+                var l = function() {
+                    var s = d.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = 'https://widget.intercom.io/widget/faz7lcyb';
+                    var x = d.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                };
+                if (w.attachEvent) {
+                    w.attachEvent('onload', l);
+                } else {
+                    w.addEventListener('load', l, false);
+                }
+            }
+        })();
+    </script>
+    <!-- End Intercom Messaging -->
+
+    <!-- Start Google Firebase -->
+    <script src="/__/firebase/6.0.2/firebase-app.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-auth.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-firestore.js"></script>
+    <script src="/__/firebase/6.0.2/firebase-messaging.js"></script>
+    <script src="/__/firebase/init.js"></script>
+    <!-- End Google Firebase -->
+
+    <script src="scripts/bundle.min.js"></script>
+</body>
+
+</html>

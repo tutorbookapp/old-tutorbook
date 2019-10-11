@@ -1,0 +1,427 @@
+// Revised Firestore Security Rules that *should* account for everything.
+
+rules_version = '2'; // For Firestore collectionGroup queries
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // [SPECIAL ACCESS]
+    match /feedback/{id} {
+      allow create: if request.auth.uid != null;
+    }
+    match /auth/{document=**} {
+      allow read: if request.auth.uid != null;
+    }
+    match /locations/{location} {
+      allow read: if request.auth.uid != null;
+      allow update, delete: if request.auth.token.email in resource.data.supervisors;
+      allow create: if request.auth.token.email in request.resource.data.supervisors
+	&& request.auth.token.supervisor == true;
+    }
+
+    // [USER PROFILES]
+    match /users/{user} {
+      // TODO: Ensure that the client can't change the user.authenticated field
+      // to become an admin or supervisor without actually knowing the code.
+      allow read: if true;
+      allow create: if (request.auth.token.email == user
+	|| request.auth.token.supervisor == true
+	|| request.auth.token.parent == true)
+	&& request.resource.data.payments.currentBalance == 0
+	&& request.resource.data.payments.currentBalanceString == "$0.00"
+	&& request.resource.data.secondsPupiled == 0
+	&& request.resource.data.secondsTutored == 0;
+      allow delete: if request.auth.token.email == user
+	|| request.auth.token.email in resource.data.proxy;
+      allow update: if (request.auth.token.email == user
+	|| request.auth.token.email in resource.data.proxy)
+	&& (
+	  !("currentBalance" in request.resource.data.payments) 
+	  || ("currentBalance" in request.resource.data.payments && request.resource.data.payments.currentBalance == resource.data.payments.currentBalance)
+	)
+	&& (
+	  !("currentBalanceString" in request.resource.data.payments) 
+	  || ("currentBalanceString" in request.resource.data.payments && request.resource.data.payments.currentBalanceString == resource.data.payments.currentBalanceString)
+	)
+	&& (
+	  !("secondsPupiled" in request.resource.data) 
+	  || ("secondsPupiled" in request.resource.data && request.resource.data.secondsPupiled == resource.data.secondsPupiled)
+	)
+	&& (
+	  !("secondsTutored" in request.resource.data) 
+	  || ("secondsTutored" in request.resource.data && request.resource.data.secondsTutored == resource.data.secondsTutored)
+	);
+    }
+
+    // [REQUESTS IN]
+    match /{path=**}/requestsIn/{requestIn} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.location.id in request.auth.token.locations; 
+    }
+    match /users/{user}/requestsIn/{requestIn} {
+      allow create: if request.auth.uid != null
+	&& exists(/databases/$(database)/documents/users/$(request.auth.token.email));
+      allow read, write: if request.auth.token.email == user
+	|| request.auth.token.email == resource.data.fromUser.email
+	|| (request.auth.token.email in resource.data.fromUser.proxy
+	|| request.auth.token.email in resource.data.toUser.proxy);
+      allow read, write: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      allow update: if request.auth.token.email ==
+	get(/databases/$(database)/documents/users/$(user)/modifiedRequestsIn/$(requestIn)).data.modifiedBy.email;
+      allow delete: if request.auth.token.email ==
+	get(/databases/$(database)/documents/users/$(user)/canceledRequestsIn/$(requestIn)).data.canceledBy.email;
+    }
+    match /{path=**}/modifiedRequestsIn/{requestIn} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.for.location.id in request.auth.token.locations;
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations;
+    }
+    match /users/{user}/modifiedRequestsIn/{requestIn} {
+      // fromUser creates this document and the toUser dismisses it
+      // Users should never need to update this document
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in resource.data.for.toUser.proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (requestIn)
+      allow create: if request.auth.token.email == 
+	get(/databases/$(database)/documents/users/$(user)/requestsIn/$(requestIn)).data.fromUser.email
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/requestsIn/$(requestIn)).data.fromUser.proxy;
+    } 
+    match /{path=**}/canceledRequestsIn/{requestIn} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.for.location.id in request.auth.token.locations; 
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations;
+    }
+    match /users/{user}/canceledRequestsIn/{requestIn} {
+      // fromUser creates this document and the toUser dismisses it
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in resource.data.for.toUser.proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (requestIn)
+      allow create: if request.auth.token.email == 
+	get(/databases/$(database)/documents/users/$(user)/requestsIn/$(requestIn)).data.fromUser.email
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/requestsIn/$(requestIn)).data.fromUser.proxy
+	|| request.resource.data.for.location.id in request.auth.token.locations;
+    }
+
+    // [REQUESTS OUT] 
+    match /{path=**}/requestsOut/{requestOut} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.location.id in request.auth.token.locations; 
+    }
+    match /users/{user}/requestsOut/{requestOut} {
+      allow read, update, delete: if request.auth.token.email == user
+	|| request.auth.token.email == resource.data.toUser.email
+	|| (request.auth.token.email in resource.data.fromUser.proxy
+	|| request.auth.token.email in resource.data.toUser.proxy);
+      allow read, update, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      allow update: if request.auth.token.email ==
+	get(/databases/$(database)/documents/users/$(user)/modifiedRequestsOut/$(requestOut)).data.modifiedBy.email;
+      allow delete: if request.auth.token.email ==
+	get(/databases/$(database)/documents/users/$(user)/canceledRequestsOut/$(requestOut)).data.canceledBy.email;
+      allow create: if request.auth.token.email == user
+	|| request.auth.token.email in 
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+    }
+    match /{path=**}/modifiedRequestsOut/{requestOut} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.for.location.id in request.auth.token.locations;
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations;
+    }
+    match /users/{user}/modifiedRequestsOut/{requestOut} {
+      // toUser creates this document and the fromUser dismisses it
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in resource.data.for.fromUser.proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (requestOut)
+      allow create: if request.auth.token.email == 
+	get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.toUser.email
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.toUser.proxy
+	|| get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.location.id
+	in request.auth.token.locations;
+    } 
+    match /{path=**}/canceledRequestsOut/{requestOut} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations; 
+    }
+    match /{path=**}/rejectedRequestsOut/{requestOut} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.for.location.id in request.auth.token.locations; 
+    }
+    match /users/{user}/rejectedRequestsOut/{requestOut} {
+      // toUser creates this document and the fromUser dismisses it
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in resource.data.for.fromUser.proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (requestOut)
+      allow create: if request.auth.token.email == 
+	get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.toUser.email
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.toUser.proxy;
+    } 
+    match /{path=**}/approvedRequestsOut/{requestOut} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      allow read: if resource.data.for.location.id in request.auth.token.locations; 
+    }
+    match /users/{user}/approvedRequestsOut/{requestOut} {
+      // toUser creates this document and the fromUser dismisses it
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in resource.data.for.fromUser.proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (requestOut)
+      allow create: if request.auth.token.email == 
+	get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.toUser.email
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/requestsOut/$(requestOut)).data.toUser.proxy;
+    }
+
+    // [APPOINTMENTS]
+    match /users/{user}/appointments/{appt} {
+      // We have to specify that the given user can read all of their appts b/c
+      // otherwise, we'd have to specify it in the query itself, which is too
+      // much of a hassle and leads to confusing code.
+      allow read, update, delete: if request.auth.token.email == user
+	|| request.auth.token.email in
+	[resource.data.attendees[0].email, resource.data.attendees[1].email]
+	|| request.auth.token.email in resource.data.attendees[0].proxy
+	|| request.auth.token.email in resource.data.attendees[1].proxy
+	|| resource.data.location.id in request.auth.token.locations;
+      allow read, update, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they were the one to approve the request
+      // or if there already is a request created (i.e. first you have to add
+      // the appt to the fromUser, then to the toUser, and finally to the location).
+      allow create: if exists(/databases/$(database)/documents/users/$(request.resource.data.attendees[0].email)/appointments/$(appt))
+	||  exists(/databases/$(database)/documents/users/$(request.resource.data.attendees[1].email)/appointments/$(appt))
+        || request.auth.token.email == 
+	get(/databases/$(database)/documents/users/$(user)/approvedRequestsOut/$(appt)).data.approvedBy.email
+	|| request.auth.token.email in 
+	get(/databases/$(database)/documents/users/$(user)/approvedRequestsOut/$(appt)).data.approvedBy.proxy;
+    }
+    match /locations/{location}/appointments/{appt} {
+      // We have to specify that the given user can read all of their appts b/c
+      // otherwise, we'd have to specify it in the query itself, which is too
+      // much of a hassle and leads to confusing code.
+      allow read, update, delete: if request.auth.token.email in
+	[resource.data.attendees[0].email, resource.data.attendees[1].email]
+	|| request.auth.token.email in resource.data.attendees[0].proxy
+	|| request.auth.token.email in resource.data.attendees[1].proxy
+	|| location in request.auth.token.locations;
+      // Only allow a user to create if they already have an appt doc
+      allow create: if 
+	exists(/databases/$(database)/documents/users/$(request.resource.data.attendees[0].email)/appointments/$(appt))
+	&& exists(/databases/$(database)/documents/users/$(request.resource.data.attendees[1].email)/appointments/$(appt));
+    }
+    match /locations/{location}/modifiedAppointments/{appt} {
+      // Only allow a user to create if they were already allowed to create a
+      // modifiedAppt doc in the other user's.
+      allow create: if exists(/databases/$(database)/documents/users/$(request.resource.data.for.attendees[0].email)/modifiedAppointments/$(appt))
+	|| exists(/databases/$(database)/documents/users/$(request.resource.data.for.attendees[1].email)/modifiedAppointments/$(appt)); 
+      allow read, delete: if location in request.auth.token.locations;
+    }
+    match /users/{user}/modifiedAppointments/{appt} {
+      // Either attendee can create and dismiss this card
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in
+	[resource.data.for.attendees[0].email, resource.data.for.attendees[1].email]
+	|| request.auth.token.email in resource.data.for.attendees[0].proxy
+	|| request.auth.token.email in resource.data.for.attendees[1].proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (appt)
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations
+	|| request.auth.token.email in
+	[get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[0].email,
+	get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[1].email]
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[0].proxy
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[1].proxy;
+    }
+    match /{path=**}/canceledAppointments/{appt} {
+      // collectionGroup query rules for supervisors and admins
+      // Allow supervisors to read docs that are at their location
+      // Supervisors can also cancel appointments at their location
+      allow read: if resource.data.for.location.id in request.auth.token.locations;
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations;
+    }
+    match /users/{user}/canceledAppointments/{appt} {
+      // Either attendee can create and dismiss this card
+      allow read, delete: if request.auth.token.email == user
+	|| request.auth.token.email in
+	[resource.data.for.attendees[0].email, resource.data.for.attendees[1].email]
+	|| request.auth.token.email in resource.data.for.attendees[0].proxy
+	|| request.auth.token.email in resource.data.for.attendees[1].proxy;
+      allow read, delete: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      // Only allow a user to create if they have the root doc (appt)
+      allow create: if request.auth.token.email in
+	[get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[0].email,
+	get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[1].email]
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[0].proxy
+	|| request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)/appointments/$(appt)).data.attendees[1].proxy;
+    }
+    match /locations/{location}/canceledAppointments/{appt} {
+      // Only allow a user to create if they were already allowed to create a
+      // canceledAppt doc in the other user's.
+      allow create: if exists(/databases/$(database)/documents/users/$(request.resource.data.for.attendees[0].email)/canceledAppointments/$(appt))
+	|| exists(/databases/$(database)/documents/users/$(request.resource.data.for.attendees[1].email)/canceledAppointments/$(appt)); 
+      allow read, delete: if location in request.auth.token.locations;
+    }
+
+    // [CLOCKINS AND CLOCKOUTS]
+    match /users/{supervisor}/clockIns/{clockIn} {
+      allow create: if exists(/databases/$(database)/documents/users/$(request.auth.token.email)/appointments/$(clockIn))
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Tutor';
+      allow read, delete: if request.auth.token.email == supervisor;
+    }
+    match /users/{supervisor}/approvedClockIns/{clockIn} {
+      allow create: if request.auth.token.email == supervisor;
+      allow read: if request.auth.token.email == resource.data.sentBy.email;
+    }
+    match /users/{user}/activeAppointments/{appt} {
+      allow read: if request.auth.token.email == user
+	|| resource.data.location.id in request.auth.token.locations;
+      allow read: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      allow create: if request.auth.token.supervisor == true
+	&& request.resource.data.location.id in request.auth.token.locations
+	&& exists(/databases/$(database)/documents/users/$(user)/appointments/$(appt));
+      allow delete: if resource.data.location.id in request.auth.token.locations
+	|| request.auth.token.email == resource.data.attendees[0].email
+	|| request.auth.token.email == resource.data.attendees[1].email;
+    }
+    match /locations/{location}/activeAppointments/{appt} {
+      allow read, create, delete: if location in request.auth.token.locations
+	|| request.auth.token.email == resource.data.attendees[0].email
+	|| request.auth.token.email == resource.data.attendees[1].email;
+    }
+    match /users/{supervisor}/rejectedClockIns/{clockIn} {
+      allow create: if request.auth.token.email == supervisor;
+      allow read: if request.auth.token.email == resource.data.sentBy.email;
+    }
+    match /users/{supervisor}/clockOuts/{clockOut} {
+      allow create: if exists(/databases/$(database)/documents/users/$(request.auth.token.email)/activeAppointments/$(clockOut))
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Tutor';
+      allow read, delete: if request.auth.token.email == supervisor;
+    }
+    match /users/{supervisor}/approvedClockOuts/{clockOut} {
+      allow create: if request.auth.token.email == supervisor;
+      allow read: if request.auth.token.email == resource.data.sentBy.email;
+    }
+    match /users/{user}/pastAppointments/{appt} {
+      allow create: if request.auth.token.supervisor == true
+	&& request.resource.data.location.id in request.auth.token.locations;
+      allow read: if request.auth.token.email == user
+	|| resource.data.location.id in request.auth.token.locations;
+      allow read: if request.auth.token.email in
+	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+      allow delete: if request.auth.token.email == resource.data.attendees[0].email
+	|| request.auth.token.email == resource.data.attendees[1].email
+	|| resource.data.location.id in request.auth.token.locations;
+    }
+    match /locations/{location}/pastAppointments/{appt} {
+      allow read, create: if request.auth.token.supervisor == true
+	&& location in request.auth.token.locations;
+      allow delete: if request.auth.token.email == resource.data.attendees[0].email
+	|| request.auth.token.email == resource.data.attendees[1].email
+	|| resource.data.location.id in request.auth.token.locations;
+    }
+    match /users/{supervisor}/rejectedClockOuts/{clockOut} {
+      allow create: if request.auth.token.email == supervisor;
+      allow read: if request.auth.token.email == resource.data.sentBy.email;
+    }
+
+    // [DISMISSED CARDS]
+    match /users/{supervisor}/dismissedCards/{card} {
+      // Workaround to enable supervisors to dismiss cards (as we don't want
+      // them deleting that actual document).
+      allow read, create: if request.auth.token.email == supervisor;
+    }
+
+    // [PAYMENTS]
+    match /users/{user}/approvedPayments/{payment} {
+      allow create: if request.auth.token.email == user
+	|| request.auth.token.email == request.resource.data.from.email;
+      allow read: if request.auth.token.email == resource.data.to.email
+	|| request.auth.token.email == resource.data.from.email;
+    }
+    match /stripeAccounts/{user} {
+      allow read: if request.auth.token.email == user;
+    }
+    match /users/{user}/sentPayments/{payment} {
+      allow create: if request.auth.token.email == user;
+    }
+    match /users/{user}/requestedPayments/{payment} {
+      allow create: if request.auth.token.email == 
+	request.resource.data.to.email;
+      allow read, delete: if request.auth.token.email == user;
+    }
+    match /users/{user}/requestedPayouts/{payout} {
+      allow create, read: if request.auth.token.email == user;
+    }
+    match /users/{user}/deniedPayments/{payment} {
+      allow read: if request.auth.token.email == user;
+      allow create: if request.auth.token.email ==
+	request.resource.data.deniedBy.email;
+    }
+    match /users/{user}/approvedPayments/{payment} {
+      allow read: if request.auth.token.email == user;
+      allow create: if request.auth.token.email ==
+	request.resource.data.approvedBy.email;
+    }
+    match /users/{user}/needApprovalPayments/{payment} {
+      allow read, delete: if request.auth.token.email == user;
+    }
+    match /users/{user}/authPayments/{payment} {
+      allow read: if request.auth.token.email == user;
+      allow create: if request.auth.token.email == request.resource.data.from.email
+	|| request.auth.token.email == request.resource.data.to.email;
+      // When a request is canceled or rejected, client removes this document.
+      allow delete: if request.auth.token.email == resource.data.from.email
+	|| request.auth.token.email == resource.data.to.email;
+    }
+    match /users/{user}/pastPayments/{payment} {
+      allow read: if request.auth.token.email == user;
+    }
+    match /users/{user}/paidPayments/{payment} {
+      allow read: if request.auth.token.email == user;
+    }
+    match /users/{user}/invalidPayments/{payment} {
+      allow read: if request.auth.token.email == user;
+    }
+
+    // [CHATS]
+    match /chats/{chat} {
+      allow read, write: if request.auth.token.email in resource.data.chatterEmails;
+      allow create: if request.auth.token.email in 
+	request.resource.data.chatterEmails;
+      match /messages/{message} {
+        allow read, create: if request.auth.token.email in
+	  get(/databases/$(database)/documents/chats/$(chat)).data.chatterEmails;
+        allow update, delete: if request.auth.token.email == 
+	  resource.data.sentBy.email;
+      }
+    }
+  }
+}

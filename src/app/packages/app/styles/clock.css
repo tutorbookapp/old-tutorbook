@@ -1,0 +1,23 @@
+.dialog-clock {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.dialog-clock .clock-container {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.dialog-clock .clock-outline {
+  width: 50vw;
+  height: 50vw;
+  border: 1px solid #393939;
+  display: table-cell;
+  border-radius: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.dialog-clock .clock-outline h1 {
+  display: inline-block;
+}

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="289.68213"
+   height="71.946404"
+   viewBox="0 0 76.645063 19.03582"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="inkscape-text-logo.svg"
+   inkscape:export-filename="/home/nchiang/repos/tutorbook/build/favicon/text-logo-bg.png"
+   inkscape:export-xdpi="662.79602"
+   inkscape:export-ydpi="662.79602">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="106.0305"
+     inkscape:cy="-49.332482"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="845"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showguides="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(4.8656721,-280.96945)">
+    <g
+       id="g913"
+       transform="matrix(0.16609822,0,0,0.16609822,-4.8656721,281.71769)">
+      <g
+         transform="translate(-37.686821,-41.651484)"
+         inkscape:label="Background"
+         id="layer2">
+        <circle
+           r="55.050568"
+           style="fill:#5d16ee;fill-opacity:1;stroke-width:0.16873583"
+           cy="96.70192"
+           cx="92.737389"
+           id="path3789" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3861"
+           d="m 100.50053,150.97112 c -0.002,-0.026 -1.012767,-5.99032 -2.246518,-13.25408 l -2.243188,-13.20682 -6.588673,-6.60418 -6.58867,-6.60418 6.509539,-6.38671 c 5.280041,-5.180407 6.440143,-6.407081 6.142114,-6.494571 -0.897305,-0.263437 -4.74518,-0.338517 -7.170999,-0.139937 -2.393937,0.195967 -6.897518,0.818014 -7.683281,1.061224 -0.268496,0.0831 -0.65256,-1.282654 -2.714543,-9.653146 -1.32099,-5.36247 -2.363366,-9.788376 -2.316392,-9.835353 0.04697,-0.047 0.318987,0.343757 0.604475,0.868294 1.980104,3.638099 5.978697,6.811981 10.215099,8.108215 9.455153,2.893062 19.699147,-3.002445 22.016927,-12.670918 0.20915,-0.872457 0.38217,-1.926451 0.38449,-2.342228 0.002,-0.415777 0.0709,-0.860894 0.15235,-0.989154 0.0849,-0.13359 1.95129,7.051191 4.36942,16.819934 2.3217,9.379236 4.29125,17.14261 4.37677,17.25196 0.0961,0.12281 -1.17804,1.53087 -3.33309,3.68357 l -3.48859,3.48476 -4.49001,-4.48709 -4.49001,-4.48709 -3.161701,3.16587 -3.161687,3.16587 3.116207,19.43611 c 1.713921,10.68987 3.116211,19.5983 3.116211,19.79651 0,0.28588 -0.13675,0.36038 -0.66145,0.36038 -0.36381,0 -0.66296,-0.0213 -0.6648,-0.0472 z"
+           style="fill:#3700b3;fill-opacity:1;stroke-width:0.1889881" />
+        <path
+           sodipodi:nodetypes="cccccccccccc"
+           inkscape:connector-curvature="0"
+           id="path3863"
+           d="m 87.747172,151.46122 c -5.162973,-0.61448 -8.221988,-1.26648 -12.284225,-2.61827 -3.436491,-1.14355 -6.36981,-2.41061 -9.201222,-3.97451 -2.057543,-1.13645 -5.664716,-3.48323 -6.754301,-4.39425 l -0.647489,-0.54137 -0.997426,-7.16668 c -0.538048,-2.80745 -1.102433,-5.52563 -1.344158,-8.36513 l 19.685529,-0.37015 h 20.414599 l 0.112459,1.04889 c 0.205298,0.94876 3.906092,26.01964 3.867392,26.05834 -0.32437,0.32437 -10.676359,0.58196 -12.851158,0.32313 z"
+           style="fill:#3700b3;fill-opacity:1;stroke-width:0.1889881" />
+        <path
+           sodipodi:nodetypes="ccccsscc"
+           inkscape:connector-curvature="0"
+           id="path3865"
+           d="m 101.24639,150.59314 c -0.10857,-0.33245 -6.148481,-40.27734 -6.147987,-40.62179 5.3e-4,-0.28518 10.806457,11.44366 13.916437,14.79597 l 1.68259,1.81369 1.70679,10.22789 c 0.93873,5.62534 1.70679,10.30459 1.70679,10.39832 0,0.38753 -5.40795,2.21681 -9.07143,3.06848 -2.73706,0.63631 -3.69293,0.62441 -3.79319,0.31744 z"
+           style="fill:#3700b3;fill-opacity:1;stroke-width:0.1889881" />
+        <path
+           sodipodi:nodetypes="ccsscscccccc"
+           inkscape:connector-curvature="0"
+           id="path3867"
+           d="m 111.76468,136.86845 -1.71252,-10.32405 4.68471,-4.21424 c 2.11405,-1.90174 8.3277,-8.40953 14.07377,-14.18386 8.51654,-8.558437 10.46449,-10.427135 10.53985,-10.111058 0.0508,0.21326 0.9855,5.242388 2.077,10.529098 l 1.98455,9.61219 -1.3135,2.67203 c -2.75718,5.6089 -6.00158,10.10595 -10.58717,14.67482 -4.84521,4.82756 -9.87705,8.39181 -15.53445,11.00367 l -2.49971,1.19462 z"
+           style="fill:#3700b3;fill-opacity:1;stroke-width:0.1889881" />
+      </g>
+      <g
+         transform="translate(-37.686821,-41.651484)"
+         id="layer1-3"
+         inkscape:label="Logo">
+        <g
+           transform="matrix(4.3627161,0,0,4.3627161,43.430203,37.146689)"
+           id="g3787">
+          <path
+             style="clip-rule:evenodd;fill:none;fill-rule:evenodd"
+             inkscape:connector-curvature="0"
+             d="M 0,0 H 24 V 24 H 0 Z"
+             id="path3767" />
+          <g
+             style="clip-rule:evenodd;fill:#ffffff;fill-opacity:1;fill-rule:evenodd"
+             id="g3773">
+            <path
+               style="fill:#ffffff;fill-opacity:1"
+               inkscape:connector-curvature="0"
+               d="m 9,17 3,-2.94 C 11.61,14.02 11.32,14 11,14 8.33,14 3,15.34 3,18 v 2 h 9 z m 2,-5 c 2.21,0 4,-1.79 4,-4 C 15,5.79 13.21,4 11,4 8.79,4 7,5.79 7,8 c 0,2.21 1.79,4 4,4"
+               id="path3769" />
+            <path
+               style="fill:#ffffff;fill-opacity:1"
+               inkscape:connector-curvature="0"
+               d="M 15.47,20.5 12,17 l 1.4,-1.41 2.07,2.08 5.13,-5.17 1.4,1.41 z"
+               id="path3771" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:FontAwesome;-inkscape-font-specification:FontAwesome;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="14.755896"
+       y="292.65686"
+       id="text1764"
+       inkscape:export-xdpi="1000"
+       inkscape:export-ydpi="1000"><tspan
+         sodipodi:role="line"
+         x="14.755896"
+         y="292.65686"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Poppins ExtraBold';-inkscape-font-specification:'Poppins ExtraBold, ';stroke-width:0.26458332"
+         id="tspan1770">Tutorbook</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:fontawesome-webfont;-inkscape-font-specification:fontawesome-webfont;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="36.54911"
+       y="287.97964"
+       id="text1768"><tspan
+         sodipodi:role="line"
+         id="tspan1766"
+         x="36.54911"
+         y="297.34341"
+         style="stroke-width:0.26458332" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.82216835px;line-height:59.11083984px;font-family:fontawesome-webfont;-inkscape-font-specification:fontawesome-webfont;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29555419"
+       x="16.283707"
+       y="297.11362"
+       id="text1776"><tspan
+         sodipodi:role="line"
+         x="16.283707"
+         y="297.11362"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:3.74368668px;line-height:59.11083984px;font-family:'Poppins SemiBold';-inkscape-font-specification:'Poppins SemiBold, Semi-Bold';fill:#666666;stroke-width:0.29555419"
+         id="tspan923">Mentor Matching</tspan><tspan
+         sodipodi:role="line"
+         x="16.283707"
+         y="358.35953"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.74368668px;line-height:59.11083984px;font-family:'Poppins SemiBold';-inkscape-font-specification:'Poppins SemiBold, ';stroke-width:0.29555419"
+         id="tspan38" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:fontawesome-webfont;-inkscape-font-specification:fontawesome-webfont;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="22.383821"
+       y="273.21301"
+       id="text36"><tspan
+         sodipodi:role="line"
+         id="tspan34"
+         x="22.383821"
+         y="282.57678"
+         style="stroke-width:0.26458332" /></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot927"
+       style="fill:black;fill-opacity:1;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion929"><rect
+           id="rect931"
+           width="178.797"
+           height="51.012703"
+           x="-90.913727"
+           y="28.004768" /></flowRegion><flowPara
+         id="flowPara933"></flowPara></flowRoot>  </g>
+</svg>

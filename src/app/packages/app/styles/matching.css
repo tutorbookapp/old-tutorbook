@@ -1,0 +1,17 @@
+.matching #pupil-button {
+  bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
+}
+
+@media(min-width: 1024px) {
+  .matching #pupil-button {
+    bottom: calc(3rem + 48px) !important; /* Adjust for existing mdc-fab */
+  }
+}
+
+.dialog-input #results .mdc-list-item:first-child{
+  margin-top: 0 !important;
+}
+
+.dialog-input #results {
+  margin-top: -20px !important;
+}

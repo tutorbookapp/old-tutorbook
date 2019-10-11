@@ -1,0 +1,21 @@
+.input-list-item .mdc-select {
+  /* NOTE: This fixes that styling error where the textField would scale
+   * correctly but the select would not. */
+  min-width: 0px !important;
+}
+
+.profile .mdc-menu {
+  width: 100% !important;
+}
+
+.profile .mdc-menu-surface {
+  width: 100% !important;
+}
+
+.profile .mdc-menu-surface--anchor {
+  width: 100% !important;
+}
+
+#media-capture {
+  display: none;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "payments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "await-to-js": "^2.1.1",
+    "axios": "^0.19.0",
+    "cors": "^2.8.5",
+    "email": "file:../email",
+    "firebase-admin": "^8.6.0",
+    "firebase-functions": "^3.2.0",
+    "stripe": "^7.9.1"
+  }
+}
