@@ -638,12 +638,15 @@ class Data {
         this.locationIDs = [];
         const snap = await firebase.firestore().collection('locations').get();
         snap.docs.forEach((doc) => {
-            this.locationsByName[doc.data().name] = doc.id;
-            this.locationDataByName[doc.data().name] = doc.data();
-            this.locationsByID[doc.id] = doc.data().name;
-            this.locationDataByID[doc.id] = doc.data();
-            this.locationNames.push(doc.data().name);
-            this.locationIDs.push(doc.id);
+            if (window.app.location === 'Any' ||
+                window.app.location === doc.data().name) {
+                this.locationsByName[doc.data().name] = doc.id;
+                this.locationDataByName[doc.data().name] = doc.data();
+                this.locationsByID[doc.id] = doc.data().name;
+                this.locationDataByID[doc.id] = doc.data();
+                this.locationNames.push(doc.data().name);
+                this.locationIDs.push(doc.id);
+            }
         });
     }
 

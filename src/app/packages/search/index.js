@@ -26,9 +26,9 @@ class Search {
             subject: 'Any',
             gender: 'Any',
             availability: {},
-            location: 'Any',
-            price: 'Any',
-            type: 'Tutor', // Default to showing tutors
+            location: window.app.location,
+            price: (window.app.location === 'Any') ? 'Any' : 'Free',
+            type: 'Tutor',
             sort: 'Rating'
         };
         this.initDescription();
