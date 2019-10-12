@@ -200,12 +200,20 @@ class SupervisorDashboard extends Dashboard {
 
     renderSelf() {
         super.renderSelf();
-        $(this.main).append(
-            this.render.divider('Everything else')
-        );
-        $(this.main).append(
-            $(this.render.template('cards')).attr('id', 'everything')
-        );
+        const that = this;
+
+        function add(label, id) {
+            $(that.main).append(
+                that.render.divider(label)
+            );
+            $(that.main).append(
+                $(that.render.template('cards')).attr('id', id)
+            );
+        };
+
+        add('Clocking requests', 'clocking');
+        add('Pending matches', 'matches');
+        add('Everything else', 'everything');
     }
 
     viewDefaultCards() {
@@ -232,12 +240,9 @@ class SupervisorDashboard extends Dashboard {
             pupils: firebase.firestore().collection('users')
                 .where('location', '==', window.app.location)
                 .where('type', '==', 'Pupil'),
-            /*
-             *appts: firebase.firestore().collection('locations')
-             *    .doc(window.app.user.locations[0]) // TODO: Add >1 location
-             *    .collection('appointments')
-             *    .get(),
-             */
+            appts: firebase.firestore().collection('locations')
+                .doc(window.app.data.locationsByName[window.app.location])
+                .collection('appointments'),
         };
         Object.entries(queries).forEach((entry) => {
             this[entry[0]] = 0;
@@ -275,6 +280,53 @@ class SupervisorDashboard extends Dashboard {
         if (!$(card).attr('card-id') || !existing.length) return super
             .viewCard(card, list);
         existing.replaceWith(card);
+    }
+};
+
+
+// Shows a dynamic dashboard where queries =
+// { 
+//   default: ['', [db.collection('default')]],
+//   matches: ['Pending matches', [db.collection('matches')]],
+//   everything: ['Everything else', [db.collectionGroup()]],
+// }
+class QueryDashboard extends Dashboard {
+
+    constructor(title, subtitle, queries, url) {
+        super();
+        this.title = title;
+        this.subtitle = subtitle;
+        this.queries = queries;
+        this.url = url || 'home';
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        $(this.main).find('.header-welcome h1').text(this.title);
+        $(this.main).find('.header-welcome h5').text(this.subtitle);
+        Object.entries(this.queries).forEach((entry) => {
+            $(this.main).append(
+                this.render.divider(entry[1][0])
+            );
+            $(this.main).append(
+                $(this.render.template('cards')).attr('id', entry[0])
+            );
+        });
+    }
+
+    view() {
+        super.view();
+        Utils.url('/app/' + this.url);
+    }
+
+    viewDefaultCards() {
+        Object.entries(this.queries).forEach((entry) => {
+            this.viewCards(entry[1][1], entry[0], entry[0], {
+                remove: () => {}, // We can add action functions to recycler
+                display: () => {},
+                empty: () => {},
+            });
+        });
     }
 };
 
