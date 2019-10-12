@@ -63,7 +63,7 @@ class Tutorbook {
     constructor() {
         this.logJobPost();
         this.version = '0.0.1';
-        this.location = 'Any';
+        this.location = 'Gunn Academic Center';
         this.functionsURL = 'https://us-central1-tutorbook-779d8.' + // Live
             'cloudfunctions.net';
 
