@@ -1,6 +1,6 @@
 # [![Tutorbook Logo](https://tutorbook.app/favicon/text-logo.png)](https://tutorbook.app)
 
-[![Build Status](https://travis-ci.com/nicholaschiang/tutorbook.svg?token=5PNfsCfstim4Rmf3CfrD&branch=master)](https://travis-ci.com/nicholaschiang/tutorbook)
+[![Build Status](https://travis-ci.org/nicholaschiang/tutorbook.svg?branch=master)](https://travis-ci.org/nicholaschiang/tutorbook)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dd8c901f0077521d8f21/maintainability)](https://codeclimate.com/github/nicholaschiang/tutorbook/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/nicholaschiang/tutorbook/badge.svg?branch=master)](https://coveralls.io/github/nicholaschiang/tutorbook?branch=master)
