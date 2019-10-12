@@ -14,6 +14,9 @@ const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
 const ConfirmationDialog = require('dialogs').confirm;
 const NotificationDialog = require('dialogs').notify;
 
+// Dashboard(s)
+const QueryDashboard = require('dashboard').query;
+
 // Dependencies
 const Data = require('data');
 const Utils = require('utils');
@@ -177,25 +180,6 @@ class Card {
 
 
 Card.renderTutorsCard = function(doc) {
-    const actions = {
-        snooze: () => {
-            $('#cards [card-id="tutors"]').remove();
-        },
-        primary: () => {
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for tutors at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
-        },
-        view: () => {
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for tutors at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
-        },
-    };
     const summary = 'Manually edit user profiles to set availability, update ' +
         'subjects, add contact information, and much more. Soon, you\'ll even' +
         ' be able to manually update service hours all without leaving your ' +
@@ -203,6 +187,45 @@ Card.renderTutorsCard = function(doc) {
     const title = window.app.dashboard.tutors + ' Tutors';
     const subtitle = 'There are currently ' + window.app.dashboard.tutors +
         ' ' + window.app.location.split(' ')[0] + ' tutors on Tutorbook';
+    const actions = {
+        snooze: () => {
+            $('#cards [card-id="tutors"]').remove();
+        },
+        primary: () => {
+            return new QueryDashboard(title, subtitle, {
+                default: {
+                    queries: {
+                        users: firebase.firstore().collection('users')
+                            .where('type', '==', 'Tutor')
+                            .where('location', '==', window.app.location)
+                            .orderBy('name'),
+                    },
+                },
+            }).view();
+            new NotificationDialog('Profile Editing', 'Manual profile editing' +
+                ' for tutors at your location is a feature currently in the' +
+                ' works (but as soon as it goes live, you\'ll be the first to' +
+                ' know). In the meantime, head over to "Manual Matching" to ' +
+                'create and manage proxy profiles.', () => {}).view();
+        },
+        view: () => {
+            return new QueryDashboard(title, subtitle, {
+                default: {
+                    queries: {
+                        users: firebase.firstore().collection('users')
+                            .where('type', '==', 'Tutor')
+                            .where('location', '==', window.app.location)
+                            .orderBy('name'),
+                    },
+                },
+            }).view();
+            new NotificationDialog('Profile Editing', 'Manual profile editing' +
+                ' for tutors at your location is a feature currently in the' +
+                ' works (but as soon as it goes live, you\'ll be the first to' +
+                ' know). In the meantime, head over to "Manual Matching" to ' +
+                'create and manage proxy profiles.', () => {}).view();
+        },
+    };
     const card = Card.renderCard(title, subtitle, summary, actions);
     $(card).attr('card-id', 'tutors');
     return card;
@@ -210,25 +233,6 @@ Card.renderTutorsCard = function(doc) {
 
 
 Card.renderPupilsCard = function(doc) {
-    const actions = {
-        snooze: () => {
-            $('#cards [card-id="pupils"]').remove();
-        },
-        primary: () => {
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for pupils at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
-        },
-        view: () => {
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for pupils at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
-        },
-    };
     const summary = 'Manually edit user profiles to set availability, update ' +
         'subjects, add contact information, and much more. Soon, you\'ll be ' +
         'able to create job posts (that tutors can respond to) for unmatched ' +
@@ -236,6 +240,45 @@ Card.renderPupilsCard = function(doc) {
     const title = window.app.dashboard.pupils + ' Pupils';
     const subtitle = 'There are currently ' + window.app.dashboard.pupils +
         ' ' + window.app.location.split(' ')[0] + ' pupils on Tutorbook';
+    const actions = {
+        snooze: () => {
+            $('#cards [card-id="pupils"]').remove();
+        },
+        primary: () => {
+            return new QueryDashboard(title, subtitle, {
+                default: {
+                    queries: {
+                        users: firebase.firstore().collection('users')
+                            .where('type', '==', 'Pupil')
+                            .where('location', '==', window.app.location)
+                            .orderBy('name'),
+                    },
+                },
+            }).view();
+            new NotificationDialog('Profile Editing', 'Manual profile editing' +
+                ' for pupils at your location is a feature currently in the' +
+                ' works (but as soon as it goes live, you\'ll be the first to' +
+                ' know). In the meantime, head over to "Manual Matching" to ' +
+                'create and manage proxy profiles.', () => {}).view();
+        },
+        view: () => {
+            return new QueryDashboard(title, subtitle, {
+                default: {
+                    queries: {
+                        users: firebase.firstore().collection('users')
+                            .where('type', '==', 'Pupil')
+                            .where('location', '==', window.app.location)
+                            .orderBy('name'),
+                    },
+                },
+            }).view();
+            new NotificationDialog('Profile Editing', 'Manual profile editing' +
+                ' for pupils at your location is a feature currently in the' +
+                ' works (but as soon as it goes live, you\'ll be the first to' +
+                ' know). In the meantime, head over to "Manual Matching" to ' +
+                'create and manage proxy profiles.', () => {}).view();
+        },
+    };
     const card = Card.renderCard(title, subtitle, summary, actions);
     $(card).attr('card-id', 'pupils');
     return card;

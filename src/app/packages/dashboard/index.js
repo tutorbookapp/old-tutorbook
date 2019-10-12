@@ -286,9 +286,25 @@ class SupervisorDashboard extends Dashboard {
 
 // Shows a dynamic dashboard where queries =
 // { 
-//   default: ['', [db.collection('default')]],
-//   matches: ['Pending matches', [db.collection('matches')]],
-//   everything: ['Everything else', [db.collectionGroup()]],
+//   default: {
+//     name: '', 
+//     queries: {
+//       default: db.collection('default'),
+//       requests: db.collection('requests'),
+//     },
+//   },
+//   matches: {
+//     name: 'Pending matches', 
+//     queries: {
+//       matches: db.collection('matches'),
+//     },
+//   },
+//   everything: {
+//     name: 'Everything else', 
+//     queries: {
+//       appts: db.collectionGroup(),
+//     },
+//   }
 // }
 class QueryDashboard extends Dashboard {
 
@@ -298,18 +314,19 @@ class QueryDashboard extends Dashboard {
         this.subtitle = subtitle;
         this.queries = queries;
         this.url = url || 'home';
+        this.renderSections();
     }
 
-    renderSelf() {
-        super.renderSelf();
+    renderSections() {
         $(this.main).find('.header-welcome h1').text(this.title);
         $(this.main).find('.header-welcome h5').text(this.subtitle);
-        Object.entries(this.queries).forEach((entry) => {
+        Object.entries(this.queries).forEach((section) => {
+            if (section[0] === 'default') return;
             $(this.main).append(
-                this.render.divider(entry[1][0])
+                this.render.divider(section[1].name)
             );
             $(this.main).append(
-                $(this.render.template('cards')).attr('id', entry[0])
+                $(this.render.template('cards')).attr('id', section[0])
             );
         });
     }
@@ -320,18 +337,61 @@ class QueryDashboard extends Dashboard {
     }
 
     viewDefaultCards() {
-        Object.entries(this.queries).forEach((entry) => {
-            this.viewCards(entry[1][1], entry[0], entry[0], {
-                remove: () => {}, // We can add action functions to recycler
-                display: () => {},
-                empty: () => {},
+        Object.entries(this.queries).forEach((section) => {
+            Object.entries(section[1].queries).forEach((query) => {
+                this.viewCards(query[1], query[0], section[0], {
+                    remove: () => {}, // We can add action functions to recycler
+                    display: () => {},
+                    empty: () => {},
+                });
             });
         });
     }
 };
 
 
+// This works (and is very scalable) but we don't need it right now
+class SupervisorQueryDashboard extends QueryDashboard {
+
+    constructor() {
+        const title = 'Welcome, ' + window.app.user.name.split(' ')[0];
+        const subtitle = 'We\'re glad you\'re here. Below are some friendly ' +
+            'suggestions for what to do next.'
+        const db = firebase.firestore();
+        const queries = {
+            default: {
+                name: 'Suggestions for you',
+                queries: {
+                    requestsOut: db.collection('users')
+                        .doc(window.app.user.email).collection('requestsOut')
+                        .orderBy('timestamp'),
+                },
+            },
+            matches: {
+                name: 'Pending matches',
+                queries: {
+                    users: db.collection('users')
+                        .where('proxy', 'array-contains', window.app.user.email),
+                },
+            },
+            everything: {
+                name: 'Everything else',
+                queries: {
+                    tutors: db.collection('users').where('type', '==', 'Tutor')
+                        .where('location', '==', window.app.location),
+                    pupils: db.collection('users').where('type', '==', 'Pupil')
+                        .where('location', '==', window.app.location),
+                },
+            },
+        };
+        super(title, subtitle, queries);
+    }
+
+};
+
+
 module.exports = {
     default: Dashboard,
     supervisor: SupervisorDashboard,
+    query: QueryDashboard,
 };
