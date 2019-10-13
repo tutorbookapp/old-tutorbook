@@ -62,7 +62,8 @@ class Payments {
             },
         };
         this.renderSelf();
-        if (window.app.user.type === 'Tutor') this.initStripe();
+        if (window.app.user.type === 'Tutor' &&
+            window.app.user.config.showPayments) this.initStripe();
     }
 
     async initStripe() {
@@ -83,16 +84,12 @@ class Payments {
             'app/users/' + window.app.user.uid;
         const doc = await firebase.firestore().collection('stripeAccounts')
             .doc(window.app.user.id).get();
-        if (window.app.user.config.showPayments && !doc.exists &&
-            !window.app.redirectedFromStripe) {
+        if (!doc.exists && !window.app.redirectedFromStripe) {
             window.app.user.cards.setupStripe = true;
             await window.app.updateUser();
             return window.app.dashboard.viewCard(Card.renderSetupStripeCard());
         }
-
-        const that = this;
-
-        function getAccountURL() {
+        const getAccountURL = () => {
             return axios({
                 method: 'get',
                 url: window.app.functionsURL + '/accountURL',
@@ -100,14 +97,13 @@ class Payments {
                     id: window.app.user.id,
                 },
             }).then((res) => {
-                that.accountURL = res.data.url;
+                this.accountURL = res.data.url;
             }).catch((err) => {
                 console.error('Error while fetching new Stripe Connect Account ' +
                     'url:', err);
-                setTimeout(getAccountURL, 5000);
+                setTimeout(getAccountURL, 10000);
             });
         };
-
         getAccountURL();
     }
 

@@ -148,7 +148,6 @@ class Utils {
                     'lesson cancellations if given notice within 24 hours.' +
                     ' No refunds will be issued unless covered by a Tutorbook ' +
                     'guarantee.',
-                stripeCode: '',
             },
             'authenticated': profile.authenticated || false,
             'locations': profile.locations || [],
