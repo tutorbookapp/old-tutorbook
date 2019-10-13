@@ -10,7 +10,7 @@ class Tracking {
 
     constructor() {}
 
-    static renderCard() {
+    static renderShortcutCard() {
         const url = 'https://docs.google.com/spreadsheets/d/1NRdoDa1VDcivCFUC' +
             'ZLLwBsOeSwlp89QessS4BzNLejs/edit?usp=sharing';
         const title = 'Service Hour Tracking';
@@ -19,7 +19,11 @@ class Tracking {
             'through your service hour spreadsheet (a Google Sheet that ' +
             'is updated every time a tutor successfuly clocks out of a ' +
             'tutoring appointment).';
+        var card;
         const actions = {
+            snooze: () => {
+                $(card).remove();
+            },
             update: () => {
                 window.app.snackbar.view('Updating sheet...');
                 axios({
@@ -46,10 +50,10 @@ class Tracking {
                 window.open(url);
             },
         };
-        const card = Card.renderCard(title, subtitle, summary, actions);
+        card = Card.renderCard(title, subtitle, summary, actions);
         $(card)
-            .attr('id', 'service-hour-tracking')
-            .attr('type', 'serviceHourTracking')
+            .attr('id', 'shortcut-to-tracking-sheet')
+            .attr('type', 'shortcut')
             .attr('priority', 10);
         return card;
     }

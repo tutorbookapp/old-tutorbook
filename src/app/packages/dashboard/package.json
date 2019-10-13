@@ -12,6 +12,7 @@
   "dependencies": {
     "card": "^1.0.0",
     "data": "^1.0.0",
+    "matching": "^1.0.0",
     "profile": "^1.0.0",
     "tracking": "^1.0.0",
     "user": "^1.0.0",

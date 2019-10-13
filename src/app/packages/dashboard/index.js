@@ -10,6 +10,7 @@ const Card = require('card');
 const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
+const Matching = require('matching');
 
 // Class that manages the dashboard view (provides an API for other classes to
 // use to display cards) and a custom welcome message that chnages each time a 
@@ -101,9 +102,6 @@ class Dashboard {
                 );
             }
         });
-        if (window.app.user.type === 'Supervisor') {
-            this.viewCard(Tracking.renderCard(), $(this.main).find('#default'));
-        }
     }
 
     // Views cards (onSnapshot) from a given query (most recent on top) using a
@@ -221,8 +219,15 @@ class SupervisorDashboard extends Dashboard {
 
     viewDefaultCards() {
         super.viewDefaultCards();
+        this.viewShortcutCards();
         //window.app.matching.viewCards();
         this.viewEverythingElse();
+    }
+
+    viewShortcutCards() {
+        const def = $(this.main).find('#default');
+        this.viewCard(Matching.renderShortcutCard(), def);
+        this.viewCard(Tracking.renderShortcutCard(), def);
     }
 
     viewEverythingElse() {

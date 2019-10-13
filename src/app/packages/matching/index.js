@@ -394,6 +394,32 @@ class Matching {
         $(this.main).find('#cards').append(card);
     }
 
+    static renderShortcutCard() {
+        const title = 'Manual Matching';
+        const subtitle = 'Create accounts and send proxy requests';
+        const summary = 'With manual matching, you\'re able to create proxy ' +
+            'accounts for students that submit physical forms that you can ' +
+            'then use to send requests to the appropriate tutors.';
+        var card;
+        const actions = {
+            snooze: () => {
+                $(card).remove();
+            },
+            view: () => {
+                window.app.matching.view();
+            },
+            primary: () => {
+                window.app.matching.view();
+            },
+        };
+        card = Card.renderCard(title, subtitle, summary, actions);
+        $(card)
+            .attr('id', 'shortcut-to-manual-matching')
+            .attr('type', 'shortcut')
+            .attr('priority', 10);
+        return card;
+    }
+
     renderCard(doc) {
         const profile = doc.data();
         this.users[doc.id] = profile; // Store raw user data
