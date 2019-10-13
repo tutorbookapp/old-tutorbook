@@ -36,6 +36,6 @@
 
 @media(min-width: 1024px) {
   .payments #withdraw {
-    bottom: calc(3rem + 48px) !important; /* Adjust for existing mdc-fab */
+    bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }
 }
