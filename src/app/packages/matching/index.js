@@ -647,8 +647,8 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                     name: time.location,
                     id: window.app.data.locationsByName[time.location],
                 },
-                fromUser: pupil,
-                toUser: tutor,
+                fromUser: Utils.filterRequestUserData(pupil),
+                toUser: Utils.filterRequestUserData(tutor),
                 timestamp: new Date(),
                 payment: {
                     amount: 0,
