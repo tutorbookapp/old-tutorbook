@@ -5,12 +5,18 @@ const updateSheet = require('sheet');
 const updateAuth = require('auth');
 const Notify = require('notifications');
 const Payments = require('payments');
+const Search = require('search');
 
 
 // ============================================================================
-// SEARCH (TODO: Hide sensitive profile data)
+// SEARCH
 // ============================================================================
 
+exports.updateSearch = functions.firestore
+    .document('/users/{id}')
+    .onWrite(Search.update);
+
+exports.search = functions.https.onRequest(Search.get);
 
 // ============================================================================
 // PAYMENTS (STRIPE)
