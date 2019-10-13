@@ -6467,11 +6467,9 @@ a.mdc-list-item {
 
 @media(min-width: 1024px) {
   .user-view #request-button {
-    bottom: calc(3rem + 48px) !important; /* Adjust for existing mdc-fab */
+    bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }
 }
-
-
 .rating__meta i {
   font-size: 18px;
 
@@ -6618,7 +6616,7 @@ a.mdc-list-item {
 
 @media(min-width: 1024px) {
   .matching #pupil-button {
-    bottom: calc(3rem + 48px) !important; /* Adjust for existing mdc-fab */
+    bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }
 }
 
