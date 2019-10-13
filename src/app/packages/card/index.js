@@ -12,7 +12,6 @@ const ViewApptDialog = require('dialogs').viewAppt;
 const ViewPastApptDialog = require('dialogs').viewPastAppt;
 const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
 const ConfirmationDialog = require('dialogs').confirm;
-const NotificationDialog = require('dialogs').notify;
 
 // Users
 const EditProfile = require('profile').edit;
@@ -244,19 +243,9 @@ Card.renderTutorsCard = function(doc) {
         },
         primary: () => {
             return window.app.dashboard.tutors.view();
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for tutors at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
         },
         view: () => {
             return window.app.dashboard.tutors.view();
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for tutors at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
         },
     };
     const card = Card.renderCard(title, subtitle, summary, actions);
@@ -280,19 +269,9 @@ Card.renderPupilsCard = function(doc) {
         },
         primary: () => {
             return window.app.dashboard.pupils.view();
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for pupils at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
         },
         view: () => {
             return window.app.dashboard.pupils.view();
-            new NotificationDialog('Profile Editing', 'Manual profile editing' +
-                ' for pupils at your location is a feature currently in the' +
-                ' works (but as soon as it goes live, you\'ll be the first to' +
-                ' know). In the meantime, head over to "Manual Matching" to ' +
-                'create and manage proxy profiles.', () => {}).view();
         },
     };
     const card = Card.renderCard(title, subtitle, summary, actions);
