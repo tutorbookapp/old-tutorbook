@@ -21,19 +21,25 @@ function updateUser(user) {
 
 
 function main() {
-    console.log('[INFO] Updating user payment types to FREE...');
+    console.log('[INFO] Updating user\'s visibility to visible...');
     return firestore.collection('users').get().then((snapshot) => {
         return snapshot.forEach((doc) => {
             var user = doc.data();
-            user.payments.type = 'Free';
+            if (!user.config) {
+                user.config = {
+                    showPayments: false,
+                    showSettings: false,
+                    showProfile: true,
+                };
+            } else {
+                user.config.showProfile = true;
+            }
             updateUser(user);
         });
     }).then(() => {
-        console.log('[INFO] Updated all user payment types to FREE.');
+        console.log('[INFO] Updated all user\'s visibility to visible.');
     });
 };
 
 
-if (true) {
-    main();
-}
+main();

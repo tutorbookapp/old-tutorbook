@@ -2,6 +2,9 @@ import {
     MDCTextField
 } from '@material/textfield/index';
 import {
+    MDCSwitch
+} from '@material/switch/index';
+import {
     MDCRipple
 } from '@material/ripple/index';
 import {
@@ -429,6 +432,14 @@ class NewProfile extends Profile {
             .insertAfter($(this.main).find('[id="Basic info"]'));
         $(this.render.textFieldItem('Email', this.profile.email))
             .insertAfter($(this.main).find('#Name').parent());
+        $(this.render.listDivider('Visibility'))
+            .insertAfter($(this.main).find('#Email').parent());
+        $(this.render.switch('Show profile', {
+            on: 'Others are able to see and request this user.',
+            off: 'Others cannot see or request this user.',
+        }, this.profile.config.showProfile)).insertAfter(
+            $(this.main).find('#Visibility')
+        );
     }
 
     view() {
@@ -442,6 +453,20 @@ class NewProfile extends Profile {
         const main = this.main;
         const that = this;
         const p = this.profile;
+
+        const show = new MDCSwitch(
+            $(this.main).find('[id="Show profile"] .mdc-switch')[0]
+        );
+        const d = {
+            on: 'Others are able to see and request this user.',
+            off: 'Others cannot see or request this user.',
+        };
+        $(this.main).find('[id="Show profile"] .mdc-switch input').click(() => {
+            p.config.showProfile = !p.config.showProfile;
+            $(this.main)
+                .find('[id="Show profile"] .mdc-list-item__secondary-text')
+                .text((p.config.showProfile) ? d.on : d.off);
+        });
 
         function t(q, action) {
             $($(main).find(q + ' input').first()).focusout(async () => {

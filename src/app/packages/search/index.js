@@ -310,7 +310,8 @@ class Search {
 
     // Gets filtered users based on our filters
     getUsers() {
-        var query = firebase.firestore().collection('users');
+        var query = firebase.firestore().collection('users')
+            .where('config.showProfile', '==', true);
 
         if (this.filters.grade !== 'Any') {
             query = query.where('grade', '==', this.filters.grade);

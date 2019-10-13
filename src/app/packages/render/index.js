@@ -19,6 +19,20 @@ class Render {
         this.templates = new Templates();
     }
 
+    switch (label, descriptions, on) {
+        const description = (on) ? descriptions.on : descriptions.off;
+        const switchEl = this.template('input-switch', {
+            id: label,
+            title: label,
+            subtitle: description,
+        });
+        if (on) {
+            $(switchEl).find('.mdc-switch').addClass('mdc-switch--checked')
+                .find('input').attr('checked', 'true');
+        }
+        return switchEl;
+    }
+
     wrapper() {
         return this.template('wrapper');
     }

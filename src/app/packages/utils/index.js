@@ -133,6 +133,7 @@ class Utils {
             'config': profile.config || {
                 showSettings: false,
                 showPayments: false,
+                showProfile: true,
             },
             'availability': profile.availability || {},
             'payments': profile.payments || {
