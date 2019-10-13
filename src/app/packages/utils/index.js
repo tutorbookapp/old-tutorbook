@@ -196,6 +196,7 @@ class Utils {
     }
 
     static getCleanPath(dirtyPath) {
+        dirtyPath = dirtyPath || document.location.pathname;
         if (dirtyPath.startsWith('/app/index.html')) {
             const newPath = dirtyPath.split('/').slice(2).join('/');
             return newPath;

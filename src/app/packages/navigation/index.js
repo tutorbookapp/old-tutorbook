@@ -149,8 +149,7 @@ class Navigation {
                     window.app.payments.view();
                 },
                 '/app/users/*': async function() {
-                    var path = Utils.getCleanPath(document.location.pathname);
-                    var id = path.split('/')[3];
+                    var id = Utils.getCleanPath().split('/')[3];
                     const profile = await Data.getUser(id);
                     new User(profile).view();
                 },
@@ -167,24 +166,16 @@ class Navigation {
                         app.router.navigate('/app/home');
                     }
                 },
-                /*
-                 *'/app/locations': function() {
-                 *    if (app.user.type === 'Supervisor') {
-                 *        app.locations.view();
-                 *    } else {
-                 *        app.router.navigate('/app/home');
-                 *    }
-                 *},
-                 *'/app/accounts': function() {
-                 *    if (app.user.type === 'Supervisor') {
-                 *        app.accounts.view();
-                 *    } else {
-                 *        app.router.navigate('/app/home');
-                 *    }
-                 *},
-                 */
                 '/app/dashboard': function() {
                     app.dashboard.view();
+                },
+                '/app/home/*': function() {
+                    if (app.user.type === 'Supervisor') {
+                        app.dashboard.viewEverythingElse();
+                        app.dashboard[Utils.getCleanPath().split('/')[3]].view();
+                    } else {
+                        app.router.navigate('/app/home');
+                    }
                 },
                 '/app/home': function() {
                     window.app.dashboard.view();
