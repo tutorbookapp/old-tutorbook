@@ -11,6 +11,7 @@ const NewRequestDialog = require('dialogs').newRequest;
 const PaidRequestDialog = require('dialogs').paidRequest;
 const StripeRequestDialog = require('dialogs').stripeRequest;
 const Utils = require('utils');
+const Data = require('data');
 
 // Class that creates it's view when called (such that mains are always
 // ready to go).
@@ -28,6 +29,15 @@ class User {
         }
         this.profile = profile;
         this.renderSelf();
+    }
+
+    static async viewUser(id) {
+        const users = window.app.search.users;
+        if (!users[id]) {
+            const p = await Data.getUser(id);
+            users[id] = new User(p);
+        }
+        return users[id].view();
     }
 
     renderSelf() {

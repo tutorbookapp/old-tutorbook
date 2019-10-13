@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "chats": "^1.0.0",
+    "data": "^1.0.0",
     "dialogs": "^1.0.0",
     "utils": "^1.0.0"
   }

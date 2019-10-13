@@ -10,6 +10,7 @@ import to from 'await-to-js';
 
 const Data = require('data');
 const Utils = require('utils');
+const User = require('user');
 const ViewApptDialog = require('dialogs').viewAppt;
 const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
 const ViewPastApptDialog = require('dialogs').viewPastAppt;
@@ -217,11 +218,11 @@ Schedule.renderApptListItem = function(doc, locationID) {
         var listItem = render.template('supervisor-appt-list-item', {
             photoA: appt.attendees[0].photo,
             viewUserA: () => {
-                Utils.viewUser(appt.attendees[0].email);
+                User.viewUser(appt.attendees[0].email);
             },
             photoB: appt.attendees[1].photo,
             viewUserB: () => {
-                Utils.viewUser(appt.attendees[1].email);
+                User.viewUser(appt.attendees[1].email);
             },
             id: 'doc-appointments-' + doc.id,
             title: title,
@@ -253,7 +254,7 @@ Schedule.renderApptListItem = function(doc, locationID) {
         var listItem = render.template('appt-list-item', {
             photo: otherUser.photo,
             viewUser: () => {
-                Utils.viewUser(otherUser.email);
+                User.viewUser(otherUser.email);
             },
             id: 'doc-appointments-' + doc.id,
             title: title,
@@ -316,10 +317,10 @@ Schedule.renderCanceledApptListItem = function(doc, locationID) {
             photoA: canceledAppt.for.attendees[0].photo,
             photoB: canceledAppt.for.attendees[1].photo,
             viewUserA: () => {
-                Utils.viewUser(canceledAppt.attendees[0].email);
+                User.viewUser(canceledAppt.attendees[0].email);
             },
             viewUserB: () => {
-                Utils.viewUser(canceledAppt.attendees[1].email);
+                User.viewUser(canceledAppt.attendees[1].email);
             },
             id: 'doc-canceledAppointments-' + doc.id,
             title: title,
@@ -343,7 +344,7 @@ Schedule.renderCanceledApptListItem = function(doc, locationID) {
         var listItem = window.app.render.template('appt-list-item', {
             photo: otherUser.photo,
             viewUser: () => {
-                Utils.viewUser(otherUser.email);
+                User.viewUser(otherUser.email);
             },
             id: 'doc-canceledAppointments-' + doc.id,
             title: title,
@@ -398,10 +399,10 @@ Schedule.renderModifiedApptListItem = function(doc, locationID) {
             photoA: modifiedAppt.for.attendees[0].photo,
             photoB: modifiedAppt.for.attendees[1].photo,
             viewUserA: () => {
-                Utils.viewUser(modifiedAppt.attendees[0].email);
+                User.viewUser(modifiedAppt.attendees[0].email);
             },
             viewUserB: () => {
-                Utils.viewUser(modifiedAppt.attendees[1].email);
+                User.viewUser(modifiedAppt.attendees[1].email);
             },
             id: 'doc-modifiedAppointments-' + doc.id,
             title: title,
@@ -425,7 +426,7 @@ Schedule.renderModifiedApptListItem = function(doc, locationID) {
         var listItem = window.app.render.template('appt-list-item', {
             photo: otherUser.photo,
             viewUser: () => {
-                Utils.viewUser(otherUser.email);
+                User.viewUser(otherUser.email);
             },
             id: 'doc-modifiedAppointments-' + doc.id,
             title: title,
@@ -479,10 +480,10 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
             photoA: activeAppt.attendees[0].photo,
             photoB: activeAppt.attendees[1].photo,
             viewUserA: () => {
-                Utils.viewUser(activeAppt.attendees[0].email);
+                User.viewUser(activeAppt.attendees[0].email);
             },
             viewUserB: () => {
-                Utils.viewUser(activeAppt.attendees[1].email);
+                User.viewUser(activeAppt.attendees[1].email);
             },
             id: 'doc-activeAppointments-' + doc.id,
             title: title,
@@ -502,7 +503,7 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
         var listItem = window.app.render.template('appt-list-item', {
             photo: otherUser.photo,
             viewUser: () => {
-                Utils.viewUser(otherUser.email);
+                User.viewUser(otherUser.email);
             },
             id: 'doc-activeAppointments-' + doc.id,
             title: title,
@@ -522,7 +523,7 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
         var listItem = window.app.render.template('appt-list-item', {
             photo: otherUser.photo,
             viewUser: () => {
-                Utils.viewUser(otherUser.email);
+                User.viewUser(otherUser.email);
             },
             id: 'doc-activeAppointments-' + doc.id,
             title: title,

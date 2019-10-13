@@ -57,7 +57,14 @@ class Navigation {
             case 'search':
                 return window.app.search.reView();
             case 'home':
-                return window.app.dashboard.reView();
+                switch (lastView.url.split('/')[3]) {
+                    case 'tutors':
+                        return window.app.dashboard.tutors.reView();
+                    case 'pupils':
+                        return window.app.dashboard.tutors.reView();
+                    default:
+                        return window.app.dashboard.reView();
+                };
             case 'users':
                 return window.app.search.reViewUser();
             case 'profile':

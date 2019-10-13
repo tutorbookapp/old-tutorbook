@@ -101,13 +101,17 @@ class Utils {
         return attendees[0];
     }
 
-    static getName(profile) { // Capitalizes the name ("nick li" -> "Nick Li")
-        var name = profile.displayName || profile.name || '';
-        var str = name.split(' ');
+    static caps(str) {
+        var str = str.split(' ');
         for (let i = 0, x = str.length; i < x; i++) {
             str[i] = str[i][0].toUpperCase() + str[i].substr(1);
         }
         return str.join(' ');
+    }
+
+    static getName(profile) { // Capitalizes the name ("nick li" -> "Nick Li")
+        var name = profile.displayName || profile.name || '';
+        return Utils.caps(name);
     }
 
     static filterProfile(profile) {
@@ -916,8 +920,8 @@ class Utils {
             'time': data.time,
             'message': data.message,
             'location': data.location,
-            'fromUser': this.filterRequestUserData(data.fromUser),
-            'toUser': this.filterRequestUserData(data.toUser),
+            'fromUser': Utils.filterRequestUserData(data.fromUser),
+            'toUser': Utils.filterRequestUserData(data.toUser),
             'timestamp': data.timestamp,
             'payment': data.payment || {
                 amount: 0,

@@ -8,6 +8,8 @@ const Data = require('data');
 const Tracking = require('tracking');
 const Card = require('card');
 const Utils = require('utils');
+const User = require('user');
+const EditProfile = require('profile').edit;
 
 // Class that manages the dashboard view (provides an API for other classes to
 // use to display cards) and a custom welcome message that chnages each time a 
@@ -61,8 +63,8 @@ class Dashboard {
             // want to show the welcome message in huge text.
             welcome: !window.app.onMobile,
             title: 'Welcome, ' + window.app.user.name.split(' ')[0],
-            subtitle: 'We\'re glad you\'re here. Below are some friendly ' +
-                'suggestions for what to do next.',
+            subtitle: 'We\'re glad you\'re here. Below are some ' +
+                'friendly suggestions for what to do next.',
         });
     }
 
@@ -147,6 +149,7 @@ class Dashboard {
     // Adds card based on priority and/or timestamp (highest priority on the top 
     // followed by the most recent).
     viewCard(card, list) {
+        list = list || $(this.main).find('#default');
         var existing = $(list)
             .find('#cards [id="' + $(card).attr('id') + '"]');
         if (existing.length) {
@@ -211,67 +214,63 @@ class SupervisorDashboard extends Dashboard {
             );
         };
 
-        add('Clocking requests', 'clocking');
-        add('Pending matches', 'matches');
+        //add('Clocking requests', 'clocking');
+        //add('Pending matches', 'matching');
         add('Everything else', 'everything');
     }
 
     viewDefaultCards() {
         super.viewDefaultCards();
-        this.viewPendingMatches();
+        //window.app.matching.viewCards();
         this.viewEverythingElse();
-    }
-
-    viewPendingMatches() {
-        const queries = {
-            matches: firebase.firestore().collection('users')
-                .where('proxy', 'array-contains', window.app.user.id),
-        };
-        Object.entries(queries).forEach((entry) => {
-            this.viewCards(entry[1], entry[0], 'matching');
-        });
     }
 
     viewEverythingElse() {
         const queries = {
             tutors: firebase.firestore().collection('users')
                 .where('location', '==', window.app.location)
-                .where('type', '==', 'Tutor'),
+                .where('type', '==', 'Tutor')
+                .orderBy('name'),
             pupils: firebase.firestore().collection('users')
                 .where('location', '==', window.app.location)
-                .where('type', '==', 'Pupil'),
-            appts: firebase.firestore().collection('locations')
-                .doc(window.app.data.locationsByName[window.app.location])
-                .collection('appointments'),
+                .where('type', '==', 'Pupil')
+                .orderBy('name'),
+            /*
+             *appts: firebase.firestore().collection('locations')
+             *    .doc(window.app.data.locationsByName[window.app.location])
+             *    .collection('appointments'),
+             */
         };
         Object.entries(queries).forEach((entry) => {
-            this[entry[0]] = 0;
+            var dashboard = new ProxyDashboard(
+                window.app.location.split(' ')[0] + ' ' + Utils.caps(entry[0]),
+                'Manually edit user profiles to set availability, update ' +
+                'subjects, add contact information, and much more.', 'users',
+                entry[0]);
+            this[entry[0]] = {
+                num: 0,
+                view: () => {
+                    dashboard.view();
+                },
+                reView: () => {
+                    dashboard.reView();
+                },
+            };
             this.viewCards(entry[1], entry[0], 'everything', {
                 empty: () => {
-                    this[entry[0]] = 0;
+                    this[entry[0]].num = 0;
+                    dashboard.empty();
                 },
                 remove: (doc) => {
-                    this[entry[0]]--;
+                    this[entry[0]].num--;
+                    dashboard.remove(doc);
                 },
                 display: (doc) => {
-                    this[entry[0]]++;
+                    this[entry[0]].num++;
+                    dashboard.display(doc);
                 },
             });
         });
-        const recycler = {
-            empty: (type) => {
-                console.log('TODO: Emptying hidden ' + type + ' dashboard');
-            },
-            display: (doc, type) => {
-                console.log('TODO: Displaying (' + doc.id + ') in ' + type +
-                    ' dashboard');
-            },
-            remove: (doc, type) => {
-                console.log('TODO: Removing (' + doc.id + ') from ' + type +
-                    ' dashboard');
-            },
-        };
-        Utils.recycle(queries, recycler);
     }
 
     viewCard(card, list) {
@@ -280,6 +279,62 @@ class SupervisorDashboard extends Dashboard {
         if (!$(card).attr('card-id') || !existing.length) return super
             .viewCard(card, list);
         existing.replaceWith(card);
+    }
+};
+
+
+class ProxyDashboard extends Dashboard {
+
+    constructor(title, subtitle, type, url) {
+        super(6);
+        this.url = '/app/home/' + (url || type);
+        this.type = type;
+        this.id = Utils.genID();
+        this.title = title;
+        this.subtitle = subtitle;
+        this.updateRender();
+    }
+
+    remove(doc) {
+        $(this.main).find('#cards [id="' + doc.id + '"]').remove();
+    }
+
+    display(doc) {
+        this.viewCard(new Card(doc, this.id, this.type).el);
+    }
+
+    empty() {
+        $(this.main).find('#cards').empty();
+    }
+
+    view() {
+        super.view();
+        Utils.url(this.url);
+    }
+
+    reView() {
+        $(this.main).find('.mdc-card').each(function() {
+            const id = $(this).attr('id');
+            $(this).find('#view').click(() => {
+                User.viewUser(id);
+            }).end().find('#primary').click(() => {
+                User.viewUser(id);
+            }).end().find('#edit').click(async () => {
+                const p = await Data.getUser(id);
+                new EditProfile(p).view();
+            });
+        });
+    }
+
+    viewDefaultCards() {}
+
+    updateRender() {
+        this.header = this.render.header('header-back', {
+            title: this.title,
+        });
+        $(this.main).find('.header-welcome h1').text(this.title);
+        $(this.main).find('.header-welcome h5').text(this.subtitle);
+        $(this.main).find('.mdc-layout-grid').addClass('compact');
     }
 };
 
@@ -317,7 +372,10 @@ class QueryDashboard extends Dashboard {
         this.renderSections();
     }
 
-    renderSections() {
+    renderSections() { // We can't access `this` until after super.renderSelf()
+        this.header = this.render.header('header-back', {
+            title: this.title,
+        });
         $(this.main).find('.header-welcome h1').text(this.title);
         $(this.main).find('.header-welcome h5').text(this.subtitle);
         Object.entries(this.queries).forEach((section) => {

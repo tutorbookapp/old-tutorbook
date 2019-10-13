@@ -34,7 +34,8 @@ service cloud.firestore {
       allow delete: if request.auth.token.email == user
 	|| request.auth.token.email in resource.data.proxy;
       allow update: if (request.auth.token.email == user
-	|| request.auth.token.email in resource.data.proxy)
+	|| request.auth.token.email in resource.data.proxy
+	|| get(/databases/$(database)/documents/locations/$(request.auth.token.locations[0])).data.name == resource.data.location) 
 	&& (
 	  !("currentBalance" in request.resource.data.payments) 
 	  || ("currentBalance" in request.resource.data.payments && request.resource.data.payments.currentBalance == resource.data.payments.currentBalance)
