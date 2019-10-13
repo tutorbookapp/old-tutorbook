@@ -47,7 +47,7 @@ class Dashboard {
     }
 
     reView() {
-        MDCTopAppBar.attachTo(this.header);
+        window.app.intercom.view(true);
         this.reViewCards();
     }
 
@@ -318,6 +318,7 @@ class ProxyDashboard extends Dashboard {
     }
 
     reView() {
+        window.app.intercom.view(true);
         $(this.main).find('.mdc-card').each(function() {
             const id = $(this).attr('id');
             $(this).find('#view').click(() => {
