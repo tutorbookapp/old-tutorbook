@@ -252,15 +252,11 @@ class Search {
         this.reViewResults();
     }
 
-    async reViewUser() {
-        const id = Utils.getCleanPath(document.location.pathname).split('/')[3];
-        if (!!this.users[id]) { // Use cached user object
-            return this.users[id].reView();
+    async reViewUser(id) {
+        if (!this.users[id]) {
+            this.users[id] = new User((await Data.getUser(id)));
         }
-        const profile = await Data.getUser(id); // Create and cache new user
-        const user = new User(profile);
-        this.users[id] = user;
-        user.reView();
+        return this.users[id].reView();
     }
 
     // Adds click listeners to existing search results

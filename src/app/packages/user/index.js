@@ -43,7 +43,10 @@ class User {
     renderSelf() {
         this.main = this.render.template('user-view', this.profile);
         this.header = this.render.header('header-back', {
-            title: 'View User'
+            title: 'View User',
+            edit: () => {
+                new window.app.EditProfile(this.profile).view();
+            },
         });
     }
 
@@ -58,7 +61,9 @@ class User {
     }
 
     reView() {
-        this.main = $('.main .user-view')[0];
+        $(this.header).find('#edit').click(() => {
+            new window.app.EditProfile(this.profile).view();
+        }); // TODO: Why do the header click listeners go away but others don't?
     }
 
     manage() {

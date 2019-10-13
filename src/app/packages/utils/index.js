@@ -6,7 +6,6 @@ import $ from 'jquery';
 
 const axios = require('axios');
 const Data = require('data');
-const NotificationDialog = require('dialogs').notify;
 
 window.axios = axios;
 
@@ -540,7 +539,7 @@ class Utils {
                 ' from availability:', availability);
             console.warn('Error while getting userAvailableDaysForLocation:', e);
             var that = this;
-            new NotificationDialog('Update Availability?', 'The availability ' +
+            new window.app.NotificationDialog('Update Availability?', 'The availability ' +
                     ' shown here is not up-to-date. The ' + location + ' may ' +
                     'no longer be open at these times or this user may no longer ' +
                     'be available (they can change their availability from their ' +
@@ -586,7 +585,7 @@ class Utils {
                 location + ' from availability:', availability);
             console.warn('Error while getting userAvailableTimesForDay:', e);
             var that = this;
-            new NotificationDialog('Update Availability?', 'The availability ' +
+            new window.app.NotificationDialog('Update Availability?', 'The availability ' +
                     ' shown here is not up-to-date. The ' + location + ' may ' +
                     'no longer be open at these times or this user may no longer ' +
                     'be available (they can change their availability from their ' +

@@ -66,7 +66,9 @@ class Navigation {
                         return window.app.dashboard.reView();
                 };
             case 'users':
-                return window.app.search.reViewUser();
+                const id = Utils.getCleanPath(document.location.pathname)
+                    .split('/')[3];
+                return window.app.search.reViewUser(id);
             case 'profile':
                 return window.app.profile.reView();
             case 'messages':

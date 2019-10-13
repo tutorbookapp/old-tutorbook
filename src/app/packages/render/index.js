@@ -58,6 +58,12 @@ class Render {
 
     fab(type) {
         switch (type) {
+            case 'edit':
+                return this.template('fab-labeled', {
+                    id: 'edit',
+                    icon: 'edit',
+                    label: 'edit',
+                });
             case 'clockIn':
                 return this.template('fab-labeled', {
                     id: 'clockInButton',

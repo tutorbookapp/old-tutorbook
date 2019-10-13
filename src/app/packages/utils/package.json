@@ -12,7 +12,6 @@
   "dependencies": {
     "axios": "^0.19.0",
     "data": "^1.0.0",
-    "dialogs": "^1.0.0",
     "templates": "^1.0.0"
   }
 }

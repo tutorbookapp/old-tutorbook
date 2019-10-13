@@ -53,6 +53,10 @@ const Listener = require('listener');
 const Login = require('login');
 const Matching = require('matching');
 
+// Dependency cycle workarounds
+const EditProfile = require('profile').edit;
+const NotificationDialog = require('dialogs').notify;
+
 // Helper packages
 const Utils = require('utils');
 const Render = require('render');
@@ -72,6 +76,10 @@ class Tutorbook {
         this.data = new Data();
         this.utils = new Utils();
         this.initOnMobile();
+
+        // Dependency cycle workarounds
+        this.EditProfile = EditProfile;
+        this.NotificationDialog = NotificationDialog;
 
         // App packages
         this.init = async () => {
