@@ -1,7 +1,24 @@
 const admin = require('firebase-admin');
+const to = require('await-to-js').default;
 const cors = require('cors')({
     origin: true,
 });
+
+
+async function getUID(profile) {
+    [err, user] = await to(admin.auth().getUserByEmail(profile.email));
+    if (err) {
+        [err, user] = await to(admin.auth().createUser({
+            email: profile.email,
+            emailVerified: false,
+            displayName: profile.name,
+            photoURL: (profile.photo && profile.photo !== '') ? profile.photo : 'https://tutorbook.app/app/img/male.png',
+            disabled: false,
+        }));
+        if (err) return console.error(err.message);
+    }
+    return user.uid;
+};
 
 
 function getName(name) { // Returns first name with last initial
@@ -14,13 +31,17 @@ function getName(name) { // Returns first name with last initial
 // to the `search` collection (that anyone can read).
 const updateSearch = async (change, context) => {
     const profile = change.after.data();
-    const id = context.params.id;
     const db = admin.firestore().collection('search');
-    if (!profile || !profile.config.showProfile) return db.doc(id).delete();
+    if (!profile || !profile.config.showProfile) return db.doc(profile.uid)
+        .delete();
+    if (!profile.uid || profile.uid === '') {
+        profile.uid = await getUID(profile);
+        await admin.firestore().collection('users').doc(context.params.id)
+            .update(profile);
+    }
     const filtered = {
         name: getName(profile.name),
-        email: profile.email, // TODO: Use uIDs to protect email addresses
-        id: profile.email,
+        uid: profile.uid,
         photo: profile.photo,
         type: profile.type,
         gender: profile.gender,
@@ -36,7 +57,7 @@ const updateSearch = async (change, context) => {
             policy: profile.payments.policy,
         },
     };
-    return db.doc(id).set(filtered);
+    return db.doc(profile.uid).set(filtered);
 };
 
 
