@@ -32,9 +32,25 @@ function getName(name) { // Returns first name with last initial
 const updateSearch = async (change, context) => {
     const profile = change.after.data();
     const db = admin.firestore().collection('search');
-    if (!profile || !profile.config.showProfile) return db.doc(profile.uid)
-        .delete();
+    if (!profile) {
+        console.log('User doc (' + profile.email + ') was deleted.');
+        const before = change.before.data();
+        if (before.uid !== '' && (await db.doc(before.uid).get()).exists) {
+            console.log('Deleting (' + profile.email + ') search doc...');
+            return db.doc(before.uid).delete();
+        }
+        return;
+    }
+    if (!profile.showProfile) {
+        console.log('Hiding (' + profile.email + ') search doc...');
+        if (profile.uid !== '' && (await db.doc(profile.uid).get()).exists) {
+            console.log('Deleting (' + profile.email + ') search doc...');
+            return db.doc(profile.uid).delete();
+        }
+        return;
+    }
     if (!profile.uid || profile.uid === '') {
+        console.log('Updating (' + profile.email + ') auth user...');
         profile.uid = await getUID(profile);
         await admin.firestore().collection('users').doc(context.params.id)
             .update(profile);
@@ -57,6 +73,7 @@ const updateSearch = async (change, context) => {
             policy: profile.payments.policy,
         },
     };
+    console.log('Updating (' + profile.email + ') search doc...');
     return db.doc(profile.uid).set(filtered);
 };
 
