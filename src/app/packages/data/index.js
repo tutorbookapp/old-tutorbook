@@ -729,6 +729,7 @@ Data.emptyProfile = {
     cards: {},
     config: {
         showPayments: false,
+        showProfile: true,
     },
     settings: {},
     availability: {},
@@ -740,6 +741,10 @@ Data.emptyProfile = {
         currentBalance: 0,
         currentBalanceString: '$0.00',
         type: 'Free',
+        policy: 'Hourly rate is $25.00 per hour. Will accept ' +
+            'lesson cancellations if given notice within 24 hours.' +
+            ' No refunds will be issued unless covered by a Tutorbook ' +
+            'guarantee.',
     },
     authenticated: false,
     secondsTutored: 0,

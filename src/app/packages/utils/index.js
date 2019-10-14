@@ -131,7 +131,6 @@ class Utils {
             'cards': profile.cards || {},
             'settings': profile.settings || {},
             'config': profile.config || {
-                showSettings: false,
                 showPayments: false,
                 showProfile: true,
             },

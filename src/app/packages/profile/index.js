@@ -433,7 +433,7 @@ class NewProfile extends Profile {
         $(this.render.textFieldItem('Email', this.profile.email))
             .insertAfter($(this.main).find('#Name').parent());
         $(this.render.listDivider('Visibility'))
-            .insertAfter($(this.main).find('#Email').parent());
+            .insertAfter($(this.main).find('#Email').first().parent());
         $(this.render.switch('Show profile', {
             on: 'Others are able to see and request this user.',
             off: 'Others cannot see or request this user.',
