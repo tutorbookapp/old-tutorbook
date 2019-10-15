@@ -33,15 +33,15 @@ const updateSearch = async (change, context) => {
     const profile = change.after.data();
     const db = admin.firestore().collection('search');
     if (!profile) {
-        console.log('User doc (' + profile.email + ') was deleted.');
         const before = change.before.data();
+        console.log('User doc (' + before.email + ') was deleted.');
         if (before.uid !== '' && (await db.doc(before.uid).get()).exists) {
-            console.log('Deleting (' + profile.email + ') search doc...');
+            console.log('Deleting (' + before.email + ') search doc...');
             return db.doc(before.uid).delete();
         }
         return;
     }
-    if (!profile.showProfile) {
+    if (!profile.config.showProfile) {
         console.log('Hiding (' + profile.email + ') search doc...');
         if (profile.uid !== '' && (await db.doc(profile.uid).get()).exists) {
             console.log('Deleting (' + profile.email + ') search doc...');
