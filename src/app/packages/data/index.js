@@ -69,10 +69,12 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') < 0) {
-            throw new Error('Invalid ID was passed to getUser. This is ' +
-                'probably a Firebase UID (which is not fully supported yet).');
+            var ref = await firebase.firestore().collection('search').doc(id)
+                .get();
+        } else {
+            var ref = await firebase.firestore().collection('users').doc(id)
+                .get();
         }
-        const ref = await firebase.firestore().collection('users').doc(id).get();
         if (ref.exists) {
             return ref.data();
         } else {
