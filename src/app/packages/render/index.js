@@ -188,7 +188,10 @@ class Render {
         const userData = {
             'pic': user.photo || user.photoURL,
             'name': user.name || user.displayName,
-            'email': user.email,
+            'paid': (user.payments.type === 'Paid'),
+            'free': (user.payments.type !== 'Paid'),
+            'rate': '$' + user.payments.hourlyCharge,
+            'grade': user.grade,
             'type': user.type || "",
         };
         return this.template('user-header', userData);
