@@ -19,6 +19,10 @@ service cloud.firestore {
 	&& request.auth.token.supervisor == true;
     }
 
+    // [SEARCH]
+    match /search/{user} {
+      allow read: if true;
+    }
     // [USER PROFILES]
     match /users/{user} {
       // TODO: Ensure that the client can't change the user.authenticated field
