@@ -38,8 +38,12 @@ function results() {
 $(searchForm).submit((event) => {
     event.preventDefault();
     window.app = {
+        location: 'Any',
         nav: {
             selected: 'Tutors',
+        },
+        user: {
+            type: 'Pupil',
         },
         render: new Render(),
     };
