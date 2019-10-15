@@ -3441,7 +3441,8 @@ ul {
 /**************** service_part css start ****************/
 /* line 2, E:/172 Etrain Education/172_Etrain_Education_html/sass/_feature_part.scss */
 .feature_part {
-  padding-top: 65px;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 /* line 5, E:/172 Etrain Education/172_Etrain_Education_html/sass/_feature_part.scss */
@@ -4056,7 +4057,7 @@ ul {
 
 /* line 247, E:/172 Etrain Education/172_Etrain_Education_html/sass/_learning.scss */
 .advance_feature {
-  padding: 169px 0px 171px;
+  padding: 50px 0px 50px;
 }
 
 @media (max-width: 576px) {
@@ -4913,6 +4914,7 @@ ul {
 /* line 2, E:/172 Etrain Education/172_Etrain_Education_html/sass/_testimonial_part.scss */
 .testimonial_part {
   overflow: hidden;
+  padding-bottom: 150px;
 }
 
 /* line 4, E:/172 Etrain Education/172_Etrain_Education_html/sass/_testimonial_part.scss */

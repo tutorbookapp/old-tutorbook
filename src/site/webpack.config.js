@@ -38,6 +38,7 @@ module.exports = [{
                 path.resolve(__dirname, 'styles/search-results.scss'),
 
                 // All other styling files are contained as CSS files
+                path.resolve(__dirname, 'styles/plyr.css'),
                 path.resolve(__dirname, 'styles/search.css'),
                 path.resolve(__dirname, 'styles/filters.css'),
                 path.resolve(__dirname, 'styles/scroller.css'),
@@ -87,6 +88,7 @@ module.exports = [{
         entry: {
             'bundle.min.js': [
                 path.resolve(__dirname, 'scripts/menu.js'),
+                path.resolve(__dirname, 'scripts/plyr.js'),
                 path.resolve(__dirname, 'scripts/search.js'),
                 path.resolve(__dirname, 'scripts/search-animation.js'),
             ]
