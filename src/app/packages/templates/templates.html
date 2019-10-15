@@ -473,12 +473,21 @@ user sees as they navigate throughout the app. -->
     <div class="user-view mdc-list-group ">
         <div id="user-header">
             <ul class="mdc-list mdc-list--non-interactive mdc-list--two-line mdc-list--avatar-list">
-                <li class="mdc-list-item" tabindex="0">
+                <li class="mdc-list-item" data-fir-id="id" data-fir-attr="type:paymentType" data-fir-click="go_to_user">
                     <img class="mdc-list-item__graphic" data-fir-attr="src:photo">
-                    <div class="mdc-list-item__text">
+                    <span class="mdc-list-item__text">
                         <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
-                        <span class="mdc-list-item__secondary-text" data-fir-content="email"></span>
-                    </div>
+                        <span class="mdc-list-item__secondary-text">
+                            <i data-fir-if="paid" class="paid-icon material-icons">money</i>
+                            <span data-fir-content="type"></span>
+                            <span>•</span>
+                            <span data-fir-if="paid" class="rate">
+                                <span class="charge" data-fir-content="rate"></span>
+                                <span class="hr">/hr</span>
+                            </span>
+                            <span data-fir-if="free" data-fir-content="grade"></span>
+                        </span>
+                    </span>
                     <span class="mdc-list-item__meta">
                         <div class="rating__meta">
                             <i class="material-icons" id="star-border-icon">star_border</i>
@@ -489,6 +498,24 @@ user sees as they navigate throughout the app. -->
                         </div>
                     </span>
                 </li>
+                <!--
+                   -<li class="mdc-list-item" tabindex="0">
+                   -    <img class="mdc-list-item__graphic" data-fir-attr="src:photo">
+                   -    <div class="mdc-list-item__text">
+                   -        <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
+                   -        <span class="mdc-list-item__secondary-text" data-fir-content="email"></span>
+                   -    </div>
+                   -    <span class="mdc-list-item__meta">
+                   -        <div class="rating__meta">
+                   -            <i class="material-icons" id="star-border-icon">star_border</i>
+                   -            <i class="material-icons" id="star-border-icon">star_border</i>
+                   -            <i class="material-icons" id="star-border-icon">star_border</i>
+                   -            <i class="material-icons" id="star-border-icon">star_border</i>
+                   -            <i class="material-icons" id="star-border-icon">star_border</i>
+                   -        </div>
+                   -    </span>
+                   -</li>
+		   -->
             </ul>
         </div>
         <div id="about-me" data-fir-if="showAbout">
@@ -511,11 +538,8 @@ user sees as they navigate throughout the app. -->
                             <strong>Payments: </strong>
                             <span style="white-space:initial!important;" data-fir-content="payments/policy"></span>
                         </div>
-                        <strong>Phone: </strong>
-                        <span data-fir-content="phone"></span>
                         <strong>Gender: </strong>
                         <span data-fir-content="gender"></span>
-                        <br>
                         <strong>Type: </strong>
                         <span data-fir-content="type"></span>
                         <strong>Grade: </strong>

@@ -41,7 +41,11 @@ class User {
     }
 
     renderSelf() {
-        this.main = this.render.template('user-view', this.profile);
+        this.main = this.render.template('user-view',
+            Utils.combineMaps(this.profile, {
+                rate: '$' + this.profile.payments.hourlyCharge
+            })
+        );
         this.header = this.render.header('header-back', {
             title: 'View User',
             showEdit: (window.app.user.type === 'Supervisor'),
@@ -56,7 +60,7 @@ class User {
         app.view(
             this.header,
             this.main,
-            '/app/users/' + this.profile.id
+            '/app/users/' + this.profile.uid
         );
         this.manage();
     }

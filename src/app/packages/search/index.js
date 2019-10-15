@@ -72,8 +72,8 @@ class Search {
     renderResult(doc) {
         const profile = doc.data();
         const user = new User(profile);
-        this.profiles[profile.id] = profile;
-        this.users[profile.id] = user;
+        this.profiles[profile.uid] = profile;
+        this.users[profile.uid] = user;
         var listItemData = Utils.cloneMap(profile);
         listItemData['id'] = doc.id;
         listItemData['go_to_user'] = () => {
