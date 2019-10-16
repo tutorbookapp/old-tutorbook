@@ -12,22 +12,25 @@ function main(tutors) {
     const bar = new ProgressBar(':bar', {
         total: tutors.length
     });
-    tutors.forEach((tutor) => {
-        admin.firestore().collection('users').doc(tutor.email).set(tutor)
-            .then(() => {
-                bar.tick();
-            }).catch((err) => {
-                console.error('[ERROR] ' + err.message);
-            });
-    });
+    admin.firestore().collection('users').doc(tutors[0].email).set(tutors[0]);
+    /*
+     *tutors.forEach((tutor) => {
+     *    admin.firestore().collection('users').doc(tutor.email).set(tutor)
+     *        .then(() => {
+     *            bar.tick();
+     *        }).catch((err) => {
+     *            console.error('[ERROR] ' + err.message);
+     *        });
+     *});
+     */
 };
 
 
 const tutors = [{
     name: 'Frankie Liu',
     photo: 'https://www.topdogtutors.com/sitecontent/profile_pics/download.png',
-    id: 'frankie.y.liu@gmail.com',
-    email: 'frankie.y.liu@gmail.com',
+    id: 'nicholas.h.chiang@gmail.com',
+    email: 'nicholas.h.chiang@gmail.com',
     type: 'Tutor',
     proxy: [],
     phone: 'Unspecified',
