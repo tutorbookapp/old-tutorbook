@@ -808,6 +808,11 @@ Data.periods = [
 
 Data.locations = ['Gunn Academic Center', 'Paly Peer Tutoring Center'];
 
+Data.addresses = {
+    'Gunn Academic Center': '780 Arastradero Rd, Palo Alto, CA 94306',
+    'Paly Peer Tutoring Center': '50 Embarcadero Rd, Palo Alto, CA 94301',
+};
+
 Data.cities = ['Palo Alto, CA', 'Mountain View, CA', 'East Palo Alto, CA'];
 
 Data.days = [

@@ -709,6 +709,7 @@ class EditRequestDialog {
     }
 
     refreshDayAndTimeSelects(request, a) {
+        if (!a[request.location.name]) return; // Custom location
         var that = this;
         var days = Utils.getUserAvailableDaysForLocation(a, request.location.name);
         var times = this.utils.getUserAvailableTimesForDay(
@@ -760,7 +761,7 @@ class EditRequestDialog {
     }
 
     refreshTimeSelects(request, a) {
-        if (!a[request.location]) return;
+        if (!a[request.location.name]) return; // Custom location
         var that = this;
         var times = this.utils.getUserAvailableTimesForDay(
             a,

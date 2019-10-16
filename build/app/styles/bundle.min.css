@@ -6470,6 +6470,12 @@ a.mdc-list-item {
     bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }
 }
+
+.user-view #map {
+  max-height: 500px;
+  height: 70vw;
+  margin: 20px;
+}
 .rating__meta i {
   font-size: 18px;
 

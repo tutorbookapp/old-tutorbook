@@ -24,6 +24,7 @@ class Render {
 
     locationInput(listener) { // TODO: Customize UI w/ the AutocompleteService
         const input = this.textField('Location', '');
+        $(input).find('input').attr('placeholder', '');
         const autocomplete = new google.maps.places.Autocomplete(
             $(input).find('input')[0], {
                 componentRestrictions: {

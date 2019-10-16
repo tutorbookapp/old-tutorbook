@@ -24,6 +24,7 @@ class User {
         if (profile.payments.type === 'Paid') {
             profile.paid = true;
             profile.showAbout = true;
+            profile.showLocation = true;
         } else {
             profile.free = true;
         }
@@ -46,6 +47,41 @@ class User {
                 rate: '$' + this.profile.payments.hourlyCharge
             })
         );
+
+        if (this.profile.payments.type === 'Paid') {
+            const first = Object.entries(this.profile.availability)[0][0];
+            if (Data.locations.indexOf(first) >= 0) {
+                var addr = Data.addresses[first];
+            } else {
+                var addr = first;
+            }
+            new google.maps.Geocoder().geocode({
+                address: addr,
+            }, (res, status) => {
+                if (status === 'OK') {
+                    const geo = res[0].geometry.location;
+                    var latLang = {
+                        lat: geo.lat(),
+                        lng: geo.lng(),
+                    };
+                } else { // Gunn Academic Center
+                    var latLang = {
+                        lat: 37.400222,
+                        lng: -122.132488
+                    };
+                }
+                const map = new google.maps.Map($(this.main).find('#map')[0], {
+                    zoom: 15,
+                    center: latLang,
+                }); // TODO: Add markers for all the user's locations
+                const marker = new google.maps.Marker({
+                    position: latLang,
+                    map: map,
+                    title: 'Tutors Here',
+                });
+            });
+        }
+
         this.header = this.render.header('header-back', {
             title: 'View User',
             showEdit: (window.app.user.type === 'Supervisor' &&
