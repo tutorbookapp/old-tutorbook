@@ -235,10 +235,12 @@ class SupervisorDashboard extends Dashboard {
             tutors: firebase.firestore().collection('users')
                 .where('location', '==', window.app.location)
                 .where('type', '==', 'Tutor')
+                .where('payments.type', '==', 'Free')
                 .orderBy('name'),
             pupils: firebase.firestore().collection('users')
                 .where('location', '==', window.app.location)
                 .where('type', '==', 'Pupil')
+                .where('payments.type', '==', 'Free')
                 .orderBy('name'),
             /*
              *appts: firebase.firestore().collection('locations')
