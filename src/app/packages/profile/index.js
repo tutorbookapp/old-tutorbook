@@ -54,9 +54,11 @@ class Profile {
                 window.app.snackbar.view('Profile updated.');
             });
         };
-        const bio = t('#Bio', (input) => {
-            p.bio = input.val();
-        });
+        if (this.profile.payments.type !== 'Paid') {
+            const bio = t('#Bio', (input) => {
+                p.bio = input.val();
+            });
+        }
         const phone = t('#Phone', (input) => {
             p.phone = input.val();
         });
@@ -189,9 +191,11 @@ class Profile {
             });
         };
 
-        const bio = t('#Bio', () => {
-            p.bio = bio.value;
-        });
+        if (this.profile.payments.type !== 'Paid') {
+            const bio = t('#Bio', () => {
+                p.bio = bio.value;
+            });
+        }
         const type = (Data.types.indexOf(p.type) < 0) ? s('#Type') : t('#Type');
         if (Data.types.indexOf(p.type) < 0) { // Users can only change type once
             listen(type, () => {
@@ -619,6 +623,69 @@ class EditProfile extends NewProfile {
 
 class PaidTutorProfile extends Profile {
 
+    constructor(profile) {
+        super(profile);
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        $(this.main).find('#Bio').replaceWith($(this.render.select(
+            'Hourly rate',
+            '$' + this.profile.payments.hourlyCharge.toFixed(2),
+            window.app.data.payments.hourlyChargeStrings
+        )).attr('style', 'width:50%!important;margin-right:20px;'));
+        $(this.render.textAreaItem(
+            'Background & Qualifications',
+            this.profile.bio
+        )).insertAfter($(this.main).find('#Gender').parent());
+    }
+
+    manage(dontUpdate) {
+        super.manage(dontUpdate);
+        const main = this.main;
+        const p = this.profile;
+
+        function t(q, action) {
+            $($(main).find(q + ' textarea').first()).focusout(async () => {
+                action();
+                if (dontUpdate) {
+                    return;
+                }
+                await window.app.updateUser(p);
+                window.app.snackbar.view('Profile updated.');
+            });
+            return MDCTextField.attachTo($(main).find(q).first()[0]);
+        };
+
+        const bio = t('[id="Background & Qualifications"]', () => {
+            p.bio = bio.value;
+        });
+        const rate = Utils.attachSelect($(main).find('[id="Hourly rate"]')[0]);
+        rate.listen('MDCSelect:change', async () => {
+            p.payments.hourlyChargeString = rate.value;
+            p.payments.hourlyCharge =
+                new Number(rate.value.split('$')[1]).valueOf();
+            await window.app.updateUser(p);
+            window.app.snackbar.view('Hourly charge updated.');
+        });
+    }
+
+    reManage() {
+        super.reManage();
+        const that = this;
+
+        function t(q, action) {
+            $(that.main.querySelector(q + ' textarea')).focusout(async () => {
+                action($(that.main).find(q + ' textarea'));
+                await window.app.updateUser(that.profile);
+                window.app.snackbar.view('Profile updated.');
+            });
+        };
+
+        const bio = t('[id="Background & Qualifications"]', (input) => {
+            this.profile.bio = input.val();
+        });
+    }
 };
 
 

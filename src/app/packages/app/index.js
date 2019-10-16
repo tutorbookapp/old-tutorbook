@@ -40,6 +40,7 @@ const Dashboard = require('dashboard').default;
 const SupervisorDashboard = require('dashboard').supervisor;
 const Search = require('search');
 const Profile = require('profile').default;
+const PaidProfile = require('profile').paid;
 const Schedule = require('schedule').default;
 const Chats = require('chats').default;
 const SupervisorSchedule = require('schedule').supervisor;
@@ -94,7 +95,11 @@ class Tutorbook {
             this.nav = new Navigation();
             this.listener = new Listener();
             this.search = new Search(this);
-            this.profile = new Profile(this.user);
+            if (this.user.payments.type === 'Paid') {
+                this.profile = new PaidProfile(this.user);
+            } else {
+                this.profile = new Profile(this.user);
+            }
             if (this.user.type === 'Supervisor') {
                 this.schedule = new SupervisorSchedule();
                 this.dashboard = new SupervisorDashboard();
