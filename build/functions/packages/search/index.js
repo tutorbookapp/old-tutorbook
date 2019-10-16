@@ -59,11 +59,14 @@ const updateSearch = async (change, context) => {
         name: getName(profile.name),
         uid: profile.uid,
         photo: profile.photo,
+        email: profile.email, // TODO: Move the data flow that requires this
+        id: profile.email, // information from the client to this server.
+        proxy: profile.proxy,
         type: profile.type,
         gender: profile.gender,
         grade: profile.grade,
         bio: profile.bio,
-        avgRating: 0, // TODO: Right now we don't support ratings
+        avgRating: 0, // TODO: Right now we don't support ratings.
         numRatings: 0,
         subjects: profile.subjects,
         availability: profile.availability,

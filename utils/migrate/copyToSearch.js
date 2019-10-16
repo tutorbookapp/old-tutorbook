@@ -52,6 +52,9 @@ async function main() {
         var filtered = {
             name: getName(profile.name),
             uid: profile.uid,
+            id: profile.email, // TODO: Move data flow that requires this
+            email: profile.email, // information server-side
+            proxy: profile.proxy || [],
             photo: profile.photo,
             type: profile.type,
             gender: profile.gender,

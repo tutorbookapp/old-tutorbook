@@ -967,7 +967,6 @@ class Utils {
         return {
             name: user.name,
             email: user.email,
-            phone: user.phone,
             id: user.id,
             photo: user.photo,
             type: user.type,

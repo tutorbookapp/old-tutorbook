@@ -29,6 +29,7 @@ const tutors = [{
     id: 'frankie.y.liu@gmail.com',
     email: 'frankie.y.liu@gmail.com',
     type: 'Tutor',
+    proxy: [],
     phone: 'Unspecified',
     gender: 'Male',
     grade: 'Adult',
@@ -78,6 +79,7 @@ const tutors = [{
     email: 'lhinkley@stanford.edu',
     photo: 'https://www.topdogtutors.com/sitecontent/profile_pics/download.png',
     type: 'Tutor',
+    proxy: [],
     phone: 'Unspecified',
     gender: 'Female',
     grade: 'Adult',
@@ -137,6 +139,7 @@ const tutors = [{
         'AP and college classes in the past, and I am very confident in my ability to teach others in an individualized way that will lead to success. In high school, I often helped out others in my classes and I want to continue helping people to achieve academic success as I have. HOBBIES: I\'ve always been really passionate about music and theater. I play piano a lot and continue to enjoy practicing it often. I did theater throughout high school and am currently looking into ways to continue pursuing this interest in college. Available: Thursday and Friday afternoons, all weekday evenings, weekend afternoons and evenings. Lives Near: 94720. Can Meet: Up to 15 minutes away for no additional charge.',
     avgRating: 0,
     numRatings: 0,
+    proxy: [],
     subjects: ['Math', 'Physics', 'Chemistry', 'Computer Science'],
     cards: {
         setupProfile: true,
@@ -178,6 +181,7 @@ const tutors = [{
     cards: {
         setupProfile: true,
     },
+    proxy: [],
     config: {
         showPayments: true,
         showProfile: true,
@@ -214,6 +218,7 @@ const tutors = [{
     cards: {
         setupProfile: true,
     },
+    proxy: [],
     phone: 'Unspecified',
     config: {
         showPayments: true,
@@ -249,6 +254,7 @@ const tutors = [{
     numRatings: 0,
     phone: 'Unspecified',
     subjects: ['English', 'Writing', 'Reading', 'Proofreading', 'Beginning Juggling'],
+    proxy: [],
     cards: {
         setupProfile: true,
     },
