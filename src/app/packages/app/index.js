@@ -76,6 +76,7 @@ class Tutorbook {
         this.render = new Render();
         this.data = new Data();
         this.utils = new Utils();
+        this.snackbar = new Snackbar(this);
         this.initOnMobile();
 
         // Dependency cycle workarounds
@@ -84,7 +85,6 @@ class Tutorbook {
 
         // App packages
         this.init = async () => {
-            this.snackbar = new Snackbar();
             this.notify = new Notify();
             this.intercom = new Help(this.user);
             this.cards = { // Store card actions & dialogs

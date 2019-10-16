@@ -7,9 +7,9 @@ import $ from 'jquery';
 // Class that manages snackbars
 class Snackbar {
 
-    constructor() {
+    constructor(app) {
         var el = document.getElementById('snackbar');
-        this.render = window.app.render;
+        this.render = (window.app) ? window.app.render : app.render;
         this.snackbar = new MDCSnackbar(el);
         this.snackbar.timeoutMs = 4000;
     }
