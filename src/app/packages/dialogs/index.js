@@ -171,8 +171,10 @@ class EditAvailabilityDialog {
 
         a('#Location', (s) => {
             if (s.value === 'Custom') {
-                $(this.main).find('#Location').parent().replaceWith(
-                    this.renderLocationInput()
+                $(this.main).find('#Location').replaceWith(
+                    this.render.locationInput((val) => {
+                        this.val.location = val.formatted_address;
+                    })
                 );
             } else {
                 this.val.location = s.value;
@@ -198,22 +200,6 @@ class EditAvailabilityDialog {
                 $(this.main).remove();
             }
         });
-    }
-
-    renderLocationInput() { // TODO: Customize UI w/ the AutocompleteService
-        const input = this.render.textFieldItem('Location', '');
-        const autocomplete = new google.maps.places.Autocomplete(
-            $(input).find('input')[0], {
-                componentRestrictions: {
-                    country: 'us'
-                },
-            });
-        window.autocomplete = autocomplete;
-        const txt = new MDCTextField($(input).find('.mdc-text-field')[0]);
-        autocomplete.addListener('place_changed', () => {
-            this.val.location = autocomplete.getPlace().formatted_address;
-        });
-        return input;
     }
 
     static async updateAvailability(profile) {
@@ -245,6 +231,7 @@ class EditAvailabilityDialog {
     }
 
     refreshTimes() { // Update time selects based on newly selected day
+        if (Data.locations.indexOf(this.val.location) < 0) return;
         const location = this.data.locationDataByName[this.val.location];
         const times = this.utils.getLocationTimesByDay(
             this.val.day,
@@ -616,7 +603,7 @@ class EditRequestDialog {
         };
         addH(user);
         addD('At');
-        addS('Location', request.location.name, userLocations);
+        addS('Location', request.location.name, userLocations.concat(['Custom']));
         addS('Day', request.time.day, userDays);
         addS('From', request.time.from, userTimes);
         addS('To', request.time.to, userTimes);
@@ -665,10 +652,17 @@ class EditRequestDialog {
         const locationEl = dialog.querySelector('#Location');
         const locationSelect = Utils.attachSelect(locationEl);
         locationSelect.listen('MDCSelect:change', function() {
-            request.location.name = locationSelect.value;
-            request.location.id = window.app.data // Only init data once
-                .locationsByName[locationSelect.value];
-            that.refreshDayAndTimeSelects(request, availability);
+            if (locationSelect.value === 'Custom') {
+                $(dialog).find('#Location').replaceWith(that.render.locationInput((val) => {
+                    request.location.name = val.formatted_address;
+                    request.location.id = val.place_id;
+                }));
+            } else {
+                request.location.name = locationSelect.value;
+                request.location.id = window.app.data // Only init data once
+                    .locationsByName[locationSelect.value];
+                that.refreshDayAndTimeSelects(request, availability);
+            }
         });
 
         const dayEl = dialog.querySelector('#Day');
@@ -766,6 +760,7 @@ class EditRequestDialog {
     }
 
     refreshTimeSelects(request, a) {
+        if (!a[request.location]) return;
         var that = this;
         var times = this.utils.getUserAvailableTimesForDay(
             a,

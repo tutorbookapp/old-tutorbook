@@ -161,12 +161,12 @@ class Utils {
     static concatArr(arrA, arrB) {
         var result = [];
         arrA.forEach((item) => {
-            if (result.indexOf(item) < 0) {
+            if (result.indexOf(item) < 0 && item !== '') {
                 result.push(item);
             }
         });
         arrB.forEach((item) => {
-            if (result.indexOf(item) < 0) {
+            if (result.indexOf(item) < 0 && item !== '') {
                 result.push(item);
             }
         });
@@ -306,7 +306,7 @@ class Utils {
         // NOTE: The string is displayed in the textField as such:
         // 'Friday at the Gunn Library from 11:00 AM to 12:00 PM'
 
-        if (string.indexOf('at the') < 0) {
+        if (string.indexOf('at the') < 0 && string !== '') {
             return Utils.parseAvailabilityString(string.replace('at', 'at the'));
         }
 

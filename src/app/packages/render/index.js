@@ -2,6 +2,9 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 import {
+    MDCTextField
+} from '@material/textfield/index';
+import {
     MDCRipple
 } from '@material/ripple/index';
 
@@ -17,6 +20,22 @@ class Render {
 
     constructor() {
         this.templates = new Templates();
+    }
+
+    locationInput(listener) { // TODO: Customize UI w/ the AutocompleteService
+        const input = this.textField('Location', '');
+        const autocomplete = new google.maps.places.Autocomplete(
+            $(input).find('input')[0], {
+                componentRestrictions: {
+                    country: 'us'
+                },
+            });
+        window.autocomplete = autocomplete;
+        const txt = new MDCTextField(input);
+        autocomplete.addListener('place_changed', () => {
+            listener(autocomplete.getPlace());
+        });
+        return input;
     }
 
     switch (label, descriptions, on) {
