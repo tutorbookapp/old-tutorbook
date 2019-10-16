@@ -27,7 +27,7 @@ service cloud.firestore {
     match /users/{user} {
       // TODO: Ensure that the client can't change the user.authenticated field
       // to become an admin or supervisor without actually knowing the code.
-      allow read: if true;
+      allow read: if request.auth.uid != null;
       allow create: if (request.auth.token.email == user
 	|| request.auth.token.supervisor == true
 	|| request.auth.token.parent == true)

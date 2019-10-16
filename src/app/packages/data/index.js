@@ -68,11 +68,12 @@ class Data {
     static async getUser(id) {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
-        } else if (id.indexOf('@') < 0) {
-            var ref = await firebase.firestore().collection('search').doc(id)
+        } else if (id.indexOf('@') >= 0) {
+            console.warn('Using an email as a user ID is deprecated.');
+            var ref = await firebase.firestore().collection('users').doc(id)
                 .get();
         } else {
-            var ref = await firebase.firestore().collection('users').doc(id)
+            var ref = await firebase.firestore().collection('search').doc(id)
                 .get();
         }
         if (ref.exists) {
