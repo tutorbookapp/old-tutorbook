@@ -147,12 +147,12 @@ class EditAvailabilityDialog {
 
     view() {
         $('body').prepend(this.main);
-        this.manage();
+        this.dialog = MDCDialog.attachTo(this.main);
         this.dialog.open();
+        this.manage();
     }
 
     manage() {
-        this.dialog = MDCDialog.attachTo(this.main);
         const that = this;
 
         function s(q) { // Attach select based on query
@@ -170,8 +170,14 @@ class EditAvailabilityDialog {
         };
 
         a('#Location', (s) => {
-            this.val.location = s.value;
-            this.refreshDaysAndTimes();
+            if (s.value === 'Custom') {
+                $(this.main).find('#Location').parent().replaceWith(
+                    this.renderLocationInput()
+                );
+            } else {
+                this.val.location = s.value;
+                this.refreshDaysAndTimes();
+            }
         });
         a('#Day', (s) => {
             this.val.day = s.value;
@@ -192,6 +198,22 @@ class EditAvailabilityDialog {
                 $(this.main).remove();
             }
         });
+    }
+
+    renderLocationInput() { // TODO: Customize UI w/ the AutocompleteService
+        const input = this.render.textFieldItem('Location', '');
+        const autocomplete = new google.maps.places.Autocomplete(
+            $(input).find('input')[0], {
+                componentRestrictions: {
+                    country: 'us'
+                },
+            });
+        window.autocomplete = autocomplete;
+        const txt = new MDCTextField($(input).find('.mdc-text-field')[0]);
+        autocomplete.addListener('place_changed', () => {
+            this.val.location = autocomplete.getPlace().formatted_address;
+        });
+        return input;
     }
 
     static async updateAvailability(profile) {
@@ -347,7 +369,9 @@ class EditAvailabilityDialog {
             content.appendChild(that.render.selectItem(l, v, d));
         };
 
-        addS('Location', v.location, d.locationNames);
+        addS('Location', v.location, Utils.concatArr(
+            [v.location], d.locationNames.concat(['Custom'])
+        ));
         addS('Day', v.day, Data.days);
         addS('From', v.fromTime, d.timeStrings);
         addS('To', v.toTime, d.timeStrings);

@@ -306,6 +306,10 @@ class Utils {
         // NOTE: The string is displayed in the textField as such:
         // 'Friday at the Gunn Library from 11:00 AM to 12:00 PM'
 
+        if (string.indexOf('at the') < 0) {
+            return Utils.parseAvailabilityString(string.replace('at', 'at the'));
+        }
+
         // First check if this is a valid string. If it isn't we want to throw
         // an error so nothing else happens.
         if (string.indexOf('at the') < 0 || string.indexOf('from') < 0 || string.indexOf('to') < 0) {
@@ -670,7 +674,11 @@ class Utils {
     }
 
     static getAvailabilityString(data) {
-        return data.day + 's at the ' + data.location + ' from ' + data.fromTime +
+        if (Data.locations.indexOf(data.location) >= 0) {
+            return data.day + 's at the ' + data.location + ' from ' + data.fromTime +
+                ' to ' + data.toTime;
+        }
+        return data.day + 's at ' + data.location + ' from ' + data.fromTime +
             ' to ' + data.toTime;
     }
 
