@@ -63,7 +63,7 @@ class Payments {
         };
         this.renderSelf();
         if (window.app.user.type === 'Tutor' &&
-            window.app.user.config.showPayments) this.initStripe();
+            window.app.user.payments.type === 'Paid') this.initStripe();
     }
 
     async initStripe() {
@@ -110,8 +110,18 @@ class Payments {
     reView() {
         if (this.user.type !== 'Tutor') return;
         $(main).find('#viewStripe').click(() => {
-            window.open(this.accountURL);
-            this.initStripe();
+            if (window.app.user.type === 'Tutor' &&
+                window.app.user.payments.type === 'Paid') {
+                window.open(this.accountURL);
+                this.initStripe();
+            } else {
+                new NotificationDialog('Payouts Account', 'To access your' +
+                    ' payouts account, enable payments by changing your ' +
+                    '"Business Type" to "Paid". Once you do, reload this ' +
+                    'page and you should have instant access to your ' +
+                    'Stripe Connect payouts dashboard through this button.',
+                    () => {}).view();
+            }
         });
         $(main).find('#withdraw').click(async () => {
             new NotificationDialog('Instant Payouts', 'Instant payouts are ' +
@@ -142,8 +152,18 @@ class Payments {
             MDCRipple.attachTo(this);
         });
         $(main).find('#viewStripe').click(() => {
-            window.open(this.accountURL);
-            this.initStripe();
+            if (window.app.user.type === 'Tutor' &&
+                window.app.user.payments.type === 'Paid') {
+                window.open(this.accountURL);
+                this.initStripe();
+            } else {
+                new NotificationDialog('Payouts Account', 'To access your' +
+                    ' payouts account, enable payments by changing your ' +
+                    '"Business Type" to "Paid". Once you do, reload this ' +
+                    'page and you should have instant access to your ' +
+                    'Stripe Connect payouts dashboard through this button.',
+                    () => {}).view();
+            }
         });
         $(main).find('#withdraw').click(async () => {
             new NotificationDialog('Instant Payouts', 'Instant payouts are ' +
@@ -209,6 +229,7 @@ class Payments {
             if (s.value === 'Free') {
                 disable(true);
             } else {
+                this.initStripe();
                 disable(false);
             }
             await window.app.updateUser();
