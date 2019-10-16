@@ -125,7 +125,8 @@ class Login {
             var errorCode = error.code;
             var errorMessage = error.message;
             var email = error.email;
-            window.app.snackbar.view(error.message);
+            window.app.snackbar.view('Could not open Google login. Reload ' +
+                'this page and try again.');
             console.error("Error while signing in with Google Popup:", error);
         });
     }
