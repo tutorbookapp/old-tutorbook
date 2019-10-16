@@ -964,14 +964,16 @@ class Utils {
     // Helper function that filters a user profile to only the fields that we care
     // about in the context of a request
     static filterRequestUserData(user) {
-        return {
+        return { // Needed info to properly render various user headers
             name: user.name,
             email: user.email,
             id: user.id,
             photo: user.photo,
             type: user.type,
+            grade: user.grade,
             gender: user.gender, // We need this to render gender pronouns correctly
             hourlyCharge: (!!user.payments) ? user.payments.hourlyCharge : 0,
+            payments: user.payments,
             proxy: user.proxy,
         };
     }
