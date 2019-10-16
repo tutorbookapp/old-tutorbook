@@ -48,7 +48,8 @@ class User {
         );
         this.header = this.render.header('header-back', {
             title: 'View User',
-            showEdit: (window.app.user.type === 'Supervisor'),
+            showEdit: (window.app.user.type === 'Supervisor' &&
+                this.profile.payments.type === 'Free'),
             edit: () => {
                 new window.app.EditProfile(this.profile).view();
             },
