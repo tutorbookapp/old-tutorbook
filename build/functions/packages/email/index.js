@@ -4,6 +4,7 @@ const fs = require('fs');
 
 // Welcome email templates
 const tutorEmail = fs.readFileSync('./html/tutor.html').toString();
+const paidTutorEmail = fs.readFileSync('./html/paidTutor.html').toString();
 const pupilEmail = fs.readFileSync('./html/pupil.html').toString();
 const supervisorEmail = fs.readFileSync('./html/supervisor.html').toString();
 const genericEmail = fs.readFileSync('./html/generic.html').toString();
@@ -108,8 +109,13 @@ class Email {
         this.subject = 'Welcome to Tutorbook';
         switch (this.user.type) {
             case 'Tutor':
-                this.subject += ' | Getting your first student';
-                this.html = tutorEmail.replace('{ username }', this.user.name);
+                if (this.user.payments.type === 'Paid') {
+                    this.subject += ' | Getting paid by your first student';
+                    this.html = paidTutorEmail.replace('{ username }', this.user.name);
+                } else {
+                    this.subject += ' | Getting your first student';
+                    this.html = tutorEmail.replace('{ username }', this.user.name);
+                }
                 break;
             case 'Pupil':
                 this.subject += ' | Finding your perfect tutor';
