@@ -94,6 +94,8 @@ class SubjectSelectDialog {
         l('#history-list', Data.historySubjects);
         l('#language-list', Data.languageSubjects);
         l('#english-list', Data.englishSubjects);
+        l('#tech-list', Data.techSubjects);
+        l('#art-list', Data.artSubjects);
         l('#life-skills-list', Data.lifeSkills);
     }
 };

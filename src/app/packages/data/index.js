@@ -827,7 +827,7 @@ Data.days = [
 
 // List of subjects taken directly from AC Application form
 Data.mathSubjects = [
-    'Algebra 1',
+    'Algebra 1', // Gunn
     'Algebra 1A',
     'Algebra 2',
     'Algebra 2/Trig A',
@@ -844,11 +844,48 @@ Data.mathSubjects = [
     'Pre-Calculus A',
     'AP Statistics',
     'Applied Math',
-    'Computer Science',
+    'Pre-Algebra', // JLS
+    'Math 6',
+    'Math 7',
+    'Math 7A',
+    'Math 8',
+    'Algebra 8',
+];
+
+Data.techSubjects = [
+    'Computer Science', // Gunn
+    'AP Comp Sci A',
+    'AP Comp Sci P',
+    'FOOP',
+    'Industrial Tech 1A', // JLS
+    'Industrial Tech 1B',
+    'Keyboarding',
+    'Computer Programming',
+    'Web Design 1A',
+    'Web Design 1B',
+    'Design and Technology',
+    'Yearbook',
+    'Multimedia Art',
+    'Video Production',
+];
+
+Data.artSubjects = [
+    'Art Spectrum', // Gunn
+    'AP Art History',
+    'Photography 1',
+    'Video 1',
+    'Yearbook', // JLS
+    'Video Production',
+    'Art 1A',
+    'Art 1B',
+    'Ceramics and Sculpture',
+    'Multimedia Art',
+    'Drama 1A',
+    'Drama 1B',
 ];
 
 Data.scienceSubjects = [
-    'Astrophysics',
+    'Astrophysics', // Gunn
     'Biology 1',
     'Biology 1A',
     'Biology H',
@@ -863,10 +900,13 @@ Data.scienceSubjects = [
     'AP Physics 1',
     'AP Physics C',
     'APES Env Sci',
+    'Science 6', // JLS
+    'Science 7',
+    'Science 8',
 ];
 
 Data.historySubjects = [
-    'World History',
+    'World History', // Gunn
     'Cont World History',
     'Government',
     'US History',
@@ -875,10 +915,13 @@ Data.historySubjects = [
     'AP Economics',
     'Psychology',
     'AP Psychology',
+    'Social Studies 6', // JLS
+    'Social Studies 7',
+    'Social Studies 8',
 ];
 
 Data.languageSubjects = [
-    'French 1',
+    'French 1', // Gunn
     'French 2',
     'French 3',
     'AP French',
@@ -898,10 +941,18 @@ Data.languageSubjects = [
     'Spanish 2',
     'Spanish 3',
     'AP Spanish',
+    'French 1A', // JLS
+    'French 1B',
+    'Japanese 1A',
+    'Japanese 1B',
+    'Spanish 1A',
+    'Spanish 1B',
+    'Mandarin 1A',
+    'German 1A',
 ];
 
 Data.englishSubjects = [
-    'Western Lit',
+    'Western Lit', // Gunn
     'Western Culture',
     'Communication',
     'World Lit',
@@ -922,17 +973,23 @@ Data.englishSubjects = [
     'The Art of Visual Storytelling',
     'Modern California Lit',
     'Women Writers',
+    'English 6', // JLS
+    'English 7',
+    'English 8',
 ];
 
 Data.lifeSkills = [
-    'Planning',
+    'Planning', // Gunn
     'Organization',
     'Study Skills',
     'Other',
+    'Leadership', // JLS
+    'Public Speaking',
 ];
 
 Data.subjects = [
-    'Algebra 1',
+    // MATH
+    'Algebra 1', // Gunn
     'Algebra 1A',
     'Algebra 2',
     'Algebra 2/Trig A',
@@ -949,8 +1006,42 @@ Data.subjects = [
     'Pre-Calculus A',
     'AP Statistics',
     'Applied Math',
-    'Computer Science',
-    'Astrophysics',
+    'Pre-Algebra', // JLS
+    'Math 6',
+    'Math 7',
+    'Math 7A',
+    'Math 8',
+    'Algebra 8',
+    // TECHNOLOGY
+    'Computer Science', // Gunn
+    'AP Comp Sci A',
+    'AP Comp Sci P',
+    'FOOP',
+    'Industrial Tech 1A', // JLS
+    'Industrial Tech 1B',
+    'Keyboarding',
+    'Computer Programming',
+    'Web Design 1A',
+    'Web Design 1B',
+    'Design and Technology',
+    'Yearbook',
+    'Multimedia Art',
+    'Video Production',
+    // ART
+    'Art Spectrum', // Gunn
+    'AP Art History',
+    'Photography 1',
+    'Video 1',
+    'Yearbook', // JLS
+    'Video Production',
+    'Art 1A',
+    'Art 1B',
+    'Ceramics and Sculpture',
+    'Multimedia Art',
+    'Drama 1A',
+    'Drama 1B',
+    // SCIENCE
+    'Astrophysics', // Gunn
     'Biology 1',
     'Biology 1A',
     'Biology H',
@@ -965,7 +1056,11 @@ Data.subjects = [
     'AP Physics 1',
     'AP Physics C',
     'APES Env Sci',
-    'World History',
+    'Science 6', // JLS
+    'Science 7',
+    'Science 8',
+    // HISTORY
+    'World History', // Gunn
     'Cont World History',
     'Government',
     'US History',
@@ -974,7 +1069,11 @@ Data.subjects = [
     'AP Economics',
     'Psychology',
     'AP Psychology',
-    'French 1',
+    'Social Studies 6', // JLS
+    'Social Studies 7',
+    'Social Studies 8',
+    // LANGUAGE
+    'French 1', // Gunn
     'French 2',
     'French 3',
     'AP French',
@@ -994,7 +1093,16 @@ Data.subjects = [
     'Spanish 2',
     'Spanish 3',
     'AP Spanish',
-    'Western Lit',
+    'French 1A', // JLS
+    'French 1B',
+    'Japanese 1A',
+    'Japanese 1B',
+    'Spanish 1A',
+    'Spanish 1B',
+    'Mandarin 1A',
+    'German 1A',
+    // ENGLISH
+    'Western Lit', // Gunn
     'Western Culture',
     'Communication',
     'World Lit',
@@ -1015,10 +1123,16 @@ Data.subjects = [
     'The Art of Visual Storytelling',
     'Modern California Lit',
     'Women Writers',
-    'Planning',
+    'English 6', // JLS
+    'English 7',
+    'English 8',
+    // LIFE SKILLS
+    'Planning', // Gunn
     'Organization',
     'Study Skills',
     'Other',
+    'Leadership', // JLS
+    'Public Speaking',
 ];
 
 Data.genders = [

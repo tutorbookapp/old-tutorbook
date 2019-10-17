@@ -103,6 +103,20 @@ class FilterDialog {
         );
 
         Utils.replaceElement(
+            dialog.querySelector('#tech-list'),
+            this.render.template('dialog-filter-item-list', {
+                items: Data.techSubjects
+            })
+        );
+
+        Utils.replaceElement(
+            dialog.querySelector('#art-list'),
+            this.render.template('dialog-filter-item-list', {
+                items: Data.artSubjects
+            })
+        );
+
+        Utils.replaceElement(
             dialog.querySelector('#science-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.scienceSubjects
@@ -155,7 +169,16 @@ class FilterDialog {
 
             sel.querySelectorAll('.mdc-list-item').forEach((el) => {
                 el.addEventListener('click', () => {
-                    if (['math', 'science', 'history', 'language', 'english', 'lifeSkills'].indexOf(key) >= 0) {
+                    if ([
+                            'math',
+                            'science',
+                            'history',
+                            'language',
+                            'english',
+                            'lifeSkills',
+                            'tech',
+                            'art'
+                        ].indexOf(key) >= 0) {
                         this.filters['subject'] = el.innerText.trim();
                         this.page('page-all');
                     } else if ('availability' === key) {
