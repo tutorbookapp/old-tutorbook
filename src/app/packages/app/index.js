@@ -52,7 +52,8 @@ const Navigation = require('navigation');
 const Help = require('intercom');
 const Listener = require('listener');
 const Login = require('login');
-const Matching = require('matching');
+const Matching = require('matching').default;
+const MatchingDialog = require('matching').dialog;
 
 // Dependency cycle workarounds
 const EditProfile = require('profile').edit;
@@ -85,6 +86,7 @@ class Tutorbook {
         // Dependency cycle workarounds
         this.EditProfile = EditProfile;
         this.NotificationDialog = NotificationDialog;
+        this.MatchingDialog = MatchingDialog;
 
         // App packages
         this.init = async () => {

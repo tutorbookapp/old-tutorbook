@@ -11,7 +11,7 @@ const User = require('user');
 const EditProfile = require('profile').edit;
 
 // Shortcut cards for SupervisorDashboard
-const matchingShortcut = require('matching').renderShortcutCard;
+const matchingShortcut = require('matching').default.renderShortcutCard;
 const scheduleShortcut = require('schedule').supervisor.renderShortcutCard;
 const trackingShortcut = require('tracking').renderShortcutCard;
 

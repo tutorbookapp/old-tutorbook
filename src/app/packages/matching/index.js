@@ -763,4 +763,7 @@ class ConfirmMatchDialog extends ConfirmationDialog {
     }
 };
 
-module.exports = Matching;
+module.exports = {
+    default: Matching,
+    dialog: MatchingDialog,
+};

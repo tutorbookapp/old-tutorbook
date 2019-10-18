@@ -89,6 +89,15 @@ class User {
             edit: () => {
                 new window.app.EditProfile(this.profile).view();
             },
+            showMatch: (window.app.user.type === 'Supervisor' &&
+                this.profile.payments.type === 'Free'),
+            match: () => {
+                Data.updateUser(Utils.combineMaps(this.profile, {
+                    proxy: [window.app.user.email],
+                }));
+                new window.app.MatchingDialog(this.profile).view();
+            },
+
         });
     }
 
