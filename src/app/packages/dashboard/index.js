@@ -337,6 +337,9 @@ class ProxyDashboard extends Dashboard {
                 new EditProfile(p).view();
             }).end().find('#match').click(async () => {
                 const p = await Data.getUser(id);
+                Data.updateUser(Utils.combineMaps(p, {
+                    proxy: [window.app.user.email],
+                }));
                 new MatchingDialog(p).view();
             });
         });

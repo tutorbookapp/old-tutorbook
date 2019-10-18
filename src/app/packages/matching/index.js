@@ -16,6 +16,7 @@ const NewProfile = require('profile').new;
 const EditProfile = require('profile').edit;
 const ConfirmationDialog = require('dialogs').confirm;
 const EditRequestDialog = require('dialogs').editRequest;
+const ViewRequestDialog = require('dialogs').viewRequest;
 
 import to from 'await-to-js';
 import $ from 'jquery';
@@ -172,6 +173,11 @@ class Matching {
             ' as a ' + request.toUser.type.toLowerCase() + ' for ' +
             request.subject + ' on ' + request.time.day + 's at the ' +
             request.location.name + '. Tap to learn more and view this request.';
+        const dialogs = {
+            edit: new EditRequestDialog(request, doc.id),
+            view: new ViewRequestDialog(request, doc.id),
+            match: new MatchingDialog(pupil.profile),
+        };
         const actions = {
             primary: () => {},
             cancel: () => {
@@ -185,10 +191,13 @@ class Matching {
                         request.toUser.email + '.');
                 }).view();
             },
-            edit: () => {
-                new EditRequestDialog(request, doc.id).view();
+            view: () => {
+                dialogs.view.view();
             },
             options: {
+                'Edit Request': () => {
+                    dialogs.edit.view();
+                },
                 'Edit Pupil': () => {
                     pupil.view();
                 },
@@ -196,7 +205,7 @@ class Matching {
                     tutor.view();
                 },
                 'Rematch': () => {
-                    new MatchingDialog(pupil.profile).view();
+                    dialogs.match.view();
                 },
                 'Approve': async () => {
                     var err;
@@ -381,7 +390,6 @@ class Matching {
         await this.initDismissedCards();
         firebase.firestore().collection('users')
             .where('proxy', 'array-contains', window.app.user.email)
-            .where('clockedIn', '==', false) // They've never clockedIn
             .onSnapshot((snapshot) => {
                 if (!snapshot.size) {
                     return this.recycler.empty();

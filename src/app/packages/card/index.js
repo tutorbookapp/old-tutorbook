@@ -226,6 +226,9 @@ Card.renderUserCard = (doc) => {
         },
     };
     if (p.type === 'Pupil') actions.match = () => {
+        Data.updateUser(Utils.combineMaps(p, {
+            proxy: [window.app.user.email],
+        }));
         new window.app.MatchingDialog(p).view();
     };
     const card = Card.renderCard(title, subtitle, summary, actions);
