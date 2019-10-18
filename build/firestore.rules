@@ -184,6 +184,7 @@ service cloud.firestore {
       // collectionGroup query rules for supervisors and admins
       // Allow supervisors to read docs that are at their location
       allow read: if resource.data.for.location.id in request.auth.token.locations; 
+      allow create: if request.resource.data.for.location.id in request.auth.token.locations; 
     }
     match /users/{user}/approvedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it

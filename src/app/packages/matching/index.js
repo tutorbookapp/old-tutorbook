@@ -197,7 +197,16 @@ class Matching {
                 },
                 'Rematch': () => {
                     new MatchingDialog(pupil.profile).view();
-                }
+                },
+                'Approve': async () => {
+                    var err;
+                    var res;
+                    [err, res] = await to(Data.approveRequest(request, doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'approve request.');
+                    window.app.snackbar.view('Approved request and created ' +
+                        'recurring appointments.');
+                },
             },
         };
         const card = Card.renderCard('Pending Match', subtitle, summary, actions);

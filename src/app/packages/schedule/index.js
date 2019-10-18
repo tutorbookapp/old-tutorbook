@@ -643,7 +643,7 @@ class SupervisorSchedule extends Schedule {
 
     viewEvents() {
         const db = firebase.firestore().collection('locations')
-            .doc(window.app.user.locations[0]); // TODO: Add >1 location
+            .doc(window.app.location); // TODO: Add >1 location
         const queries = {
             appointments: db.collection('appointments').orderBy('timestamp', 'desc'),
             pastAppointments: db.collection('pastAppointments')
