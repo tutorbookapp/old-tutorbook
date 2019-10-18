@@ -1,6 +1,9 @@
 import {
     MDCRipple
 } from '@material/ripple/index';
+import {
+    MDCMenu
+} from '@material/menu/index';
 
 import $ from 'jquery';
 
@@ -772,21 +775,11 @@ Card.renderRequestInCard = function(doc) {
 // Render function that returns a populated requestOut dashboard card
 Card.renderRequestOutCard = function(doc) {
     const request = doc.data();
-    if (app.user.type === 'Supervisor') {
-        var subtitle = 'From ' + request.fromUser.name +
-            ' to ' + request.toUser.name;
-        var summary = request.fromUser.name.split(' ')[0] +
-            ' requested ' + request.toUser.name.split(' ')[0] +
-            ' as a ' + request.toUser.type.toLowerCase() + ' for ' +
-            request.subject + ' on ' + request.time.day + 's at the ' +
-            request.location.name + '. Tap to learn more and view this request.';
-    } else {
-        var subtitle = 'To ' + request.toUser.name;
-        var summary = 'You requested ' + request.toUser.name.split(' ')[0] +
-            ' as a ' + request.toUser.type.toLowerCase() + ' for ' +
-            request.subject + ' on ' + request.time.day + 's at the ' +
-            request.location.name + '. Tap to learn more and edit your request.';
-    }
+    var subtitle = 'To ' + request.toUser.name;
+    var summary = 'You requested ' + request.toUser.name.split(' ')[0] +
+        ' as a ' + request.toUser.type.toLowerCase() + ' for ' +
+        request.subject + ' on ' + request.time.day + 's at the ' +
+        request.location.name + '. Tap to learn more and edit your request.';
     const actions = {};
     actions.primary = function() {
         new ViewRequestDialog(request).view();
@@ -995,11 +988,31 @@ Card.renderCard = function(title, subtitle, summary, actions) {
         summary: summary,
         actions: actions,
     });
+    if (typeof actions.options === 'object') {
+        $(card).find('.dashboard-card__primary-action')
+            .removeClass('mdc-card__primary-action');
+        Object.entries(actions.options).forEach((entry) => {
+            $(card).find('.mdc-list').append(app.render.template('card-action', {
+                label: entry[0],
+                action: entry[1],
+            }));
+        });
+        new MDCRipple($(card).find('.mdc-icon-button')[0]).unbounded = true;
+        const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
+        $(card).find('#menu').click(() => {
+            menu.open = true;
+        });
+        actions.menu = () => {
+            menu.open = true;
+        };
+    } else if (actions.primary) {
+        MDCRipple.attachTo($(card).find('.mdc-card__primary-action')[0]);
+    }
     const buttons = card.querySelector('.mdc-card__actions'); // Actions
     Object.entries(actions).forEach((entry) => {
         var label = entry[0];
         var action = entry[1];
-        if (label !== 'primary') {
+        if (['primary', 'options', 'menu'].indexOf(label) < 0) {
             buttons.insertBefore(
                 Card.button(label, action),
                 buttons.firstElementChild
@@ -1007,7 +1020,7 @@ Card.renderCard = function(title, subtitle, summary, actions) {
         }
     });
     $(card)
-        .find('.mdc-button, .mdc-card__primary-action, .mdc-icon-button')
+        .find('.mdc-button, .mdc-list-item')
         .each(function() {
             MDCRipple.attachTo($(this)[0]);
         });

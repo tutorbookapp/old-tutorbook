@@ -15,6 +15,7 @@ const Data = require('data');
 const NewProfile = require('profile').new;
 const EditProfile = require('profile').edit;
 const ConfirmationDialog = require('dialogs').confirm;
+const EditRequestDialog = require('dialogs').editRequest;
 
 import to from 'await-to-js';
 import $ from 'jquery';
@@ -141,9 +142,9 @@ class Matching {
     }
 
     async renderPendingMatchCard(doc) {
-        const card = Card.renderRequestOutCard(doc);
         const users = this.users;
         const profiles = this.profiles;
+        const request = doc.data();
 
         async function profile(id, el) {
             if (!!users[id]) {
@@ -161,24 +162,47 @@ class Matching {
             return profile;
         };
 
-        const tutor = await profile(doc.data().toUser.email);
-        const pupil = await profile(doc.data().fromUser.email);
-        window.app.cards.requestsOut[doc.id].tutor = () => {
-            tutor.view(); // We have to do this so that `this` is defined
-        };
-        window.app.cards.requestsOut[doc.id].pupil = () => {
-            pupil.view();
-        };
+        const tutor = await profile(request.toUser.email);
+        const pupil = await profile(request.fromUser.email);
 
-        $(card).find('.dashboard-card__title').text('Pending Match');
-        $(card).find('.mdc-card__actions').append(Card.button('pupil', () => {
-            pupil.view();
-        }));
-        $(card).find('.mdc-card__actions').append(Card.button('tutor', () => {
-            tutor.view();
-        }));
-        MDCRipple.attachTo($(card).find('#tutor')[0]);
-        MDCRipple.attachTo($(card).find('#pupil')[0]);
+        const subtitle = 'From ' + request.fromUser.name +
+            ' to ' + request.toUser.name;
+        const summary = request.fromUser.name.split(' ')[0] +
+            ' requested ' + request.toUser.name.split(' ')[0] +
+            ' as a ' + request.toUser.type.toLowerCase() + ' for ' +
+            request.subject + ' on ' + request.time.day + 's at the ' +
+            request.location.name + '. Tap to learn more and view this request.';
+        const actions = {
+            primary: () => {},
+            cancel: () => {
+                const summary = "Cancel request to " + request.toUser.name +
+                    " for " + request.subject + " at " + request.time.from +
+                    " on " + request.time.day + "s.";
+                new ConfirmationDialog('Cancel Request?', summary, async () => {
+                    Card.remove(doc, 'requestsOut');
+                    await Data.cancelRequest(request, doc.id);
+                    app.snackbar.view('Canceled request to ' +
+                        request.toUser.email + '.');
+                }).view();
+            },
+            edit: () => {
+                new EditRequestDialog(request, doc.id).view();
+            },
+            options: {
+                'Edit Pupil': () => {
+                    pupil.view();
+                },
+                'Edit Tutor': () => {
+                    tutor.view();
+                },
+                'Rematch': () => {
+                    new MatchingDialog(pupil.profile).view();
+                }
+            },
+        };
+        const card = Card.renderCard('Pending Match', subtitle, summary, actions);
+        window.app.cards.requestsOut[doc.id] = actions; // Store actions & dialogs
+
         return card;
     }
 
@@ -194,7 +218,7 @@ class Matching {
         window.app.nav.selected = 'Matching';
         window.app.view(this.header, this.main, '/app/matching');
         this.manage();
-        this.viewCards();
+        (this.cardsViewed) ? this.reViewCards(): this.viewCards();
     }
 
     reView() {
@@ -216,13 +240,19 @@ class Matching {
         const approvedRequestsOut = window.app.cards.approvedRequestsOut;
         const rejectedRequestsOut = window.app.cards.rejectedRequestsOut;
 
-        function listen(el, actionMap) { // Adds click listeners to card buttons
-            const actions = actionMap[$(el).attr('id')];
+        function add(el, actions) {
             Object.entries(actions).forEach((entry) => {
                 var label = entry[0];
                 var action = entry[1];
-                $(el).find('#' + label).click(action);
+                if (label === 'options') {
+                    return add($(el).find('.mdc-list'), action);
+                }
+                $(el).find('[id="' + label + '"]').click(action);
             });
+        };
+
+        function listen(el, actionMap) { // Adds click listeners to card buttons
+            return add(el, actionMap[$(el).attr('id')]);
         };
 
         $(this.main).find('#cards [type="requestsOut"]').each(async function() {
@@ -279,6 +309,15 @@ class Matching {
                         window.app.snackbar.view('Deleted account.');
                     }).view();
             });
+            $(this).find('#hide').click(() => {
+                $(this).remove();
+                Data.updateUser(Utils.combineMaps(profile, {
+                    proxy: [],
+                })).catch((err) => {
+                    window.app.snackbar.view('Could not hide ' + profile.name +
+                        '\'s card.');
+                });
+            });
         });
     }
 
@@ -319,6 +358,7 @@ class Matching {
     }
 
     async viewCards() {
+        this.cardsViewed = true;
         // Shows unmatched tutors/pupils and matched tutors/pupils (who haven't 
         // created past appts).
         await this.initDismissedCards();
@@ -432,7 +472,17 @@ class Matching {
             (!!profile.type ? profile.type.toLowerCase() : '') +
             ' account for ' + profile.email + '. Tap to view or edit ' +
             Utils.getPronoun(profile.gender) + ' profile.';
+        var card;
         const actions = {
+            hide: () => {
+                $(card).remove();
+                Data.updateUser(Utils.combineMaps(profile, {
+                    proxy: [],
+                })).catch((err) => {
+                    window.app.snackbar.view('Could not hide ' + profile.name +
+                        '\'s card.');
+                });
+            },
             delete: () => {
                 new ConfirmationDialog('Delete Proxy Account?',
                     'You are about to permanently delete ' + profile.name +
@@ -463,7 +513,7 @@ class Matching {
             };
         }
 
-        const card = Card.renderCard(title, subtitle, summary, actions);
+        card = Card.renderCard(title, subtitle, summary, actions);
         MDCRipple.attachTo($(card).find('.mdc-card__primary-action')[0]);
         MDCRipple.attachTo($(card).find('#edit')[0]);
         MDCRipple.attachTo($(card).find('#delete')[0]);
@@ -559,11 +609,9 @@ class MatchingDialog {
     renderSelf() {
         this.header = this.render.header('header-back', {
             title: 'New Match',
-            back: () => {
-                new ConfirmationDialog('Discard Match?', 'You are about to ' +
-                    'permanently delete this match. Navigating back will ' +
-                    'delete any changes that you\'ve made. Are you sure?').view();
-            },
+            //new ConfirmationDialog('Discard Match?', 'You are about to ' +
+            //'permanently delete this match. Navigating back will ' +
+            //'delete any changes that you\'ve made. Are you sure?').view();
         });
         this.main = this.render.template('dialog-input');
         const profile = this.profile;
