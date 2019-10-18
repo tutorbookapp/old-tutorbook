@@ -70,8 +70,7 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Gunn Academic Center',
-            id: 'NJp0Y6wyMh2fDdxSuRSx',
+            name: 'Any',
         };
         this.functionsURL = 'https://us-central1-tutorbook-779d8.' + // Live
             'cloudfunctions.net';
