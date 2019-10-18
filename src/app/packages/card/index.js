@@ -211,8 +211,8 @@ Card.renderUserCard = (doc) => {
     } else {
         summary += ' Does not have any availability.';
     }
-    if (summary.length > 80) {
-        summary = summary.substring(0, 80) + '...';
+    if (summary.length > 100) {
+        summary = summary.substring(0, 100) + '...';
     }
     const actions = {
         primary: () => {
