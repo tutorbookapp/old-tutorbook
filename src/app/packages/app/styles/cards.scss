@@ -2,6 +2,23 @@
 @import "@material/typography/mdc-typography";
 @import "@material/chips/mdc-chips";
 
+.dashboard-card__primary-action {
+  outline: none;
+  cursor: pointer;
+  .mdc-menu-surface--anchor {
+    float: right;
+    width: 24px;
+    height: 24px;
+  }
+  i {
+    float: right;
+  }
+  button {
+    float: right;
+    margin: -12px;
+  }
+}
+
 .dashboard-card__primary {
   padding: 1rem;
 }

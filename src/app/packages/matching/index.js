@@ -295,7 +295,7 @@ class Matching {
                 return match.view();
             });
             $(this).find('#delete').click(() => {
-                new ConfirmationDialog('Delete Proxy Account?',
+                new ConfirmationDialog('Delete Account?',
                     'You are about to permanently delete ' + user.name +
                     '\'s account data. This action cannot be undone. Please ensure ' +
                     'to check with your fellow supervisors before continuing.', async () => {

@@ -17,6 +17,7 @@ import to from 'await-to-js';
 // TODO: Make these dialog classes
 const EditAvailabilityDialog = require('dialogs').editAvailability;
 const EditSubjectDialog = require('dialogs').editSubject;
+const ConfirmationDialog = require('dialogs').confirm;
 const Data = require('data');
 const Utils = require('utils');
 const User = require('user');
@@ -593,6 +594,11 @@ class EditProfile extends NewProfile {
         super(profile);
     }
 
+    manage() {
+        super.manage();
+        MDCRipple.attachTo($(this.main).find('.delete-user-input button')[0]);
+    }
+
     renderSelf() {
         super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -605,6 +611,24 @@ class EditProfile extends NewProfile {
             },
         });
         this.styleEmailInput();
+        $(this.main).append(this.render.template('delete-user-input', {
+            delete: () => {
+                new ConfirmationDialog('Delete Account?',
+                    'You are about to permanently delete ' + this.profile.name +
+                    '\'s account data. This action cannot be undone. Please ensure ' +
+                    'to check with your fellow supervisors before continuing.', async () => {
+                        window.app.nav.back();
+                        var err;
+                        var res;
+                        [err, res] = await to(Data.deleteUser(this.profile.id));
+                        if (err) {
+                            window.app.snackbar.view('Could not delete account.');
+                            console.error('Error while deleting proxy account:', err);
+                        }
+                        window.app.snackbar.view('Deleted account.');
+                    }).view();
+            },
+        }));
     }
 
     updateProfile() {

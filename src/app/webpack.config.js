@@ -41,6 +41,7 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/settings.scss'),
                 path.resolve(__dirname, 'packages/app/styles/schedule.scss'),
                 path.resolve(__dirname, 'packages/app/styles/chat.scss'),
+                path.resolve(__dirname, 'packages/app/styles/profile.scss'),
 
                 // All other styling files are contained as CSS files
                 path.resolve(__dirname, 'packages/app/styles/loader.css'),
@@ -51,7 +52,6 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/search.css'),
                 path.resolve(__dirname, 'packages/app/styles/filters.css'),
                 path.resolve(__dirname, 'packages/app/styles/history.css'),
-                path.resolve(__dirname, 'packages/app/styles/profile.css'),
                 path.resolve(__dirname, 'packages/app/styles/matching.css'),
             ]
         },
