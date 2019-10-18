@@ -76,7 +76,8 @@ service cloud.firestore {
       allow update: if request.auth.token.email ==
 	get(/databases/$(database)/documents/users/$(user)/modifiedRequestsIn/$(requestIn)).data.modifiedBy.email;
       allow delete: if request.auth.token.email ==
-	get(/databases/$(database)/documents/users/$(user)/canceledRequestsIn/$(requestIn)).data.canceledBy.email;
+	get(/databases/$(database)/documents/users/$(user)/canceledRequestsIn/$(requestIn)).data.canceledBy.email || request.auth.token.email ==
+	get(/databases/$(database)/documents/users/$(resource.data.fromUser.email)/approvedRequestsOut/$(requestIn)).data.approvedBy.email;
     }
     match /{path=**}/modifiedRequestsIn/{requestIn} {
       // collectionGroup query rules for supervisors and admins

@@ -233,24 +233,24 @@ class SupervisorDashboard extends Dashboard {
     viewEverythingElse() {
         const queries = {
             tutors: firebase.firestore().collection('users')
-                .where('location', '==', window.app.location)
+                .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Tutor')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
             pupils: firebase.firestore().collection('users')
-                .where('location', '==', window.app.location)
+                .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Pupil')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
             /*
              *appts: firebase.firestore().collection('locations')
-             *    .doc(window.app.data.locationsByName[window.app.location])
+             *    .doc(window.app.data.locationsByName[window.app.location.name])
              *    .collection('appointments'),
              */
         };
         Object.entries(queries).forEach((entry) => {
             var dashboard = new ProxyDashboard(
-                window.app.location.split(' ')[0] + ' ' + Utils.caps(entry[0]),
+                window.app.location.name.split(' ')[0] + ' ' + Utils.caps(entry[0]),
                 'Manually edit user profiles to set availability, update ' +
                 'subjects, add contact information, and much more.', 'users',
                 entry[0]);
@@ -444,9 +444,9 @@ class SupervisorQueryDashboard extends QueryDashboard {
                 name: 'Everything else',
                 queries: {
                     tutors: db.collection('users').where('type', '==', 'Tutor')
-                        .where('location', '==', window.app.location),
+                        .where('location', '==', window.app.location.name),
                     pupils: db.collection('users').where('type', '==', 'Pupil')
-                        .where('location', '==', window.app.location),
+                        .where('location', '==', window.app.location.name),
                 },
             },
         };

@@ -1,3 +1,5 @@
+const to = require('await-to-js').default;
+
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
 // Classes#Instance_properties
@@ -321,22 +323,29 @@ class Data {
             .doc(id),
         ];
 
-        await approvedRequestOut.set({
+        var err;
+        var res;
+        [err, res] = await to(approvedRequestOut.set({
             for: request,
             approvedBy: app.conciseUser,
             approvedTimestamp: new Date(),
-        });
-        await requestOut.delete();
-        await requestIn.delete();
+        }));
+        if (err) return console.error('Error while adding approvedRequestOut:',
+            err);
+        [err, res] = await to(requestOut.delete());
+        if (err) return console.error('Error while deleting requestOut:', err);
+        [err, res] = await to(requestIn.delete());
+        if (err) return console.error('Error while deleting requestIn:', err);
         for (var i = 0; i < appts.length; i++) {
             var appt = appts[i];
-            await appt.set({
+            [err, res] = await to(appt.set({
                 attendees: [request.fromUser, request.toUser],
                 location: request.location,
                 for: request,
                 time: request.time,
                 timestamp: new Date(),
-            });
+            }));
+            if (err) return console.error('Error while creating appt doc:', err);
         }
     }
 
@@ -641,8 +650,8 @@ class Data {
         this.locationIDs = [];
         const snap = await firebase.firestore().collection('locations').get();
         snap.docs.forEach((doc) => {
-            if (window.app.location === 'Any' ||
-                window.app.location === doc.data().name) {
+            if (window.app.location.name === 'Any' ||
+                window.app.location.id === doc.id) {
                 this.locationsByName[doc.data().name] = doc.id;
                 this.locationDataByName[doc.data().name] = doc.data();
                 this.locationsByID[doc.id] = doc.data().name;

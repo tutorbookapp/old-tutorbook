@@ -200,9 +200,9 @@ Card.renderUserCard = (doc) => {
         summary = summary.substring(0, summary.length - 2) + '.';
     }
     if (Object.keys(p.availability).length > 0 &&
-        p.availability[window.app.location]) {
+        p.availability[window.app.location.name]) {
         summary += ' Available on ';
-        Object.entries(p.availability[window.app.location]).forEach((entry) => {
+        Object.entries(p.availability[window.app.location.name]).forEach((entry) => {
             var day = entry[0];
             var time = entry[1][0].open;
             summary += day + 's at ' + time + ', ';
@@ -237,9 +237,9 @@ Card.renderTutorsCard = function(doc) {
         ' be able to manually update service hours all without leaving your ' +
         'dashboard.';
     const title = window.app.dashboard.tutors.num + ' ' +
-        window.app.location.split(' ')[0] + ' Tutors';
+        window.app.location.name.split(' ')[0] + ' Tutors';
     const subtitle = 'There are currently ' + window.app.dashboard.tutors.num +
-        ' ' + window.app.location.split(' ')[0] + ' tutors on Tutorbook';
+        ' ' + window.app.location.name.split(' ')[0] + ' tutors on Tutorbook';
     const actions = {
         snooze: () => {
             $('#cards [card-id="tutors"]').remove();
@@ -263,9 +263,9 @@ Card.renderPupilsCard = function(doc) {
         'able to create job posts (that tutors can respond to) for unmatched ' +
         'pupils.';
     const title = window.app.dashboard.pupils.num + ' ' +
-        window.app.location.split(' ')[0] + ' Pupils';
+        window.app.location.name.split(' ')[0] + ' Pupils';
     const subtitle = 'There are currently ' + window.app.dashboard.pupils.num +
-        ' ' + window.app.location.split(' ')[0] + ' pupils on Tutorbook';
+        ' ' + window.app.location.name.split(' ')[0] + ' pupils on Tutorbook';
     const actions = {
         snooze: () => {
             $('#cards [card-id="pupils"]').remove();

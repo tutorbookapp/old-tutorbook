@@ -204,8 +204,16 @@ class Matching {
                     [err, res] = await to(Data.approveRequest(request, doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'approve request.');
+                    $(this.main).find('[id="' + tutor.email + '"]').remove();
+                    Data.updateUser(Utils.combineMaps(tutor.profile, {
+                        proxy: [],
+                    }));
+                    $(this.main).find('[id="' + pupil.email + '"]').remove();
+                    Data.updateUser(Utils.combineMaps(pupil.profile, {
+                        proxy: [],
+                    }));
                     window.app.snackbar.view('Approved request and created ' +
-                        'recurring appointments.');
+                        'appointment.');
                 },
             },
         };

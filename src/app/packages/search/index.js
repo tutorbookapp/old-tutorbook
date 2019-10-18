@@ -26,8 +26,8 @@ class Search {
             subject: 'Any',
             gender: 'Any',
             availability: {},
-            location: window.app.location,
-            price: (window.app.location === 'Any') ? 'Any' : 'Free',
+            location: window.app.location.name,
+            price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
             type: 'Tutor',
             sort: 'Rating'
         };
