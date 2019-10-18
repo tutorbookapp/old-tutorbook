@@ -449,10 +449,13 @@ class ViewRequestDialog {
         this.renderSelf();
     }
 
-    renderSelf() {
+    async renderSelf() {
         const that = this;
         const request = this.request;
         const el = this.render.template('dialog-input');
+        const otherUser = await Data.getUser(
+            Utils.getOtherUser(request.toUser, request.fromUser).email
+        );
 
         function add(e) {
             el.appendChild(e);
@@ -462,20 +465,30 @@ class ViewRequestDialog {
             add(that.render.textFieldItem(l, d));
         };
 
-        add(this.render.userHeader(
-            Utils.getOtherUser(request.fromUser, request.toUser)
-        ));
-        add(this.render.listDivider('At'));
+        function addD(label) {
+            add(that.render.listDivider(label));
+        };
+
+        if (window.app.user.type === 'Supervisor') {
+            // NOTE: By default we show the toUser's availability for supervisors,
+            // and thus this "user" object is the toUser's data.
+            const fromUser = await Data.getUser(request.fromUser.email);
+            addD('From ' + fromUser.type.toLowerCase());
+            add(this.render.userHeader(fromUser));
+            addD('To ' + otherUser.type.toLowerCase());
+        }
+        add(this.render.userHeader(otherUser));
+        addD('At');
         addT('Location', request.location.name);
         addT('Day', request.time.day);
         addT('From', request.time.from);
         addT('To', request.time.to);
-        add(this.render.listDivider('For'));
+        addD('For');
         addT('Subject', request.subject);
         add(this.render.textAreaItem('Message', request.message));
 
         if (request.payment.type === 'Paid') {
-            add(this.render.listDivider('Payment'));
+            addD('Payment');
             addT('Amount', '$' + request.payment.amount.toFixed(2));
             addT('Payment method', request.payment.method);
         }
@@ -502,15 +515,11 @@ class ViewRequestDialog {
 
         this.header = header;
         this.main = el;
-
-        return {
-            header: this.header,
-            main: this.el,
-        };
     }
 
     // Views the dialog and adds manager(s)
-    view() {
+    async view() {
+        if (!this.main) await this.renderSelf();
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         this.manage();
@@ -542,7 +551,8 @@ class EditRequestDialog {
         this.request = request;
         this.id = id;
         this.render = window.app.render;
-        this.utils = new Utils(); // To use timeString related functions
+        this.utils = window.app.utils;
+        this.renderSelf();
     }
 
     async renderSelf(profile) {
@@ -628,7 +638,7 @@ class EditRequestDialog {
 
     // Views the dialog and adds manager(s)
     async view() {
-        await this.renderSelf();
+        if (!this.main) await this.renderSelf();
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         this.manage();
@@ -1110,8 +1120,8 @@ class ViewApptDialog extends ViewRequestDialog {
         this.appt = appt;
     }
 
-    renderSelf() {
-        super.renderSelf();
+    async renderSelf() {
+        await super.renderSelf();
         if (window.app.user.type === 'Tutor') {
             if (this.request.payment.type === 'Paid') {
                 $(this.main).append(this.render.fab('requestPayment'));
@@ -1124,6 +1134,12 @@ class ViewApptDialog extends ViewRequestDialog {
                 )).insertAfter($(this.main).find('[id="Hours clocked"]'));
                 $(this.main).append(this.render.fab('clockIn'));
             }
+        } else if (window.app.user.type === 'Supervisor') {
+            $(this.main).find('[id="To ' +
+                this.request.toUser.type.toLowerCase() + '"]').remove();
+            $(this.main).find('[id="From ' +
+                this.request.fromUser.type.toLowerCase() + '"] h4'
+            ).text('Attendees');
         }
         this.header = this.render.header('header-action', {
             showEdit: true,
@@ -1276,8 +1292,8 @@ class ViewPastApptDialog extends ViewApptDialog {
         super(appt, id);
     }
 
-    renderSelf() {
-        super.renderSelf();
+    async renderSelf() {
+        await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Past Appointment',
         });
@@ -1289,12 +1305,20 @@ class ViewActiveApptDialog extends ViewApptDialog {
         super(appt, id);
     }
 
-    renderSelf() {
-        super.renderSelf();
+    async renderSelf() {
+        await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Active Appointment',
         });
         $(this.main).find('.mdc-fab__label').text('ClockOut');
+    }
+};
+
+class ViewCanceledApptDialog extends ViewApptDialog {
+    constructor(appt, id) {
+        throw new Error('The ViewCanceledApptDialog has not been implemented ' +
+            'yet.');
+        super();
     }
 };
 
@@ -1308,6 +1332,7 @@ module.exports = {
     editAppt: EditApptDialog,
     viewPastAppt: ViewPastApptDialog,
     viewActiveAppt: ViewActiveApptDialog,
+    viewCanceledAppt: ViewCanceledApptDialog,
     notify: NotificationDialog,
     editSubject: EditSubjectDialog,
     selectSubject: SubjectSelectDialog,

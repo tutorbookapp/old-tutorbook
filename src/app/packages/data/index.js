@@ -71,7 +71,7 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('Using an email as a user ID is deprecated.');
+            //console.warn('Using an email as a user ID is deprecated.');
             var ref = await firebase.firestore().collection('users').doc(id)
                 .get();
         } else {

@@ -13,6 +13,7 @@ const Utils = require('utils');
 const User = require('user');
 const ViewApptDialog = require('dialogs').viewAppt;
 const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
+const ViewCanceledApptDialog = require('dialogs').viewCanceledAppt;
 const ViewPastApptDialog = require('dialogs').viewPastAppt;
 const ConfirmationDialog = require('dialogs').confirm;
 
@@ -213,6 +214,7 @@ Schedule.renderApptListItem = function(doc, locationID) {
     const subtitle = "Tutoring session for " + appt.for.subject + " at the " +
         appt.location.name + ".";
     const time = Schedule.getNextDateWithDay(appt.time.day);
+    const dialog = new ViewApptDialog(doc.data(), doc.id);
 
     if (window.app.user.type === 'Supervisor') {
         var listItem = render.template('supervisor-appt-list-item', {
@@ -229,7 +231,7 @@ Schedule.renderApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: time,
             go_to_appt: () => {
-                new ViewApptDialog(doc.data(), doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Cancel',
@@ -261,7 +263,7 @@ Schedule.renderApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: time,
             go_to_appt: () => {
-                new ViewApptDialog(doc.data(), doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Cancel',
@@ -311,6 +313,7 @@ Schedule.renderCanceledApptListItem = function(doc, locationID) {
     const subtitle = canceledAppt.canceledBy.name + " canceled this upcoming " +
         "appointment. Please ensure to address these changes.";
     const time = Schedule.getNextDateWithDay(canceledAppt.for.time.day);
+    const dialog = new ViewCanceledApptDialog(canceledAppt.for, doc.id);
 
     if (window.app.user.type === 'Supervisor') {
         var listItem = window.app.render.template('supervisor-appt-list-item', {
@@ -327,7 +330,7 @@ Schedule.renderCanceledApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: time,
             go_to_appt: () => {
-                new CanceledApptDialog(canceledAppt.for, doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Dismiss',
@@ -351,7 +354,7 @@ Schedule.renderCanceledApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: time,
             go_to_appt: () => {
-                new CanceledApptDialog(canceledAppt.for, doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Dismiss',
@@ -393,6 +396,7 @@ Schedule.renderModifiedApptListItem = function(doc, locationID) {
     const subtitle = modifiedAppt.modifiedBy.name + " modified this upcoming " +
         "appointment. Please ensure to address these changes.";
     const time = Schedule.getNextDateWithDay(modifiedAppt.for.time.day);
+    const dialog = new ViewApptDialog(doc.data(), doc.id);
 
     if (window.app.user.type === 'Supervisor') {
         var listItem = window.app.render.template('supervisor-appt-list-item', {
@@ -409,7 +413,7 @@ Schedule.renderModifiedApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: time,
             go_to_appt: () => {
-                new ViewApptDialog(doc.data(), doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Dismiss',
@@ -433,7 +437,7 @@ Schedule.renderModifiedApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: time,
             go_to_appt: () => {
-                new ViewApptDialog(doc.data(), doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Dismiss',
@@ -474,6 +478,7 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
     }
     const subtitle = "Tutoring session right now for " + activeAppt.for.subject +
         " at the " + activeAppt.location.name + ".";
+    const dialog = new ViewActiveApptDialog(activeAppt, doc.id);
 
     if (window.app.user.type === 'Supervisor') {
         var listItem = window.app.render.template('supervisor-appt-list-item', {
@@ -490,7 +495,7 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: activeAppt.clockIn.sentTimestamp.toDate(),
             go_to_appt: () => {
-                new ViewActiveApptDialog(activeAppt, doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'ClockOut',
@@ -510,7 +515,7 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: activeAppt.clockIn.sentTimestamp.toDate(),
             go_to_appt: () => {
-                new ViewActiveApptDialog(activeAppt, doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'ClockOut',
@@ -530,7 +535,7 @@ Schedule.renderActiveApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: activeAppt.clockIn.sentTimestamp.toDate(),
             go_to_appt: () => {
-                new ViewActiveApptDialog(activeAppt, doc.id).view();
+                dialog.view();
             },
             showAction: false,
         });
@@ -562,6 +567,7 @@ Schedule.renderPastApptListItem = function(doc, locationID) {
     }
     const subtitle = "Tutoring session for " + pastAppt.for.subject + " at the " +
         pastAppt.location.name + ".";
+    const dialog = new ViewPastApptDialog(pastAppt, doc.id);
 
     if (window.app.user.type === 'Supervisor') {
         var listItem = window.app.render.template('supervisor-appt-list-item', {
@@ -580,7 +586,7 @@ Schedule.renderPastApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: pastAppt.clockIn.sentTimestamp.toDate(),
             go_to_appt: () => {
-                new ViewPastApptDialog(pastAppt, doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Delete',
@@ -607,7 +613,7 @@ Schedule.renderPastApptListItem = function(doc, locationID) {
             subtitle: subtitle,
             timestamp: pastAppt.clockIn.sentTimestamp.toDate(),
             go_to_appt: () => {
-                new ViewPastApptDialog(pastAppt, doc.id).view();
+                dialog.view();
             },
             showAction: true,
             actionLabel: 'Delete',
