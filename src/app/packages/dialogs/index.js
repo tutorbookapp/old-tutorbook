@@ -1122,19 +1122,21 @@ class ViewApptDialog extends ViewRequestDialog {
 
     async renderSelf() {
         await super.renderSelf();
-        if (window.app.user.type === 'Tutor') {
+        if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
             if (this.request.payment.type === 'Paid') {
                 $(this.main).append(this.render.fab('requestPayment'));
             } else {
-                $(this.render.listDivider('Hours clocked'))
-                    .insertAfter($(this.main).find('.user-header'));
+                $(this.render.listDivider('Hours clocked')).insertAfter(
+                    $(this.main).find('[data-fir-click="go_to_user"]').last()
+                );
                 $(this.render.splitListItem(
                     this.render.textField('Current', '0:0:0.00'),
                     this.render.textField('Total', '0:0:0.00')
                 )).insertAfter($(this.main).find('[id="Hours clocked"]'));
                 $(this.main).append(this.render.fab('clockIn'));
             }
-        } else if (window.app.user.type === 'Supervisor') {
+        }
+        if (window.app.user.type === 'Supervisor') {
             $(this.main).find('[id="To ' +
                 this.request.toUser.type.toLowerCase() + '"]').remove();
             $(this.main).find('[id="From ' +
@@ -1161,7 +1163,7 @@ class ViewApptDialog extends ViewRequestDialog {
         $(this.main).find('.mdc-fab').each(function() {
             MDCRipple.attachTo(this);
         });
-        if (window.app.user.type === 'Tutor') {
+        if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
             if (this.request.payment.type === 'Paid') {
                 $(this.main).find('.mdc-fab').click(async () => {
                     var err;
@@ -1193,9 +1195,9 @@ class ViewApptDialog extends ViewRequestDialog {
         this.timer = setInterval(this.update, 10);
         await Data.clockIn(this.appt, this.id);
         window.app.snackbar.view('Sent clock in request.');
-        $(this.header).find('.material-icons').off('click').click(() => {
-            window.app.snackbar.view('Navigation is locked until you clock out.');
-        });
+        //$(this.header).find('.material-icons').off('click').click(() => {
+        //window.app.snackbar.view('Navigation is locked until you clock out.');
+        //});
     }
 
     async clockOut() {
@@ -1303,7 +1305,34 @@ class ViewPastApptDialog extends ViewApptDialog {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Past Appointment',
+            showDelete: true,
+            delete: () => {
+                return new ConfirmationDialog('Delete Past Appointment?',
+                    'Are you sure you want to permanently delete this ' +
+                    'past appointment between ' + this.appt.attendees[0].name +
+                    ' and ' + this.appt.attendees[1].name + '? This action ' +
+                    'cannot be undone.', async () => {
+                        window.app.nav.back();
+                        await Data.deletePastAppt(this.appt, this.id);
+                        window.app.snackbar.view('Deleted past appointment.');
+                    }).view();
+            },
+            cancel: window.app.nav.back,
         });
+        $(this.render.textFieldItem(
+            'Time clocked',
+            Utils.getDurationStringFromDates(
+                this.appt.clockIn.sentTimestamp.toDate(),
+                this.appt.clockOut.sentTimestamp.toDate()
+            ))).insertAfter($(this.main).find('#Current').parent());
+        $(this.main).find('#Current').replaceWith($(this.render.textField(
+                'Clock in',
+                this.appt.clockIn.sentTimestamp.toDate().toLocaleTimeString()
+            )).attr('style', 'margin-right:20px;')).end()
+            .find('#Total').replaceWith(this.render.textField(
+                'Clock out',
+                this.appt.clockOut.sentTimestamp.toDate().toLocaleTimeString()
+            ));
     }
 };
 

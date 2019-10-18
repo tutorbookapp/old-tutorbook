@@ -298,8 +298,9 @@ service cloud.firestore {
 
     // [CLOCKINS AND CLOCKOUTS]
     match /users/{supervisor}/clockIns/{clockIn} {
-      allow create: if exists(/databases/$(database)/documents/users/$(request.auth.token.email)/appointments/$(clockIn))
-	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Tutor';
+      allow create: if request.auth.token.email == supervisor
+	|| (exists(/databases/$(database)/documents/users/$(request.auth.token.email)/appointments/$(clockIn))
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Tutor');
       allow read, delete: if request.auth.token.email == supervisor;
     }
     match /users/{supervisor}/approvedClockIns/{clockIn} {
@@ -328,8 +329,9 @@ service cloud.firestore {
       allow read: if request.auth.token.email == resource.data.sentBy.email;
     }
     match /users/{supervisor}/clockOuts/{clockOut} {
-      allow create: if exists(/databases/$(database)/documents/users/$(request.auth.token.email)/activeAppointments/$(clockOut))
-	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Tutor';
+      allow create: if request.auth.token.email == supervisor 
+	|| (exists(/databases/$(database)/documents/users/$(request.auth.token.email)/activeAppointments/$(clockOut))
+	&& get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.type == 'Tutor');
       allow read, delete: if request.auth.token.email == supervisor;
     }
     match /users/{supervisor}/approvedClockOuts/{clockOut} {

@@ -149,7 +149,7 @@ class Utils {
                     'guarantee.',
             },
             'authenticated': profile.authenticated || false,
-            'locations': profile.locations || [],
+            'location': profile.location || (window.app) ? window.app.location.name : 'Gunn Academic Center',
             'children': profile.children || [],
             'secondsTutored': profile.secondsTutored || 0,
             'secondsPupiled': profile.secondsPupiled || 0,

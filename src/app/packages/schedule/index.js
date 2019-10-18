@@ -595,10 +595,12 @@ Schedule.renderPastApptListItem = function(doc, locationID) {
                 return new ConfirmationDialog('Delete Past Appointment?',
                     'Are you sure you want to permanently delete this ' +
                     'past appointment between ' + pastAppt.attendees[0].name +
-                    ' and ' + pastAppt.attendees[1].name + '? This action cannot be undone.', async () => {
+                    ' and ' + pastAppt.attendees[1].name + '? This action ' +
+                    'cannot be undone.', async () => {
                         $('#doc-pastAppointments-' + doc.id).remove();
                         window.app.schedule.refresh();
                         await Data.deletePastAppt(pastAppt, doc.id);
+                        window.app.snackbar.view('Deleted past appointment.');
                     }).view();
             },
         });

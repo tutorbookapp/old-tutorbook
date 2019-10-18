@@ -761,8 +761,7 @@ Data.emptyProfile = {
     authenticated: false,
     secondsTutored: 0,
     secondsPupiled: 0,
-    clockedIn: false,
-    clockedOut: false,
+    location: (window.app) ? window.app.location.name : 'Gunn Academic Center',
 };
 
 Data.gunnSchedule = {

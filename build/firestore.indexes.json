@@ -949,6 +949,20 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "payments.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "proficientStudies",
           "arrayConfig": "CONTAINS"
         },
