@@ -5,12 +5,15 @@ import {
 import $ from 'jquery';
 
 const Data = require('data');
-const Tracking = require('tracking');
 const Card = require('card');
 const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
-const Matching = require('matching');
+
+// Shortcut cards for SupervisorDashboard
+const matchingShortcut = require('matching').renderShortcutCard;
+const scheduleShortcut = require('schedule').supervisor.renderShortcutCard;
+const trackingShortcut = require('tracking').renderShortcutCard;
 
 // Class that manages the dashboard view (provides an API for other classes to
 // use to display cards) and a custom welcome message that chnages each time a 
@@ -226,8 +229,9 @@ class SupervisorDashboard extends Dashboard {
 
     viewShortcutCards() {
         const def = $(this.main).find('#default');
-        this.viewCard(Matching.renderShortcutCard(), def);
-        this.viewCard(Tracking.renderShortcutCard(), def);
+        this.viewCard(scheduleShortcut(), def);
+        this.viewCard(matchingShortcut(), def);
+        this.viewCard(trackingShortcut(), def);
     }
 
     viewEverythingElse() {

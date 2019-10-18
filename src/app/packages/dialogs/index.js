@@ -1273,6 +1273,13 @@ class EditApptDialog extends EditRequestDialog {
 
     async renderSelf() {
         await super.renderSelf();
+        if (window.app.user.type === 'Supervisor') {
+            $(this.main).find('[id="To ' +
+                this.request.toUser.type.toLowerCase() + '"]').remove();
+            $(this.main).find('[id="From ' +
+                this.request.fromUser.type.toLowerCase() + '"] h4'
+            ).text('Attendees');
+        }
         this.header = this.render.header('header-action', {
             title: 'Edit Appointment',
             ok: async () => {

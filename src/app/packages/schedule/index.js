@@ -8,6 +8,7 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const Card = require('card');
 const Data = require('data');
 const Utils = require('utils');
 const User = require('user');
@@ -663,6 +664,34 @@ class SupervisorSchedule extends Schedule {
         };
         Utils.recycle(queries, this.recycler);
     }
+
+    static renderShortcutCard() {
+        const title = 'Upcoming Appointments';
+        const subtitle = 'Manage upcoming, active, and past appointments';
+        const summary = 'From your schedule, you\'re able to view, edit, and ' +
+            'cancel all active, past, and upcoming tutoring appointments at ' +
+            'your location(s). Soon, you\'ll be able to clock-in and out for ' +
+            'the tutors at your location without leaving the schedule view.';
+        var card;
+        const actions = {
+            snooze: () => {
+                $(card).remove();
+            },
+            view: () => {
+                window.app.schedule.view();
+            },
+            primary: () => {
+                window.app.schedule.view();
+            },
+        };
+        card = Card.renderCard(title, subtitle, summary, actions);
+        $(card)
+            .attr('id', 'shortcut-to-schedule')
+            .attr('type', 'shortcut')
+            .attr('priority', 10);
+        return card;
+    }
+
 };
 
 
