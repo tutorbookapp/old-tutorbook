@@ -225,6 +225,9 @@ Card.renderUserCard = (doc) => {
             new EditProfile(p).view();
         },
     };
+    if (p.type === 'Pupil') actions.match = () => {
+        new window.app.MatchingDialog(p).view();
+    };
     const card = Card.renderCard(title, subtitle, summary, actions);
     $(card).addClass('mdc-layout-grid__cell--span-2');
     return card;

@@ -61,7 +61,7 @@ class Navigation {
                     case 'tutors':
                         return window.app.dashboard.tutors.reView();
                     case 'pupils':
-                        return window.app.dashboard.tutors.reView();
+                        return window.app.dashboard.pupils.reView();
                     default:
                         return window.app.dashboard.reView();
                 };

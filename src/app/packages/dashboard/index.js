@@ -9,6 +9,7 @@ const Card = require('card');
 const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
+const MatchingDialog = require('matching').dialog;
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('matching').default.renderShortcutCard;
@@ -334,6 +335,9 @@ class ProxyDashboard extends Dashboard {
             }).end().find('#edit').click(async () => {
                 const p = await Data.getUser(id);
                 new EditProfile(p).view();
+            }).end().find('#match').click(async () => {
+                const p = await Data.getUser(id);
+                new MatchingDialog(p).view();
             });
         });
     }
