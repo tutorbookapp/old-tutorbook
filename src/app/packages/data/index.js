@@ -695,7 +695,7 @@ class Data {
     }
 
     initHourlyCharges() {
-        for (var i = 5; i <= 100; i += 5) {
+        for (var i = 5; i <= 200; i += 5) {
             var chargeString = '$' + i + '.00';
             this.payments.hourlyChargeStrings.push(chargeString);
             this.payments.hourlyChargesMap[chargeString] = i;
