@@ -1,10 +1,8 @@
-const express = require('express');
 const to = require('await-to-js').default;
 const admin = require('firebase-admin');
 const cors = require('cors')({
     origin: true,
 });
-const app = express();
 
 
 // Recieves a user, an action, and (optional) data. Performs requested action
@@ -33,9 +31,6 @@ class DataProxy {
     async act() {
         const action = this.action;
         const data = this.data;
-        console.log('Global keys:', Object.keys(global));
-        console.log('User:', global.app.user);
-        console.log('conciseUser:', global.app.conciseUser);
         switch (action) {
             case 'newRequest':
                 return Data.newRequest(data.request, data.payment);
@@ -1250,20 +1245,18 @@ module.exports = (req, res) => {
     return cors(req, res, async () => {
         console.log('Responding to ' + req.query.action + ' action from ' +
             req.query.user + '...');
-        console.log('Global keys:', Object.keys(global));
         const data = new DataProxy(
             (await Data.getUser(req.query.user)),
             req.query.action,
             req.body,
         );
-        console.log('Global keys:', Object.keys(global));
         return data.act().then(() => {
             res.send('[SUCCESS]');
         }).catch((err) => {
             console.error('Error while processing ' + req.query.action +
                 ' action from ' + req.query.user + ':', err.message);
             res.send('[ERROR] ' + err.message);
-            throw err;
+            throw err; // So Firebase doesn't register a 200 f(x) code
         });
     });
 };
