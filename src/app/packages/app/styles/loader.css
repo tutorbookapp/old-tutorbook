@@ -1,3 +1,17 @@
+.card-schedule #loader {
+  display: block;
+  text-align: center;
+  padding: 200px;
+}
+
+.card-schedule .loader {
+  position: initial !important;
+  left: none !important;
+  top: none !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
 .loader {
   left: 50%;
   top: 50%;

@@ -1479,7 +1479,7 @@ styling due to input el spacing. -->
 
 <!-- Calendar Schedule View List Template -->
 <div hidden class="template" id="schedule">
-    <div class="schedule ">
+    <div class="schedule">
         <div data-fir-if="welcome" class="header-welcome">
             <h1 class="mdc-typography--headline1">
                 Appointments
@@ -1748,7 +1748,7 @@ section) -->
     </li>
 </div>
 
-<!-- Empty Dismissable Card Template (used for welcome messages on mobile -->
+<!-- Empty Dismissable Card Template -->
 <div hidden class="template" id="card-empty">
     <div class="card-empty mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card">
         <div class="mdc-card__primary-action dashboard-card__primary-action" id="primary" data-fir-click="actions/primary" tabindex="0">
@@ -1770,6 +1770,70 @@ section) -->
         </div>
         <div class="mdc-card__actions">
         </div>
+    </div>
+</div>
+
+<!-- Four-Day Schedule Card Template -->
+<div class="template" id="card-schedule">
+    <div class="card-schedule mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop">
+        <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+                <div class="schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">Monday</div>
+                <div class="schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">Tuesday</div>
+                <div class="schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">Wednesday</div>
+                <div class="schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">Thursday</div>
+                <div class="schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">Friday</div>
+                <div class="schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">Saturday</div>
+                <div id="monday" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">
+                    <ul class="mdc-list schedule-list">
+                    </ul>
+                </div>
+                <div id="tuesday" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">
+                    <ul class="mdc-list schedule-list">
+                    </ul>
+                </div>
+                <div id="wednesday" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">
+                    <ul class="mdc-list schedule-list">
+                    </ul>
+                </div>
+                <div id="thursday" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">
+                    <ul class="mdc-list schedule-list">
+                    </ul>
+                </div>
+                <div id="friday" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">
+                    <ul class="mdc-list schedule-list">
+                    </ul>
+                </div>
+                <div id="saturday" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop">
+                    <ul class="mdc-list schedule-list">
+                    </ul>
+                </div>
+            </div>
+            <div id="loader">
+                <div class="loader">
+                    <svg viewBox="0 0 32 32" width="32" height="32">
+                        <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Event Card Template -->
+<div hidden class="template" id="card-event">
+    <div class="card-event mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop">
+        <h2 class="dashboard-card__title mdc-typography mdc-typography--headline6">
+            <span data-fir-content="title">Titling Title</span>
+            <div class="mdc-menu-surface--anchor">
+                <button id="menu" class="mdc-icon-button material-icons">more_vert</button>
+                <div class="mdc-menu mdc-menu-surface">
+                    <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+                    </ul>
+                </div>
+            </div>
+        </h2>
+        <h3 class="location-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2" data-fir-content="subtitle">This is a subtitle</h3>
     </div>
 </div>
 

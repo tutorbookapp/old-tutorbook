@@ -6158,6 +6158,31 @@ a.mdc-list-item {
   :not(.mdc-list--non-interactive) > :not(.mdc-list-item--disabled).mdc-list-item--selected.mdc-ripple-upgraded {
     --mdc-ripple-fg-opacity: 0.2; }
 
+.card-schedule {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px; }
+
+.card-schedule .schedule-header-text {
+  padding-left: 4px;
+  margin-bottom: -20px; }
+
+.card-event {
+  padding: 12px 12px 12px 20px;
+  border-radius: 4px;
+  margin-bottom: 10px; }
+  .card-event .mdc-menu-surface--anchor {
+    float: right;
+    width: 24px;
+    height: 24px; }
+  .card-event i {
+    float: right; }
+  .card-event button {
+    float: right;
+    margin: -12px; }
+
+.card-event h2, .card-event h3 {
+  color: #FFF !important; }
+
 .schedule h1 {
   text-align: center; }
 
@@ -6624,6 +6649,20 @@ svg.mdc-button__icon {
 
 #media-capture {
   display: none; }
+.card-schedule #loader {
+  display: block;
+  text-align: center;
+  padding: 200px;
+}
+
+.card-schedule .loader {
+  position: initial !important;
+  left: none !important;
+  top: none !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
 .loader {
   left: 50%;
   top: 50%;

@@ -216,16 +216,106 @@ class SupervisorDashboard extends Dashboard {
             );
         };
 
-        //add('Clocking requests', 'clocking');
-        //add('Pending matches', 'matching');
+        add('Schedule', 'schedule');
         add('Everything else', 'everything');
     }
 
     viewDefaultCards() {
         super.viewDefaultCards();
+        this.viewScheduleCards();
         this.viewShortcutCards();
-        //window.app.matching.viewCards();
         this.viewEverythingElse();
+    }
+
+    viewScheduleCards() {
+        const schedule = this.render.template('card-schedule');
+        const existing = $(this.main).find('.card-schedule');
+        if (existing.length) {
+            $(existing).replaceWith(schedule);
+        } else {
+            $(this.main).find('#schedule .mdc-layout-grid__inner')
+                .append(schedule);
+        }
+        const day = (day, el) => {
+            const cols = [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday'
+            ];
+            $(el).addClass('mdc-layout-grid__cell--order-' +
+                (cols.indexOf(day) + 1));
+            return el;
+        };
+        const colors = {};
+        const color = (time) => {
+            if (colors[time.day] && colors[time.day][time.from])
+                return colors[time.day][time.from];
+            const palette = {
+                'purples': ['#7e57c2', '#5e35b1', '#4527a0'],
+                'pinks': ['#ec407a', '#d81b60', '#ad1457'],
+                'blues': ['#5c6bc0', '#3949ab', '#283593'],
+                'oranges': ['#ffa726', '#fb8c00', '#ef6c00'],
+                'greens': ['#26a69a', '#00897b', '#00695c'],
+                'greys': ['#78909c', '#546e7a', '#37474f'],
+            };
+            if (colors[time.day]) {
+                var type = 'oranges';
+                var used = [];
+                Object.entries(palette).forEach((entry) => {
+                    Object.values(colors[time.day]).forEach((color) => {
+                        if (entry[1].indexOf(color) >= 0) type = entry[0];
+                        used.push(color);
+                    });
+                });
+                for (var i = 0; i < palette[type].length; i++) {
+                    if (used.indexOf(palette[type][i]) < 0) {
+                        colors[time.day][time.from] = palette[type][i];
+                        break;
+                    }
+                }
+                if (!colors[time.day][time.from])
+                    colors[time.day][time.from] = used[0];
+            } else {
+                colors[time.day] = {};
+                var type = 'oranges';
+                var used = [];
+                Object.entries(palette).forEach((entry) => {
+                    Object.values(colors).forEach((times) => {
+                        Object.values(times).forEach((c) => {
+                            if (entry[1].indexOf(c) >= 0) used.push(entry[0]);
+                        });
+                    });
+                });
+                for (var i = 0; i < Object.keys(palette).length; i++) {
+                    var key = Object.keys(palette)[i];
+                    if (used.indexOf(key) < 0) type = key;
+                }
+                colors[time.day][time.from] = palette[type][0];
+            }
+            return colors[time.day][time.from];
+        };
+        const add = (appt) => {
+            const title = appt.attendees[0].name.split(' ')[0] + ' and ' +
+                appt.attendees[1].name.split(' ')[0];
+            const subtitle = ((Data.periods.indexOf(appt.time.from) < 0) ?
+                'At ' : 'During ') + appt.time.from;
+            const card = $(this.render.template('card-event', {
+                title: title,
+                subtitle: subtitle,
+            })).css('background', color(appt.time));
+            $(schedule).find('#' + appt.time.day.toLowerCase() + ' ul')
+                .append(card);
+        };
+        firebase.firestore().collection('locations').doc(window.app.location.id)
+            .collection('appointments').get().then((snapshot) => {
+                $(schedule).find('#loader').remove();
+                snapshot.forEach((doc) => {
+                    add(doc.data());
+                });
+            });
     }
 
     viewShortcutCards() {

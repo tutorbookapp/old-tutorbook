@@ -1,5 +1,37 @@
 @import "@material/list/mdc-list";
 
+.card-schedule {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.card-schedule .schedule-header-text {
+  padding-left: 4px;
+  margin-bottom: -20px;
+}
+
+.card-event {
+  padding: 12px 12px 12px 20px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  .mdc-menu-surface--anchor {
+    float: right;
+    width: 24px;
+    height: 24px;
+  }
+  i {
+    float: right;
+  }
+  button {
+    float: right;
+    margin: -12px;
+  }
+}
+
+.card-event h2,.card-event h3 {
+  color: #FFF !important; 
+}
+
 .schedule h1 {
   text-align: center;
 }
