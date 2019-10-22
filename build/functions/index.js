@@ -3,10 +3,17 @@ const admin = require('firebase-admin').initializeApp();
 
 const updateSheet = require('sheet');
 const updateAuth = require('auth');
+const data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
 const Search = require('search');
 
+
+// ============================================================================
+// DATA-FLOW
+// ============================================================================
+
+exports.data = functions.https.onRequest(data);
 
 // ============================================================================
 // SEARCH
