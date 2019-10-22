@@ -6,6 +6,7 @@ import {
 } from '@material/menu/index';
 
 import $ from 'jquery';
+import to from 'await-to-js';
 
 // Dialogs
 const EditRequestDialog = require('dialogs').editRequest;
@@ -797,7 +798,10 @@ Card.renderRequestOutCard = function(doc) {
             request.time.day + "s.";
         new ConfirmationDialog('Cancel Request?', summary, async () => {
             Card.remove(doc, 'requestsOut');
-            await Data.cancelRequest(request, doc.id);
+            var err;
+            var res;
+            [err, res] = await to(Data.cancelRequest(request, doc.id));
+            if (err) return app.snackbar.view('Could not cancel request.');
             app.snackbar.view('Canceled request to ' +
                 request.toUser.email + '.');
         }).view();

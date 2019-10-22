@@ -1,4 +1,4 @@
-const to = require('await-to-js').default;
+import to from 'await-to-js';
 
 
 // Class that manages Firestore data flow along with any local app data
@@ -89,6 +89,7 @@ class Data {
                 throw new Error('Server-side error: ' + res.data);
         }).catch((err) => {
             console.error('Error during ' + action + ' REST API call.', err);
+            throw err;
         });
     }
 

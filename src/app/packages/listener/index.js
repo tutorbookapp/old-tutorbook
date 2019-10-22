@@ -1,4 +1,4 @@
-const to = require('await-to-js').default;
+import to from 'await-to-js';
 
 const Utils = require('utils'); // TODO: Only import these static classes once
 const Data = require('data');

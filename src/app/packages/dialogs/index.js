@@ -12,7 +12,7 @@ import {
 } from '@material/top-app-bar/index';
 
 import $ from 'jquery';
-const to = require('await-to-js').default;
+import to from 'await-to-js';
 
 const Data = require('data');
 const Utils = require('utils');
