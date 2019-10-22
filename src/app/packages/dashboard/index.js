@@ -1,8 +1,15 @@
 import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
+import {
+    MDCRipple
+} from '@material/ripple/index';
+import {
+    MDCMenu
+} from '@material/menu/index';
 
 import $ from 'jquery';
+import to from 'await-to-js';
 
 const Data = require('data');
 const Card = require('card');
@@ -10,6 +17,10 @@ const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
 const MatchingDialog = require('matching').dialog;
+const ViewApptDialog = require('dialogs').viewAppt;
+const EditApptDialog = require('dialogs').editAppt;
+const NotificationDialog = require('dialogs').notify;
+const ConfirmationDialog = require('dialogs').confirm;
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('matching').default.renderShortcutCard;
@@ -297,7 +308,8 @@ class SupervisorDashboard extends Dashboard {
             }
             return colors[time.day][time.from];
         };
-        const add = (appt) => {
+        const add = (doc) => {
+            const appt = doc.data();
             const title = appt.attendees[0].name.split(' ')[0] + ' and ' +
                 appt.attendees[1].name.split(' ')[0];
             const subtitle = ((Data.periods.indexOf(appt.time.from) < 0) ?
@@ -305,15 +317,69 @@ class SupervisorDashboard extends Dashboard {
             const card = $(this.render.template('card-event', {
                 title: title,
                 subtitle: subtitle,
+                id: doc.id,
             })).css('background', color(appt.time));
-            $(schedule).find('#' + appt.time.day.toLowerCase() + ' ul')
+            Object.entries({
+                'View': () => {
+                    new ViewApptDialog(appt).view();
+                },
+                'Edit': () => {
+                    new EditApptDialog(appt).view();
+                },
+                'Cancel': () => {
+                    return new ConfirmationDialog('Cancel Appointment?',
+                        'Cancel tutoring sessions between ' + appt.attendees[0].name +
+                        ' and ' + appt.attendees[1].name + ' for ' + appt.for.subject + ' at ' +
+                        appt.time.from + ' at the ' +
+                        appt.location.name + '.', async () => {
+                            $(schedule).find('#' + doc.id).remove();
+                            var err;
+                            var res;
+                            [err, res] = await to(Data.cancelAppt(appt, doc.id));
+                            if (err) return window.app.snackbar.view('Could ' +
+                                'not cancel appointment.');
+                            window.app.snackbar.view('Canceled appointment.');
+                        }).view();
+                },
+                'Clock-In': () => {
+                    new NotificationDialog('Instant Clock-Ins', 'Soon, you\'' +
+                        'll be able to clock in and out for your tutors. But ' +
+                        'in the meantime, while we\'re still working out some' +
+                        ' cinks, head over to the schedule view to manage ' +
+                        'tutor clock ins.', () => {}).view();
+                },
+                'Clock-Out': () => {
+                    new NotificationDialog('Instant Clock-Outs', 'Soon, you\'' +
+                        'll be able to clock in and out for your tutors. But ' +
+                        'in the meantime, while we\'re still working out some' +
+                        ' cinks, head over to the schedule view to manage ' +
+                        'tutor clock outs.', () => {}).view();
+                },
+            }).forEach((entry) => {
+                $(card).find('.mdc-menu .mdc-list').append(
+                    this.render.template('card-action', {
+                        label: entry[0],
+                        action: entry[1],
+                    })
+                );
+            });
+            const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
+            const button = $(card).find('#menu');
+            MDCRipple.attachTo(button[0]).unbounded = true;
+            $(card).find('.mdc-menu .mdc-list-item').each(function() {
+                MDCRipple.attachTo(this);
+            });
+            button.click(() => {
+                menu.open = true;
+            });
+            $(schedule).find('#' + appt.time.day.toLowerCase() + ' .schedule-list')
                 .append(card);
         };
         firebase.firestore().collection('locations').doc(window.app.location.id)
             .collection('appointments').get().then((snapshot) => {
                 $(schedule).find('#loader').remove();
                 snapshot.forEach((doc) => {
-                    add(doc.data());
+                    add(doc);
                 });
             });
     }
