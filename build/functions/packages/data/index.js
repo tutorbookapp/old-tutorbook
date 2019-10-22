@@ -1,50 +1,74 @@
+const express = require('express');
 const to = require('await-to-js').default;
 const admin = require('firebase-admin');
 const cors = require('cors')({
     origin: true,
 });
+const app = express();
 
 
 // Recieves a user, an action, and (optional) data. Performs requested action
 // (using the below `Data` class) and sends snackbar message response.
 class DataProxy {
-    constructor(res, user, action, data, id) {
+    constructor(user, action, data) {
         global.app = {
             user: user,
-            conciseUser: Data.filterRequestUserData(user),
+            conciseUser: {
+                name: user.name,
+                email: user.email,
+                id: user.id,
+                photo: user.photo,
+                type: user.type,
+                grade: user.grade,
+                gender: user.gender,
+                hourlyCharge: (!!user.payments) ? user.payments.hourlyCharge : 0,
+                payments: user.payments,
+                proxy: user.proxy,
+            },
         };
-        return this.act(res, action, data, id);
+        this.action = action;
+        this.data = data;
     }
 
-    async act(res, action, data, id) {
-        async function d(fx, er, ok) {
-            [err, res] = await to(fx(data, id));
-            if (err) {
-                console.error(er);
-                return res.send(er);
-            }
-            return res.send(ok);
-        };
+    async act() {
+        const action = this.action;
+        const data = this.data;
+        console.log('Global keys:', Object.keys(global));
+        console.log('User:', global.app.user);
+        console.log('conciseUser:', global.app.conciseUser);
         switch (action) {
             case 'newRequest':
-                return d(
-                    Data.newRequest,
-                    'Could not send request.',
-                    'Request sent.'
-                );
+                return Data.newRequest(data.request, data.payment);
+            case 'requestPayout':
+                return Data.requestPayout();
+            case 'requestPaymentFor':
+                return Data.requestPaymentFor(data.appt, data.id);
+            case 'approvePayment':
+                return Data.approvePayment(data.approvedPayment, data.id);
+            case 'denyPayment':
+                return Data.denyPayment(data.deniedPayment, data.id);
+            case 'approveClockIn':
+                return Data.approveClockIn(data.clockIn, data.id);
+            case 'approveClockOut':
+                return Data.approveClockOut(data.clockOut, data.id);
+            case 'clockIn':
+                return Data.clockIn(data.appt, data.id);
+            case 'clockOut':
+                return Data.clockOut(data.appt, data.id);
+            case 'approveRequest':
+                return Data.approveRequest(data.request, data.id);
+            case 'modifyAppt':
+                return Data.modifyAppt(data.appt, data.id);
+            case 'cancelAppt':
+                return Data.cancelAppt(data.appt, data.id);
+            case 'rejectRequest':
+                return Data.rejectRequest(data.request, data.id);
+            case 'cancelRequest':
+                return Data.cancelRequest(data.request, data.id);
+            case 'modifyRequest':
+                return Data.modifyRequest(data.request, data.id);
             default:
-                if (!Data[action]) {
-                    console.error('Could not process ' + action + ' request.');
-                    return res.send('Could not process request. Contact ' +
-                        'support at help@tutorbook.app.');
-                }
-                [err, res] = await to(Data[action](data, id));
-                if (err) {
-                    console.error('Error while processing ' + action +
-                        ' action.');
-                    return res.send('Could not process action.');
-                }
-                return res.send('Action processed.');
+                throw new Error('Could not process ' + action + ' request.');
         };
     }
 };
@@ -378,12 +402,12 @@ class Data {
             approvedBy: app.conciseUser,
             approvedTimestamp: new Date(),
         }));
-        if (err) return console.error('Error while adding approvedRequestOut:',
-            err);
+        if (err)
+            throw new Error('Error while adding approvedRequestOut:', err);
         [err, res] = await to(requestOut.delete());
-        if (err) return console.error('Error while deleting requestOut:', err);
+        if (err) throw new Error('Error while deleting requestOut:', err);
         [err, res] = await to(requestIn.delete());
-        if (err) return console.error('Error while deleting requestIn:', err);
+        if (err) throw new Error('Error while deleting requestIn:', err);
         for (var i = 0; i < appts.length; i++) {
             var appt = appts[i];
             [err, res] = await to(appt.set({
@@ -393,7 +417,7 @@ class Data {
                 time: request.time,
                 timestamp: new Date(),
             }));
-            if (err) return console.error('Error while creating appt doc:', err);
+            if (err) throw new Error('Error while creating appt doc:', err);
         }
     }
 
@@ -1224,14 +1248,22 @@ Data.types = [
 
 module.exports = (req, res) => {
     return cors(req, res, async () => {
-        console.log('Responding to ' + req.params.action + ' action from ' +
-            req.params.user + ' with data (' + req.params.id + '):', req.data);
-        return new DataProxy(
-            res,
-            (await Data.getUser(req.params.user)),
-            req.params.action,
-            req.data,
-            req.params.id
-        ).act();
+        console.log('Responding to ' + req.query.action + ' action from ' +
+            req.query.user + '...');
+        console.log('Global keys:', Object.keys(global));
+        const data = new DataProxy(
+            (await Data.getUser(req.query.user)),
+            req.query.action,
+            req.body,
+        );
+        console.log('Global keys:', Object.keys(global));
+        return data.act().then(() => {
+            res.send('[SUCCESS]');
+        }).catch((err) => {
+            console.error('Error while processing ' + req.query.action +
+                ' action from ' + req.query.user + ':', err.message);
+            res.send('[ERROR] ' + err.message);
+            throw err;
+        });
     });
 };

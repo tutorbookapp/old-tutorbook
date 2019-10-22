@@ -1,5 +1,6 @@
 const to = require('await-to-js').default;
 
+
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
 // Classes#Instance_properties
@@ -8,63 +9,6 @@ class Data {
         this.initTimes();
         this.initHourlyCharges();
         this.initLocations();
-    }
-
-    static requestPayout() {
-        return firebase.firestore().collection('users')
-            .doc(window.app.user.id).collection('requestedPayouts').doc().set({
-                timestamp: new Date(),
-            });
-    }
-
-    static requestPaymentFor(appt, id) {
-        const user = Data.getOther(appt.attendees);
-        return firebase.firestore().collection('users').doc(user.email)
-            .collection('requestedPayments').doc(id).set({
-                from: Data.getOther(appt.attendees),
-                to: window.app.conciseUser,
-                amount: appt.for.payment.amount,
-                for: appt,
-                timestamp: new Date(),
-            });
-    }
-
-    static async approvePayment(approvedPayment, id) {
-        const db = firebase.firestore();
-        const payments = [
-            db.collection('users').doc(approvedPayment.to.email)
-            .collection('approvedPayments').doc(id),
-            db.collection('users').doc(approvedPayment.from.email)
-            .collection('approvedPayments').doc(id),
-        ];
-        const requestedPayment = db.collection('users')
-            .doc(window.app.user.email)
-            .collection('requestedPayments').doc(id);
-        await requestedPayment.delete();
-        return payments.forEach(async (payment) => {
-            await payment.set(approvedPayment);
-        });
-    }
-
-    static async denyPayment(deniedPayment, id) {
-        const db = firebase.firestore();
-        const payments = [
-            db.collection('users').doc(approvedPayment.appt.attendees[0].email)
-            .collection('deniedPayments').doc(id),
-            db.collection('users').doc(approvedPayment.appt.attendees[1].email)
-            .collection('deniedPayments').doc(id),
-        ];
-        const approvedPaymentRef = db.collection('users')
-            .doc(window.app.user.email)
-            .collection('needApprovalPayments').doc(id);
-        await approvedPaymentRef.delete();
-        payments.forEach(async (payment) => {
-            await payment.set({
-                for: deniedPayment,
-                deniedBy: that.conciseUser,
-                deniedTimestamp: new Date(),
-            });
-        });
     }
 
     static async getUser(id) {
@@ -110,40 +54,6 @@ class Data {
             .set(user);
     }
 
-    static async approveClockIn(clockIn, id) {
-        const db = firebase.firestore();
-        const ref = db.collection('users').doc(window.app.user.id)
-            .collection('clockIns').doc(id);
-        const approvedClockIn = db.collection('users').doc(window.app.user.id)
-            .collection('approvedClockIns').doc();
-        const activeAppts = [
-            db.collection('users').doc(clockIn.for.attendees[0].email)
-            .collection('activeAppointments')
-            .doc(id),
-            db.collection('users').doc(clockIn.for.attendees[1].email)
-            .collection('activeAppointments')
-            .doc(id),
-            db.collection('locations').doc(clockIn.for.location.id)
-            .collection('activeAppointments')
-            .doc(id),
-        ];
-        await ref.delete();
-        await approvedClockIn.set(Data.combineMaps(clockIn, {
-            approvedTimestamp: new Date(),
-            approvedBy: window.app.conciseUser,
-        }));
-        // Tedious work around of the infinite loop
-        const activeApptData = Data.cloneMap(clockIn.for);
-        activeApptData.clockIn = Data.combineMaps(clockIn, {
-            approvedTimestamp: new Date(),
-            approvedBy: window.app.conciseUser,
-        });
-        for (var i = 0; i < activeAppts.length; i++) {
-            var activeAppt = activeAppts[i];
-            await activeAppt.set(activeApptData);
-        }
-    }
-
     static getOther(notThisUser, attendees) { // Don't create dependency loops
         if (!notThisUser.email && !!notThisUser.length) {
             if (notThisUser[0].email === window.app.user.email) {
@@ -157,58 +67,68 @@ class Data {
         return attendees[0];
     }
 
-    static async approveClockOut(clockOutData, id) {
-        // Tedious work around of the infinite loop
-        const approvedClockOutData = Data.combineMaps(clockOutData, {
-            approvedTimestamp: new Date(),
-            approvedBy: window.app.conciseUser,
+    // This post function calls a REST API that will:
+    // 1) perform the given action using information given
+    // 2a) axios will throw a "Network Error" for uncaught errors server-side
+    // 2b) res.data will be "ERROR" for known errors server-side
+    // 2c) res.data will be "SUCCESS" when there are no errors server-side
+    // Whenever a data function is called, the app will wait for a "SUCCESS" 
+    // before showing the user a snackbar. If an error is thrown, we show the 
+    // user an error message snackbar.
+    static post(action, data) {
+        return axios({
+            method: 'post',
+            url: window.app.functionsURL + '/data',
+            params: {
+                user: window.app.user.id || window.app.user.email,
+                action: action,
+            },
+            data: data,
+        }).then((res) => {
+            if (res.data.indexOf('ERROR') >= 0)
+                throw new Error('Server-side error: ' + res.data);
+        }).catch((err) => {
+            console.error('Error during ' + action + ' REST API call.', err);
         });
-        const appt = Data.cloneMap(approvedClockOutData.for);
-        appt.clockOut = Data.cloneMap(approvedClockOutData);
+    }
 
-        // Define Firestore doc locations
-        const db = firebase.firestore();
-        const clockOut = db.collection('users').doc(window.app.user.id)
-            .collection('clockOuts').doc(id);
-        const approvedClockOut = db.collection('users').doc(window.app.user.id)
-            .collection('approvedClockOuts').doc();
-        const activeAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
-            .collection('activeAppointments')
-            .doc(id),
-            db.collection('users').doc(appt.attendees[1].email)
-            .collection('activeAppointments')
-            .doc(id),
-            db.collection('locations').doc(appt.location.id)
-            .collection('activeAppointments')
-            .doc(id),
-        ];
-        const pastAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
-            .collection('pastAppointments')
-            .doc(),
-        ];
-        const pastApptID = pastAppts[0].id;
-        pastAppts.push(
-            db.collection('users').doc(appt.attendees[1].email)
-            .collection('pastAppointments')
-            .doc(pastApptID),
-        );
-        pastAppts.push(
-            db.collection('locations').doc(appt.location.id)
-            .collection('pastAppointments')
-            .doc(pastApptID),
-        );
+    static requestPayout() {
+        return Data.post('requestPayout');
+    }
 
-        // Actually mess with docs
-        await clockOut.delete();
-        await approvedClockOut.set(approvedClockOutData);
-        for (var i = 0; i < activeAppts.length; i++) {
-            await activeAppts[i].delete();
-        }
-        for (var i = 0; i < pastAppts.length; i++) {
-            await pastAppts[i].set(appt);
-        }
+    static requestPaymentFor(appt, id) {
+        return Data.post('requestPaymentFor', {
+            appt: appt,
+            id: id,
+        });
+    }
+
+    static approvePayment(approvedPayment, id) {
+        return Data.post('approvePayment', {
+            approvedPayment: approvedPayment,
+            id: id,
+        });
+    }
+
+    static denyPayment(deniedPayment, id) {
+        return Data.post('denyPayment', {
+            deniedPayment: deniedPayment,
+            id: id,
+        });
+    }
+
+    static approveClockIn(clockIn, id) {
+        return Data.post('approveClockIn', {
+            clockIn: clockIn,
+            id: id,
+        });
+    }
+
+    static approveClockOut(clockOut, id) {
+        return Data.post('approveClockOut', {
+            clockOut: clockOut,
+            id: id,
+        });
     }
 
     static combineMaps(mapA, mapB) { // Avoid dependency loops with Utils
@@ -254,311 +174,60 @@ class Data {
         }
     }
 
-    static async clockIn(appt, id) {
-        const clockIn = {
-            sentTimestamp: new Date(),
-            sentBy: window.app.conciseUser,
-        };
-
-        const db = firebase.firestore();
-        const supervisor = await Data.getLocationSupervisor(appt.location.id);
-        const ref = db.collection('users').doc(supervisor)
-            .collection('clockIns').doc(id);
-
-        appt.supervisor = supervisor; // Avoid infinite reference loop
-        appt.clockIn = Data.cloneMap(clockIn);
-        clockIn.for = Data.cloneMap(appt);
-
-        await ref.set(clockIn);
-        return db.collection('users').doc(window.app.user.id).update({
-            clockedIn: true
+    static clockIn(appt, id) {
+        return Data.post('clockIn', {
+            appt: appt,
+            id: id,
         });
     }
 
-    static async clockOut(appt, id) {
-        const clockOut = {
-            sentTimestamp: new Date(),
-            sentBy: window.app.conciseUser,
-        };
-
-        const db = firebase.firestore();
-        const ref = db.collection('users').doc(appt.supervisor)
-            .collection('clockOuts').doc(id);
-
-        appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
-        clockOut.for = Data.cloneMap(appt);
-
-        await ref.set(clockOut);
-        return db.collection('users').doc(window.app.user.id).update({
-            clockedOut: true
+    static clockOut(appt, id) {
+        return Data.post('clockOut', {
+            appt: appt,
+            id: id,
         });
     }
 
-    static async approveRequest(request, id) {
-        const db = firebase.firestore();
-        const requestIn = db.collection("users").doc(request.toUser.email)
-            .collection('requestsIn')
-            .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('requestsOut')
-            .doc(id);
-        // TODO: Right now we don't allow supervisors to approve requests.
-        // Shoud we?
-        const approvedRequestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('approvedRequestsOut')
-            .doc(id);
-        // NOTE: The appts must be processed in this order due to the way that
-        // the Firestore rules are setup (i.e. first we check if there is an
-        // approvedRequestOut doc, then we check if there is an appt doc
-        // already created).
-        const appts = [
-            db.collection('users').doc(request.fromUser.email)
-            .collection('appointments')
-            .doc(id),
-            db.collection('users').doc(request.toUser.email)
-            .collection('appointments')
-            .doc(id),
-            db.collection('locations').doc(request.location.id)
-            .collection('appointments')
-            .doc(id),
-        ];
-
-        var err;
-        var res;
-        [err, res] = await to(approvedRequestOut.set({
-            for: request,
-            approvedBy: app.conciseUser,
-            approvedTimestamp: new Date(),
-        }));
-        if (err) return console.error('Error while adding approvedRequestOut:',
-            err);
-        [err, res] = await to(requestOut.delete());
-        if (err) return console.error('Error while deleting requestOut:', err);
-        [err, res] = await to(requestIn.delete());
-        if (err) return console.error('Error while deleting requestIn:', err);
-        for (var i = 0; i < appts.length; i++) {
-            var appt = appts[i];
-            [err, res] = await to(appt.set({
-                attendees: [request.fromUser, request.toUser],
-                location: request.location,
-                for: request,
-                time: request.time,
-                timestamp: new Date(),
-            }));
-            if (err) return console.error('Error while creating appt doc:', err);
-        }
-    }
-
-    static async modifyAppt(apptData, id) {
-        const db = firebase.firestore();
-        apptData = Data.trimObject(apptData);
-        const appts = [
-            db.collection('users').doc(apptData.attendees[0].email)
-            .collection('appointments')
-            .doc(id),
-            db.collection('users').doc(apptData.attendees[1].email)
-            .collection('appointments')
-            .doc(id),
-            db.collection('locations').doc(apptData.location.id)
-            .collection('appointments')
-            .doc(id),
-        ];
-        const modifiedAppts = [];
-        if (apptData.attendees[0].email !== app.user.email) {
-            modifiedAppts.push(db.collection('users').doc(apptData.attendees[0].email)
-                .collection('modifiedAppointments').doc(id));
-        }
-        if (apptData.attendees[1].email !== app.user.email) {
-            modifiedAppts.push(db.collection('users').doc(apptData.attendees[1].email)
-                .collection('modifiedAppointments').doc(id));
-        }
-        if (app.user.locations.indexOf(apptData.location.id) < 0) {
-            modifiedAppts.push(db.collection('locations').doc(apptData.location.id)
-                .collection('modifiedAppointments').doc(id));
-        }
-
-        for (var i = 0; i < modifiedAppts.length; i++) {
-            var modifiedAppt = modifiedAppts[i];
-            await modifiedAppt.set({
-                modifiedBy: app.conciseUser,
-                modifiedTimestamp: new Date(),
-                for: apptData,
-            });
-        }
-        for (var i = 0; i < appts.length; i++) {
-            var appt = appts[i];
-            await appt.update(apptData);
-        }
-    }
-
-    static async cancelAppt(apptData, id) {
-        const db = firebase.firestore();
-        const appts = [
-            db.collection('users').doc(apptData.attendees[0].email)
-            .collection('appointments')
-            .doc(id),
-            db.collection('users').doc(apptData.attendees[1].email)
-            .collection('appointments')
-            .doc(id),
-            db.collection('locations').doc(apptData.location.id)
-            .collection('appointments')
-            .doc(id),
-        ];
-        const canceledAppts = [];
-        if (apptData.attendees[0].email !== app.user.email) {
-            canceledAppts.push(db.collection('users').doc(apptData.attendees[0].email)
-                .collection('canceledAppointments').doc(id));
-        }
-        if (apptData.attendees[1].email !== app.user.email) {
-            canceledAppts.push(db.collection('users').doc(apptData.attendees[1].email)
-                .collection('canceledAppointments').doc(id));
-        }
-        if (app.user.locations.indexOf(apptData.location.id) < 0) {
-            canceledAppts.push(db.collection('locations').doc(apptData.location.id)
-                .collection('canceledAppointments').doc(id));
-        }
-
-        if (apptData.for.payment.type === 'Paid') {
-            // Delete the authPayment docs as well
-            const authPayments = [
-                db.collection('users').doc(apptData.attendees[0].email)
-                .collection('authPayments')
-                .doc(id),
-                db.collection('users').doc(apptData.attendees[1].email)
-                .collection('authPayments')
-                .doc(id),
-            ];
-            authPayments.forEach(async (authPayment) => {
-                await authPayment.delete();
-            });
-        }
-
-        canceledAppts.forEach(async (appt) => {
-            await appt.set({
-                canceledBy: app.conciseUser,
-                canceledTimestamp: new Date(),
-                for: apptData,
-            });
-        });
-
-        appts.forEach(async (appt) => {
-            await appt.delete();
+    static approveRequest(request, id) {
+        return Data.post('approveRequest', {
+            request: request,
+            id: id,
         });
     }
 
-    static async rejectRequest(request, id) {
-        const db = firebase.firestore();
-        const requestIn = db.collection("users").doc(request.toUser.email)
-            .collection('requestsIn')
-            .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('requestsOut')
-            .doc(id);
-        const rejectedRequestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('rejectedRequestsOut')
-            .doc(id);
-
-        if (request.payment.type === 'Paid') {
-            // Delete the authPayment docs as well
-            const authPayments = [
-                db.collection('users').doc(request.fromUser.email)
-                .collection('authPayments')
-                .doc(id),
-                db.collection('users').doc(request.toUser.email)
-                .collection('authPayments')
-                .doc(id),
-            ];
-            authPayments.forEach(async (authPayment) => {
-                await authPayment.delete();
-            });
-        }
-
-        await rejectedRequestOut.set({
-            for: request,
-            rejectedBy: app.conciseUser,
-            rejectedTimestamp: new Date(),
+    static modifyAppt(appt, id) {
+        return Data.post('modifyAppt', {
+            appt: appt,
+            id: id,
         });
-        await requestOut.delete();
-        await requestIn.delete();
     }
 
-    static async cancelRequest(request, id) {
-        const db = firebase.firestore();
-        const requestIn = db.collection("users").doc(request.toUser.email)
-            .collection('requestsIn')
-            .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('requestsOut')
-            .doc(id);
-
-        if (request.payment.type === 'Paid') {
-            // Delete the authPayment docs as well
-            const authPayments = [
-                db.collection('users').doc(request.fromUser.email)
-                .collection('authPayments')
-                .doc(id),
-                db.collection('users').doc(request.toUser.email)
-                .collection('authPayments')
-                .doc(id),
-            ];
-            authPayments.forEach(async (authPayment) => {
-                await authPayment.delete();
-            });
-        }
-
-        const canceledRequests = [];
-        if (request.toUser.email !== app.user.email) {
-            canceledRequests.push(db.collection('users').doc(request.toUser.email)
-                .collection('canceledRequestsIn').doc(id));
-        }
-        if (request.fromUser.email !== app.user.email) {
-            canceledRequests.push(db.collection('users').doc(request.fromUser.email)
-                .collection('canceledRequestsOut').doc(id));
-        }
-
-        canceledRequests.forEach(async (canceledRequest) => {
-            await canceledRequest.set({
-                canceledBy: app.conciseUser,
-                canceledTimestamp: new Date(),
-                for: request,
-            });
+    static cancelAppt(appt, id) {
+        return Data.post('cancelAppt', {
+            appt: appt,
+            id: id,
         });
-        await requestOut.delete();
-        await requestIn.delete();
     }
 
-    static async modifyRequest(request, id) {
-        const db = firebase.firestore();
-        request = Data.trimObject(request);
-        const requestIn = db.collection("users").doc(request.toUser.email)
-            .collection('requestsIn')
-            .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('requestsOut')
-            .doc(id);
-        // We send modified requests to all users that aren't the currentUser
-        const modifiedRequests = [];
-        if (request.fromUser.email !== app.user.email) {
-            modifiedRequests.push(db.collection('users')
-                .doc(request.fromUser.email)
-                .collection('modifiedRequestsOut')
-                .doc(id));
-        }
-        if (request.toUser.email !== app.user.email) {
-            modifiedRequests.push(db.collection('users')
-                .doc(request.toUser.email)
-                .collection('modifiedRequestsIn')
-                .doc(id));
-        }
-        modifiedRequests.forEach(async (modifiedRequest) => {
-            await modifiedRequest.set({
-                for: request,
-                modifiedBy: app.conciseUser,
-                modifiedTimestamp: new Date(),
-            });
+    static rejectRequest(request, id) {
+        return Data.post('rejectRequest', {
+            request: request,
+            id: id,
         });
-        await requestOut.update(request);
-        await requestIn.update(request);
+    }
+
+    static cancelRequest(request, id) {
+        return Data.post('cancelRequest', {
+            request: request,
+            id: id,
+        });
+    }
+
+    static modifyRequest(request, id) {
+        return Data.post('modifyRequest', {
+            request: request,
+            id: id,
+        });
     }
 
     static trimObject(ob) {
@@ -582,63 +251,11 @@ class Data {
         return result;
     }
 
-    static async newRequest(request, payment) {
-        const db = firebase.firestore();
-        request = Data.trimObject(request);
-        const requestIn = db.collection('users').doc(request.toUser.email)
-            .collection('requestsIn')
-            .doc();
-        const requestOut = db.collection('users').doc(request.fromUser.email)
-            .collection('requestsOut')
-            .doc(requestIn.id);
-
-        // Add request documents for both users
-        await requestOut.set(request);
-        await requestIn.set(request);
-        // Add payment document for server to process
-        if (!!payment && request.payment.type === 'Paid') {
-            switch (payment.method) {
-                case 'PayPal':
-                    // Authorize payment for capture (after the tutor clocks
-                    // out and the pupil approves payment).
-                    await firebase.firestore().collection('users')
-                        .doc(request.fromUser.email)
-                        .collection('authPayments')
-                        .doc(requestIn.id)
-                        .set(payment);
-                    await firebase.firestore().collection('users')
-                        .doc(request.toUser.email)
-                        .collection('authPayments')
-                        .doc(requestIn.id)
-                        .set(payment);
-                    break;
-                case 'Stripe':
-                    // Authorize payment for capture (after the tutor clocks
-                    // out and the pupil approves payment).
-                    await firebase.firestore().collection('users')
-                        .doc(request.fromUser.email)
-                        .collection('sentPayments')
-                        .doc(requestIn.id)
-                        .set(payment);
-                    break;
-                default:
-                    console.warn('Invalid payment method (' + payment.method +
-                        '). Defaulting to PayPal...');
-                    // Authorize payment for capture (after the tutor clocks
-                    // out and the pupil approves payment).
-                    await firebase.firestore().collection('users')
-                        .doc(request.fromUser.email)
-                        .collection('authPayments')
-                        .doc(requestIn.id)
-                        .set(payment);
-                    await firebase.firestore().collection('users')
-                        .doc(request.toUser.email)
-                        .collection('authPayments')
-                        .doc(requestIn.id)
-                        .set(payment);
-                    break; // Not necessary (see: https://bit.ly/2AILLZj)
-            };
-        }
+    static newRequest(request, payment) {
+        return Data.post('newRequest', {
+            request: request,
+            payment: payment,
+        });
     }
 
     async initLocations() { // Different formats of the same location data

@@ -75,6 +75,7 @@ class Tutorbook {
         };
         this.functionsURL = 'https://us-central1-tutorbook-779d8.' + // Live
             'cloudfunctions.net';
+        //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-central1';
 
         // Helper packages
         this.render = new Render();

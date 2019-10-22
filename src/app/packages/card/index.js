@@ -31,7 +31,8 @@ class Card {
         this.render = app.render;
         this.el = this.getCardFromType(type, doc);
         this.el.setAttribute('timestamp',
-            (doc.data && doc.data().timestamp) ? doc.data().timestamp.toDate() : new Date()
+            (doc.data && doc.data().timestamp && doc.data().timestamp.toDate) ?
+            doc.data().timestamp.toDate() : new Date()
         );
         this.el.setAttribute('priority', priority || 1);
         this.el.setAttribute('query', queryID);
