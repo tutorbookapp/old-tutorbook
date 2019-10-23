@@ -1,8 +1,14 @@
 @import "@material/list/mdc-list";
+@import "@material/layout-grid/mdc-layout-grid";
 
 .card-schedule {
   border: 1px solid #e0e0e0;
   border-radius: 4px;
+}
+
+.card-schedule .mdc-layout-grid__inner {
+  /* TODO: Add dynamic rendering to schedule. */
+  grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
 }
 
 .card-schedule .schedule-header-text {
