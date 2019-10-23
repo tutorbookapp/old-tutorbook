@@ -8,7 +8,7 @@ const cors = require('cors')({
 // Recieves a user, an action, and (optional) data. Performs requested action
 // (using the below `Data` class) and sends snackbar message response.
 class DataProxy {
-    constructor(user, action, data) {
+    constructor(user, action, data, sandboxed) {
         global.app = {
             user: user,
             conciseUser: {
@@ -24,6 +24,8 @@ class DataProxy {
                 proxy: user.proxy,
             },
         };
+        global.db = (sandboxed) ? admin.firestore()
+            .collection('sandbox').doc('tutorbook') : admin.firestore();
         this.action = action;
         this.data = data;
     }
@@ -78,7 +80,7 @@ class Data {
     }
 
     static requestPayout() {
-        return admin.firestore().collection('users')
+        return global.db.collection('users')
             .doc(global.app.user.id).collection('requestedPayouts').doc().set({
                 timestamp: new Date(),
             });
@@ -86,7 +88,7 @@ class Data {
 
     static requestPaymentFor(appt, id) {
         const user = Data.getOther(appt.attendees);
-        return admin.firestore().collection('users').doc(user.email)
+        return global.db.collection('users').doc(user.email)
             .collection('requestedPayments').doc(id).set({
                 from: Data.getOther(appt.attendees),
                 to: global.app.conciseUser,
@@ -97,7 +99,7 @@ class Data {
     }
 
     static async approvePayment(approvedPayment, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const payments = [
             db.collection('users').doc(approvedPayment.to.email)
             .collection('approvedPayments').doc(id),
@@ -114,7 +116,7 @@ class Data {
     }
 
     static async denyPayment(deniedPayment, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const payments = [
             db.collection('users').doc(approvedPayment.appt.attendees[0].email)
             .collection('deniedPayments').doc(id),
@@ -139,10 +141,10 @@ class Data {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
             //console.warn('Using an email as a user ID is deprecated.');
-            var ref = await admin.firestore().collection('users').doc(id)
+            var ref = await global.db.collection('users').doc(id)
                 .get();
         } else {
-            var ref = await admin.firestore().collection('search').doc(id)
+            var ref = await global.db.collection('search').doc(id)
                 .get();
         }
         if (ref.exists) {
@@ -157,7 +159,7 @@ class Data {
         if (!user) {
             throw new Error('Could not update user b/c id was undefined.');
         }
-        return admin.firestore().collection('users').doc(user.id || user.email)
+        return global.db.collection('users').doc(user.id || user.email)
             .update(user);
     }
 
@@ -165,7 +167,7 @@ class Data {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
         }
-        return admin.firestore().collection('users').doc(id)
+        return global.db.collection('users').doc(id)
             .delete();
     }
 
@@ -173,12 +175,12 @@ class Data {
         if (!user || !user.id) {
             throw new Error('Could not create user b/c id was undefined.');
         }
-        return admin.firestore().collection('users').doc(user.id)
+        return global.db.collection('users').doc(user.id)
             .set(user);
     }
 
     static async approveClockIn(clockIn, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const ref = db.collection('users').doc(global.app.user.id)
             .collection('clockIns').doc(id);
         const approvedClockIn = db.collection('users').doc(global.app.user.id)
@@ -234,7 +236,7 @@ class Data {
         appt.clockOut = Data.cloneMap(approvedClockOutData);
 
         // Define Firestore doc locations
-        const db = admin.firestore();
+        const db = global.db;
         const clockOut = db.collection('users').doc(global.app.user.id)
             .collection('clockOuts').doc(id);
         const approvedClockOut = db.collection('users').doc(global.app.user.id)
@@ -300,7 +302,7 @@ class Data {
 
     static async getLocationSupervisor(id) {
         try {
-            const doc = await admin.firestore().collection('locations')
+            const doc = await global.db.collection('locations')
                 .doc(id).get();
             const supervisors = doc.data().supervisors;
             return supervisors[0]; // TODO: How do we check to see if a given
@@ -327,7 +329,7 @@ class Data {
             sentBy: global.app.conciseUser,
         };
 
-        const db = admin.firestore();
+        const db = global.db;
         const supervisor = await Data.getLocationSupervisor(appt.location.id);
         const ref = db.collection('users').doc(supervisor)
             .collection('clockIns').doc(id);
@@ -348,7 +350,7 @@ class Data {
             sentBy: global.app.conciseUser,
         };
 
-        const db = admin.firestore();
+        const db = global.db;
         const ref = db.collection('users').doc(appt.supervisor)
             .collection('clockOuts').doc(id);
 
@@ -362,7 +364,7 @@ class Data {
     }
 
     static async approveRequest(request, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const requestIn = db.collection("users").doc(request.toUser.email)
             .collection('requestsIn')
             .doc(id);
@@ -417,7 +419,7 @@ class Data {
     }
 
     static async modifyAppt(apptData, id) {
-        const db = admin.firestore();
+        const db = global.db;
         apptData = Data.trimObject(apptData);
         const appts = [
             db.collection('users').doc(apptData.attendees[0].email)
@@ -459,7 +461,7 @@ class Data {
     }
 
     static async cancelAppt(apptData, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const appts = [
             db.collection('users').doc(apptData.attendees[0].email)
             .collection('appointments')
@@ -514,7 +516,7 @@ class Data {
     }
 
     static async rejectRequest(request, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const requestIn = db.collection("users").doc(request.toUser.email)
             .collection('requestsIn')
             .doc(id);
@@ -550,7 +552,7 @@ class Data {
     }
 
     static async cancelRequest(request, id) {
-        const db = admin.firestore();
+        const db = global.db;
         const requestIn = db.collection("users").doc(request.toUser.email)
             .collection('requestsIn')
             .doc(id);
@@ -595,7 +597,7 @@ class Data {
     }
 
     static async modifyRequest(request, id) {
-        const db = admin.firestore();
+        const db = global.db;
         request = Data.trimObject(request);
         const requestIn = db.collection("users").doc(request.toUser.email)
             .collection('requestsIn')
@@ -650,7 +652,7 @@ class Data {
     }
 
     static async newRequest(request, payment) {
-        const db = admin.firestore();
+        const db = global.db;
         request = Data.trimObject(request);
         const requestIn = db.collection('users').doc(request.toUser.email)
             .collection('requestsIn')
@@ -668,12 +670,12 @@ class Data {
                 case 'PayPal':
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
-                    await admin.firestore().collection('users')
+                    await global.db.collection('users')
                         .doc(request.fromUser.email)
                         .collection('authPayments')
                         .doc(requestIn.id)
                         .set(payment);
-                    await admin.firestore().collection('users')
+                    await global.db.collection('users')
                         .doc(request.toUser.email)
                         .collection('authPayments')
                         .doc(requestIn.id)
@@ -682,7 +684,7 @@ class Data {
                 case 'Stripe':
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
-                    await admin.firestore().collection('users')
+                    await global.db.collection('users')
                         .doc(request.fromUser.email)
                         .collection('sentPayments')
                         .doc(requestIn.id)
@@ -693,12 +695,12 @@ class Data {
                         '). Defaulting to PayPal...');
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
-                    await admin.firestore().collection('users')
+                    await global.db.collection('users')
                         .doc(request.fromUser.email)
                         .collection('authPayments')
                         .doc(requestIn.id)
                         .set(payment);
-                    await admin.firestore().collection('users')
+                    await global.db.collection('users')
                         .doc(request.toUser.email)
                         .collection('authPayments')
                         .doc(requestIn.id)
@@ -715,7 +717,7 @@ class Data {
         this.locationDataByID = {};
         this.locationNames = [];
         this.locationIDs = [];
-        const snap = await admin.firestore().collection('locations').get();
+        const snap = await global.db.collection('locations').get();
         snap.docs.forEach((doc) => {
             if (global.app.location.name === 'Any' ||
                 global.app.location.id === doc.id) {
@@ -1249,6 +1251,7 @@ module.exports = (req, res) => {
             (await Data.getUser(req.query.user)),
             req.query.action,
             req.body,
+            false, // TODO: Add sandbox management based on URL
         );
         return data.act().then(() => {
             res.send('[SUCCESS]');
