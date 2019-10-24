@@ -43,45 +43,103 @@ class DataProxy {
         };
         this.action = action;
         this.data = data;
+        this.token = token;
+        this.user = user;
     }
 
     async act() {
         const action = this.action;
         const data = this.data;
+        const token = this.token;
+        const user = this.user;
+        const exists = async (collection, id) => {
+            const doc = await global.db.collection('users').doc(user.id)
+                .collection(collection).doc(id).get();
+            assert(doc.exists);
+        };
         switch (action) {
             case 'createUser':
                 assert(token.email === data.email || token.supervisor);
                 return Data.createUser(data);
             case 'newRequest':
-                assert(token.email === data.fromUser || token.supervisor);
+                assert(token.email === data.request.fromUser.email || token.supervisor);
                 return Data.newRequest(data.request, data.payment);
             case 'requestPayout':
+                assert(user.type === 'Tutor' && user.payments.type === 'Paid');
                 return Data.requestPayout();
             case 'requestPaymentFor':
+                assert([
+                        data.appt.attendees[0].email,
+                        data.appt.attendees[1].email,
+                    ].indexOf(token.email) >= 0 &&
+                    user.type === 'Tutor' &&
+                    user.payments.type === 'Paid' &&
+                    data.appt.payment.type === 'Paid'
+                );
+                await exists('appointments', data.id);
                 return Data.requestPaymentFor(data.appt, data.id);
             case 'approvePayment':
+                assert(user.type === 'Pupil');
+                await exists('appointments', data.id);
                 return Data.approvePayment(data.approvedPayment, data.id);
             case 'denyPayment':
+                assert(user.type === 'Pupil');
+                await exists('appointments', data.id);
                 return Data.denyPayment(data.deniedPayment, data.id);
             case 'approveClockIn':
+                assert(token.supervisor);
+                await exists('clockIns', data.id);
                 return Data.approveClockIn(data.clockIn, data.id);
             case 'approveClockOut':
+                assert(token.supervisor);
+                await exists('clockOuts', data.id);
                 return Data.approveClockOut(data.clockOut, data.id);
             case 'clockIn':
+                assert(user.type === 'Tutor' || token.supervisor);
+                if (!token.supervisor) await exists('appointments', data.id);
                 return Data.clockIn(data.appt, data.id);
             case 'clockOut':
+                assert(user.type === 'Tutor' || token.supervisor);
+                if (!token.supervisor) await exists('activeAppointments', data.id);
                 return Data.clockOut(data.appt, data.id);
             case 'approveRequest':
+                assert(token.email === data.request.toUser.email ||
+                    token.supervisor);
+                if (!token.supervisor) await exists('requestsIn', data.id);
                 return Data.approveRequest(data.request, data.id);
             case 'modifyAppt':
+                assert([
+                    data.appt.attendees[0].email,
+                    data.appt.attendees[1].email
+                ].indexOf(token.email) >= 0 || token.supervisor);
+                if (!token.supervisor) await exists('appointments', data.id);
                 return Data.modifyAppt(data.appt, data.id);
             case 'cancelAppt':
+                assert([
+                    data.appt.attendees[0].email,
+                    data.appt.attendees[1].email
+                ].indexOf(token.email) >= 0 || token.supervisor);
+                if (!token.supervisor) await exists('appointments', data.id);
                 return Data.cancelAppt(data.appt, data.id);
             case 'rejectRequest':
+                assert(token.email === data.request.toUser.email ||
+                    token.supervisor);
+                if (!token.supervisor) await exists('requestsIn', data.id);
                 return Data.rejectRequest(data.request, data.id);
             case 'cancelRequest':
+                assert(token.email === data.request.fromUser.email ||
+                    token.supervisor);
+                if (!token.supervisor) await exists('requestsOut', data.id);
                 return Data.cancelRequest(data.request, data.id);
             case 'modifyRequest':
+                assert([
+                    data.request.fromUser.email,
+                    data.request.toUser.email,
+                ].indexOf(token.email) >= 0 || token.supervisor);
+                if (token.email === data.request.fromUser.email)
+                    await exists('requestsOut', data.id);
+                if (token.email === data.request.toUser.email)
+                    await exists('requestsIn', data.id);
                 return Data.modifyRequest(data.request, data.id);
             default:
                 throw new Error('Could not process ' + action + ' request.');
@@ -1304,13 +1362,14 @@ module.exports = {
             });
         });
     },
-    onCall: (data, context) => { // Firebase Function HTTPS Callable trigger
+    onCall: async (data, context) => { // Firebase Function HTTPS Callable trigger
         console.log('Responding to ' + data.action + ' action from ' +
             context.auth.token.email + '...');
         global.db = (data.sandbox) ? admin.firestore()
             .collection('sandbox').doc('tutorbook') : admin.firestore();
         const dataProxy = new DataProxy(
             (await Data.getUser(context.auth.token.email)),
+            context.auth.token,
             data.action,
             data.body,
         );

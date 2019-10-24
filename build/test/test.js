@@ -1,4 +1,13 @@
 const axios = require('axios');
+const firebaseApp = require('firebase').initializeApp({
+    "projectId": "tutorbook-779d8",
+    "databaseURL": "https://tutorbook-779d8.firebaseio.com",
+    "storageBucket": "tutorbook-779d8.appspot.com",
+    "locationId": "us-central",
+    "apiKey": "AIzaSyCNaEj1Mbi-79cGA0vW48iqZtrbtU-NTh4",
+    "authDomain": "tutorbook-779d8.firebaseapp.com",
+    "messagingSenderId": "488773238477"
+});
 const firebase = require("@firebase/testing");
 const fs = require("fs");
 const projectId = "tutorbook-779d8";
@@ -192,19 +201,34 @@ describe("Tutorbook", () => {
 });
 
 describe("Tutorbook's REST API", () => {
-    function post(user, action, data) {
+    async function post(user, action, data) {
+        const token = await axios({
+            method: 'post',
+            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/auth',
+            params: {
+                user: user,
+            },
+        });
+        if (typeof token.data === 'string' && token.data.indexOf('ERROR') > 0)
+            throw new Error(token.data.replace('[ERROR] ', ''));
+        await firebaseApp.auth().signInWithCustomToken(token.data);
         return axios({
             method: 'post',
             url: 'http://localhost:5001/tutorbook-779d8/us-central1/data',
             params: {
                 user: user,
                 action: action,
+                token: (await firebaseApp.auth().currentUser.getIdToken(true)),
             },
             data: data,
         }).then((res) => {
+            firebaseApp.auth().signOut();
             if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
                 throw new Error(res.data.replace('[ERROR] ', ''));
             return res;
+        }).catch((err) => {
+            firebaseApp.auth().signOut();
+            throw err;
         });
     };
 
@@ -216,6 +240,7 @@ describe("Tutorbook's REST API", () => {
             name: 'Tutor Tutorbook',
             email: 'tutor@tutorbook.app',
             id: 'tutor@tutorbook.app',
+            uid: 'l9oxeZesaQXsBh4guDGJzHdNJlw2',
             type: 'Tutor',
             config: {
                 showProfile: true,
@@ -230,6 +255,7 @@ describe("Tutorbook's REST API", () => {
             name: 'Pupil Tutorbook',
             email: 'pupil@tutorbook.app',
             id: 'pupil@tutorbook.app',
+            uid: 'HBnt90xkbOW9GMZGJCacbqnK2hI3',
             type: 'Pupil',
             config: {
                 showProfile: true,
@@ -244,6 +270,7 @@ describe("Tutorbook's REST API", () => {
             name: 'Supervisor Tutorbook',
             email: 'supervisor@tutorbook.app',
             id: 'supervisor@tutorbook.app',
+            uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
             type: 'Supervisor',
             config: {
                 showProfile: true,

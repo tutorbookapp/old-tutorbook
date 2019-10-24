@@ -63,19 +63,41 @@ const updateSearch = async (change, context) => {
         if (!profile.uid) return console.warn('Could not get uID. You\'re ' +
             'probably running tests with a local functions emulator.');
         await admin.firestore().collection('users').doc(context.params.id)
-            .update(profile);
+            .update({
+                uid: profile.uid
+            });
     }
+    const missing = (profile, attr) => {
+        return !profile[attr] || (
+            (typeof profile[attr] === 'string') ? profile[attr] === '' :
+            (typeof profile[attr] === 'object') ?
+            Object.values(profile[attr]).length === 0 :
+            true
+        );
+    };
+    const needed = ['name', 'email', 'id', 'type', 'subjects', 'availability'];
+    for (var i = 0; i < needed.length; i++) {
+        if (missing(profile, needed[i]))
+            return console.warn('Profile did not have a valid ' + needed[i] +
+                ', skipping...');
+    }
+    ['photo', 'grade', 'gender', 'payments', 'proxy', 'bio'].forEach((attr) => {
+        if (missing(profile, attr))
+            console.warn('Profile did not have a valid ' + attr +
+                ', falling back to default...');
+    });
     const filtered = {
         name: getName(profile.name),
         uid: profile.uid,
-        photo: profile.photo,
+        photo: profile.photo || 'https://tutorbook.app/app/img/' +
+            ((profile.gender === 'Female') ? 'female.png' : 'male.png'),
         email: profile.email, // TODO: Move the data flow that requires this
-        id: profile.email, // information from the client to this server.
-        proxy: profile.proxy,
+        id: profile.id, // information from the client to this server.
+        proxy: profile.proxy || [],
         type: profile.type,
-        gender: profile.gender,
-        grade: profile.grade,
-        bio: profile.bio,
+        gender: profile.gender || 'Male',
+        grade: profile.grade || 'Sophomore',
+        bio: profile.bio || '',
         avgRating: 0, // TODO: Right now we don't support ratings.
         numRatings: 0,
         subjects: profile.subjects,
@@ -84,6 +106,13 @@ const updateSearch = async (change, context) => {
             hourlyCharge: profile.payments.hourlyCharge,
             type: profile.payments.type,
             policy: profile.payments.policy,
+        } || {
+            houryCharge: 25,
+            type: 'Free',
+            policy: 'Hourly rate is $25.00 per hour. Will accept ' +
+                'lesson cancellations if given notice within 24 hours.' +
+                ' No refunds will be issued unless covered by a Tutorbook ' +
+                'guarantee.',
         },
     };
     console.log('Updating (' + profile.email + ') search doc...');

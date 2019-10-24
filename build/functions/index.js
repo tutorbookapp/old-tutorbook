@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin').initializeApp();
 
 const updateSheet = require('sheet');
-const updateAuth = require('auth');
+const Auth = require('auth');
 const Data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
@@ -86,8 +86,9 @@ exports.updateSheet = functions.https.onRequest(updateSheet);
 // supervisor and if so, ensure that they have customAuth setup
 exports.updateCustomAuth = functions.firestore
     .document('users/{id}')
-    .onWrite(updateAuth);
+    .onWrite(Auth.update);
 
+exports.auth = functions.https.onRequest(Auth.custom);
 
 // ============================================================================
 // NOTIFICATIONS (EMAIL, SMS, & WEBPUSH)

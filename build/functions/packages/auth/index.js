@@ -1,4 +1,19 @@
 const admin = require('firebase-admin');
+const cors = require('cors')({
+    origin: true,
+});
+
+
+const customAuth = (req, res) => {
+    return cors(req, res, async () => {
+        const user = await admin.auth().getUserByEmail(req.query.user);
+        return admin.auth().createCustomToken(user.uid).then((token) => {
+            return res.json(token);
+        }).catch((err) => {
+            return res.send('[ERROR] ' + err.message);
+        });
+    });
+};
 
 
 const updateAuth = async (change, context) => {
@@ -75,4 +90,7 @@ const updateAuth = async (change, context) => {
 };
 
 
-module.exports = updateAuth;
+module.exports = {
+    update: updateAuth,
+    custom: customAuth,
+};
