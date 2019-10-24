@@ -1276,24 +1276,40 @@ Data.types = [
 ];
 
 
-module.exports = (req, res) => {
-    return cors(req, res, async () => {
-        console.log('Responding to ' + req.query.action + ' action from ' +
-            req.query.user + '...');
-        global.db = (req.query.sandbox) ? admin.firestore()
-            .collection('sandbox').doc('tutorbook') : admin.firestore();
-        const data = new DataProxy(
-            (await Data.getUser(req.query.user)),
-            req.query.action,
-            req.body,
-        );
-        return data.act().then((result) => {
-            res.json(result);
-        }).catch((err) => {
-            console.error('Error while processing ' + req.query.action +
-                ' action from ' + req.query.user + ':', err.message);
-            res.send('[ERROR] ' + err.message);
-            throw err; // So Firebase doesn't register a 200 f(x) code
+module.exports = {
+    onRequest: (req, res) => { // Firebase Functions HTTP Request trigger
+        return cors(req, res, async () => {
+            console.log('Responding to ' + req.query.action + ' action from ' +
+                req.query.user + '...');
+            global.db = (req.query.sandbox) ? admin.firestore()
+                .collection('sandbox').doc('tutorbook') : admin.firestore();
+            const data = new DataProxy(
+                (await Data.getUser(req.query.user)),
+                req.query.action,
+                req.body,
+            );
+            return data.act().then((result) => {
+                res.json(result);
+            }).catch((err) => {
+                console.error('Error while processing ' + req.query.action +
+                    ' action from ' + req.query.user + ':', err.message);
+                res.send('[ERROR] ' + err.message);
+                throw err; // So Firebase doesn't register a 200 f(x) code
+            });
         });
-    });
+    },
+    onCall: (data, context) => { // Firebase Function HTTPS Callable trigger
+        console.log('Responding to ' + data.action + ' action from ' +
+            context.auth.token.email + '...');
+        global.db = (data.sandbox) ? admin.firestore()
+            .collection('sandbox').doc('tutorbook') : admin.firestore();
+        const dataProxy = new DataProxy(
+            (await Data.getUser(context.auth.token.email)),
+            data.action,
+            data.body,
+        );
+        return dataProxy.act().catch((err) => {
+            throw new functions.https.HttpsError('internal', err.message);
+        });
+    },
 };

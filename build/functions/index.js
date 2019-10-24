@@ -3,7 +3,7 @@ const admin = require('firebase-admin').initializeApp();
 
 const updateSheet = require('sheet');
 const updateAuth = require('auth');
-const data = require('data');
+const Data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
 const Search = require('search');
@@ -13,7 +13,8 @@ const Search = require('search');
 // DATA-FLOW
 // ============================================================================
 
-exports.data = functions.https.onRequest(data);
+exports.data = functions.https.onRequest(Data.onRequest); // TODO: Manage auth.
+exports.secureData = functions.https.onCall(Data.onCall);
 
 // ============================================================================
 // SEARCH
