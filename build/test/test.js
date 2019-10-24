@@ -63,7 +63,7 @@ describe("Tutorbook's REST API", () => {
     // ========================================================================
     // REQUESTs
     // ========================================================================
-    function createRequest() {
+    function createRequest(user) {
         const request = {
             fromUser: {
                 email: 'pupil@tutorbook.app',
@@ -89,10 +89,11 @@ describe("Tutorbook's REST API", () => {
             },
             timestamp: new Date(),
         };
-        return post('pupil@tutorbook.app', 'newRequest', {
+        const res = await post(user || 'pupil@tutorbook.app', 'newRequest', {
             request: request,
             payment: {}
         });
+        return [res.data.request, res.data.id];
     };
 
     it("lets authenticated users send requests", () => {
@@ -100,24 +101,30 @@ describe("Tutorbook's REST API", () => {
     });
 
     it("lets the sender modify a request", async () => {
-        await createRequest();
+        [request, id] = await createRequest();
     });
 
     it("lets the receiver modify a request", async () => {
-        await createRequest();
+        [request, id] = await createRequest();
     });
 
     it("lets the sender cancel a request", async () => {
-        await createRequest();
+        [request, id] = await createRequest();
     });
 
     it("lets the receiver reject a request", async () => {
-        await createRequest();
+        [request, id] = await createRequest();
     });
 
-    async function approveRequest() {
-        await createRequest();
-        throw UnimplementedError('approveRequest() has not been implemented.');
+    async function approveRequest(user) {
+        [request, id] = await createRequest(user);
+        const res = await post(
+            user || 'tutor@tutorbook.app',
+            'approveRequest', {
+                request: request,
+                id: id,
+            });
+        return [res.appt, res.id];
     };
 
     it("lets the receiver approve a request", () => {
@@ -125,23 +132,23 @@ describe("Tutorbook's REST API", () => {
     });
 
     it("lets supervisors create requests", async () => {
-        await createRequest();
+        [request, id] = await createRequest('supervisor@tutorbook.app');
     });
 
     it("lets supervisors modify requests", async () => {
-        await createRequest();
+        [request, id] = await createRequest('supervisor@tutorbook.app');
     });
 
     it("lets supervisors cancel requests", async () => {
-        await createRequest();
+        [request, id] = await createRequest('supervisor@tutorbook.app');
     });
 
     it("lets supervisors reject requests", async () => {
-        await createRequest();
+        [request, id] = await createRequest('supervisor@tutorbook.app');
     });
 
-    it("lets supervisors approve requests", async () => {
-        await createRequest();
+    it("lets supervisors approve requests", () => {
+        return approveRequest('supervisor@tutorbook.app');
     });
 
     // ========================================================================

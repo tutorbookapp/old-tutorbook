@@ -8,7 +8,7 @@ const cors = require('cors')({
 // Recieves a user, an action, and (optional) data. Performs requested action
 // (using the below `Data` class) and sends snackbar message response.
 class DataProxy {
-    constructor(user, action, data, sandboxed) {
+    constructor(user, action, data) {
         global.app = {
             user: user,
             conciseUser: {
@@ -24,8 +24,6 @@ class DataProxy {
                 proxy: user.proxy,
             },
         };
-        global.db = (sandboxed) ? admin.firestore()
-            .collection('sandbox').doc('tutorbook') : admin.firestore();
         this.action = action;
         this.data = data;
     }
@@ -391,6 +389,13 @@ class Data {
             .collection('appointments')
             .doc(id),
         ];
+        const apptData = {
+            attendees: [request.fromUser, request.toUser],
+            location: request.location,
+            for: request,
+            time: request.time,
+            timestamp: new Date(),
+        };
 
         var err;
         var res;
@@ -407,15 +412,14 @@ class Data {
         if (err) throw new Error('Error while deleting requestIn:', err);
         for (var i = 0; i < appts.length; i++) {
             var appt = appts[i];
-            [err, res] = await to(appt.set({
-                attendees: [request.fromUser, request.toUser],
-                location: request.location,
-                for: request,
-                time: request.time,
-                timestamp: new Date(),
-            }));
+            [err, res] = await to(appt.set(apptData));
             if (err) throw new Error('Error while creating appt doc:', err);
         }
+        return {
+            request: request,
+            appt: apptData,
+            id: id,
+        };
     }
 
     static async modifyAppt(apptData, id) {
@@ -708,6 +712,11 @@ class Data {
                     break; // Not necessary (see: https://bit.ly/2AILLZj)
             };
         }
+        return {
+            request: request,
+            payment: payment,
+            id: requestIn.id,
+        };
     }
 
     async initLocations() { // Different formats of the same location data
@@ -1247,14 +1256,15 @@ module.exports = (req, res) => {
     return cors(req, res, async () => {
         console.log('Responding to ' + req.query.action + ' action from ' +
             req.query.user + '...');
+        global.db = (req.query.sandbox) ? admin.firestore()
+            .collection('sandbox').doc('tutorbook') : admin.firestore();
         const data = new DataProxy(
             (await Data.getUser(req.query.user)),
             req.query.action,
             req.body,
-            false, // TODO: Add sandbox management based on URL
         );
-        return data.act().then(() => {
-            res.send('[SUCCESS]');
+        return data.act().then((result) => {
+            res.json(result);
         }).catch((err) => {
             console.error('Error while processing ' + req.query.action +
                 ' action from ' + req.query.user + ':', err.message);
