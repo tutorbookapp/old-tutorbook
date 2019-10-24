@@ -64,7 +64,7 @@ describe("Tutorbook's REST API", () => {
     // ========================================================================
     // USERs
     // ========================================================================
-    async function createUsers() {
+    function createUsers() {
         const users = [{
             name: 'Tutor Tutorbook',
             email: 'tutor@tutorbook.app',
@@ -81,16 +81,19 @@ describe("Tutorbook's REST API", () => {
             id: 'supervisor@tutorbook.app',
             type: 'Supervisor',
         }];
-        await users.forEach(async (user) => {
-            await post(user.id, 'createUser', user);
+        return users.forEach((user) => {
+            return post(user.id, 'createUser', user);
         });
     };
+
+    it("lets users create their own profiles", () => {
+        return createUsers();
+    });
 
     // ========================================================================
     // REQUESTs
     // ========================================================================
     async function createRequest(user) {
-        await createUsers();
         const request = {
             fromUser: {
                 email: 'pupil@tutorbook.app',
