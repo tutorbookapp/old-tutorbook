@@ -6,6 +6,8 @@ const updateAuth = async (change, context) => {
     const id = context.params.id;
     if (!profile) {
         return console.warn('User (' + id + ') doc was deleted.');
+    } else if (!profile.uid || profile.uid === '') {
+        return console.warn('User (' + id + ') did not have a uID.');
     }
     const db = admin.firestore();
 
@@ -14,9 +16,19 @@ const updateAuth = async (change, context) => {
         .doc('supervisors')
         .get();
     var validIDs = [];
-    Object.entries(supervisorCodes.data()).forEach((entry) => {
-        validIDs.push(entry[1]);
-    });
+    if (supervisorCodes.exists) {
+        Object.entries(supervisorCodes.data()).forEach((entry) => {
+            validIDs.push(entry[1]);
+        });
+    } else {
+        console.warn('Supervisor auth codes do not exist, falling back to ' +
+            'default IDs...');
+        validIDs = [
+            'supervisor@tutorbook.app',
+            'psteward@pausd.org',
+            'lcollart@pausd.org'
+        ];
+    }
     if (profile.type === 'Supervisor' && profile.authenticated &&
         validIDs.indexOf(id) >= 0) { // SUPERVISOR
         console.log(profile.name + ' was a verified supervisor. ' +

@@ -10,7 +10,7 @@ class SMS {
     constructor(phone, message) {
         this.phone = phone;
         this.message = message;
-        this.send();
+        if (this.phone && this.phone !== '') this.send();
     }
 
     send() {

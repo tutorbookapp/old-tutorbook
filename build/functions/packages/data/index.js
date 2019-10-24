@@ -9,19 +9,33 @@ const cors = require('cors')({
 // (using the below `Data` class) and sends snackbar message response.
 class DataProxy {
     constructor(user, action, data) {
+        ['name', 'email', 'id', 'type'].forEach((attr) => {
+            if (!user[attr] || user[attr] === '')
+                throw new Error('User did not have a valid ' + attr + '.');
+        });
+        ['photo', 'grade', 'gender', 'payments', 'proxy'].forEach((attr) => {
+            if (!user[attr] || user[attr] === '')
+                console.warn('User did not have a valid ' + attr +
+                    ', falling back to default...');
+        });
         global.app = {
             user: user,
             conciseUser: {
                 name: user.name,
                 email: user.email,
                 id: user.id,
-                photo: user.photo,
+                photo: user.photo || 'https://tutorbook.app/app/img/' +
+                    ((user.gender === 'Female') ? 'female.png' : 'male.png'),
                 type: user.type,
-                grade: user.grade,
-                gender: user.gender,
-                hourlyCharge: (!!user.payments) ? user.payments.hourlyCharge : 0,
-                payments: user.payments,
-                proxy: user.proxy,
+                grade: user.grade || 'Sophomore',
+                gender: user.gender || 'Male',
+                hourlyCharge: (user.payments && user.payments.hourlyCharge) ?
+                    user.payments.hourlyCharge : 0,
+                payments: user.payments || {
+                    hourlyCharge: 0,
+                    type: 'Free',
+                },
+                proxy: user.proxy || [],
             },
         };
         this.action = action;
@@ -498,10 +512,8 @@ class Data {
             canceledAppts.push(db.collection('users').doc(apptData.attendees[1].email)
                 .collection('canceledAppointments').doc(id));
         }
-        if (app.user.locations.indexOf(apptData.location.id) < 0) {
-            canceledAppts.push(db.collection('locations').doc(apptData.location.id)
-                .collection('canceledAppointments').doc(id));
-        }
+        canceledAppts.push(db.collection('locations').doc(apptData.location.id)
+            .collection('canceledAppointments').doc(id));
 
         if (apptData.for.payment.type === 'Paid') {
             // Delete the authPayment docs as well
@@ -681,7 +693,7 @@ class Data {
         await requestOut.set(request);
         await requestIn.set(request);
         // Add payment document for server to process
-        if (!!payment && request.payment.type === 'Paid') {
+        if (payment && request.payment && request.payment.type === 'Paid') {
             switch (payment.method) {
                 case 'PayPal':
                     // Authorize payment for capture (after the tutor clocks

@@ -12,7 +12,9 @@ async function getUID(profile) {
             email: profile.email,
             emailVerified: false,
             displayName: profile.name,
-            photoURL: (profile.photo && profile.photo !== '') ? profile.photo : 'https://tutorbook.app/app/img/male.png',
+            photoURL: (profile.photo && profile.photo !== '') ?
+                profile.photo : 'https://tutorbook.app/app/img/' +
+                ((profile.gender === 'Female') ? 'female.png' : 'male.png'),
             disabled: false,
         }));
         if (err) return console.error(err.message);
@@ -35,15 +37,21 @@ const updateSearch = async (change, context) => {
     if (!profile) {
         const before = change.before.data();
         console.log('User doc (' + before.email + ') was deleted.');
-        if (before.uid !== '' && (await db.doc(before.uid).get()).exists) {
+        if (before.uid &&
+            before.uid !== '' &&
+            (await db.doc(before.uid).get()).exists
+        ) {
             console.log('Deleting (' + before.email + ') search doc...');
             return db.doc(before.uid).delete();
         }
         return;
     }
-    if (!profile.config.showProfile) {
+    if (!profile.config || !profile.config.showProfile) {
         console.log('Hiding (' + profile.email + ') search doc...');
-        if (profile.uid !== '' && (await db.doc(profile.uid).get()).exists) {
+        if (profile.uid &&
+            profile.uid !== '' &&
+            (await db.doc(profile.uid).get()).exists
+        ) {
             console.log('Deleting (' + profile.email + ') search doc...');
             return db.doc(profile.uid).delete();
         }
@@ -52,6 +60,8 @@ const updateSearch = async (change, context) => {
     if (!profile.uid || profile.uid === '') {
         console.log('Updating (' + profile.email + ') auth user...');
         profile.uid = await getUID(profile);
+        if (!profile.uid) return console.warn('Could not get uID. You\'re ' +
+            'probably running tests with a local functions emulator.');
         await admin.firestore().collection('users').doc(context.params.id)
             .update(profile);
     }
