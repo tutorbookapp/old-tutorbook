@@ -155,49 +155,69 @@ describe("Tutorbook's REST API", () => {
     // APPOINTMENTs
     // ========================================================================
     it("lets attendees modify appointments", async () => {
-        await approveRequest();
+        [appt, id] = await approveRequest();
     });
 
     it("lets attendees cancel appointments", async () => {
-        await approveRequest();
+        [appt, id] = await approveRequest();
     });
 
     it("lets supervisors modify appointments", async () => {
-        await approveRequest();
+        [appt, id] = await approveRequest();
     });
 
     it("lets supervisors cancel appointments", async () => {
-        await approveRequest();
+        [appt, id] = await approveRequest();
     });
 
     // ========================================================================
     // CLOCK-INs/OUTs
     // ========================================================================
-    function clockIn() {
-        await approveRequest();
-        throw new UnimplementedError('clockIn() has not yet been implemented.');
+    function clockIn(user) {
+        [appt, id] = await approveRequest(user);
+        const res = await post(user || 'tutor@tutorbook.app', 'clockIn', {
+            appt: appt,
+            id: id,
+        });
+        return [res.clockIn, res.id];
     };
 
     it("lets tutors clock-in to appointments", () => {
         return clockIn();
     });
 
-    it("lets supervisors approve clock-in requests", async () => {
-        await clockIn();
+    it("lets supervisors clock tutors into appointments", () => {
+        return clockIn('supervisor@tutorbook.app');
     });
 
-    function clockOut() {
-        await clockIn();
-        throw new UnimplementedError('clockOut() has not yet been implemented.');
+    it("lets supervisors approve clock-in requests", async () => {
+        [clockIn, id] = await clockIn();
+    });
+
+    function clockOut(user) {
+        [clockIn, id] = await clockIn(user);
+        const res = await post(user || 'tutor@tutorbook.app', 'clockOut', {
+            appt: clockIn.for,
+            id: id,
+        });
+        return [res.clockOut, res.id];
     };
 
     it("lets tutors clock-out of active appointments", () => {
         return clockOut();
     });
 
-    it("lets supervisors approve clock-out requests", async () => {
-        await clockOut();
+    it("lets supervisors clock tutors out of active appointments", () => {
+        return clockOut('supervisor@tutorbook.app');
     });
+
+    it("lets supervisors approve clock-out requests", async () => {
+        [clockOut, id] = await clockOut();
+    });
+
+    // ========================================================================
+    // PAYMENTs
+    // ========================================================================
 
     // ========================================================================
     // SUPERVISORs

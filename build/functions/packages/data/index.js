@@ -337,9 +337,14 @@ class Data {
         clockIn.for = Data.cloneMap(appt);
 
         await ref.set(clockIn);
-        return db.collection('users').doc(global.app.user.id).update({
+        await db.collection('users').doc(global.app.user.id).update({
             clockedIn: true
         });
+        return {
+            clockIn: clockIn,
+            appt: appt,
+            id: id,
+        };
     }
 
     static async clockOut(appt, id) {
@@ -356,9 +361,14 @@ class Data {
         clockOut.for = Data.cloneMap(appt);
 
         await ref.set(clockOut);
-        return db.collection('users').doc(global.app.user.id).update({
+        await db.collection('users').doc(global.app.user.id).update({
             clockedOut: true
         });
+        return {
+            clockOut: clockOut,
+            appt: appt,
+            id: id,
+        };
     }
 
     static async approveRequest(request, id) {
