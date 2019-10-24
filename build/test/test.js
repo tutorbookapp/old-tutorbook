@@ -51,7 +51,7 @@ describe("Tutorbook's REST API", () => {
     function post(user, action, data) {
         return axios({
             method: 'post',
-            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/data'
+            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/data',
             params: {
                 user: user,
                 action: action,
