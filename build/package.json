@@ -4,6 +4,7 @@
   "description": "App designed to optimize the process required to get a pupil with an appropriate tutor.",
   "devDependencies": {
     "@firebase/testing": "^0.13.0",
+    "axios": "^0.19.0",
     "filesystem": "1.0.1",
     "mocha": "^6.2.0"
   },

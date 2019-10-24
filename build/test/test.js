@@ -1,3 +1,4 @@
+const axios = require('axios');
 const firebase = require("@firebase/testing");
 const fs = require("fs");
 const projectId = "tutorbook-779d8";
@@ -50,11 +51,11 @@ describe("Tutorbook's REST API", () => {
     function post(user, action, data) {
         return axios({
             method: 'post',
-            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/' +
-                'data/sandbox',
+            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/data'
             params: {
                 user: user,
                 action: action,
+                sandbox: true,
             },
             data: data,
         });
