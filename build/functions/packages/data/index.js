@@ -32,6 +32,8 @@ class DataProxy {
         const action = this.action;
         const data = this.data;
         switch (action) {
+            case 'createUser':
+                return Data.createUser(data);
             case 'newRequest':
                 return Data.newRequest(data.request, data.payment);
             case 'requestPayout':

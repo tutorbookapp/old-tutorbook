@@ -22,14 +22,14 @@ function to(promise) {
 };
 
 beforeEach(async () => {
-    // Clear the database between tests
+    // Clear the database simulator between tests
     await firebase.clearFirestoreData({
         projectId
     });
 });
 
 async function resetDB() {
-    // Clear the database between tests
+    // Clear the database simulator between tests
     await firebase.clearFirestoreData({
         projectId
     });
@@ -62,9 +62,35 @@ describe("Tutorbook's REST API", () => {
     };
 
     // ========================================================================
+    // USERs
+    // ========================================================================
+    async function createUsers() {
+        const users = [{
+            name: 'Tutor Tutorbook',
+            email: 'tutor@tutorbook.app',
+            id: 'tutor@tutorbook.app',
+            type: 'Tutor',
+        }, {
+            name: 'Pupil Tutorbook',
+            email: 'pupil@tutorbook.app',
+            id: 'pupil@tutorbook.app',
+            type: 'Pupil',
+        }, {
+            name: 'Supervisor Tutorbook',
+            email: 'supervisor@tutorbook.app',
+            id: 'supervisor@tutorbook.app',
+            type: 'Supervisor',
+        }];
+        await users.forEach(async (user) => {
+            await post(user.id, 'createUser', user);
+        });
+    };
+
+    // ========================================================================
     // REQUESTs
     // ========================================================================
     async function createRequest(user) {
+        await createUsers();
         const request = {
             fromUser: {
                 email: 'pupil@tutorbook.app',
