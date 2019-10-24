@@ -63,7 +63,7 @@ describe("Tutorbook's REST API", () => {
     // ========================================================================
     // REQUESTs
     // ========================================================================
-    function createRequest(user) {
+    async function createRequest(user) {
         const request = {
             fromUser: {
                 email: 'pupil@tutorbook.app',
@@ -173,7 +173,7 @@ describe("Tutorbook's REST API", () => {
     // ========================================================================
     // CLOCK-INs/OUTs
     // ========================================================================
-    function clockIn(user) {
+    async function clockIn(user) {
         [appt, id] = await approveRequest(user);
         const res = await post(user || 'tutor@tutorbook.app', 'clockIn', {
             appt: appt,
@@ -194,7 +194,7 @@ describe("Tutorbook's REST API", () => {
         [clockIn, id] = await clockIn();
     });
 
-    function clockOut(user) {
+    async function clockOut(user) {
         [clockIn, id] = await clockIn(user);
         const res = await post(user || 'tutor@tutorbook.app', 'clockOut', {
             appt: clockIn.for,
