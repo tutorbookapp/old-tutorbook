@@ -1,5 +1,6 @@
 const to = require('await-to-js').default;
 const admin = require('firebase-admin');
+const assert = require('assert');
 const cors = require('cors')({
     origin: true,
 });
@@ -8,7 +9,9 @@ const cors = require('cors')({
 // Recieves a user, an action, and (optional) data. Performs requested action
 // (using the below `Data` class) and sends snackbar message response.
 class DataProxy {
-    constructor(user, action, data) {
+    constructor(user, token, action, data) {
+        assert(token.email === user.email);
+        assert(token.uid === user.uid);
         ['name', 'email', 'id', 'type'].forEach((attr) => {
             if (!user[attr] || user[attr] === '')
                 throw new Error('User did not have a valid ' + attr + '.');
@@ -47,8 +50,10 @@ class DataProxy {
         const data = this.data;
         switch (action) {
             case 'createUser':
+                assert(token.email === data.email || token.supervisor);
                 return Data.createUser(data);
             case 'newRequest':
+                assert(token.email === data.fromUser || token.supervisor);
                 return Data.newRequest(data.request, data.payment);
             case 'requestPayout':
                 return Data.requestPayout();
@@ -1285,6 +1290,7 @@ module.exports = {
                 .collection('sandbox').doc('tutorbook') : admin.firestore();
             const data = new DataProxy(
                 (await Data.getUser(req.query.user)),
+                (await admin.auth().verifyIdToken(req.query.token)),
                 req.query.action,
                 req.body,
             );
