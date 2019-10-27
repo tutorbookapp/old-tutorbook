@@ -9,7 +9,7 @@
     "mocha": "^6.2.0"
   },
   "scripts": {
-    "test": "mocha --timeout=10000 --color=false"
+    "test": "mocha --timeout=100000 --color=false"
   },
   "repository": {
     "type": "git",

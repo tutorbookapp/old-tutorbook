@@ -334,43 +334,45 @@ describe("Tutorbook's REST API", () => {
         return [res.data.request, res.data.id];
     };
 
-    it("lets authenticated users send requests", () => {
-        return createRequest();
-    });
-
-    it("lets the sender modify a request", async () => {
-        [request, id] = await createRequest();
-        request.time.day = 'Wednesday';
-        return post('pupil@tutorbook.app', 'modifyRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets the receiver modify a request", async () => {
-        [request, id] = await createRequest();
-        request.time.day = 'Wednesday';
-        return post('tutor@tutorbook.app', 'modifyRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets the sender cancel a request", async () => {
-        [request, id] = await createRequest();
-        return post('pupil@tutorbook.app', 'cancelRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets the receiver reject a request", async () => {
-        [request, id] = await createRequest();
-        return post('tutor@tutorbook.app', 'rejectRequest', {
-            request: request,
-            id: id,
-        });
-    });
+    /*
+     *    it("lets authenticated users send requests", () => {
+     *        return createRequest();
+     *    });
+     *
+     *    it("lets the sender modify a request", async () => {
+     *        [request, id] = await createRequest();
+     *        request.time.day = 'Wednesday';
+     *        return post('pupil@tutorbook.app', 'modifyRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets the receiver modify a request", async () => {
+     *        [request, id] = await createRequest();
+     *        request.time.day = 'Wednesday';
+     *        return post('tutor@tutorbook.app', 'modifyRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets the sender cancel a request", async () => {
+     *        [request, id] = await createRequest();
+     *        return post('pupil@tutorbook.app', 'cancelRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets the receiver reject a request", async () => {
+     *        [request, id] = await createRequest();
+     *        return post('tutor@tutorbook.app', 'rejectRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     */
 
     async function approveRequest(user) {
         [request, id] = await createRequest(user);
@@ -383,42 +385,44 @@ describe("Tutorbook's REST API", () => {
         return [res.data.appt, res.data.id];
     };
 
-    it("lets the receiver approve a request", () => {
-        return approveRequest();
-    });
-
-    it("lets supervisors create requests", () => {
-        return createRequest('supervisor@tutorbook.app');
-    });
-
-    it("lets supervisors modify requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        request.time.day = 'Wednesday';
-        return post('supervisor@tutorbook.app', 'modifyRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets supervisors cancel requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        return post('supervisor@tutorbook.app', 'cancelRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets supervisors reject requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        return post('supervisor@tutorbook.app', 'rejectRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets supervisors approve requests", () => {
-        return approveRequest('supervisor@tutorbook.app');
-    });
+    /*
+     *    it("lets the receiver approve a request", () => {
+     *        return approveRequest();
+     *    });
+     *
+     *    it("lets supervisors create requests", () => {
+     *        return createRequest('supervisor@tutorbook.app');
+     *    });
+     *
+     *    it("lets supervisors modify requests", async () => {
+     *        [request, id] = await createRequest('supervisor@tutorbook.app');
+     *        request.time.day = 'Wednesday';
+     *        return post('supervisor@tutorbook.app', 'modifyRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors cancel requests", async () => {
+     *        [request, id] = await createRequest('supervisor@tutorbook.app');
+     *        return post('supervisor@tutorbook.app', 'cancelRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors reject requests", async () => {
+     *        [request, id] = await createRequest('supervisor@tutorbook.app');
+     *        return post('supervisor@tutorbook.app', 'rejectRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors approve requests", () => {
+     *        return approveRequest('supervisor@tutorbook.app');
+     *    });
+     */
 
     // ========================================================================
     // APPOINTMENTs
@@ -470,8 +474,22 @@ describe("Tutorbook's REST API", () => {
     // ========================================================================
     // CLOCK-INs/OUTs
     // ========================================================================
+    function createLocation() {
+        const location = {
+            supervisors: ['supervisor@tutorbook.app'],
+            city: 'Palo Alto, CA',
+            name: 'Gunn Academic Center',
+            timestamp: new Date(),
+        };
+        return post('supervisor@tutorbook.app', 'createLocation', {
+            location: location,
+            id: 'NJp0Y6wyMh2fDdxSuRSx',
+        });
+    };
+
     async function clockIn(user) {
         [appt, id] = await approveRequest(user);
+        await createLocation(); // Determines who to send clocking request(s)
         const res = await post(user || 'tutor@tutorbook.app', 'clockIn', {
             appt: appt,
             id: id,
@@ -487,14 +505,24 @@ describe("Tutorbook's REST API", () => {
         return clockIn('supervisor@tutorbook.app');
     });
 
+    async function approveClockIn(user) {
+        [clockInData, id] = await clockIn(user);
+        const res = await post(user || 'supervisor@tutorbook.app',
+            'approveClockIn', {
+                clockIn: clockInData,
+                id: id,
+            });
+        return [res.appt, res.id];
+    };
+
     it("lets supervisors approve clock-in requests", async () => {
-        [clockIn, id] = await clockIn();
+        return approveClockIn();
     });
 
     async function clockOut(user) {
-        [clockInData, id] = await clockIn(user);
+        [appt, id] = await approveClockIn(user);
         const res = await post(user || 'tutor@tutorbook.app', 'clockOut', {
-            appt: clockInData.for,
+            appt: appt,
             id: id,
         });
         return [res.data.clockOut, res.data.id];

@@ -89,44 +89,44 @@ const approvedRequestNotification = async (snap, context) => {
 
 // pendingClockIns - sms, webpush to the recipient of a clockIn request
 const clockIn = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // pendingClockOuts - sms, webpush to the recipient of a clockOut request
 const clockOut = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // modifiedRequestsIn - sms, webpush to tutor when request is modified
 const modifiedRequestIn = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // modifiedRequestsOut - sms, webpush to pupil when request is modified
 const modifiedRequestOut = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // canceledRequestsIn - sms, webpush to tutor when request is canceled
 const canceledRequestIn = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // rejectedRequestsOut - sms, webpush to pupil when request is rejected
 const rejectedRequestOut = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // modifiedAppointments - sms, webpush, email to other attendee when appt is
 // modified
 const modifiedAppt = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 // canceledAppointments - sms, webpush, email to other attendee when appt is
 // canceled
 const canceledAppt = async (snap, context) => {
-    throw new Error('This notification function has not been implemented yet.');
+    console.warn('This notification function has not been implemented yet.');
 };
 
 

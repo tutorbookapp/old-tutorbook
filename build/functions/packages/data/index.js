@@ -55,9 +55,14 @@ class DataProxy {
         const exists = async (collection, id) => {
             const doc = await global.db.collection('users').doc(user.id)
                 .collection(collection).doc(id).get();
+            console.log('Does ' + user.id + ' have a(n) ' + collection +
+                ' doc (' + id + ')?', (doc.exists) ? 'Yes.' : 'No, erroring.');
             assert(doc.exists);
         };
         switch (action) {
+            case 'createLocation':
+                assert(token.supervisor);
+                return Data.createLocation(data.location, data.id);
             case 'createUser':
                 assert(token.email === data.email || token.supervisor);
                 return Data.createUser(data);
@@ -248,12 +253,22 @@ class Data {
             .delete();
     }
 
+    static async createLocation(location, id) {
+        if (!location)
+            throw new Error('Could not create location b/c it was undefined.');
+        const doc = (id && id !== '') ? global.db.collection('locations')
+            .doc(id) : global.db.collection('locations').doc();
+        await doc.set(location);
+        return {
+            id: doc.id,
+            location: location,
+        };
+    }
+
     static createUser(user) {
-        if (!user || !user.id) {
+        if (!user || !user.id)
             throw new Error('Could not create user b/c id was undefined.');
-        }
-        return global.db.collection('users').doc(user.id)
-            .set(user);
+        return global.db.collection('users').doc(user.id).set(user);
     }
 
     static async approveClockIn(clockIn, id) {
@@ -378,26 +393,11 @@ class Data {
     }
 
     static async getLocationSupervisor(id) {
-        try {
-            const doc = await global.db.collection('locations')
-                .doc(id).get();
-            const supervisors = doc.data().supervisors;
-            return supervisors[0]; // TODO: How do we check to see if a given
-            // supervisor is actually active on the app right now?
-        } catch (e) {
-            console.warn('Error while getting a location supervisor:', e);
-            /*
-             *new NotificationDialog('Update Availability?', 'The availability ' +
-             *    ' shown here is not up-to-date. The ' + location + ' may ' +
-             *    'no longer be open at these times or this user may no longer ' +
-             *    'be available (they can change their availability from their ' +
-             *    'profile). Please cancel this request and ' +
-             *    'create a new one.').view();
-             *    TODO: Show a notification dialog without creating a dependency loop
-             */
-            global.app.snackbar.view('Could not find location supervisor.');
-            global.app.nav.back();
-        }
+        const doc = await global.db.collection('locations')
+            .doc(id).get();
+        const supervisors = doc.data().supervisors;
+        return supervisors[0]; // TODO: How do we check to see if a given
+        // supervisor is actually active on the app right now?
     }
 
     static async clockIn(appt, id) {
@@ -534,7 +534,8 @@ class Data {
             modifiedAppts.push(db.collection('users').doc(apptData.attendees[1].email)
                 .collection('modifiedAppointments').doc(id));
         }
-        if (app.user.locations.indexOf(apptData.location.id) < 0) {
+        if (app.user.locations &&
+            app.user.locations.indexOf(apptData.location.id) < 0) {
             modifiedAppts.push(db.collection('locations').doc(apptData.location.id)
                 .collection('modifiedAppointments').doc(id));
         }
@@ -1358,7 +1359,7 @@ module.exports = {
                 console.error('Error while processing ' + req.query.action +
                     ' action from ' + req.query.user + ':', err.message);
                 res.send('[ERROR] ' + err.message);
-                throw err; // So Firebase doesn't register a 200 f(x) code
+                throw err;
             });
         });
     },
