@@ -783,8 +783,8 @@ Card.renderRequestInCard = function(doc) {
 // Render function that returns a populated requestOut dashboard card
 Card.renderRequestOutCard = function(doc) {
     const request = doc.data();
-    var subtitle = 'To ' + request.toUser.name;
-    var summary = 'You requested ' + request.toUser.name.split(' ')[0] +
+    const subtitle = 'To ' + request.toUser.name;
+    const summary = 'You requested ' + request.toUser.name.split(' ')[0] +
         ' as a ' + request.toUser.type.toLowerCase() + ' for ' +
         request.subject + ' on ' + request.time.day + 's at the ' +
         request.location.name + '. Tap to learn more and edit your request.';
@@ -885,14 +885,23 @@ Card.renderApptCard = function(doc) {
             appt.time.from + ".";
     }
     const actions = {};
+    var card;
+    var err;
+    var res;
     actions.cancel = function() {
         var summary = "Cancel sessions with " + withUser.name + " for " +
             appt.for.subject + " at " + appt.time.from + " on " +
             appt.time.day + "s.";
         new ConfirmationDialog('Cancel Appointment?', summary, async () => {
-            Card.remove(doc, 'appointments');
-            await Data.cancelAppt(appt, doc.id);
+            $(card).hide();
+            app.snackbar.view('Canceling appointment...');
+            [err, res] = await to(Data.cancelAppt(appt, doc.id));
+            if (err) {
+                $(card).show();
+                return app.snackbar.view('Could not cancel appointment.');
+            }
             app.snackbar.view('Canceled appointment with ' + withUser.email + '.');
+            $(card).remove();
         }).view()
     };
     actions.view = function() {
@@ -902,7 +911,7 @@ Card.renderApptCard = function(doc) {
         new ViewApptDialog(appt, doc.id).view();
     };
 
-    var card = Card.renderCard('Upcoming Appointment', subtitle, summary, actions);
+    card = Card.renderCard('Upcoming Appointment', subtitle, summary, actions);
     return card;
 };
 

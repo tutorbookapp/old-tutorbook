@@ -14,7 +14,6 @@ const Search = require('search');
 // ============================================================================
 
 exports.data = functions.https.onRequest(Data.onRequest); // TODO: Manage auth.
-exports.secureData = functions.https.onCall(Data.onCall);
 
 // ============================================================================
 // SEARCH

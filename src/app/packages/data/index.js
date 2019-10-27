@@ -75,18 +75,19 @@ class Data {
     // Whenever a data function is called, the app will wait for a "SUCCESS" 
     // before showing the user a snackbar. If an error is thrown, we show the 
     // user an error message snackbar.
-    static post(action, data) {
+    static async post(action, data) {
         return axios({
             method: 'post',
             url: window.app.functionsURL + '/data',
             params: {
                 user: window.app.user.id || window.app.user.email,
                 action: action,
+                token: (await firebase.auth().currentUser.getIdToken(true)),
             },
             data: data,
         }).then((res) => {
-            if (res.data.indexOf('ERROR') >= 0)
-                throw new Error('Server-side error: ' + res.data);
+            if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
+                throw new Error(res.data.replace('[ERROR] ', ''));
         }).catch((err) => {
             console.error('Error during ' + action + ' REST API call.', err);
             throw err;

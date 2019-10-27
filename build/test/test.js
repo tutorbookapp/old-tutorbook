@@ -334,45 +334,43 @@ describe("Tutorbook's REST API", () => {
         return [res.data.request, res.data.id];
     };
 
-    /*
-     *    it("lets authenticated users send requests", () => {
-     *        return createRequest();
-     *    });
-     *
-     *    it("lets the sender modify a request", async () => {
-     *        [request, id] = await createRequest();
-     *        request.time.day = 'Wednesday';
-     *        return post('pupil@tutorbook.app', 'modifyRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     *
-     *    it("lets the receiver modify a request", async () => {
-     *        [request, id] = await createRequest();
-     *        request.time.day = 'Wednesday';
-     *        return post('tutor@tutorbook.app', 'modifyRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     *
-     *    it("lets the sender cancel a request", async () => {
-     *        [request, id] = await createRequest();
-     *        return post('pupil@tutorbook.app', 'cancelRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     *
-     *    it("lets the receiver reject a request", async () => {
-     *        [request, id] = await createRequest();
-     *        return post('tutor@tutorbook.app', 'rejectRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     */
+    it("lets authenticated users send requests", () => {
+        return createRequest();
+    });
+
+    it("lets the sender modify a request", async () => {
+        [request, id] = await createRequest();
+        request.time.day = 'Wednesday';
+        return post('pupil@tutorbook.app', 'modifyRequest', {
+            request: request,
+            id: id,
+        });
+    });
+
+    it("lets the receiver modify a request", async () => {
+        [request, id] = await createRequest();
+        request.time.day = 'Wednesday';
+        return post('tutor@tutorbook.app', 'modifyRequest', {
+            request: request,
+            id: id,
+        });
+    });
+
+    it("lets the sender cancel a request", async () => {
+        [request, id] = await createRequest();
+        return post('pupil@tutorbook.app', 'cancelRequest', {
+            request: request,
+            id: id,
+        });
+    });
+
+    it("lets the receiver reject a request", async () => {
+        [request, id] = await createRequest();
+        return post('tutor@tutorbook.app', 'rejectRequest', {
+            request: request,
+            id: id,
+        });
+    });
 
     async function approveRequest(user) {
         [request, id] = await createRequest(user);
@@ -385,44 +383,42 @@ describe("Tutorbook's REST API", () => {
         return [res.data.appt, res.data.id];
     };
 
-    /*
-     *    it("lets the receiver approve a request", () => {
-     *        return approveRequest();
-     *    });
-     *
-     *    it("lets supervisors create requests", () => {
-     *        return createRequest('supervisor@tutorbook.app');
-     *    });
-     *
-     *    it("lets supervisors modify requests", async () => {
-     *        [request, id] = await createRequest('supervisor@tutorbook.app');
-     *        request.time.day = 'Wednesday';
-     *        return post('supervisor@tutorbook.app', 'modifyRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     *
-     *    it("lets supervisors cancel requests", async () => {
-     *        [request, id] = await createRequest('supervisor@tutorbook.app');
-     *        return post('supervisor@tutorbook.app', 'cancelRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     *
-     *    it("lets supervisors reject requests", async () => {
-     *        [request, id] = await createRequest('supervisor@tutorbook.app');
-     *        return post('supervisor@tutorbook.app', 'rejectRequest', {
-     *            request: request,
-     *            id: id,
-     *        });
-     *    });
-     *
-     *    it("lets supervisors approve requests", () => {
-     *        return approveRequest('supervisor@tutorbook.app');
-     *    });
-     */
+    it("lets the receiver approve a request", () => {
+        return approveRequest();
+    });
+
+    it("lets supervisors create requests", () => {
+        return createRequest('supervisor@tutorbook.app');
+    });
+
+    it("lets supervisors modify requests", async () => {
+        [request, id] = await createRequest('supervisor@tutorbook.app');
+        request.time.day = 'Wednesday';
+        return post('supervisor@tutorbook.app', 'modifyRequest', {
+            request: request,
+            id: id,
+        });
+    });
+
+    it("lets supervisors cancel requests", async () => {
+        [request, id] = await createRequest('supervisor@tutorbook.app');
+        return post('supervisor@tutorbook.app', 'cancelRequest', {
+            request: request,
+            id: id,
+        });
+    });
+
+    it("lets supervisors reject requests", async () => {
+        [request, id] = await createRequest('supervisor@tutorbook.app');
+        return post('supervisor@tutorbook.app', 'rejectRequest', {
+            request: request,
+            id: id,
+        });
+    });
+
+    it("lets supervisors approve requests", () => {
+        return approveRequest('supervisor@tutorbook.app');
+    });
 
     // ========================================================================
     // APPOINTMENTs
@@ -541,10 +537,10 @@ describe("Tutorbook's REST API", () => {
     });
 
     // ========================================================================
-    // PAYMENTs
+    // TODO: PAYMENTs
     // ========================================================================
 
     // ========================================================================
-    // SUPERVISORs
+    // TODO: SUPERVISORs
     // ========================================================================
 });

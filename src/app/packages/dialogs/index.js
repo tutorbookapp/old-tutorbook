@@ -505,6 +505,7 @@ class ViewRequestDialog {
             showApprove: window.app.user.email === this.request.toUser.email,
             approve: async () => {
                 window.app.nav.back();
+                window.app.snackbar.view('Approving request...');
                 await Data.approveRequest(this.request, this.id);
                 window.app.snackbar.view('Approved request.');
             },
@@ -523,6 +524,7 @@ class ViewRequestDialog {
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         this.manage();
+
     }
 
     manage() {
@@ -892,6 +894,7 @@ class NewRequestDialog extends EditRequestDialog {
 
     async sendRequest() { // Override modify to create a new request
         window.app.nav.back();
+        window.app.snackbar.view('Sending request...');
         await Data.newRequest(this.request, this.payment);
         window.app.snackbar.view(
             'Request sent to ' + this.request.toUser.email + '.',
