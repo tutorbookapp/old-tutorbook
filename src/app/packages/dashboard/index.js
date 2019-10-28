@@ -376,7 +376,8 @@ class SupervisorDashboard extends Dashboard {
                 .append(card);
         };
         firebase.firestore().collection('locations').doc(window.app.location.id)
-            .collection('appointments').get().then((snapshot) => {
+            .collection('appointments').orderBy('time.from').get()
+            .then((snapshot) => {
                 $(schedule).find('#loader').remove();
                 snapshot.forEach((doc) => {
                     add(doc);
