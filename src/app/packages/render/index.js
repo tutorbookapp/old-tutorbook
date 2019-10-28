@@ -58,6 +58,10 @@ class Render {
     }
 
     snackbar(label, action, close) {
+        if (typeof label === 'boolean' || typeof label === 'undefined')
+            return this.template('snackbar-empty', {
+                close: label,
+            });
         return this.template('snackbar', {
             label: label,
             action: action,

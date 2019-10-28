@@ -756,14 +756,23 @@ Card.renderRequestInCard = function(doc) {
         ' for ' + request.subject + ' on ' + request.time.day + 's at the ' +
         request.location.name + '. Tap to learn more and setup an appointment.';
     var actions = {};
+    var err;
+    var res;
+    var card;
     actions.reject = function() {
         const summary = "Reject request from " + request.fromUser.name +
             " for " + request.subject + " at " +
             request.time.from + " on " + request.time.day +
             "s.";
         new ConfirmationDialog('Reject Request?', summary, async () => {
-                Card.remove(doc, 'requestsIn');
-                await Data.rejectRequest(request, doc.id);
+                $(card).hide();
+                window.app.snackbar.view('Rejecting request...');
+                [err, res] = await to(Data.rejectRequest(request, doc.id));
+                if (err) {
+                    $(card).show();
+                    return window.app.snackbar.view('Could not reject request.');
+                }
+                $(card).remove();
                 window.app.snackbar.view('Rejected request from ' +
                     request.fromUser.email + '.');
             })
@@ -776,7 +785,8 @@ Card.renderRequestInCard = function(doc) {
         new ViewRequestDialog(request, doc.id).view();
     };
 
-    return Card.renderCard('New Request', subtitle, summary, actions);
+    card = Card.renderCard('New Request', subtitle, summary, actions);
+    return card;
 };
 
 
@@ -792,16 +802,22 @@ Card.renderRequestOutCard = function(doc) {
     actions.primary = function() {
         new ViewRequestDialog(request).view();
     };
+    var card;
+    var err;
+    var res;
     actions.cancel = function() {
         const summary = "Cancel request to " + request.toUser.name + " for " +
             request.subject + " at " + request.time.from + " on " +
             request.time.day + "s.";
         new ConfirmationDialog('Cancel Request?', summary, async () => {
-            Card.remove(doc, 'requestsOut');
-            var err;
-            var res;
+            $(card).hide();
+            window.app.snackbar.view('Canceling request...');
             [err, res] = await to(Data.cancelRequest(request, doc.id));
-            if (err) return app.snackbar.view('Could not cancel request.');
+            if (err) {
+                $(card).show();
+                return app.snackbar.view('Could not cancel request.');
+            }
+            $(card).remove();
             app.snackbar.view('Canceled request to ' +
                 request.toUser.email + '.');
         }).view();
@@ -811,7 +827,8 @@ Card.renderRequestOutCard = function(doc) {
     };
     window.app.cards.requestsOut[doc.id] = actions; // Store actions & dialogs
 
-    return Card.renderCard('Pending Request', subtitle, summary, actions);
+    card = Card.renderCard('Pending Request', subtitle, summary, actions);
+    return card;
 };
 
 
@@ -900,8 +917,9 @@ Card.renderApptCard = function(doc) {
                 $(card).show();
                 return app.snackbar.view('Could not cancel appointment.');
             }
-            app.snackbar.view('Canceled appointment with ' + withUser.email + '.');
             $(card).remove();
+            app.snackbar.view('Canceled appointment with ' + withUser.email +
+                '.');
         }).view()
     };
     actions.view = function() {

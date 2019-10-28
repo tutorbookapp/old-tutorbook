@@ -81,7 +81,7 @@ class Tutorbook {
         this.render = new Render();
         this.data = new Data();
         this.utils = new Utils();
-        this.snackbar = new Snackbar(this);
+        this.snackbar = new Snackbar(this.render);
         this.initOnMobile();
 
         // Dependency cycle workarounds

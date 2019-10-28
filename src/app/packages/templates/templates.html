@@ -35,6 +35,19 @@ user sees as they navigate throughout the app. -->
     </li>
 </div>
 
+<!-- Empty Snackbar -->
+<div hidden class="template" id="snackbar-empty">
+    <div class="mdc-snackbar" data-fir-id="id">
+        <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label" role="status" aria-live="polite">
+            </div>
+            <div class="mdc-snackbar__actions">
+                <button data-fir-if="close" class="mdc-icon-button material-icons mdc-snackbar__dismiss">close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Labeled Snackbar -->
 <div hidden class="template" id="snackbar">
     <div class="mdc-snackbar" data-fir-id="id">
