@@ -1,3 +1,6 @@
+notifications:
+  slack: tutorbookapp:TO4yyYMKazQGLZ0isrytycru
+
 branches:
   only:
     - master
