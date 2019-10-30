@@ -153,7 +153,7 @@ class DataProxy {
                     await exists('requestsIn', data.id);
                 return Data.modifyRequest(data.request, data.id);
             default:
-                throw new Error('Could not process ' + action + ' request.');
+                throw new Error('Data action (' + action + ') does not exist.');
         };
     }
 };
