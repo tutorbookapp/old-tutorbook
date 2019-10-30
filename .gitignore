@@ -5,6 +5,7 @@
 # Cred
 *cred.json
 *token.json
+.runtimeconfig.json
 
 # Logs
 logs
