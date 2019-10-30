@@ -5,6 +5,7 @@ branches:
   - master
   - gunn
   - paly
+  - jls
 language: node_js
 node_js:
 - '10.10'
