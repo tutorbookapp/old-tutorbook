@@ -303,6 +303,10 @@ class Data {
             var activeAppt = activeAppts[i];
             await activeAppt.set(activeApptData);
         }
+        return {
+            appt: activeApptData,
+            id: id,
+        };
     }
 
     static getOther(notThisUser, attendees) { // Don't create dependency loops
@@ -370,6 +374,10 @@ class Data {
         for (var i = 0; i < pastAppts.length; i++) {
             await pastAppts[i].set(appt);
         }
+        return {
+            appt: appt,
+            id: pastApptID,
+        };
     }
 
     static combineMaps(mapA, mapB) { // Avoid dependency loops with Utils
