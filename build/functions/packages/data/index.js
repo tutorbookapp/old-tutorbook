@@ -310,6 +310,7 @@ class Data {
             await activeAppt.set(activeApptData);
         }
         return {
+            clockIn: clockIn,
             appt: activeApptData,
             id: id,
         };
@@ -412,6 +413,7 @@ class Data {
             await pastAppts[i].set(appt);
         }
         return {
+            clockOut: clockOut,
             appt: appt,
             id: pastApptID,
         };

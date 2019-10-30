@@ -1,5 +1,6 @@
 @import "@material/list/mdc-list";
 @import "@material/layout-grid/mdc-layout-grid";
+@import "@material/linear-progress/mdc-linear-progress";
 
 .card-schedule {
   border: 1px solid #e0e0e0;
@@ -17,16 +18,15 @@
 }
 
 .card-event {
-  padding: 12px 12px 12px 20px;
-  border-radius: 4px;
   margin-bottom: 10px;
+  border-radius: 4px;
+  .container {
+    padding: 12px 12px 12px 20px;
+  }
   .mdc-menu-surface--anchor {
     float: right;
     width: 24px;
     height: 24px;
-  }
-  i {
-    float: right;
   }
   button {
     float: right;

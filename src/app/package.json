@@ -36,6 +36,7 @@
     "@material/fab": "^1.1.1",
     "@material/icon-button": "^1.1.0",
     "@material/layout-grid": "^0.41.0",
+    "@material/linear-progress": "^3.2.0",
     "@material/list": "^1.1.1",
     "@material/menu": "^1.1.1",
     "@material/menu-surface": "^1.1.1",

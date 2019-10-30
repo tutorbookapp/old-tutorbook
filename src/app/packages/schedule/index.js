@@ -4,6 +4,12 @@ import {
 import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
+import {
+    MDCLinearProgress
+} from '@material/linear-progress/index';
+import {
+    MDCMenu
+} from '@material/menu/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -12,6 +18,7 @@ const Card = require('card');
 const Data = require('data');
 const Utils = require('utils');
 const User = require('user');
+const EditApptDialog = require('dialogs').editAppt;
 const ViewApptDialog = require('dialogs').viewAppt;
 const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
 const ViewCanceledApptDialog = require('dialogs').viewCanceledAppt;
@@ -51,7 +58,7 @@ class Schedule {
                         var listItem = Schedule.renderCanceledApptListItem(doc);
                         break;
                 };
-                this.viewEvent(listItem)
+                this.viewAppt(listItem)
             },
             empty: (type) => {
                 $(this.main).find('[type="' + type + '"]').remove();
@@ -83,16 +90,16 @@ class Schedule {
         window.app.nav.selected = 'Schedule';
         window.app.view(this.header, this.main, '/app/schedule');
         MDCTopAppBar.attachTo(this.header);
-        this.viewEvents();
+        this.viewAppts();
     }
 
     reView() {
-        this.viewEvents(); // TODO: Just re-attach listeners
+        this.viewAppts(); // TODO: Just re-attach listeners
     }
 
-    reViewEvents() {}
+    reViewAppts() {}
 
-    viewEvents() {
+    viewAppts() {
         const db = firebase.firestore().collection('users')
             .doc(window.app.user.id); // TODO: Add proxy results too 
         const queries = {
@@ -122,7 +129,7 @@ class Schedule {
         });
     }
 
-    viewEvent(listItem) {
+    viewAppt(listItem) {
         const scheduleEl = $(this.main).find('.mdc-list')[0];
         const timestamp = new Date($(listItem).attr('timestamp'));
         const id = $(listItem).attr('id');
@@ -650,7 +657,7 @@ class SupervisorSchedule extends Schedule {
         super();
     }
 
-    viewEvents() {
+    viewAppts() {
         const db = firebase.firestore().collection('locations')
             .doc(window.app.location.id); // TODO: Add >1 location
         const queries = {
@@ -697,7 +704,181 @@ class SupervisorSchedule extends Schedule {
 };
 
 
+class ScheduleCard {
+
+    constructor() {
+        this.render = window.app.render;
+        this.colors = {};
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        this.main = this.render.template('card-schedule');
+    }
+
+    viewAppts() {
+        firebase.firestore().collection('locations').doc(window.app.location.id)
+            .collection('appointments').orderBy('time.from').get()
+            .then((snapshot) => {
+                $(this.main).find('#loader').remove();
+                snapshot.forEach((doc) => {
+                    this.viewAppt(doc);
+                });
+            });
+    }
+
+    viewAppt(doc) {
+        $(this.main)
+            .find('#' + doc.data().time.day.toLowerCase() + ' .schedule-list')
+            .append(this.renderAppt(doc));
+    }
+
+    renderAppt(doc) {
+        const appt = doc.data();
+        const title = appt.attendees[0].name.split(' ')[0] + ' and ' +
+            appt.attendees[1].name.split(' ')[0];
+        const subtitle = ((Data.periods.indexOf(appt.time.from) < 0) ?
+            'At ' : 'During ') + appt.time.from;
+        const background = this.color(appt.time);
+        const card = $(this.render.template('card-event', {
+            title: title,
+            subtitle: subtitle,
+            id: doc.id,
+        })).css('background', background);
+        var timer;
+        const clockIn = () => {
+            $(card).prepend($(this.render.template('event-progress')));
+            $(card)
+                .find('.mdc-linear-progress__bar-inner')
+                .css('background-color', background);
+            var time = 0; // Seconds since button clicked
+            var total = 5; // Duration of appt in seconds
+            const bar = new MDCLinearProgress(
+                $(card).find('.mdc-linear-progress')[0]
+            );
+            timer = window.setInterval(() => {
+                time++;
+                bar.progress = time / total;
+                if (time === total) window.clearInterval(timer);
+            }, 1000);
+        };
+        const clockOut = () => {
+            if (timer) {
+                window.clearInterval(timer);
+                timer = undefined;
+            }
+            $(card).find('.mdc-linear-progress').remove();
+        };
+        Object.entries({
+            'View': () => {
+                new ViewApptDialog(appt).view();
+            },
+            'Edit': () => {
+                new EditApptDialog(appt).view();
+            },
+            'Cancel': () => {
+                return new ConfirmationDialog('Cancel Appointment?',
+                    'Cancel tutoring sessions between ' + appt.attendees[0].name +
+                    ' and ' + appt.attendees[1].name + ' for ' + appt.for.subject + ' at ' +
+                    appt.time.from + ' at the ' +
+                    appt.location.name + '.', async () => {
+                        $(schedule).find('#' + doc.id).remove();
+                        var err;
+                        var res;
+                        [err, res] = await to(Data.cancelAppt(appt, doc.id));
+                        if (err) return window.app.snackbar.view('Could ' +
+                            'not cancel appointment.');
+                        window.app.snackbar.view('Canceled appointment.');
+                    }).view();
+            },
+            'Clock-In': async () => {
+                clockIn();
+                window.app.snackbar.view('Clocking in for ' +
+                    appt.for.toUser.name.split(' ')[0] + '...');
+                const r = await Data.instantClockIn(doc.data(), doc.id);
+                window.app.snackbar.view('Clocked in at ' + r.data.clockIn
+                    .sentTimestamp.toDate().toLocaleTimeString() + '.');
+            },
+            'Clock-Out': async () => {
+                clockOut();
+                window.app.snackbar.view('Clocking out for ' +
+                    appt.for.toUser.name.split(' ')[0] + '...');
+                const r = await Data.instantClockOut(doc.data(), doc.id);
+                window.app.snackbar.view('Clocked out at ' + r.data.clockOut
+                    .sentTimestamp.toDate().toLocaleTimeString() + '.');
+            },
+        }).forEach((entry) => {
+            $(card).find('.mdc-menu .mdc-list').append(
+                this.render.template('card-action', {
+                    label: entry[0],
+                    action: entry[1],
+                })
+            );
+        });
+        const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
+        const button = $(card).find('#menu');
+        MDCRipple.attachTo(button[0]).unbounded = true;
+        $(card).find('.mdc-menu .mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        button.click(() => {
+            menu.open = true;
+        });
+        return card;
+    }
+
+    color(time) {
+        if (this.colors[time.day] && this.colors[time.day][time.from])
+            return this.colors[time.day][time.from];
+        const palette = {
+            'purples': ['#7e57c2', '#5e35b1', '#4527a0', '#311b92'],
+            'pinks': ['#ec407a', '#d81b60', '#ad1457', '#880e4f'],
+            'blues': ['#5c6bc0', '#3949ab', '#283593', '#1a237e'],
+            'oranges': ['#ffa726', '#fb8c00', '#ef6c00', '#e65100'],
+            'greens': ['#26a69a', '#00897b', '#00695c', '#004d40'],
+            'greys': ['#78909c', '#546e7a', '#37474f', '#263238'],
+        };
+        if (this.colors[time.day]) {
+            var type = 'oranges';
+            var used = [];
+            Object.entries(palette).forEach((entry) => {
+                Object.values(this.colors[time.day]).forEach((color) => {
+                    if (entry[1].indexOf(color) >= 0) type = entry[0];
+                    used.push(color);
+                });
+            });
+            for (var i = 0; i < palette[type].length; i++) {
+                if (used.indexOf(palette[type][i]) < 0) {
+                    this.colors[time.day][time.from] = palette[type][i];
+                    break;
+                }
+            }
+            if (!this.colors[time.day][time.from])
+                this.colors[time.day][time.from] = used[0];
+        } else {
+            this.colors[time.day] = {};
+            var type = 'oranges';
+            var used = [];
+            Object.entries(palette).forEach((entry) => {
+                Object.values(this.colors).forEach((times) => {
+                    Object.values(times).forEach((c) => {
+                        if (entry[1].indexOf(c) >= 0) used.push(entry[0]);
+                    });
+                });
+            });
+            for (var i = 0; i < Object.keys(palette).length; i++) {
+                var key = Object.keys(palette)[i];
+                if (used.indexOf(key) < 0) type = key;
+            }
+            this.colors[time.day][time.from] = palette[type][0];
+        }
+        return this.colors[time.day][time.from];
+    }
+};
+
+
 module.exports = {
     default: Schedule,
     supervisor: SupervisorSchedule,
+    card: ScheduleCard,
 };

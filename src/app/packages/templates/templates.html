@@ -1828,20 +1828,38 @@ section) -->
     </div>
 </div>
 
+<!-- Event Progress Bar -->
+<div hidden class="template" id="event-progress">
+    <div role="progressbar" class="mdc-linear-progress">
+        <div class="mdc-linear-progress__buffering-dots"></div>
+        <div class="mdc-linear-progress__buffer"></div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+    </div>
+</div>
+
 <!-- Event Card Template -->
 <div hidden class="template" id="card-event">
     <div data-fir-id="id" class="card-event mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop">
-        <h2 class="dashboard-card__title mdc-typography mdc-typography--headline6">
-            <span data-fir-content="title">Titling Title</span>
-            <div class="mdc-menu-surface--anchor">
-                <button id="menu" class="mdc-icon-button material-icons">more_vert</button>
-                <div class="mdc-menu mdc-menu-surface">
-                    <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-                    </ul>
+        <div class="container">
+            <h2 class="dashboard-card__title mdc-typography mdc-typography--headline6">
+                <span data-fir-content="title">Titling Title</span>
+                <div class="mdc-menu-surface--anchor">
+                    <button id="menu" class="mdc-icon-button material-icons">more_vert</button>
+                    <div class="mdc-menu mdc-menu-surface">
+                        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </h2>
-        <h3 class="location-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2" data-fir-content="subtitle">This is a subtitle</h3>
+            </h2>
+            <h3 class="dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2">
+                <span data-fir-content="subtitle">This is a subtitle</span>
+            </h3>
+        </div>
     </div>
 </div>
 

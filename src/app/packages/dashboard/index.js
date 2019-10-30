@@ -4,9 +4,6 @@ import {
 import {
     MDCRipple
 } from '@material/ripple/index';
-import {
-    MDCMenu
-} from '@material/menu/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -17,10 +14,7 @@ const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
 const MatchingDialog = require('matching').dialog;
-const ViewApptDialog = require('dialogs').viewAppt;
-const EditApptDialog = require('dialogs').editAppt;
-const NotificationDialog = require('dialogs').notify;
-const ConfirmationDialog = require('dialogs').confirm;
+const ScheduleCard = require('schedule').card;
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('matching').default.renderShortcutCard;
@@ -239,160 +233,15 @@ class SupervisorDashboard extends Dashboard {
     }
 
     viewScheduleCards() {
-        const schedule = this.render.template('card-schedule');
+        const schedule = new ScheduleCard();
         const existing = $(this.main).find('.card-schedule');
         if (existing.length) {
-            $(existing).replaceWith(schedule);
+            $(existing).replaceWith(schedule.main);
         } else {
             $(this.main).find('#schedule .mdc-layout-grid__inner')
-                .append(schedule);
+                .append(schedule.main);
         }
-        const day = (day, el) => {
-            const cols = [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday'
-            ];
-            $(el).addClass('mdc-layout-grid__cell--order-' +
-                (cols.indexOf(day) + 1));
-            return el;
-        };
-        const colors = {};
-        const color = (time) => {
-            if (colors[time.day] && colors[time.day][time.from])
-                return colors[time.day][time.from];
-            const palette = {
-                'purples': ['#7e57c2', '#5e35b1', '#4527a0', '#311b92'],
-                'pinks': ['#ec407a', '#d81b60', '#ad1457', '#880e4f'],
-                'blues': ['#5c6bc0', '#3949ab', '#283593', '#1a237e'],
-                'oranges': ['#ffa726', '#fb8c00', '#ef6c00', '#e65100'],
-                'greens': ['#26a69a', '#00897b', '#00695c', '#004d40'],
-                'greys': ['#78909c', '#546e7a', '#37474f', '#263238'],
-            };
-            if (colors[time.day]) {
-                var type = 'oranges';
-                var used = [];
-                Object.entries(palette).forEach((entry) => {
-                    Object.values(colors[time.day]).forEach((color) => {
-                        if (entry[1].indexOf(color) >= 0) type = entry[0];
-                        used.push(color);
-                    });
-                });
-                for (var i = 0; i < palette[type].length; i++) {
-                    if (used.indexOf(palette[type][i]) < 0) {
-                        colors[time.day][time.from] = palette[type][i];
-                        break;
-                    }
-                }
-                if (!colors[time.day][time.from])
-                    colors[time.day][time.from] = used[0];
-            } else {
-                colors[time.day] = {};
-                var type = 'oranges';
-                var used = [];
-                Object.entries(palette).forEach((entry) => {
-                    Object.values(colors).forEach((times) => {
-                        Object.values(times).forEach((c) => {
-                            if (entry[1].indexOf(c) >= 0) used.push(entry[0]);
-                        });
-                    });
-                });
-                for (var i = 0; i < Object.keys(palette).length; i++) {
-                    var key = Object.keys(palette)[i];
-                    if (used.indexOf(key) < 0) type = key;
-                }
-                colors[time.day][time.from] = palette[type][0];
-            }
-            return colors[time.day][time.from];
-        };
-        const add = (doc) => {
-            const appt = doc.data();
-            const title = appt.attendees[0].name.split(' ')[0] + ' and ' +
-                appt.attendees[1].name.split(' ')[0];
-            const subtitle = ((Data.periods.indexOf(appt.time.from) < 0) ?
-                'At ' : 'During ') + appt.time.from;
-            const card = $(this.render.template('card-event', {
-                title: title,
-                subtitle: subtitle,
-                id: doc.id,
-            })).css('background', color(appt.time));
-            Object.entries({
-                'View': () => {
-                    new ViewApptDialog(appt).view();
-                },
-                'Edit': () => {
-                    new EditApptDialog(appt).view();
-                },
-                'Cancel': () => {
-                    return new ConfirmationDialog('Cancel Appointment?',
-                        'Cancel tutoring sessions between ' + appt.attendees[0].name +
-                        ' and ' + appt.attendees[1].name + ' for ' + appt.for.subject + ' at ' +
-                        appt.time.from + ' at the ' +
-                        appt.location.name + '.', async () => {
-                            $(schedule).find('#' + doc.id).remove();
-                            var err;
-                            var res;
-                            [err, res] = await to(Data.cancelAppt(appt, doc.id));
-                            if (err) return window.app.snackbar.view('Could ' +
-                                'not cancel appointment.');
-                            window.app.snackbar.view('Canceled appointment.');
-                        }).view();
-                },
-                'Clock-In': async () => {
-                    window.app.snackbar.view('Clocking in for ' +
-                        appt.for.toUser.name.split(' ')[0] + '...');
-                    const r = await Data.instantClockIn(this.appt, this.id);
-                    window.app.snackbar.view('Clocked in at ' + r.data.clockIn
-                        .sentTimestamp.toDate().toLocaleTimeString() + '.');
-                    new NotificationDialog('Instant Clock-Ins', 'Soon, you\'' +
-                        'll be able to clock in and out for your tutors. But ' +
-                        'in the meantime, while we\'re still working out some' +
-                        ' cinks, head over to the schedule view to manage ' +
-                        'tutor clock ins.', () => {}).view();
-                },
-                'Clock-Out': async () => {
-                    window.app.snackbar.view('Clocking out for ' +
-                        appt.for.toUser.name.split(' ')[0] + '...');
-                    const r = await Data.instantClockOut(this.appt, this.id);
-                    window.app.snackbar.view('Clocked out at ' + r.data.clockOut
-                        .sentTimestamp.toDate().toLocaleTimeString() + '.');
-                    new NotificationDialog('Instant Clock-Outs', 'Soon, you\'' +
-                        'll be able to clock in and out for your tutors. But ' +
-                        'in the meantime, while we\'re still working out some' +
-                        ' cinks, head over to the schedule view to manage ' +
-                        'tutor clock outs.', () => {}).view();
-                },
-            }).forEach((entry) => {
-                $(card).find('.mdc-menu .mdc-list').append(
-                    this.render.template('card-action', {
-                        label: entry[0],
-                        action: entry[1],
-                    })
-                );
-            });
-            const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
-            const button = $(card).find('#menu');
-            MDCRipple.attachTo(button[0]).unbounded = true;
-            $(card).find('.mdc-menu .mdc-list-item').each(function() {
-                MDCRipple.attachTo(this);
-            });
-            button.click(() => {
-                menu.open = true;
-            });
-            $(schedule).find('#' + appt.time.day.toLowerCase() + ' .schedule-list')
-                .append(card);
-        };
-        firebase.firestore().collection('locations').doc(window.app.location.id)
-            .collection('appointments').orderBy('time.from').get()
-            .then((snapshot) => {
-                $(schedule).find('#loader').remove();
-                snapshot.forEach((doc) => {
-                    add(doc);
-                });
-            });
+        schedule.viewAppts();
     }
 
     viewShortcutCards() {

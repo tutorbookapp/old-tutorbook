@@ -88,6 +88,7 @@ class Data {
         }).then((res) => {
             if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
                 throw new Error(res.data.replace('[ERROR] ', ''));
+            return res;
         }).catch((err) => {
             console.error('Error during ' + action + ' REST API call.', err);
             throw err;
