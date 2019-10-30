@@ -508,7 +508,7 @@ describe("Tutorbook's REST API", () => {
                 clockIn: clockInData,
                 id: id,
             });
-        return [res.appt, res.id];
+        return [res.data.appt, res.data.id];
     };
 
     it("lets supervisors approve clock-in requests", async () => {
