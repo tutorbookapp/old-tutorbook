@@ -91,6 +91,12 @@ class DataProxy {
                 assert(user.type === 'Pupil');
                 await exists('appointments', data.id);
                 return Data.denyPayment(data.deniedPayment, data.id);
+            case 'instantClockIn':
+                assert(token.supervisor);
+                return Data.instantClockIn(data.appt, data.id);
+            case 'instantClockOut':
+                assert(token.supervisor);
+                return Data.instantClockOut(data.appt, data.id);
             case 'approveClockIn':
                 assert(token.supervisor);
                 await exists('clockIns', data.id);
@@ -361,7 +367,54 @@ class Data {
     }
 
     static async instantClockOut(appt, id) {
-        // TODO: Add instant clockOuts
+        const db = global.db;
+        const clockOut = {
+            sentTimestamp: new Date(),
+            sentBy: global.app.conciseUser,
+        };
+
+        appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
+        clockOut.for = Data.cloneMap(appt);
+
+        const activeAppts = [
+            db.collection('users').doc(appt.attendees[0].email)
+            .collection('activeAppointments')
+            .doc(id),
+            db.collection('users').doc(appt.attendees[1].email)
+            .collection('activeAppointments')
+            .doc(id),
+            db.collection('locations').doc(appt.location.id)
+            .collection('activeAppointments')
+            .doc(id),
+        ];
+        const pastAppts = [
+            db.collection('users').doc(appt.attendees[0].email)
+            .collection('pastAppointments')
+            .doc(),
+        ];
+        const pastApptID = pastAppts[0].id;
+        pastAppts.push(
+            db.collection('users').doc(appt.attendees[1].email)
+            .collection('pastAppointments')
+            .doc(pastApptID),
+        );
+        pastAppts.push(
+            db.collection('locations').doc(appt.location.id)
+            .collection('pastAppointments')
+            .doc(pastApptID),
+        );
+
+        // Actually mess with docs
+        for (var i = 0; i < activeAppts.length; i++) {
+            await activeAppts[i].delete();
+        }
+        for (var i = 0; i < pastAppts.length; i++) {
+            await pastAppts[i].set(appt);
+        }
+        return {
+            appt: appt,
+            id: pastApptID,
+        };
     }
 
     static async approveClockOut(clockOutData, id) {

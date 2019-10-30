@@ -536,6 +536,23 @@ describe("Tutorbook's REST API", () => {
         [clockOut, id] = await clockOut();
     });
 
+    it("lets supervisors perform instant clock-ins", async () => {
+        [appt, id] = await approveRequest();
+        await createLocation();
+        return post('supervisor@tutorbook.app', 'instantClockIn', {
+            appt: appt,
+            id: id,
+        });
+    });
+
+    it("lets supervisors perform instant clock-outs", async () => {
+        [appt, id] = await approveClockIn();
+        return post('supervisor@tutorbook.app', 'instantClockOut', {
+            appt: appt,
+            id: id,
+        });
+    });
+
     // ========================================================================
     // TODO: PAYMENTs
     // ========================================================================
