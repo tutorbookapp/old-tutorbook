@@ -342,6 +342,11 @@ class SupervisorDashboard extends Dashboard {
                         }).view();
                 },
                 'Clock-In': () => {
+                    window.app.snackbar.view('Clocking in for ' +
+                        appt.for.toUser.name.split(' ')[0] + '...');
+                    const r = await Data.instantClockIn(this.appt, this.id);
+                    window.app.snackbar.view('Clocked in at ' + r.data.clockIn
+                        .sentTimestamp.toDate().toLocaleTimeString() + '.');
                     new NotificationDialog('Instant Clock-Ins', 'Soon, you\'' +
                         'll be able to clock in and out for your tutors. But ' +
                         'in the meantime, while we\'re still working out some' +
@@ -349,6 +354,11 @@ class SupervisorDashboard extends Dashboard {
                         'tutor clock ins.', () => {}).view();
                 },
                 'Clock-Out': () => {
+                    window.app.snackbar.view('Clocking out for ' +
+                        appt.for.toUser.name.split(' ')[0] + '...');
+                    const r = await Data.instantClockOut(this.appt, this.id);
+                    window.app.snackbar.view('Clocked out at ' + r.data.clockOut
+                        .sentTimestamp.toDate().toLocaleTimeString() + '.');
                     new NotificationDialog('Instant Clock-Outs', 'Soon, you\'' +
                         'll be able to clock in and out for your tutors. But ' +
                         'in the meantime, while we\'re still working out some' +

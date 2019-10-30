@@ -176,6 +176,20 @@ class Data {
         }
     }
 
+    static instantClockIn(appt, id) { // Sends and approves clock in request
+        return Data.post('instantClockIn', {
+            appt: appt,
+            id: id,
+        });
+    }
+
+    static instantClockOut(appt, id) { // Sends and approves clock out request
+        return Data.post('instantClockOut', {
+            appt: appt,
+            id: id,
+        });
+    }
+
     static clockIn(appt, id) {
         return Data.post('clockIn', {
             appt: appt,
