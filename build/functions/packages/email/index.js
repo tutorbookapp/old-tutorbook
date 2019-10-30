@@ -99,7 +99,7 @@ class Email {
             request.time.day + 's at the ' + request.location.name + ' from ' +
             request.time.from + ' until ' + request.time.to + '.';
         this.subject = '[Approved Request] ' + approvedBy.name.split(' ')[0] +
-            ' approved your lesson request for ' + request.for.subject;
+            ' approved your lesson request for ' + request.subject;
         this.html = requestApprovedEmail
             .replace('{ username }', this.user.name.split(' ')[0])
             .replace('{ summary }', summary);
