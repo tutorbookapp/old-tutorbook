@@ -1,19 +1,13 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin').initializeApp();
 
+const updateHours = require('hours');
 const updateSheet = require('sheet');
 const Auth = require('auth');
 const Data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
 const Search = require('search');
-
-
-// ============================================================================
-// DATA-FLOW
-// ============================================================================
-
-exports.data = functions.https.onRequest(Data.onRequest); // TODO: Manage auth.
 
 // ============================================================================
 // SEARCH
@@ -88,6 +82,12 @@ exports.updateCustomAuth = functions.firestore
     .onWrite(Auth.update);
 
 exports.auth = functions.https.onRequest(Auth.custom);
+
+exports.data = functions.https.onRequest(Data.onRequest);
+
+exports.updateHours = functions.firestore
+    .document('users/{user}/pastAppointments/{appt}')
+    .onCreate(updateHours);
 
 // ============================================================================
 // NOTIFICATIONS (EMAIL, SMS, & WEBPUSH)
