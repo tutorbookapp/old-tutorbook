@@ -18,7 +18,8 @@ install:
 - cd functions/
 - npm i
 before_script:
-- firebase emulators:start --only firestore,functions --project tutorbook-779d8 & sleep 5
+- firebase emulators:start --only firestore,functions --project tutorbook-779d8 &>/dev/null &
+- sleep 5
 script:
 - cd ../
 - npm test
