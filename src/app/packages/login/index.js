@@ -93,7 +93,7 @@ class Login {
                 // 2) Linking Google Calendar or iCal to their account
                 // 3) Setting up their first location or applying to be a supervisor
                 // for an existing location
-                Utils.url('/app/home?cards=setupProfile+setupNotifications?auth=false?type=Supervisor');
+                Utils.url('/app/home?cards=setupNotifications?auth=false?type=Supervisor');
                 Login.viewGoogleSignIn();
             },
         });
