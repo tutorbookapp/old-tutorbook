@@ -341,7 +341,7 @@ class SupervisorDashboard extends Dashboard {
                             window.app.snackbar.view('Canceled appointment.');
                         }).view();
                 },
-                'Clock-In': () => {
+                'Clock-In': async () => {
                     window.app.snackbar.view('Clocking in for ' +
                         appt.for.toUser.name.split(' ')[0] + '...');
                     const r = await Data.instantClockIn(this.appt, this.id);
@@ -353,7 +353,7 @@ class SupervisorDashboard extends Dashboard {
                         ' cinks, head over to the schedule view to manage ' +
                         'tutor clock ins.', () => {}).view();
                 },
-                'Clock-Out': () => {
+                'Clock-Out': async () => {
                     window.app.snackbar.view('Clocking out for ' +
                         appt.for.toUser.name.split(' ')[0] + '...');
                     const r = await Data.instantClockOut(this.appt, this.id);
