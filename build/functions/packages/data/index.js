@@ -271,6 +271,44 @@ class Data {
         return global.db.collection('users').doc(user.id).set(user);
     }
 
+    static async instantClockIn(appt, id) { // Creates and approves clock in
+        const db = global.db;
+        const clockIn = {
+            sentTimestamp: new Date(),
+            sentBy: global.app.conciseUser,
+        };
+        const supervisor = await Data.getLocationSupervisor(appt.location.id);
+        const activeAppts = [
+            db.collection('users').doc(appt.attendees[0].email)
+            .collection('activeAppointments')
+            .doc(id),
+            db.collection('users').doc(appt.attendees[1].email)
+            .collection('activeAppointments')
+            .doc(id),
+            db.collection('locations').doc(appt.location.id)
+            .collection('activeAppointments')
+            .doc(id),
+        ];
+
+        // Tedious work arounds for infinite reference loops
+        appt.supervisor = supervisor;
+        appt.clockIn = Data.cloneMap(clockIn);
+        clockIn.for = Data.cloneMap(appt);
+        const activeApptData = Data.cloneMap(appt);
+        activeApptData.clockIn = Data.combineMaps(clockIn, {
+            approvedTimestamp: new Date(),
+            approvedBy: global.app.conciseUser,
+        });
+        for (var i = 0; i < activeAppts.length; i++) {
+            var activeAppt = activeAppts[i];
+            await activeAppt.set(activeApptData);
+        }
+        return {
+            appt: activeApptData,
+            id: id,
+        };
+    }
+
     static async approveClockIn(clockIn, id) {
         const db = global.db;
         const ref = db.collection('users').doc(global.app.user.id)
@@ -320,6 +358,10 @@ class Data {
             return attendees[1];
         }
         return attendees[0];
+    }
+
+    static async instantClockOut(appt, id) {
+        // TODO: Add instant clockOuts
     }
 
     static async approveClockOut(clockOutData, id) {
