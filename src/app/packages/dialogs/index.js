@@ -1196,6 +1196,7 @@ class ViewApptDialog extends ViewRequestDialog {
 
     async clockIn() {
         this.timer = setInterval(this.update, 10);
+        window.app.snackbar.view('Sending request...');
         await Data.clockIn(this.appt, this.id);
         window.app.snackbar.view('Sent clock in request.');
         //$(this.header).find('.material-icons').off('click').click(() => {
@@ -1206,6 +1207,7 @@ class ViewApptDialog extends ViewRequestDialog {
     async clockOut() {
         clearInterval(this.timer);
         this.timer = null;
+        window.app.snackbar.view('Sending request...');
         await Data.clockOut(this.appt, this.id);
         window.app.snackbar.view('Sent clock out request.');
     }
