@@ -67,7 +67,7 @@ const updateAuth = async (change, context) => {
             }).catch((err) => {
                 console.error('Error while adding ' +
                     'supervisor customAuth to ' + profile.email +
-                    '\'s account:', err);
+                    '\'s account:', err.message);
             });
     } else { // NOTHING
         console.log(profile.name + ' was not a verified supervisor. ' +
@@ -84,7 +84,7 @@ const updateAuth = async (change, context) => {
                     profile.email + '\'s account.');
             }).catch((err) => {
                 console.error('Error while removing customAuth claims' +
-                    ' from ' + profile.email + '\'s account:', err);
+                    ' from ' + profile.email + '\'s account:', err.message);
             });
     }
 };
