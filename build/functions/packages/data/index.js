@@ -297,6 +297,8 @@ class Data {
         ];
 
         // Tedious work arounds for infinite reference loops
+        appt = (await db.collection('users').doc(appt.attendees[0].email)
+            .collection('appointments').doc(id).get()).data();
         appt.supervisor = supervisor;
         clockIn.for = Data.cloneMap(appt);
         appt.clockIn = Data.combineMaps(clockIn, {
@@ -371,10 +373,6 @@ class Data {
             sentTimestamp: new Date(),
             sentBy: global.app.conciseUser,
         };
-
-        appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
-        clockOut.for = Data.cloneMap(appt);
-
         const activeAppts = [
             db.collection('users').doc(appt.attendees[0].email)
             .collection('activeAppointments')
@@ -386,6 +384,11 @@ class Data {
             .collection('activeAppointments')
             .doc(id),
         ];
+
+        appt = (await activeAppts[0].get()).data();
+        appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
+        clockOut.for = Data.cloneMap(appt);
+
         const pastAppts = [
             db.collection('users').doc(appt.attendees[0].email)
             .collection('pastAppointments')

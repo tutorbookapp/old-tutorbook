@@ -704,139 +704,115 @@ class SupervisorSchedule extends Schedule {
 };
 
 
-class ScheduleCard {
-
-    constructor() {
+class Event {
+    constructor(appt, id, colors) {
         this.render = window.app.render;
-        this.colors = {};
+        this.colors = colors || {};
+        this.color = this.getColor(appt.time);
+        Object.entries(appt).forEach((entry) => {
+            this[entry[0]] = entry[1];
+        });
+        this.id = id;
         this.renderSelf();
     }
 
+    async clockIn() {
+        $(this.el).find('.mdc-list [id="Clock in"] .mdc-list-item__text')
+            .text('Clock out').end()
+            .find('.mdc-linear-progress').remove().end()
+            .prepend(this.render.template('event-progress'));
+        $(this.el).find('.mdc-linear-progress__bar-inner')
+            .css('background-color', this.color);
+        var time = 0; // Seconds since button clicked
+        var total = (new Date('1/1/2019 ' + this.time.to).getTime() -
+            new Date('1/1/2019 ' + this.time.from).getTime()) / 1000;
+        const bar = new MDCLinearProgress(
+            $(this.el).find('.mdc-linear-progress')[0]);
+        this.timer = window.setInterval(() => {
+            time++;
+            bar.progress = time / total;
+            if (time === total) window.clearInterval(this.timer);
+        }, 1000);
+        window.app.snackbar.view('Clocking in for ' +
+            this.for.toUser.name.split(' ')[0] + '...');
+        const [e, r] = await to(Data.instantClockIn(
+            Utils.filterApptData(this), this.id));
+        if (e) return window.app.snackbar.view('Could not clock in.');
+        window.app.snackbar.view('Clocked in at ' + new Date(r.data
+            .clockIn.sentTimestamp).toLocaleTimeString() + '.');
+    }
+
+    async clockOut() {
+        window.clearInterval(this.timer);
+        $(this.el).find('.mdc-list [id="Clock in"] .mdc-list-item__text')
+            .text('Clock in');
+        $(this.el).find('.mdc-linear-progress').remove();
+        window.app.snackbar.view('Clocking out for ' +
+            this.for.toUser.name.split(' ')[0] + '...');
+        const [e, r] = await to(Data.instantClockOut(
+            Utils.filterApptData(this), this.id));
+        if (e) return window.app.snackbar.view('Could not clock out.');
+        window.app.snackbar.view('Clocked out at ' + new Date(r.data
+            .clockOut.sentTimestamp).toLocaleTimeString() + '.');
+    }
+
     renderSelf() {
-        this.main = this.render.template('card-schedule');
-    }
-
-    viewAppts() {
-        firebase.firestore().collection('locations').doc(window.app.location.id)
-            .collection('appointments').orderBy('time.from').get()
-            .then((snapshot) => {
-                $(this.main).find('#loader').remove();
-                snapshot.forEach((doc) => {
-                    this.viewAppt(doc);
-                });
-            });
-    }
-
-    viewAppt(doc) {
-        $(this.main)
-            .find('#' + doc.data().time.day.toLowerCase() + ' .schedule-list')
-            .append(this.renderAppt(doc));
-    }
-
-    renderAppt(doc) {
-        const appt = doc.data();
-        const title = appt.attendees[0].name.split(' ')[0] + ' and ' +
-            appt.attendees[1].name.split(' ')[0];
-        const subtitle = ((Data.periods.indexOf(appt.time.from) < 0) ?
-            'At ' : 'During ') + appt.time.from;
-        const background = this.color(appt.time);
-        const card = $(this.render.template('card-event', {
+        const title = this.attendees[0].name.split(' ')[0] + ' and ' +
+            this.attendees[1].name.split(' ')[0];
+        const subtitle = ((Data.periods.indexOf(this.time.from) < 0) ?
+            'At ' : 'During ') + this.time.from;
+        this.el = $(this.render.template('card-event', {
             title: title,
             subtitle: subtitle,
-            id: doc.id,
-        })).css('background', background);
-        var timer;
-        var activeAppt;
-        const clockIn = async () => {
-            $(card).find('.mdc-list [id="Clock in"] .mdc-list-item__text')
-                .text('Clock out').end()
-                .find('.mdc-linear-progress').remove().end()
-                .prepend(this.render.template('event-progress'));
-            $(card).find('.mdc-linear-progress__bar-inner')
-                .css('background-color', background);
-            var time = 0; // Seconds since button clicked
-            var total = (new Date('1/1/2019 ' + appt.time.to).getTime() -
-                new Date('1/1/2019 ' + appt.time.from).getTime()) / 1000;
-            const bar = new MDCLinearProgress(
-                $(card).find('.mdc-linear-progress')[0]);
-            timer = window.setInterval(() => {
-                time++;
-                bar.progress = time / total;
-                if (time === total) window.clearInterval(timer);
-            }, 1000);
-            window.app.snackbar.view('Clocking in for ' +
-                appt.for.toUser.name.split(' ')[0] + '...');
-            const [e, r] = await to(Data.instantClockIn(doc.data(), doc.id));
-            activeAppt = r.data.appt;
-            if (e) return window.app.snackbar.view('Could not clock in.');
-            window.app.snackbar.view('Clocked in at ' + new Date(r.data
-                .clockIn.sentTimestamp).toLocaleTimeString() + '.');
-        };
-        const clockOut = async () => {
-            if (timer) {
-                window.clearInterval(timer);
-                timer = undefined;
-            }
-            $(card).find('.mdc-list [id="Clock in"] .mdc-list-item__text')
-                .text('Clock in');
-            $(card).find('.mdc-linear-progress').remove();
-            window.app.snackbar.view('Clocking out for ' +
-                appt.for.toUser.name.split(' ')[0] + '...');
-            const [e, r] = await to(Data.instantClockOut(activeAppt, doc.id));
-            activeAppt = undefined;
-            if (e) return window.app.snackbar.view('Could not clock out.');
-            window.app.snackbar.view('Clocked out at ' + new Date(r.data
-                .clockOut.sentTimestamp).toLocaleTimeString() + '.');
-        };
+            id: this.id,
+        })).css('background', this.color);
         Object.entries({
             'View': () => {
-                new ViewApptDialog(appt).view();
+                new ViewApptDialog(Utils.filterApptData(this)).view();
             },
             'Edit': () => {
-                new EditApptDialog(appt).view();
+                new EditApptDialog(Utils.filterApptData(this)).view();
             },
             'Cancel': () => {
                 return new ConfirmationDialog('Cancel Appointment?',
-                    'Cancel tutoring sessions between ' + appt.attendees[0].name +
-                    ' and ' + appt.attendees[1].name + ' for ' + appt.for.subject + ' at ' +
-                    appt.time.from + ' at the ' +
-                    appt.location.name + '.', async () => {
-                        $(schedule).find('#' + doc.id).remove();
-                        const [e, r] = await to(Data.cancelAppt(appt, doc.id));
+                    'Cancel tutoring sessions between ' + this.attendees[0].name +
+                    ' and ' + this.attendees[1].name + ' for ' +
+                    this.for.subject + ' at ' + this.time.from + ' at the ' +
+                    this.location.name + '.', async () => {
+                        $(this.el).remove();
+                        const [e, r] = await to(Data.cancelAppt(
+                            Utils.filterApptData(this), this.id));
                         if (e) return window.app.snackbar.view('Could ' +
                             'not cancel appointment.');
                         window.app.snackbar.view('Canceled appointment.');
                     }).view();
             },
             'Clock in': async () => {
-                console.log(activeAppt);
-                if (activeAppt) {
-                    clockOut();
+                if ($(this.el).find('.mdc-linear-progress').length) {
+                    this.clockOut();
                 } else {
-                    clockIn();
+                    this.clockIn();
                 }
             },
         }).forEach((entry) => {
-            $(card).find('.mdc-menu .mdc-list').append(
+            $(this.el).find('.mdc-menu .mdc-list').append(
                 this.render.template('card-action', {
                     label: entry[0],
                     action: entry[1],
                 })
             );
         });
-        const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
-        const button = $(card).find('#menu');
-        MDCRipple.attachTo(button[0]).unbounded = true;
-        $(card).find('.mdc-menu .mdc-list-item').each(function() {
+        const menu = new MDCMenu($(this.el).find('.mdc-menu')[0]);
+        MDCRipple.attachTo($(this.el).find('#menu')[0]).unbounded = true;
+        $(this.el).find('.mdc-menu .mdc-list-item').each(function() {
             MDCRipple.attachTo(this);
         });
-        button.click(() => {
+        $(this.el).find('#menu').click(() => {
             menu.open = true;
         });
-        return card;
     }
 
-    color(time) {
+    getColor(time) {
         if (this.colors[time.day] && this.colors[time.day][time.from])
             return this.colors[time.day][time.from];
         const palette = {
@@ -882,6 +858,38 @@ class ScheduleCard {
             this.colors[time.day][time.from] = palette[type][0];
         }
         return this.colors[time.day][time.from];
+    }
+};
+
+
+class ScheduleCard {
+
+    constructor() {
+        this.render = window.app.render;
+        this.colors = {};
+        this.events = {};
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        this.main = this.render.template('card-schedule');
+    }
+
+    async viewAppts() {
+        const snapshot = await firebase.firestore().collection('locations')
+            .doc(window.app.location.id).collection('appointments')
+            .orderBy('time.from').get();
+        $(this.main).find('#loader').remove();
+        snapshot.forEach((doc) => {
+            this.events[doc.id] = new Event(doc.data(), doc.id, this.colors);
+        });
+        this.viewEvents();
+    }
+
+    viewEvents() {
+        Object.values(this.events).forEach((e) => {
+            $(this.main).find('#' + e.time.day + ' .schedule-list').append(e.el);
+        });
     }
 };
 
