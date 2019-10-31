@@ -746,30 +746,47 @@ class ScheduleCard {
             id: doc.id,
         })).css('background', background);
         var timer;
-        const clockIn = () => {
-            $(card).find('.mdc-linear-progress').remove();
-            $(card).prepend($(this.render.template('event-progress')));
-            $(card)
-                .find('.mdc-linear-progress__bar-inner')
+        var activeAppt;
+        const clockIn = async () => {
+            $(card).find('.mdc-list [id="Clock in"] .mdc-list-item__text')
+                .text('Clock out').end()
+                .find('.mdc-linear-progress').remove().end()
+                .prepend(this.render.template('event-progress'));
+            $(card).find('.mdc-linear-progress__bar-inner')
                 .css('background-color', background);
             var time = 0; // Seconds since button clicked
             var total = (new Date('1/1/2019 ' + appt.time.to).getTime() -
                 new Date('1/1/2019 ' + appt.time.from).getTime()) / 1000;
             const bar = new MDCLinearProgress(
-                $(card).find('.mdc-linear-progress')[0]
-            );
+                $(card).find('.mdc-linear-progress')[0]);
             timer = window.setInterval(() => {
                 time++;
                 bar.progress = time / total;
                 if (time === total) window.clearInterval(timer);
             }, 1000);
+            window.app.snackbar.view('Clocking in for ' +
+                appt.for.toUser.name.split(' ')[0] + '...');
+            const [e, r] = await to(Data.instantClockIn(doc.data(), doc.id));
+            activeAppt = r.data.appt;
+            if (e) return window.app.snackbar.view('Could not clock in.');
+            window.app.snackbar.view('Clocked in at ' + new Date(r.data
+                .clockIn.sentTimestamp).toLocaleTimeString() + '.');
         };
-        const clockOut = () => {
+        const clockOut = async () => {
             if (timer) {
                 window.clearInterval(timer);
                 timer = undefined;
             }
+            $(card).find('.mdc-list [id="Clock in"] .mdc-list-item__text')
+                .text('Clock in');
             $(card).find('.mdc-linear-progress').remove();
+            window.app.snackbar.view('Clocking out for ' +
+                appt.for.toUser.name.split(' ')[0] + '...');
+            const [e, r] = await to(Data.instantClockOut(activeAppt, doc.id));
+            activeAppt = undefined;
+            if (e) return window.app.snackbar.view('Could not clock out.');
+            window.app.snackbar.view('Clocked out at ' + new Date(r.data
+                .clockOut.sentTimestamp).toLocaleTimeString() + '.');
         };
         Object.entries({
             'View': () => {
@@ -785,29 +802,19 @@ class ScheduleCard {
                     appt.time.from + ' at the ' +
                     appt.location.name + '.', async () => {
                         $(schedule).find('#' + doc.id).remove();
-                        var err;
-                        var res;
-                        [err, res] = await to(Data.cancelAppt(appt, doc.id));
-                        if (err) return window.app.snackbar.view('Could ' +
+                        const [e, r] = await to(Data.cancelAppt(appt, doc.id));
+                        if (e) return window.app.snackbar.view('Could ' +
                             'not cancel appointment.');
                         window.app.snackbar.view('Canceled appointment.');
                     }).view();
             },
-            'Clock-In': async () => {
-                clockIn();
-                window.app.snackbar.view('Clocking in for ' +
-                    appt.for.toUser.name.split(' ')[0] + '...');
-                const r = await Data.instantClockIn(doc.data(), doc.id);
-                window.app.snackbar.view('Clocked in at ' + new Date(r.data
-                    .clockIn.sentTimestamp).toLocaleTimeString() + '.');
-            },
-            'Clock-Out': async () => {
-                clockOut();
-                window.app.snackbar.view('Clocking out for ' +
-                    appt.for.toUser.name.split(' ')[0] + '...');
-                const r = await Data.instantClockOut(doc.data(), doc.id);
-                window.app.snackbar.view('Clocked out at ' + new Date(r.data
-                    .clockOut.sentTimestamp).toLocaleTimeString() + '.');
+            'Clock in': async () => {
+                console.log(activeAppt);
+                if (activeAppt) {
+                    clockOut();
+                } else {
+                    clockIn();
+                }
             },
         }).forEach((entry) => {
             $(card).find('.mdc-menu .mdc-list').append(
