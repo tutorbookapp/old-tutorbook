@@ -298,20 +298,18 @@ class Data {
 
         // Tedious work arounds for infinite reference loops
         appt.supervisor = supervisor;
-        appt.clockIn = Data.cloneMap(clockIn);
         clockIn.for = Data.cloneMap(appt);
-        const activeApptData = Data.cloneMap(appt);
-        activeApptData.clockIn = Data.combineMaps(clockIn, {
+        appt.clockIn = Data.combineMaps(clockIn, {
             approvedTimestamp: new Date(),
             approvedBy: global.app.conciseUser,
         });
         for (var i = 0; i < activeAppts.length; i++) {
             var activeAppt = activeAppts[i];
-            await activeAppt.set(activeApptData);
+            await activeAppt.set(appt);
         }
         return {
             clockIn: clockIn,
-            appt: activeApptData,
+            appt: appt,
             id: id,
         };
     }
