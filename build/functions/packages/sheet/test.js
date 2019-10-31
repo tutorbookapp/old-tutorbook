@@ -1,10 +1,11 @@
 const admin = require('firebase-admin');
-const {
-    google
-} = require('googleapis');
-const cors = require('cors')({
-    origin: true,
+const serviceAccount = require('./admin.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://tutorbook-779d8.firebaseio.com',
 });
+
 const Sheet = require('./sheet.js');
 const to = require('await-to-js').default;
 
@@ -64,16 +65,4 @@ async function updateGoogleSheet() {
     return new Sheet().write(sheetVals);
 };
 
-
-const updateSheet = (req, res) => {
-    return cors(req, res, async () => {
-        [err, resp] = await to(updateGoogleSheet());
-        res.json({
-            err: err,
-            res: resp,
-        });
-    });
-};
-
-
-module.exports = updateSheet;
+updateGoogleSheet();
