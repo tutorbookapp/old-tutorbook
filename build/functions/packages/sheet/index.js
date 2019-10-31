@@ -6,7 +6,7 @@ const cors = require('cors')({
     origin: true,
 });
 const Sheet = require('./sheet.js');
-
+const to = require('await-to-js').default;
 
 // Manages service hour tracking sheet for supervisors
 function parseDate(timestamp) {
@@ -26,7 +26,9 @@ function getDurationStringFromSecs(secs) {
 async function updateGoogleSheet() {
     const db = admin.firestore();
     const userSnap = await db.collection('users')
-        .where('type', '==', 'Tutor').get();
+        .where('type', '==', 'Tutor')
+        .orderBy('name')
+        .get();
     const users = [];
     const sheetVals = [];
     userSnap.forEach((doc) => {
@@ -67,8 +69,6 @@ async function updateGoogleSheet() {
 
 const updateSheet = (req, res) => {
     return cors(req, res, async () => {
-        var err;
-        var resp;
         [err, resp] = await to(updateGoogleSheet());
         res.json({
             err: err,
