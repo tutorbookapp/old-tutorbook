@@ -36,6 +36,8 @@ async function updateGoogleSheet() {
         users.push(doc);
     });
     for (var i = 0; i < users.length; i++) {
+        var startDate = '1/1/2019';
+        var endDate = '1/1/2019';
         var profile = users[i].data();
         var name = profile.name;
         var grade = profile.grade;
@@ -43,22 +45,15 @@ async function updateGoogleSheet() {
 
         var firstAppt = await users[i].ref.collection('pastAppointments')
             .orderBy('clockOut.sentTimestamp', 'asc').limit(1).get();
-        var startDate;
         firstAppt.forEach((doc) => {
             startDate = parseDate(doc.data().clockOut.sentTimestamp);
         });
 
         var lastAppt = await users[i].ref.collection('pastAppointments')
             .orderBy('clockOut.sentTimestamp', 'desc').limit(1).get();
-        var endDate;
         lastAppt.forEach((doc) => {
             endDate = parseDate(doc.data().clockOut.sentTimestamp);
         });
-
-        if (!startDate || !endDate) {
-            startDate = '1/1/2019';
-            endDate = '1/1/2019';
-        }
 
         sheetVals.push([name, grade, serviceHours, startDate, endDate]);
     }
