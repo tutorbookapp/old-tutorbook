@@ -747,12 +747,14 @@ class ScheduleCard {
         })).css('background', background);
         var timer;
         const clockIn = () => {
+            $(card).find('.mdc-linear-progress').remove();
             $(card).prepend($(this.render.template('event-progress')));
             $(card)
                 .find('.mdc-linear-progress__bar-inner')
                 .css('background-color', background);
             var time = 0; // Seconds since button clicked
-            var total = 5; // Duration of appt in seconds
+            var total = (new Date('1/1/2019 ' + appt.time.to).getTime() -
+                new Date('1/1/2019 ' + appt.time.from).getTime()) / 1000;
             const bar = new MDCLinearProgress(
                 $(card).find('.mdc-linear-progress')[0]
             );
@@ -796,16 +798,16 @@ class ScheduleCard {
                 window.app.snackbar.view('Clocking in for ' +
                     appt.for.toUser.name.split(' ')[0] + '...');
                 const r = await Data.instantClockIn(doc.data(), doc.id);
-                window.app.snackbar.view('Clocked in at ' + r.data.clockIn
-                    .sentTimestamp.toDate().toLocaleTimeString() + '.');
+                window.app.snackbar.view('Clocked in at ' + new Date(r.data
+                    .clockIn.sentTimestamp).toLocaleTimeString() + '.');
             },
             'Clock-Out': async () => {
                 clockOut();
                 window.app.snackbar.view('Clocking out for ' +
                     appt.for.toUser.name.split(' ')[0] + '...');
                 const r = await Data.instantClockOut(doc.data(), doc.id);
-                window.app.snackbar.view('Clocked out at ' + r.data.clockOut
-                    .sentTimestamp.toDate().toLocaleTimeString() + '.');
+                window.app.snackbar.view('Clocked out at ' + new Date(r.data
+                    .clockOut.sentTimestamp).toLocaleTimeString() + '.');
             },
         }).forEach((entry) => {
             $(card).find('.mdc-menu .mdc-list').append(
