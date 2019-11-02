@@ -18,6 +18,10 @@ class Data {
             //console.warn('Using an email as a user ID is deprecated.');
             var ref = await firebase.firestore().collection('users').doc(id)
                 .get();
+        } else if (firebase.auth().currentUser) {
+            var ref = await firebase.firestore().collection('users').doc(
+                (await firebase.firestore().collection('search').doc(id).get())
+                .data().id).get();
         } else {
             var ref = await firebase.firestore().collection('search').doc(id)
                 .get();

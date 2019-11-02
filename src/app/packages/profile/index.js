@@ -220,7 +220,7 @@ class Profile {
             p.email = email.value;
         });
         $(this.main).find('#Email input').attr('disabled', 'disabled');
-        $('[id="Subject"]').each(function(i) { // So $ doesn't getElementById
+        $(this.main).find('[id="Subject"]').each(function(i) {
             const textField = MDCTextField.attachTo($(this)[0]);
             $(this).click(() => {
                 new EditSubjectDialog(
@@ -229,7 +229,7 @@ class Profile {
                 ).view();
             });
         });
-        $('[id="Available"]').each(function(i) {
+        $(this.main).find('[id="Available"]').each(function(i) {
             const textField = MDCTextField.attachTo($(this)[0]);
             $(this).click(() => {
                 new EditAvailabilityDialog(
@@ -237,6 +237,20 @@ class Profile {
                     (dontUpdate) ? p : undefined
                 ).view();
             });
+        });
+        if (dontUpdate) return;
+        $(this.main).find('[data-fir-click="delete"]').click(() => {
+            new ConfirmationDialog('Delete Account?',
+                'You are about to permanently delete all of your account data' +
+                ' (including any appointments, requests, messages, or service' +
+                ' hours that you might have). This action cannot be undone. ' +
+                'Still sure you want to delete this account?', async () => {
+                    const [err, res] = await to(Data.deleteUser(p.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'delete account.');
+                    window.app.signOut();
+                    window.app.snackbar.view('Deleted account and signed out.');
+                }).view();
         });
     }
 
@@ -299,6 +313,9 @@ class Profile {
             },
         });
         this.addAvailabilityInputs();
+        $(this.main).append(this.render.template('delete-user-input', {
+            delete: () => {},
+        }));
     }
 
     addSubjectInput() {
@@ -341,7 +358,8 @@ class Profile {
         $(el).click(() => {
             new EditAvailabilityDialog(el).view();
         });
-        $(this.main).append(el); // Availability is the last section of inputs
+        $(el).insertAfter(
+            $(this.main).find('[id="Available"]').last().parent());
         el.scrollIntoView();
         $(el).click();
     }
@@ -445,6 +463,7 @@ class NewProfile extends Profile {
         }, this.profile.config.showProfile)).insertAfter(
             $(this.main).find('#Visibility')
         );
+        $(this.main).find('[data-fir-click="delete"]').parent().remove();
     }
 
     view() {
@@ -550,7 +569,8 @@ class NewProfile extends Profile {
         $(el).click(() => {
             new EditAvailabilityDialog(el, this.profile).view();
         });
-        $(this.main).append(el); // Availability is the last section of inputs
+        $(el).insertAfter(
+            $(this.main).find('[id="Available"]').last().parent());
         el.scrollIntoView();
         $(el).click();
     }
