@@ -93,6 +93,8 @@ exports.updateHours = functions.firestore
 // NOTIFICATIONS (EMAIL, SMS, & WEBPUSH)
 // ============================================================================
 
+exports.apptNotification = functions.https.onRequest(Notify.appt);
+
 exports.newUserNotification = functions.firestore
     .document('users/{id}')
     .onCreate(Notify.user);

@@ -10,6 +10,7 @@
   "author": "Nicholas Chiang",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "email": "file:../email",
     "firebase-admin": "^8.6.0",
     "sms": "file:../sms",
