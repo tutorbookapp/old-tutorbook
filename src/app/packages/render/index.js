@@ -22,6 +22,13 @@ class Render {
         this.templates = new Templates();
     }
 
+    checkBox(label, id) {
+        return this.template('checkbox-input', {
+            id: id || label,
+            label: label,
+        });
+    }
+
     locationInput(listener) { // TODO: Customize UI w/ the AutocompleteService
         const input = this.textField('Location', '');
         $(input).find('input').attr('placeholder', '');

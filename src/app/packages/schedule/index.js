@@ -24,6 +24,7 @@ const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
 const ViewCanceledApptDialog = require('dialogs').viewCanceledAppt;
 const ViewPastApptDialog = require('dialogs').viewPastAppt;
 const ConfirmationDialog = require('dialogs').confirm;
+const ApptNotificationDialog = require('dialogs').notifyAppt;
 
 // Class that provides a schedule view and header and manages all the data flow
 // concerning the user's appointments. Also provides an API to insert into the
@@ -675,16 +676,19 @@ class SupervisorSchedule extends Schedule {
     }
 
     static renderShortcutCard() {
+        const dialog = new ApptNotificationDialog();
         const title = 'Upcoming Appointments';
         const subtitle = 'Manage upcoming, active, and past appointments';
         const summary = 'From your schedule, you\'re able to view, edit, and ' +
             'cancel all active, past, and upcoming tutoring appointments at ' +
-            'your location(s). Soon, you\'ll be able to clock-in and out for ' +
-            'the tutors at your location without leaving the schedule view.';
+            'your location(s).';
         var card;
         const actions = {
             snooze: () => {
                 $(card).remove();
+            },
+            notify: () => {
+                dialog.view();
             },
             view: () => {
                 window.app.schedule.view();

@@ -44,7 +44,7 @@
     "@material/menu": "^1.1.1",
     "@material/menu-surface": "^1.1.1",
     "@material/notched-outline": "^3.0.0",
-    "@material/ripple": "^1.1.0",
+    "@material/ripple": "^4.0.0",
     "@material/select": "^1.1.1",
     "@material/snackbar": "^1.1.1",
     "@material/switch": "^2.0.0",

@@ -10,12 +10,83 @@ import {
 import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
+import {
+    MDCFormField
+} from '@material/form-field/index';
+import {
+    MDCCheckbox
+} from '@material/checkbox/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
 
 const Data = require('data');
 const Utils = require('utils');
+
+
+class ApptNotificationDialog {
+
+    constructor() {
+        this.render = window.app.render;
+        this.renderSelf();
+    }
+
+    view() {
+        $('body').prepend(this.main);
+        if (!this.managed) this.manage();
+        this.dialog.open();
+    }
+
+    renderSelf() {
+        this.main = this.render.template('dialog-appt');
+        const add = (el) => {
+            $(this.main).find('.mdc-dialog__content').append(el);
+        };
+        const addD = (label) => {
+            add('<h4 class="mdc-list-group__subheader">' + label + '</h4>');
+        };
+        const addC = (label, id) => {
+            add(this.render.checkBox(label, id));
+        };
+        addD('Send reminder messages to');
+        addC('Tutors (those who received the original request)', 'tutors');
+        addC('Pupils (those who sent the original request)', 'pupils');
+        addD('Who have appointments on');
+        ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach(
+            (day) => {
+                addC(day, day.toLowerCase());
+            });
+    }
+
+    manage() {
+        this.dialog = new MDCDialog(this.main);
+        const checkboxes = {};
+        $(this.main).find('.mdc-checkbox').each(function() {
+            // TODO: Fix MDCRipple effects
+            checkboxes[$(this).parent().attr('id')] = new MDCCheckbox(this);
+            MDCFormField.attachTo($(this).parent()[0]).input =
+                checkboxes[$(this).attr('id')];
+        });
+        $(this.main).find('button').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        this.dialog.listen('MDCDialog:closing', (event) => {
+            if (event.detail.action !== 'send') return;
+            const tutor = checkboxes['tutors'].checked;
+            const pupil = checkboxes['pupils'].checked;
+            if (!tutor && !pupil) return console.warn('Did not send any ' +
+                'notifications.');
+            window.app.snackbar.view('Sending reminder messages...');
+            Object.entries(checkboxes).forEach((entry) => {
+                if (['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
+                    .indexOf(entry[0]) >= 0 && entry[1].checked
+                ) return Data.notifyAppt(entry[0], tutor, pupil);
+            });
+            window.app.snackbar.view('Sent reminder messages.');
+        });
+        this.managed = true;
+    }
+};
 
 
 class SubjectSelectDialog {
@@ -1371,6 +1442,7 @@ module.exports = {
     stripeRequest: StripeRequestDialog,
     viewAppt: ViewApptDialog,
     editAppt: EditApptDialog,
+    notifyAppt: ApptNotificationDialog,
     viewPastAppt: ViewPastApptDialog,
     viewActiveAppt: ViewActiveApptDialog,
     viewCanceledAppt: ViewCanceledApptDialog,

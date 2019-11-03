@@ -2,6 +2,42 @@
 <!-- TEMPLATES: these are HTML templates for all of the objects that the 
 user sees as they navigate throughout the app. -->
 
+<!-- Checkbox Input -->
+<div hidden class="template" id="checkbox-input">
+    <div class="mdc-form-field" data-fir-id="id">
+        <div class="mdc-checkbox">
+            <input type="checkbox" class="mdc-checkbox__native-control" data-fir-id="inputId" />
+            <div class="mdc-checkbox__background">
+                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                </svg>
+                <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+        </div>
+        <label data-fir-attr="for:inputId" data-fir-content="label">Label</label>
+    </div>
+</div>
+
+<!-- Appt Notification Dialog -->
+<div hidden class="template" id="dialog-appt">
+    <aside class="mdc-dialog mdc-dialog--scrollable" id="dialog-appt">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 id="mdc-dialog-with-list-label" class="mdc-dialog__title">
+                    Appointment Notifications
+                </h2>
+                <div class="mdc-dialog__content">
+                </div>
+                <footer class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">Cancel</button>
+                    <button type="button" class="mdc-button mdc-dialog__button mdc-dialog__button--default" data-mdc-dialog-action="send" id="send">Send</button>
+                </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </aside>
+</div>
+
 <!-- Delete User List Item -->
 <div hidden class="template" id="delete-user-input">
     <div class="delete-user-input">

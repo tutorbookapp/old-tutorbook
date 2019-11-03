@@ -18,7 +18,7 @@ const Webpush = require('webpush');
 // }
 const apptNotification = (req, res) => {
     return cors(req, res, async () => {
-        if (!req.query.tutor || !req.query.pupil)
+        if (!req.query.tutor && !req.query.pupil)
             return console.warn('Request did not send any notifications.');
         const db = admin.firestore().collection('users');
         const supervisor = (await db.doc(
