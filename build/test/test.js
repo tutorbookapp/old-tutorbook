@@ -1,3 +1,4 @@
+const assert = require('assert');
 const axios = require('axios');
 const firebaseApp = require('firebase').initializeApp({
     "projectId": "tutorbook-779d8",
@@ -201,34 +202,36 @@ describe("Tutorbook", () => {
 });
 
 describe("Tutorbook's REST API", () => {
-    async function post(user, action, data) {
-        const token = await axios({
+    async function getToken(user) {
+        const res = await axios({
             method: 'post',
             url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/auth',
             params: {
                 user: user,
             },
         });
-        if (typeof token.data === 'string' && token.data.indexOf('ERROR') > 0)
-            throw new Error(token.data.replace('[ERROR] ', ''));
-        await firebaseApp.auth().signInWithCustomToken(token.data);
+        if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
+            throw new Error(res.data.replace('[ERROR] ', ''));
+        await firebaseApp.auth().signInWithCustomToken(res.data);
+        const token = await firebaseApp.auth().currentUser.getIdToken(true);
+        await firebaseApp.auth().signOut();
+        return token;
+    };
+
+    async function post(user, action, data) {
         return axios({
             method: 'post',
             url: 'http://localhost:5001/tutorbook-779d8/us-central1/data',
             params: {
                 user: user,
                 action: action,
-                token: (await firebaseApp.auth().currentUser.getIdToken(true)),
+                token: (await getToken(user)),
             },
             data: data,
         }).then((res) => {
-            firebaseApp.auth().signOut();
             if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
                 throw new Error(res.data.replace('[ERROR] ', ''));
             return res;
-        }).catch((err) => {
-            firebaseApp.auth().signOut();
-            throw err;
         });
     };
 
@@ -334,43 +337,45 @@ describe("Tutorbook's REST API", () => {
         return [res.data.request, res.data.id];
     };
 
-    it("lets authenticated users send requests", () => {
-        return createRequest();
-    });
-
-    it("lets the sender modify a request", async () => {
-        [request, id] = await createRequest();
-        request.time.day = 'Wednesday';
-        return post('pupil@tutorbook.app', 'modifyRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets the receiver modify a request", async () => {
-        [request, id] = await createRequest();
-        request.time.day = 'Wednesday';
-        return post('tutor@tutorbook.app', 'modifyRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets the sender cancel a request", async () => {
-        [request, id] = await createRequest();
-        return post('pupil@tutorbook.app', 'cancelRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets the receiver reject a request", async () => {
-        [request, id] = await createRequest();
-        return post('tutor@tutorbook.app', 'rejectRequest', {
-            request: request,
-            id: id,
-        });
-    });
+    /*
+     *    it("lets authenticated users send requests", () => {
+     *        return createRequest();
+     *    });
+     *
+     *    it("lets the sender modify a request", async () => {
+     *        [request, id] = await createRequest();
+     *        request.time.day = 'Wednesday';
+     *        return post('pupil@tutorbook.app', 'modifyRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets the receiver modify a request", async () => {
+     *        [request, id] = await createRequest();
+     *        request.time.day = 'Wednesday';
+     *        return post('tutor@tutorbook.app', 'modifyRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets the sender cancel a request", async () => {
+     *        [request, id] = await createRequest();
+     *        return post('pupil@tutorbook.app', 'cancelRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets the receiver reject a request", async () => {
+     *        [request, id] = await createRequest();
+     *        return post('tutor@tutorbook.app', 'rejectRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     */
 
     async function approveRequest(user) {
         [request, id] = await createRequest(user);
@@ -383,175 +388,179 @@ describe("Tutorbook's REST API", () => {
         return [res.data.appt, res.data.id];
     };
 
-    it("lets the receiver approve a request", () => {
-        return approveRequest();
-    });
-
-    it("lets supervisors create requests", () => {
-        return createRequest('supervisor@tutorbook.app');
-    });
-
-    it("lets supervisors modify requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        request.time.day = 'Wednesday';
-        return post('supervisor@tutorbook.app', 'modifyRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets supervisors cancel requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        return post('supervisor@tutorbook.app', 'cancelRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets supervisors reject requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        return post('supervisor@tutorbook.app', 'rejectRequest', {
-            request: request,
-            id: id,
-        });
-    });
-
-    it("lets supervisors approve requests", () => {
-        return approveRequest('supervisor@tutorbook.app');
-    });
-
-    // ========================================================================
-    // APPOINTMENTs
-    // ========================================================================
-    it("lets attendees modify appointments", async () => {
-        [appt, id] = await approveRequest();
-        appt.time.day = 'Wednesday';
-        await post('tutor@tutorbook.app', 'modifyAppt', {
-            appt: appt,
-            id: id,
-        });
-        appt.time.day = 'Thursday';
-        return post('pupil@tutorbook.app', 'modifyAppt', {
-            appt: appt,
-            id: id,
-        });
-    });
-
-    it("lets attendees cancel appointments", async () => {
-        [appt, id] = await approveRequest();
-        await post('tutor@tutorbook.app', 'cancelAppt', {
-            appt: appt,
-            id: id,
-        });
-        [appt, id] = await approveRequest();
-        return post('pupil@tutorbook.app', 'cancelAppt', {
-            appt: appt,
-            id: id,
-        });
-    });
-
-    it("lets supervisors modify appointments", async () => {
-        [appt, id] = await approveRequest();
-        appt.time.day = 'Wednesday';
-        return post('supervisor@tutorbook.app', 'modifyAppt', {
-            appt: appt,
-            id: id,
-        });
-    });
-
-    it("lets supervisors cancel appointments", async () => {
-        [appt, id] = await approveRequest();
-        return post('supervisor@tutorbook.app', 'cancelAppt', {
-            appt: appt,
-            id: id,
-        });
-    });
+    /*
+     *    it("lets the receiver approve a request", () => {
+     *        return approveRequest();
+     *    });
+     *
+     *    it("lets supervisors create requests", () => {
+     *        return createRequest('supervisor@tutorbook.app');
+     *    });
+     *
+     *    it("lets supervisors modify requests", async () => {
+     *        [request, id] = await createRequest('supervisor@tutorbook.app');
+     *        request.time.day = 'Wednesday';
+     *        return post('supervisor@tutorbook.app', 'modifyRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors cancel requests", async () => {
+     *        [request, id] = await createRequest('supervisor@tutorbook.app');
+     *        return post('supervisor@tutorbook.app', 'cancelRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors reject requests", async () => {
+     *        [request, id] = await createRequest('supervisor@tutorbook.app');
+     *        return post('supervisor@tutorbook.app', 'rejectRequest', {
+     *            request: request,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors approve requests", () => {
+     *        return approveRequest('supervisor@tutorbook.app');
+     *    });
+     *
+     *    // ========================================================================
+     *    // APPOINTMENTs
+     *    // ========================================================================
+     *    it("lets attendees modify appointments", async () => {
+     *        [appt, id] = await approveRequest();
+     *        appt.time.day = 'Wednesday';
+     *        await post('tutor@tutorbook.app', 'modifyAppt', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *        appt.time.day = 'Thursday';
+     *        return post('pupil@tutorbook.app', 'modifyAppt', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets attendees cancel appointments", async () => {
+     *        [appt, id] = await approveRequest();
+     *        await post('tutor@tutorbook.app', 'cancelAppt', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *        [appt, id] = await approveRequest();
+     *        return post('pupil@tutorbook.app', 'cancelAppt', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors modify appointments", async () => {
+     *        [appt, id] = await approveRequest();
+     *        appt.time.day = 'Wednesday';
+     *        return post('supervisor@tutorbook.app', 'modifyAppt', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors cancel appointments", async () => {
+     *        [appt, id] = await approveRequest();
+     *        return post('supervisor@tutorbook.app', 'cancelAppt', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *    });
+     */
 
     // ========================================================================
     // CLOCK-INs/OUTs
     // ========================================================================
-    function createLocation() {
-        const location = {
-            supervisors: ['supervisor@tutorbook.app'],
-            city: 'Palo Alto, CA',
-            name: 'Gunn Academic Center',
-            timestamp: new Date(),
-        };
-        return post('supervisor@tutorbook.app', 'createLocation', {
-            location: location,
-            id: 'NJp0Y6wyMh2fDdxSuRSx',
-        });
-    };
-
-    async function clockIn(user) {
-        [appt, id] = await approveRequest(user);
-        await createLocation(); // Determines who to send clocking request(s)
-        const res = await post(user || 'tutor@tutorbook.app', 'clockIn', {
-            appt: appt,
-            id: id,
-        });
-        return [res.data.clockIn, res.data.id];
-    };
-
-    it("lets tutors clock-in to appointments", () => {
-        return clockIn();
-    });
-
-    it("lets supervisors clock tutors into appointments", () => {
-        return clockIn('supervisor@tutorbook.app');
-    });
-
-    async function approveClockIn(user) {
-        [clockInData, id] = await clockIn(user);
-        const res = await post(user || 'supervisor@tutorbook.app',
-            'approveClockIn', {
-                clockIn: clockInData,
-                id: id,
-            });
-        return [res.data.appt, res.data.id];
-    };
-
-    it("lets supervisors approve clock-in requests", async () => {
-        return approveClockIn();
-    });
-
-    async function clockOut(user) {
-        [appt, id] = await approveClockIn(user);
-        const res = await post(user || 'tutor@tutorbook.app', 'clockOut', {
-            appt: appt,
-            id: id,
-        });
-        return [res.data.clockOut, res.data.id];
-    };
-
-    it("lets tutors clock-out of active appointments", () => {
-        return clockOut();
-    });
-
-    it("lets supervisors clock tutors out of active appointments", () => {
-        return clockOut('supervisor@tutorbook.app');
-    });
-
-    it("lets supervisors approve clock-out requests", async () => {
-        [clockOut, id] = await clockOut();
-    });
-
-    it("lets supervisors perform instant clock-ins", async () => {
-        [appt, id] = await approveRequest();
-        await createLocation();
-        return post('supervisor@tutorbook.app', 'instantClockIn', {
-            appt: appt,
-            id: id,
-        });
-    });
-
-    it("lets supervisors perform instant clock-outs", async () => {
-        [appt, id] = await approveClockIn();
-        return post('supervisor@tutorbook.app', 'instantClockOut', {
-            appt: appt,
-            id: id,
-        });
-    });
+    /*
+     *    function createLocation() {
+     *        const location = {
+     *            supervisors: ['supervisor@tutorbook.app'],
+     *            city: 'Palo Alto, CA',
+     *            name: 'Gunn Academic Center',
+     *            timestamp: new Date(),
+     *        };
+     *        return post('supervisor@tutorbook.app', 'createLocation', {
+     *            location: location,
+     *            id: 'NJp0Y6wyMh2fDdxSuRSx',
+     *        });
+     *    };
+     *
+     *    async function clockIn(user) {
+     *        [appt, id] = await approveRequest(user);
+     *        await createLocation(); // Determines who to send clocking request(s)
+     *        const res = await post(user || 'tutor@tutorbook.app', 'clockIn', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *        return [res.data.clockIn, res.data.id];
+     *    };
+     *
+     *    it("lets tutors clock-in to appointments", () => {
+     *        return clockIn();
+     *    });
+     *
+     *    it("lets supervisors clock tutors into appointments", () => {
+     *        return clockIn('supervisor@tutorbook.app');
+     *    });
+     *
+     *    async function approveClockIn(user) {
+     *        [clockInData, id] = await clockIn(user);
+     *        const res = await post(user || 'supervisor@tutorbook.app',
+     *            'approveClockIn', {
+     *                clockIn: clockInData,
+     *                id: id,
+     *            });
+     *        return [res.data.appt, res.data.id];
+     *    };
+     *
+     *    it("lets supervisors approve clock-in requests", async () => {
+     *        return approveClockIn();
+     *    });
+     *
+     *    async function clockOut(user) {
+     *        [appt, id] = await approveClockIn(user);
+     *        const res = await post(user || 'tutor@tutorbook.app', 'clockOut', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *        return [res.data.clockOut, res.data.id];
+     *    };
+     *
+     *    it("lets tutors clock-out of active appointments", () => {
+     *        return clockOut();
+     *    });
+     *
+     *    it("lets supervisors clock tutors out of active appointments", () => {
+     *        return clockOut('supervisor@tutorbook.app');
+     *    });
+     *
+     *    it("lets supervisors approve clock-out requests", async () => {
+     *        [clockOut, id] = await clockOut();
+     *    });
+     *
+     *    it("lets supervisors perform instant clock-ins", async () => {
+     *        [appt, id] = await approveRequest();
+     *        await createLocation();
+     *        return post('supervisor@tutorbook.app', 'instantClockIn', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *    });
+     *
+     *    it("lets supervisors perform instant clock-outs", async () => {
+     *        [appt, id] = await approveClockIn();
+     *        return post('supervisor@tutorbook.app', 'instantClockOut', {
+     *            appt: appt,
+     *            id: id,
+     *        });
+     *    });
+     */
 
     // ========================================================================
     // TODO: PAYMENTs
@@ -560,4 +569,27 @@ describe("Tutorbook's REST API", () => {
     // ========================================================================
     // TODO: SUPERVISORs
     // ========================================================================
+    it("lets supervisors send reminder messages", async () => {
+        await createUsers();
+        [appt, id] = await approveRequest();
+        return axios({
+            method: 'get',
+            url: 'http://localhost:5001/tutorbook-779d8/us-central1/' +
+                'apptNotification',
+            params: {
+                token: (await getToken('supervisor@tutorbook.app')),
+                tutor: true,
+                pupil: false,
+                location: appt.location.id,
+                day: appt.time.day.toLowerCase(),
+            },
+        }).then((res) => {
+            if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
+                throw new Error(res.data.replace('[ERROR]', ''));
+            assert(res.data.tutors.length === 1 &&
+                res.data.tutors[0] === 'tutor@tutorbook.app');
+            assert(res.data.pupils.length === 0);
+            assert(res.data.appts.length === 3); // Tutors, pupils, & locations
+        });
+    });
 });

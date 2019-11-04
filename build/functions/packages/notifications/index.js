@@ -7,6 +7,10 @@ const Email = require('email');
 const SMS = require('sms');
 const Webpush = require('webpush');
 
+// helper - uppercases first letter of a given string
+const upper = (str) => {
+    return str.substring(0, 1).toUpperCase() + str.substring(1, str.length);
+};
 
 // appt - upcoming appt sms messages manually requested by supervisor
 // params - {
@@ -18,30 +22,54 @@ const Webpush = require('webpush');
 // }
 const apptNotification = (req, res) => {
     return cors(req, res, async () => {
-        if (!req.query.tutor && !req.query.pupil)
+        if (!req.query.tutor && !req.query.pupil) {
+            res.send('[ERROR] Please specify who to send notifications to.');
             return console.warn('Request did not send any notifications.');
+        }
         const db = admin.firestore().collection('users');
-        const supervisor = (await db.doc(
-            (await admin.auth().verifyIdToken(req.query.token)).email
-        ).get()).data();
-        return (await admin.firestore().collectionGroup('appointments')
+        const token = await admin.auth().verifyIdToken(req.query.token);
+        if (!token.supervisor) {
+            res.send('[ERROR] Invalid supervisor authentication token.');
+            return console.warn('Request did not send a valid supervisor ' +
+                'authentication token.');
+        }
+        const supervisor = (await db.doc(token.email).get()).data();
+        const tutors = [];
+        const pupils = [];
+        const appts = [];
+        (await admin.firestore()
+            .collectionGroup('appointments')
             .where('location.id', '==', req.query.location)
             .where('time.day', '==', upper(req.query.day)).get()
-        ).forEach(async (appt) => {
-            if (req.query.tutor) {
-                const tutor = (await db.doc(appt.for.toUser.email).get()).data();
+        ).forEach((doc) => {
+            appts.push(doc.data());
+        });
+        await Promise.all((appts).map(async (appt) => {
+            if (req.query.tutor === 'true' &&
+                tutors.indexOf(appt.for.toUser.email) < 0) {
+                tutors.push(appt.for.toUser.email);
+                const tutor = (await db.doc(appt.for.toUser.email).get())
+                    .data();
                 await new SMS(tutor.phone, supervisor.name + ' wanted to ' +
-                    'remind you that you have a tutoring session in the ' +
-                    appt.location.name + ' on ' + appt.time.day + ' at ' +
-                    appt.time.from + '.');
+                    'remind you that you have a tutoring session for ' +
+                    appt.subject + ' in the ' + appt.location.name + ' on ' +
+                    appt.time.day + ' at ' + appt.time.from + '.');
             }
-            if (req.query.pupil) {
-                const pupil = (await db.doc(appt.for.fromUser.email).get()).data();
+            if (req.query.pupil === 'true' &&
+                pupils.indexOf(appt.for.fromUser.email) < 0) {
+                pupils.push(appt.for.fromUser.email);
+                const pupil = (await db.doc(appt.for.fromUser.email).get())
+                    .data();
                 await new SMS(pupil.phone, supervisor.name + ' wanted to ' +
-                    'remind you that you have a tutoring session in the ' +
-                    appt.location.name + ' on ' + appt.time.day + ' at ' +
-                    appt.time.from + '.');
+                    'remind you that you have a tutoring session for ' +
+                    appt.subject + ' in the ' + appt.location.name + ' on ' +
+                    appt.time.day + ' at ' + appt.time.from + '.');
             }
+        }));
+        return res.json({
+            tutors: tutors,
+            pupils: pupils,
+            appts: appts,
         });
     });
 };
