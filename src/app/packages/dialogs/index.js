@@ -70,19 +70,24 @@ class ApptNotificationDialog {
         $(this.main).find('button').each(function() {
             MDCRipple.attachTo(this);
         });
-        this.dialog.listen('MDCDialog:closing', (event) => {
+        this.dialog.listen('MDCDialog:closing', async (event) => {
             if (event.detail.action !== 'send') return;
             const tutor = checkboxes['tutors'].checked;
             const pupil = checkboxes['pupils'].checked;
             if (!tutor && !pupil) return console.warn('Did not send any ' +
                 'notifications.');
             window.app.snackbar.view('Sending reminder messages...');
-            Object.entries(checkboxes).forEach((entry) => {
-                if (['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
-                    .indexOf(entry[0]) >= 0 && entry[1].checked
-                ) return Data.notifyAppt(entry[0], tutor, pupil);
-            });
-            window.app.snackbar.view('Sent reminder messages.');
+            try {
+                await Promise.all(Object.entries(checkboxes).map((entry) => {
+                    if (['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
+                        .indexOf(entry[0]) >= 0 && entry[1].checked
+                    ) return Data.notifyAppt(entry[0], tutor, pupil);
+                }));
+                window.app.snackbar.view('Sent reminder messages.');
+            } catch (e) {
+                console.error('Error while sending notification messages:', e);
+                window.app.snackbar.view('Could not send reminder messages.');
+            }
         });
         this.managed = true;
     }

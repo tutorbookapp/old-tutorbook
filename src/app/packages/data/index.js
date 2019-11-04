@@ -82,6 +82,10 @@ class Data {
                 tutor: tutor || false,
                 pupil: pupil || false,
             },
+        }).then((res) => {
+            if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
+                throw new Error(res.data.replace('[ERROR]', ''));
+            return res.data;
         });
     }
 

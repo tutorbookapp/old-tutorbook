@@ -70,7 +70,8 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Any',
+            name: 'Test Location for Notifications',
+            id: 'alkdsfjsa;lfkasfda;',
         };
         this.functionsURL = 'https://us-central1-tutorbook-779d8.' + // Live
             'cloudfunctions.net';
