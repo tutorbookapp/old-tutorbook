@@ -1,36 +1,3 @@
-/*
- *APP FLOW TODO:
- *1) Pupil flow
- *  [x] Goes to the website and searches for a tutor
- *  [x] Sees search results but has to login to send a request
- *  [x] Signs up for an account using Google (less < 1 sec)
- *  [x] Sends that tutor (and 5 others) messages and lesson requests
- *  [x] Request gets approved, they start meeting regularly through the app
- *2) Service[ ]hour tutor flow
- *  [x] Goes to the website and signs up as a tutor
- *  [x] Populates their profile (subjects, contact, availability)
- *  [x] Responds to job postings and pupil questions (tracking hours)
- *  [x] Approves lesson request from pupil and tracks hours through the app
- *3) Paid tutor flow
- *  [x] Goes to the website and signs up as a tutor
- *  [x] Goes to settings and enables payments
- *  [x] Populates profile and payment policies
- *  [x] Responds to job postings and pupil questions 
- *  [x] Approves lesson request from pupil and tracks hours/payments through the app
- *4) Supervisor flow
- *  [x] Securely logs in with given credentials
- *  [x] Dashboard of app activity (statistics on what is going on)
- *  [x] Sets up appointments (through proxy accounts)
- *  [x] Approves/rejects tutor clock[ ]ins/outs at their location(s)
- *  [x] Tracks their tutors's service hours through the app
- *5) Parent flow (right now, same as pupil flow, but different user type)
- *  [x] Goes to the website and searches for a tutor (for their child)
- *  [x] Sees search results but has to login to send a request
- *  [x] Signs up for an account using Google (less < 1 sec)
- *  [x] Sends that tutor (and 5 others) messages and lesson requests
- *  [x] Request gets approved, they start meeting regularly through the app
- */
-
 // Dependencies
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -41,6 +8,7 @@ const SupervisorDashboard = require('dashboard').supervisor;
 const Search = require('search');
 const Profile = require('profile').default;
 const PaidProfile = require('profile').paid;
+const TutorProfile = require('profile').tutor;
 const Schedule = require('schedule').default;
 const Chats = require('chats').default;
 const SupervisorSchedule = require('schedule').supervisor;
@@ -102,6 +70,8 @@ class Tutorbook {
             this.search = new Search(this);
             if (this.user.payments.type === 'Paid') {
                 this.profile = new PaidProfile(this.user);
+            } else if (this.user.type === 'Tutor') {
+                this.profile = new TutorProfile(this.user);
             } else {
                 this.profile = new Profile(this.user);
             }

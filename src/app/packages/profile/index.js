@@ -192,7 +192,8 @@ class Profile {
             });
         };
 
-        if (this.profile.payments.type !== 'Paid') {
+        if (this.profile.payments.type !== 'Paid' &&
+            this.profile.type !== 'Tutor') {
             const bio = t('#Bio', () => {
                 p.bio = bio.value;
             });
@@ -665,6 +666,28 @@ class EditProfile extends NewProfile {
 };
 
 
+class TutorProfile extends Profile {
+
+    constructor(profile) {
+        super(profile);
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        $(this.main).find('#Bio').replaceWith($(this.render.textField(
+            'Service hours',
+            Utils.getDurationStringFromSecs(profile.secondsTutored || 0),
+        )).attr('style', 'width:50%!important;margin-right:20px;'));
+    }
+
+    manage(dontUpdate) {
+        super.manage(dontUpdate);
+        MDCTextField.attachTo($(this.main).find('[id="Service hours"]')[0]);
+        $(this.main).find('[id="Service hours"] input').attr('disabled', 'true');
+    }
+};
+
+
 class PaidTutorProfile extends Profile {
 
     constructor(profile) {
@@ -738,4 +761,5 @@ module.exports = {
     new: NewProfile,
     edit: EditProfile,
     paid: PaidTutorProfile,
+    tutor: TutorProfile,
 };
