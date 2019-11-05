@@ -91,7 +91,6 @@ class User {
                 (Object.entries(this.profile.availability).length > 0) ?
                 Object.entries(this.profile.availability)[0][0] :
                 window.app.location.name;
-            console.log('First location for ' + this.profile.name + ':', first);
             if (Data.locations.indexOf(first) >= 0) {
                 var addr = Data.addresses[first];
             } else {
