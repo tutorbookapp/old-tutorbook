@@ -3,7 +3,7 @@ const admin = require('firebase-admin'); // Initialized in ../index.js
 
 class Webpush {
 
-    constructor(id, title, body, actions) {
+    constructor(id, title, body, data) {
         if (!title || title === '' || typeof title !== 'string') {
             throw new Error('Webpush must have a valid title.');
         } else if (!body || body === '' || typeof body !== 'string') {
@@ -32,7 +32,8 @@ class Webpush {
                                 'on/logo.svg',
                             badge: 'https://tutorbook-779d8.firebaseapp.com/favic' +
                                 'on/notification-badge.svg',
-                            actions: [actions || {}],
+                            actions: [{}],
+                            data: data || {},
                         },
                     },
                     token: token,

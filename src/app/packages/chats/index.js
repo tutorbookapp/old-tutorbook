@@ -85,10 +85,9 @@ class Chats {
     }
 
     async chat(id) {
-        const doc = await this.getChat(id);
-        const chat = new Chat(doc.id, doc.data());
-        chats[doc.id] = chat;
-        chat.view();
+        if (!this.chats[id])
+            this.chats[id] = new Chat(id, (await this.getChat(id)).data());
+        this.chats[id].view();
     }
 
     // Render function that returns the chat view

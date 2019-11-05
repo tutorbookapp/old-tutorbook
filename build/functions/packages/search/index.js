@@ -28,6 +28,18 @@ function getName(name) { // Returns first name with last initial
     return split[0] + ' ' + split[split.length - 1].charAt(0);
 };
 
+// webhook - enables integration across Twilio and Intercom via Automate.io
+const getEmailFromPhone = (req, res) => {
+    return cors(req, res, async () => {
+        const emails = [];
+        (await admin.firestore().collection('users')
+            .where('phone', '==', req.query.phone).limit(1).get()
+        ).forEach((doc) => {
+            emails.push(doc.id);
+        });
+        return res.send(emails[0]);
+    });
+};
 
 // Manages the copying of data from the `users` collection (that noone can read)
 // to the `search` collection (that anyone can read).
@@ -131,4 +143,5 @@ const getResults = (req, res) => {
 module.exports = {
     update: updateSearch,
     get: getResults,
+    getEmailFromPhone: getEmailFromPhone,
 };

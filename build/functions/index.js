@@ -73,6 +73,8 @@ exports.processWeeklyPayouts = functions.https
 // OTHER
 // ============================================================================
 
+exports.getEmailFromPhone = functions.https.onRequest(Search.getEmailFromPhone);
+
 exports.updateSheet = functions.https.onRequest(updateSheet);
 
 // user - When a newUser document is modified, check if they're a verified

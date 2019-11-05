@@ -35,6 +35,17 @@ class Notify {
             messaging.onMessage((payload) => {
                 if (payload.notification.body === 'Authenticated account.') {
                     return firebase.auth().currentUser.getIdToken(true);
+                } else if (payload.notification.title.indexOf('Message') >= 0) {
+                    if (window.app.nav.selected !== 'Messages') {
+                        return window.app.snackbar.view(
+                            payload.notification.title + ': ' +
+                            payload.notification.body, 'view', () => {
+                                window.app.chats.chat(
+                                    payload.notification.data.id);
+                            }, false);
+                    } else {
+                        return;
+                    }
                 }
                 window.app.snackbar.view(payload.notification.body);
             });

@@ -13,10 +13,12 @@ class Snackbar {
         this.render = render || new Render();
     }
 
-    view(message, label, action) {
+    view(message, label, action, showClose) {
         const v = () => {
             if (!label || !action) {
                 var el = this.render.snackbar(true);
+            } else if (typeof showClose === 'boolean') {
+                var el = this.render.snackbar(label, action, showClose);
             } else {
                 var el = this.render.snackbar(label, action, true);
             }

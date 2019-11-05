@@ -104,15 +104,17 @@ const messageNotification = async (snap, context) => {
     const chat = await admin.firestore().collection('chats')
         .doc(context.params.chat).get();
     return chat.data().chatterEmails.forEach(async (email) => {
-        if (email !== message.sentBy.email) {
+        if (email !== snap.data().sentBy.email) {
             await new Webpush(
                 email,
-                'Message from ' + snap.data().sentBy.name,
-                snap.data().message
+                'Message from ' + snap.data().sentBy.name.split(' ')[0],
+                snap.data().message, {
+                    id: context.params.chat
+                },
             );
             await new SMS((await admin.firestore().collection('users')
                     .doc(email).get()).data().phone,
-                'New message from ' + snap.data().sentBy.name.split(' ')[0] +
+                'Message from ' + snap.data().sentBy.name.split(' ')[0] +
                 ': ' + snap.data().message
             );
         }
