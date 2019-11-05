@@ -56,7 +56,6 @@ class Tutorbook {
         this.EditProfile = EditProfile;
         this.NotificationDialog = NotificationDialog;
         this.MatchingDialog = MatchingDialog;
-        this.PaidTutorProfile = PaidTutorProfile;
         this.renderCard = renderCard;
 
         // App packages

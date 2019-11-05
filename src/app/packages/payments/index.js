@@ -11,6 +11,9 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const Profile = require('profile').default;
+const PaidProfile = require('profile').paid;
+const TutorProfile = require('profile').tutor;
 const NotificationDialog = require('dialogs').notify;
 const Card = require('card');
 const Utils = require('utils');
@@ -227,8 +230,12 @@ class Payments {
         const type = a('#Type', async (s) => {
             p.type = s.value;
             if (s.value === 'Free') {
+                window.app.profile = (window.app.user.type === 'Tutor') ?
+                    new TutorProfile(window.app.user) :
+                    new Profile(window.app.user);
                 disable(true);
             } else {
+                window.app.profile = new PaidProfile(window.app.user);
                 this.initStripe();
                 disable(false);
             }

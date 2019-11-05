@@ -17,9 +17,7 @@ class Utils {
     }
 
     static showPayments() {
-        window.app.user.payments.type = 'Paid';
         window.app.user.config.showPayments = true;
-        window.app.profile = new window.PaidTutorProfile(window.app.user);
         window.app.nav.initDrawer();
         window.app.updateUser();
         window.app.payments.view();

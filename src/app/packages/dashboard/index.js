@@ -111,7 +111,8 @@ class Dashboard {
                 );
             }
         });
-        if (window.app.user.type === 'Tutor') this.viewCard(
+        if (window.app.user.type === 'Tutor' &&
+            window.app.user.payments.type === 'Free') this.viewCard(
             window.app.profile.renderServiceHourCard(),
             $(this.main).find('#default')
         );
