@@ -49,7 +49,10 @@ class User {
         );
 
         if (this.profile.payments.type === 'Paid') {
-            const first = Object.entries(this.profile.availability)[0][0];
+            const first =
+                (Object.entries(this.profile.availability).length > 0) ?
+                Object.entries(this.profile.availability)[0][0] :
+                window.app.location.name;
             if (Data.locations.indexOf(first) >= 0) {
                 var addr = Data.addresses[first];
             } else {
