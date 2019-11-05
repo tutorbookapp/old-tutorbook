@@ -473,6 +473,7 @@ Data.periods = [
 Data.locations = ['Gunn Academic Center', 'Paly Peer Tutoring Center'];
 
 Data.addresses = {
+    'Any': '780 Arastradero Rd, Palo Alto, CA 94306',
     'Gunn Academic Center': '780 Arastradero Rd, Palo Alto, CA 94306',
     'Paly Peer Tutoring Center': '50 Embarcadero Rd, Palo Alto, CA 94301',
 };
