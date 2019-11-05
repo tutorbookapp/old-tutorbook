@@ -7,6 +7,18 @@ const Email = require('email');
 const SMS = require('sms');
 const Webpush = require('webpush');
 
+// helper - returns the proper gender pronoun
+const getPronoun = (gender) => {
+    switch (gender) {
+        case 'Male':
+            return 'his';
+        case 'Female':
+            return 'her';
+        default:
+            return 'their';
+    };
+};
+
 // helper - uppercases first letter of a given string
 const upper = (str) => {
     return str.substring(0, 1).toUpperCase() + str.substring(1, str.length);
@@ -98,6 +110,11 @@ const messageNotification = async (snap, context) => {
                 'Message from ' + snap.data().sentBy.name,
                 snap.data().message
             );
+            await new SMS((await admin.firestore().collection('users')
+                    .doc(email).get()).data().phone,
+                'New message from ' + snap.data().sentBy.name.split(' ')[0] +
+                ': ' + snap.data().message
+            );
         }
     });
 };
@@ -107,7 +124,7 @@ const chatNotification = (snap, context) => {
     const chat = snap.data();
     const body = chat.createdBy.name + ' wants to chat with you. Log ' +
         'into Tutorbook (https://tutorbook.app/app/messages) to respond ' +
-        'to ' + Utils.getPronoun(chat.createdBy.gender) + ' messages.';
+        'to ' + getPronoun(chat.createdBy.gender) + ' messages.';
     const title = 'Chat with ' + chat.createdBy.name;
     // Send notification to all the other people on the chat
     return chat.chatters.forEach(async (chatter) => {
