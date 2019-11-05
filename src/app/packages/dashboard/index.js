@@ -111,6 +111,10 @@ class Dashboard {
                 );
             }
         });
+        if (window.app.user.type === 'Tutor') this.viewCard(
+            window.app.profile.renderServiceHourCard(),
+            $(this.main).find('#default')
+        );
     }
 
     // Views cards (onSnapshot) from a given query (most recent on top) using a

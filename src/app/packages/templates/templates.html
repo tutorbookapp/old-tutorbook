@@ -2,6 +2,46 @@
 <!-- TEMPLATES: these are HTML templates for all of the objects that the 
 user sees as they navigate throughout the app. -->
 
+<!-- Service Hour Tracking Card Template -->
+<div hidden class="template" id="card-service-hours">
+    <div id="service-hours-card" class="mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card">
+        <div class="dashboard-card__primary-action" id="primary">
+            <div class="left">
+                <canvas width="170px" height="190px"></canvas>
+            </div>
+            <div class="right">
+                <div class="dashboard-card__primary">
+                    <h2 class="dashboard-card__title mdc-typography mdc-typography--headline6">
+                        <span data-fir-content="title">Service Hours</span>
+                        <div class="mdc-menu-surface--anchor">
+                            <button id="menu" class="mdc-icon-button material-icons">more_vert</button>
+                            <div class="mdc-menu mdc-menu-surface">
+                                <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+                                    <li class="mdc-list-item" role="menuitem" data-fir-click="snooze">
+                                        <span class="mdc-list-item__text">Snooze</span>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem" data-fir-click="history">
+                                        <span class="mdc-list-item__text">Tracking</span>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem" data-fir-click="info">
+                                        <span class="mdc-list-item__text">About</span>
+                                    </li>
+                                    <li class="mdc-list-item" role="menuitem" data-fir-click="paid">
+                                        <span class="mdc-list-item__text">Payments</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </h2>
+                    <h3 class="dashboard-card__subtitle mdc-typography mdc-typography--subtitle2" data-fir-content="subtitle">Track your progress</h3>
+                </div>
+                <div class="dashboard-card__secondary mdc-typography mdc-typography--body2" data-fir-content="summary">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Checkbox Input -->
 <div hidden class="template" id="checkbox-input">
     <div class="mdc-form-field" data-fir-id="id">
@@ -776,7 +816,7 @@ user sees as they navigate throughout the app. -->
                     <div class="mdc-menu mdc-menu-surface">
                         <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" id="menu-list">
                             <li class="mdc-list-item" role="menuitem" data-fir-click="sign_out">
-                                <span class="mdc-list-item__text">Sign Out</span>
+                                <span class="mdc-list-item__text">Sign out</span>
                             </li>
                             <li class="mdc-list-item" role="menuitem" data-fir-click="payments">
                                 <span class="mdc-list-item__text">Payments</span>
@@ -809,7 +849,7 @@ user sees as they navigate throughout the app. -->
                     <div class="mdc-menu mdc-menu-surface">
                         <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
                             <li class="mdc-list-item" role="menuitem" data-fir-click="sign_out">
-                                <span class="mdc-list-item__text">Sign Out</span>
+                                <span class="mdc-list-item__text">Sign out</span>
                             </li>
                         </ul>
                     </div>
@@ -853,13 +893,8 @@ user sees as they navigate throughout the app. -->
                     <div class="mdc-menu mdc-menu-surface" id="menu">
                         <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" id="menu-list">
                             <li class="mdc-list-item" role="menuitem" data-fir-click="sign_out">
-                                <span class="mdc-list-item__text">Sign Out</span>
+                                <span class="mdc-list-item__text">Sign out</span>
                             </li>
-                            <!--
-		   -<li class="mdc-list-item" role="menuitem" data-fir-click="settings">
-		   -    <span class="mdc-list-item__text">Settings</span>
-		   -</li>
-		   -->
                         </ul>
                     </div>
                 </div>

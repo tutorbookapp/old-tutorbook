@@ -259,14 +259,6 @@ class Navigation {
             showHelp: function() {
                 app.feedback.view();
             },
-            /*
-             *showLocations: () => {
-             *    app.locations.view();
-             *},
-             *showAccounts: () => {
-             *    app.accounts.view();
-             *},
-             */
         }
 
         var drawerEl = $('#nav-drawer')[0];

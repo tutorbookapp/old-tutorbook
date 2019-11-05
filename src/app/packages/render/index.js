@@ -10,6 +10,7 @@ import {
 
 import $ from 'jquery';
 
+const Chart = require('chart.js');
 const User = require('user');
 const Templates = require('templates');
 const Data = require('data');
@@ -20,6 +21,44 @@ class Render {
 
     constructor() {
         this.templates = new Templates();
+    }
+
+    progressDoughnut(options) {
+        new Chart(options.canvas, {
+            type: 'pie',
+            data: {
+                labels: ['Hours', 'Needed'],
+                datasets: [{
+                    data: [options.tracked, options.requirement],
+                    backgroundColor: [
+                        '#6200EE',
+                        '#DFDFDF',
+                    ],
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+                layout: {
+                    padding: {
+                        left: 20,
+                        top: 20,
+                        right: 0,
+                        bottom: 20,
+                    },
+                },
+                tooltips: {
+                    bodyFontFamily: 'Roboto, sans-serif',
+                    bodyFontSize: 14,
+                    bodyFontColor: 'rgba(0, 0, 0, 0.54)',
+                    backgroundColor: '#fff',
+                    caretPadding: 5,
+                    displayColors: false,
+                },
+                cutoutPercentage: 25,
+            },
+        });
     }
 
     checkBox(label, id) {
@@ -264,10 +303,7 @@ class Render {
                     window.app.signOut();
                 },
                 'payments': () => {
-                    window.app.user.config.showPayments = true;
-                    window.app.nav.initDrawer();
-                    window.app.updateUser();
-                    window.app.payments.view();
+                    Utils.showPayments();
                 },
                 'settings': () => {
                     window.app.settings.view();

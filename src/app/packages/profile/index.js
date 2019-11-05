@@ -10,6 +10,9 @@ import {
 import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
+import {
+    MDCMenu
+} from '@material/menu/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -17,6 +20,7 @@ import to from 'await-to-js';
 // TODO: Make these dialog classes
 const EditAvailabilityDialog = require('dialogs').editAvailability;
 const EditSubjectDialog = require('dialogs').editSubject;
+const NotificationDialog = require('dialogs').notify;
 const ConfirmationDialog = require('dialogs').confirm;
 const Data = require('data');
 const Utils = require('utils');
@@ -676,7 +680,7 @@ class TutorProfile extends Profile {
         super.renderSelf();
         $(this.main).find('#Bio').replaceWith($(this.render.textField(
             'Service hours',
-            Utils.getDurationStringFromSecs(profile.secondsTutored || 0),
+            Utils.getDurationStringFromSecs(this.profile.secondsTutored || 0),
         )).attr('style', 'width:50%!important;margin-right:20px;'));
     }
 
@@ -684,6 +688,52 @@ class TutorProfile extends Profile {
         super.manage(dontUpdate);
         MDCTextField.attachTo($(this.main).find('[id="Service hours"]')[0]);
         $(this.main).find('[id="Service hours"] input').attr('disabled', 'true');
+    }
+
+    renderServiceHourCard() {
+        const card = this.render.template('card-service-hours', {
+            title: (window.app.onMobile) ? 'Service' : 'Service Hours',
+            subtitle: (window.app.onMobile) ? 'Track your hours' : 'Track ' +
+                'your progress',
+            summary: (window.app.onMobile) ? 'Keep track of your service ' +
+                'hours and progression towards your goals.' : 'Visualize ' +
+                'your progress towards graduation requirements (a total of 15' +
+                ' hours as part of the Living Skills class that are shown ' +
+                'here) or other goals.',
+            snooze: () => {
+                $(card).remove();
+            },
+            history: () => {
+                window.app.schedule.view();
+            },
+            info: () => {
+                window.open('https://gunn.pausd.org/campus-life/community-' +
+                    'service');
+            },
+            paid: () => {
+                Utils.showPayments();
+            },
+        });
+        setTimeout(() => {
+            const tracked = new Number(Utils.getDurationStringFromSecs(
+                this.profile.secondsTutored).split(':')[0]);
+            this.render.progressDoughnut({
+                requirement: (15 - tracked),
+                tracked: tracked,
+                canvas: $(card).find('canvas')[0],
+            });
+        }, 200);
+        const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
+        $(card).find('button').click(() => {
+            menu.open = true;
+        });
+        $(card).find('button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
+        });
+        $(card).find('.mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        return card;
     }
 };
 

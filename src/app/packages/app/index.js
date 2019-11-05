@@ -26,6 +26,7 @@ const MatchingDialog = require('matching').dialog;
 // Dependency cycle workarounds
 const EditProfile = require('profile').edit;
 const NotificationDialog = require('dialogs').notify;
+const renderCard = require('card').renderCard;
 
 // Helper packages
 const Utils = require('utils');
@@ -55,6 +56,8 @@ class Tutorbook {
         this.EditProfile = EditProfile;
         this.NotificationDialog = NotificationDialog;
         this.MatchingDialog = MatchingDialog;
+        this.PaidTutorProfile = PaidTutorProfile;
+        this.renderCard = renderCard;
 
         // App packages
         this.init = async () => {

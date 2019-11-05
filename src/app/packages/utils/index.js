@@ -16,6 +16,15 @@ class Utils {
         this.data = new Data();
     }
 
+    static showPayments() {
+        window.app.user.payments.type = 'Paid';
+        window.app.user.config.showPayments = true;
+        window.app.profile = new window.PaidTutorProfile(window.app.user);
+        window.app.nav.initDrawer();
+        window.app.updateUser();
+        window.app.payments.view();
+    }
+
     static viewCard(card, cards) {
         if (!card) {
             throw new Error('Invalid card passed to viewCard:', card);

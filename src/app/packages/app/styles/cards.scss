@@ -2,6 +2,16 @@
 @import "@material/typography/mdc-typography";
 @import "@material/chips/mdc-chips";
 
+.dashboard-card .left {
+  width: 170px;
+  float: left;
+}
+
+.dashboard-card .right {
+  width: calc(100% - 170px);
+  float: right;
+}
+
 .dashboard-card__primary-action {
   outline: none;
   cursor: pointer;
