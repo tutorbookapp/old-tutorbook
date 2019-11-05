@@ -161,7 +161,7 @@ class Profile {
         this.managed = true;
         MDCTopAppBar.attachTo($('.mdc-top-app-bar')[0]);
         $('.mdc-top-app-bar .material-icons').each(function() {
-            MDCRipple.attachTo($(this)[0]);
+            MDCRipple.attachTo($(this)[0]).unbounded = true;
         });
         this.manageHeader();
 
