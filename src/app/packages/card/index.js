@@ -421,11 +421,10 @@ Card.renderSetupNotificationsCard = function() {
     const card = Card.renderCard(
         'Enable Notifications', 'Enable push notifications',
         (app.user.type === 'Tutor') ? 'Enable push notifications to be ' +
-        'notified when you recieve a new lesson request and authorized ' +
-        'payment, when a pupil modifies their request, or when a pupil ' +
-        'cancels their request.' : (app.user.type === 'Pupil') ? 'Enable' +
-        ' push notifications to be notified when a tutor approves, rejects' +
-        ', or modifies your request.' : 'Enable push notifications to be ' +
+        'notified about new lesson requests, messages, job opportunities, ' +
+        'and appointments.' : (app.user.type === 'Pupil') ? 'Enable' +
+        ' push notifications to be notified when tutors approve, reject' +
+        ', or modify your requests.' : 'Enable push notifications to be ' +
         'notified about important app activity.', {
             primary: () => {
                 window.app.notify.getPermission();
