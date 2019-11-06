@@ -28,15 +28,13 @@ class Navigation {
     update() {
         // We store all past views in an array. To go back, simply show the
         // last item in that array. If the array is empty, go to the dashboard.
-        if (this.views.length > 0) {
-            this.views[this.views.length - 1].scroll = $(document).scrollTop();
-        }
         if ($('.header .mdc-top-app-bar').length) { // Skip initial empty view
             this.views.push({
                 header: document.querySelector('.header').firstElementChild,
                 main: document.querySelector('.main').firstElementChild,
                 url: document.location.pathname,
             });
+            this.views[this.views.length - 1].scroll = $(document).scrollTop();
         }
     }
 
