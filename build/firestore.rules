@@ -31,17 +31,18 @@ service cloud.firestore {
       // to become an admin or supervisor without actually knowing the code.
       allow read: if request.auth.uid != null;
       allow create: if (request.auth.token.email == user
-	|| request.auth.token.supervisor == true
-	|| request.auth.token.parent == true)
+	|| request.auth.token.supervisor)
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.payments.currentBalanceString == "$0.00"
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
       allow delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.proxy;
+	|| request.auth.token.email in resource.data.proxy
+	|| request.auth.token.supervisor;
       allow update: if (request.auth.token.email == user
 	|| request.auth.token.email in resource.data.proxy
-	|| get(/databases/$(database)/documents/locations/$(request.auth.token.locations[0])).data.name == resource.data.location) 
+	|| request.auth.token.supervisor) // TODO: Check if this user is at one
+  	// of the supervisor's location(s)
 	&& (
 	  !("currentBalance" in request.resource.data.payments) 
 	  || ("currentBalance" in request.resource.data.payments && request.resource.data.payments.currentBalance == resource.data.payments.currentBalance)
