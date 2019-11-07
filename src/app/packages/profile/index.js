@@ -586,6 +586,7 @@ class NewProfile extends Profile {
     }
 
     createProfile() {
+        this.profile.location = window.app.location.name;
         this.profile.id = this.profile.email;
         switch (this.profile.gender) {
             case 'Male':
