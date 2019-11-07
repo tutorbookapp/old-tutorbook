@@ -40,6 +40,7 @@ const updateAuth = async (change, context) => {
             'default IDs...');
         validIDs = [
             'supervisor@tutorbook.app',
+            'mlim@pausd.org',
             'psteward@pausd.org',
             'lcollart@pausd.org'
         ];
