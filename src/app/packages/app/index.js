@@ -39,7 +39,8 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Any',
+            name: 'Gunn Academic Center',
+            id: 'NJp0Y6wyMh2fDdxSuRSx',
         };
         this.functionsURL = 'https://us-central1-tutorbook-779d8.' + // Live
             'cloudfunctions.net';
@@ -171,7 +172,7 @@ class Tutorbook {
         console.log('──╚╝──╚═══╝──╚╝──╚═══╝╚╝╚═╝╚═══╝╚═══╝╚═══╝╚╝╚═╝');
         console.log('===============================================');
         console.log('Taking a look under the hood? We\'d love to have you on ' +
-            'the team. Email hiring@tutorbook.app for more info.');
+            'the team. Email nicholaschiang@tutorbook.app for more info.');
     }
 
     print() {

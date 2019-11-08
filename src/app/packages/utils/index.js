@@ -16,6 +16,55 @@ class Utils {
         this.data = new Data();
     }
 
+    static color(time, colors) {
+        if (!colors || typeof colors !== 'object') colors = {};
+        if (colors[time.day] && colors[time.day][time.from])
+            return colors[time.day][time.from];
+        const palette = {
+            'purples': ['#7e57c2', '#5e35b1', '#4527a0', '#311b92'],
+            'pinks': ['#ec407a', '#d81b60', '#ad1457', '#880e4f'],
+            'blues': ['#5c6bc0', '#3949ab', '#283593', '#1a237e'],
+            'oranges': ['#ffa726', '#fb8c00', '#ef6c00', '#e65100'],
+            'greens': ['#26a69a', '#00897b', '#00695c', '#004d40'],
+            'greys': ['#78909c', '#546e7a', '#37474f', '#263238'],
+        };
+        if (colors[time.day]) {
+            var type = 'oranges';
+            var used = [];
+            Object.entries(palette).forEach((entry) => {
+                Object.values(colors[time.day]).forEach((color) => {
+                    if (entry[1].indexOf(color) >= 0) type = entry[0];
+                    used.push(color);
+                });
+            });
+            for (var i = 0; i < palette[type].length; i++) {
+                if (used.indexOf(palette[type][i]) < 0) {
+                    colors[time.day][time.from] = palette[type][i];
+                    break;
+                }
+            }
+            if (!colors[time.day][time.from])
+                colors[time.day][time.from] = used[0];
+        } else {
+            colors[time.day] = {};
+            var type = 'oranges';
+            var used = [];
+            Object.entries(palette).forEach((entry) => {
+                Object.values(colors).forEach((times) => {
+                    Object.values(times).forEach((c) => {
+                        if (entry[1].indexOf(c) >= 0) used.push(entry[0]);
+                    });
+                });
+            });
+            for (var i = 0; i < Object.keys(palette).length; i++) {
+                var key = Object.keys(palette)[i];
+                if (used.indexOf(key) < 0) type = key;
+            }
+            colors[time.day][time.from] = palette[type][0];
+        }
+        return colors[time.day][time.from];
+    }
+
     static showPayments() {
         window.app.user.config.showPayments = true;
         window.app.nav.initDrawer();
