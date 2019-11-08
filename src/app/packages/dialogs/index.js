@@ -1368,7 +1368,7 @@ class EditApptDialog extends EditRequestDialog {
             ok: async () => {
                 window.app.nav.back();
                 await Data.modifyAppt(this.appt, this.id);
-                window.app.snackbar.view('Modified window.app.intment.');
+                window.app.snackbar.view('Modified appointment.');
             },
             cancel: () => {
                 window.app.nav.back();
@@ -1414,6 +1414,7 @@ class ViewPastApptDialog extends ViewApptDialog {
                 'Clock out',
                 this.appt.clockOut.sentTimestamp.toDate().toLocaleTimeString()
             ));
+        $(this.main).find('.mdc-fab').remove();
     }
 };
 

@@ -117,21 +117,25 @@ class Templates {
                 tel.setAttribute('id', that.getDeepItem(data, field));
             },
             'data-fir-attr': function(tel) {
-                var chunks = tel.getAttribute('data-fir-attr').split(':');
-                var attr = chunks[0];
-                var field = chunks[1];
-                tel.setAttribute(attr, that.getDeepItem(data, field));
+                tel.getAttribute('data-fir-attr').split(',').forEach((pair) => {
+                    var chunks = pair.split(':');
+                    var attr = chunks[0];
+                    var field = chunks[1];
+                    tel.setAttribute(attr, that.getDeepItem(data, field));
+                });
             },
             'data-fir-style': function(tel) {
-                var chunks = tel.getAttribute('data-fir-style').split(':');
-                var attr = chunks[0];
-                var field = chunks[1];
-                var value = that.getDeepItem(data, field);
+                tel.getAttribute('data-fir-style').split(',').forEach((pair) => {
+                    var chunks = pair.split(':');
+                    var attr = chunks[0];
+                    var field = chunks[1];
+                    var value = that.getDeepItem(data, field);
 
-                if (attr.toLowerCase() === 'backgroundimage') {
-                    value = 'url(' + value + ')';
-                }
-                tel.style[attr] = value;
+                    if (attr.toLowerCase() === 'backgroundimage') {
+                        value = 'url(' + value + ')';
+                    }
+                    tel.style[attr] = value;
+                });
             }
         };
 

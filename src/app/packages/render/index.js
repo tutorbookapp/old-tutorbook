@@ -290,6 +290,9 @@ class Render {
     header(id, data) {
         var headerEl = this.template(id,
             Utils.combineMaps({
+                'cancel': () => {
+                    window.app.nav.back();
+                },
                 'back': () => {
                     window.app.nav.back();
                 },

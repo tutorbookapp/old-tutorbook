@@ -16,6 +16,22 @@ class Utils {
         this.data = new Data();
     }
 
+    static getNextDateWithDay(day) {
+        const now = new Date();
+        const date = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            0, 0, 0, 0);
+        var count = 0;
+        // Added counter just in case we get something that goes on forever
+        while (Data.days[date.getDay()] !== day && count <= 256) {
+            date.setDate(date.getDate() + 1);
+            count++;
+        }
+        return date;
+    }
+
     static color(time, colors) {
         if (!colors || typeof colors !== 'object') colors = {};
         if (colors[time.day] && colors[time.day][time.from])

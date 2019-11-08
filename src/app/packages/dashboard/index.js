@@ -14,7 +14,7 @@ const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
 const MatchingDialog = require('matching').dialog;
-const ScheduleCard = require('schedule').card;
+const ScheduleCard = require('schedule-card');
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('matching').default.renderShortcutCard;

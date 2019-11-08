@@ -241,6 +241,13 @@ class Data {
         });
     }
 
+    static deletePastAppt(appt, id) {
+        return Data.post('deletePastAppt', {
+            appt: appt,
+            id: id,
+        });
+    }
+
     static cancelAppt(appt, id) {
         return Data.post('cancelAppt', {
             appt: appt,

@@ -125,6 +125,13 @@ class DataProxy {
                 ].indexOf(token.email) >= 0 || token.supervisor);
                 if (!token.supervisor) await exists('appointments', data.id);
                 return Data.modifyAppt(data.appt, data.id);
+            case 'deletePastAppt':
+                assert([
+                    data.appt.attendees[0].email,
+                    data.appt.attendees[1].email
+                ].indexOf(token.email) >= 0 || token.supervisor);
+                if (!token.supervisor) await exists('pastAppointments', data.id);
+                return Data.deletePastAppt(data.appt, data.id);
             case 'cancelAppt':
                 assert([
                     data.appt.attendees[0].email,
@@ -306,8 +313,7 @@ class Data {
             approvedBy: global.app.conciseUser,
         });
         for (var i = 0; i < activeAppts.length; i++) {
-            var activeAppt = activeAppts[i];
-            await activeAppt.set(appt);
+            await activeAppts[i].set(appt);
         }
         return {
             clockIn: clockIn,
@@ -658,6 +664,24 @@ class Data {
             var appt = appts[i];
             await appt.update(apptData);
         }
+    }
+
+    static deletePastAppt(apptData, id) {
+        const db = global.db;
+        const appts = [
+            db.collection('users').doc(apptData.attendees[0].email)
+            .collection('pastAppointments')
+            .doc(id),
+            db.collection('users').doc(apptData.attendees[1].email)
+            .collection('pastAppointments')
+            .doc(id),
+            db.collection('locations').doc(apptData.location.id)
+            .collection('pastAppointments')
+            .doc(id),
+        ];
+        return appts.forEach(async (appt) => {
+            await appt.delete();
+        });
     }
 
     static async cancelAppt(apptData, id) {
