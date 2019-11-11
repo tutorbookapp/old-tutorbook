@@ -339,6 +339,8 @@ class Data {
             .collection('activeAppointments')
             .doc(id),
         ];
+        clockIn = (await ref.get()).data(); // Don't trust the client (and this
+        // will use the actual Timestamp() object for clockIn.sentTimestamp).
         await ref.delete();
         await approvedClockIn.set(Data.combineMaps(clockIn, {
             approvedTimestamp: new Date(),
@@ -428,6 +430,10 @@ class Data {
 
     static async approveClockOut(clockOutData, id) {
         // Tedious work around of the infinite loop
+        const db = global.db;
+        const clockOut = db.collection('users').doc(global.app.user.id)
+            .collection('clockOuts').doc(id);
+        clockOutData = (await clockOut.get()).data(); // Don't trust client
         const approvedClockOutData = Data.combineMaps(clockOutData, {
             approvedTimestamp: new Date(),
             approvedBy: global.app.conciseUser,
@@ -435,10 +441,6 @@ class Data {
         const appt = Data.cloneMap(approvedClockOutData.for);
         appt.clockOut = Data.cloneMap(approvedClockOutData);
 
-        // Define Firestore doc locations
-        const db = global.db;
-        const clockOut = db.collection('users').doc(global.app.user.id)
-            .collection('clockOuts').doc(id);
         const approvedClockOut = db.collection('users').doc(global.app.user.id)
             .collection('approvedClockOuts').doc();
         const activeAppts = [
@@ -520,9 +522,12 @@ class Data {
 
         const db = global.db;
         const supervisor = await Data.getLocationSupervisor(appt.location.id);
+        const apptRef = db.collection('users').doc(appt.attendees[0].email)
+            .collection('appointments').doc(id);
         const ref = db.collection('users').doc(supervisor)
             .collection('clockIns').doc(id);
 
+        appt = (await apptRef.get()).data(); // Don't trust the client
         appt.supervisor = supervisor; // Avoid infinite reference loop
         appt.clockIn = Data.cloneMap(clockIn);
         clockIn.for = Data.cloneMap(appt);
@@ -545,9 +550,12 @@ class Data {
         };
 
         const db = global.db;
+        const apptRef = db.collection('users').doc(appt.attendees[0].email)
+            .collection('appointments').doc(id);
         const ref = db.collection('users').doc(appt.supervisor)
             .collection('clockOuts').doc(id);
 
+        appt = (await apptRef.get()).data(); // Don't trust the client
         appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
         clockOut.for = Data.cloneMap(appt);
 
