@@ -947,6 +947,10 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">account_circle</i>
                 <span class="mdc-list-item__text">Profile</span>
             </a>
+            <a id="payments" data-fir-if="payments" class="mdc-list-item" data-fir-click="showPayments">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">payment</i>
+                <span class="mdc-list-item__text">Payments</span>
+            </a>
             <a id="schedule" class="mdc-list-item" data-fir-click="showSchedule">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">calendar_today</i>
                 <span class="mdc-list-item__text">Schedule</span>
@@ -956,31 +960,11 @@ needs to be rendered with a ton of click listeners.) -->
                 <span class="mdc-list-item__text">Messages</span>
             </a>
             <!--
-               -<hr class="mdc-list-divider" data-fir-if="supervisor">
-               -<a id="locations" data-fir-if="supervisor" class="mdc-list-item" data-fir-click="showLocations">
-               -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">location_on</i>
-               -    <span class="mdc-list-item__text">Locations</span>
-               -</a>
-               -<a id="accounts" data-fir-if="supervisor" class="mdc-list-item" data-fir-click="showAccounts">
-               -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">supervisor_account</i>
-               -    <span class="mdc-list-item__text">Accounts</span>
-               -</a>
-	       -->
-            <hr class="mdc-list-divider">
-            <!--
    -<a id="settings" class="mdc-list-item" data-fir-click="showSettings">
    -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
    -    <span class="mdc-list-item__text">Settings</span>
    -</a>
    -->
-            <a id="payments" data-fir-if="payments" class="mdc-list-item" data-fir-click="showPayments">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">payment</i>
-                <span class="mdc-list-item__text">Payments</span>
-            </a>
-            <a id="feedback" class="mdc-list-item" data-fir-click="showHelp">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">help_outline</i>
-                <span class="mdc-list-item__text">Help & feedback</span>
-            </a>
         </nav>
     </div>
 </div>
