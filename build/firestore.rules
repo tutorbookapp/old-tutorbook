@@ -83,7 +83,7 @@ service cloud.firestore {
     match /users/{user}/modifiedRequestsIn/{requestIn} {
       // fromUser creates this document and the toUser dismisses it
       // Users should never need to update this document
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in resource.data.for.toUser.proxy;
       allow read: if request.auth.token.email in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
@@ -95,7 +95,7 @@ service cloud.firestore {
     }
     match /users/{user}/canceledRequestsIn/{requestIn} {
       // fromUser creates this document and the toUser dismisses it
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in resource.data.for.toUser.proxy;
       allow read: if request.auth.token.email in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
@@ -122,7 +122,7 @@ service cloud.firestore {
     }
     match /users/{user}/modifiedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in resource.data.for.fromUser.proxy;
       allow read: if request.auth.token.email in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
@@ -134,7 +134,7 @@ service cloud.firestore {
     }
     match /users/{user}/rejectedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in resource.data.for.fromUser.proxy;
       allow read: if request.auth.token.email in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
@@ -146,7 +146,7 @@ service cloud.firestore {
     }
     match /users/{user}/approvedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in resource.data.for.fromUser.proxy;
       allow read: if request.auth.token.email in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
@@ -174,11 +174,11 @@ service cloud.firestore {
 	|| location in request.auth.token.locations;
     }
     match /locations/{location}/modifiedAppointments/{appt} {
-      allow read: if location in request.auth.token.locations;
+      allow read, delete: if location in request.auth.token.locations;
     }
     match /users/{user}/modifiedAppointments/{appt} {
       // Either attendee can create and dismiss this card
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in
 	[resource.data.for.attendees[0].email, resource.data.for.attendees[1].email]
 	|| request.auth.token.email in resource.data.for.attendees[0].proxy
@@ -194,7 +194,7 @@ service cloud.firestore {
     }
     match /users/{user}/canceledAppointments/{appt} {
       // Either attendee can create and dismiss this card
-      allow read: if request.auth.token.email == user
+      allow read, delete: if request.auth.token.email == user
 	|| request.auth.token.email in
 	[resource.data.for.attendees[0].email, resource.data.for.attendees[1].email]
 	|| request.auth.token.email in resource.data.for.attendees[0].proxy
@@ -205,7 +205,7 @@ service cloud.firestore {
     match /locations/{location}/canceledAppointments/{appt} {
       // Only allow a user to create if they were already allowed to create a
       // canceledAppt doc in the other user's.
-      allow read: if location in request.auth.token.locations;
+      allow read, delete: if location in request.auth.token.locations;
     }
 
     // [CLOCKINS AND CLOCKOUTS]
