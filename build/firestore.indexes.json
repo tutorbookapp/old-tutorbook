@@ -605,6 +605,20 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "availability.`Paly Peer Tutoring Center`.Monday",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "availability.`Test Location`.Monday",
           "arrayConfig": "CONTAINS"
         },
@@ -1139,6 +1153,28 @@
     {
       "collectionGroup": "appointments",
       "fieldPath": "location.id",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "DESCENDING",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "arrayConfig": "CONTAINS",
+          "queryScope": "COLLECTION"
+        },
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "appointments",
+      "fieldPath": "time.day",
       "indexes": [
         {
           "order": "ASCENDING",
