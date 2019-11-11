@@ -2,6 +2,10 @@
 @import "@material/layout-grid/mdc-layout-grid";
 @import "@material/linear-progress/mdc-linear-progress";
 
+#load-more {
+  margin-bottom: 50px;
+}
+
 .card-schedule {
   border: 1px solid #e0e0e0;
   border-radius: 4px;

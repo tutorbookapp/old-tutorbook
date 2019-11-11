@@ -31,7 +31,10 @@ class Listener {
                     Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
                     data.for.time.from + '. Approve this clock in?';
                 new ConfirmationDialog(title, summary, async () => {
-                    await Data.approveClockIn(doc.data(), doc.id);
+                    const [err, res] = await to(
+                        Data.approveClockIn(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'approve clock in request.');
                     window.app.snackbar.view('Approved clock in request.');
                 }, true).view();
             },
@@ -58,7 +61,10 @@ class Listener {
                     Utils.getOther(data.sentBy, data.for.attendees).name +
                     ' ending at ' + data.for.time.to + '. Approve this clock out?';
                 new ConfirmationDialog(title, summary, async () => {
-                    await Data.approveClockOut(doc.data(), doc.id);
+                    const [err, res] = await to(
+                        Data.approveClockOut(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'approve clock out request.');
                     window.app.snackbar.view('Approved clock out request.');
                 }, true).view();
             },
@@ -89,9 +95,8 @@ class Listener {
                     data.to.name.split(' ')[0] + ' $' + data.amount.toFixed(2) +
                     '?';
                 new ConfirmationDialog(title, summary, async () => {
-                    var err;
-                    var res;
-                    [err, res] = await to(Data.approvePayment(doc.data(), doc.id));
+                    const [err, res] = await to(
+                        Data.approvePayment(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'approved payment.');
                     window.app.snackbar.view('Approved and sent $' +

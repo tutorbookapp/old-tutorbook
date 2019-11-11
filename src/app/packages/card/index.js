@@ -859,17 +859,13 @@ Card.renderActiveApptCard = function(doc) {
         primary: () => {
             new ViewActiveApptDialog(appt, doc.id).view();
         },
-        delete: () => {
-            return new ConfirmationDialog('Delete Appointment?', summary, async () => {
-                Card.remove(doc, 'activeAppointments');
-                await Data.deleteActiveAppt(appt, doc.id);
-                window.app.snackbar.view('Active appointment deleted.');
-            }).view();
-        },
     };
     if (app.user.type === 'Tutor') {
         actions.clockout = async () => {
-            await Data.clockOut(appt, doc.id);
+            window.app.snackbar.view('Sending request...');
+            const [err, res] = await to(Data.clockOut(appt, doc.id));
+            if (err) return window.app.snackbar.view('Could not send clock ' +
+                'out request.');
             window.app.snackbar.view('Sent clock out request.');
         };
     }

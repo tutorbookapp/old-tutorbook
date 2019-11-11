@@ -32,6 +32,7 @@ class Schedule {
 
     constructor() {
         this.render = window.app.render;
+        this.limit = 10; // How many pastAppointments to load
         this.recycler = {
             remove: (doc, type) => {
                 $(this.main)
@@ -87,8 +88,16 @@ class Schedule {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Schedule';
         window.app.view(this.header, this.main, '/app/schedule');
-        MDCTopAppBar.attachTo(this.header);
+        this.manage();
         this.viewAppts();
+    }
+
+    manage() {
+        MDCTopAppBar.attachTo(this.header);
+        MDCRipple.attachTo($(this.main).find('#load-more')[0]);
+        $(this.main).find('#load-more').click(() => {
+            this.loadMore();
+        });
     }
 
     reView() {
@@ -104,7 +113,7 @@ class Schedule {
             appointments: db.collection('appointments')
                 .orderBy('timestamp', 'desc'),
             pastAppointments: db.collection('pastAppointments')
-                .orderBy('clockOut.sentTimestamp', 'desc').limit(10),
+                .orderBy('clockOut.sentTimestamp', 'desc').limit(this.limit),
             activeAppointments: db.collection('activeAppointments')
                 .orderBy('clockIn.sentTimestamp', 'desc'),
             modifiedAppointments: db.collection('modifiedAppointments')
@@ -113,6 +122,16 @@ class Schedule {
                 .orderBy('canceledTimestamp', 'desc'),
         };
         Utils.recycle(queries, this.recycler);
+    }
+
+    loadMore() {
+        const db = firebase.firestore().collection('users')
+            .doc(window.app.user.id); // TODO: Add proxy results too 
+        this.limit += 10;
+        Utils.recycle({
+            pastAppointments: db.collection('pastAppointments')
+                .orderBy('clockOut.sentTimestamp', 'desc').limit(this.limit),
+        }, this.recycler);
     }
 
     renderSelf() {
@@ -247,7 +266,7 @@ class SupervisorSchedule extends Schedule {
             appointments: db.collection('appointments')
                 .orderBy('timestamp', 'desc'),
             pastAppointments: db.collection('pastAppointments')
-                .orderBy('clockOut.sentTimestamp', 'desc').limit(10),
+                .orderBy('clockOut.sentTimestamp', 'desc').limit(this.limit),
             activeAppointments: db.collection('activeAppointments')
                 .orderBy('clockIn.sentTimestamp', 'desc'),
             modifiedAppointments: db.collection('modifiedAppointments')
@@ -256,6 +275,16 @@ class SupervisorSchedule extends Schedule {
                 .orderBy('canceledTimestamp', 'desc'),
         };
         Utils.recycle(queries, this.recycler);
+    }
+
+    loadMore() {
+        const db = firebase.firestore().collection('locations')
+            .doc(window.app.location.id); // TODO: Add >1 location
+        this.limit += 10;
+        Utils.recycle({
+            pastAppointments: db.collection('pastAppointments')
+                .orderBy('clockOut.sentTimestamp', 'desc').limit(this.limit),
+        }, this.recycler);
     }
 
     static renderShortcutCard() {

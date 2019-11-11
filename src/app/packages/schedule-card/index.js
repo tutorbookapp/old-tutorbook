@@ -120,6 +120,9 @@ class ActiveAppt extends Event {
         this.actions['Clock out'] = async () => {
             this.clockOut();
         };
+        this.actions['View'] = () => {
+            new ViewActiveApptDialog(Utils.filterApptData(this)).view();
+        };
         this.renderSelf();
     }
 

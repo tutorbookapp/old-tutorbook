@@ -1271,26 +1271,29 @@ class ViewApptDialog extends ViewRequestDialog {
     }
 
     async clockIn() {
-        this.timer = setInterval(this.update, 10);
+        this.timer = setInterval(() => {
+            this.update();
+        }, 10);
         window.app.snackbar.view('Sending request...');
-        await Data.clockIn(this.appt, this.id);
+        const [err, res] = await to(Data.clockIn(this.appt, this.id));
+        if (err) return window.app.snackbar.view('Could not send clock in ' +
+            'request.');
         window.app.snackbar.view('Sent clock in request.');
-        //$(this.header).find('.material-icons').off('click').click(() => {
-        //window.app.snackbar.view('Navigation is locked until you clock out.');
-        //});
     }
 
     async clockOut() {
         clearInterval(this.timer);
         this.timer = null;
         window.app.snackbar.view('Sending request...');
-        await Data.clockOut(this.appt, this.id);
+        const [err, res] = await to(Data.clockOut(this.appt, this.id));
+        if (err) return window.app.snackbar.view('Could not send clock out ' +
+            'request.');
         window.app.snackbar.view('Sent clock out request.');
     }
 
     update() {
         // Formatted as: Hr:Min:Sec.Millisec
-        var currentTimeDisplay = $('#Current input')[0];
+        var currentTimeDisplay = $(this.main).find('#Current input')[0];
         var current = currentTimeDisplay.value.toString();
         var currentHours = new Number(current.split(':')[0]);
         var currentMinutes = new Number(current.split(':')[1]);
@@ -1319,7 +1322,7 @@ class ViewApptDialog extends ViewRequestDialog {
 
         // Next, update the total time
         // Formatted as: Hr:Min:Sec.Millisec
-        var totalTimeDisplay = $('#Total input')[0];
+        var totalTimeDisplay = $(this.main).find('#Total input')[0];
         var total = totalTimeDisplay.value.toString();
         var totalHours = new Number(total.split(':')[0]);
         var totalMinutes = new Number(total.split(':')[1]);
@@ -1386,6 +1389,9 @@ class ViewPastApptDialog extends ViewApptDialog {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Past Appointment',
+            print: () => {
+                window.app.print();
+            },
             showDelete: true,
             delete: () => {
                 return new ConfirmationDialog('Delete Past Appointment?',
@@ -1398,7 +1404,6 @@ class ViewPastApptDialog extends ViewApptDialog {
                         window.app.snackbar.view('Deleted past appointment.');
                     }).view();
             },
-            cancel: window.app.nav.back,
         });
         $(this.render.textFieldItem(
             'Time clocked',
@@ -1429,14 +1434,36 @@ class ViewActiveApptDialog extends ViewApptDialog {
             title: 'Active Appointment',
         });
         $(this.main).find('.mdc-fab__label').text('ClockOut');
+        $(this.main).find('#Total input').val(
+            Utils.getDurationStringFromDates(
+                this.appt.clockIn.sentTimestamp.toDate(), new Date()
+            ));
+        $(this.main).find('#Current input').val(
+            Utils.getDurationStringFromDates(
+                this.appt.clockIn.sentTimestamp.toDate(), new Date()
+            ));
+        this.timer = setInterval(() => {
+            this.update();
+        }, 10);
     }
 };
 
 class ViewCanceledApptDialog extends ViewApptDialog {
     constructor(appt, id) {
-        throw new Error('The ViewCanceledApptDialog has not been implemented ' +
-            'yet.');
-        super();
+        super(appt, id);
+    }
+
+    async renderSelf() {
+        await super.renderSelf();
+        this.header = this.render.header('header-action', {
+            title: 'Canceled Appointment',
+            print: () => {
+                window.app.print();
+            },
+        });
+        $(this.main).find('[id="Hours clocked"]').remove();
+        $(this.main).find('#Current').parent().remove();
+        $(this.main).find('.mdc-fab').remove();
     }
 };
 

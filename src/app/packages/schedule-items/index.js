@@ -255,8 +255,11 @@ class ActiveAppt extends Event {
             showAction: window.app.user.type === 'Tutor',
             actionLabel: 'ClockOut',
             action: async () => {
-                await Data.clockOut(doc.data(), doc.id);
-                window.app.schedule.refresh();
+                window.app.snackbar.view('Sending request...');
+                const [err, res] = await to(Data.clockOut(doc.data(), doc.id));
+                if (err) return window.app.snackbar.view('Could not send ' +
+                    'clock out request.');
+                window.app.snackbar.view('Sent clock out request.');
             },
         };
         this.renderSelf();
@@ -287,7 +290,13 @@ class SupervisorActiveAppt extends Event {
             showAction: true,
             actionLabel: 'ClockOut',
             action: async () => {
-                await Data.clockOut(doc.data(), doc.id);
+                window.app.snackbar.view('Clocking out for ' +
+                    this.for.toUser.name.split(' ')[0] + '...');
+                const [e, r] = await to(
+                    Data.instantClockOut(doc.data(), doc.id));
+                if (e) return window.app.snackbar.view('Could not clock out.');
+                window.app.snackbar.view('Clocked out at ' + new Date(r.data
+                    .clockOut.sentTimestamp).toLocaleTimeString() + '.');
                 window.app.schedule.refresh();
             },
         };
