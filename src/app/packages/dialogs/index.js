@@ -1274,21 +1274,39 @@ class ViewApptDialog extends ViewRequestDialog {
         this.timer = setInterval(() => {
             this.update();
         }, 10);
-        window.app.snackbar.view('Sending request...');
-        const [err, res] = await to(Data.clockIn(this.appt, this.id));
-        if (err) return window.app.snackbar.view('Could not send clock in ' +
-            'request.');
-        window.app.snackbar.view('Sent clock in request.');
+        if (window.app.user.type === 'Supervisor') {
+            window.app.snackbar.view('Clocking in for ' +
+                this.appt.for.toUser.name.split(' ')[0] + '...');
+            const [e, r] = await to(Data.instantClockIn(this.appt, this.id));
+            if (e) return window.app.snackbar.view('Could not clock in.');
+            window.app.snackbar.view('Clocked in at ' + new Date(r.data
+                .clockIn.sentTimestamp).toLocaleTimeString() + '.');
+        } else {
+            window.app.snackbar.view('Sending request...');
+            const [err, res] = await to(Data.clockIn(this.appt, this.id));
+            if (err) return window.app.snackbar.view('Could not send clock ' +
+                'in request.');
+            window.app.snackbar.view('Sent clock in request.');
+        }
     }
 
     async clockOut() {
         clearInterval(this.timer);
         this.timer = null;
-        window.app.snackbar.view('Sending request...');
-        const [err, res] = await to(Data.clockOut(this.appt, this.id));
-        if (err) return window.app.snackbar.view('Could not send clock out ' +
-            'request.');
-        window.app.snackbar.view('Sent clock out request.');
+        if (window.app.user.type === 'Supervisor') {
+            window.app.snackbar.view('Clocking out for ' +
+                this.appt.for.toUser.name.split(' ')[0] + '...');
+            const [e, r] = await to(Data.instantClockOut(this.appt, this.id));
+            if (e) return window.app.snackbar.view('Could not clock out.');
+            window.app.snackbar.view('Clocked out at ' + new Date(r.data
+                .clockOut.sentTimestamp).toLocaleTimeString() + '.');
+        } else {
+            window.app.snackbar.view('Sending request...');
+            const [err, res] = await to(Data.clockOut(this.appt, this.id));
+            if (err) return window.app.snackbar.view('Could not send clock ' +
+                'out request.');
+            window.app.snackbar.view('Sent clock out request.');
+        }
     }
 
     update() {

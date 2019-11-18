@@ -261,8 +261,8 @@ class Render {
             'paid': ((user.payments) ? user.payments.type === 'Paid' : false),
             'free': ((user.payments) ? user.payments.type === 'Free' : true),
             'rate': '$' + ((user.payments) ? user.payments.hourlyCharge : 25),
-            'grade': user.grade || 'No Grade',
-            'type': user.type || 'No Type',
+            'grade': user.grade || 'No grade',
+            'type': user.type || 'No type',
         };
         return this.template('user-header', userData);
     }
