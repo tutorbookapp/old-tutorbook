@@ -588,6 +588,8 @@ class NewProfile extends Profile {
     createProfile() {
         this.profile.location = window.app.location.name;
         this.profile.id = this.profile.email;
+        this.profile.authenticated = this.profile.type === 'Tutor' ||
+            this.profile.type === 'Pupil';
         switch (this.profile.gender) {
             case 'Male':
                 this.profile.photo = 'https://tutorbook.app/app/img/male.png';
