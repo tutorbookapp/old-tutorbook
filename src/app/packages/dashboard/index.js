@@ -227,6 +227,8 @@ class SupervisorDashboard extends Dashboard {
                 ', and start service hour timers for tutors at your ' +
                 'location(s).', () => {}).view(),
         });
+        MDCRipple.attachTo($(this.header).find('.search-box button')[0])
+            .unbounded = true;
 
         function add(label, id) {
             $(that.main).append(
