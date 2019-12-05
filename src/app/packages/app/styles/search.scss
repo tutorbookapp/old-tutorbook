@@ -1,11 +1,29 @@
 @import "@material/top-app-bar/mdc-top-app-bar";
 @import "@material/icon-button/mdc-icon-button";
+@import "@material/elevation/mdc-elevation";
 
 #search-app-bar { /* Emulate Google Drive's Top App Bar */
   @include mdc-top-app-bar-fill-color(#FFF);
   @include mdc-top-app-bar-ink-color(#5F6368); 
   @include mdc-top-app-bar-icon-ink-color(#5F6368);
   border-bottom: 1px solid #E0E0E0;
+  .search-results {
+    position: absolute;
+    background: #FFF;
+    border-radius: 0px 0px 7px 7px;
+    top: calc(64px - 7px + 1px); /* Puts this right below search-box */
+    width: calc(50vw + 79px + 4px); /* Size of search-box and then some */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+  .search-box--elevated {
+    border-radius: 7px 7px 0px 0px !important;
+    background: #FFF !important;
+    border-bottom: 1px solid #E0E0E0;
+    input {
+      background: #FFF !important;
+    }
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
   .search-box {
     border-radius: 7px;
     padding: 11px;
@@ -30,6 +48,10 @@
     }
   }
   @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .search-results {
+      top: calc(56px - 6px + 1px);
+      width: calc(50vw + 47px + 4px); /* Size of search-box and then some */
+    } 
     .mdc-top-app-bar__title {
       display: none !important;
     }

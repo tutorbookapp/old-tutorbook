@@ -803,6 +803,10 @@ user sees as they navigate throughout the app. -->
     </div>
 </div>
 
+<div hidden class="template" id="search-results-divider">
+    <li role="separator" class="mdc-list-divider"></li>
+</div>
+
 <div hidden class="template" id="header-search">
     <header id="search-app-bar" class="mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
@@ -817,6 +821,10 @@ user sees as they navigate throughout the app. -->
                     <button data-fir-click="search-info" class="mdc-icon-button">
                         <i class="material-icons">info</i>
                     </button>
+                </div>
+                <div class="search-results" style="display:none;">
+                    <ul id="results" class="mdc-list mdc-list--avatar-list mdc-list--two-line">
+                    </ul>
                 </div>
             </section>
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
