@@ -1,0 +1,43 @@
+@import "@material/top-app-bar/mdc-top-app-bar";
+@import "@material/icon-button/mdc-icon-button";
+
+#search-app-bar { /* Emulate Google Drive's Top App Bar */
+  @include mdc-top-app-bar-fill-color(#FFF);
+  @include mdc-top-app-bar-ink-color(#5F6368); 
+  @include mdc-top-app-bar-icon-ink-color(#5F6368);
+  border-bottom: 1px solid #E0E0E0;
+  .search-box {
+    border-radius: 7px;
+    padding: 11px;
+    background: #F1F3F4;
+    color: #5F6368;
+    #search-icon {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    button {
+      float: right;
+      @include mdc-icon-button-icon-size(24px, 24px, 2px);
+    }
+    input {
+      vertical-align: middle;
+      width: 50vw;
+      background: #F1F3F4;
+      font-color: #C3AEAF;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      border: none;
+    }
+  }
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .mdc-top-app-bar__title {
+      display: none !important;
+    }
+    .search-box {
+      padding: 9px;
+    }
+    button {
+      display: none;
+    }
+  }
+}

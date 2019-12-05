@@ -14,6 +14,7 @@ const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
 const MatchingDialog = require('matching').dialog;
+const NotificationDialog = require('dialogs').notify;
 const ScheduleCard = require('schedule-card');
 
 // Shortcut cards for SupervisorDashboard
@@ -216,6 +217,16 @@ class SupervisorDashboard extends Dashboard {
     renderSelf() {
         super.renderSelf();
         const that = this;
+
+        this.header = this.render.header('header-search', {
+            'title': 'Tutorbook',
+            'search-info': () => new NotificationDialog('About Search',
+                'Tutorbook\'s new search bar is an app-wide search feature to' +
+                ' make your job easier. From the search bar, you can find, ' +
+                'match, and message students, schedule or cancel appointments' +
+                ', and start service hour timers for tutors at your ' +
+                'location(s).', () => {}).view(),
+        });
 
         function add(label, id) {
             $(that.main).append(

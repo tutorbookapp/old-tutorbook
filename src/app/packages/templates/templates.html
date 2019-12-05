@@ -803,6 +803,41 @@ user sees as they navigate throughout the app. -->
     </div>
 </div>
 
+<div hidden class="template" id="header-search">
+    <header id="search-app-bar" class="mdc-top-app-bar mdc-top-app-bar--fixed">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <div class="button mdc-top-app-bar__navigation-icon" data-fir-click="navigation"><i class="material-icons">menu</i></div>
+                <span class="mdc-top-app-bar__title" data-fir-content="title">Tutorbook</span>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-middle">
+                <div class="search-box">
+                    <i id="search-icon" class="material-icons">search</i>
+                    <input placeholder="Search Tutorbook" type="text" name="query">
+                    <button data-fir-click="search-info" class="mdc-icon-button">
+                        <i class="material-icons">info</i>
+                    </button>
+                </div>
+            </section>
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                <div class="mdc-menu-surface--anchor">
+                    <div class="button mdc-top-app-bar__action-item" data-fir-click="menu"><i class="material-icons">more_vert</i></div>
+                    <div class="mdc-menu mdc-menu-surface">
+                        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" id="menu-list">
+                            <li class="mdc-list-item" role="menuitem" data-fir-click="sign_out">
+                                <span class="mdc-list-item__text">Sign out</span>
+                            </li>
+                            <li class="mdc-list-item" role="menuitem" data-fir-click="payments">
+                                <span class="mdc-list-item__text">Payments</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </header>
+</div>
+
 <div hidden class="template" id="header-main">
     <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
