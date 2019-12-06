@@ -8396,7 +8396,7 @@ svg.mdc-button__icon {
       --mdc-ripple-fg-opacity: 0.12; }
   #search-app-bar .search-results {
     position: absolute;
-    max-height: 60vw;
+    max-height: 80vh;
     overflow-x: hidden;
     overflow-y: scroll;
     background: #FFF;
