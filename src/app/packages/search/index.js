@@ -35,8 +35,7 @@ class SearchHeader {
         });
         $(this.el).find('#clear-button').click(() => {
             $(this.el).find('.search-box input').val('');
-            $(this.el).find('#clear-button').hide();
-            $(this.el).find('#info-button').show();
+            this.showInfoButton();
         });
         $(this.el).find('#info-button').click(() => new NotificationDialog(
             'About Search',
@@ -57,13 +56,7 @@ class SearchHeader {
         const index = algolia.initIndex('users');
         const search = async () => {
             const query = $(this.el).find('.search-box input').val();
-            if (query.length > 0) {
-                $(this.el).find('#info-button').hide();
-                $(this.el).find('#clear-button').show();
-            } else {
-                $(this.el).find('#clear-button').hide();
-                $(this.el).find('#info-button').show();
-            }
+            (query.length > 0) ? this.showClearButton(): this.showInfoButton();
             const res = await index.search({
                 query: query,
                 facetFilters: window.app.location.name !==
@@ -75,6 +68,18 @@ class SearchHeader {
         };
         $(this.el).find('.search-box input').on('input', async () => search());
         search(); // TODO: Show filter prompts instead of initial results
+    }
+
+    showInfoButton() {
+        if (window.app.onMobile) return;
+        $(this.el).find('#clear-button').hide();
+        $(this.el).find('#info-button').show();
+    }
+
+    showClearButton() {
+        if (window.app.onMobile) return;
+        $(this.el).find('#info-button').hide();
+        $(this.el).find('#clear-button').show();
     }
 
     showResults() {
