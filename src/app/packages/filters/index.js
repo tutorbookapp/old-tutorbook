@@ -54,7 +54,7 @@ class FilterDialog {
                 subject: 'Any',
                 gender: 'Any',
                 type: 'Any',
-                price: 'Any',
+                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 availability: {},
                 location: 'Any',
                 sort: 'Rating'
@@ -74,12 +74,22 @@ class FilterDialog {
             })
         );
 
-        Utils.replaceElement(
-            dialog.querySelector('#price-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.prices)
-            })
-        );
+        if (window.app.location.name === 'Any') {
+            Utils.replaceElement(
+                dialog.querySelector('#price-list'),
+                this.render.template('dialog-filter-item-list', {
+                    items: ['Any'].concat(Data.prices)
+                })
+            );
+        } else {
+            Utils.replaceElement(
+                dialog.querySelector('#price-list'),
+                'Due to PAUSD guidelines, we can only show free service-hour' +
+                ' peer tutors on this website. To filter by price and view ' +
+                'more professional tutors, go to the root partition at https:' +
+                '//tutorbook.app/app.'
+            );
+        }
 
         Utils.replaceElement(
             dialog.querySelector('#gender-list'),

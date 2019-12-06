@@ -176,7 +176,7 @@ class Search {
                 gender: 'Any',
                 availability: {},
                 location: 'Any',
-                price: 'Any',
+                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             };
@@ -243,7 +243,7 @@ class Search {
                 gender: 'Any',
                 availability: {},
                 location: 'Any',
-                price: 'Any',
+                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             };
