@@ -54,7 +54,7 @@ class Search {
 
     // Checks if the profile should show up in search results
     validResult(profile) {
-        if (profile.grade === '' || profile.grade === undefined) {
+        if (Data.grades.indexOf(profile.grade) < 0) {
             return false;
         } else if (profile.subjects.length === 0) {
             return false;

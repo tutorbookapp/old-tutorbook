@@ -11,6 +11,32 @@ class Data {
         this.initLocations();
     }
 
+    static get grades() {
+        const highSchool = ['Senior', 'Junior', 'Sophomore', 'Freshman'];
+        const middleSchool = ['8th Grade', '7th Grade', '6th Grade'];
+        const elementarySchool = [
+            '5th Grade',
+            '4th Grade',
+            '3rd Grade',
+            '2nd Grade',
+            '1st Grade',
+            'Kindergarten',
+        ];
+        switch (window.app.location.name.split(' ')[0]) {
+            case 'Gunn':
+                return highSchool;
+            case 'Paly':
+                return highSchool;
+            case 'JLS':
+                return middleSchool;
+            default:
+                return ['Adult']
+                    .concat(highSchool)
+                    .concat(middleSchool)
+                    .concat(elementarySchool);
+        };
+    }
+
     static async getUser(id) {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
@@ -811,23 +837,6 @@ Data.genders = [
     'Male',
     'Female',
     'Other'
-];
-
-Data.grades = [
-    'Adult',
-    'Senior',
-    'Junior',
-    'Sophomore',
-    'Freshman',
-    '8th Grade',
-    '7th Grade',
-    '6th Grade',
-    '5th Grade',
-    '4th Grade',
-    '3rd Grade',
-    '2nd Grade',
-    '1st Grade',
-    'Kindergarten',
 ];
 
 Data.types = [
