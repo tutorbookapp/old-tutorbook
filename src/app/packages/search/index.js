@@ -7,6 +7,8 @@ import {
 
 import $ from 'jquery';
 
+const algolia = require('algoliasearch')
+    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const User = require('user');
 const Render = require('render');
 const FilterDialog = require('filters');
@@ -46,17 +48,17 @@ class SearchHeader {
                 this.results();
             }
         });
-        $(this.el).find('.search-box input').change(() => {
-            // TODO: Add Algolia integration
-        });
-    }
-
-    async viewMockResults() {
-        (await firebase.firestore().collection('users').limit(5).get())
-        .forEach((doc) =>
-            $(this.el).find('#results').append(this.renderResult(doc))
-        );
-        this.results();
+        const index = algolia.initIndex('users');
+        const search = async () => {
+            const res = await index.search({
+                query: $(this.el).find('.search-box input').val(),
+            });
+            $(this.el).find('#results').empty();
+            res.hits.forEach((hit) =>
+                $(this.el).find('#results').append(this.renderResult(hit)));
+        };
+        $(this.el).find('.search-box input').on('input', async () => search());
+        search(); // TODO: Show filter prompts instead of initial results
     }
 
     results() {
@@ -77,11 +79,11 @@ class SearchHeader {
             .removeClass('search-box--elevated');
     }
 
-    renderResult(doc) { // TODO: Remove code duplication from Search()
-        const profile = doc.data();
+    renderResult(hit) { // TODO: Remove code duplication from Search()
+        const profile = Utils.filterProfileData(hit);
         const user = new User(profile);
         const listItemData = Utils.cloneMap(profile);
-        listItemData['id'] = doc.id;
+        listItemData['id'] = hit.objectID;
         listItemData['go_to_user'] = () => {
             user.view();
         };

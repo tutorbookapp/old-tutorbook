@@ -9,6 +9,9 @@
   border-bottom: 1px solid #E0E0E0;
   .search-results {
     position: absolute;
+    max-height: 60vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
     background: #FFF;
     border-radius: 0px 0px 7px 7px;
     top: calc(64px - 7px + 1px); /* Puts this right below search-box */
@@ -39,6 +42,7 @@
     }
     input {
       vertical-align: middle;
+      outline: none;
       width: 50vw;
       background: #F1F3F4;
       font-color: #C3AEAF;

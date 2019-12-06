@@ -1018,14 +1018,28 @@ class Utils {
     // correspond with profile document data.
     static filterProfileData(user) {
         return {
-            'subjects': user.subjects,
-            'grade': user.grade,
-            'gender': user.gender,
-            'phone': user.phone,
-            'email': user.email,
-            'bio': user.bio,
-            'type': user.type,
-            'availability': user.availability,
+            name: user.name,
+            uid: user.uid,
+            photo: user.photo,
+            id: user.id, // Right now, we just use email for id
+            email: user.email,
+            phone: user.phone,
+            type: user.type,
+            gender: user.gender,
+            grade: user.grade,
+            bio: user.bio,
+            avgRating: user.avgRating,
+            numRatings: user.numRatings,
+            subjects: user.subjects,
+            cards: user.cards,
+            config: user.config,
+            settings: user.settings,
+            availability: user.availability,
+            payments: user.payments,
+            authenticated: user.authenticated,
+            secondsTutored: user.secondsTutored,
+            secondsPupiled: user.secondsPupiled,
+            location: user.location,
         };
     }
 

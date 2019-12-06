@@ -233,12 +233,16 @@ class SupervisorDashboard extends Dashboard {
         add('Everything else', 'everything');
     }
 
+    reView() {
+        super.reView();
+        this.search.manage();
+    }
+
     viewDefaultCards() {
         super.viewDefaultCards();
         this.viewScheduleCards();
         this.viewShortcutCards();
         this.viewEverythingElse();
-        this.search.viewMockResults();
     }
 
     viewScheduleCards() {

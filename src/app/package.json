@@ -51,6 +51,7 @@
     "@material/textfield": "^1.1.1",
     "@material/top-app-bar": "^1.1.1",
     "@material/typography": "^1.0.0",
+    "algoliasearch": "^3.35.1",
     "await-to-js": "^2.1.1",
     "chart.js": "^2.9.2",
     "googleapis": "^39.2.0",
