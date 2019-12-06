@@ -25,14 +25,9 @@ function main() {
     return firestore.collection('users').get().then((snapshot) => {
         return snapshot.forEach((doc) => {
             var user = doc.data();
-            if (!user.config) {
-                user.config = {
-                    showPayments: false,
-                    showSettings: false,
-                    showProfile: true,
-                };
-            } else {
-                user.config.showProfile = true;
+            if (user.location === 'Any' && (user.email.indexOf('pausd') > 0 ||
+                    user.availability['Gunn Academic Center'] !== undefined)) {
+                user.location = 'Gunn Academic Center';
             }
             updateUser(user);
         });
