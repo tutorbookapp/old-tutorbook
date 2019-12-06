@@ -8422,6 +8422,7 @@ svg.mdc-button__icon {
     border-radius: 7px 7px 0px 0px !important;
     background: #FFF !important;
     border-bottom: 1px solid #E0E0E0;
+    /* See https://bit.ly/389xzIj for info about box-shadow */
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
     #search-app-bar .search-box--elevated input {
       background: #FFF !important; }
@@ -8448,8 +8449,8 @@ svg.mdc-button__icon {
       width: 50vw;
       background: #F1F3F4;
       font-color: #C3AEAF;
-      font-family: 'Poppins', sans-serif;
-      font-size: 16px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
       border: none; }
   @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     #search-app-bar .search-results {

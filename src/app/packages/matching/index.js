@@ -8,7 +8,7 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-const Search = require('search');
+const Search = require('search').default;
 const Card = require('card');
 const Utils = require('utils');
 const Data = require('data');

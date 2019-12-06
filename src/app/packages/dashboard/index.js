@@ -14,8 +14,8 @@ const Utils = require('utils');
 const User = require('user');
 const EditProfile = require('profile').edit;
 const MatchingDialog = require('matching').dialog;
-const NotificationDialog = require('dialogs').notify;
 const ScheduleCard = require('schedule-card');
+const SearchHeader = require('search').header;
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('matching').default.renderShortcutCard;
@@ -217,7 +217,8 @@ class SupervisorDashboard extends Dashboard {
     renderSelf() {
         super.renderSelf();
         const that = this;
-        this.renderSearch();
+        this.search = new SearchHeader();
+        this.header = this.search.el;
 
         function add(label, id) {
             $(that.main).append(
@@ -232,66 +233,12 @@ class SupervisorDashboard extends Dashboard {
         add('Everything else', 'everything');
     }
 
-    renderSearch() {
-        this.header = this.render.header('header-search', {
-            'title': 'Tutorbook',
-            'search-info': () => new NotificationDialog('About Search',
-                'Tutorbook\'s new search bar is an app-wide search feature to' +
-                ' make your job easier. From the search bar, you can find, ' +
-                'match, and message students, schedule or cancel appointments' +
-                ', and start service hour timers for tutors at your ' +
-                'location(s).', () => {}).view(),
-        });
-        MDCRipple.attachTo($(this.header).find('.search-box button')[0])
-            .unbounded = true;
-    }
-
-    renderResult(doc) { // TODO: Remove code duplication from Search()
-        const profile = doc.data();
-        const user = new User(profile);
-        const listItemData = Utils.cloneMap(profile);
-        listItemData['id'] = doc.id;
-        listItemData['go_to_user'] = () => {
-            user.view();
-        };
-
-        if (profile.payments.type === 'Paid') {
-            listItemData.type = 'Tutor';
-            listItemData.paid = true;
-            listItemData.free = false;
-            listItemData.rate = '$' + profile.payments.hourlyCharge.toFixed(0);
-            listItemData.paymentType = 'paid';
-        } else {
-            listItemData.free = true;
-            listItemData.paid = false;
-            listItemData.paymentType = 'free';
-        }
-
-        const el = this.render.template('search-result-user', listItemData);
-        Utils.replaceElement(
-            el.querySelector('.rating__meta'),
-            this.render.rating(profile.avgRating)
-        );
-        MDCRipple.attachTo(el);
-        return el;
-    }
-
-    async viewMockResults() {
-        (await firebase.firestore().collection('users').limit(5).get())
-        .forEach((doc) =>
-            $(this.header).find('#results').append(this.renderResult(doc))
-        );
-        $(this.header).find('.search-results').attr('style', 'display:visible;');
-        $(this.header).find('.search-box')
-            .addClass('search-box--elevated');
-    }
-
     viewDefaultCards() {
         super.viewDefaultCards();
         this.viewScheduleCards();
         this.viewShortcutCards();
         this.viewEverythingElse();
-        this.viewMockResults();
+        this.search.viewMockResults();
     }
 
     viewScheduleCards() {

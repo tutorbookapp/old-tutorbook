@@ -5,7 +5,7 @@ import to from 'await-to-js';
 // App packages
 const Dashboard = require('dashboard').default;
 const SupervisorDashboard = require('dashboard').supervisor;
-const Search = require('search');
+const Search = require('search').default;
 const Profile = require('profile').default;
 const PaidProfile = require('profile').paid;
 const TutorProfile = require('profile').tutor;

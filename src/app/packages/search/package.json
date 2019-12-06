@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "data": "^1.0.0",
+    "dialogs": "^1.0.0",
     "filters": "^1.0.0",
     "user": "^1.0.0",
     "utils": "^1.0.0"

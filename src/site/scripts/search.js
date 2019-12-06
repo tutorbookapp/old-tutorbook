@@ -17,7 +17,7 @@ const searchEl = document.querySelector('.search_results .main');
 const dialogEl = document.querySelector('#login-dialog');
 
 const Render = require('../../app/packages/render/index.js');
-const Search = require('../../app/packages/search/index.js');
+const Search = require('../../app/packages/search/index.js').default;
 
 // TODO: Make an MDC Menu pop down on keyup (i.e. as the user is typing) that
 // has filter suggestions.

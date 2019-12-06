@@ -5,12 +5,108 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
+import $ from 'jquery';
+
 const User = require('user');
 const Render = require('render');
 const FilterDialog = require('filters');
 const Utils = require('utils');
 const Data = require('data');
-const $ = require('jquery');
+const NotificationDialog = require('dialogs').notify;
+
+class SearchHeader {
+
+    constructor() {
+        this.render = window.app.render;
+        this.renderSelf();
+        this.manage();
+    }
+
+    renderSelf() {
+        this.el = this.render.header('header-search', {
+            'title': 'Tutorbook',
+            'search-info': () => new NotificationDialog('About Search',
+                'Tutorbook\'s new search bar is an app-wide search feature to' +
+                ' make your job easier. From the search bar, you can find, ' +
+                'match, and message students, schedule or cancel appointments' +
+                ', and start service hour timers for tutors at your ' +
+                'location(s).', () => {}).view(),
+            'search': () => this.showResults(),
+        });
+        MDCRipple.attachTo($(this.el).find('.search-box button')[0])
+            .unbounded = true;
+    }
+
+    manage() {
+        $(document).click((event) => {
+            const $target = $(event.target);
+            if (!$target.closest($(this.el).find('.search-results')).length &&
+                !$target.closest($(this.el).find('.search-box')).length &&
+                $(this.el).find('.search-results').is(':visible')) {
+                this.results();
+            }
+        });
+        $(this.el).find('.search-box input').change(() => {
+            // TODO: Add Algolia integration
+        });
+    }
+
+    async viewMockResults() {
+        (await firebase.firestore().collection('users').limit(5).get())
+        .forEach((doc) =>
+            $(this.el).find('#results').append(this.renderResult(doc))
+        );
+        this.results();
+    }
+
+    results() {
+        if ($(this.el).find('.search-results').is(':visible'))
+            return this.hideResults();
+        return this.showResults();
+    }
+
+    showResults() {
+        $(this.el).find('.search-results').show();
+        $(this.el).find('.search-box')
+            .addClass('search-box--elevated');
+    }
+
+    hideResults() {
+        $(this.el).find('.search-results').hide();
+        $(this.el).find('.search-box')
+            .removeClass('search-box--elevated');
+    }
+
+    renderResult(doc) { // TODO: Remove code duplication from Search()
+        const profile = doc.data();
+        const user = new User(profile);
+        const listItemData = Utils.cloneMap(profile);
+        listItemData['id'] = doc.id;
+        listItemData['go_to_user'] = () => {
+            user.view();
+        };
+
+        if (profile.payments.type === 'Paid') {
+            listItemData.type = 'Tutor';
+            listItemData.paid = true;
+            listItemData.free = false;
+            listItemData.rate = '$' + profile.payments.hourlyCharge.toFixed(0);
+            listItemData.paymentType = 'paid';
+        } else {
+            listItemData.free = true;
+            listItemData.paid = false;
+            listItemData.paymentType = 'free';
+        }
+
+        const el = this.render.template('search-result-user', listItemData);
+        Utils.replaceElement(
+            el.querySelector('.rating__meta'),
+            this.render.rating(profile.avgRating)
+        );
+        MDCRipple.attachTo(el);
+        return el;
+    }
+}
 
 
 // Class that manages the Tutorbook search screen and results. See: 
@@ -410,4 +506,7 @@ class Search {
 };
 
 
-module.exports = Search;
+module.exports = {
+    default: Search,
+    header: SearchHeader,
+};
