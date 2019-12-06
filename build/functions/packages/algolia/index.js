@@ -16,6 +16,9 @@ class Algolia {
 
     user(change, context) {
         this.update(change, context, 'users');
+        client.initIndex('users').setSettings({
+            attributesForFaceting: ['filterOnly(payments.type)'],
+        });
     }
 
     appt(change, context) {

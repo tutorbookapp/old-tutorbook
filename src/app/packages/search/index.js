@@ -52,6 +52,8 @@ class SearchHeader {
         const search = async () => {
             const res = await index.search({
                 query: $(this.el).find('.search-box input').val(),
+                facetFilters: window.app.location.name !==
+                    'Any' ? ['payments.type:Free'] : undefined,
             });
             $(this.el).find('#results').empty();
             res.hits.forEach((hit) =>
