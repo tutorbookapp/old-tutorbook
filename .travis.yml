@@ -19,7 +19,8 @@ install:
 - cd functions/
 - npm i
 before_script:
-- firebase emulators:start --only firestore,functions --project tutorbook-779d8 &>/dev/null &
+- firebase emulators:start --only firestore,functions --project tutorbook-779d8 &>/dev/null
+  &
 - sleep 5
 script:
 - cd ../
@@ -28,5 +29,5 @@ after_script:
 - firebase deploy --project tutorbook-779d8 --except functions --token "$FIREBASE_TOKEN"
   --message "$TRAVIS_COMMIT_MESSAGE"
 before_install:
-- openssl aes-256-cbc -K $encrypted_643ae61e7902_key -iv $encrypted_643ae61e7902_iv
-  -in ./build/functions/.runtimeconfig.json.enc -out ./build/functions/.runtimeconfig.json -d
+- openssl aes-256-cbc -K $encrypted_c7b1ade89059_key -iv $encrypted_c7b1ade89059_iv
+  -in build/functions/.runtimeconfig.json.enc -out build/functions/.runtimeconfig.json -d
