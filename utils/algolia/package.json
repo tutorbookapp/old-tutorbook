@@ -1,0 +1,16 @@
+{
+  "name": "algolia-kickstart",
+  "version": "1.0.0",
+  "description": "Utility script to add all relevant Firestore objects to their Algolia indexes.",
+  "main": "kickstart.js",
+  "scripts": {
+    "start": "node kickstart.js"
+  },
+  "keywords": [],
+  "author": "Nicholas Chiang",
+  "license": "MIT",
+  "dependencies": {
+    "algoliasearch": "^3.35.1",
+    "firebase-admin": "^8.8.0"
+  }
+}
