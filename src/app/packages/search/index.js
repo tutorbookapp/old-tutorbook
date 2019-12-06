@@ -21,29 +21,30 @@ class SearchHeader {
     constructor() {
         this.render = window.app.render;
         this.renderSelf();
-        this.manage();
     }
 
     renderSelf() {
         this.el = this.render.header('header-search', {
             'title': 'Tutorbook',
-            'search-info': () => new NotificationDialog('About Search',
-                'Tutorbook\'s new search bar is an app-wide search feature to' +
-                ' make your job easier. From the search bar, you can find, ' +
-                'match, and message students, schedule or cancel appointments' +
-                ', and start service hour timers for tutors at your ' +
-                'location(s).', () => {}).view(),
-            'clear-query': () => {
-                $(this.el).find('.search-box input').val('');
-                $(this.el).find('#clear-button').hide();
-                $(this.el).find('#info-button').show();
-            },
         });
-        MDCRipple.attachTo($(this.el).find('.search-box button')[0])
-            .unbounded = true;
     }
 
     manage() {
+        $(this.el).find('.search-box button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
+        });
+        $(this.el).find('#clear-button').click(() => {
+            $(this.el).find('.search-box input').val('');
+            $(this.el).find('#clear-button').hide();
+            $(this.el).find('#info-button').show();
+        });
+        $(this.el).find('#info-button').click(() => new NotificationDialog(
+            'About Search',
+            'Tutorbook\'s new search bar is an app-wide search feature to' +
+            ' make your job easier. From the search bar, you can find, ' +
+            'match, and message students, schedule or cancel appointments' +
+            ', and start service hour timers for tutors at your ' +
+            'location(s).', () => {}).view());
         $(document).click((event) => {
             const $target = $(event.target);
             const clicked =

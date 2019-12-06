@@ -233,6 +233,11 @@ class SupervisorDashboard extends Dashboard {
         add('Everything else', 'everything');
     }
 
+    view() {
+        super.view();
+        this.search.manage();
+    }
+
     reView() {
         super.reView();
         this.search.manage();
