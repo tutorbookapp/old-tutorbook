@@ -33,7 +33,11 @@ class SearchHeader {
                 'match, and message students, schedule or cancel appointments' +
                 ', and start service hour timers for tutors at your ' +
                 'location(s).', () => {}).view(),
-            'search': () => this.showResults(),
+            'clear-query': () => {
+                $(this.el).find('.search-box input').val('');
+                $(this.el).find('#clear-button').hide();
+                $(this.el).find('#info-button').show();
+            },
         });
         MDCRipple.attachTo($(this.el).find('.search-box button')[0])
             .unbounded = true;
@@ -51,8 +55,16 @@ class SearchHeader {
         });
         const index = algolia.initIndex('users');
         const search = async () => {
+            const query = $(this.el).find('.search-box input').val();
+            if (query.length > 0) {
+                $(this.el).find('#info-button').hide();
+                $(this.el).find('#clear-button').show();
+            } else {
+                $(this.el).find('#clear-button').hide();
+                $(this.el).find('#info-button').show();
+            }
             const res = await index.search({
-                query: $(this.el).find('.search-box input').val(),
+                query: query,
                 facetFilters: window.app.location.name !==
                     'Any' ? ['payments.type:Free'] : undefined,
             });
