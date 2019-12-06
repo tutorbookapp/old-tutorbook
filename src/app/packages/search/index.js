@@ -42,11 +42,12 @@ class SearchHeader {
     manage() {
         $(document).click((event) => {
             const $target = $(event.target);
-            if (!$target.closest($(this.el).find('.search-results')).length &&
-                !$target.closest($(this.el).find('.search-box')).length &&
-                $(this.el).find('.search-results').is(':visible')) {
-                this.results();
-            }
+            const clicked =
+                $target.closest($(this.el).find('.search-results')).length ||
+                $target.closest($(this.el).find('.search-box')).length;
+            const open = $(this.el).find('.search-results').is(':visible');
+            return (!clicked && open) ? this.hideResults() :
+                (clicked && !open) ? this.showResults() : undefined;
         });
         const index = algolia.initIndex('users');
         const search = async () => {
@@ -61,12 +62,6 @@ class SearchHeader {
         };
         $(this.el).find('.search-box input').on('input', async () => search());
         search(); // TODO: Show filter prompts instead of initial results
-    }
-
-    results() {
-        if ($(this.el).find('.search-results').is(':visible'))
-            return this.hideResults();
-        return this.showResults();
     }
 
     showResults() {
