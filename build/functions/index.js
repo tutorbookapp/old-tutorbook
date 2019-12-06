@@ -3,6 +3,7 @@ const admin = require('firebase-admin').initializeApp();
 
 const updateHours = require('hours');
 const updateSheet = require('sheet');
+const Algolia = require('algolia');
 const Auth = require('auth');
 const Data = require('data');
 const Notify = require('notifications');
@@ -10,7 +11,7 @@ const Payments = require('payments');
 const Search = require('search');
 
 // ============================================================================
-// SEARCH
+// SEARCH (VIA ALGOLIA) 
 // ============================================================================
 
 exports.updateSearch = functions.firestore
@@ -18,6 +19,26 @@ exports.updateSearch = functions.firestore
     .onWrite(Search.update);
 
 exports.search = functions.https.onRequest(Search.get);
+
+exports.algoliaUserUpdate = functions.firestore
+    .document('/users/{id}')
+    .onWrite(Algolia.user);
+
+exports.algoliaApptUpdate = functions.firestore
+    .document('/locations/{location}/appointments/{id}') // Avoids duplicates
+    .onWrite(Algolia.appt);
+
+exports.algoliaActiveApptUpdate = functions.firestore
+    .document('/locations/{location}/activeAppointments/{id}')
+    .onWrite(Algolia.activeAppt);
+
+exports.algoliaPastApptUpdate = functions.firestore
+    .document('/locations/{location}/pastAppointments/{id}')
+    .onWrite(Algolia.pastAppt);
+
+exports.algoliaChatUpdate = functions.firestore
+    .document('/chats/{id}')
+    .onWrite(Algolia.chat);
 
 // ============================================================================
 // PAYMENTS (STRIPE)

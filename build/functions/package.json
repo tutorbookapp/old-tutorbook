@@ -20,6 +20,7 @@
     "html-loader": "^0.5.5"
   },
   "dependencies": {
+    "algolia": "file:./packages/algolia",
     "hours": "file:./packages/hours",
     "data": "file:./packages/data",
     "search": "file:./packages/search",
