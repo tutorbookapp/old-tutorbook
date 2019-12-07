@@ -202,8 +202,9 @@ class Profile {
                 p.bio = bio.value;
             });
         }
-        const type = (Data.types.indexOf(p.type) < 0) ? s('#Type') : t('#Type');
-        if (Data.types.indexOf(p.type) < 0) { // Users can only change type once
+        const typeCanBeChanged = $(this.main).find('#Type .mdc-menu').length;
+        const type = (typeCanBeChanged) ? s('#Type') : t('#Type');
+        if (typeCanBeChanged) { // Users can only change type once
             listen(type, () => {
                 p.type = type.value;
             });
@@ -646,9 +647,8 @@ class EditProfile extends NewProfile {
                     '\'s account data. This action cannot be undone. Please ensure ' +
                     'to check with your fellow supervisors before continuing.', async () => {
                         window.app.nav.back();
-                        var err;
-                        var res;
-                        [err, res] = await to(Data.deleteUser(this.profile.id));
+                        const [err, res] = await to(
+                            Data.deleteUser(this.profile.id));
                         if (err) {
                             window.app.snackbar.view('Could not delete account.');
                             console.error('Error while deleting proxy account:', err);
@@ -657,6 +657,9 @@ class EditProfile extends NewProfile {
                     }).view();
             },
         }));
+        $(this.main).find('#Type').replaceWith(
+            $(this.render.select('Type', this.profile.type, Data.types))
+            .attr('style', 'width:50% !important;'));
     }
 
     updateProfile() {
