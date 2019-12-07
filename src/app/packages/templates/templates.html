@@ -1676,6 +1676,34 @@ styling due to input el spacing. -->
     </li>
 </div>
 
+<!-- User List Item Search Hit Template (has expandable menu) -->
+<div hidden class="template" id="search-hit-user">
+    <li class="mdc-list-item" data-fir-id="id" data-fir-attr="type:paymentType" data-fir-click="go_to_user">
+        <img class="mdc-list-item__graphic" data-fir-attr="src:photo">
+        <span class="mdc-list-item__text">
+            <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
+            <span class="mdc-list-item__secondary-text">
+                <i data-fir-if="paid" class="paid-icon material-icons">money</i>
+                <span data-fir-content="type"></span>
+                <span>•</span>
+                <span data-fir-if="paid" class="rate">
+                    <span class="charge" data-fir-content="rate"></span>
+                    <span class="hr">/hr</span>
+                </span>
+                <span data-fir-if="free" data-fir-content="grade"></span>
+            </span>
+        </span>
+        <span class="mdc-list-item__meta">
+            <button class="mdc-icon-button" data-fir-click="match">
+                <i class="material-icons">wc</i>
+            </button>
+            <button class="mdc-icon-button" data-fir-click="edit">
+                <i class="material-icons">edit</i>
+            </button>
+        </span>
+    </li>
+</div>
+
 <!-- User List Item Search Result Template -->
 <div hidden class="template" id="search-result-user">
     <li class="mdc-list-item" data-fir-id="id" data-fir-attr="type:paymentType" data-fir-click="go_to_user">

@@ -9,8 +9,8 @@ import $ from 'jquery';
 
 const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
+const EditProfile = require('profile').edit;
 const User = require('user');
-const Render = require('render');
 const FilterDialog = require('filters');
 const Utils = require('utils');
 const Data = require('data');
@@ -64,7 +64,7 @@ class SearchHeader {
             });
             $(this.el).find('#results').empty();
             res.hits.forEach((hit) =>
-                $(this.el).find('#results').append(this.renderResult(hit)));
+                $(this.el).find('#results').append(this.renderHit(hit)));
         };
         $(this.el).find('.search-box input').on('input', async () => search());
         search(); // TODO: Show filter prompts instead of initial results
@@ -94,13 +94,23 @@ class SearchHeader {
             .removeClass('search-box--elevated');
     }
 
-    renderResult(hit) { // TODO: Remove code duplication from Search()
+    renderHit(hit) { // TODO: Remove code duplication from Search()
+        var el;
         const profile = Utils.filterProfileData(hit);
+        const match = new window.app.MatchingDialog(profile);
+        const edit = new EditProfile(profile);
         const user = new User(profile);
         const listItemData = Utils.cloneMap(profile);
-        listItemData['id'] = hit.objectID;
-        listItemData['go_to_user'] = () => {
+        listItemData.id = hit.objectID;
+        listItemData.go_to_user = (event) => {
+            if ($(event.target).closest('button').length) return;
             user.view();
+        };
+        listItemData.match = () => {
+            match.view();
+        };
+        listItemData.edit = () => {
+            edit.view();
         };
 
         if (profile.payments.type === 'Paid') {
@@ -115,12 +125,11 @@ class SearchHeader {
             listItemData.paymentType = 'free';
         }
 
-        const el = this.render.template('search-result-user', listItemData);
-        Utils.replaceElement(
-            el.querySelector('.rating__meta'),
-            this.render.rating(profile.avgRating)
-        );
+        el = this.render.template('search-hit-user', listItemData);
         MDCRipple.attachTo(el);
+        $(el).find('button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
+        });
         return el;
     }
 }

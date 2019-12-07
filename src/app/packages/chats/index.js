@@ -9,7 +9,6 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 const Utils = require('utils');
-const Render = require('render');
 
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.

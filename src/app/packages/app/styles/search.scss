@@ -17,6 +17,9 @@
     top: calc(64px - 7px + 1px); /* Puts this right below search-box */
     width: calc(50vw + 79px + 4px); /* Size of search-box and then some */
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    li button {
+      color: #5F6368 !important;
+    }
   }
   .search-box--elevated {
     border-radius: 7px 7px 0px 0px !important;

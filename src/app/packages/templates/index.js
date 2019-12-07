@@ -94,9 +94,9 @@ class Templates {
             'data-fir-click': function(tel) {
                 // TODO: For some reason, addEventListener('click'); doesn't
                 // work when we use this to render something twice.
-                $(tel).click(() => {
+                $(tel).click((event) => {
                     var field = $(tel).attr('data-fir-click');
-                    that.getDeepItem(data, field)();
+                    that.getDeepItem(data, field)(event);
                 });
             },
             'data-fir-if': function(tel) {
