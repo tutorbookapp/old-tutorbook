@@ -5,7 +5,7 @@ const client = require('algoliasearch')(
 );
 
 class Algolia {
-    update(change, context, indexID) {
+    static update(change, context, indexID) {
         const index = client.initIndex(indexID);
         if (!change.after.exists) return index.deleteObject(context.params.id);
         const object = change.after.data();
@@ -14,27 +14,27 @@ class Algolia {
         return index.saveObject(object);
     }
 
-    user(change, context) {
-        this.update(change, context, 'users');
+    static user(change, context) {
+        Algolia.update(change, context, 'users');
         client.initIndex('users').setSettings({
             attributesForFaceting: ['filterOnly(payments.type)'],
         });
     }
 
-    appt(change, context) {
-        this.update(change, context, 'appts');
+    static appt(change, context) {
+        Algolia.update(change, context, 'appts');
     }
 
-    activeAppt(change, context) {
-        this.update(change, context, 'activeAppts');
+    static activeAppt(change, context) {
+        Algolia.update(change, context, 'activeAppts');
     }
 
-    pastAppt(change, context) {
-        this.update(change, context, 'pastAppts');
+    static pastAppt(change, context) {
+        Algolia.update(change, context, 'pastAppts');
     }
 
-    chat(change, context) {
-        this.update(change, context, 'chats');
+    static chat(change, context) {
+        Algolia.update(change, context, 'chats');
     }
 };
 
