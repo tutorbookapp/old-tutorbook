@@ -121,8 +121,9 @@ class ActiveAppt extends Event {
             this.clockOut();
         };
         this.actions['View'] = () => {
-            new ViewActiveApptDialog(Utils.filterApptData(this)).view();
+            new ViewActiveApptDialog(Utils.filterActiveApptData(this)).view();
         };
+        this.color = '#B00020';
         this.renderSelf();
     }
 
