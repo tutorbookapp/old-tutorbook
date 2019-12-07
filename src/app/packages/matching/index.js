@@ -186,8 +186,9 @@ class Matching {
                     " on " + request.time.day + "s.";
                 new ConfirmationDialog('Cancel Request?', summary, async () => {
                     Card.remove(doc, 'requestsOut');
+                    window.app.snackbar.view('Canceling request...');
                     await Data.cancelRequest(request, doc.id);
-                    app.snackbar.view('Canceled request to ' +
+                    window.app.snackbar.view('Canceled request to ' +
                         request.toUser.email + '.');
                 }).view();
             },
@@ -208,9 +209,10 @@ class Matching {
                     dialogs.match.view();
                 },
                 'Approve': async () => {
-                    var err;
-                    var res;
-                    [err, res] = await to(Data.approveRequest(request, doc.id));
+                    window.app.snackbar.view('Approving request and creating ' +
+                        'appointment...');
+                    const [err, res] = await to(
+                        Data.approveRequest(request, doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'approve request.');
                     $(this.main).find('[id="' + tutor.email + '"]').remove();
@@ -751,9 +753,14 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                     method: 'PayPal',
                 },
             };
-            var err;
-            var res;
-            [err, res] = await to(Data.newRequest(request));
+            if (!pupil.proxy) {
+                pupil.proxy = [window.app.user.email];
+                Data.updateUser(pupil);
+            } else if (pupil.proxy.indexOf(window.app.user.email) < 0) {
+                pupil.proxy.push(window.app.user.email);
+                Data.updateUser(pupil);
+            }
+            const [err, res] = await to(Data.newRequest(request));
             if (err) {
                 console.error('Error while sending proxy request:', err);
                 return window.app.snackbar.view('Could not create match or ' +
