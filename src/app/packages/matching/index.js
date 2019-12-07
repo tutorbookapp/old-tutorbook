@@ -582,9 +582,7 @@ class MatchingDialog {
     }
 
     manage() {
-        if (this.managed) {
-            return;
-        }
+        if (this.managed) return;
         this.managed = true;
         MDCTopAppBar.attachTo(this.header);
         const that = this;
@@ -634,9 +632,6 @@ class MatchingDialog {
     renderSelf() {
         this.header = this.render.header('header-back', {
             title: 'New Match',
-            //new ConfirmationDialog('Discard Match?', 'You are about to ' +
-            //'permanently delete this match. Navigating back will ' +
-            //'delete any changes that you\'ve made. Are you sure?').view();
         });
         this.main = this.render.template('dialog-input');
         const profile = this.profile;
@@ -724,9 +719,10 @@ class ConfirmMatchDialog extends ConfirmationDialog {
     constructor(pupil, tutor, subject, timeString) {
         const title = 'Confirm Match?';
         const message = 'You are about to create a match between ' +
-            pupil.name + ' (the pupil) and ' + tutor.name + ' (the tutor) for ' + subject + '.' +
-            ' Doing so will send ' + tutor.name.split(' ')[0] + ' a lesson request for ' +
-            timeString + ' Are you sure you want to complete this match?';
+            pupil.name + ' (the pupil) and ' + tutor.name + ' (the tutor) ' +
+            'for ' + subject + '. Doing so will send ' +
+            tutor.name.split(' ')[0] + ' a lesson request for ' + timeString +
+            ' Are you sure you want to complete this match?';
 
         async function match() {
             window.app.nav.back();
