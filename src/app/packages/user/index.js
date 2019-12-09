@@ -138,7 +138,7 @@ class User {
         const messageFab = this.main.querySelector('#message-button');
         MDCRipple.attachTo(messageFab);
         messageFab.addEventListener('click', () => {
-            return window.app.chats.newWith(this.profile);
+            return window.app.chats.newWith(this.profile).view();
         });
 
         // REQUEST FAB

@@ -63,8 +63,14 @@ class SearchHeader {
                     'Any' ? ['payments.type:Free'] : undefined,
             });
             $(this.el).find('#results').empty();
-            res.hits.forEach((hit) =>
-                $(this.el).find('#results').append(this.renderHit(hit)));
+            res.hits.forEach((hit) => {
+                try {
+                    $(this.el).find('#results').append(this.renderHit(hit));
+                } catch (e) {
+                    console.warn('[ERROR] Could not render hit (' +
+                        hit.objectID + ') b/c of', e);
+                }
+            });
         };
         $(this.el).find('.search-box input').on('input', async () => search());
         search(); // TODO: Show filter prompts instead of initial results
@@ -96,7 +102,7 @@ class SearchHeader {
 
     renderHit(hit) { // TODO: Remove code duplication from Search()
         var el;
-        const profile = Utils.filterProfileData(hit);
+        const profile = Utils.filterProfile(hit);
         const match = new window.app.MatchingDialog(profile);
         const edit = new EditProfile(profile);
         const user = new User(profile);
@@ -111,6 +117,9 @@ class SearchHeader {
         };
         listItemData.edit = () => {
             edit.view();
+        };
+        listItemData.chat = async () => {
+            (await window.app.chats.newWith(profile)).view();
         };
 
         if (profile.payments.type === 'Paid') {

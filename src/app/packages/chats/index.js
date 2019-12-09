@@ -216,7 +216,7 @@ class Chats {
     async newWith(user) {
         // First, check if we have a stored chat object for the given user
         if (!!this.chatsByEmail[user.email]) {
-            return this.chatsByEmail[user.email].view();
+            return this.chatsByEmail[user.email];
         }
 
         // Second, check if the user already has a chat with the given user
@@ -230,7 +230,7 @@ class Chats {
         });
         for (var i = 0; i < docs.length; i++) {
             if (docs[i].data().chatterEmails.indexOf(user.email) >= 0) {
-                return new Chat(docs[i].id, docs[i].data()).view();
+                return new Chat(docs[i].id, docs[i].data());
             }
         }
 
@@ -256,7 +256,7 @@ class Chats {
         };
         const ref = db.collection('chats').doc();
         await ref.set(chat);
-        return new Chat(ref.id, chat).view();
+        return new Chat(ref.id, chat);
     }
 };
 
@@ -296,9 +296,13 @@ class Chat {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Messages';
         window.app.view(this.header, this.main, '/app/messages/' + this.id);
-
         this.viewMessages();
         this.manage();
+    }
+
+    toString() {
+        return 'Chat between ' + this.chat.chatters[0].name + ' and ' +
+            this.chat.chatters[1].name;
     }
 
     renderSelf() {

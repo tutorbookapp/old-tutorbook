@@ -181,7 +181,7 @@ class Utils {
     }
 
     static getName(profile) { // Capitalizes the name ("nick li" -> "Nick Li")
-        var name = profile.displayName || profile.name || '';
+        var name = profile.name || profile.displayName || '';
         return Utils.caps(name);
     }
 
@@ -1011,35 +1011,6 @@ class Utils {
             'id': data.id || '', // NOTE: We use this to be able to access and update the
             // Firestore document across different functions within the app all
             // using the same `this.currentRequest` map.
-        };
-    }
-
-    // Helper function that takes in a map and returns only those values that
-    // correspond with profile document data.
-    static filterProfileData(user) {
-        return {
-            name: user.name,
-            uid: user.uid,
-            photo: user.photo,
-            id: user.id, // Right now, we just use email for id
-            email: user.email,
-            phone: user.phone,
-            type: user.type,
-            gender: user.gender,
-            grade: user.grade,
-            bio: user.bio,
-            avgRating: user.avgRating,
-            numRatings: user.numRatings,
-            subjects: user.subjects,
-            cards: user.cards,
-            config: user.config,
-            settings: user.settings,
-            availability: user.availability,
-            payments: user.payments,
-            authenticated: user.authenticated,
-            secondsTutored: user.secondsTutored,
-            secondsPupiled: user.secondsPupiled,
-            location: user.location,
         };
     }
 
