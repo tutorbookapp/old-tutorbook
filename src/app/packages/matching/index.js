@@ -749,10 +749,10 @@ class ConfirmMatchDialog extends ConfirmationDialog {
             };
             if (!pupil.proxy) {
                 pupil.proxy = [window.app.user.email];
-                Data.updateUser(pupil);
+                await Data.updateUser(pupil);
             } else if (pupil.proxy.indexOf(window.app.user.email) < 0) {
                 pupil.proxy.push(window.app.user.email);
-                Data.updateUser(pupil);
+                await Data.updateUser(pupil);
             }
             const [err, res] = await to(Data.newRequest(request));
             if (err) {

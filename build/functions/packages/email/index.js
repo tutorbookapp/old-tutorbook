@@ -14,6 +14,7 @@ const newRequestEmail =
     fs.readFileSync('./html/newRequest.html').toString();
 const requestApprovedEmail =
     fs.readFileSync('./html/approvedRequest.html').toString();
+const rulesEmail = fs.readFileSync('./html/rules.html').toString();
 const defaultEmail = fs.readFileSync('./html/default.html').toString();
 
 // Class that manages email templates
@@ -31,6 +32,9 @@ class Email {
             case 'appt':
                 this.renderApprovedRequest(data);
                 break;
+            case 'rules':
+                this.renderRules(data);
+                break;
             default:
                 this.renderDefault(data);
                 break;
@@ -39,6 +43,8 @@ class Email {
     }
 
     renderDefault(data) {
+        if (!data.message || !data.subject) throw new Error('Email needs a ' +
+            'subject and a message');
         this.subject = data.subject;
         this.html = defaultEmail
             .replace('{ username }', this.user.name)
@@ -103,6 +109,39 @@ class Email {
         this.html = requestApprovedEmail
             .replace('{ username }', this.user.name.split(' ')[0])
             .replace('{ summary }', summary);
+    }
+
+    renderRules(data) {
+        const request = data.appt.for;
+        const vars = {
+            summary: 'You now have tutoring appointments for ' +
+                request.subject + ' with ' + request.toUser.name.split(' ')[0] +
+                ' on ' + request.time.day + 's at the ' + request.location.name +
+                ' from ' + request.time.from + ' until ' + request.time.to + '.',
+            tutor: data.tutor.name.split(' ')[0],
+            tutorPhone: data.tutor.phone || 'No Phone',
+            tutorEmail: data.tutor.email || 'No Email',
+            pupil: data.pupil.name.split(' ')[0],
+            pupilPhone: data.pupil.phone || 'No Phone',
+            pupilEmail: data.pupil.email || 'No Email',
+            supervisor: data.supervisor.name.split(' ')[0],
+            supervisorPhone: data.supervisor.phone || 'No Phone',
+            supervisorEmail: data.supervisor.email || 'No Email',
+            location: request.location.name,
+        }
+        this.subject = '[Important] ' + request.location.name + ' Policy';
+        this.html = this.render(vars, rulesEmail);
+    }
+
+    render(vars, html) {
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+        Object.entries(vars).forEach((variable) => {
+            html = html.replaceAll('{ ' + variable[0] + ' }', variable[1]);
+        });
+        return html;
     }
 
     renderWelcome() { // Renders welcome email (custom to user type)

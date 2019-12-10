@@ -69,6 +69,7 @@ class SearchHeader {
                 } catch (e) {
                     console.warn('[ERROR] Could not render hit (' +
                         hit.objectID + ') b/c of', e);
+                    console.log('[DEBUG] Hit had name (' + hit.name + ').');
                 }
             });
         };
@@ -121,6 +122,8 @@ class SearchHeader {
         listItemData.chat = async () => {
             (await window.app.chats.newWith(profile)).view();
         };
+        listItemData.grade = profile.grade || 'No Grade';
+        listItemData.type = profile.type || 'No Type';
 
         if (profile.payments.type === 'Paid') {
             listItemData.type = 'Tutor';

@@ -502,11 +502,11 @@ class NewProfile extends Profile {
             $($(main).find(q + ' input').first()).focusout(async () => {
                 action();
             });
-            return MDCTextField.attachTo($(main).find(q).first()[0]);
+            return new MDCTextField($(main).find(q).first()[0]);
         };
 
         const name = t('#Name', () => {
-            p.name = name.value;
+            p.name = Utils.caps(name.value);
         });
         name.required = true;
         const email = t('#Email', () => {
@@ -516,6 +516,24 @@ class NewProfile extends Profile {
         });
         email.required = true;
         email.disabled = false;
+        this.req = [{
+            input: name,
+            valid: () => {
+                try {
+                    Utils.caps(name.value);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            },
+        }, {
+            input: email,
+            valid: () => {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email.value.toLowerCase());
+            },
+        }];
+        window.app.req = this.req;
         $('[id="Subject"]').each(function(i) {
             $(this).off('click').click(() => {
                 new EditSubjectDialog($(this)[0], p).view();
@@ -586,7 +604,22 @@ class NewProfile extends Profile {
         EditAvailabilityDialog.updateAvailability(this.profile);
     }
 
+    get valid() {
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+        var valid = true;
+        this.req.forEach((req) => {
+            if (!req.input.valid ||
+                req.input.value.replaceAll(' ', '') === '' ||
+                !req.valid()) valid = req.input.valid = false;
+        });
+        return valid;
+    }
+
     createProfile() {
+        if (!this.valid) return;
         this.profile.location = window.app.location.name;
         this.profile.id = this.profile.email;
         this.profile.authenticated = this.profile.type === 'Tutor' ||
@@ -663,6 +696,7 @@ class EditProfile extends NewProfile {
     }
 
     updateProfile() {
+        if (!this.valid) return;
         this.profile.id = this.profile.email;
         window.app.nav.back();
         Data.updateUser(this.profile).then(() => {

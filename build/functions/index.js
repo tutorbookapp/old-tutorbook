@@ -123,6 +123,10 @@ exports.smsFallback = functions.https.onRequest(SMS.fallback);
 
 exports.apptNotification = functions.https.onRequest(Notify.appt);
 
+exports.apptRulesNotification = functions.firestore
+    .document('locations/{location}/appointments/{appt}')
+    .onCreate(Notify.rules);
+
 exports.newUserNotification = functions.firestore
     .document('users/{id}')
     .onCreate(Notify.user);

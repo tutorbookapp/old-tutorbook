@@ -47,7 +47,7 @@ class SMS {
                 from: (await getUser(req.body.From)),
             });
             const smsCount = req.session.counter || 0;
-            if (smsCount > 0) return; // Only respond w/ automated message once
+            if (smsCount > 0) return res.status(200).end();
             req.session.counter = smsCount + 1;
             const twiml = new MessagingResponse();
             twiml.message('Your message has been forwarded to your Tutorbook ' +

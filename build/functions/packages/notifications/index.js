@@ -148,6 +148,27 @@ const feedbackNotification = async (snap, context) => {
         snap.data().message);
 };
 
+// appts - email location rules to new 'tutor matches'
+const rulesNotification = async (snap, context) => {
+    const appt = snap.data();
+    const users = admin.firestore().collection('users');
+    const tutor = (await users
+        .doc(appt.for.toUser.id || appt.for.toUser.email).get()).data();
+    const pupil = (await users
+        .doc(appt.for.fromUser.id || appt.for.fromUser.email).get()).data();
+    const supervisorId = (await admin.firestore().collection('locations')
+        .doc(context.params.location).get()).data().supervisors[0];
+    const supervisor = (await users.doc(supervisorId).get()).data();
+    [tutor, pupil, supervisor].forEach(async (user) => {
+        await new Email('rules', user, {
+            appt: appt,
+            tutor: tutor,
+            pupil: pupil,
+            supervisor: supervisor,
+        });
+    });
+};
+
 // requestsIn - sms, webpush, email to tutor for new requests
 const requestNotification = async (snap, context) => {
     const request = snap.data();
@@ -225,6 +246,7 @@ const canceledAppt = async (snap, context) => {
 
 module.exports = {
     appt: apptNotification,
+    rules: rulesNotification,
     user: userNotification,
     message: messageNotification,
     chat: chatNotification,
