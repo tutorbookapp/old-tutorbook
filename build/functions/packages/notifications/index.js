@@ -132,7 +132,12 @@ const chatNotification = (snap, context) => {
     return chat.chatters.forEach(async (chatter) => {
         if (chatter.email !== chat.createdBy.email) {
             await new Webpush(chatter.email, title, body);
-            await new SMS(chatter, body);
+            await new SMS((await admin
+                .firestore()
+                .collection('users')
+                .doc(chatter.id || chatter.email)
+                .get()
+            ).data(), body);
         }
     });
 };
