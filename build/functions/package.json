@@ -30,6 +30,8 @@
     "notifications": "file:./packages/notifications",
     "payments": "file:./packages/payments",
     "sms": "file:./packages/sms",
+    "message": "file:./packages/message",
+    "utils": "file:./packages/utils",
     "webpush": "file:./packages/webpush",
     "firebase-admin": "^8.6.0",
     "firebase-functions": "^3.2.0"
