@@ -179,9 +179,9 @@ class Utils {
         return str.join(' ');
     }
 
-    static getPhone(phone) {
-        const parsed = phone(phone);
-        if (!parsed[0]) return "";
+    static getPhone(phoneString) {
+        const parsed = phone(phoneString);
+        if (!parsed[0]) return phoneString || '';
         return parsed[0];
     }
 
