@@ -1,5 +1,5 @@
 import to from 'await-to-js';
-
+const axios = require('axios');
 
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/

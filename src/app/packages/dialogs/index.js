@@ -971,7 +971,8 @@ class NewRequestDialog extends EditRequestDialog {
     async sendRequest() { // Override modify to create a new request
         window.app.nav.back();
         window.app.snackbar.view('Sending request...');
-        await Data.newRequest(this.request, this.payment);
+        const [err, res] = await to(Data.newRequest(this.request, this.payment));
+        if (err) return window.app.snackbar.view('Could not send request.');
         window.app.snackbar.view(
             'Request sent to ' + this.request.toUser.email + '.',
             'Undo',
