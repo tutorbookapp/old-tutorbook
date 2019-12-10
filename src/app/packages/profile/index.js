@@ -505,6 +505,9 @@ class NewProfile extends Profile {
             return new MDCTextField($(main).find(q).first()[0]);
         };
 
+        const bio = t('#Bio', () => {
+            p.bio = bio.value;
+        });
         const name = t('#Name', () => {
             p.name = Utils.caps(name.value);
         });
