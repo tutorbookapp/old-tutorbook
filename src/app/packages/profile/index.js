@@ -80,6 +80,19 @@ class Profile {
                 new EditAvailabilityDialog($(this)[0]).view();
             });
         });
+        $(this.main).find('[data-fir-click="delete"]').click(() => {
+            new ConfirmationDialog('Delete Account?',
+                'You are about to permanently delete all of your account data' +
+                ' (including any appointments, requests, messages, or service' +
+                ' hours that you might have). This action cannot be undone. ' +
+                'Still sure you want to delete this account?', async () => {
+                    const [err, res] = await to(Data.deleteUser(p.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'delete account.');
+                    window.app.signOut();
+                    window.app.snackbar.view('Deleted account and signed out.');
+                }).view();
+        });
     }
 
     async saveImage(file) {
@@ -244,6 +257,7 @@ class Profile {
                 ).view();
             });
         });
+        MDCRipple.attachTo($(this.main).find('[data-fir-click="delete"]')[0]);
         if (dontUpdate) return;
         $(this.main).find('[data-fir-click="delete"]').click(() => {
             new ConfirmationDialog('Delete Account?',
