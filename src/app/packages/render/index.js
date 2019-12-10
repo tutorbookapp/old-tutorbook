@@ -106,6 +106,7 @@ class Render {
         if (typeof label === 'boolean' || typeof label === 'undefined')
             return this.template('snackbar-empty', {
                 close: label,
+                id: Utils.genID(),
             });
         return this.template('snackbar', {
             label: label,
