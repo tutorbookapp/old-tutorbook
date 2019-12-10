@@ -4,10 +4,9 @@ import {
 
 import $ from 'jquery';
 
+const phone = require('phone');
 const axios = require('axios');
 const Data = require('data');
-
-window.axios = axios;
 
 // Tutorbook utils class that contains basic utils used across the program
 class Utils {
@@ -180,6 +179,12 @@ class Utils {
         return str.join(' ');
     }
 
+    static getPhone(phone) {
+        const parsed = phone(phone);
+        if (!parsed[0]) return "";
+        return parsed[0];
+    }
+
     static getName(profile) { // Capitalizes the name ("nick li" -> "Nick Li")
         var name = profile.name || profile.displayName || '';
         return Utils.caps(name);
@@ -192,7 +197,7 @@ class Utils {
             'photo': profile.photoURL || profile.photo || "",
             'id': profile.email || "", // Use email as ID
             'email': profile.email || "",
-            'phone': profile.phone || "",
+            'phone': Utils.getPhone(profile.phone),
             'type': profile.type || "",
             'gender': profile.gender || "",
             'grade': profile.grade || "",
