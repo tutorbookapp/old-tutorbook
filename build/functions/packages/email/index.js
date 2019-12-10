@@ -115,7 +115,10 @@ class Email {
         const request = data.appt.for;
         const vars = {
             summary: 'You now have tutoring appointments for ' +
-                request.subject + ' with ' + request.toUser.name.split(' ')[0] +
+                request.subject + ' with ' + ((this.user.email !==
+                        request.toUser.email) ?
+                    request.toUser.name.split(' ')[0] :
+                    request.fromUser.name.split(' ')[0]) +
                 ' on ' + request.time.day + 's at the ' + request.location.name +
                 ' from ' + request.time.from + ' until ' + request.time.to + '.',
             tutor: data.tutor.name.split(' ')[0],
