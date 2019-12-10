@@ -977,9 +977,13 @@ class NewRequestDialog extends EditRequestDialog {
             'Request sent to ' + this.request.toUser.email + '.',
             'Undo',
             async () => {
-                window.app.snackbar.closeUndo();
-                await Data.deleteRequest(this.request);
-                window.app.snackbar.view('Canceled request.');
+                window.app.snackbar.view('Canceling request...');
+                const [err, response] = await to(
+                    Data.cancelRequest(this.request, res.id));
+                if (err) return window.app.snackbar.view('Could not cancel ' +
+                    'request. Go to your dashboard to try again.');
+                window.app.snackbar.view('Canceled request to ' +
+                    this.request.toUser.email + '.');
             },
         );
     }
