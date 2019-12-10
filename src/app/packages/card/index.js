@@ -802,8 +802,6 @@ Card.renderRequestOutCard = function(doc) {
         new ViewRequestDialog(request).view();
     };
     var card;
-    var err;
-    var res;
     actions.cancel = function() {
         const summary = "Cancel request to " + request.toUser.name + " for " +
             request.subject + " at " + request.time.from + " on " +
@@ -811,13 +809,13 @@ Card.renderRequestOutCard = function(doc) {
         new ConfirmationDialog('Cancel Request?', summary, async () => {
             $(card).hide();
             window.app.snackbar.view('Canceling request...');
-            [err, res] = await to(Data.cancelRequest(request, doc.id));
+            const [err, res] = await to(Data.cancelRequest(request, doc.id));
             if (err) {
                 $(card).show();
-                return app.snackbar.view('Could not cancel request.');
+                return window.app.snackbar.view('Could not cancel request.');
             }
             $(card).remove();
-            app.snackbar.view('Canceled request to ' +
+            window.app.snackbar.view('Canceled request to ' +
                 request.toUser.email + '.');
         }).view();
     };
