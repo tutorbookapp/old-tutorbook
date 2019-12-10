@@ -62,7 +62,7 @@ const apptNotification = (req, res) => {
                 tutors.push(appt.for.toUser.email);
                 const tutor = (await db.doc(appt.for.toUser.email).get())
                     .data();
-                await new SMS(tutor.phone, supervisor.name + ' wanted to ' +
+                await new SMS(tutor, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
                     appt.subject + ' in the ' + appt.location.name + ' on ' +
                     appt.time.day + ' at ' + appt.time.from + '.');
@@ -72,7 +72,7 @@ const apptNotification = (req, res) => {
                 pupils.push(appt.for.fromUser.email);
                 const pupil = (await db.doc(appt.for.fromUser.email).get())
                     .data();
-                await new SMS(pupil.phone, supervisor.name + ' wanted to ' +
+                await new SMS(pupil, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
                     appt.subject + ' in the ' + appt.location.name + ' on ' +
                     appt.time.day + ' at ' + appt.time.from + '.');
@@ -92,14 +92,14 @@ const userNotification = async (snap, context) => {
     console.log('Sending ' + profile.name + ' <' + profile.email +
         '> welcome notifications...');
     await new Email('welcome', profile);
-    await new SMS(profile.phone, 'Welcome to Tutorbook! This is how ' +
+    await new SMS(profile, 'Welcome to Tutorbook! This is how ' +
         'you\'ll receive SMS notifications. To turn them off, go to ' +
         'settings and toggle SMS notifications off.');
     console.log('Sent ' + profile.name + ' <' + profile.email +
         '> welcome notifications.');
 };
 
-// messages - webpush for new messages
+// messages - sms, webpush for new messages
 const messageNotification = async (snap, context) => {
     const chat = await admin.firestore().collection('chats')
         .doc(context.params.chat).get();
@@ -113,7 +113,7 @@ const messageNotification = async (snap, context) => {
                 },
             );
             await new SMS((await admin.firestore().collection('users')
-                    .doc(email).get()).data().phone,
+                    .doc(email).get()).data(),
                 'Message from ' + snap.data().sentBy.name.split(' ')[0] +
                 ': ' + snap.data().message
             );
@@ -132,15 +132,20 @@ const chatNotification = (snap, context) => {
     return chat.chatters.forEach(async (chatter) => {
         if (chatter.email !== chat.createdBy.email) {
             await new Webpush(chatter.email, title, body);
-            await new SMS(chatter.phone, body);
+            await new SMS(chatter, body);
         }
     });
 };
 
 // feedback - sms to me for new feedback
 const feedbackNotification = async (snap, context) => {
-    await new SMS('+16508612723', 'Feedback from ' + snap.data().from.name +
-        ': ' + snap.data().message);
+    await new SMS({
+            phone: '+16508612723',
+            email: 'nc26459@pausd.us',
+            id: 'nc26459@pausd.us',
+            location: 'Test Location',
+        }, 'Feedback from ' + snap.data().from.name + ': ' +
+        snap.data().message);
 };
 
 // requestsIn - sms, webpush, email to tutor for new requests
@@ -152,7 +157,7 @@ const requestNotification = async (snap, context) => {
         request.toUser.type.toLowerCase() + ' for ' + request.subject +
         '. Log into your Tutorbook dashboard (https://tutorbook.app/app)' +
         ' to approve or modify this request.';
-    await new SMS(user.data().phone, summary);
+    await new SMS(user.data(), summary);
     await new Email('request', user.data(), request);
     console.log('Sent request notification to ' + user.data().name + ' <' +
         user.data().email + '> <' + user.data().phone + '>.');
@@ -169,7 +174,7 @@ const approvedRequestNotification = async (snap, context) => {
         ' with ' + request.toUser.name.split(' ')[0] + ' on ' +
         request.time.day + 's at the ' + request.location.name + ' from ' +
         request.time.from + ' until ' + request.time.to + '.';
-    await new SMS(user.data().phone, summary);
+    await new SMS(user.data(), summary);
     await new Email('appt', user.data(), snap.data());
     console.log('Sent appt notification to ' + user.data().name + ' <' +
         user.data().email + '> <' + user.data().phone + '>.');

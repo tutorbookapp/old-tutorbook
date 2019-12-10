@@ -3,6 +3,7 @@ const admin = require('firebase-admin').initializeApp();
 
 const updateHours = require('hours');
 const updateSheet = require('sheet');
+const SMS = require('sms');
 const Algolia = require('algolia');
 const Auth = require('auth');
 const Data = require('data');
@@ -111,6 +112,10 @@ exports.data = functions.https.onRequest(Data.onRequest);
 exports.updateHours = functions.firestore
     .document('users/{user}/pastAppointments/{appt}')
     .onCreate(updateHours);
+
+exports.sms = functions.https.onRequest(SMS.receive);
+
+exports.smsFallback = functions.https.onRequest(SMS.fallback);
 
 // ============================================================================
 // NOTIFICATIONS (EMAIL, SMS, & WEBPUSH)

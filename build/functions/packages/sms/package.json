@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "firebase-functions": "^3.2.0",
-    "twilio": "^3.35.1"
+    "twilio": "^3.35.1",
+    "message": "file:../message",
+    "utils": "file:../utils"
   }
 }
