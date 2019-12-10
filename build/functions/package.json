@@ -21,19 +21,22 @@
   },
   "dependencies": {
     "algolia": "file:./packages/algolia",
-    "hours": "file:./packages/hours",
-    "data": "file:./packages/data",
-    "search": "file:./packages/search",
     "auth": "file:./packages/auth",
-    "sheet": "file:./packages/sheet",
+    "cors": "^2.8.5",
+    "data": "file:./packages/data",
     "email": "file:./packages/email",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "firebase-admin": "^8.6.0",
+    "firebase-functions": "^3.2.0",
+    "hours": "file:./packages/hours",
+    "message": "file:./packages/message",
     "notifications": "file:./packages/notifications",
     "payments": "file:./packages/payments",
+    "search": "file:./packages/search",
+    "sheet": "file:./packages/sheet",
     "sms": "file:./packages/sms",
-    "message": "file:./packages/message",
     "utils": "file:./packages/utils",
-    "webpush": "file:./packages/webpush",
-    "firebase-admin": "^8.6.0",
-    "firebase-functions": "^3.2.0"
+    "webpush": "file:./packages/webpush"
   }
 }
