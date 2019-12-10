@@ -77,7 +77,6 @@ class Render {
                     country: 'us'
                 },
             });
-        window.autocomplete = autocomplete;
         const txt = new MDCTextField(input);
         autocomplete.addListener('place_changed', () => {
             listener(autocomplete.getPlace());

@@ -533,7 +533,6 @@ class NewProfile extends Profile {
                 return re.test(email.value.toLowerCase());
             },
         }];
-        window.app.req = this.req;
         $('[id="Subject"]').each(function(i) {
             $(this).off('click').click(() => {
                 new EditSubjectDialog($(this)[0], p).view();
