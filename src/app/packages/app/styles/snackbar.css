@@ -1,0 +1,3 @@
+.mdc-snackbar__dismiss { /* Workaround for containing mismatched MDC versions */
+  color: rgba(255, 255, 255, 0.87) !important;
+}
