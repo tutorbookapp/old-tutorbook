@@ -113,7 +113,7 @@ exports.updateHours = functions.firestore
     .document('users/{user}/pastAppointments/{appt}')
     .onCreate(updateHours);
 
-exports.sms = functions.https.onRequest(SMS.receive);
+exports.sms = functions.https.onRequest(SMS.receive());
 
 exports.smsFallback = functions.https.onRequest(SMS.fallback);
 

@@ -10,9 +10,11 @@
   "author": "Nicholas Chiang",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
     "firebase-functions": "^3.2.0",
-    "twilio": "^3.35.1",
     "message": "file:../message",
+    "twilio": "^3.35.1",
     "utils": "file:../utils"
   }
 }

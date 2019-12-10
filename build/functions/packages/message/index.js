@@ -17,9 +17,9 @@ class Message {
 
     async send() {
         return (await this.chat()).collection('messages').doc().set({
-            sentBy: supervisor,
+            sentBy: this.from,
             timestamp: new Date(),
-            message: message.text,
+            message: this.message,
         });
     }
 
@@ -27,10 +27,10 @@ class Message {
         var chat;
         (await db
             .collection('chats')
-            .where('chatterEmails', 'array-contains', params.to.email)
+            .where('chatterEmails', 'array-contains', this.to.email)
             .get()
         ).forEach((doc) => {
-            if (doc.data().chatterEmails.indexOf(params.from.email) >= 0)
+            if (doc.data().chatterEmails.indexOf(this.from.email) >= 0)
                 chat = doc.ref
         });
         if (!chat) {
@@ -38,18 +38,18 @@ class Message {
             chat.set({
                 lastMessage: {
                     message: 'No messages so far. Click to send the first one.',
-                    sentBy: params.from,
+                    sentBy: this.from,
                     timestamp: new Date(),
                 },
                 chatters: [
-                    params.to,
-                    params.from,
+                    this.to,
+                    this.from,
                 ],
                 chatterEmails: [
-                    params.to.email,
-                    params.from.email,
+                    this.to.email,
+                    this.from.email,
                 ],
-                createdBy: params.from,
+                createdBy: this.from,
                 name: '',
                 photo: '',
             });
