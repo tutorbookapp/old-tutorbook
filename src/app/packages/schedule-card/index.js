@@ -102,6 +102,7 @@ class Appt extends Event {
     }
 
     async clockIn() {
+        $(this.el).css('background', '#FFBB00');
         window.app.snackbar.view('Clocking in for ' + this.for.toUser.name +
             '...');
         const [e, r] = await to(Data.instantClockIn(
@@ -110,6 +111,7 @@ class Appt extends Event {
         window.app.snackbar.view('Clocked in for ' + this.for.toUser.name
             .split(' ')[0] + ' at ' + new Date(r.clockIn.sentTimestamp)
             .toLocaleTimeString() + '.');
+        $(this.el).css('background', this.color);
     }
 }
 
