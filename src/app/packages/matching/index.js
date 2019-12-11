@@ -55,6 +55,7 @@ class Matching {
                     $(this).remove();
                     that.removeUserQuery($(this).attr('id'));
                 });
+                if ($(this.main).find('.mdc-card').length) return;
                 $(this.renderEmpty()).insertAfter(
                     $(this.main).find('.header-welcome')
                 );
@@ -69,6 +70,8 @@ class Matching {
                     .last().remove(); // This should only ever remove one card
                 switch (type) {
                     case 'requestsOut':
+                        if ($(this.main).find('[type="requestsOut"][user="' +
+                                doc.data().fromUser.email + '"]').length) return;
                         $(this.main)
                             .find('[id="' + doc.data().fromUser.email + '"]')
                             .show();
@@ -497,6 +500,7 @@ class Matching {
         const actions = {
             hide: () => {
                 $(card).remove();
+                this.removeUserQuery(doc.id);
                 Data.updateUser(Utils.combineMaps(profile, {
                     proxy: [],
                 })).catch((err) => {
@@ -509,13 +513,9 @@ class Matching {
                     'You are about to permanently delete ' + profile.name +
                     '\'s account data. This action cannot be undone. Please ensure ' +
                     'to check with your fellow supervisors before continuing.', async () => {
-                        var err;
-                        var res;
-                        [err, res] = await to(Data.deleteUser(doc.id));
-                        if (err) {
-                            window.app.snackbar.view('Could not delete account.');
-                            console.error('Error while deleting proxy account:', err);
-                        }
+                        const [err, res] = await to(Data.deleteUser(doc.id));
+                        if (err) window.app.snackbar.view('Could not delete ' +
+                            'account.');
                         window.app.snackbar.view('Deleted account.');
                     }).view();
             },
