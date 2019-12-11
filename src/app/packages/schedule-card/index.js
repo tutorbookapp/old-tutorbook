@@ -102,13 +102,14 @@ class Appt extends Event {
     }
 
     async clockIn() {
-        window.app.snackbar.view('Clocking in for ' +
-            this.for.toUser.name.split(' ')[0] + '...');
+        window.app.snackbar.view('Clocking in for ' + this.for.toUser.name +
+            '...');
         const [e, r] = await to(Data.instantClockIn(
             Utils.filterApptData(this), this.id));
         if (e) return window.app.snackbar.view('Could not clock in.');
-        window.app.snackbar.view('Clocked in at ' + new Date(r.clockIn
-            .sentTimestamp).toLocaleTimeString() + '.');
+        window.app.snackbar.view('Clocked in for ' + this.for.toUser.name
+            .split(' ')[0] + ' at ' + new Date(r.clockIn.sentTimestamp)
+            .toLocaleTimeString() + '.');
     }
 }
 
@@ -146,13 +147,14 @@ class ActiveAppt extends Event {
     }
 
     async clockOut() {
-        window.app.snackbar.view('Clocking out for ' +
-            this.for.toUser.name.split(' ')[0] + '...');
+        window.app.snackbar.view('Clocking out for ' + this.for.toUser.name +
+            '...');
         const [e, r] = await to(Data.instantClockOut(
             Utils.filterApptData(this), this.id));
         if (e) return window.app.snackbar.view('Could not clock out.');
-        window.app.snackbar.view('Clocked out at ' + new Date(r.clockOut
-            .sentTimestamp).toLocaleTimeString() + '.');
+        window.app.snackbar.view('Clocked out for ' + this.for.toUser.name
+            .split(' ')[0] + ' at ' + new Date(r.clockOut.sentTimestamp)
+            .toLocaleTimeString() + '.');
     }
 }
 
