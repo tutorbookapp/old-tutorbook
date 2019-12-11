@@ -107,8 +107,8 @@ class Appt extends Event {
         const [e, r] = await to(Data.instantClockIn(
             Utils.filterApptData(this), this.id));
         if (e) return window.app.snackbar.view('Could not clock in.');
-        window.app.snackbar.view('Clocked in at ' + new Date(r.data
-            .clockIn.sentTimestamp).toLocaleTimeString() + '.');
+        window.app.snackbar.view('Clocked in at ' + new Date(r.clockIn
+            .sentTimestamp).toLocaleTimeString() + '.');
     }
 }
 
@@ -151,8 +151,8 @@ class ActiveAppt extends Event {
         const [e, r] = await to(Data.instantClockOut(
             Utils.filterApptData(this), this.id));
         if (e) return window.app.snackbar.view('Could not clock out.');
-        window.app.snackbar.view('Clocked out at ' + new Date(r.data
-            .clockOut.sentTimestamp).toLocaleTimeString() + '.');
+        window.app.snackbar.view('Clocked out at ' + new Date(r.clockOut
+            .sentTimestamp).toLocaleTimeString() + '.');
     }
 }
 
