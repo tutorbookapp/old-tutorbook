@@ -156,13 +156,13 @@ class SupervisorCanceledAppt extends Event {
         this.timestamp = Utils.getNextDateWithDay(this.for.time.day);
         this.dialog = new ViewCanceledApptDialog(doc.data().for, doc.id);
         this.data = {
-            photoA: canceledAppt.for.attendees[0].photo,
-            photoB: canceledAppt.for.attendees[1].photo,
+            photoA: this.for.attendees[0].photo,
+            photoB: this.for.attendees[1].photo,
             viewUserA: () => {
-                User.viewUser(canceledAppt.attendees[0].email);
+                User.viewUser(this.attendees[0].email);
             },
             viewUserB: () => {
-                User.viewUser(canceledAppt.attendees[1].email);
+                User.viewUser(this.attendees[1].email);
             },
             type: 'canceledAppointments',
             showAction: true,
@@ -171,12 +171,12 @@ class SupervisorCanceledAppt extends Event {
                 $(this.el).remove();
                 window.app.schedule.refresh();
                 await firebase.firestore().collection('locations')
-                    .doc(canceledAppt.for.location.id)
+                    .doc(this.for.location.id)
                     .collection('canceledAppointments')
                     .doc(doc.id).delete();
             },
         };
-        this.renderSelf();
+        this.renderSelf('supervisor-appt-list-item');
     }
 };
 

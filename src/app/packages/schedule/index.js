@@ -42,24 +42,29 @@ class Schedule {
                 this.refresh();
             },
             display: (doc, type) => {
-                switch (type) {
-                    case 'appointments':
-                        var listItem = Schedule.renderApptListItem(doc);
-                        break;
-                    case 'pastAppointments':
-                        var listItem = Schedule.renderPastApptListItem(doc);
-                        break;
-                    case 'activeAppointments':
-                        var listItem = Schedule.renderActiveApptListItem(doc);
-                        break;
-                    case 'modifiedAppointments':
-                        var listItem = Schedule.renderModifiedApptListItem(doc);
-                        break;
-                    case 'canceledAppointments':
-                        var listItem = Schedule.renderCanceledApptListItem(doc);
-                        break;
-                };
-                this.viewAppt(listItem)
+                try {
+                    switch (type) {
+                        case 'appointments':
+                            var listItem = Schedule.renderApptListItem(doc);
+                            break;
+                        case 'pastAppointments':
+                            var listItem = Schedule.renderPastApptListItem(doc);
+                            break;
+                        case 'activeAppointments':
+                            var listItem = Schedule.renderActiveApptListItem(doc);
+                            break;
+                        case 'modifiedAppointments':
+                            var listItem = Schedule.renderModifiedApptListItem(doc);
+                            break;
+                        case 'canceledAppointments':
+                            var listItem = Schedule.renderCanceledApptListItem(doc);
+                            break;
+                    };
+                    this.viewAppt(listItem);
+                } catch (e) {
+                    console.warn('[ERROR] Could not render ' + type + ' (' +
+                        doc.id + ') b/c of', e);
+                }
             },
             empty: (type) => {
                 $(this.main).find('[type="' + type + '"]').remove();
