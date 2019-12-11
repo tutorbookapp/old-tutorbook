@@ -754,12 +754,10 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                 pupil.proxy.push(window.app.user.email);
                 await Data.updateUser(pupil);
             }
+            window.app.snackbar.view('Creating match and sending request...');
             const [err, res] = await to(Data.newRequest(request));
-            if (err) {
-                console.error('Error while sending proxy request:', err);
-                return window.app.snackbar.view('Could not create match or ' +
-                    'send request to ' + tutor.email + '.');
-            }
+            if (err) return window.app.snackbar.view('Could not create match ' +
+                'or send request to ' + tutor.email + '.');
             window.app.snackbar.view('Created match and sent request to ' +
                 tutor.email + '.');
         };
