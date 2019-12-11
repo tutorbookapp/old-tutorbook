@@ -583,12 +583,6 @@ class MatchingDialog {
         MDCTopAppBar.attachTo(this.header);
         const that = this;
 
-        function t(q) {
-            var t = MDCTextField.attachTo($(that.main).find(q)[0]);
-            $(that.main).find(q + ' input').attr('disabled', 'disabled');
-            return t;
-        };
-
         function s(q) { // Attach select based on query
             return Utils.attachSelect($(that.main).find(q)[0]);
         };
@@ -599,10 +593,6 @@ class MatchingDialog {
             });
         };
 
-        t('#Bio');
-        t('#Type');
-        t('#Grade');
-        t('#Phone');
         listen(s('#Subject'), (s) => {
             this.subject = s.value;
             this.results();
@@ -613,19 +603,7 @@ class MatchingDialog {
         });
     }
 
-    // Steps to match a pupil with the right tutor (should take < 30 sec):
-    // 1) Select which subject they want a match for.
-    // 2) Out of the tutors for that subject (who are filtered by availability),
-    // select one to send a request or create an appointment with.
-    // 3) Confirm match? You're done!
-    // Views required for the above app flow:
-    // [x] Profile header
-    // [x] Meta data on the given pupil
-    // [x] Subject select
-    // [x] Search results div
-    // [ ] TODO: Hover information dialog (shows more detailed info on tutors)
-    // [x] Make match dialog (shows tutor and pupil, asks to confirm the match)
-    renderSelf() {
+    renderSelf() { // TODO: Add hover-for-more-info on tutor search results
         this.header = this.render.header('header-back', {
             title: 'New Match',
         });
@@ -645,18 +623,11 @@ class MatchingDialog {
             return that.render.selectItem(l, v, d);
         };
 
-        function t(l, v) { // Render text field
-            return that.render.textField(l, v);
-        };
-
         function addD(l) { // Add list divider
             that.main.appendChild(that.render.listDivider(l));
         };
 
         add(this.render.profileHeader(profile));
-        addD('Basic info');
-        addSplit(t('Bio', profile.bio), t('Type', profile.type));
-        addSplit(t('Grade', profile.grade), t('Phone', profile.phone));
         addD('Matching for');
         add(s('Subject', this.subject, profile.subjects));
         add(s('Time', this.time, Utils.getAvailabilityStrings(profile.availability)));
