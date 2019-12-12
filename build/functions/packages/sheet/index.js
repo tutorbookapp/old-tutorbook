@@ -68,7 +68,7 @@ const updateSheet = (req, res) => {
         const [err, result] = await to(updateGoogleSheet(req.query.location));
         if (err) console.error('[ERROR] While updating sheet:', err);
         res.json({
-            err: err,
+            err: (err && typeof err === 'object') ? err.message : err,
             res: result,
         });
     });

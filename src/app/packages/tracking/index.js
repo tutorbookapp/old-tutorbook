@@ -42,7 +42,7 @@ class Tracking {
                         window.open(url);
                     });
                 }).catch((err) => {
-                    console.error('Error while invoking function:', err);
+                    console.error('[ERROR] Could not update sheet:', err);
                     window.app.snackbar.view('Could not update sheet. Try ' +
                         'again in a few minutes.');
                 });
