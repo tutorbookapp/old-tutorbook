@@ -49,7 +49,7 @@ class FilterDialog {
         const pages = dialog.querySelectorAll('.page');
 
         dialog.querySelector('#reset-button').addEventListener('click', () => {
-            this.filters = { // TODO: Ensure this reset button works
+            Object.entries({
                 grade: 'Any',
                 subject: 'Any',
                 gender: 'Any',
@@ -58,7 +58,7 @@ class FilterDialog {
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
-            };
+            }).forEach((filter) => this.filters[filter[0]] = filter[1]);
             this.page('page-all');
         });
 
