@@ -22,7 +22,10 @@ function algolia(doc, indexID) {
 
 async function main() {
     client.initIndex('users').setSettings({
-        attributesForFaceting: ['filterOnly(payments.type)'],
+        attributesForFaceting: [
+            'filterOnly(payments.type)',
+            'filterOnly(location)',
+        ],
     });
     (await db.collection('users').get()) // USERS
     .forEach((doc) => algolia(doc, 'users'));
