@@ -17,8 +17,8 @@ class FilterDialog {
             subject: 'Any',
             gender: 'Any',
             availability: {},
-            location: 'Any',
-            price: 'Any',
+            location: window.app.location.name,
+            price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
             type: 'Any',
             sort: 'Rating'
         };
@@ -53,10 +53,10 @@ class FilterDialog {
                 grade: 'Any',
                 subject: 'Any',
                 gender: 'Any',
-                type: 'Any',
-                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 availability: {},
-                location: 'Any',
+                location: window.app.location.name,
+                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
+                type: 'Any',
                 sort: 'Rating'
             };
             this.page('page-all');
