@@ -30,17 +30,15 @@ class Tracking {
                     method: 'get',
                     url: window.app.functionsURL + '/updateSheet',
                 }).then((res) => {
-                    if (!res.err) {
-                        return window.app.snackbar.view(
-                            'Updated sheet.', 'View', () => {
-                                window.open(url);
-                            });
-                    }
-                    console.error('Error while updating sheet:', err);
-                    window.app.snackbar.view('Could not update sheet.');
+                    if (res.data.err) return window.app.snackbar.view('Could ' +
+                        'not update sheet. Try again in a few minutes.');
+                    window.app.snackbar.view('Updated sheet.', 'View', () => {
+                        window.open(url);
+                    });
                 }).catch((err) => {
                     console.error('Error while invoking function:', err);
-                    window.app.snackbar.view('Could not update sheet.');
+                    window.app.snackbar.view('Could not update sheet. Try ' +
+                        'again in a few minutes.');
                 });
             },
             view: () => {
