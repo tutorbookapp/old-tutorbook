@@ -25,7 +25,7 @@ function getDurationStringFromSecs(secs) {
 // Update spreadsheet when we get a new pastAppt
 async function updateGoogleSheet(locationName) {
     const db = admin.firestore();
-    const userQuery = db.collection('users').where('type', '==', 'Tutor');
+    var userQuery = db.collection('users').where('type', '==', 'Tutor');
     if (locationName && locationName !== 'Any')
         userQuery = userQuery.where('location', '==', locationName);
     const userSnap = await userQuery.orderBy('name').get();
