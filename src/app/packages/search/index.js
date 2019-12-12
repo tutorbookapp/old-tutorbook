@@ -309,7 +309,7 @@ class Search {
                 subject: 'Any',
                 gender: 'Any',
                 availability: {},
-                location: 'Any',
+                location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
@@ -376,7 +376,7 @@ class Search {
                 subject: 'Any',
                 gender: 'Any',
                 availability: {},
-                location: 'Any',
+                location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
@@ -450,6 +450,11 @@ class Search {
         } else {
             var query = firebase.firestore().collection('search');
         }
+
+        if (this.filters.location !== 'Any') {
+            query = query.where('location', '==', this.filters.location);
+        }
+
         if (this.filters.grade !== 'Any') {
             query = query.where('grade', '==', this.filters.grade);
         }
