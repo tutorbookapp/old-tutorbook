@@ -40,6 +40,9 @@ async function updateGoogleSheet() {
         var profile = users[i].data();
         var name = profile.name;
         var grade = profile.grade;
+        var url = 'https://' + (profile.location === 'Gunn Academic Center' ?
+            'gunn.' : profile.location === 'Paly Peer Tutoring Center' ?
+            'paly.' : '') + 'tutorbook.app/app/users/' + profile.email;
         var serviceHours = getDurationStringFromSecs(profile.secondsTutored);
 
         var firstAppt = await users[i].ref.collection('pastAppointments')
@@ -54,7 +57,7 @@ async function updateGoogleSheet() {
             endDate = parseDate(doc.data().clockOut.sentTimestamp);
         });
 
-        sheetVals.push([name, grade, serviceHours, startDate, endDate]);
+        sheetVals.push([name, grade, serviceHours, startDate, endDate, url]);
     }
     return new Sheet().write(sheetVals);
 };

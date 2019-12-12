@@ -43,7 +43,7 @@ class Sheet {
     read() {
         return this.sheets.values.get({
             spreadsheetId: functions.config().sheets.id,
-            range: 'Sheet1!A4:E',
+            range: 'Sheet1!A4:F',
             auth: this.auth,
         }).then((res) => {
             console.log('Read spreadsheet.');
@@ -55,7 +55,7 @@ class Sheet {
     clear() {
         return this.sheets.values.clear({
             spreadsheetId: functions.config().sheets.id,
-            range: 'Sheet1!A4:E',
+            range: 'Sheet1!A4:F',
             auth: this.auth,
         });
     }
@@ -67,7 +67,7 @@ class Sheet {
         };
         return this.sheets.values.update({
             spreadsheetId: functions.config().sheets.id,
-            range: 'Sheet1!A4:E',
+            range: 'Sheet1!A4:F',
             valueInputOption: 'USER_ENTERED',
             resource: body,
             auth: this.auth,
