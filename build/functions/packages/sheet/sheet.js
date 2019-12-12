@@ -9,7 +9,7 @@ const {
 // of our service hour tracking sheet).
 class Sheet {
 
-    constructor(auth) {
+    constructor(locationName) {
         const content = fs.readFileSync('./cred/sheets/cred.json');
         const {
             client_secret,
@@ -19,6 +19,8 @@ class Sheet {
         this.auth = new google.auth.OAuth2(
             client_id, client_secret, redirect_uris[0]
         );
+        this.id = (locationName === 'Gunn Academic Center') ? functions.config()
+            .sheets.gunn : functions.config().sheets.paly;
         const token = fs.readFileSync('./cred/sheets/token.json');
         this.auth.setCredentials(functions.config().sheets.token);
         this.sheets = google.sheets({
@@ -42,7 +44,7 @@ class Sheet {
 
     read() {
         return this.sheets.values.get({
-            spreadsheetId: functions.config().sheets.id,
+            spreadsheetId: this.id,
             range: 'Sheet1!A4:F',
             auth: this.auth,
         }).then((res) => {
@@ -54,7 +56,7 @@ class Sheet {
 
     clear() {
         return this.sheets.values.clear({
-            spreadsheetId: functions.config().sheets.id,
+            spreadsheetId: this.id,
             range: 'Sheet1!A4:F',
             auth: this.auth,
         });
@@ -66,7 +68,7 @@ class Sheet {
             values: vals,
         };
         return this.sheets.values.update({
-            spreadsheetId: functions.config().sheets.id,
+            spreadsheetId: this.id,
             range: 'Sheet1!A4:F',
             valueInputOption: 'USER_ENTERED',
             resource: body,

@@ -23,12 +23,12 @@ function getDurationStringFromSecs(secs) {
 };
 
 // Update spreadsheet when we get a new pastAppt
-async function updateGoogleSheet() {
+async function updateGoogleSheet(locationName) {
     const db = admin.firestore();
-    const userSnap = await db.collection('users')
-        .where('type', '==', 'Tutor')
-        .orderBy('name')
-        .get();
+    const userQuery = db.collection('users').where('type', '==', 'Tutor');
+    if (locationName && locationName !== 'Any')
+        userQuery = userQuery.where('location', '==', locationName);
+    const userSnap = await userQuery.orderBy('name').get();
     const users = [];
     const sheetVals = [];
     userSnap.forEach((doc) => {
@@ -59,13 +59,13 @@ async function updateGoogleSheet() {
 
         sheetVals.push([name, grade, serviceHours, startDate, endDate, url]);
     }
-    return new Sheet().write(sheetVals);
+    return new Sheet(locationName).write(sheetVals);
 };
 
 
 const updateSheet = (req, res) => {
     return cors(req, res, async () => {
-        const [err, result] = await to(updateGoogleSheet());
+        const [err, result] = await to(updateGoogleSheet(req.query.location));
         res.json({
             err: err,
             res: result,
