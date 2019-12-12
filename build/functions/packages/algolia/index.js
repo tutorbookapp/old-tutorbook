@@ -17,7 +17,10 @@ class Algolia {
     static user(change, context) {
         Algolia.update(change, context, 'users');
         client.initIndex('users').setSettings({
-            attributesForFaceting: ['filterOnly(payments.type)'],
+            attributesForFaceting: [
+                'filterOnly(payments.type)',
+                'filterOnly(location)',
+            ],
         });
     }
 
