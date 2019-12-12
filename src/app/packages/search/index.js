@@ -60,7 +60,10 @@ class SearchHeader {
             const res = await index.search({
                 query: query,
                 facetFilters: window.app.location.name !==
-                    'Any' ? ['payments.type:Free'] : undefined,
+                    'Any' ? [
+                        'payments.type:Free',
+                        'location:' + window.app.location.name,
+                    ] : undefined,
             });
             $(this.el).find('#results').empty();
             res.hits.forEach((hit) => {
