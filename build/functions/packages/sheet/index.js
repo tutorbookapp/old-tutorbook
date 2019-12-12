@@ -65,10 +65,10 @@ async function updateGoogleSheet() {
 
 const updateSheet = (req, res) => {
     return cors(req, res, async () => {
-        [err, resp] = await to(updateGoogleSheet());
+        const [err, result] = await to(updateGoogleSheet());
         res.json({
             err: err,
-            res: resp,
+            res: result,
         });
     });
 };
