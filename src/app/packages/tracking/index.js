@@ -11,8 +11,11 @@ class Tracking {
     constructor() {}
 
     static renderShortcutCard() {
-        const url = 'https://docs.google.com/spreadsheets/d/1NRdoDa1VDcivCFUC' +
-            'ZLLwBsOeSwlp89QessS4BzNLejs/edit?usp=sharing';
+        const url = (window.app.location.name === 'Gunn Academic Center') ?
+            'https://docs.google.com/spreadsheets/d/1NRdoDa1VDcivCFUCZLLwBsOe' +
+            'Swlp89QessS4BzNLejs/edit?usp=sharing' : 'https://docs.google.com' +
+            '/spreadsheets/d/1MUvYy3xm4YmjmC9CMgT0NEnWgDrSYkXgtQATmt_bwkw/edi' +
+            't?usp=sharing';
         const title = 'Service Hour Tracking';
         const subtitle = 'Sync service hour data to Google Sheets';
         const summary = 'Manipulate and manage your tutors\' service hours ' +
@@ -29,6 +32,9 @@ class Tracking {
                 axios({
                     method: 'get',
                     url: window.app.functionsURL + '/updateSheet',
+                    params: {
+                        location: window.app.location.name,
+                    },
                 }).then((res) => {
                     if (res.data.err) return window.app.snackbar.view('Could ' +
                         'not update sheet. Try again in a few minutes.');
