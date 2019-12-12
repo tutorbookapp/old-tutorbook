@@ -66,6 +66,7 @@ async function updateGoogleSheet(locationName) {
 const updateSheet = (req, res) => {
     return cors(req, res, async () => {
         const [err, result] = await to(updateGoogleSheet(req.query.location));
+        if (err) console.error('[ERROR] While updating sheet:', err);
         res.json({
             err: err,
             res: result,
