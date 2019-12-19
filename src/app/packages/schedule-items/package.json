@@ -14,5 +14,8 @@
     "tutorbook-dialogs": "^0.1.3",
     "tutorbook-user": "^0.1.3",
     "tutorbook-utils": "^0.1.3"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }

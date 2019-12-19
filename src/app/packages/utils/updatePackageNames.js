@@ -41,7 +41,24 @@ function main(packages, packagesDir) { // TODO: Get packages from packagesDir
         fileCount + ' package.json files.');
 };
 
-main([
+function githubPackages(packages, packagesDir) {
+    console.log('[INFO] Updating ' + packages.length + ' packages...');
+    var count = 0;
+    packages.forEach((packageDir) => {
+        const filename = (packagesDir || './') + packageDir + '/package.json';
+        const packageJson = JSON.parse(fs.readFileSync(filename));
+        if (typeof packageJson.publishConfig !== 'object')
+            packageJson.publishConfig = {};
+        packageJson.publishConfig.registry = 'https://npm.pkg.github.com';
+        console.log('[DEBUG] Updating ' + packageJson.name + '...');
+        fs.writeFileSync(filename, JSON.stringify(packageJson, null, 2));
+        count++;
+    });
+    console.log('[INFO] Checked ' + packages.length + ' packages and updated ' +
+        count + ' of those packages\' package.json file.');
+};
+
+githubPackages([
     'app',
     'card',
     'chats',
