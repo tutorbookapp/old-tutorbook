@@ -1,5 +1,5 @@
 {
-  "name": "navigation",
+  "name": "tutorbook-navigation",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -12,10 +12,10 @@
   "dependencies": {
     "@material/drawer": "^3.2.0",
     "@material/ripple": "^3.2.0",
-    "data": "^0.1.0",
     "jquery": "^3.4.1",
     "navigo": "^7.1.2",
-    "user": "^0.1.0",
-    "utils": "^0.1.0"
+    "tutorbook-data": "^0.1.0",
+    "tutorbook-user": "^0.1.0",
+    "tutorbook-utils": "^0.1.0"
   }
 }

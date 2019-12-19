@@ -1,5 +1,5 @@
 {
-  "name": "payments",
+  "name": "tutorbook-payments",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "card": "^0.1.0",
-    "data": "^0.1.0",
-    "dialogs": "^0.1.0",
-    "profile": "^0.1.0",
-    "schedule": "^0.1.0",
-    "utils": "^0.1.0"
+    "tutorbook-card": "^0.1.0",
+    "tutorbook-data": "^0.1.0",
+    "tutorbook-dialogs": "^0.1.0",
+    "tutorbook-profile": "^0.1.0",
+    "tutorbook-schedule": "^0.1.0",
+    "tutorbook-utils": "^0.1.0"
   }
 }

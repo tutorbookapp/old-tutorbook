@@ -1,6 +1,6 @@
 {
-  "name": "tutorbook-login",
-  "version": "0.1.0",
+  "name": "tutorbook-settings",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "tutorbook-utils": "^0.1.0"
-  }
+  "license": "ISC"
 }

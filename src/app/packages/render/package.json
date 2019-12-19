@@ -1,5 +1,5 @@
 {
-  "name": "render",
+  "name": "tutorbook-render",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "data": "^0.1.0",
-    "templates": "^0.1.0",
-    "user": "^0.1.0",
-    "utils": "^0.1.0"
+    "tutorbook-data": "^0.1.0",
+    "tutorbook-templates": "^0.1.0",
+    "tutorbook-user": "^0.1.0",
+    "tutorbook-utils": "^0.1.0"
   }
 }

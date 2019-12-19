@@ -1,5 +1,5 @@
 {
-  "name": "search",
+  "name": "tutorbook-search",
   "version": "0.1.0",
   "main": "index.js",
   "scripts": {
@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "data": "^0.1.0",
-    "dialogs": "^0.1.0",
-    "filters": "^0.1.0",
-    "profile": "^0.1.0",
-    "user": "^0.1.0",
-    "utils": "^0.1.0"
+    "tutorbook-data": "^0.1.0",
+    "tutorbook-dialogs": "^0.1.0",
+    "tutorbook-filters": "^0.1.0",
+    "tutorbook-profile": "^0.1.0",
+    "tutorbook-user": "^0.1.0",
+    "tutorbook-utils": "^0.1.0"
   },
   "description": ""
 }
