@@ -58,7 +58,26 @@ function githubPackages(packages, packagesDir) {
         count + ' of those packages\' package.json file.');
 };
 
-githubPackages([
+function addRepo(packages, packagesDir) {
+    console.log('[INFO] Updating ' + packages.length + ' packages...');
+    var count = 0;
+    packages.forEach((packageDir) => {
+        const filename = (packagesDir || './') + packageDir + '/package.json';
+        const packageJson = JSON.parse(fs.readFileSync(filename));
+        packageJson.repository = {
+            type: 'git',
+            url: 'ssh://git@github.com/nicholaschiang/tutorbook.git',
+            directory: 'src/app/packages/' + packageDir,
+        };
+        console.log('[DEBUG] Updating ' + packageJson.name + '...');
+        fs.writeFileSync(filename, JSON.stringify(packageJson, null, 2));
+        count++;
+    });
+    console.log('[INFO] Checked ' + packages.length + ' packages and updated ' +
+        count + ' of those packages\' package.json file.');
+};
+
+addRepo([
     'app',
     'card',
     'chats',

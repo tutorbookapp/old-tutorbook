@@ -17,5 +17,10 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/nicholaschiang/tutorbook.git",
+    "directory": "src/app/packages/schedule-items"
   }
 }
