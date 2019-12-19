@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "scripts/Tutorbook.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "data": "^0.1.0",
     "dialogs": "^0.1.0",
     "feedback": "^0.1.0",
-    "intercom": "^0.1.0",
+    "intercom": "^0.1.1",
     "listener": "^0.1.0",
     "login": "^0.1.0",
     "matching": "^0.1.0",
