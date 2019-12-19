@@ -1,6 +1,6 @@
 {
   "name": "tutorbook-snackbar",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tutorbook-render": "^0.1.0"
+    "tutorbook-render": "^0.1.3"
   }
 }

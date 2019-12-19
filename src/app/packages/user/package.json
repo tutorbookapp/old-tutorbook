@@ -1,6 +1,6 @@
 {
   "name": "tutorbook-user",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tutorbook-chats": "^0.1.0",
-    "tutorbook-data": "^0.1.0",
-    "tutorbook-dialogs": "^0.1.0",
-    "tutorbook-utils": "^0.1.0"
+    "tutorbook-chats": "^0.1.3",
+    "tutorbook-data": "^0.1.3",
+    "tutorbook-dialogs": "^0.1.3",
+    "tutorbook-utils": "^0.1.3"
   }
 }
