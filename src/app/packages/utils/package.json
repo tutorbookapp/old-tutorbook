@@ -1,6 +1,6 @@
 {
   "name": "utils",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",
-    "data": "^1.0.0",
+    "data": "^0.1.0",
     "phone": "^2.4.3",
-    "templates": "^1.0.0"
+    "templates": "^0.1.0"
   }
 }

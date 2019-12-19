@@ -1,6 +1,6 @@
 {
   "name": "snackbar",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "render": "^1.0.0"
+    "render": "^0.1.0"
   }
 }

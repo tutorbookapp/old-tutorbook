@@ -1,6 +1,6 @@
 {
   "name": "search",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "data": "^1.0.0",
-    "dialogs": "^1.0.0",
-    "filters": "^1.0.0",
-    "profile": "^1.0.0",
-    "user": "^1.0.0",
-    "utils": "^1.0.0"
+    "data": "^0.1.0",
+    "dialogs": "^0.1.0",
+    "filters": "^0.1.0",
+    "profile": "^0.1.0",
+    "user": "^0.1.0",
+    "utils": "^0.1.0"
   },
   "description": ""
 }

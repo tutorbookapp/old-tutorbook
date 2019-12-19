@@ -1,6 +1,6 @@
 {
   "name": "chats",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "data": "^1.0.0",
-    "utils": "^1.0.0"
+    "data": "^0.1.0",
+    "utils": "^0.1.0"
   }
 }
