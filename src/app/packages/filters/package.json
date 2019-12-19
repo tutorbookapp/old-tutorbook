@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/filters",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.1.4",
-    "@tutorbook/templates": "^0.1.4",
-    "@tutorbook/utils": "^0.1.4"
+    "@tutorbook/data": "^0.1.5",
+    "@tutorbook/templates": "^0.1.5",
+    "@tutorbook/utils": "^0.1.5"
   },
   "repository": {
     "type": "git",

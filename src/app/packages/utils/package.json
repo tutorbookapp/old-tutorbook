@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/utils",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tutorbook/data": "^0.1.5",
+    "@tutorbook/templates": "^0.1.5",
     "axios": "^0.19.0",
-    "phone": "^2.4.3",
-    "@tutorbook/data": "^0.1.4",
-    "@tutorbook/templates": "^0.1.4"
+    "phone": "^2.4.3"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/navigation",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,11 +12,11 @@
   "dependencies": {
     "@material/drawer": "^3.2.0",
     "@material/ripple": "^3.2.0",
+    "@tutorbook/data": "^0.1.5",
+    "@tutorbook/user": "^0.1.5",
+    "@tutorbook/utils": "^0.1.5",
     "jquery": "^3.4.1",
-    "navigo": "^7.1.2",
-    "@tutorbook/data": "^0.1.4",
-    "@tutorbook/user": "^0.1.4",
-    "@tutorbook/utils": "^0.1.4"
+    "navigo": "^7.1.2"
   },
   "repository": {
     "type": "git",
