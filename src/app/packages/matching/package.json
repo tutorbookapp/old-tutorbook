@@ -1,5 +1,5 @@
 {
-  "name": "tutorbook-matching",
+  "name": "@tutorbook/matching",
   "version": "0.1.4",
   "description": "",
   "main": "index.js",
@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tutorbook-card": "^0.1.4",
-    "tutorbook-data": "^0.1.4",
-    "tutorbook-dialogs": "^0.1.4",
-    "tutorbook-profile": "^0.1.4",
-    "tutorbook-search": "^0.1.4",
-    "tutorbook-utils": "^0.1.4"
+    "@tutorbook/card": "^0.1.4",
+    "@tutorbook/data": "^0.1.4",
+    "@tutorbook/dialogs": "^0.1.4",
+    "@tutorbook/profile": "^0.1.4",
+    "@tutorbook/search": "^0.1.4",
+    "@tutorbook/utils": "^0.1.4"
   },
   "repository": {
     "type": "git",

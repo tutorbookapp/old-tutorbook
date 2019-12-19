@@ -1,5 +1,5 @@
 {
-  "name": "tutorbook-settings",
+  "name": "@tutorbook/settings",
   "version": "0.1.4",
   "description": "",
   "main": "index.js",

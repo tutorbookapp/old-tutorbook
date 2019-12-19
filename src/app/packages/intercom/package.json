@@ -1,5 +1,5 @@
 {
-  "name": "tutorbook-intercom",
+  "name": "@tutorbook/intercom",
   "version": "0.1.4",
   "description": "",
   "main": "index.js",

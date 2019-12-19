@@ -1,5 +1,5 @@
 {
-  "name": "tutorbook-notify",
+  "name": "@tutorbook/notify",
   "version": "0.1.4",
   "description": "",
   "main": "index.js",

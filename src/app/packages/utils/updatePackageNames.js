@@ -1,14 +1,14 @@
 const fs = require('fs');
 
-function main(packages, packagesDir) { // TODO: Get packages from packagesDir
+function updatePackageNames(packages, packagesDir) { // TODO: Get packages from packagesDir
     const packageNamesChanged = []; // Names to look for in dependencies
     console.log('[INFO] Updating ' + packages.length + ' packages...');
     packages.forEach((packageDir) => {
         const filename = (packagesDir || './') + packageDir + '/package.json';
         const packageJson = JSON.parse(fs.readFileSync(filename));
-        if (packageJson.name.indexOf('tutorbook') < 0) {
+        if (packageJson.name.indexOf('@tutorbook/') < 0) {
             packageNamesChanged.push(packageJson.name);
-            packageJson.name = 'tutorbook-' + packageJson.name;
+            packageJson.name = '@tutorbook/' + packageJson.name.replace('tutorbook-', '');
             console.log('[DEBUG] Updating ' + packageJson.name + '...');
             fs.writeFileSync(filename, JSON.stringify(packageJson, null, 2));
             count++;
@@ -29,7 +29,7 @@ function main(packages, packagesDir) { // TODO: Get packages from packagesDir
             if (packageNamesChanged.indexOf(dep[0]) >= 0) {
                 console.log('[DEBUG] Updating ' + dep[0] +
                     ' dependency name in ' + packageJson.name + '...');
-                deps['tutorbook-' + dep[0]] = dep[1];
+                deps['@tutorbook/' + dep[0].replace('tutorbook-', '')] = dep[1];
                 delete deps[dep[0]];
                 count++;
             }
@@ -92,7 +92,7 @@ function removePubConfig(packages, packagesDir) {
         count + ' of those packages\' package.json file.');
 };
 
-removePubConfig([
+updatePackageNames([
     'app',
     'card',
     'chats',
