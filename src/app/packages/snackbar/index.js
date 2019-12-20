@@ -4,7 +4,7 @@ import {
 
 import $ from 'jquery';
 
-const Render = require('render');
+const Render = require('@tutorbook/render');
 
 // Class that manages snackbars
 class Snackbar {

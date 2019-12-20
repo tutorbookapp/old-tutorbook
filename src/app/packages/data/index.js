@@ -193,7 +193,7 @@ class Data {
         return result;
     }
 
-    static cloneMap(map) { // Don't create dependency loops by require('utils')
+    static cloneMap(map) { // Don't create dependency loops by require('@tutorbook/utils')
         var clone = {};
         for (var i in map) {
             clone[i] = map[i];

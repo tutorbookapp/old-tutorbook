@@ -8,7 +8,7 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const Utils = require('utils');
+const Utils = require('@tutorbook/utils');
 
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.

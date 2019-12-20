@@ -8,22 +8,22 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const Card = require('card');
-const Data = require('data');
-const Utils = require('utils');
+const Card = require('@tutorbook/card');
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
 
-const ApptNotificationDialog = require('dialogs').notifyAppt;
+const ApptNotificationDialog = require('@tutorbook/dialogs').notifyAppt;
 
-const Appt = require('schedule-items').appt;
-const ActiveAppt = require('schedule-items').active;
-const PastAppt = require('schedule-items').past;
-const CanceledAppt = require('schedule-items').canceled;
-const ModifiedAppt = require('schedule-items').modified;
-const SupervisorAppt = require('schedule-items').supervisor.appt;
-const SupervisorActiveAppt = require('schedule-items').supervisor.active;
-const SupervisorPastAppt = require('schedule-items').supervisor.past;
-const SupervisorCanceledAppt = require('schedule-items').supervisor.canceled;
-const SupervisorModifiedAppt = require('schedule-items').supervisor.modified;
+const Appt = require('@tutorbook/schedule-items').appt;
+const ActiveAppt = require('@tutorbook/schedule-items').active;
+const PastAppt = require('@tutorbook/schedule-items').past;
+const CanceledAppt = require('@tutorbook/schedule-items').canceled;
+const ModifiedAppt = require('@tutorbook/schedule-items').modified;
+const SupervisorAppt = require('@tutorbook/schedule-items').supervisor.appt;
+const SupervisorActiveAppt = require('@tutorbook/schedule-items').supervisor.active;
+const SupervisorPastAppt = require('@tutorbook/schedule-items').supervisor.past;
+const SupervisorCanceledAppt = require('@tutorbook/schedule-items').supervisor.canceled;
+const SupervisorModifiedAppt = require('@tutorbook/schedule-items').supervisor.modified;
 
 // Class that provides a schedule view and header and manages all the data flow
 // concerning the user's appointments. Also provides an API to insert into the

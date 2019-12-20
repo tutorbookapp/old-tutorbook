@@ -18,13 +18,13 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 // TODO: Make these dialog classes
-const EditAvailabilityDialog = require('dialogs').editAvailability;
-const EditSubjectDialog = require('dialogs').editSubject;
-const NotificationDialog = require('dialogs').notify;
-const ConfirmationDialog = require('dialogs').confirm;
-const Data = require('data');
-const Utils = require('utils');
-const User = require('user');
+const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
+const EditSubjectDialog = require('@tutorbook/dialogs').editSubject;
+const NotificationDialog = require('@tutorbook/dialogs').notify;
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
+const User = require('@tutorbook/user');
 
 // Profile class that provides a profile view and header and manages all data
 // flow concering the user's profile.

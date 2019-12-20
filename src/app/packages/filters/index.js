@@ -7,8 +7,8 @@ import {
 
 import $ from 'jquery';
 
-const Utils = require('utils');
-const Data = require('data');
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
 
 class FilterDialog {
     constructor(filters) {

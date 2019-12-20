@@ -6,7 +6,7 @@ import $ from 'jquery';
 
 const phone = require('phone');
 const axios = require('axios');
-const Data = require('data');
+const Data = require('@tutorbook/data');
 
 // Tutorbook utils class that contains basic utils used across the program
 class Utils {

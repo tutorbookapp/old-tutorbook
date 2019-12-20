@@ -11,14 +11,14 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const Profile = require('profile').default;
-const PaidProfile = require('profile').paid;
-const TutorProfile = require('profile').tutor;
-const NotificationDialog = require('dialogs').notify;
-const Card = require('card');
-const Utils = require('utils');
-const Data = require('data');
-const getDayAndDateString = require('schedule').default.getDayAndDateString;
+const Profile = require('@tutorbook/profile').default;
+const PaidProfile = require('@tutorbook/profile').paid;
+const TutorProfile = require('@tutorbook/profile').tutor;
+const NotificationDialog = require('@tutorbook/dialogs').notify;
+const Card = require('@tutorbook/card');
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
+const getDayAndDateString = require('@tutorbook/schedule').default.getDayAndDateString;
 
 // TODO: Class that provides the payments view and header and manages all data flow
 // concerning payment management (overrides the newRequest dialog).

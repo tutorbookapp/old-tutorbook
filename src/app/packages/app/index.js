@@ -3,35 +3,35 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 // App packages
-const Dashboard = require('dashboard').default;
-const SupervisorDashboard = require('dashboard').supervisor;
-const Search = require('search').default;
-const Profile = require('profile').default;
-const PaidProfile = require('profile').paid;
-const TutorProfile = require('profile').tutor;
-const Schedule = require('schedule').default;
-const Chats = require('chats').default;
-const SupervisorSchedule = require('schedule').supervisor;
-const Payments = require('payments');
-const Feedback = require('feedback');
-const Notify = require('notify');
-const Snackbar = require('snackbar');
-const Navigation = require('navigation');
-const Help = require('intercom');
-const Listener = require('listener');
-const Login = require('login');
-const Matching = require('matching').default;
-const MatchingDialog = require('matching').dialog;
+const Dashboard = require('@tutorbook/dashboard').default;
+const SupervisorDashboard = require('@tutorbook/dashboard').supervisor;
+const Search = require('@tutorbook/search').default;
+const Profile = require('@tutorbook/profile').default;
+const PaidProfile = require('@tutorbook/profile').paid;
+const TutorProfile = require('@tutorbook/profile').tutor;
+const Schedule = require('@tutorbook/schedule').default;
+const Chats = require('@tutorbook/chats').default;
+const SupervisorSchedule = require('@tutorbook/schedule').supervisor;
+const Payments = require('@tutorbook/payments');
+const Feedback = require('@tutorbook/feedback');
+const Notify = require('@tutorbook/notify');
+const Snackbar = require('@tutorbook/snackbar');
+const Navigation = require('@tutorbook/navigation');
+const Help = require('@tutorbook/intercom');
+const Listener = require('@tutorbook/listener');
+const Login = require('@tutorbook/login');
+const Matching = require('@tutorbook/matching').default;
+const MatchingDialog = require('@tutorbook/matching').dialog;
 
 // Dependency cycle workarounds
-const EditProfile = require('profile').edit;
-const NotificationDialog = require('dialogs').notify;
-const renderCard = require('card').renderCard;
+const EditProfile = require('@tutorbook/profile').edit;
+const NotificationDialog = require('@tutorbook/dialogs').notify;
+const renderCard = require('@tutorbook/card').renderCard;
 
 // Helper packages
-const Utils = require('utils');
-const Render = require('render');
-const Data = require('data');
+const Utils = require('@tutorbook/utils');
+const Render = require('@tutorbook/render');
+const Data = require('@tutorbook/data');
 
 class Tutorbook {
 

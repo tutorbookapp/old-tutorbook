@@ -10,9 +10,9 @@ import {
 
 import $ from 'jquery';
 
-const Data = require('data');
-const User = require('user');
-const Utils = require('utils');
+const Data = require('@tutorbook/data');
+const User = require('@tutorbook/user');
+const Utils = require('@tutorbook/utils');
 const Navigo = require('navigo');
 
 // Class that manages app URLs, the navigation drawer, and back navigation

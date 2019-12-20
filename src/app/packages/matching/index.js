@@ -8,15 +8,15 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-const Search = require('search').default;
-const Card = require('card');
-const Utils = require('utils');
-const Data = require('data');
-const NewProfile = require('profile').new;
-const EditProfile = require('profile').edit;
-const ConfirmationDialog = require('dialogs').confirm;
-const EditRequestDialog = require('dialogs').editRequest;
-const ViewRequestDialog = require('dialogs').viewRequest;
+const Search = require('@tutorbook/search').default;
+const Card = require('@tutorbook/card');
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
+const NewProfile = require('@tutorbook/profile').new;
+const EditProfile = require('@tutorbook/profile').edit;
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
+const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
 
 import to from 'await-to-js';
 import $ from 'jquery';

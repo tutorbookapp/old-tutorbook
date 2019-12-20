@@ -10,7 +10,7 @@ import {
 
 import $ from 'jquery';
 
-const Utils = require('utils');
+const Utils = require('@tutorbook/utils');
 
 // Class that handles new logins and user sign ups
 class Login {

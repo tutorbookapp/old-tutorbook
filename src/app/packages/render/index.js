@@ -11,10 +11,10 @@ import {
 import $ from 'jquery';
 
 const Chart = require('chart.js');
-const User = require('user');
-const Templates = require('templates');
-const Data = require('data');
-const Utils = require('utils');
+const User = require('@tutorbook/user');
+const Templates = require('@tutorbook/templates');
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
 
 // Class that contains commonly used rendering functions
 class Render {

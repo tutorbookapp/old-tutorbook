@@ -9,12 +9,12 @@ import $ from 'jquery';
 
 const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
-const EditProfile = require('profile').edit;
-const User = require('user');
-const FilterDialog = require('filters');
-const Utils = require('utils');
-const Data = require('data');
-const NotificationDialog = require('dialogs').notify;
+const EditProfile = require('@tutorbook/profile').edit;
+const User = require('@tutorbook/user');
+const FilterDialog = require('@tutorbook/filters');
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
+const NotificationDialog = require('@tutorbook/dialogs').notify;
 
 class SearchHeader {
 

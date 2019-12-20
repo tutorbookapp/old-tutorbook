@@ -8,19 +8,19 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('data');
-const Card = require('card');
-const Utils = require('utils');
-const User = require('user');
-const EditProfile = require('profile').edit;
-const MatchingDialog = require('matching').dialog;
-const ScheduleCard = require('schedule-card');
-const SearchHeader = require('search').header;
+const Data = require('@tutorbook/data');
+const Card = require('@tutorbook/card');
+const Utils = require('@tutorbook/utils');
+const User = require('@tutorbook/user');
+const EditProfile = require('@tutorbook/profile').edit;
+const MatchingDialog = require('@tutorbook/matching').dialog;
+const ScheduleCard = require('@tutorbook/schedule-card');
+const SearchHeader = require('@tutorbook/search').header;
 
 // Shortcut cards for SupervisorDashboard
-const matchingShortcut = require('matching').default.renderShortcutCard;
-const scheduleShortcut = require('schedule').supervisor.renderShortcutCard;
-const trackingShortcut = require('tracking').renderShortcutCard;
+const matchingShortcut = require('@tutorbook/matching').default.renderShortcutCard;
+const scheduleShortcut = require('@tutorbook/schedule').supervisor.renderShortcutCard;
+const trackingShortcut = require('@tutorbook/tracking').renderShortcutCard;
 
 // Class that manages the dashboard view (provides an API for other classes to
 // use to display cards) and a custom welcome message that chnages each time a 

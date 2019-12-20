@@ -7,11 +7,11 @@ import {
 
 import $ from 'jquery';
 
-const NewRequestDialog = require('dialogs').newRequest;
-const PaidRequestDialog = require('dialogs').paidRequest;
-const StripeRequestDialog = require('dialogs').stripeRequest;
-const Utils = require('utils');
-const Data = require('data');
+const NewRequestDialog = require('@tutorbook/dialogs').newRequest;
+const PaidRequestDialog = require('@tutorbook/dialogs').paidRequest;
+const StripeRequestDialog = require('@tutorbook/dialogs').stripeRequest;
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
 
 // Class that creates it's view when called (such that mains are always
 // ready to go).

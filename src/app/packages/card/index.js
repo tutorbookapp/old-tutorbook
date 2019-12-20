@@ -9,21 +9,21 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 // Dialogs
-const EditRequestDialog = require('dialogs').editRequest;
-const ViewRequestDialog = require('dialogs').viewRequest;
-const EditApptDialog = require('dialogs').editAppt;
-const ViewApptDialog = require('dialogs').viewAppt;
-const ViewPastApptDialog = require('dialogs').viewPastAppt;
-const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
-const ConfirmationDialog = require('dialogs').confirm;
+const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
+const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
+const EditApptDialog = require('@tutorbook/dialogs').editAppt;
+const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
+const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
+const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
 // Users
-const EditProfile = require('profile').edit;
-const User = require('user');
+const EditProfile = require('@tutorbook/profile').edit;
+const User = require('@tutorbook/user');
 
 // Dependencies
-const Data = require('data');
-const Utils = require('utils');
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
 
 // Class this renders each card based on the given doc, queryID, and type
 class Card {

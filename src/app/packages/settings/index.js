@@ -1,4 +1,4 @@
-const Data = require('data');
+const Data = require('@tutorbook/data');
 
 
 // Class that provides the settings screen and header and manages all data flow

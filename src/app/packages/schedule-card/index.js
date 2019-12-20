@@ -11,14 +11,14 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('data');
-const Utils = require('utils');
-const EditApptDialog = require('dialogs').editAppt;
-const ViewApptDialog = require('dialogs').viewAppt;
-const ViewActiveApptDialog = require('dialogs').viewActiveAppt;
-const ViewCanceledApptDialog = require('dialogs').viewCanceledAppt;
-const ViewPastApptDialog = require('dialogs').viewPastAppt;
-const ConfirmationDialog = require('dialogs').confirm;
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
+const EditApptDialog = require('@tutorbook/dialogs').editAppt;
+const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
+const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
+const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;
+const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
 class Event {
     constructor(appt, id, colors, type) {

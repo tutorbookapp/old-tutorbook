@@ -20,8 +20,8 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('data');
-const Utils = require('utils');
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
 
 
 class ApptNotificationDialog {

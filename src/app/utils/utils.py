@@ -18,11 +18,15 @@ def updateReqs(directory, prefix="@tutorbook/", vals=[]):
         vals.append(package)
     for package in os.listdir(directory):
         for jsfile in os.listdir(f"{directory}{package}"):
-            if jsfile.endsWith(".js"):
-                with fileinput.input(jsfile, inplace=True, backup=".bak") as file:
-                    for line in file:
-                        for val in vals:
-                            line.replace(val, prefix + val)
+            if jsfile.endswith(".js"):
+                with open(f"{directory}{package}/{jsfile}", "r") as file:
+                    filedata = file.read()
+                for val in vals:
+                    filedata = filedata.replace(
+                        f"require('{val}')", f"require('{prefix}{val}')"
+                    )
+                with open(f"{directory}{package}/{jsfile}", "w") as file:
+                    filedata = file.write(filedata)
 
 
 if __name__ == "__main__":

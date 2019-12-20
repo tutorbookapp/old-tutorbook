@@ -1,8 +1,8 @@
 import to from 'await-to-js';
 
-const Utils = require('utils'); // TODO: Only import these static classes once
-const Data = require('data');
-const ConfirmationDialog = require('dialogs').confirm;
+const Utils = require('@tutorbook/utils'); // TODO: Only import these static classes once
+const Data = require('@tutorbook/data');
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
 // Class that enables the client to listen to remote events (e.g. Firestore
 // database triggers or HTTP request responses).
