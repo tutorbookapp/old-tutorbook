@@ -120,4 +120,4 @@ updatePackageNames([
     'tracking',
     'user',
     'utils',
-], '../');
+], '../packages/');
