@@ -4,6 +4,7 @@
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dd8c901f0077521d8f21/maintainability)](https://codeclimate.com/github/nicholaschiang/tutorbook/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/nicholaschiang/tutorbook/badge.svg?branch=master)](https://coveralls.io/github/nicholaschiang/tutorbook?branch=master)
+[![NPM version](https://badge.fury.io/js/%40tutorbook%2Fapp.svg)](https://badge.fury.io/js/%40tutorbook%2Fapp)
 
 App designed to optimize the process required to get a student with a qualified tutor.
 
