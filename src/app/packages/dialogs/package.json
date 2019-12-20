@@ -17,5 +17,6 @@
     "type": "git",
     "url": "ssh://git@github.com/nicholaschiang/tutorbook.git",
     "directory": "src/app/packages/dialogs"
-  }
+  },
+  "gitHead": "8442c34e048dad5475715b6846404a379a7fa182"
 }
