@@ -124,9 +124,7 @@ class Tutorbook {
 
     async initUser() {
         const user = firebase.auth().currentUser;
-        var profile;
-        var err;
-        [err, profile] = await to(Data.getUser(user.email));
+        const [err, profile] = await to(Data.getUser(user.email));
         if (err) {
             // No user doc, create new user doc
             await Data.createUser(Utils.filterProfile(user));
