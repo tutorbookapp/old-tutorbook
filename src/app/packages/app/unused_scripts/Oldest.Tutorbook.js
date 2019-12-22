@@ -613,12 +613,12 @@ function addRequestIn(options) {
         console.warn("addRequestIn expected fromUser (" + request.fromUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.toUser.email)
             .collection('requestsIn')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.toUser.email)
             .collection('requestsIn')
             .doc();
@@ -641,12 +641,12 @@ function addRequestOut(options) {
         console.warn("addRequestOut expected fromUser (" + request.fromUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('requestsOut')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('requestsOut')
             .doc();
@@ -680,12 +680,12 @@ Tutorbook.prototype.addCanceledRequestIn = function(options) {
     };
 
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.toUser.email)
             .collection('canceledRequestsIn')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.toUser.email)
             .collection('canceledRequestsIn')
             .doc();
@@ -722,12 +722,12 @@ Tutorbook.prototype.addApprovedRequestOut = function(options) {
     };
 
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('approvedRequestsOut')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('approvedRequestsOut')
             .doc();
@@ -761,12 +761,12 @@ Tutorbook.prototype.addRejectedRequestOut = function(options) {
     };
 
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('rejectedRequestsOut')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('rejectedRequestsOut')
             .doc();
@@ -791,7 +791,7 @@ function deleteCanceledRequestIn(options) {
     if (firebase.auth().currentUser.email !== request.toUser.email) {
         console.warn("deleteCanceledRequestIn expected toUser (" + request.toUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.toUser.email)
         .collection('canceledRequestsIn')
         .doc();
@@ -815,7 +815,7 @@ function deleteRejectedRequestOut(options) {
     if (firebase.auth().currentUser.email !== request.fromUser.email) {
         console.warn("deleteRejectedRequestOut expected fromUser (" + request.fromUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.fromUser.email)
         .collection('rejectedRequestsOut')
         .doc();
@@ -832,7 +832,7 @@ function deleteRequestIn(options) {
         console.error("deleteRequestIn called without id or user", options);
         return;
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(user.email)
         .collection('requestsIn')
         .doc(id);
@@ -849,7 +849,7 @@ function deleteRequestOut(options) {
         console.error("deleteRequestOut called without id or user", options);
         return;
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(user.email)
         .collection('requestsOut')
         .doc(id);
@@ -868,7 +868,7 @@ function modifyRequestOut(options) {
         console.error("modifyRequestOut called without id or request", options);
         return;
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.fromUser.email)
         .collection('requestsOut')
         .doc(id);
@@ -885,7 +885,7 @@ function modifyRequestIn(options) {
         console.error("modifyRequestIn called without id or request", options);
         return;
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.toUser.email)
         .collection('requestsIn')
         .doc(id);
@@ -921,7 +921,7 @@ Tutorbook.prototype.addModifiedRequestOut = function(options) {
         'timestamp': new Date(),
     };
 
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.fromUser.email)
         .collection('modifiedRequestsOut')
         .doc(id);
@@ -959,7 +959,7 @@ Tutorbook.prototype.addModifiedRequestIn = function(options) {
         'timestamp': new Date(),
     };
 
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.toUser.email)
         .collection('modifiedRequestsIn')
         .doc(id);
@@ -980,12 +980,12 @@ function addAppointment(options) {
     }
     return appt.attendees.forEach((user) => {
         if (id) {
-            var doc = firebase.firestore().collection('users')
+            var doc = firebase.firestore().collection('usersByEmail')
                 .doc(user.email)
                 .collection('appointments')
                 .doc(id);
         } else {
-            var doc = firebase.firestore().collection('users')
+            var doc = firebase.firestore().collection('usersByEmail')
                 .doc(user.email)
                 .collection('appointments')
                 .doc(id);
@@ -1007,7 +1007,7 @@ function modifyAppointment(options) {
         return;
     }
     return appt.attendees.forEach((user) => {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(user.email)
             .collection('appointments')
             .doc(id);
@@ -1043,7 +1043,7 @@ Tutorbook.prototype.addModifiedAppointment = function(options) {
         'timestamp': new Date(),
     };
 
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(otherUser.email)
         .collection('modifiedAppointments')
         .doc(id);
@@ -1074,7 +1074,7 @@ Tutorbook.prototype.addCanceledAppointment = function(options) {
         'timestamp': new Date(),
     };
 
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(otherUser.email)
         .collection('canceledAppointments')
         .doc(id);
@@ -1094,7 +1094,7 @@ function deleteAppointment(options) {
     }
 
     return appt.attendees.forEach((user) => {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(user.email)
             .collection('appointments')
             .doc(id);
@@ -1304,7 +1304,7 @@ Tutorbook.prototype.updateCurrentUser = function() {
 };
 
 Tutorbook.prototype.updateUser = function(data) {
-    var doc = firebase.firestore().collection('users').doc(data.email);
+    var doc = firebase.firestore().collection('usersByEmail').doc(data.email);
     return doc.update(data).catch((err) => {
         console.log("Error while updating user " + data.email + ":", err);
 
@@ -1318,7 +1318,7 @@ Tutorbook.prototype.updateUser = function(data) {
 };
 
 Tutorbook.prototype.clearStudies = function(id) {
-    return firebase.firestore().collection('users').doc(firebase.auth().currentUser.email).collection(id).get().then((snapshot) => {
+    return firebase.firestore().collection('usersByEmail').doc(firebase.auth().currentUser.email).collection(id).get().then((snapshot) => {
         snapshot.forEach((doc) => {
             doc.ref.delete();
         });
@@ -1326,7 +1326,7 @@ Tutorbook.prototype.clearStudies = function(id) {
 };
 
 Tutorbook.prototype.addStudy = function(data, id) {
-    var doc = firebase.firestore().collection('users').doc(this.currentUser.email).collection(id).doc();
+    var doc = firebase.firestore().collection('usersByEmail').doc(this.currentUser.email).collection(id).doc();
     return doc.set(data).catch((err) => {
         console.log("Error while adding study " + data.name + " for user " + id + ":", err);
 
@@ -1339,7 +1339,7 @@ Tutorbook.prototype.addStudy = function(data, id) {
 };
 
 Tutorbook.prototype.addUser = function(data) {
-    var doc = firebase.firestore().collection('users').doc(data.email);
+    var doc = firebase.firestore().collection('usersByEmail').doc(data.email);
     return doc.set(data).catch((err) => {
         console.log("Error while adding user " + data.email + ":", err);
 
@@ -1353,7 +1353,7 @@ Tutorbook.prototype.addUser = function(data) {
 
 Tutorbook.prototype.getAllUsers = function(renderer) {
     var query = firebase.firestore()
-        .collection('users')
+        .collection('usersByEmail')
         .orderBy('avgRating', 'desc')
         .limit(50);
 
@@ -1398,7 +1398,7 @@ Tutorbook.prototype.getDashboardData = function(userID) {
     var that = this;
     types.forEach(function(type) {
         var query = firebase.firestore()
-            .collection('users')
+            .collection('usersByEmail')
             .doc(userID)
             .collection(type)
             .orderBy('timestamp', 'desc')
@@ -1440,7 +1440,7 @@ Tutorbook.prototype.getDocumentsInQuery = function(query, renderer) {
 };
 
 Tutorbook.prototype.getUser = function(id) {
-    return firebase.firestore().collection('users').doc(id).get().catch((err) => {
+    return firebase.firestore().collection('usersByEmail').doc(id).get().catch((err) => {
         console.error("Error while getting user profile " + id + ":", err);
 
         // Snackbar
@@ -1452,7 +1452,7 @@ Tutorbook.prototype.getUser = function(id) {
 };
 
 Tutorbook.prototype.getFilteredUsers = function(filters, renderer) {
-    var query = firebase.firestore().collection('users');
+    var query = firebase.firestore().collection('usersByEmail');
 
     if (filters.grade !== 'Any') {
         query = query.where('gradeString', '==', filters.grade);
@@ -1488,7 +1488,7 @@ Tutorbook.prototype.getFilteredUsers = function(filters, renderer) {
 };
 
 Tutorbook.prototype.addRating = function(userID, rating) {
-    var collection = firebase.firestore().collection('users');
+    var collection = firebase.firestore().collection('usersByEmail');
     var document = collection.doc(userID);
     var newRatingDocument = document.collection('ratings').doc();
 
@@ -1744,7 +1744,7 @@ Tutorbook.prototype.initNotifications = function() {
 
     function sendTokenToServer(token) {
         // Right now, tokens are stored in the currentUser's Firestore document
-        var docRef = firebase.firestore().collection('users').doc(firebase.auth().currentUser.email);
+        var docRef = firebase.firestore().collection('usersByEmail').doc(firebase.auth().currentUser.email);
         console.log("Setting token of " + docRef.id + " to be:", token);
 
         return docRef.get().then((doc) => {
@@ -3787,7 +3787,7 @@ Tutorbook.prototype.viewList = function(filters, filter_description) {
 Tutorbook.prototype.initUserViews = function() {
     // This should actively "viewUser" with replace=False so as to increase loading speeds
     // (i.e. use onSnapshot() callback to ensure that all users are rendered ahead of time.
-    var query = firebase.firestore().collection('users');
+    var query = firebase.firestore().collection('usersByEmail');
 
     // TODO: Instead of having to re-get the user data in "viewUser"
     // Add an option to just use the data passed in {options}.

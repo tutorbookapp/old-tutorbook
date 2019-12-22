@@ -43,23 +43,23 @@ Tutorbook.prototype.updateCurrentUser = function() {
 };
 
 Tutorbook.prototype.updateUser = function(data) {
-    var doc = firebase.firestore().collection('users').doc(data.email);
+    var doc = firebase.firestore().collection('usersByEmail').doc(data.email);
     return doc.update(data);
 };
 
 Tutorbook.prototype.addStudy = function(data, id) {
-    var doc = firebase.firestore().collection('users').doc(this.currentUser.email).collection(id).doc(data.name);
+    var doc = firebase.firestore().collection('usersByEmail').doc(this.currentUser.email).collection(id).doc(data.name);
     return doc.set(data);
 };
 
 Tutorbook.prototype.addUser = function(data) {
-    var doc = firebase.firestore().collection('users').doc(data.email);
+    var doc = firebase.firestore().collection('usersByEmail').doc(data.email);
     return doc.set(data);
 };
 
 Tutorbook.prototype.getAllUsers = function(renderer) {
     var query = firebase.firestore()
-        .collection('users')
+        .collection('usersByEmail')
         .orderBy('avgRating', 'desc')
         .limit(50);
 
@@ -85,11 +85,11 @@ Tutorbook.prototype.getDocumentsInQuery = function(query, renderer) {
 };
 
 Tutorbook.prototype.getUser = function(id) {
-    return firebase.firestore().collection('users').doc(id).get();
+    return firebase.firestore().collection('usersByEmail').doc(id).get();
 };
 
 Tutorbook.prototype.getUserData = function(id) {
-    firebase.firestore().collection('users').doc(id).get().then(function(doc) {
+    firebase.firestore().collection('usersByEmail').doc(id).get().then(function(doc) {
         if (doc.exists) {
             return doc.data();
         } else {
@@ -100,7 +100,7 @@ Tutorbook.prototype.getUserData = function(id) {
 };
 
 Tutorbook.prototype.getFilteredUsers = function(filters, renderer) {
-    var query = firebase.firestore().collection('users');
+    var query = firebase.firestore().collection('usersByEmail');
 
     if (filters.grade !== 'Any') {
         query = query.where('gradeString', '==', filters.grade);
@@ -129,7 +129,7 @@ Tutorbook.prototype.getFilteredUsers = function(filters, renderer) {
 };
 
 Tutorbook.prototype.addRating = function(userID, rating) {
-    var collection = firebase.firestore().collection('users');
+    var collection = firebase.firestore().collection('usersByEmail');
     var document = collection.doc(userID);
     var newRatingDocument = document.collection('ratings').doc();
 
@@ -170,7 +170,7 @@ Tutorbook.prototype.addRequest = function(userID, request) {
     // First, add it to the other users requestsIn inbox
     // to wait for approval.
     console.log("Adding request to target user's inbox...");
-    var targetsInbox = firebase.firestore().collection('users').doc(userID).collection('requestsIn');
+    var targetsInbox = firebase.firestore().collection('usersByEmail').doc(userID).collection('requestsIn');
     targetsInbox.add(request).catch(function(error) {
         console.error("Error writing new request to Firebase Database", error);
     });
@@ -183,7 +183,7 @@ Tutorbook.prototype.addRequest = function(userID, request) {
     var currentUserID = firebase.auth().currentUser.email;
     // TODO: Move from using email as unique ID to using 
     // Firebase.auth()'s built-in uid attribute
-    var yourOutbox = firebase.firestore().collection('users').doc(currentUserID).collection('requestsOut');
+    var yourOutbox = firebase.firestore().collection('usersByEmail').doc(currentUserID).collection('requestsOut');
 
     this.getUser(userID).then(function(doc) {
         if (doc.exists) {
@@ -308,7 +308,7 @@ Tutorbook.prototype.getDashboardData = function(userID) {
     var that = this;
     types.forEach(function(type) {
         var query = firebase.firestore()
-            .collection('users')
+            .collection('usersByEmail')
             .doc(userID)
             .collection(type)
             .orderBy('timestamp', 'desc')

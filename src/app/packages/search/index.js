@@ -448,7 +448,7 @@ class Search {
     // Gets filtered users based on our filters
     getUsers() {
         if (firebase.auth().currentUser) {
-            var query = firebase.firestore().collection('users')
+            var query = firebase.firestore().collection('usersByEmail')
                 .where('config.showProfile', '==', true);
         } else {
             var query = firebase.firestore().collection('search');

@@ -304,7 +304,7 @@ class Payments {
 
     viewTransactions() {
         $(this.main).find('#history ul').empty();
-        const db = firebase.firestore().collection('users')
+        const db = firebase.firestore().collection('usersByEmail')
             .doc(window.app.user.id);
         const queries = {
             authPayments: db.collection('authPayments')

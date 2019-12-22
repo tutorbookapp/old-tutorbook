@@ -2137,7 +2137,7 @@ Tutorbook.prototype.getAllSupervisorScheduleQueries = function(subcollection) {
 // Data flow function that returns a query for a certain user subcollection
 Tutorbook.prototype.getSubcollectionData = function(subcollection) {
     return firebase.firestore()
-        .collection('users')
+        .collection('usersByEmail')
         .doc(this.user.id)
         .collection(subcollection)
         .limit(30);
@@ -2390,7 +2390,7 @@ Tutorbook.prototype.renderCanceledApptListItem = function(doc, locationID) {
             action: async () => {
                 $('#doc-canceledAppointments-' + doc.id).remove();
                 that.refreshSchedule();
-                await firebase.firestore().collection('users')
+                await firebase.firestore().collection('usersByEmail')
                     .doc(that.user.email)
                     .collection('canceledAppointments')
                     .doc(doc.id).delete();
@@ -2477,7 +2477,7 @@ Tutorbook.prototype.renderModifiedApptListItem = function(doc, locationID) {
             action: async () => {
                 $('#doc-modifiedAppointments-' + doc.id).remove();
                 that.refreshSchedule();
-                await firebase.firestore().collection('users')
+                await firebase.firestore().collection('usersByEmail')
                     .doc(that.user.email)
                     .collection('modifiedAppointments')
                     .doc(doc.id).delete();
@@ -3541,12 +3541,12 @@ Tutorbook.prototype.approvePayment = async function(approvedPayment, id) {
     const db = firebase.firestore();
     const that = this;
     const payments = [
-        db.collection('users').doc(approvedPayment.appt.attendees[0].email)
+        db.collection('usersByEmail').doc(approvedPayment.appt.attendees[0].email)
         .collection('approvedPayments').doc(id),
-        db.collection('users').doc(approvedPayment.appt.attendees[1].email)
+        db.collection('usersByEmail').doc(approvedPayment.appt.attendees[1].email)
         .collection('approvedPayments').doc(id),
     ];
-    const approvedPaymentRef = db.collection('users').doc(this.user.email)
+    const approvedPaymentRef = db.collection('usersByEmail').doc(this.user.email)
         .collection('needApprovalPayments').doc(id);
     await approvedPaymentRef.delete();
     payments.forEach(async (payment) => {
@@ -3566,12 +3566,12 @@ Tutorbook.prototype.denyPayment = async function(deniedPayment, id) {
     const db = firebase.firestore();
     const that = this;
     const payments = [
-        db.collection('users').doc(approvedPayment.appt.attendees[0].email)
+        db.collection('usersByEmail').doc(approvedPayment.appt.attendees[0].email)
         .collection('deniedPayments').doc(id),
-        db.collection('users').doc(approvedPayment.appt.attendees[1].email)
+        db.collection('usersByEmail').doc(approvedPayment.appt.attendees[1].email)
         .collection('deniedPayments').doc(id),
     ];
-    const approvedPaymentRef = db.collection('users').doc(this.user.email)
+    const approvedPaymentRef = db.collection('usersByEmail').doc(this.user.email)
         .collection('needApprovalPayments').doc(id);
     await approvedPaymentRef.delete();
     payments.forEach(async (payment) => {
@@ -4944,7 +4944,7 @@ Tutorbook.prototype.emptySearchResults = function() {
 // Data action function that gets user's that fit with the current filters in
 // the Firestore database
 Tutorbook.prototype.getFilteredUsers = function() {
-    var query = firebase.firestore().collection('users');
+    var query = firebase.firestore().collection('usersByEmail');
 
     if (this.filters.grade !== 'Any') {
         query = query.where('grade', '==', this.filters.grade);
@@ -5027,7 +5027,7 @@ Tutorbook.prototype.getFilteredUsers = function() {
 // database
 Tutorbook.prototype.getUsers = function() {
     return firebase.firestore()
-        .collection('users')
+        .collection('usersByEmail')
         .orderBy('avgRating', 'desc')
         .limit(50)
 };
@@ -5776,7 +5776,7 @@ Tutorbook.prototype.viewAccountCards = function() {
 // Data flow function that returns an array of the current supervisor's proxy
 // user's emails.
 Tutorbook.prototype.getProxyUserEmails = function() {
-    return firebase.firestore().collection('users')
+    return firebase.firestore().collection('usersByEmail')
         .where('proxy', 'array-contains', this.user.email)
         .get().then((snapshot) => {
             var proxyEmails = [];
@@ -5794,7 +5794,7 @@ Tutorbook.prototype.getProxyUserEmails = function() {
 // Data flow function that returns a query for profile/account documents that 
 // this supervisor has created that have not yet been claimed by their users.
 Tutorbook.prototype.getAccountData = function() {
-    return firebase.firestore().collection('users')
+    return firebase.firestore().collection('usersByEmail')
         .where('proxy', 'array-contains', this.user.email);
 };
 
@@ -5810,7 +5810,7 @@ Tutorbook.prototype.deleteAccount = function(doc) {
             'to check with your fellow supervisors before continuing.')
         .listen('MDCDialog:closing', (event) => {
             if (event.detail.action === 'yes') {
-                return firebase.firestore().collection('users').doc(doc.id)
+                return firebase.firestore().collection('usersByEmail').doc(doc.id)
                     .delete().then(() => {
                         that.viewSnackbar('Deleted account.');
                     }).catch((err) => {
@@ -6023,7 +6023,7 @@ Tutorbook.prototype.addUpdateAccountManager = function() {
         // If the profile is populated, dismiss the setupProfileCard
         profile.cards.setupProfile = !that.userProfile(profile);
 
-        return firebase.firestore().collection('users').doc(doc.id)
+        return firebase.firestore().collection('usersByEmail').doc(doc.id)
             .update(profile).then(() => {
                 that.viewSnackbar('Account updated.');
             }).catch((err) => {
@@ -6157,7 +6157,7 @@ Tutorbook.prototype.addNewAccountManager = function() {
             profile.authenticated = true;
         }
 
-        return firebase.firestore().collection('users').doc(profile.email)
+        return firebase.firestore().collection('usersByEmail').doc(profile.email)
             .set(profile).then(() => {
                 that.viewSnackbar('Account created.');
                 that.back();
@@ -7024,7 +7024,7 @@ Tutorbook.prototype.deleteChild = function(doc) {
         .listen('MDCDialog:closing', async (event) => {
             if (event.detail.action === 'yes') {
                 $('#card-children-' + doc.data().uid).remove();
-                return firebase.firestore().collection('users').doc(doc.id)
+                return firebase.firestore().collection('usersByEmail').doc(doc.id)
                     .delete().then(() => {
                         that.viewSnackbar('Deleted account.');
                     }).catch((err) => {
@@ -7113,7 +7113,7 @@ Tutorbook.prototype.viewNewChildRequestDialog = async function(subject, user) {
 Tutorbook.prototype.initChildren = async function() {
     if (this.user.type === 'Parent') {
         const db = firebase.firestore();
-        const children = await db.collection('users')
+        const children = await db.collection('usersByEmail')
             .where('proxy', 'array-contains', this.user.email)
             .get();
         this.user.children = {};
@@ -7244,7 +7244,7 @@ Tutorbook.prototype.viewChildren = function() {
 // Data flow function that returns a query for a certain user subcollection
 Tutorbook.prototype.getChildSubcollectionData = function(subcollection, child) {
     return firebase.firestore()
-        .collection('users')
+        .collection('usersByEmail')
         .doc(child.email)
         .collection(subcollection)
         .limit(30);
@@ -7254,7 +7254,7 @@ Tutorbook.prototype.getChildSubcollectionData = function(subcollection, child) {
 // Gets all children
 Tutorbook.prototype.getChildren = function() {
     const db = firebase.firestore();
-    return db.collection('users')
+    return db.collection('usersByEmail')
         .where('proxy', 'array-contains', this.user.email);
 };
 
@@ -8030,7 +8030,7 @@ Tutorbook.prototype.clockIn = async function() {
     const db = firebase.firestore();
     const locationID = this.currentAppt.location.id;
     const supervisor = await this.getLocationSupervisor(locationID);
-    const clockIn = db.collection('users').doc(supervisor)
+    const clockIn = db.collection('usersByEmail').doc(supervisor)
         .collection('clockIns').doc(this.currentAppt.id);
 
     // NOTE: We can't have this as reference to the original as it causes an 
@@ -8087,7 +8087,7 @@ Tutorbook.prototype.watchClockInStatus = function() {
     this.log('Watching clockIn status...');
     // First, watch for an activeAppointment doc to be created (once it is, 
     // we know that the clockIn was approved).
-    firebase.firestore().collection('users').doc(this.user.email)
+    firebase.firestore().collection('usersByEmail').doc(this.user.email)
         .collection('activeAppointments')
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
@@ -8109,7 +8109,7 @@ Tutorbook.prototype.watchClockInStatus = function() {
     this.getUser(this.currentAppt.supervisor).then((doc) => {
         return doc.data();
     }).then((supervisor) => {
-        firebase.firestore().collection('users').doc(this.currentAppt.supervisor)
+        firebase.firestore().collection('usersByEmail').doc(this.currentAppt.supervisor)
             .collection('rejectedClockIns')
             // NOTE: We must have this where condition, or the request will be
             // rejected by our new Firestore rules
@@ -8139,7 +8139,7 @@ Tutorbook.prototype.watchClockOutStatus = function() {
     var that = this;
     const db = firebase.firestore();
     this.log('Watching clockOut status...');
-    db.collection('users').doc(this.user.email)
+    db.collection('usersByEmail').doc(this.user.email)
         .collection('pastAppointments')
         .onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
@@ -8160,7 +8160,7 @@ Tutorbook.prototype.watchClockOutStatus = function() {
     this.getUser(this.currentAppt.supervisor).then((doc) => {
         return doc.data();
     }).then((supervisor) => {
-        db.collection('users').doc(this.currentAppt.supervisor)
+        db.collection('usersByEmail').doc(this.currentAppt.supervisor)
             .collection('rejectedClockOuts')
             // NOTE: We must have this where condition, or the request will be
             // rejected by our new Firestore rules
@@ -8194,7 +8194,7 @@ Tutorbook.prototype.addClockOut = function() {
     // NOTE: The id of the clockOut document is the same as the id of
     // the original appt. This is b/c there will only ever be one clockOut
     // at a time for a given appt document.
-    return firebase.firestore().collection('users').doc(supervisor)
+    return firebase.firestore().collection('usersByEmail').doc(supervisor)
         .collection('clockOuts').doc(that.currentAppt.id)
         .set(that.currentClockOut).then(() => {
             that.viewSnackbar('Sent clock out request to ' + supervisor + '.');
@@ -8280,7 +8280,7 @@ Tutorbook.prototype.clockOut = async function() {
     };
 
     const db = firebase.firestore();
-    const clockOut = db.collection('users').doc(this.currentAppt.supervisor)
+    const clockOut = db.collection('usersByEmail').doc(this.currentAppt.supervisor)
         .collection('clockOuts').doc(this.currentAppt.id);
 
     // NOTE: We can't have this as reference to the original as it causes an 
@@ -8436,15 +8436,15 @@ Tutorbook.prototype.renderClockInCard = function(doc) {
 // subcollections.
 Tutorbook.prototype.approveClockIn = async function(clockIn, id) {
     const db = firebase.firestore();
-    const ref = db.collection('users').doc(this.user.email)
+    const ref = db.collection('usersByEmail').doc(this.user.email)
         .collection('clockIns').doc(id);
-    const approvedClockIn = db.collection('users').doc(this.user.email)
+    const approvedClockIn = db.collection('usersByEmail').doc(this.user.email)
         .collection('approvedClockIns').doc();
     const activeAppts = [
-        db.collection('users').doc(clockIn.for.attendees[0].email)
+        db.collection('usersByEmail').doc(clockIn.for.attendees[0].email)
         .collection('activeAppointments')
         .doc(id),
-        db.collection('users').doc(clockIn.for.attendees[1].email)
+        db.collection('usersByEmail').doc(clockIn.for.attendees[1].email)
         .collection('activeAppointments')
         .doc(id),
         db.collection('locations').doc(clockIn.for.location.id)
@@ -8478,9 +8478,9 @@ Tutorbook.prototype.approveClockIn = async function(clockIn, id) {
 Tutorbook.prototype.rejectClockIn = async function(clockInData, id) {
     const db = firebase.firestore();
     const appt = clockInData.for;
-    const clockIn = db.collection('users').doc(this.user.email)
+    const clockIn = db.collection('usersByEmail').doc(this.user.email)
         .collection('clockIns').doc(id);
-    const rejectedClockIn = db.collection('users').doc(this.user.email)
+    const rejectedClockIn = db.collection('usersByEmail').doc(this.user.email)
         .collection('rejectedClockIns').doc();
     await clockIn.delete();
     await rejectedClockIn.set(this.combineMaps(clockInData, {
@@ -8511,15 +8511,15 @@ Tutorbook.prototype.approveClockOut = async function(clockOutData, id) {
 
     // Define Firestore doc locations
     const db = firebase.firestore();
-    const clockOut = db.collection('users').doc(this.user.email)
+    const clockOut = db.collection('usersByEmail').doc(this.user.email)
         .collection('clockOuts').doc(id);
-    const approvedClockOut = db.collection('users').doc(this.user.email)
+    const approvedClockOut = db.collection('usersByEmail').doc(this.user.email)
         .collection('approvedClockOuts').doc();
     const activeAppts = [
-        db.collection('users').doc(appt.attendees[0].email)
+        db.collection('usersByEmail').doc(appt.attendees[0].email)
         .collection('activeAppointments')
         .doc(id),
-        db.collection('users').doc(appt.attendees[1].email)
+        db.collection('usersByEmail').doc(appt.attendees[1].email)
         .collection('activeAppointments')
         .doc(id),
         db.collection('locations').doc(appt.location.id)
@@ -8527,13 +8527,13 @@ Tutorbook.prototype.approveClockOut = async function(clockOutData, id) {
         .doc(id),
     ];
     const pastAppts = [
-        db.collection('users').doc(appt.attendees[0].email)
+        db.collection('usersByEmail').doc(appt.attendees[0].email)
         .collection('pastAppointments')
         .doc(),
     ];
     const pastApptID = pastAppts[0].id;
     pastAppts.push(
-        db.collection('users').doc(appt.attendees[1].email)
+        db.collection('usersByEmail').doc(appt.attendees[1].email)
         .collection('pastAppointments')
         .doc(pastApptID),
     );
@@ -8562,15 +8562,15 @@ Tutorbook.prototype.approveClockOut = async function(clockOutData, id) {
 Tutorbook.prototype.rejectClockOut = async function(clockOutData, id) {
     const db = firebase.firestore();
     const appt = clockOutData.for;
-    const clockOut = db.collection('users').doc(this.user.email)
+    const clockOut = db.collection('usersByEmail').doc(this.user.email)
         .collection('clockOuts').doc(id);
-    const rejectedClockOut = db.collection('users').doc(this.user.email)
+    const rejectedClockOut = db.collection('usersByEmail').doc(this.user.email)
         .collection('rejectedClockOuts').doc();
     const activeAppts = [
-        db.collection('users').doc(appt.attendees[0].email)
+        db.collection('usersByEmail').doc(appt.attendees[0].email)
         .collection('activeAppointments')
         .doc(id),
-        db.collection('users').doc(appt.attendees[1].email)
+        db.collection('usersByEmail').doc(appt.attendees[1].email)
         .collection('activeAppointments')
         .doc(id),
         db.collection('locations').doc(appt.location.id)
@@ -9091,7 +9091,7 @@ Tutorbook.prototype.renderApprovedRequestOutCard = function(doc) {
         // Show appointment
         if (that.user.type === 'Supervisor') {
             // First, try the fromUser's collections
-            return firebase.firestore().collection('users')
+            return firebase.firestore().collection('usersByEmail')
                 .doc(data.for.fromUser.email)
                 .collection('appointments')
                 .doc(doc.id).get().then((doc) => {
@@ -9103,7 +9103,7 @@ Tutorbook.prototype.renderApprovedRequestOutCard = function(doc) {
                     }
                     // Then, if that doc doesn't exist yet, try
                     // the toUser's collections
-                    return firebase.firestore().collection('users')
+                    return firebase.firestore().collection('usersByEmail')
                         .doc(data.for.toUser.email)
                         .collection('appointments')
                         .doc(doc.id).get().then((doc) => {
@@ -9253,7 +9253,7 @@ Tutorbook.prototype.initDismissedCards = function() {
     this.dismissedCards = [];
     if (this.user.type === 'Supervisor' || this.user.type === 'Parent') {
         var that = this;
-        return firebase.firestore().collection('users').doc(this.user.email)
+        return firebase.firestore().collection('usersByEmail').doc(this.user.email)
             .collection('dismissedCards').get().then((snapshot) => {
                 snapshot.forEach((doc) => {
                     that.dismissedCards.push(doc.id);
@@ -9273,12 +9273,12 @@ Tutorbook.prototype.removeCardDoc = function(type, id) {
         // subcollection that is synced locally. Cards in this collection
         // are not shown in the dashboard view.
         this.dismissedCards.push(type + '-' + id);
-        return firebase.firestore().collection('users').doc(this.user.email)
+        return firebase.firestore().collection('usersByEmail').doc(this.user.email)
             .collection('dismissedCards').doc(type + '-' + id).set({
                 timestamp: new Date()
             });
     } else {
-        return firebase.firestore().collection('users').doc(this.user.email)
+        return firebase.firestore().collection('usersByEmail').doc(this.user.email)
             .collection(type).doc(id).delete();
     }
 };
@@ -9476,9 +9476,9 @@ Tutorbook.prototype.renderActiveApptCard = function(doc) {
 Tutorbook.prototype.deletePastAppt = async function(appt, id) {
     const db = firebase.firestore();
     const appts = [
-        db.collection('users').doc(appt.attendees[0].email)
+        db.collection('usersByEmail').doc(appt.attendees[0].email)
         .collection('pastAppointments').doc(id),
-        db.collection('users').doc(appt.attendees[1].email)
+        db.collection('usersByEmail').doc(appt.attendees[1].email)
         .collection('pastAppointments').doc(id),
         db.collection('locations').doc(appt.location.id)
         .collection('pastAppointments').doc(id),
@@ -9498,9 +9498,9 @@ Tutorbook.prototype.deletePastAppt = async function(appt, id) {
 Tutorbook.prototype.deleteActiveAppt = async function(appt, id) {
     const db = firebase.firestore();
     const appts = [
-        db.collection('users').doc(appt.attendees[0].email)
+        db.collection('usersByEmail').doc(appt.attendees[0].email)
         .collection('activeAppointments').doc(id),
-        db.collection('users').doc(appt.attendees[1].email)
+        db.collection('usersByEmail').doc(appt.attendees[1].email)
         .collection('activeAppointments').doc(id),
         db.collection('locations').doc(appt.location.id)
         .collection('activeAppointments').doc(id),
@@ -12760,12 +12760,12 @@ function addRequestIn(options) {
         console.warn("addRequestIn expected fromUser (" + request.fromUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.toUser.email)
             .collection('requestsIn')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.toUser.email)
             .collection('requestsIn')
             .doc();
@@ -12789,12 +12789,12 @@ function addRequestOut(options) {
         console.warn("addRequestOut expected fromUser (" + request.fromUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('requestsOut')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('requestsOut')
             .doc();
@@ -12830,12 +12830,12 @@ Tutorbook.prototype.addRejectedRequestOut = function(options) {
     };
 
     if (id) {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('rejectedRequestsOut')
             .doc(id);
     } else {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(request.fromUser.email)
             .collection('rejectedRequestsOut')
             .doc();
@@ -12861,7 +12861,7 @@ function deleteCanceledRequestIn(options) {
     if (firebase.auth().currentUser.email !== request.toUser.email) {
         console.warn("deleteCanceledRequestIn expected toUser (" + request.toUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.toUser.email)
         .collection('canceledRequestsIn')
         .doc();
@@ -12886,7 +12886,7 @@ function deleteRejectedRequestOut(options) {
     if (firebase.auth().currentUser.email !== request.fromUser.email) {
         console.warn("deleteRejectedRequestOut expected fromUser (" + request.fromUser.email + ") and currentUser (" + firebase.auth().currentUser.email + ") to match.");
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(request.fromUser.email)
         .collection('rejectedRequestsOut')
         .doc();
@@ -12904,7 +12904,7 @@ function deleteRequestIn(options) {
         console.error("deleteRequestIn called without id or user", options);
         return;
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(user.email)
         .collection('requestsIn')
         .doc(id);
@@ -12922,7 +12922,7 @@ function deleteRequestOut(options) {
         console.error("deleteRequestOut called without id or user", options);
         return;
     }
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(user.email)
         .collection('requestsOut')
         .doc(id);
@@ -12944,7 +12944,7 @@ Tutorbook.prototype.addAppointment = function(options) {
     }
 
     function addUserAppt(user) {
-        return firebase.firestore().collection('users')
+        return firebase.firestore().collection('usersByEmail')
             .doc(user)
             .collection('appointments')
             .doc(id).set(appt).catch((err) => {
@@ -12986,7 +12986,7 @@ Tutorbook.prototype.modifyAppointment = function(options) {
         return;
     }
     return appt.attendees.forEach((user) => {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(user.email)
             .collection('appointments')
             .doc(id);
@@ -13025,7 +13025,7 @@ Tutorbook.prototype.addModifiedAppointment = function(options) {
         'timestamp': new Date(),
     };
 
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(otherUser.email)
         .collection('modifiedAppointments')
         .doc(id);
@@ -13067,7 +13067,7 @@ Tutorbook.prototype.addCanceledAppointment = async function(options) {
         'timestamp': new Date(),
     };
 
-    var doc = firebase.firestore().collection('users')
+    var doc = firebase.firestore().collection('usersByEmail')
         .doc(otherUser.email)
         .collection('canceledAppointments')
         .doc(id);
@@ -13101,7 +13101,7 @@ Tutorbook.prototype.deleteAppointment = async function(options) {
     await doc.delete();
 
     return appt.attendees.forEach((user) => {
-        var doc = firebase.firestore().collection('users')
+        var doc = firebase.firestore().collection('usersByEmail')
             .doc(user.email)
             .collection('appointments')
             .doc(id);
@@ -13137,20 +13137,20 @@ Tutorbook.prototype.rejectRequest = async function(id, request) {
     const requestIn = db.collection("users").doc(request.toUser.email)
         .collection('requestsIn')
         .doc(id);
-    const requestOut = db.collection('users').doc(request.fromUser.email)
+    const requestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('requestsOut')
         .doc(id);
-    const rejectedRequestOut = db.collection('users').doc(request.fromUser.email)
+    const rejectedRequestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('rejectedRequestsOut')
         .doc(id);
 
     if (request.payment.type === 'Paid') {
         // Delete the authPayment docs as well
         const authPayments = [
-            db.collection('users').doc(request.fromUser.email)
+            db.collection('usersByEmail').doc(request.fromUser.email)
             .collection('authPayments')
             .doc(id),
-            db.collection('users').doc(request.toUser.email)
+            db.collection('usersByEmail').doc(request.toUser.email)
             .collection('authPayments')
             .doc(id),
         ];
@@ -13175,17 +13175,17 @@ Tutorbook.prototype.cancelRequest = async function(id, request) {
     const requestIn = db.collection("users").doc(request.toUser.email)
         .collection('requestsIn')
         .doc(id);
-    const requestOut = db.collection('users').doc(request.fromUser.email)
+    const requestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('requestsOut')
         .doc(id);
 
     if (request.payment.type === 'Paid') {
         // Delete the authPayment docs as well
         const authPayments = [
-            db.collection('users').doc(request.fromUser.email)
+            db.collection('usersByEmail').doc(request.fromUser.email)
             .collection('authPayments')
             .doc(id),
-            db.collection('users').doc(request.toUser.email)
+            db.collection('usersByEmail').doc(request.toUser.email)
             .collection('authPayments')
             .doc(id),
         ];
@@ -13196,11 +13196,11 @@ Tutorbook.prototype.cancelRequest = async function(id, request) {
 
     const canceledRequests = [];
     if (request.toUser.email !== this.user.email) {
-        canceledRequests.push(db.collection('users').doc(request.toUser.email)
+        canceledRequests.push(db.collection('usersByEmail').doc(request.toUser.email)
             .collection('canceledRequestsIn').doc(id));
     }
     if (request.fromUser.email !== this.user.email) {
-        canceledRequests.push(db.collection('users').doc(request.fromUser.email)
+        canceledRequests.push(db.collection('usersByEmail').doc(request.fromUser.email)
             .collection('canceledRequestsOut').doc(id));
     }
 
@@ -13222,10 +13222,10 @@ Tutorbook.prototype.newRequest = async function(request, payment) {
     this.log('Adding payment:', payment);
 
     const db = firebase.firestore();
-    const requestIn = db.collection('users').doc(request.toUser.email)
+    const requestIn = db.collection('usersByEmail').doc(request.toUser.email)
         .collection('requestsIn')
         .doc();
-    const requestOut = db.collection('users').doc(request.fromUser.email)
+    const requestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('requestsOut')
         .doc(requestIn.id);
 
@@ -13234,11 +13234,11 @@ Tutorbook.prototype.newRequest = async function(request, payment) {
     await requestIn.set(request);
     // Add payment document for server to process
     if (request.payment.type === 'Paid') {
-        await firebase.firestore().collection('users').doc(request.fromUser.email)
+        await firebase.firestore().collection('usersByEmail').doc(request.fromUser.email)
             .collection('authPayments')
             .doc(requestIn.id)
             .set(payment);
-        await firebase.firestore().collection('users').doc(request.toUser.email)
+        await firebase.firestore().collection('usersByEmail').doc(request.toUser.email)
             .collection('authPayments')
             .doc(requestIn.id)
             .set(payment);
@@ -13286,18 +13286,18 @@ Tutorbook.prototype.modifyRequest = async function(request, id) {
     const requestIn = db.collection("users").doc(request.toUser.email)
         .collection('requestsIn')
         .doc(id);
-    const requestOut = db.collection('users').doc(request.fromUser.email)
+    const requestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('requestsOut')
         .doc(id);
     // We send modified requests to all users that aren't the currentUser
     const modifiedRequests = [];
     if (request.fromUser.email !== this.user.email) {
-        modifiedRequests.push(db.collection('users').doc(request.fromUser.email)
+        modifiedRequests.push(db.collection('usersByEmail').doc(request.fromUser.email)
             .collection('modifiedRequestsOut')
             .doc(id));
     }
     if (request.toUser.email !== this.user.email) {
-        modifiedRequests.push(db.collection('users').doc(request.toUser.email)
+        modifiedRequests.push(db.collection('usersByEmail').doc(request.toUser.email)
             .collection('modifiedRequestsIn')
             .doc(id));
     }
@@ -13320,12 +13320,12 @@ Tutorbook.prototype.approveRequest = async function(request, id) {
     const requestIn = db.collection("users").doc(request.toUser.email)
         .collection('requestsIn')
         .doc(id);
-    const requestOut = db.collection('users').doc(request.fromUser.email)
+    const requestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('requestsOut')
         .doc(id);
     // TODO: Right now we don't allow supervisors to approve requests.
     // Shoud we?
-    const approvedRequestOut = db.collection('users').doc(request.fromUser.email)
+    const approvedRequestOut = db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('approvedRequestsOut')
         .doc(id);
     // NOTE: The appts must be processed in this order due to the way that
@@ -13333,10 +13333,10 @@ Tutorbook.prototype.approveRequest = async function(request, id) {
     // approvedRequestOut doc, then we check if there is an appt doc
     // already created).
     const appts = [
-        db.collection('users').doc(request.fromUser.email)
+        db.collection('usersByEmail').doc(request.fromUser.email)
         .collection('appointments')
         .doc(id),
-        db.collection('users').doc(request.toUser.email)
+        db.collection('usersByEmail').doc(request.toUser.email)
         .collection('appointments')
         .doc(id),
         db.collection('locations').doc(request.location.id)
@@ -13368,10 +13368,10 @@ Tutorbook.prototype.approveRequest = async function(request, id) {
 Tutorbook.prototype.modifyAppt = async function(apptData, id) {
     const db = firebase.firestore();
     const appts = [
-        db.collection('users').doc(apptData.attendees[0].email)
+        db.collection('usersByEmail').doc(apptData.attendees[0].email)
         .collection('appointments')
         .doc(id),
-        db.collection('users').doc(apptData.attendees[1].email)
+        db.collection('usersByEmail').doc(apptData.attendees[1].email)
         .collection('appointments')
         .doc(id),
         db.collection('locations').doc(apptData.location.id)
@@ -13380,11 +13380,11 @@ Tutorbook.prototype.modifyAppt = async function(apptData, id) {
     ];
     const modifiedAppts = [];
     if (apptData.attendees[0].email !== this.user.email) {
-        modifiedAppts.push(db.collection('users').doc(apptData.attendees[0].email)
+        modifiedAppts.push(db.collection('usersByEmail').doc(apptData.attendees[0].email)
             .collection('modifiedAppointments').doc(id));
     }
     if (apptData.attendees[1].email !== this.user.email) {
-        modifiedAppts.push(db.collection('users').doc(apptData.attendees[1].email)
+        modifiedAppts.push(db.collection('usersByEmail').doc(apptData.attendees[1].email)
             .collection('modifiedAppointments').doc(id));
     }
     if (this.user.locations.indexOf(apptData.location.id) < 0) {
@@ -13411,10 +13411,10 @@ Tutorbook.prototype.modifyAppt = async function(apptData, id) {
 Tutorbook.prototype.cancelAppt = async function(apptData, id) {
     const db = firebase.firestore();
     const appts = [
-        db.collection('users').doc(apptData.attendees[0].email)
+        db.collection('usersByEmail').doc(apptData.attendees[0].email)
         .collection('appointments')
         .doc(id),
-        db.collection('users').doc(apptData.attendees[1].email)
+        db.collection('usersByEmail').doc(apptData.attendees[1].email)
         .collection('appointments')
         .doc(id),
         db.collection('locations').doc(apptData.location.id)
@@ -13423,11 +13423,11 @@ Tutorbook.prototype.cancelAppt = async function(apptData, id) {
     ];
     const canceledAppts = [];
     if (apptData.attendees[0].email !== this.user.email) {
-        canceledAppts.push(db.collection('users').doc(apptData.attendees[0].email)
+        canceledAppts.push(db.collection('usersByEmail').doc(apptData.attendees[0].email)
             .collection('canceledAppointments').doc(id));
     }
     if (apptData.attendees[1].email !== this.user.email) {
-        canceledAppts.push(db.collection('users').doc(apptData.attendees[1].email)
+        canceledAppts.push(db.collection('usersByEmail').doc(apptData.attendees[1].email)
             .collection('canceledAppointments').doc(id));
     }
     if (this.user.locations.indexOf(apptData.location.id) < 0) {
@@ -13438,10 +13438,10 @@ Tutorbook.prototype.cancelAppt = async function(apptData, id) {
     if (apptData.for.payment.type === 'Paid') {
         // Delete the authPayment docs as well
         const authPayments = [
-            db.collection('users').doc(apptData.attendees[0].email)
+            db.collection('usersByEmail').doc(apptData.attendees[0].email)
             .collection('authPayments')
             .doc(id),
-            db.collection('users').doc(apptData.attendees[1].email)
+            db.collection('usersByEmail').doc(apptData.attendees[1].email)
             .collection('authPayments')
             .doc(id),
         ];
@@ -13468,7 +13468,7 @@ Tutorbook.prototype.cancelAppt = async function(apptData, id) {
 // Data action function that fetches the given appt doc from the currentUser's
 // appointments subcollection.
 Tutorbook.prototype.getAppt = function(id) {
-    return firebase.firestore().collection('users').doc(this.user.email)
+    return firebase.firestore().collection('usersByEmail').doc(this.user.email)
         .collection('appointments')
         .doc(id)
         .get();
@@ -13714,7 +13714,7 @@ Tutorbook.prototype.initUser = function(log) {
 Tutorbook.prototype.updateUser = function() {
     const id = this.user.email;
     var that = this;
-    return firebase.firestore().collection('users').doc(id)
+    return firebase.firestore().collection('usersByEmail').doc(id)
         .update(this.user)
         .catch((err) => {
             that.log('Error while updating document, creating new doc:', err);
@@ -13728,7 +13728,7 @@ Tutorbook.prototype.createUserDoc = function() {
     console.log('Creating new user doc:', this.user);
     const id = this.user.email;
     var that = this;
-    return firebase.firestore().collection('users').doc(id)
+    return firebase.firestore().collection('usersByEmail').doc(id)
         .set(this.combineMaps(this.user, {
             createdTimestamp: new Date()
         }))
@@ -13742,7 +13742,7 @@ Tutorbook.prototype.createUserDoc = function() {
 // Data action function that returns userData within the user's Firestore doc
 Tutorbook.prototype.getUser = function(id) {
     var that = this;
-    return firebase.firestore().collection('users').doc(id).get()
+    return firebase.firestore().collection('usersByEmail').doc(id).get()
         .catch((err) => {
             console.error("Error while getting user profile " + id + ":", err);
             that.viewSnackbar("Could not load user " + id + ".");

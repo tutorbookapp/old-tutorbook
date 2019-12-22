@@ -41,8 +41,8 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            //console.warn('Using an email as a user ID is deprecated.');
-            var ref = await firebase.firestore().collection('users').doc(id)
+            console.warn('Using an email as a user ID is deprecated.');
+            var ref = await firebase.firestore().collection('usersByEmail').doc(id)
                 .get();
         } else if (firebase.auth().currentUser) {
             var ref = await firebase.firestore().collection('users').doc(
@@ -63,7 +63,7 @@ class Data {
     static updateUser(user) {
         if (!user || !(user.id || user.email))
             throw new Error('Could not update user b/c id was undefined.');
-        return firebase.firestore().collection('users').doc(user.id || user.email)
+        return firebase.firestore().collection('usersByEmail').doc(user.id || user.email)
             .update(user);
     }
 
@@ -71,13 +71,23 @@ class Data {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
         }
-        return firebase.firestore().collection('users').doc(id)
+        return firebase.firestore().collection('usersByEmail').doc(id)
             .delete();
     }
 
     static createUser(user) {
-        if (!user || !user.id) {
-            throw new Error('Could not create user b/c id was undefined.');
+        if (!user) {
+            throw new Error('Could not create user b/c profile was undefined.');
+        } else if (!user.id && !user.uid) {
+            throw new Error('Could not create user b/b id was undefined.');
+        } else if (user.uid && user.uid !== '') {
+            return firebase.firestore().collection('usersById').doc(user.uid)
+                .set(user);
+        } else {
+            if (user.id.indexOf('@') > 0) console.warn('Using an email as a ' +
+                'user ID is deprecated.');
+            return firebase.firestore().collection('usersByEmail').doc(user.id)
+                .set(user);
         }
         return firebase.firestore().collection('users').doc(user.id)
             .set(user);

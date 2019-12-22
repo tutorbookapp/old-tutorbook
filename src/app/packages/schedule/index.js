@@ -112,7 +112,7 @@ class Schedule {
     reViewAppts() {}
 
     viewAppts() {
-        const db = firebase.firestore().collection('users')
+        const db = firebase.firestore().collection('usersByEmail')
             .doc(window.app.user.id); // TODO: Add proxy results too 
         const queries = {
             appointments: db.collection('appointments')
@@ -130,7 +130,7 @@ class Schedule {
     }
 
     loadMore() {
-        const db = firebase.firestore().collection('users')
+        const db = firebase.firestore().collection('usersByEmail')
             .doc(window.app.user.id); // TODO: Add proxy results too 
         this.limit += 10;
         Utils.recycle({

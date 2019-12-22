@@ -136,7 +136,7 @@ class CanceledAppt extends Event {
             action: async () => {
                 $(this.el).remove();
                 window.app.schedule.refresh();
-                await firebase.firestore().collection('users')
+                await firebase.firestore().collection('usersByEmail')
                     .doc(window.app.user.email)
                     .collection('canceledAppointments')
                     .doc(doc.id).delete();
@@ -195,7 +195,7 @@ class ModifiedAppt extends Event {
             action: async () => {
                 $(this.el).remove();
                 window.app.schedule.refresh();
-                await firebase.firestore().collection('users')
+                await firebase.firestore().collection('usersByEmail')
                     .doc(window.app.user.email)
                     .collection('modifiedAppointments')
                     .doc(doc.id).delete();

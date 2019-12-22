@@ -37,7 +37,7 @@ class Dashboard {
         this.dismissedCards = [];
         if (window.app.user.type === 'Supervisor') {
             var that = window.app;
-            return firebase.firestore().collection('users').doc(window.app.user.email)
+            return firebase.firestore().collection('usersByEmail').doc(window.app.user.email)
                 .collection('dismissedCards').get().then((snapshot) => {
                     snapshot.forEach((doc) => {
                         this.dismissedCards.push(doc.id);
@@ -98,7 +98,7 @@ class Dashboard {
             'modifiedAppointments',
             'canceledAppointments',
         ].forEach((subcollection) => {
-            const query = firebase.firestore().collection('users')
+            const query = firebase.firestore().collection('usersByEmail')
                 .doc(id)
                 .collection(subcollection)
                 .orderBy('timestamp', 'desc');
@@ -271,12 +271,12 @@ class SupervisorDashboard extends Dashboard {
 
     viewEverythingElse() {
         const queries = {
-            tutors: firebase.firestore().collection('users')
+            tutors: firebase.firestore().collection('usersByEmail')
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Tutor')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
-            pupils: firebase.firestore().collection('users')
+            pupils: firebase.firestore().collection('usersByEmail')
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Pupil')
                 .where('payments.type', '==', 'Free')
@@ -473,7 +473,7 @@ class SupervisorQueryDashboard extends QueryDashboard {
             default: {
                 name: 'Suggestions for you',
                 queries: {
-                    requestsOut: db.collection('users')
+                    requestsOut: db.collection('usersByEmail')
                         .doc(window.app.user.email).collection('requestsOut')
                         .orderBy('timestamp'),
                 },
@@ -481,16 +481,16 @@ class SupervisorQueryDashboard extends QueryDashboard {
             matches: {
                 name: 'Pending matches',
                 queries: {
-                    users: db.collection('users')
+                    users: db.collection('usersByEmail')
                         .where('proxy', 'array-contains', window.app.user.email),
                 },
             },
             everything: {
                 name: 'Everything else',
                 queries: {
-                    tutors: db.collection('users').where('type', '==', 'Tutor')
+                    tutors: db.collection('usersByEmail').where('type', '==', 'Tutor')
                         .where('location', '==', window.app.location.name),
-                    pupils: db.collection('users').where('type', '==', 'Pupil')
+                    pupils: db.collection('usersByEmail').where('type', '==', 'Pupil')
                         .where('location', '==', window.app.location.name),
                 },
             },

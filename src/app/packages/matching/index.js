@@ -136,7 +136,7 @@ class Matching {
 
     async initDismissedCards() {
         this.dismissed = {};
-        const cards = await firebase.firestore().collection('users')
+        const cards = await firebase.firestore().collection('usersByEmail')
             .doc(window.app.user.id).collection('dismissedCards').get();
         cards.forEach((card) => {
             if (!this.dismissed[card.data().type])
@@ -387,7 +387,7 @@ class Matching {
         // Shows unmatched tutors/pupils and matched tutors/pupils (who haven't 
         // created past appts).
         await this.initDismissedCards();
-        firebase.firestore().collection('users')
+        firebase.firestore().collection('usersByEmail')
             .where('proxy', 'array-contains', window.app.user.email)
             .onSnapshot((snapshot) => {
                 if (!snapshot.size) {
@@ -415,7 +415,7 @@ class Matching {
             'approvedRequestsOut',
             'rejectedRequestsOut',
         ].forEach((subcollection) => {
-            this.queries[id].push(firebase.firestore().collection('users').doc(id)
+            this.queries[id].push(firebase.firestore().collection('usersByEmail').doc(id)
                 .collection(subcollection).onSnapshot((snapshot) => {
                     if (!snapshot.size) {
                         return this.matchesRecycler.empty(subcollection, id);
