@@ -136,12 +136,9 @@ class Tutorbook {
     }
 
     updateUser(user) {
-        if (!user) {
-            return firebase.firestore().collection('users').doc(this.user.id)
-                .update(this.user);
-        }
-        return firebase.firestore().collection('users').doc(user.id)
-            .update(user);
+        if (!user) return firebase.firestore().collection('users')
+            .doc(this.user.uid).update(this.user);
+        return firebase.firestore().collection('users').doc(user.uid)
     }
 
     signOut() {

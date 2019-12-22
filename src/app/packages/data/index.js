@@ -49,7 +49,7 @@ class Data {
                 (await firebase.firestore().collection('search').doc(id).get())
                 .data().id).get();
         } else {
-            var ref = await firebase.firestore().collection('search').doc(id)
+            var ref = await firebase.firestore().collection('users').doc(id)
                 .get();
         }
         if (ref.exists) {
@@ -81,7 +81,7 @@ class Data {
         } else if (!user.id && !user.uid) {
             throw new Error('Could not create user b/b id was undefined.');
         } else if (user.uid && user.uid !== '') {
-            return firebase.firestore().collection('usersById').doc(user.uid)
+            return firebase.firestore().collection('users').doc(user.uid)
                 .set(user);
         } else {
             if (user.id.indexOf('@') > 0) console.warn('Using an email as a ' +
