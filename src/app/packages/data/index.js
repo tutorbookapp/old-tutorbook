@@ -137,6 +137,7 @@ class Data {
             method: 'post',
             url: window.app.functionsURL + '/data',
             params: {
+                test: window.app.test,
                 user: window.app.user.id || window.app.user.email,
                 action: action,
                 token: (await firebase.auth().currentUser.getIdToken(true)),

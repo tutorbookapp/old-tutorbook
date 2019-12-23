@@ -41,9 +41,10 @@ class Tutorbook {
         this.location = {
             name: 'Any',
         };
-        this.functionsURL = 'https://us-central1-tutorbook-779d8.' + // Live
-            'cloudfunctions.net';
-        //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-central1';
+        this.test = false;
+        this.functionsURL = (this.test) ? 'http://localhost:5001/tutorbook-77' +
+            '9d8/us-central1' : 'https://us-central1-tutorbook-779d8.cloudfun' +
+            'ctions.net';
 
         // Helper packages
         this.render = new Render();
