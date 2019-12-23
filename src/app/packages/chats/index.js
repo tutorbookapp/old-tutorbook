@@ -109,6 +109,7 @@ class Chats {
     viewChats() {
         var that = this;
         this.emptyChats();
+        console.log('[DEBUG] Getting chats...');
         this.getChats().onSnapshot((snapshot) => {
             if (!snapshot.size) {
                 return that.recycler.empty();
@@ -348,6 +349,7 @@ class Chat {
     // View function that shows the messages of the chat
     viewMessages() {
         this.emptyMessages();
+        console.log('[DEBUG] Getting messages for ' + this + '...');
         this.getMessages().onSnapshot((snapshot) => {
             if (!snapshot.size) {
                 return this.recycler.empty();

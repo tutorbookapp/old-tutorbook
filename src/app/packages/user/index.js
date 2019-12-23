@@ -59,7 +59,7 @@ class User {
                 this.profile.payments.type === 'Free'),
             match: () => {
                 Data.updateUser(Utils.combineMaps(this.profile, {
-                    proxy: [window.app.user.email],
+                    proxy: [window.app.user.uid],
                 }));
                 new window.app.MatchingDialog(this.profile).view();
             },

@@ -229,7 +229,7 @@ Card.renderUserCard = (doc) => {
     };
     if (p.type === 'Pupil') actions.match = () => {
         Data.updateUser(Utils.combineMaps(p, {
-            proxy: [window.app.user.email],
+            proxy: [window.app.user.uid],
         }));
         new window.app.MatchingDialog(p).view();
     };

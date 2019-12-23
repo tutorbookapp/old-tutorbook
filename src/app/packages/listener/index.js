@@ -40,6 +40,7 @@ class Listener {
             },
         };
         const db = window.app.db.collection('users').doc(window.app.user.uid);
+        console.log('[DEBUG] Listening for clock in requests...');
         db.collection('clockIns').onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === 'removed') {
@@ -68,6 +69,7 @@ class Listener {
                 }, true).view();
             },
         };
+        console.log('[DEBUG] Listening for clock out requests...');
         db.collection('clockOuts').onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === 'removed') {
@@ -103,6 +105,7 @@ class Listener {
                 }, true).view();
             }
         };
+        console.log('[DEBUG] Listening for payment requests...');
         window.app.db.collection('users').doc(window.app.user.uid)
             .collection('requestedPayments').onSnapshot((snapshot) => {
                 snapshot.docChanges().forEach((change) => {

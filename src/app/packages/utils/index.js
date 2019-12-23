@@ -111,6 +111,7 @@ class Utils {
         Object.entries(queries).forEach((entry) => {
             var subcollection = entry[0];
             var query = entry[1];
+            console.log('[DEBUG] Recycling...');
             query.onSnapshot((snapshot) => {
                 if (!snapshot.size) {
                     return recycler.empty(subcollection);

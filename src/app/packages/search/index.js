@@ -425,6 +425,7 @@ class Search {
         $(this.header).find('[data-fir-content="filter_description"]')
             .text(this.filterDescription);
         this.emptyResults();
+        console.log('[DEBUG] Getting search results...');
         this.getUsers().onSnapshot((snapshot) => {
             if (!snapshot.size) {
                 return that.recycler.empty();

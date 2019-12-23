@@ -139,6 +139,7 @@ class Dashboard {
                 $(list).find('#cards [id="' + doc.id + '"]').remove();
             },
         };
+        console.log('[DEBUG] Viewing ' + type + ' cards...');
         query.onSnapshot((snapshot) => {
             if (!snapshot.size) {
                 return recycler.empty(list);
@@ -370,7 +371,7 @@ class ProxyDashboard extends Dashboard {
             }).end().find('#match').click(async () => {
                 const p = await Data.getUser(id);
                 Data.updateUser(Utils.combineMaps(p, {
-                    proxy: [window.app.user.email],
+                    proxy: [window.app.user.uid],
                 }));
                 new MatchingDialog(p).view();
             });
@@ -480,7 +481,7 @@ class SupervisorQueryDashboard extends QueryDashboard {
                 name: 'Pending matches',
                 queries: {
                     users: db.collection('users')
-                        .where('proxy', 'array-contains', window.app.user.email),
+                        .where('proxy', 'array-contains', window.app.user.uid),
                 },
             },
             everything: {

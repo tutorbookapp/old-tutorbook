@@ -324,9 +324,7 @@ class Matching {
                     'You are about to permanently delete ' + user.name +
                     '\'s account data. This action cannot be undone. Please ensure ' +
                     'to check with your fellow supervisors before continuing.', async () => {
-                        var err;
-                        var res;
-                        [err, res] = await to(Data.deleteUser(id));
+                        const [err, res] = await to(Data.deleteUser(id));
                         if (err) {
                             window.app.snackbar.view('Could not delete account.');
                             console.error('Error while deleting proxy account:', err);
@@ -364,7 +362,7 @@ class Matching {
         // Show supervisors a dialog to create a new pupil profile
         new NewProfile(Utils.combineMaps(Data.emptyProfile, {
             type: 'Pupil',
-            proxy: [window.app.user.email],
+            proxy: [window.app.user.uid],
             authenticated: true,
         })).view();
     }
@@ -373,7 +371,7 @@ class Matching {
         // Show supervisors a dialog to create a new tutor profile
         new NewProfile(Utils.combineMaps(Data.emptyProfile, {
             type: 'Tutor',
-            proxy: [window.app.user.email],
+            proxy: [window.app.user.uid],
             authenticated: true,
         })).view();
     }
@@ -387,8 +385,9 @@ class Matching {
         // Shows unmatched tutors/pupils and matched tutors/pupils (who haven't 
         // created past appts).
         await this.initDismissedCards();
+        console.log('[DEBUG] Getting proxied users...');
         window.app.db.collection('users')
-            .where('proxy', 'array-contains', window.app.user.email)
+            .where('proxy', 'array-contains', window.app.user.uid)
             .onSnapshot((snapshot) => {
                 if (!snapshot.size) {
                     return this.recycler.empty();
@@ -415,6 +414,8 @@ class Matching {
             'approvedRequestsOut',
             'rejectedRequestsOut',
         ].forEach((subcollection) => {
+            console.log('[DEBUG] Listening to matches for proxy user (' + id +
+                ')...');
             this.queries[id].push(window.app.db.collection('users').doc(id)
                 .collection(subcollection).onSnapshot((snapshot) => {
                     if (!snapshot.size) {
@@ -719,10 +720,10 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                 },
             };
             if (!pupil.proxy) {
-                pupil.proxy = [window.app.user.email];
+                pupil.proxy = [window.app.user.uid];
                 await Data.updateUser(pupil);
-            } else if (pupil.proxy.indexOf(window.app.user.email) < 0) {
-                pupil.proxy.push(window.app.user.email);
+            } else if (pupil.proxy.indexOf(window.app.user.uid) < 0) {
+                pupil.proxy.push(window.app.user.uid);
                 await Data.updateUser(pupil);
             }
             window.app.snackbar.view('Creating match and sending request...');
