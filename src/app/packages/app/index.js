@@ -51,7 +51,7 @@ class Tutorbook {
 
         // Helper packages
         this.render = new Render();
-        this.data = new Data();
+        this.data = new Data(this.db);
         this.utils = new Utils();
         this.snackbar = new Snackbar(this.render);
         this.initOnMobile();

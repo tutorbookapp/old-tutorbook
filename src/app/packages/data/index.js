@@ -5,7 +5,9 @@ const axios = require('axios');
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
 // Classes#Instance_properties
 class Data {
-    constructor() {
+    constructor(db) {
+        this.db = (window.app && window.app.db) ? window.app.db : db || firebase
+            .firestore().collection('partitions').doc('default');
         this.initTimes();
         this.initHourlyCharges();
         this.initLocations();
@@ -347,7 +349,7 @@ class Data {
         this.locationDataByID = {};
         this.locationNames = [];
         this.locationIDs = [];
-        const snap = await window.app.db.collection('locations').get();
+        const snap = await this.db.collection('locations').get();
         snap.docs.forEach((doc) => {
             if (window.app.location.name === 'Any' ||
                 window.app.location.id === doc.id) {
