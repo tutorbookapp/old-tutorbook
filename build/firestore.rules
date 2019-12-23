@@ -64,7 +64,7 @@ service cloud.firestore {
       // TODO: Ensure that the client can't change the user.authenticated field
       // to become an admin or supervisor without actually knowing the code.
       allow read: if request.auth.uid != null;
-      allow create: if (request.auth.token.email == user
+      allow create: if (request.auth.uid == user
 	|| request.auth.token.supervisor)
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.payments.currentBalanceString == "$0.00"
