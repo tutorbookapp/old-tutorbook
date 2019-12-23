@@ -1483,8 +1483,9 @@ module.exports = {
         return cors(req, res, async () => {
             console.log('Responding to ' + req.query.action + ' action from ' +
                 req.query.user + '...');
-            global.db = (req.query.sandbox) ? admin.firestore()
-                .collection('sandbox').doc('tutorbook') : admin.firestore();
+            global.db = (req.query.test) ? admin.firestore()
+                .collection('partitions').doc('test') : admin.firestore()
+                .collection('partitions').doc('default');
             const data = new DataProxy(
                 (await Data.getUser(req.query.user)),
                 (await admin.auth().verifyIdToken(req.query.token)),
@@ -1504,8 +1505,9 @@ module.exports = {
     onCall: async (data, context) => { // Firebase Function HTTPS Callable trigger
         console.log('Responding to ' + data.action + ' action from ' +
             context.auth.token.email + '...');
-        global.db = (data.sandbox) ? admin.firestore()
-            .collection('sandbox').doc('tutorbook') : admin.firestore();
+        global.db = (data.test) ? admin.firestore()
+            .collection('partitions').doc('test') : admin.firestore()
+            .collection('partitions').doc('default');
         const dataProxy = new DataProxy(
             (await Data.getUser(context.auth.token.email)),
             context.auth.token,
