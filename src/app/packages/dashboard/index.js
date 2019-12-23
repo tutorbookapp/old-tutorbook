@@ -37,7 +37,7 @@ class Dashboard {
         this.dismissedCards = [];
         if (window.app.user.type === 'Supervisor') {
             var that = window.app;
-            return firebase.firestore().collection('usersByEmail').doc(window.app.user.email)
+            return window.app.db.collection('usersByEmail').doc(window.app.user.email)
                 .collection('dismissedCards').get().then((snapshot) => {
                     snapshot.forEach((doc) => {
                         this.dismissedCards.push(doc.id);
@@ -98,7 +98,7 @@ class Dashboard {
             'modifiedAppointments',
             'canceledAppointments',
         ].forEach((subcollection) => {
-            const query = firebase.firestore().collection('usersByEmail')
+            const query = window.app.db.collection('usersByEmail')
                 .doc(id)
                 .collection(subcollection)
                 .orderBy('timestamp', 'desc');
@@ -271,18 +271,18 @@ class SupervisorDashboard extends Dashboard {
 
     viewEverythingElse() {
         const queries = {
-            tutors: firebase.firestore().collection('usersByEmail')
+            tutors: window.app.db.collection('usersByEmail')
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Tutor')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
-            pupils: firebase.firestore().collection('usersByEmail')
+            pupils: window.app.db.collection('usersByEmail')
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Pupil')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
             /*
-             *appts: firebase.firestore().collection('locations')
+             *appts: window.app.db.collection('locations')
              *    .doc(window.app.data.locationsByName[window.app.location.name])
              *    .collection('appointments'),
              */
@@ -468,7 +468,7 @@ class SupervisorQueryDashboard extends QueryDashboard {
         const title = 'Welcome, ' + window.app.user.name.split(' ')[0];
         const subtitle = 'We\'re glad you\'re here. Below are some friendly ' +
             'suggestions for what to do next.'
-        const db = firebase.firestore();
+        const db = window.app.db;
         const queries = {
             default: {
                 name: 'Suggestions for you',

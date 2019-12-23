@@ -112,7 +112,7 @@ class Schedule {
     reViewAppts() {}
 
     viewAppts() {
-        const db = firebase.firestore().collection('usersByEmail')
+        const db = window.app.db.collection('usersByEmail')
             .doc(window.app.user.id); // TODO: Add proxy results too 
         const queries = {
             appointments: db.collection('appointments')
@@ -130,7 +130,7 @@ class Schedule {
     }
 
     loadMore() {
-        const db = firebase.firestore().collection('usersByEmail')
+        const db = window.app.db.collection('usersByEmail')
             .doc(window.app.user.id); // TODO: Add proxy results too 
         this.limit += 10;
         Utils.recycle({
@@ -265,7 +265,7 @@ class SupervisorSchedule extends Schedule {
     }
 
     viewAppts() {
-        const db = firebase.firestore().collection('locations')
+        const db = window.app.db.collection('locations')
             .doc(window.app.location.id); // TODO: Add >1 location
         const queries = {
             appointments: db.collection('appointments')
@@ -283,7 +283,7 @@ class SupervisorSchedule extends Schedule {
     }
 
     loadMore() {
-        const db = firebase.firestore().collection('locations')
+        const db = window.app.db.collection('locations')
             .doc(window.app.location.id); // TODO: Add >1 location
         this.limit += 10;
         Utils.recycle({

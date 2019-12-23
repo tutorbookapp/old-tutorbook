@@ -132,7 +132,7 @@ class Login {
     }
 
     static getSupervisorCodes() {
-        return firebase.firestore().collection('auth').doc('supervisors')
+        return window.app.db.collection('auth').doc('supervisors')
             .get().catch((err) => {
                 console.error('Error while getting supervisor codes:', err);
                 window.app.snackbar.view('Could not fetch verification codes.');

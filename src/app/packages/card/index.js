@@ -664,7 +664,7 @@ Card.renderApprovedRequestOutCard = function(doc) {
             // Show appointment
             if (window.app.user.type === 'Supervisor') {
                 // First, try the fromUser's collections
-                return firebase.firestore().collection('usersByEmail')
+                return window.app.db.collection('usersByEmail')
                     .doc(data.for.fromUser.email)
                     .collection('appointments')
                     .doc(doc.id).get().then((doc) => {
@@ -673,7 +673,7 @@ Card.renderApprovedRequestOutCard = function(doc) {
                         }
                         // Then, if that doc doesn't exist yet, try
                         // the toUser's collections
-                        return firebase.firestore().collection('usersByEmail')
+                        return window.app.db.collection('usersByEmail')
                             .doc(data.for.toUser.email)
                             .collection('appointments')
                             .doc(doc.id).get().then((doc) => {
@@ -1070,13 +1070,13 @@ Card.button = function(label, action) {
 Card.remove = function(doc, type) {
     $('[id="' + doc.id + '"][type="' + type + '"]').remove();
     if (window.app.user.type === 'Supervisor') {
-        return firebase.firestore().collection('usersByEmail').doc(window.app.user.id)
+        return window.app.db.collection('usersByEmail').doc(window.app.user.id)
             .collection('dismissedCards').doc(doc.id).set({
                 type: type,
                 timestamp: new Date(),
             });
     }
-    return firebase.firestore().collection('usersByEmail').doc(window.app.user.id)
+    return window.app.db.collection('usersByEmail').doc(window.app.user.id)
         .collection(type).doc(doc.id).delete();
 };
 
@@ -1087,12 +1087,12 @@ Card.prototype.removeCardDoc = function(type, id) {
         // subcollection that is synced locally. Cards in this collection
         // are not shown in the dashboard view.
         this.dismissedCards.push(type + '-' + id);
-        return firebase.firestore().collection('usersByEmail').doc(app.user.email)
+        return window.app.db.collection('usersByEmail').doc(app.user.email)
             .collection('dismissedCards').doc(type + '-' + id).set({
                 timestamp: new Date()
             });
     } else {
-        return firebase.firestore().collection('usersByEmail').doc(app.user.email)
+        return window.app.db.collection('usersByEmail').doc(app.user.email)
             .collection(type).doc(id).delete();
     }
 };

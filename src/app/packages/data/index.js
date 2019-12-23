@@ -42,14 +42,14 @@ class Data {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
             console.warn('Using an email as a user ID is deprecated.');
-            var ref = await firebase.firestore().collection('usersByEmail').doc(id)
+            var ref = await window.app.db.collection('usersByEmail').doc(id)
                 .get();
         } else if (firebase.auth().currentUser) {
-            var ref = await firebase.firestore().collection('users').doc(
-                (await firebase.firestore().collection('search').doc(id).get())
+            var ref = await window.app.db.collection('users').doc(
+                (await window.app.db.collection('search').doc(id).get())
                 .data().id).get();
         } else {
-            var ref = await firebase.firestore().collection('users').doc(id)
+            var ref = await window.app.db.collection('users').doc(id)
                 .get();
         }
         if (ref.exists) {
@@ -63,7 +63,7 @@ class Data {
     static updateUser(user) {
         if (!user || !(user.id || user.email))
             throw new Error('Could not update user b/c id was undefined.');
-        return firebase.firestore().collection('usersByEmail').doc(user.id ||
+        return window.app.db.collection('usersByEmail').doc(user.id ||
             user.email).update(user);
     }
 
@@ -71,7 +71,7 @@ class Data {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
         }
-        return firebase.firestore().collection('usersByEmail').doc(id)
+        return window.app.db.collection('usersByEmail').doc(id)
             .delete();
     }
 
@@ -81,15 +81,15 @@ class Data {
         } else if (!user.id && !user.uid) {
             throw new Error('Could not create user b/b id was undefined.');
         } else if (user.uid && user.uid !== '') {
-            return firebase.firestore().collection('users').doc(user.uid)
+            return window.app.db.collection('users').doc(user.uid)
                 .set(user);
         } else {
             if (user.id.indexOf('@') > 0) console.warn('Using an email as a ' +
                 'user ID is deprecated.');
-            return firebase.firestore().collection('usersByEmail').doc(user.id)
+            return window.app.db.collection('usersByEmail').doc(user.id)
                 .set(user);
         }
-        return firebase.firestore().collection('users').doc(user.id)
+        return window.app.db.collection('users').doc(user.id)
             .set(user);
     }
 
@@ -214,7 +214,7 @@ class Data {
 
     static async getLocationSupervisor(id) {
         try {
-            const doc = await firebase.firestore().collection('locations')
+            const doc = await window.app.db.collection('locations')
                 .doc(id).get();
             const supervisors = doc.data().supervisors;
             return supervisors[0]; // TODO: How do we check to see if a given
@@ -347,7 +347,7 @@ class Data {
         this.locationDataByID = {};
         this.locationNames = [];
         this.locationIDs = [];
-        const snap = await firebase.firestore().collection('locations').get();
+        const snap = await window.app.db.collection('locations').get();
         snap.docs.forEach((doc) => {
             if (window.app.location.name === 'Any' ||
                 window.app.location.id === doc.id) {

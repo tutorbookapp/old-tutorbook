@@ -226,10 +226,10 @@ class ScheduleCard {
             },
         };
         Utils.recycle({
-            appts: firebase.firestore().collection('locations')
+            appts: window.app.db.collection('locations')
                 .doc(window.app.location.id).collection('appointments')
                 .orderBy('time.from'),
-            activeAppts: firebase.firestore().collection('locations')
+            activeAppts: window.app.db.collection('locations')
                 .doc(window.app.location.id).collection('activeAppointments')
                 .orderBy('time.from'),
         }, recycler);

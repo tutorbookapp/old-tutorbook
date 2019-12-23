@@ -448,10 +448,10 @@ class Search {
     // Gets filtered users based on our filters
     getUsers() {
         if (firebase.auth().currentUser) {
-            var query = firebase.firestore().collection('usersByEmail')
+            var query = window.app.db.collection('usersByEmail')
                 .where('config.showProfile', '==', true);
         } else {
-            var query = firebase.firestore().collection('search');
+            var query = window.app.db.collection('search');
         }
 
         if (this.filters.location !== 'Any') {

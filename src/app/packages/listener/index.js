@@ -39,7 +39,7 @@ class Listener {
                 }, true).view();
             },
         };
-        const db = firebase.firestore().collection('usersByEmail')
+        const db = window.app.db.collection('usersByEmail')
             .doc(window.app.user.id);
         db.collection('clockIns').onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
@@ -104,7 +104,7 @@ class Listener {
                 }, true).view();
             }
         };
-        firebase.firestore().collection('usersByEmail').doc(window.app.user.id)
+        window.app.db.collection('usersByEmail').doc(window.app.user.id)
             .collection('requestedPayments').onSnapshot((snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === 'removed') {

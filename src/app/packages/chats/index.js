@@ -133,7 +133,7 @@ class Chats {
     // Function that returns the user's current chats (we will support filtering
     // chats in the future).
     getChats() {
-        const db = firebase.firestore();
+        const db = window.app.db;
         return db.collection('chats')
             .where('chatterEmails', 'array-contains', window.app.user.email);
     }
@@ -146,12 +146,12 @@ class Chats {
     // Data action function that deletes the chat and TODO: sends out deleted chat
     // notifications to the other users on the chat.
     deleteChat(chat, id) {
-        const db = firebase.firestore();
+        const db = window.app.db;
         return db.collection('chats').doc(id).delete();
     }
 
     getChat(id) {
-        return firebase.firestore().collection('chats').doc(id).get();
+        return window.app.db.collection('chats').doc(id).get();
     }
 
     // Render function that returns a chat list item
@@ -220,7 +220,7 @@ class Chats {
         }
 
         // Second, check if the user already has a chat with the given user
-        const db = firebase.firestore();
+        const db = window.app.db;
         const chats = await db.collection('chats')
             .where('chatterEmails', 'array-contains', window.app.user.email)
             .get();
@@ -413,7 +413,7 @@ class Chat {
 
     // Data action function that gets the messages for the currentChat.
     getMessages() {
-        const db = firebase.firestore();
+        const db = window.app.db;
         return db.collection('chats').doc(this.id).collection('messages')
             .orderBy('timestamp', 'desc')
             .limit(30); // TODO: Add infinite scrolling for past messages
@@ -430,7 +430,7 @@ class Chat {
         if (txt === '') {
             return;
         }
-        const db = firebase.firestore();
+        const db = window.app.db;
         const message = db.collection('chats').doc(this.id)
             .collection('messages').doc();
         await message.set({

@@ -45,6 +45,9 @@ class Tutorbook {
         this.functionsURL = (this.test) ? 'http://localhost:5001/tutorbook-77' +
             '9d8/us-central1' : 'https://us-central1-tutorbook-779d8.cloudfun' +
             'ctions.net';
+        this.db = (this.test) ? firebase.firestore().collection('partitions')
+            .doc('test') : firebase.firestore().collection('partitions')
+            .doc('default');
 
         // Helper packages
         this.render = new Render();
@@ -137,9 +140,9 @@ class Tutorbook {
     }
 
     updateUser(user) {
-        if (!user) return firebase.firestore().collection('users')
+        if (!user) return window.app.db.collection('users')
             .doc(this.user.uid).update(this.user);
-        return firebase.firestore().collection('users').doc(user.uid)
+        return window.app.db.collection('users').doc(user.uid)
     }
 
     signOut() {

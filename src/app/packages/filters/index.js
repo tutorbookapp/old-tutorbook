@@ -400,7 +400,7 @@ class FilterDialog {
 
     async initLocationData() {
         this.locationData = {};
-        const snapshot = await firebase.firestore().collection('locations').get();
+        const snapshot = await window.app.db.collection('locations').get();
         snapshot.forEach((ref) => {
             const location = ref.data();
             this.locationData[location.name] = location;

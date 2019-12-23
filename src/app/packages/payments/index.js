@@ -85,7 +85,7 @@ class Payments {
             'description]=Tutoring%20services%20provided%20via%20' +
             'Tutorbook.&stripe_user[url]=https://tutorbook.app/' +
             'app/users/' + window.app.user.uid;
-        const doc = await firebase.firestore().collection('stripeAccounts')
+        const doc = await window.app.db.collection('stripeAccounts')
             .doc(window.app.user.id).get();
         if (!doc.exists && !window.app.redirectedFromStripe) {
             window.app.user.cards.setupStripe = true;
@@ -304,7 +304,7 @@ class Payments {
 
     viewTransactions() {
         $(this.main).find('#history ul').empty();
-        const db = firebase.firestore().collection('usersByEmail')
+        const db = window.app.db.collection('usersByEmail')
             .doc(window.app.user.id);
         const queries = {
             authPayments: db.collection('authPayments')

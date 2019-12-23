@@ -98,7 +98,7 @@ class Profile {
     async saveImage(file) {
         // 1 - We change the profile image to a loading icon that will get updated 
         // with the shared image.
-        const db = firebase.firestore();
+        const db = window.app.db;
         window.app.snackbar.view('Uploading profile image...');
         this.profile.photo = 'https://tutorbook.app/app/img/loading.gif';
         await window.app.updateUser(this.profile);
