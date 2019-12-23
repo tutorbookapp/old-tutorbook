@@ -1,0 +1,16 @@
+/* Coming Soon CSS */
+.container {
+  width: 600px;
+  margin: 5em auto;
+  padding: 2em;
+  background-color: #fdfdff;
+  border-radius: 0.5em;
+  box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f2;
+  margin: 0;
+  padding: 0;
+}
