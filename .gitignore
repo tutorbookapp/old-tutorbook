@@ -1,3 +1,6 @@
+# Sensitive information on Firestore backups
+firestore-backups
+
 # Vim Swap Files
 *.swo
 *.swp
