@@ -1,9 +1,7 @@
 // Script that adds all relevant objects in Firestore to Algolia indexes
 
-const id = '9FGZL7GIJM';
-const key = 'fb7894893d554015714ca2246b9f2b04';
-//const id = 'TODO: ADD-ALGOLIA-APP-ID-HERE';
-//const key = 'TODO: ADD-ALGOLIA-KEY-HERE';
+const id = 'TODO: ADD-ALGOLIA-APP-ID-HERE';
+const key = 'TODO: ADD-ALGOLIA-KEY-HERE';
 const client = require('algoliasearch')(id, key);
 const serviceAccount = require('../admin-cred.json');
 const admin = require('firebase-admin');
@@ -11,7 +9,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: 'https://tutorbook-779d8.firebaseio.com',
 });
-const db = admin.firestore();
+const db = admin.firestore().collection('partitions').doc('default');
 
 function algolia(doc, indexID) {
     const object = doc.data();
