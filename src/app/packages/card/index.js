@@ -664,8 +664,8 @@ Card.renderApprovedRequestOutCard = function(doc) {
             // Show appointment
             if (window.app.user.type === 'Supervisor') {
                 // First, try the fromUser's collections
-                return window.app.db.collection('usersByEmail')
-                    .doc(data.for.fromUser.email)
+                return window.app.db.collection('users')
+                    .doc(data.for.fromUser.uid)
                     .collection('appointments')
                     .doc(doc.id).get().then((doc) => {
                         if (doc.exists) {
@@ -673,8 +673,8 @@ Card.renderApprovedRequestOutCard = function(doc) {
                         }
                         // Then, if that doc doesn't exist yet, try
                         // the toUser's collections
-                        return window.app.db.collection('usersByEmail')
-                            .doc(data.for.toUser.email)
+                        return window.app.db.collection('users')
+                            .doc(data.for.toUser.uid)
                             .collection('appointments')
                             .doc(doc.id).get().then((doc) => {
                                 if (doc.exists) {
@@ -1070,13 +1070,13 @@ Card.button = function(label, action) {
 Card.remove = function(doc, type) {
     $('[id="' + doc.id + '"][type="' + type + '"]').remove();
     if (window.app.user.type === 'Supervisor') {
-        return window.app.db.collection('usersByEmail').doc(window.app.user.id)
+        return window.app.db.collection('users').doc(window.app.user.uid)
             .collection('dismissedCards').doc(doc.id).set({
                 type: type,
                 timestamp: new Date(),
             });
     }
-    return window.app.db.collection('usersByEmail').doc(window.app.user.id)
+    return window.app.db.collection('users').doc(window.app.user.uid)
         .collection(type).doc(doc.id).delete();
 };
 
@@ -1087,12 +1087,12 @@ Card.prototype.removeCardDoc = function(type, id) {
         // subcollection that is synced locally. Cards in this collection
         // are not shown in the dashboard view.
         this.dismissedCards.push(type + '-' + id);
-        return window.app.db.collection('usersByEmail').doc(app.user.email)
+        return window.app.db.collection('users').doc(window.app.user.uid)
             .collection('dismissedCards').doc(type + '-' + id).set({
                 timestamp: new Date()
             });
     } else {
-        return window.app.db.collection('usersByEmail').doc(app.user.email)
+        return window.app.db.collection('users').doc(window.app.user.uid)
             .collection(type).doc(id).delete();
     }
 };

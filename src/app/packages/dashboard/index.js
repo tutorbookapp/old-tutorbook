@@ -37,7 +37,7 @@ class Dashboard {
         this.dismissedCards = [];
         if (window.app.user.type === 'Supervisor') {
             var that = window.app;
-            return window.app.db.collection('usersByEmail').doc(window.app.user.email)
+            return window.app.db.collection('users').doc(window.app.user.uid)
                 .collection('dismissedCards').get().then((snapshot) => {
                     snapshot.forEach((doc) => {
                         this.dismissedCards.push(doc.id);
@@ -53,7 +53,7 @@ class Dashboard {
         window.app.intercom.view(true);
         window.app.view(this.header, this.main, '/app/home');
         MDCTopAppBar.attachTo(this.header);
-        this.viewDefaultCards(window.app.user.id);
+        this.viewDefaultCards(window.app.user.uid);
     }
 
     reView() {
@@ -62,7 +62,7 @@ class Dashboard {
     }
 
     reViewCards() { // It's too hard to re-add all unique event listeners
-        this.viewDefaultCards(window.app.user.id);
+        this.viewDefaultCards(window.app.user.uid);
     }
 
     renderSelf() {
@@ -81,9 +81,7 @@ class Dashboard {
 
     // Views the default user cards for given userID
     viewDefaultCards(id) {
-        if (!id) {
-            id = window.app.user.id;
-        }
+        if (!id) id = window.app.user.uid;
         this.emptyCards('default');
         [
             'requestsIn',
@@ -98,7 +96,7 @@ class Dashboard {
             'modifiedAppointments',
             'canceledAppointments',
         ].forEach((subcollection) => {
-            const query = window.app.db.collection('usersByEmail')
+            const query = window.app.db.collection('users')
                 .doc(id)
                 .collection(subcollection)
                 .orderBy('timestamp', 'desc');

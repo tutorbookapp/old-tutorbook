@@ -136,8 +136,8 @@ class CanceledAppt extends Event {
             action: async () => {
                 $(this.el).remove();
                 window.app.schedule.refresh();
-                await window.app.db.collection('usersByEmail')
-                    .doc(window.app.user.email)
+                await window.app.db.collection('users')
+                    .doc(window.app.user.uid)
                     .collection('canceledAppointments')
                     .doc(doc.id).delete();
             },
@@ -195,8 +195,8 @@ class ModifiedAppt extends Event {
             action: async () => {
                 $(this.el).remove();
                 window.app.schedule.refresh();
-                await window.app.db.collection('usersByEmail')
-                    .doc(window.app.user.email)
+                await window.app.db.collection('users')
+                    .doc(window.app.user.uid)
                     .collection('modifiedAppointments')
                     .doc(doc.id).delete();
             },

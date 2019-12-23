@@ -39,8 +39,7 @@ class Listener {
                 }, true).view();
             },
         };
-        const db = window.app.db.collection('usersByEmail')
-            .doc(window.app.user.id);
+        const db = window.app.db.collection('users').doc(window.app.user.uid);
         db.collection('clockIns').onSnapshot((snapshot) => {
             snapshot.docChanges().forEach((change) => {
                 if (change.type === 'removed') {
@@ -104,7 +103,7 @@ class Listener {
                 }, true).view();
             }
         };
-        window.app.db.collection('usersByEmail').doc(window.app.user.id)
+        window.app.db.collection('users').doc(window.app.user.uid)
             .collection('requestedPayments').onSnapshot((snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === 'removed') {

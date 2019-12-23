@@ -304,8 +304,8 @@ class Payments {
 
     viewTransactions() {
         $(this.main).find('#history ul').empty();
-        const db = window.app.db.collection('usersByEmail')
-            .doc(window.app.user.id);
+        const db = window.app.db.collection('users')
+            .doc(window.app.user.uid);
         const queries = {
             authPayments: db.collection('authPayments')
                 .orderBy('timestamp', 'desc'),

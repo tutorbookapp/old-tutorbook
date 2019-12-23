@@ -112,8 +112,8 @@ class Schedule {
     reViewAppts() {}
 
     viewAppts() {
-        const db = window.app.db.collection('usersByEmail')
-            .doc(window.app.user.id); // TODO: Add proxy results too 
+        const db = window.app.db.collection('users')
+            .doc(window.app.user.uid); // TODO: Add proxy results too 
         const queries = {
             appointments: db.collection('appointments')
                 .orderBy('timestamp', 'desc'),
@@ -130,8 +130,8 @@ class Schedule {
     }
 
     loadMore() {
-        const db = window.app.db.collection('usersByEmail')
-            .doc(window.app.user.id); // TODO: Add proxy results too 
+        const db = window.app.db.collection('users')
+            .doc(window.app.user.uid); // TODO: Add proxy results too 
         this.limit += 10;
         Utils.recycle({
             pastAppointments: db.collection('pastAppointments')

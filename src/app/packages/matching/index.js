@@ -136,8 +136,8 @@ class Matching {
 
     async initDismissedCards() {
         this.dismissed = {};
-        const cards = await window.app.db.collection('usersByEmail')
-            .doc(window.app.user.id).collection('dismissedCards').get();
+        const cards = await window.app.db.collection('users')
+            .doc(window.app.user.uid).collection('dismissedCards').get();
         cards.forEach((card) => {
             if (!this.dismissed[card.data().type])
                 this.dismissed[card.data().type] = [];
@@ -387,7 +387,7 @@ class Matching {
         // Shows unmatched tutors/pupils and matched tutors/pupils (who haven't 
         // created past appts).
         await this.initDismissedCards();
-        window.app.db.collection('usersByEmail')
+        window.app.db.collection('users')
             .where('proxy', 'array-contains', window.app.user.email)
             .onSnapshot((snapshot) => {
                 if (!snapshot.size) {
@@ -415,7 +415,7 @@ class Matching {
             'approvedRequestsOut',
             'rejectedRequestsOut',
         ].forEach((subcollection) => {
-            this.queries[id].push(window.app.db.collection('usersByEmail').doc(id)
+            this.queries[id].push(window.app.db.collection('users').doc(id)
                 .collection(subcollection).onSnapshot((snapshot) => {
                     if (!snapshot.size) {
                         return this.matchesRecycler.empty(subcollection, id);
