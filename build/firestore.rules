@@ -3,7 +3,7 @@
 rules_version = '2'; // For Firestore collectionGroup queries
 
 service cloud.firestore {
-  match /databases/{database}/documents {
+  match /databases/{database}/documents/partitions/{partition} {
 
     // [SPECIAL ACCESS]
     match /auth/{document=**} {
