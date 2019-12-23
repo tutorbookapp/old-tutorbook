@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const db = admin.firestore().collection('partitions').doc('default');
 const axios = require('axios');
 const to = require('await-to-js').default;
 const stripe = require('stripe')(functions.config().stripe.key);
@@ -15,7 +16,7 @@ const accountURL = (req, res) => {
     return cors(req, res, async () => { // Cannot use async in CORS function
         console.log('Creating Stripe Express Account (' + req.query.id +
             ') login link...');
-        const doc = await admin.firestore().collection('stripeAccounts')
+        const doc = await db.collection('stripeAccounts')
             .doc(req.query.id).get(); // stripeAccounts are for paid tutors
         if (!doc.exists) {
             throw new Error('Account (' + req.query.id + ') did not exist.');
@@ -38,7 +39,7 @@ const accountURL = (req, res) => {
 const initAccount = (req, res) => {
     return cors(req, res, () => {
         console.log('Initializing Stripe account for ' + req.query.id + '...');
-        const ref = admin.firestore().collection('stripeAccounts')
+        const ref = db.collection('stripeAccounts')
             .doc(req.query.id); // stripeAccounts are for paid tutors
         return axios({
             method: 'POST',
@@ -74,7 +75,6 @@ const initAccount = (req, res) => {
 const processSentPayment = async (snap, context) => {
     const payment = snap.data();
     const id = context.params.payment;
-    const db = admin.firestore();
 
     // Sends user error message and asks for different payment method
     async function error(err) {
@@ -157,9 +157,9 @@ const processPastAppt = (snap, context) => {
     const request = appt.for;
     const id = context.params.appt;
     const pendingPayments = [
-        admin.firestore().collection('users').doc(request.fromUser.email)
+        db.collection('users').doc(request.fromUser.email)
         .collection('pendingPayments').doc(id),
-        admin.firestore().collection('users').doc(request.toUser.email)
+        db.collection('users').doc(request.toUser.email)
         .collection('pendingPayments').doc(id),
     ];
     return pendingPayments.forEach(async (doc) => {
@@ -179,7 +179,6 @@ const processPastAppt = (snap, context) => {
 // 2) Delete approvedPayment docs and create pastPayment docs
 const processApprovedPayment = async (snap, context) => {
     const payment = snap.data();
-    const db = admin.firestore();
     const id = context.params.payment;
     const user = context.params.user;
     if (user !== payment.from.email) {
@@ -233,12 +232,12 @@ const processApprovedPayment = async (snap, context) => {
 const processRequestedPayout = async (snap, context) => {
     const user = context.params.tutor;
     const payout = snap.data();
-    const account = await admin.firestore().collection('stripeAccounts')
+    const account = await db.collection('stripeAccounts')
         .doc(user).get();
     console.log('Creating payout for user (' + user + ') with account (' +
         account.data().id + ')...');
     // Grab all pastPayments that occurred after the payout request timestamp
-    const pastPayments = await admin.firestore().collection('users').doc(user)
+    const pastPayments = await db.collection('users').doc(user)
         .collection('pastPayments').orderBy('timestamp', 'desc').get();
     var amount = 0; // In cents
     pastPayments.forEach(async (payment) => {
@@ -257,9 +256,9 @@ const processRequestedPayout = async (snap, context) => {
     }, {
         stripe_account: account.data().id,
     });
-    const requestedPayoutDoc = admin.firestore().collection('users').doc(user)
+    const requestedPayoutDoc = db.collection('users').doc(user)
         .collection('requestedPayouts').doc(context.params.payout);
-    const pastPayoutDoc = admin.firestore().collection('users').doc(user)
+    const pastPayoutDoc = db.collection('users').doc(user)
         .collection('pastPayouts').doc();
     await requestedPayoutDoc.delete();
     await payoutDoc.set({
@@ -301,9 +300,9 @@ const updateBalance = async (snap, context) => {
 
 // Add payment methods to Stripe Customer profile
 const addMethod = async (method, userID) => {
-    const db = admin.firestore().collection('stripeCustomers')
+    const custDoc = db.collection('stripeCustomers')
         .doc(userID);
-    const user = await db.get();
+    const user = await custDoc.get();
     console.log('Adding payment method (' + method.id + ') to user (' +
         user.id + ')...');
     if (user.exists) { // Update existing customer
@@ -313,10 +312,10 @@ const addMethod = async (method, userID) => {
             source: method.id,
         });
         console.log('Adding card (' + card.id + ') doc...');
-        await db.collection('cards').doc(card.id).set(card);
+        await custDoc.collection('cards').doc(card.id).set(card);
         const customer = await stripe.customers.retrieve(user.data().id);
         console.log('Updating customer (' + user.id + ') doc...');
-        await db.update(customer);
+        await custDoc.update(customer);
     } else { // Create new customer
         console.log('User (' + user.id +
             ') does not exist, creating new customer and source...');
@@ -325,13 +324,13 @@ const addMethod = async (method, userID) => {
             email: user.id,
         });
         console.log('Adding customer (' + user.id + ') doc...');
-        await db.set(newCustomer); // Next, retrieve and add the new card
+        await custDoc.set(newCustomer); // Next, retrieve and add the new card
         const newCard = await stripe.customers.retrieveSource(
             newCustomer.id,
             newCustomer.default_source
         );
         console.log('Adding card (' + newCard.id + ') doc...');
-        await db.collection('cards').doc(newCard.id).set(newCard);
+        await custDoc.collection('cards').doc(newCard.id).set(newCard);
     }
 };
 

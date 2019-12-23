@@ -1,10 +1,11 @@
 const axios = require('axios');
 const admin = require('firebase-admin');
+const db = admin.firestore().collection('partitions').doc('default');
 
 const updateHours = async (appt, context) => {
     const durationInSecs = (appt.data().clockOut.sentTimestamp.toDate() -
         appt.data().clockIn.sentTimestamp.toDate()) / 1000;
-    const user = (await admin.firestore().collection('users')
+    const user = (await db.collection('users')
         .doc(context.params.user).get()).data();
 
     switch (user.type) {
@@ -22,7 +23,7 @@ const updateHours = async (appt, context) => {
     }
 
     console.log('Updating (' + user.type + ') seconds for ' + user.name + '...');
-    await admin.firestore().collection('users').doc(context.params.user)
+    await db.collection('users').doc(context.params.user)
         .update(user);
     console.log('Updating service hour sheet...');
     await axios({

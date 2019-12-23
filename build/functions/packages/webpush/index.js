@@ -1,5 +1,5 @@
 const admin = require('firebase-admin'); // Initialized in ../index.js
-
+const db = admin.firestore().collection('partitions').doc('default');
 
 class Webpush {
 
@@ -9,7 +9,7 @@ class Webpush {
         } else if (!body || body === '' || typeof body !== 'string') {
             throw new Error('Webpush must have a valid body.');
         }
-        admin.firestore().collection('users') // Constructor can't be async
+        db.collection('users') // Constructor can't be async
             .doc(id).get().then((userRef) => {
                 const token = userRef.data().notificationToken;
                 this.id = id;

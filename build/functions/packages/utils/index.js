@@ -1,4 +1,5 @@
-const db = require('firebase-admin').firestore();
+const db = require('firebase-admin').firestore().collection('partitions')
+    .doc('default');
 
 class Utils {
 

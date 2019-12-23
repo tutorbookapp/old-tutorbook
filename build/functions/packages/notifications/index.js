@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+const db = admin.firestore().collection('partitions').doc('default');
 const cors = require('cors')({
     origin: true,
 });
@@ -38,7 +39,7 @@ const apptNotification = (req, res) => {
             res.send('[ERROR] Please specify who to send notifications to.');
             return console.warn('Request did not send any notifications.');
         }
-        const db = admin.firestore().collection('users');
+        const db = db.collection('users');
         const token = await admin.auth().verifyIdToken(req.query.token);
         if (!token.supervisor) {
             res.send('[ERROR] Invalid supervisor authentication token.');
@@ -49,7 +50,7 @@ const apptNotification = (req, res) => {
         const tutors = [];
         const pupils = [];
         const appts = [];
-        (await admin.firestore()
+        (await db
             .collectionGroup('appointments')
             .where('location.id', '==', req.query.location)
             .where('time.day', '==', upper(req.query.day)).get()
@@ -101,7 +102,7 @@ const userNotification = async (snap, context) => {
 
 // messages - sms, webpush for new messages
 const messageNotification = async (snap, context) => {
-    const chat = await admin.firestore().collection('chats')
+    const chat = await db.collection('chats')
         .doc(context.params.chat).get();
     return chat.data().chatterEmails.forEach(async (email) => {
         if (email !== snap.data().sentBy.email) {
@@ -112,7 +113,7 @@ const messageNotification = async (snap, context) => {
                     id: context.params.chat
                 },
             );
-            await new SMS((await admin.firestore().collection('users')
+            await new SMS((await db.collection('users')
                     .doc(email).get()).data(),
                 'Message from ' + snap.data().sentBy.name.split(' ')[0] +
                 ': ' + snap.data().message
@@ -156,12 +157,12 @@ const feedbackNotification = async (snap, context) => {
 // appts - email location rules to new 'tutor matches'
 const rulesNotification = async (snap, context) => {
     const appt = snap.data();
-    const users = admin.firestore().collection('users');
+    const users = db.collection('users');
     const tutor = (await users
         .doc(appt.for.toUser.id || appt.for.toUser.email).get()).data();
     const pupil = (await users
         .doc(appt.for.fromUser.id || appt.for.fromUser.email).get()).data();
-    const supervisorId = (await admin.firestore().collection('locations')
+    const supervisorId = (await db.collection('locations')
         .doc(context.params.location).get()).data().supervisors[0];
     const supervisor = (await users.doc(supervisorId).get()).data();
     [tutor, pupil, supervisor].forEach(async (user) => {
@@ -177,7 +178,7 @@ const rulesNotification = async (snap, context) => {
 // requestsIn - sms, webpush, email to tutor for new requests
 const requestNotification = async (snap, context) => {
     const request = snap.data();
-    const user = await admin.firestore().collection('users')
+    const user = await db.collection('users')
         .doc(context.params.user).get();
     const summary = request.fromUser.name + ' wants you as a ' +
         request.toUser.type.toLowerCase() + ' for ' + request.subject +
@@ -193,7 +194,7 @@ const requestNotification = async (snap, context) => {
 const approvedRequestNotification = async (snap, context) => {
     const approvedBy = snap.data().approvedBy;
     const request = snap.data().for;
-    const user = await admin.firestore().collection('users')
+    const user = await db.collection('users')
         .doc(context.params.user).get();
     const summary = approvedBy.name + ' approved your lesson request. You' +
         ' now have tutoring appointments for ' + request.subject +

@@ -1,4 +1,5 @@
 const admin = require('firebase-admin');
+const db = admin.firestore().collection('partitions').doc('default');
 const to = require('await-to-js').default;
 const cors = require('cors')({
     origin: true,
@@ -32,7 +33,7 @@ function getName(name) { // Returns first name with last initial
 const getEmailFromPhone = (req, res) => {
     return cors(req, res, async () => {
         const emails = [];
-        (await admin.firestore().collection('users')
+        (await db.collection('users')
             .where('phone', '==', req.query.phone).limit(1).get()
         ).forEach((doc) => {
             emails.push(doc.id);
@@ -45,16 +46,16 @@ const getEmailFromPhone = (req, res) => {
 // to the `search` collection (that anyone can read).
 const updateSearch = async (change, context) => {
     const profile = change.after.data();
-    const db = admin.firestore().collection('search');
+    const search = db.collection('search');
     if (!profile) {
         const before = change.before.data();
         console.log('User doc (' + before.email + ') was deleted.');
         if (before.uid &&
             before.uid !== '' &&
-            (await db.doc(before.uid).get()).exists
+            (await search.doc(before.uid).get()).exists
         ) {
             console.log('Deleting (' + before.email + ') search doc...');
-            return db.doc(before.uid).delete();
+            return search.doc(before.uid).delete();
         }
         return;
     }
@@ -62,10 +63,10 @@ const updateSearch = async (change, context) => {
         console.log('Hiding (' + profile.email + ') search doc...');
         if (profile.uid &&
             profile.uid !== '' &&
-            (await db.doc(profile.uid).get()).exists
+            (await search.doc(profile.uid).get()).exists
         ) {
             console.log('Deleting (' + profile.email + ') search doc...');
-            return db.doc(profile.uid).delete();
+            return search.doc(profile.uid).delete();
         }
         return;
     }
@@ -74,7 +75,7 @@ const updateSearch = async (change, context) => {
         profile.uid = await getUID(profile);
         if (!profile.uid) return console.warn('Could not get uID. You\'re ' +
             'probably running tests with a local functions emulator.');
-        await admin.firestore().collection('users').doc(context.params.id)
+        await search.collection('users').doc(context.params.id)
             .update({
                 uid: profile.uid
             });
@@ -128,7 +129,7 @@ const updateSearch = async (change, context) => {
         },
     };
     console.log('Updating (' + profile.email + ') search doc...');
-    return db.doc(profile.uid).set(filtered);
+    return search.doc(profile.uid).set(filtered);
 };
 
 

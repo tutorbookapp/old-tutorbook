@@ -24,10 +24,10 @@ const updateAuth = async (change, context) => {
     } else if (!profile.uid || profile.uid === '') {
         return console.warn('User (' + id + ') did not have a uID.');
     }
-    const db = admin.firestore();
+    const db = admin.firestore().collection('partitions').doc('default');
 
     // Check to see if the supervisor's id is in the codes collection
-    const supervisorCodes = await admin.firestore().collection('auth')
+    const supervisorCodes = await db.collection('auth')
         .doc('supervisors')
         .get();
     var validIDs = [];
