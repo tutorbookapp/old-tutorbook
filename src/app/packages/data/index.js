@@ -63,8 +63,8 @@ class Data {
     static updateUser(user) {
         if (!user || !(user.id || user.email))
             throw new Error('Could not update user b/c id was undefined.');
-        return firebase.firestore().collection('usersByEmail').doc(user.id || user.email)
-            .update(user);
+        return firebase.firestore().collection('usersByEmail').doc(user.id ||
+            user.email).update(user);
     }
 
     static deleteUser(id) {
