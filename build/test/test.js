@@ -1,3 +1,67 @@
+// =============================================================================
+// CONFIG VARIABLES
+// =============================================================================
+
+const LOCATION = {
+    name: 'Gunn Academic Center',
+    id: 'NJp0Y6wyMh2fDdxSuRSx',
+};
+const TUTOR = {
+    name: 'Tutor Tutorbook',
+    email: 'tutor@tutorbook.app',
+    id: 'tutor@tutorbook.app',
+    uid: 'l9oxeZesaQXsBh4guDGJzHdNJlw2',
+    type: 'Tutor',
+    gender: 'Male',
+    config: {
+        showProfile: true,
+    },
+    payments: {
+        currentBalance: 0,
+        currentBalanceString: '$0.00',
+    },
+    secondsPupiled: 0,
+    secondsTutored: 0,
+};
+const PUPIL = {
+    name: 'Pupil Tutorbook',
+    email: 'pupil@tutorbook.app',
+    id: 'pupil@tutorbook.app',
+    uid: 'HBnt90xkbOW9GMZGJCacbqnK2hI3',
+    type: 'Pupil',
+    gender: 'Male',
+    config: {
+        showProfile: true,
+    },
+    payments: {
+        currentBalance: 0,
+        currentBalanceString: '$0.00',
+    },
+    secondsPupiled: 0,
+    secondsTutored: 0,
+};
+const SUPERVISOR = {
+    name: 'Supervisor Tutorbook',
+    email: 'supervisor@tutorbook.app',
+    id: 'supervisor@tutorbook.app',
+    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+    type: 'Supervisor',
+    gender: 'Female',
+    config: {
+        showProfile: true,
+    },
+    payments: {
+        currentBalance: 0,
+        currentBalanceString: '$0.00',
+    },
+    secondsPupiled: 0,
+    secondsTutored: 0,
+};
+
+// =============================================================================
+// DEPENDENCIES
+// =============================================================================
+
 const assert = require('assert');
 const axios = require('axios');
 const firebaseApp = require('firebase').initializeApp({
@@ -16,6 +80,10 @@ const firebasePort = require("../firebase.json").emulators.firestore.port;
 const port = !!firebasePort ? firebasePort : 8080;
 const coverageUrl = `http://localhost:${port}/emulator/v1/projects/${projectId}:ruleCoverage.html`;
 const rules = fs.readFileSync("firestore.rules", "utf8");
+
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
 
 function authedApp(auth) {
     return firebase.initializeTestApp({
@@ -57,37 +125,39 @@ after(async () => {
     console.log(`View rule coverage information at ${coverageUrl}\n`);
 });
 
+// =============================================================================
+// FIRESTORE RULES TESTS
+// =============================================================================
+
 describe("Tutorbook", () => {
-    // ========================================================================
-    // PROFILE DATA FLOW
-    // ========================================================================
+
     it("requires users to log in before creating a profile", async () => {
         const db = authedApp(null);
         await Promise.all([
-            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
-            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+            db.collection("usersByEmail").doc(PUPIL.email),
+            db.collection("users").doc(PUPIL.uid),
         ].map(async (profile) => {
             await firebase.assertFails(profile.set({
-                type: "Pupil"
+                type: PUPIL.type
             }));
         }));
     });
 
     it("does not let users change their balance or secondsTutored/Pupiled", async () => {
         const db = authedApp({
-            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
-            email: "pupil@tutorbook.me"
+            uid: PUPIL.uid,
+            email: PUPIL.email
         });
         await Promise.all([
-            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
-            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+            db.collection("usersByEmail").doc(PUPIL.email),
+            db.collection("users").doc(PUPIL.uid),
         ].map(async (profile) => {
             await firebase.assertFails(profile.set({
-                type: "Pupil"
+                type: PUPIL.type
             }));
             await firebase.assertSucceeds(
                 profile.set({
-                    type: "Pupil",
+                    type: PUPIL.type,
                     payments: {
                         currentBalance: 0,
                         currentBalanceString: '$0.00',
@@ -101,17 +171,17 @@ describe("Tutorbook", () => {
 
     async function createProfiles() {
         var db = authedApp({
-            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
-            email: "pupil@tutorbook.me"
+            uid: PUPIL.uid,
+            email: PUPIL.email
         });
         await Promise.all([
-            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
-            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+            db.collection("usersByEmail").doc(PUPIL.email),
+            db.collection("users").doc(PUPIL.uid),
         ].map(async (profile) => {
             await firebase.assertSucceeds(profile.set({
-                name: "Pupil Tutorbook",
-                gender: "Male",
-                type: "Pupil",
+                name: PUPIL.name,
+                gender: PUPIL.gender,
+                type: PUPIL.type,
                 payments: {
                     currentBalance: 0,
                     currentBalanceString: '$0.00',
@@ -121,17 +191,17 @@ describe("Tutorbook", () => {
             }));
         }));
         db = authedApp({
-            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
-            email: "tutor@tutorbook.me"
+            uid: PUPIL.uid,
+            email: TUTOR.email
         });
         await Promise.all([
-            db.collection("usersByEmail").doc("tutor@tutorbook.me"),
-            db.collection("users").doc("l9oxeZesaQXsBh4guDGJzHdNJlw2"),
+            db.collection("usersByEmail").doc(TUTOR.email),
+            db.collection("users").doc(TUTOR.uid),
         ].map(async (profile) => {
             await firebase.assertSucceeds(profile.set({
-                name: "Tutor Tutorbook",
-                gender: "Male",
-                type: "Tutor",
+                name: TUTOR.name,
+                gender: TUTOR.gender,
+                type: TUTOR.type,
                 payments: {
                     currentBalance: 0,
                     currentBalanceString: '$0.00',
@@ -144,17 +214,17 @@ describe("Tutorbook", () => {
 
     async function createSupervisorProfile() {
         const db = authedApp({
-            uid: "OAmavOtc6GcL2BuxFJu4sd5rwDu1",
-            email: "supervisor@tutorbook.me"
+            uid: SUPERVISOR.uid,
+            email: SUPERVISOR.email
         });
         await Promise.all([
-            db.collection("usersByEmail").doc("supervisor@tutorbook.me"),
-            db.collection("users").doc("OAmavOtc6GcL2BuxFJu4sd5rwDu1"),
+            db.collection("usersByEmail").doc(SUPERVISOR.email),
+            db.collection("users").doc(SUPERVISOR.uid),
         ].map(async (profile) => {
             await firebase.assertSucceeds(profile.set({
-                name: "Supervisor Tutorbook",
-                gender: "Male",
-                type: "Supervisor",
+                name: SUPERVISOR.name,
+                gender: SUPERVISOR.gender,
+                type: SUPERVISOR.type,
                 payments: {
                     currentBalance: 0,
                     currentBalanceString: '$0.00',
@@ -167,15 +237,15 @@ describe("Tutorbook", () => {
 
     it("only lets users create their own profile", async () => {
         const db = authedApp({
-            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
-            email: "pupil@tutorbook.me"
+            uid: PUPIL.uid,
+            email: PUPIL.email
         });
         await Promise.all([
-            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
-            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+            db.collection("usersByEmail").doc(PUPIL.email),
+            db.collection("users").doc(PUPIL.uid),
         ].map(async (profile) => {
             await firebase.assertSucceeds(profile.set({
-                type: "Pupil",
+                type: PUPIL.type,
                 payments: {
                     currentBalance: 0,
                     currentBalanceString: '$0.00',
@@ -185,11 +255,11 @@ describe("Tutorbook", () => {
             }));
         }));
         await Promise.all([
-            db.collection("usersByEmail").doc("tutor@tutorbook.me"),
-            db.collection("users").doc("l9oxeZesaQXsBh4guDGJzHdNJlw2"),
+            db.collection("usersByEmail").doc(TUTOR.email),
+            db.collection("users").doc(TUTOR.uid),
         ].map(async (profile) => {
             await firebase.assertFails(profile.set({
-                type: "Tutor",
+                type: TUTOR.type,
                 payments: {
                     currentBalance: 0,
                     currentBalanceString: '$0.00',
@@ -202,15 +272,19 @@ describe("Tutorbook", () => {
 
     it("lets any logged in user read any profile", async () => {
         const db = authedApp({
-            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
-            email: "pupil@tutorbook.me"
+            uid: PUPIL.uid,
+            email: PUPIL.email
         });
         await Promise.all([
-            db.collection("usersByEmail").doc("tutor@tutorbook.me"),
-            db.collection("users").doc("l9oxeZesaQXsBh4guDGJzHdNJlw2"),
+            db.collection("usersByEmail").doc(TUTOR.email),
+            db.collection("users").doc(TUTOR.uid),
         ].map(async (profile) => await firebase.assertSucceeds(profile.get())));
     });
 });
+
+// =============================================================================
+// REST API TESTS
+// =============================================================================
 
 describe("Tutorbook's REST API", () => {
     async function getToken(user) {
@@ -219,6 +293,7 @@ describe("Tutorbook's REST API", () => {
             url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/auth',
             params: {
                 user: user,
+                token: process.env.TUTORBOOK_TEST_GET_AUTH_TOKEN,
             },
         });
         if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
@@ -247,56 +322,11 @@ describe("Tutorbook's REST API", () => {
         });
     };
 
-    // ========================================================================
+    // =========================================================================
     // USERs
-    // ========================================================================
+    // =========================================================================
     async function createUsers() {
-        const users = [{
-            name: 'Tutor Tutorbook',
-            email: 'tutor@tutorbook.app',
-            id: 'tutor@tutorbook.app',
-            uid: 'l9oxeZesaQXsBh4guDGJzHdNJlw2',
-            type: 'Tutor',
-            config: {
-                showProfile: true,
-            },
-            payments: {
-                currentBalance: 0,
-                currentBalanceString: '$0.00',
-            },
-            secondsPupiled: 0,
-            secondsTutored: 0,
-        }, {
-            name: 'Pupil Tutorbook',
-            email: 'pupil@tutorbook.app',
-            id: 'pupil@tutorbook.app',
-            uid: 'HBnt90xkbOW9GMZGJCacbqnK2hI3',
-            type: 'Pupil',
-            config: {
-                showProfile: true,
-            },
-            payments: {
-                currentBalance: 0,
-                currentBalanceString: '$0.00',
-            },
-            secondsPupiled: 0,
-            secondsTutored: 0,
-        }, {
-            name: 'Supervisor Tutorbook',
-            email: 'supervisor@tutorbook.app',
-            id: 'supervisor@tutorbook.app',
-            uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
-            type: 'Supervisor',
-            config: {
-                showProfile: true,
-            },
-            payments: {
-                currentBalance: 0,
-                currentBalanceString: '$0.00',
-            },
-            secondsPupiled: 0,
-            secondsTutored: 0,
-        }];
+        const users = [TUTOR, PUPIL, SUPERVISOR];
         await Promise.all(users.map(async (user) => {
             const db = authedApp({
                 uid: user.uid,
@@ -311,23 +341,25 @@ describe("Tutorbook's REST API", () => {
         }));
     };
 
-    // ========================================================================
+    // =========================================================================
     // REQUESTs
-    // ========================================================================
+    // =========================================================================
     async function createRequest(user) {
         await createUsers();
         const request = {
             fromUser: {
-                email: 'pupil@tutorbook.app',
-                name: 'Pupil Tutorbook',
-                type: 'Pupil',
-                gender: 'Male',
+                email: PUPIL.email,
+                uid: PUPIL.uid,
+                name: PUPIL.name,
+                type: PUPIL.type,
+                gender: PUPIL.gender,
             },
             toUser: {
-                email: 'tutor@tutorbook.app',
-                name: 'Tutor Tutorbook',
-                type: 'Tutor',
-                gender: 'Male',
+                email: TUTOR.email,
+                uid: TUTOR.uid,
+                name: TUTOR.name,
+                type: TUTOR.type,
+                gender: TUTOR.gender,
             },
             subject: 'Computer Science',
             time: {
@@ -336,8 +368,8 @@ describe("Tutorbook's REST API", () => {
                 to: '3:45 PM',
             },
             location: {
-                name: 'Gunn Academic Center',
-                id: 'NJp0Y6wyMh2fDdxSuRSx',
+                name: LOCATION.name,
+                id: LOCATION.id,
             },
             payment: {
                 type: 'Free',
@@ -346,7 +378,7 @@ describe("Tutorbook's REST API", () => {
             },
             timestamp: new Date(),
         };
-        const res = await post(user || 'pupil@tutorbook.app', 'newRequest', {
+        const res = await post(user || PUPIL.email, 'newRequest', {
             request: request,
             payment: {}
         });
@@ -360,7 +392,7 @@ describe("Tutorbook's REST API", () => {
     it("lets the sender modify a request", async () => {
         [request, id] = await createRequest();
         request.time.day = 'Wednesday';
-        return post('pupil@tutorbook.app', 'modifyRequest', {
+        return post(PUPIL.email, 'modifyRequest', {
             request: request,
             id: id,
         });
@@ -369,7 +401,7 @@ describe("Tutorbook's REST API", () => {
     it("lets the receiver modify a request", async () => {
         [request, id] = await createRequest();
         request.time.day = 'Wednesday';
-        return post('tutor@tutorbook.app', 'modifyRequest', {
+        return post(TUTOR.email, 'modifyRequest', {
             request: request,
             id: id,
         });
@@ -377,7 +409,7 @@ describe("Tutorbook's REST API", () => {
 
     it("lets the sender cancel a request", async () => {
         [request, id] = await createRequest();
-        return post('pupil@tutorbook.app', 'cancelRequest', {
+        return post(PUPIL.email, 'cancelRequest', {
             request: request,
             id: id,
         });
@@ -385,7 +417,7 @@ describe("Tutorbook's REST API", () => {
 
     it("lets the receiver reject a request", async () => {
         [request, id] = await createRequest();
-        return post('tutor@tutorbook.app', 'rejectRequest', {
+        return post(TUTOR.email, 'rejectRequest', {
             request: request,
             id: id,
         });
@@ -394,7 +426,7 @@ describe("Tutorbook's REST API", () => {
     async function approveRequest(user) {
         [request, id] = await createRequest(user);
         const res = await post(
-            user || 'tutor@tutorbook.app',
+            user || TUTOR.email,
             'approveRequest', {
                 request: request,
                 id: id,
@@ -407,50 +439,50 @@ describe("Tutorbook's REST API", () => {
     });
 
     it("lets supervisors create requests", () => {
-        return createRequest('supervisor@tutorbook.app');
+        return createRequest(SUPERVISOR.email);
     });
 
     it("lets supervisors modify requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
+        [request, id] = await createRequest(SUPERVISOR.email);
         request.time.day = 'Wednesday';
-        return post('supervisor@tutorbook.app', 'modifyRequest', {
+        return post(SUPERVISOR.email, 'modifyRequest', {
             request: request,
             id: id,
         });
     });
 
     it("lets supervisors cancel requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        return post('supervisor@tutorbook.app', 'cancelRequest', {
+        [request, id] = await createRequest(SUPERVISOR.email);
+        return post(SUPERVISOR.email, 'cancelRequest', {
             request: request,
             id: id,
         });
     });
 
     it("lets supervisors reject requests", async () => {
-        [request, id] = await createRequest('supervisor@tutorbook.app');
-        return post('supervisor@tutorbook.app', 'rejectRequest', {
+        [request, id] = await createRequest(SUPERVISOR.email);
+        return post(SUPERVISOR.email, 'rejectRequest', {
             request: request,
             id: id,
         });
     });
 
     it("lets supervisors approve requests", () => {
-        return approveRequest('supervisor@tutorbook.app');
+        return approveRequest(SUPERVISOR.email);
     });
 
-    // ========================================================================
+    // =========================================================================
     // APPOINTMENTs
-    // ========================================================================
+    // =========================================================================
     it("lets attendees modify appointments", async () => {
         [appt, id] = await approveRequest();
         appt.time.day = 'Wednesday';
-        await post('tutor@tutorbook.app', 'modifyAppt', {
+        await post(TUTOR.email, 'modifyAppt', {
             appt: appt,
             id: id,
         });
         appt.time.day = 'Thursday';
-        return post('pupil@tutorbook.app', 'modifyAppt', {
+        return post(PUPIL.email, 'modifyAppt', {
             appt: appt,
             id: id,
         });
@@ -458,12 +490,12 @@ describe("Tutorbook's REST API", () => {
 
     it("lets attendees cancel appointments", async () => {
         [appt, id] = await approveRequest();
-        await post('tutor@tutorbook.app', 'cancelAppt', {
+        await post(TUTOR.email, 'cancelAppt', {
             appt: appt,
             id: id,
         });
         [appt, id] = await approveRequest();
-        return post('pupil@tutorbook.app', 'cancelAppt', {
+        return post(PUPIL.email, 'cancelAppt', {
             appt: appt,
             id: id,
         });
@@ -472,7 +504,7 @@ describe("Tutorbook's REST API", () => {
     it("lets supervisors modify appointments", async () => {
         [appt, id] = await approveRequest();
         appt.time.day = 'Wednesday';
-        return post('supervisor@tutorbook.app', 'modifyAppt', {
+        return post(SUPERVISOR.email, 'modifyAppt', {
             appt: appt,
             id: id,
         });
@@ -480,32 +512,32 @@ describe("Tutorbook's REST API", () => {
 
     it("lets supervisors cancel appointments", async () => {
         [appt, id] = await approveRequest();
-        return post('supervisor@tutorbook.app', 'cancelAppt', {
+        return post(SUPERVISOR.email, 'cancelAppt', {
             appt: appt,
             id: id,
         });
     });
 
-    // ========================================================================
+    // =========================================================================
     // CLOCK-INs/OUTs
-    // ========================================================================
+    // =========================================================================
     function createLocation() {
         const location = {
-            supervisors: ['supervisor@tutorbook.app'],
+            supervisors: [SUPERVISOR.email],
             city: 'Palo Alto, CA',
-            name: 'Gunn Academic Center',
+            name: LOCATION.name,
             timestamp: new Date(),
         };
-        return post('supervisor@tutorbook.app', 'createLocation', {
+        return post(SUPERVISOR.email, 'createLocation', {
             location: location,
-            id: 'NJp0Y6wyMh2fDdxSuRSx',
+            id: LOCATION.id,
         });
     };
 
     async function clockIn(user) {
         [appt, id] = await approveRequest(user);
         await createLocation(); // Determines who to send clocking request(s)
-        const res = await post(user || 'tutor@tutorbook.app', 'clockIn', {
+        const res = await post(user || TUTOR.email, 'clockIn', {
             appt: appt,
             id: id,
         });
@@ -517,12 +549,12 @@ describe("Tutorbook's REST API", () => {
     });
 
     it("lets supervisors clock tutors into appointments", () => {
-        return clockIn('supervisor@tutorbook.app');
+        return clockIn(SUPERVISOR.email);
     });
 
     async function approveClockIn(user) {
         [clockInData, id] = await clockIn(user);
-        const res = await post(user || 'supervisor@tutorbook.app',
+        const res = await post(user || SUPERVISOR.email,
             'approveClockIn', {
                 clockIn: clockInData,
                 id: id,
@@ -536,7 +568,7 @@ describe("Tutorbook's REST API", () => {
 
     async function clockOut(user) {
         [appt, id] = await approveClockIn(user);
-        const res = await post(user || 'tutor@tutorbook.app', 'clockOut', {
+        const res = await post(user || TUTOR.email, 'clockOut', {
             appt: appt,
             id: id,
         });
@@ -548,7 +580,7 @@ describe("Tutorbook's REST API", () => {
     });
 
     it("lets supervisors clock tutors out of active appointments", () => {
-        return clockOut('supervisor@tutorbook.app');
+        return clockOut(SUPERVISOR.email);
     });
 
     it("lets supervisors approve clock-out requests", async () => {
@@ -558,7 +590,7 @@ describe("Tutorbook's REST API", () => {
     it("lets supervisors perform instant clock-ins", async () => {
         [appt, id] = await approveRequest();
         await createLocation();
-        return post('supervisor@tutorbook.app', 'instantClockIn', {
+        return post(SUPERVISOR.email, 'instantClockIn', {
             appt: appt,
             id: id,
         });
@@ -566,19 +598,19 @@ describe("Tutorbook's REST API", () => {
 
     it("lets supervisors perform instant clock-outs", async () => {
         [appt, id] = await approveClockIn();
-        return post('supervisor@tutorbook.app', 'instantClockOut', {
+        return post(SUPERVISOR.email, 'instantClockOut', {
             appt: appt,
             id: id,
         });
     });
 
-    // ========================================================================
+    // =========================================================================
     // TODO: PAYMENTs
-    // ========================================================================
+    // =========================================================================
 
-    // ========================================================================
+    // =========================================================================
     // TODO: SUPERVISORs
-    // ========================================================================
+    // =========================================================================
     it("lets supervisors send reminder messages", async () => {
         await createUsers();
         [appt, id] = await approveRequest();
@@ -587,7 +619,7 @@ describe("Tutorbook's REST API", () => {
             url: 'http://localhost:5001/tutorbook-779d8/us-central1/' +
                 'apptNotification',
             params: {
-                token: (await getToken('supervisor@tutorbook.app')),
+                token: (await getToken(SUPERVISOR.email)),
                 tutor: true,
                 pupil: false,
                 location: appt.location.id,
@@ -597,7 +629,7 @@ describe("Tutorbook's REST API", () => {
             if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
                 throw new Error(res.data.replace('[ERROR]', ''));
             assert(res.data.tutors.length === 1 &&
-                res.data.tutors[0] === 'tutor@tutorbook.app');
+                res.data.tutors[0] === TUTOR.email);
             assert(res.data.pupils.length === 0);
             assert(res.data.appts.length === 3); // Tutors, pupils, & locations
         });
