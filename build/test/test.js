@@ -21,7 +21,7 @@ function authedApp(auth) {
     return firebase.initializeTestApp({
         projectId,
         auth
-    }).firestore();
+    }).firestore().collection("partitions").doc("test");
 }
 
 function to(promise) {
@@ -63,44 +63,52 @@ describe("Tutorbook", () => {
     // ========================================================================
     it("requires users to log in before creating a profile", async () => {
         const db = authedApp(null);
-        const profile = db.collection("users").doc("pupil@tutorbook.me");
-        await firebase.assertFails(profile.set({
-            type: "Pupil"
+        await Promise.all([
+            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
+            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+        ].map(async (profile) => {
+            await firebase.assertFails(profile.set({
+                type: "Pupil"
+            }));
         }));
     });
 
     it("does not let users change their balance or secondsTutored/Pupiled", async () => {
         const db = authedApp({
-            uid: "pupil@tutorbook.me",
+            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
             email: "pupil@tutorbook.me"
         });
-        const profile = db.collection("users").doc("pupil@tutorbook.me");
-        await firebase.assertFails(profile.set({
-            type: "Pupil"
+        await Promise.all([
+            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
+            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+        ].map(async (profile) => {
+            await firebase.assertFails(profile.set({
+                type: "Pupil"
+            }));
+            await firebase.assertSucceeds(
+                profile.set({
+                    type: "Pupil",
+                    payments: {
+                        currentBalance: 0,
+                        currentBalanceString: '$0.00',
+                    },
+                    secondsPupiled: 0,
+                    secondsTutored: 0,
+                })
+            );
         }));
-        await firebase.assertSucceeds(
-            profile.set({
-                type: "Pupil",
-                payments: {
-                    currentBalance: 0,
-                    currentBalanceString: '$0.00',
-                },
-                secondsPupiled: 0,
-                secondsTutored: 0,
-            })
-        );
     });
 
     async function createProfiles() {
         var db = authedApp({
-            uid: "pupil@tutorbook.me",
+            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
             email: "pupil@tutorbook.me"
         });
-        await firebase.assertSucceeds(
-            db
-            .collection("users")
-            .doc("pupil@tutorbook.me")
-            .set({
+        await Promise.all([
+            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
+            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+        ].map(async (profile) => {
+            await firebase.assertSucceeds(profile.set({
                 name: "Pupil Tutorbook",
                 gender: "Male",
                 type: "Pupil",
@@ -110,17 +118,17 @@ describe("Tutorbook", () => {
                 },
                 secondsPupiled: 0,
                 secondsTutored: 0,
-            })
-        );
+            }));
+        }));
         db = authedApp({
-            uid: "tutor@tutorbook.me",
+            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
             email: "tutor@tutorbook.me"
         });
-        await firebase.assertSucceeds(
-            db
-            .collection("users")
-            .doc("tutor@tutorbook.me")
-            .set({
+        await Promise.all([
+            db.collection("usersByEmail").doc("tutor@tutorbook.me"),
+            db.collection("users").doc("l9oxeZesaQXsBh4guDGJzHdNJlw2"),
+        ].map(async (profile) => {
+            await firebase.assertSucceeds(profile.set({
                 name: "Tutor Tutorbook",
                 gender: "Male",
                 type: "Tutor",
@@ -130,20 +138,20 @@ describe("Tutorbook", () => {
                 },
                 secondsPupiled: 0,
                 secondsTutored: 0,
-            })
-        );
+            }));
+        }));
     };
 
     async function createSupervisorProfile() {
         const db = authedApp({
-            uid: "supervisor@tutorbook.me",
+            uid: "OAmavOtc6GcL2BuxFJu4sd5rwDu1",
             email: "supervisor@tutorbook.me"
         });
-        await firebase.assertSucceeds(
-            db
-            .collection("users")
-            .doc("supervisor@tutorbook.me")
-            .set({
+        await Promise.all([
+            db.collection("usersByEmail").doc("supervisor@tutorbook.me"),
+            db.collection("users").doc("OAmavOtc6GcL2BuxFJu4sd5rwDu1"),
+        ].map(async (profile) => {
+            await firebase.assertSucceeds(profile.set({
                 name: "Supervisor Tutorbook",
                 gender: "Male",
                 type: "Supervisor",
@@ -153,20 +161,20 @@ describe("Tutorbook", () => {
                 },
                 secondsPupiled: 0,
                 secondsTutored: 0,
-            })
-        );
+            }));
+        }));
     };
 
     it("only lets users create their own profile", async () => {
         const db = authedApp({
-            uid: "pupil@tutorbook.me",
+            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
             email: "pupil@tutorbook.me"
         });
-        await firebase.assertSucceeds(
-            db
-            .collection("users")
-            .doc("pupil@tutorbook.me")
-            .set({
+        await Promise.all([
+            db.collection("usersByEmail").doc("pupil@tutorbook.me"),
+            db.collection("users").doc("HBnt90xkbOW9GMZGJCacbqnK2hI3"),
+        ].map(async (profile) => {
+            await firebase.assertSucceeds(profile.set({
                 type: "Pupil",
                 payments: {
                     currentBalance: 0,
@@ -174,13 +182,13 @@ describe("Tutorbook", () => {
                 },
                 secondsPupiled: 0,
                 secondsTutored: 0,
-            })
-        );
-        await firebase.assertFails(
-            db
-            .collection("users")
-            .doc("tutor@tutorbook.me")
-            .set({
+            }));
+        }));
+        await Promise.all([
+            db.collection("usersByEmail").doc("tutor@tutorbook.me"),
+            db.collection("users").doc("l9oxeZesaQXsBh4guDGJzHdNJlw2"),
+        ].map(async (profile) => {
+            await firebase.assertFails(profile.set({
                 type: "Tutor",
                 payments: {
                     currentBalance: 0,
@@ -188,16 +196,19 @@ describe("Tutorbook", () => {
                 },
                 secondsPupiled: 0,
                 secondsTutored: 0,
-            })
-        );
+            }));
+        }));
     });
 
     it("lets any logged in user read any profile", async () => {
         const db = authedApp({
-            uid: 'pupil@tutorbook.me',
+            uid: "HBnt90xkbOW9GMZGJCacbqnK2hI3",
+            email: "pupil@tutorbook.me"
         });
-        const profile = db.collection("users").doc("tutor@tutorbook.me");
-        await firebase.assertSucceeds(profile.get());
+        await Promise.all([
+            db.collection("usersByEmail").doc("tutor@tutorbook.me"),
+            db.collection("users").doc("l9oxeZesaQXsBh4guDGJzHdNJlw2"),
+        ].map(async (profile) => await firebase.assertSucceeds(profile.get())));
     });
 });
 
@@ -223,6 +234,7 @@ describe("Tutorbook's REST API", () => {
             method: 'post',
             url: 'http://localhost:5001/tutorbook-779d8/us-central1/data',
             params: {
+                test: true,
                 user: user,
                 action: action,
                 token: (await getToken(user)),
@@ -285,14 +297,18 @@ describe("Tutorbook's REST API", () => {
             secondsPupiled: 0,
             secondsTutored: 0,
         }];
-        await users.forEach(async (user) => {
+        await Promise.all(users.map(async (user) => {
             const db = authedApp({
-                uid: user.id,
+                uid: user.uid,
                 email: user.email,
             });
-            const profile = db.collection('users').doc(user.id);
-            await firebase.assertSucceeds(profile.set(user));
-        });
+            await Promise.all([
+                db.collection('users').doc(user.uid),
+                db.collection('usersByEmail').doc(user.id),
+            ].map(async (doc) => {
+                await firebase.assertSucceeds(doc.set(user))
+            }));
+        }));
     };
 
     // ========================================================================
