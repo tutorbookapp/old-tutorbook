@@ -235,35 +235,38 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            //console.warn('Using an email as a user ID is deprecated.');
-            var ref = await global.db.collection('users').doc(id)
-                .get();
+            console.warn('Using an email as a user ID is deprecated.');
+            var ref = await global.db.collection('usersByEmail').doc(id).get();
         } else {
-            var ref = await global.db.collection('search').doc(id)
-                .get();
+            var ref = await global.db.collection('users').doc(id).get();
         }
-        if (ref.exists) {
-            return ref.data();
-        } else {
-            console.error('User (' + id + ') did not exist.');
-            throw new Error('User (' + id + ') did not exist.');
-        }
+        if (ref.exists) return ref.data();
+        throw new Error('User (' + id + ') did not exist.');
     }
 
     static updateUser(user) {
         if (!user) {
+            throw new Error('Cannot update an undefined user.');
+        } else if (!user.id && !user.email && !user.uid) {
             throw new Error('Could not update user b/c id was undefined.');
+        } else if (user.uid && user.uid !== '') {
+            return global.db.collection('users').doc(user.uid).update(user);
+        } else {
+            console.warn('Using an email as a user ID is deprecated.');
+            return global.db.collection('usersByEmail').doc(user.id ||
+                user.email).update(user);
         }
-        return global.db.collection('users').doc(user.id || user.email)
-            .update(user);
     }
 
     static deleteUser(id) {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
+        } else if (id.indexOf('@') >= 0) {
+            console.warn('Using an email as a user ID is deprecated.');
+            return global.db.collection('usersByEmail').doc(id).delete();
+        } else {
+            return global.db.collection('users').doc(id).delete();
         }
-        return global.db.collection('users').doc(id)
-            .delete();
     }
 
     static async createLocation(location, id) {
