@@ -269,12 +269,12 @@ class SupervisorDashboard extends Dashboard {
 
     viewEverythingElse() {
         const queries = {
-            tutors: window.app.db.collection('usersByEmail')
+            tutors: window.app.db.collection('users')
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Tutor')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
-            pupils: window.app.db.collection('usersByEmail')
+            pupils: window.app.db.collection('users')
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Pupil')
                 .where('payments.type', '==', 'Free')
@@ -471,7 +471,7 @@ class SupervisorQueryDashboard extends QueryDashboard {
             default: {
                 name: 'Suggestions for you',
                 queries: {
-                    requestsOut: db.collection('usersByEmail')
+                    requestsOut: db.collection('users')
                         .doc(window.app.user.email).collection('requestsOut')
                         .orderBy('timestamp'),
                 },
@@ -479,16 +479,16 @@ class SupervisorQueryDashboard extends QueryDashboard {
             matches: {
                 name: 'Pending matches',
                 queries: {
-                    users: db.collection('usersByEmail')
+                    users: db.collection('users')
                         .where('proxy', 'array-contains', window.app.user.email),
                 },
             },
             everything: {
                 name: 'Everything else',
                 queries: {
-                    tutors: db.collection('usersByEmail').where('type', '==', 'Tutor')
+                    tutors: db.collection('users').where('type', '==', 'Tutor')
                         .where('location', '==', window.app.location.name),
-                    pupils: db.collection('usersByEmail').where('type', '==', 'Pupil')
+                    pupils: db.collection('users').where('type', '==', 'Pupil')
                         .where('location', '==', window.app.location.name),
                 },
             },
