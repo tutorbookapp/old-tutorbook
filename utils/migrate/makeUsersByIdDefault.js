@@ -9,7 +9,7 @@ admin.initializeApp({
 });
 
 const auth = admin.auth();
-const db = admin.firestore();
+const db = admin.firestore().collection('partitions').doc('default');
 
 // Iterate over all users included in the new usersByEmail collection and check
 // if they have a valid uID (by getting the user via Firebase Auth). If they do
@@ -19,22 +19,24 @@ const main = async () => {
     const snapshot = await db.collection('usersByEmail').get();
     const bar = new cliProgress.SingleBar({}, cliProgress.Presets.legacy);
     var count = 0;
+    console.log('[INFO] Copying ' + snapshot.docs.length + ' users...');
     bar.start(snapshot.docs.length, 0);
-    return snapshot.forEach(async (doc) => {
+    await Promise.all(snapshot.docs.map(async (doc) => {
         var [err, user] = await to(auth.getUser(doc.data().uid));
         if (err)[err, user] = await to(auth.getUserByEmail(doc.id));
         if (err)[err, user] = await to(auth.createUser({
             displayName: doc.data().name,
             email: doc.data().email,
             phoneNumber: doc.data().phone,
-            photoURL: doc.data().photo,
+            photoURL: doc.data().photo || 'https://tutorbook.app/app/img/male.png',
         }));
+        count++;
         if (err) return console.warn('[ERROR] Could not get uID for user (' +
             doc.id + '), skipping...', err);
         await db.collection('users').doc(user.uid).set(doc.data());
-        count++;
         bar.update(count);
-    });
+    }));
+    console.log('[INFO] Copied ' + snapshot.docs.length + ' users.');
 };
 
 main();
