@@ -50,7 +50,7 @@ const apptNotification = (req, res) => {
         const tutors = [];
         const pupils = [];
         const appts = [];
-        (await db
+        (await admin.firestore()
             .collectionGroup('appointments')
             .where('location.id', '==', req.query.location)
             .where('time.day', '==', upper(req.query.day)).get()
