@@ -64,7 +64,7 @@ const updateAuth = async (change, context) => {
         console.log(profile.name + ' was a verified supervisor. ' +
             'Adding customAuth claims...');
         const locations = await db.collection('locations')
-            .where('supervisors', 'array-contains', profile.email)
+            .where('supervisors', 'array-contains', profile.uid)
             .get();
         var locationIDs = [];
         locations.forEach((doc) => {
@@ -78,10 +78,10 @@ const updateAuth = async (change, context) => {
                 children: [],
             }).then(() => {
                 console.log('Added supervisor customAuth to ' +
-                    profile.email + '\'s account.');
+                    profile.name + '\'s account.');
             }).catch((err) => {
                 console.error('Error while adding ' +
-                    'supervisor customAuth to ' + profile.email +
+                    'supervisor customAuth to ' + profile.name +
                     '\'s account:', err.message);
             });
     } else { // NOTHING
@@ -96,10 +96,10 @@ const updateAuth = async (change, context) => {
             })
             .then(() => {
                 console.log('Removed any customAuth claims from ' +
-                    profile.email + '\'s account.');
+                    profile.name + '\'s account.');
             }).catch((err) => {
                 console.error('Error while removing customAuth claims' +
-                    ' from ' + profile.email + '\'s account:', err.message);
+                    ' from ' + profile.name + '\'s account:', err.message);
             });
     }
 };
