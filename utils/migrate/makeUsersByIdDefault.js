@@ -31,11 +31,12 @@ const main = async () => {
             photoURL: doc.data().photo || 'https://tutorbook.app/app/img/male.png',
         }));
         count++;
+        bar.update(count);
         if (err) return console.warn('[ERROR] Could not get uID for user (' +
             doc.id + '), skipping...', err);
         await db.collection('users').doc(user.uid).set(doc.data());
-        bar.update(count);
     }));
+    bar.stop();
     console.log('[INFO] Copied ' + snapshot.docs.length + ' users.');
 };
 
