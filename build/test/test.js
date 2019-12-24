@@ -305,12 +305,16 @@ describe("Tutorbook's REST API", () => {
     };
 
     async function post(user, action, data) {
+        const uid = (user === PUPIL.email) ? PUPIL.uid :
+            (user === TUTOR.email) ? TUTOR.uid :
+            (user === SUPERVISOR.email) ? SUPERVISOR.uid : null;
+        if (!uid) throw new Error('Unknown email (' + user + ').');
         return axios({
             method: 'post',
             url: 'http://localhost:5001/tutorbook-779d8/us-central1/data',
             params: {
                 test: true,
-                user: user,
+                user: uid,
                 action: action,
                 token: (await getToken(user)),
             },
