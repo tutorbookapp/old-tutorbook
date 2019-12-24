@@ -37,10 +37,10 @@ service cloud.firestore {
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
       allow delete: if request.auth.token.email == userEmail
-	|| request.auth.token.uid in resource.data.proxy
+	|| request.auth.uid in resource.data.proxy
 	|| request.auth.token.supervisor;
       allow update: if (request.auth.token.email == userEmail
-	|| request.auth.token.uid in resource.data.proxy
+	|| request.auth.uid in resource.data.proxy
 	|| request.auth.token.supervisor) // TODO: Check if this user is at one
   	// of the supervisor's location(s)
 	&& (
@@ -71,10 +71,10 @@ service cloud.firestore {
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
       allow delete: if request.auth.uid == user
-	|| request.auth.token.uid in resource.data.proxy
+	|| request.auth.uid in resource.data.proxy
 	|| request.auth.token.supervisor;
       allow update: if (request.auth.uid == user
-	|| request.auth.token.uid in resource.data.proxy
+	|| request.auth.uid in resource.data.proxy
 	|| request.auth.token.supervisor) // TODO: Check if this user is at one
   	// of the supervisor's location(s)
 	&& (
@@ -144,9 +144,9 @@ service cloud.firestore {
     match /users/{user}/requestsOut/{requestOut} {
       allow read: if request.auth.uid == user
 	|| request.auth.uid == resource.data.toUser.uid
-	|| (request.auth.token.uid in resource.data.fromUser.proxy
-	|| request.auth.token.uid in resource.data.toUser.proxy);
-      allow read: if request.auth.token.uid in
+	|| (request.auth.uid in resource.data.fromUser.proxy
+	|| request.auth.uid in resource.data.toUser.proxy);
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /{path=**}/modifiedRequestsOut/{requestOut} {
@@ -157,8 +157,8 @@ service cloud.firestore {
     match /users/{user}/modifiedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
       allow read, delete: if request.auth.uid == user
-	|| request.auth.token.uid in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.token.uid in
+	|| request.auth.uid in resource.data.for.fromUser.proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     } 
     match /{path=**}/rejectedRequestsOut/{requestOut} {
@@ -169,8 +169,8 @@ service cloud.firestore {
     match /users/{user}/rejectedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
       allow read, delete: if request.auth.uid == user
-	|| request.auth.token.uid in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.token.uid in
+	|| request.auth.uid in resource.data.for.fromUser.proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     } 
     match /{path=**}/approvedRequestsOut/{requestOut} {
@@ -181,8 +181,8 @@ service cloud.firestore {
     match /users/{user}/approvedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
       allow read, delete: if request.auth.uid == user
-	|| request.auth.token.uid in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.token.uid in
+	|| request.auth.uid in resource.data.for.fromUser.proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
 
@@ -192,19 +192,19 @@ service cloud.firestore {
       // otherwise, we'd have to specify it in the query itself, which is too
       // much of a hassle and leads to confusing code.
       allow read: if request.auth.uid == user
-	|| request.auth.token.uid in
+	|| request.auth.uid in
 	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
-	|| request.auth.token.uid in resource.data.attendees[0].proxy
-	|| request.auth.token.uid in resource.data.attendees[1].proxy
+	|| request.auth.uid in resource.data.attendees[0].proxy
+	|| request.auth.uid in resource.data.attendees[1].proxy
 	|| resource.data.location.id in request.auth.token.locations;
-      allow read: if request.auth.token.uid in
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /locations/{location}/appointments/{appt} {
-      allow read: if request.auth.token.uid in
+      allow read: if request.auth.uid in
 	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
-	|| request.auth.token.uid in resource.data.attendees[0].proxy
-	|| request.auth.token.uid in resource.data.attendees[1].proxy
+	|| request.auth.uid in resource.data.attendees[0].proxy
+	|| request.auth.uid in resource.data.attendees[1].proxy
 	|| location in request.auth.token.locations;
     }
     match /locations/{location}/modifiedAppointments/{appt} {
@@ -337,13 +337,12 @@ service cloud.firestore {
 
     // [CHATS]
     match /chats/{chat} {
-      allow read, write: if request.auth.token.email in resource.data.chatterEmails;
-      allow create: if request.auth.token.email in 
-	request.resource.data.chatterEmails;
+      allow read, write: if request.auth.uid in resource.data.chatterUIDs;
+      allow create: if request.auth.uid in request.resource.data.chatterUIDs;
       match /messages/{message} {
-        allow read, create: if request.auth.token.email in
-	  get(/databases/$(database)/documents/chats/$(chat)).data.chatterEmails;
-        allow update, delete: if request.auth.token.uid == 
+        allow read, create: if request.auth.uid in
+	  get(/databases/$(database)/documents/chats/$(chat)).data.chatterUIDs;
+        allow update, delete: if request.auth.uid == 
 	  resource.data.sentBy.uid;
       }
     }
