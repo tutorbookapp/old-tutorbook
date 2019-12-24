@@ -39,7 +39,8 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Any',
+            name: 'Gunn Academic Center',
+            id: 'NJp0Y6wyMh2fDdxSuRSx',
         };
         this.test = true;
         this.functionsURL = (this.test) ? 'http://localhost:5001/tutorbook-77' +
