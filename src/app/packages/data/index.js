@@ -44,55 +44,51 @@ class Data {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
             console.warn('Using an email as a user ID is deprecated.');
-            var ref = await window.app.db.collection('usersByEmail').doc(id)
-                .get();
-        } else if (firebase.auth().currentUser) {
-            var ref = await window.app.db.collection('users').doc(
-                (await window.app.db.collection('search').doc(id).get())
-                .data().id).get();
+            var ref = await window.app.db.collection('usersByEmail').doc(id).get();
         } else {
-            var ref = await window.app.db.collection('users').doc(id)
-                .get();
+            var ref = await window.app.db.collection('users').doc(id).get();
         }
-        if (ref.exists) {
-            return ref.data();
-        } else {
-            console.error('User (' + id + ') did not exist.');
-            throw new Error('User (' + id + ') did not exist.');
-        }
+        if (ref.exists) return ref.data();
+        throw new Error('User (' + id + ') did not exist.');
     }
 
     static updateUser(user) {
-        if (!user || !(user.id || user.email))
+        if (!user) {
+            throw new Error('Cannot update an undefined user.');
+        } else if (!user.id && !user.email && !user.uid) {
             throw new Error('Could not update user b/c id was undefined.');
-        return window.app.db.collection('usersByEmail').doc(user.id ||
-            user.email).update(user);
+        } else if (user.uid) {
+            return window.app.db.collection('users').doc(user.uid).update(user);
+        } else {
+            console.warn('Using an email as a user ID is deprecated.');
+            return window.app.db.collection('usersByEmail').doc(user.id ||
+                user.email).update(user);
+        }
     }
 
     static deleteUser(id) {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
+        } else if (id.indexOf('@') >= 0) {
+            console.warn('Using an email as a user ID is deprecated.');
+            return window.app.db.collection('usersByEmail').doc(id).delete();
+        } else {
+            return window.app.db.collection('users').doc(id).delete();
         }
-        return window.app.db.collection('usersByEmail').doc(id)
-            .delete();
     }
 
     static createUser(user) {
         if (!user) {
-            throw new Error('Could not create user b/c profile was undefined.');
-        } else if (!user.id && !user.uid) {
-            throw new Error('Could not create user b/b id was undefined.');
-        } else if (user.uid && user.uid !== '') {
-            return window.app.db.collection('users').doc(user.uid)
-                .set(user);
+            throw new Error('Cannot create an undefined user.');
+        } else if (!user.id && !user.uid && !user.email) {
+            throw new Error('Could not create user b/c id was undefined.');
+        } else if (user.uid) {
+            return window.app.db.collection('users').doc(user.uid).set(user);
         } else {
-            if (user.id.indexOf('@') > 0) console.warn('Using an email as a ' +
-                'user ID is deprecated.');
-            return window.app.db.collection('usersByEmail').doc(user.id)
-                .set(user);
+            console.warn('Using an email as a user ID is deprecated.');
+            return window.app.db.collection('usersByEmail').doc(user.id ||
+                user.email).set(user);
         }
-        return window.app.db.collection('users').doc(user.id)
-            .set(user);
     }
 
     static getOther(notThisUser, attendees) { // Don't create dependency loops

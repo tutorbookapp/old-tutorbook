@@ -41,7 +41,7 @@ class Tutorbook {
         this.location = {
             name: 'Any',
         };
-        this.test = false;
+        this.test = true;
         this.functionsURL = (this.test) ? 'http://localhost:5001/tutorbook-77' +
             '9d8/us-central1' : 'https://us-central1-tutorbook-779d8.cloudfun' +
             'ctions.net';
