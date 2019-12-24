@@ -46,11 +46,11 @@ const apptNotification = (req, res) => {
             return console.warn('Request did not send a valid supervisor ' +
                 'authentication token.');
         }
-        const supervisor = (await users.doc(token.email).get()).data();
+        const supervisor = (await users.doc(token.uid).get()).data();
         const tutors = [];
         const pupils = [];
         const appts = [];
-        (await admin.firestore()
+        (await admin.firestore() // TODO: Split this query by partition
             .collectionGroup('appointments')
             .where('location.id', '==', req.query.location)
             .where('time.day', '==', upper(req.query.day)).get()
@@ -59,9 +59,9 @@ const apptNotification = (req, res) => {
         });
         await Promise.all((appts).map(async (appt) => {
             if (req.query.tutor === 'true' &&
-                tutors.indexOf(appt.for.toUser.email) < 0) {
-                tutors.push(appt.for.toUser.email);
-                const tutor = (await users.doc(appt.for.toUser.email).get())
+                tutors.indexOf(appt.for.toUser.uid) < 0) {
+                tutors.push(appt.for.toUser.uid);
+                const tutor = (await users.doc(appt.for.toUser.uid).get())
                     .data();
                 await new SMS(tutor, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
@@ -69,9 +69,9 @@ const apptNotification = (req, res) => {
                     appt.time.day + ' at ' + appt.time.from + '.');
             }
             if (req.query.pupil === 'true' &&
-                pupils.indexOf(appt.for.fromUser.email) < 0) {
-                pupils.push(appt.for.fromUser.email);
-                const pupil = (await users.doc(appt.for.fromUser.email).get())
+                pupils.indexOf(appt.for.fromUser.uid) < 0) {
+                pupils.push(appt.for.fromUser.uid);
+                const pupil = (await users.doc(appt.for.fromUser.uid).get())
                     .data();
                 await new SMS(pupil, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
@@ -90,6 +90,8 @@ const apptNotification = (req, res) => {
 // user - sms, email for new users (custom by user type)
 const userNotification = async (snap, context) => {
     const profile = snap.data();
+    if (!profile || !profile.name) return console.warn('Cannot send welcome ' +
+        'notifications to users without names.');
     console.log('Sending ' + profile.name + ' <' + profile.email +
         '> welcome notifications...');
     await new Email('welcome', profile);
@@ -104,17 +106,17 @@ const userNotification = async (snap, context) => {
 const messageNotification = async (snap, context) => {
     const chat = await db.collection('chats')
         .doc(context.params.chat).get();
-    return chat.data().chatterEmails.forEach(async (email) => {
-        if (email !== snap.data().sentBy.email) {
+    return chat.data().chatterUIDs.forEach(async (uid) => {
+        if (uid !== snap.data().sentBy.uid) {
             await new Webpush(
-                email,
+                uid,
                 'Message from ' + snap.data().sentBy.name.split(' ')[0],
                 snap.data().message, {
                     id: context.params.chat
                 },
             );
             await new SMS((await db.collection('users')
-                    .doc(email).get()).data(),
+                    .doc(uid).get()).data(),
                 'Message from ' + snap.data().sentBy.name.split(' ')[0] +
                 ': ' + snap.data().message
             );
@@ -131,12 +133,12 @@ const chatNotification = (snap, context) => {
     const title = 'Chat with ' + chat.createdBy.name;
     // Send notification to all the other people on the chat
     return chat.chatters.forEach(async (chatter) => {
-        if (chatter.email !== chat.createdBy.email) {
-            await new Webpush(chatter.email, title, body);
+        if (chatter.uid !== chat.createdBy.uid) {
+            await new Webpush(chatter.uid, title, body);
             await new SMS((await admin
                 .firestore()
                 .collection('users')
-                .doc(chatter.id || chatter.email)
+                .doc(chatter.uid)
                 .get()
             ).data(), body);
         }
@@ -159,9 +161,9 @@ const rulesNotification = async (snap, context) => {
     const appt = snap.data();
     const users = db.collection('users');
     const tutor = (await users
-        .doc(appt.for.toUser.id || appt.for.toUser.email).get()).data();
+        .doc(appt.for.toUser.uid).get()).data();
     const pupil = (await users
-        .doc(appt.for.fromUser.id || appt.for.fromUser.email).get()).data();
+        .doc(appt.for.fromUser.uid).get()).data();
     const supervisorId = (await db.collection('locations')
         .doc(context.params.location).get()).data().supervisors[0];
     const supervisor = (await users.doc(supervisorId).get()).data();
