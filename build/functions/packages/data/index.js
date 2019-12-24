@@ -12,7 +12,7 @@ class DataProxy {
     constructor(user, token, action, data) {
         assert(token.email === user.email);
         assert(token.uid === user.uid);
-        ['name', 'email', 'id', 'type'].forEach((attr) => {
+        ['name', 'email', 'id', 'type', 'uid'].forEach((attr) => {
             if (!user[attr] || user[attr] === '')
                 throw new Error('User did not have a valid ' + attr + '.');
         });
@@ -54,7 +54,7 @@ class DataProxy {
         const token = this.token;
         const user = this.user;
         const exists = async (collection, id) => {
-            const doc = await global.db.collection('users').doc(user.id)
+            const doc = await global.db.collection('users').doc(user.uid)
                 .collection(collection).doc(id).get();
             console.log('Does ' + user.id + ' have a(n) ' + collection +
                 ' doc (' + id + ')?', (doc.exists) ? 'Yes.' : 'No, erroring.');
@@ -65,19 +65,20 @@ class DataProxy {
                 assert(token.supervisor);
                 return Data.createLocation(data.location, data.id);
             case 'createUser':
-                assert(token.email === data.email || token.supervisor);
+                assert(token.uid === data.uid || token.supervisor);
                 return Data.createUser(data);
             case 'newRequest':
-                assert(token.email === data.request.fromUser.email || token.supervisor);
+                assert(token.uid === data.request.fromUser.uid ||
+                    token.supervisor);
                 return Data.newRequest(data.request, data.payment);
             case 'requestPayout':
                 assert(user.type === 'Tutor' && user.payments.type === 'Paid');
                 return Data.requestPayout();
             case 'requestPaymentFor':
                 assert([
-                        data.appt.attendees[0].email,
-                        data.appt.attendees[1].email,
-                    ].indexOf(token.email) >= 0 &&
+                        data.appt.attendees[0].uid,
+                        data.appt.attendees[1].uid,
+                    ].indexOf(token.uid) >= 0 &&
                     user.type === 'Tutor' &&
                     user.payments.type === 'Paid' &&
                     data.appt.payment.type === 'Paid'
@@ -115,49 +116,49 @@ class DataProxy {
                 if (!token.supervisor) await exists('activeAppointments', data.id);
                 return Data.clockOut(data.appt, data.id);
             case 'approveRequest':
-                assert(token.email === data.request.toUser.email ||
+                assert(token.uid === data.request.toUser.uid ||
                     token.supervisor);
                 if (!token.supervisor) await exists('requestsIn', data.id);
                 return Data.approveRequest(data.request, data.id);
             case 'modifyAppt':
                 assert([
-                    data.appt.attendees[0].email,
-                    data.appt.attendees[1].email
-                ].indexOf(token.email) >= 0 || token.supervisor);
+                    data.appt.attendees[0].uid,
+                    data.appt.attendees[1].uid
+                ].indexOf(token.uid) >= 0 || token.supervisor);
                 if (!token.supervisor) await exists('appointments', data.id);
                 return Data.modifyAppt(data.appt, data.id);
             case 'deletePastAppt':
                 assert([
-                    data.appt.attendees[0].email,
-                    data.appt.attendees[1].email
-                ].indexOf(token.email) >= 0 || token.supervisor);
+                    data.appt.attendees[0].uid,
+                    data.appt.attendees[1].uid
+                ].indexOf(token.uid) >= 0 || token.supervisor);
                 if (!token.supervisor) await exists('pastAppointments', data.id);
                 return Data.deletePastAppt(data.appt, data.id);
             case 'cancelAppt':
                 assert([
-                    data.appt.attendees[0].email,
-                    data.appt.attendees[1].email
-                ].indexOf(token.email) >= 0 || token.supervisor);
+                    data.appt.attendees[0].uid,
+                    data.appt.attendees[1].uid
+                ].indexOf(token.uid) >= 0 || token.supervisor);
                 if (!token.supervisor) await exists('appointments', data.id);
                 return Data.cancelAppt(data.appt, data.id);
             case 'rejectRequest':
-                assert(token.email === data.request.toUser.email ||
+                assert(token.uid === data.request.toUser.uid ||
                     token.supervisor);
                 if (!token.supervisor) await exists('requestsIn', data.id);
                 return Data.rejectRequest(data.request, data.id);
             case 'cancelRequest':
-                assert(token.email === data.request.fromUser.email ||
+                assert(token.uid === data.request.fromUser.uid ||
                     token.supervisor);
                 if (!token.supervisor) await exists('requestsOut', data.id);
                 return Data.cancelRequest(data.request, data.id);
             case 'modifyRequest':
                 assert([
-                    data.request.fromUser.email,
-                    data.request.toUser.email,
-                ].indexOf(token.email) >= 0 || token.supervisor);
-                if (token.email === data.request.fromUser.email)
+                    data.request.fromUser.uid,
+                    data.request.toUser.uid,
+                ].indexOf(token.uid) >= 0 || token.supervisor);
+                if (token.uid === data.request.fromUser.uid)
                     await exists('requestsOut', data.id);
-                if (token.email === data.request.toUser.email)
+                if (token.uid === data.request.toUser.uid)
                     await exists('requestsIn', data.id);
                 return Data.modifyRequest(data.request, data.id);
             default:
@@ -177,14 +178,14 @@ class Data {
 
     static requestPayout() {
         return global.db.collection('users')
-            .doc(global.app.user.id).collection('requestedPayouts').doc().set({
+            .doc(global.app.user.uid).collection('requestedPayouts').doc().set({
                 timestamp: new Date(),
             });
     }
 
     static requestPaymentFor(appt, id) {
         const user = Data.getOther(appt.attendees);
-        return global.db.collection('users').doc(user.email)
+        return global.db.collection('users').doc(user.uid)
             .collection('requestedPayments').doc(id).set({
                 from: Data.getOther(appt.attendees),
                 to: global.app.conciseUser,
@@ -197,13 +198,13 @@ class Data {
     static async approvePayment(approvedPayment, id) {
         const db = global.db;
         const payments = [
-            db.collection('users').doc(approvedPayment.to.email)
+            db.collection('users').doc(approvedPayment.to.uid)
             .collection('approvedPayments').doc(id),
-            db.collection('users').doc(approvedPayment.from.email)
+            db.collection('users').doc(approvedPayment.from.uid)
             .collection('approvedPayments').doc(id),
         ];
         const requestedPayment = db.collection('users')
-            .doc(global.app.user.email)
+            .doc(global.app.user.uid)
             .collection('requestedPayments').doc(id);
         await requestedPayment.delete();
         return payments.forEach(async (payment) => {
@@ -214,13 +215,13 @@ class Data {
     static async denyPayment(deniedPayment, id) {
         const db = global.db;
         const payments = [
-            db.collection('users').doc(approvedPayment.appt.attendees[0].email)
+            db.collection('users').doc(approvedPayment.appt.attendees[0].uid)
             .collection('deniedPayments').doc(id),
-            db.collection('users').doc(approvedPayment.appt.attendees[1].email)
+            db.collection('users').doc(approvedPayment.appt.attendees[1].uid)
             .collection('deniedPayments').doc(id),
         ];
         const approvedPaymentRef = db.collection('users')
-            .doc(global.app.user.email)
+            .doc(global.app.user.uid)
             .collection('needApprovalPayments').doc(id);
         await approvedPaymentRef.delete();
         payments.forEach(async (payment) => {
@@ -250,7 +251,7 @@ class Data {
             throw new Error('Cannot update an undefined user.');
         } else if (!user.id && !user.email && !user.uid) {
             throw new Error('Could not update user b/c id was undefined.');
-        } else if (user.uid && user.uid !== '') {
+        } else if (user.uid) {
             return global.db.collection('users').doc(user.uid).update(user);
         } else {
             console.warn('Using an email as a user ID is deprecated.');
@@ -273,8 +274,8 @@ class Data {
     static async createLocation(location, id) {
         if (!location)
             throw new Error('Could not create location b/c it was undefined.');
-        const doc = (id && id !== '') ? global.db.collection('locations')
-            .doc(id) : global.db.collection('locations').doc();
+        const doc = (id) ? global.db.collection('locations').doc(id) : global.db
+            .collection('locations').doc();
         await doc.set(location);
         return {
             id: doc.id,
@@ -283,9 +284,17 @@ class Data {
     }
 
     static createUser(user) {
-        if (!user || !user.id)
+        if (!user) {
+            throw new Error('Cannot create an undefined user.');
+        } else if (!user.id && !user.uid && !user.email) {
             throw new Error('Could not create user b/c id was undefined.');
-        return global.db.collection('users').doc(user.id).set(user);
+        } else if (user.uid) {
+            return global.db.collection('users').doc(user.uid).set(user);
+        } else {
+            console.warn('Using an email as a user ID is deprecated.');
+            return global.db.collection('usersByEmail').doc(user.id ||
+                user.email).set(user);
+        }
     }
 
     static async instantClockIn(appt, id) { // Creates and approves clock in
@@ -296,10 +305,10 @@ class Data {
         };
         const supervisor = await Data.getLocationSupervisor(appt.location.id);
         const activeAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
+            db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
             .doc(id),
-            db.collection('users').doc(appt.attendees[1].email)
+            db.collection('users').doc(appt.attendees[1].uid)
             .collection('activeAppointments')
             .doc(id),
             db.collection('locations').doc(appt.location.id)
@@ -308,7 +317,7 @@ class Data {
         ];
 
         // Tedious work arounds for infinite reference loops
-        appt = (await db.collection('users').doc(appt.attendees[0].email)
+        appt = (await db.collection('users').doc(appt.attendees[0].uid)
             .collection('appointments').doc(id).get()).data();
         appt.supervisor = supervisor;
         clockIn.for = Data.cloneMap(appt);
@@ -328,15 +337,15 @@ class Data {
 
     static async approveClockIn(clockIn, id) {
         const db = global.db;
-        const ref = db.collection('users').doc(global.app.user.id)
+        const ref = db.collection('users').doc(global.app.user.uid)
             .collection('clockIns').doc(id);
-        const approvedClockIn = db.collection('users').doc(global.app.user.id)
+        const approvedClockIn = db.collection('users').doc(global.app.user.uid)
             .collection('approvedClockIns').doc();
         const activeAppts = [
-            db.collection('users').doc(clockIn.for.attendees[0].email)
+            db.collection('users').doc(clockIn.for.attendees[0].uid)
             .collection('activeAppointments')
             .doc(id),
-            db.collection('users').doc(clockIn.for.attendees[1].email)
+            db.collection('users').doc(clockIn.for.attendees[1].uid)
             .collection('activeAppointments')
             .doc(id),
             db.collection('locations').doc(clockIn.for.location.id)
@@ -367,13 +376,13 @@ class Data {
     }
 
     static getOther(notThisUser, attendees) { // Don't create dependency loops
-        if (!notThisUser.email && !!notThisUser.length) {
-            if (notThisUser[0].email === global.app.user.email) {
+        if (!notThisUser.uid && notThisUser.length) {
+            if (notThisUser[0].uid === global.app.user.uid) {
                 return notThisUser[1];
             }
             return notThisUser[0];
         }
-        if (attendees[0].email === notThisUser.email) {
+        if (attendees[0].uid === notThisUser.uid) {
             return attendees[1];
         }
         return attendees[0];
@@ -386,10 +395,10 @@ class Data {
             sentBy: global.app.conciseUser,
         };
         const activeAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
+            db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
             .doc(id),
-            db.collection('users').doc(appt.attendees[1].email)
+            db.collection('users').doc(appt.attendees[1].uid)
             .collection('activeAppointments')
             .doc(id),
             db.collection('locations').doc(appt.location.id)
@@ -402,13 +411,13 @@ class Data {
         clockOut.for = Data.cloneMap(appt);
 
         const pastAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
+            db.collection('users').doc(appt.attendees[0].uid)
             .collection('pastAppointments')
             .doc(),
         ];
         const pastApptID = pastAppts[0].id;
         pastAppts.push(
-            db.collection('users').doc(appt.attendees[1].email)
+            db.collection('users').doc(appt.attendees[1].uid)
             .collection('pastAppointments')
             .doc(pastApptID),
         );
@@ -435,7 +444,7 @@ class Data {
     static async approveClockOut(clockOutData, id) {
         // Tedious work around of the infinite loop
         const db = global.db;
-        const clockOut = db.collection('users').doc(global.app.user.id)
+        const clockOut = db.collection('users').doc(global.app.user.uid)
             .collection('clockOuts').doc(id);
         clockOutData = (await clockOut.get()).data(); // Don't trust client
         const approvedClockOutData = Data.combineMaps(clockOutData, {
@@ -445,13 +454,13 @@ class Data {
         const appt = Data.cloneMap(approvedClockOutData.for);
         appt.clockOut = Data.cloneMap(approvedClockOutData);
 
-        const approvedClockOut = db.collection('users').doc(global.app.user.id)
+        const approvedClockOut = db.collection('users').doc(global.app.user.uid)
             .collection('approvedClockOuts').doc();
         const activeAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
+            db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
             .doc(id),
-            db.collection('users').doc(appt.attendees[1].email)
+            db.collection('users').doc(appt.attendees[1].uid)
             .collection('activeAppointments')
             .doc(id),
             db.collection('locations').doc(appt.location.id)
@@ -459,13 +468,13 @@ class Data {
             .doc(id),
         ];
         const pastAppts = [
-            db.collection('users').doc(appt.attendees[0].email)
+            db.collection('users').doc(appt.attendees[0].uid)
             .collection('pastAppointments')
             .doc(),
         ];
         const pastApptID = pastAppts[0].id;
         pastAppts.push(
-            db.collection('users').doc(appt.attendees[1].email)
+            db.collection('users').doc(appt.attendees[1].uid)
             .collection('pastAppointments')
             .doc(pastApptID),
         );
@@ -526,7 +535,7 @@ class Data {
 
         const db = global.db;
         const supervisor = await Data.getLocationSupervisor(appt.location.id);
-        const apptRef = db.collection('users').doc(appt.attendees[0].email)
+        const apptRef = db.collection('users').doc(appt.attendees[0].uid)
             .collection('appointments').doc(id);
         const ref = db.collection('users').doc(supervisor)
             .collection('clockIns').doc(id);
@@ -554,7 +563,7 @@ class Data {
         };
 
         const db = global.db;
-        const apptRef = db.collection('users').doc(appt.attendees[0].email)
+        const apptRef = db.collection('users').doc(appt.attendees[0].uid)
             .collection('appointments').doc(id);
         const ref = db.collection('users').doc(appt.supervisor)
             .collection('clockOuts').doc(id);
@@ -576,15 +585,16 @@ class Data {
 
     static async approveRequest(request, id) {
         const db = global.db;
-        const requestIn = db.collection("users").doc(request.toUser.email)
+        const requestIn = db.collection("users").doc(request.toUser.uid)
             .collection('requestsIn')
             .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
+        const requestOut = db.collection('users').doc(request.fromUser.uid)
             .collection('requestsOut')
             .doc(id);
         // TODO: Right now we don't allow supervisors to approve requests.
         // Shoud we?
-        const approvedRequestOut = db.collection('users').doc(request.fromUser.email)
+        const approvedRequestOut = db.collection('users')
+            .doc(request.fromUser.uid)
             .collection('approvedRequestsOut')
             .doc(id);
         // NOTE: The appts must be processed in this order due to the way that
@@ -592,10 +602,10 @@ class Data {
         // approvedRequestOut doc, then we check if there is an appt doc
         // already created).
         const appts = [
-            db.collection('users').doc(request.fromUser.email)
+            db.collection('users').doc(request.fromUser.uid)
             .collection('appointments')
             .doc(id),
-            db.collection('users').doc(request.toUser.email)
+            db.collection('users').doc(request.toUser.uid)
             .collection('appointments')
             .doc(id),
             db.collection('locations').doc(request.location.id)
@@ -639,10 +649,10 @@ class Data {
         const db = global.db;
         apptData = Data.trimObject(apptData);
         const appts = [
-            db.collection('users').doc(apptData.attendees[0].email)
+            db.collection('users').doc(apptData.attendees[0].uid)
             .collection('appointments')
             .doc(id),
-            db.collection('users').doc(apptData.attendees[1].email)
+            db.collection('users').doc(apptData.attendees[1].uid)
             .collection('appointments')
             .doc(id),
             db.collection('locations').doc(apptData.location.id)
@@ -650,12 +660,14 @@ class Data {
             .doc(id),
         ];
         const modifiedAppts = [];
-        if (apptData.attendees[0].email !== app.user.email) {
-            modifiedAppts.push(db.collection('users').doc(apptData.attendees[0].email)
+        if (apptData.attendees[0].uid !== app.user.uid) {
+            modifiedAppts.push(db.collection('users')
+                .doc(apptData.attendees[0].uid)
                 .collection('modifiedAppointments').doc(id));
         }
-        if (apptData.attendees[1].email !== app.user.email) {
-            modifiedAppts.push(db.collection('users').doc(apptData.attendees[1].email)
+        if (apptData.attendees[1].uid !== app.user.uid) {
+            modifiedAppts.push(db.collection('users')
+                .doc(apptData.attendees[1].uid)
                 .collection('modifiedAppointments').doc(id));
         }
         if (app.user.locations &&
@@ -681,10 +693,10 @@ class Data {
     static deletePastAppt(apptData, id) {
         const db = global.db;
         const appts = [
-            db.collection('users').doc(apptData.attendees[0].email)
+            db.collection('users').doc(apptData.attendees[0].uid)
             .collection('pastAppointments')
             .doc(id),
-            db.collection('users').doc(apptData.attendees[1].email)
+            db.collection('users').doc(apptData.attendees[1].uid)
             .collection('pastAppointments')
             .doc(id),
             db.collection('locations').doc(apptData.location.id)
@@ -699,10 +711,10 @@ class Data {
     static async cancelAppt(apptData, id) {
         const db = global.db;
         const appts = [
-            db.collection('users').doc(apptData.attendees[0].email)
+            db.collection('users').doc(apptData.attendees[0].uid)
             .collection('appointments')
             .doc(id),
-            db.collection('users').doc(apptData.attendees[1].email)
+            db.collection('users').doc(apptData.attendees[1].uid)
             .collection('appointments')
             .doc(id),
             db.collection('locations').doc(apptData.location.id)
@@ -710,12 +722,14 @@ class Data {
             .doc(id),
         ];
         const canceledAppts = [];
-        if (apptData.attendees[0].email !== app.user.email) {
-            canceledAppts.push(db.collection('users').doc(apptData.attendees[0].email)
+        if (apptData.attendees[0].uid !== app.user.uid) {
+            canceledAppts.push(db.collection('users')
+                .doc(apptData.attendees[0].uid)
                 .collection('canceledAppointments').doc(id));
         }
-        if (apptData.attendees[1].email !== app.user.email) {
-            canceledAppts.push(db.collection('users').doc(apptData.attendees[1].email)
+        if (apptData.attendees[1].uid !== app.user.uid) {
+            canceledAppts.push(db.collection('users')
+                .doc(apptData.attendees[1].uid)
                 .collection('canceledAppointments').doc(id));
         }
         canceledAppts.push(db.collection('locations').doc(apptData.location.id)
@@ -724,10 +738,10 @@ class Data {
         if (apptData.for.payment.type === 'Paid') {
             // Delete the authPayment docs as well
             const authPayments = [
-                db.collection('users').doc(apptData.attendees[0].email)
+                db.collection('users').doc(apptData.attendees[0].uid)
                 .collection('authPayments')
                 .doc(id),
-                db.collection('users').doc(apptData.attendees[1].email)
+                db.collection('users').doc(apptData.attendees[1].uid)
                 .collection('authPayments')
                 .doc(id),
             ];
@@ -751,23 +765,24 @@ class Data {
 
     static async rejectRequest(request, id) {
         const db = global.db;
-        const requestIn = db.collection("users").doc(request.toUser.email)
+        const requestIn = db.collection("users").doc(request.toUser.uid)
             .collection('requestsIn')
             .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
+        const requestOut = db.collection('users').doc(request.fromUser.uid)
             .collection('requestsOut')
             .doc(id);
-        const rejectedRequestOut = db.collection('users').doc(request.fromUser.email)
+        const rejectedRequestOut = db.collection('users')
+            .doc(request.fromUser.uid)
             .collection('rejectedRequestsOut')
             .doc(id);
 
         if (request.payment.type === 'Paid') {
             // Delete the authPayment docs as well
             const authPayments = [
-                db.collection('users').doc(request.fromUser.email)
+                db.collection('users').doc(request.fromUser.uid)
                 .collection('authPayments')
                 .doc(id),
-                db.collection('users').doc(request.toUser.email)
+                db.collection('users').doc(request.toUser.uid)
                 .collection('authPayments')
                 .doc(id),
             ];
@@ -787,20 +802,20 @@ class Data {
 
     static async cancelRequest(request, id) {
         const db = global.db;
-        const requestIn = db.collection("users").doc(request.toUser.email)
+        const requestIn = db.collection("users").doc(request.toUser.uid)
             .collection('requestsIn')
             .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
+        const requestOut = db.collection('users').doc(request.fromUser.uid)
             .collection('requestsOut')
             .doc(id);
 
         if (request.payment.type === 'Paid') {
             // Delete the authPayment docs as well
             const authPayments = [
-                db.collection('users').doc(request.fromUser.email)
+                db.collection('users').doc(request.fromUser.uid)
                 .collection('authPayments')
                 .doc(id),
-                db.collection('users').doc(request.toUser.email)
+                db.collection('users').doc(request.toUser.uid)
                 .collection('authPayments')
                 .doc(id),
             ];
@@ -810,12 +825,13 @@ class Data {
         }
 
         const canceledRequests = [];
-        if (request.toUser.email !== app.user.email) {
-            canceledRequests.push(db.collection('users').doc(request.toUser.email)
+        if (request.toUser.uid !== app.user.uid) {
+            canceledRequests.push(db.collection('users').doc(request.toUser.uid)
                 .collection('canceledRequestsIn').doc(id));
         }
-        if (request.fromUser.email !== app.user.email) {
-            canceledRequests.push(db.collection('users').doc(request.fromUser.email)
+        if (request.fromUser.uid !== app.user.uid) {
+            canceledRequests.push(db.collection('users')
+                .doc(request.fromUser.uid)
                 .collection('canceledRequestsOut').doc(id));
         }
 
@@ -833,23 +849,23 @@ class Data {
     static async modifyRequest(request, id) {
         const db = global.db;
         request = Data.trimObject(request);
-        const requestIn = db.collection("users").doc(request.toUser.email)
+        const requestIn = db.collection("users").doc(request.toUser.uid)
             .collection('requestsIn')
             .doc(id);
-        const requestOut = db.collection('users').doc(request.fromUser.email)
+        const requestOut = db.collection('users').doc(request.fromUser.uid)
             .collection('requestsOut')
             .doc(id);
         // We send modified requests to all users that aren't the currentUser
         const modifiedRequests = [];
-        if (request.fromUser.email !== app.user.email) {
+        if (request.fromUser.uid !== app.user.uid) {
             modifiedRequests.push(db.collection('users')
-                .doc(request.fromUser.email)
+                .doc(request.fromUser.uid)
                 .collection('modifiedRequestsOut')
                 .doc(id));
         }
-        if (request.toUser.email !== app.user.email) {
+        if (request.toUser.uid !== app.user.uid) {
             modifiedRequests.push(db.collection('users')
-                .doc(request.toUser.email)
+                .doc(request.toUser.uid)
                 .collection('modifiedRequestsIn')
                 .doc(id));
         }
@@ -888,10 +904,10 @@ class Data {
     static async newRequest(request, payment) {
         const db = global.db;
         request = Data.trimObject(request);
-        const requestIn = db.collection('users').doc(request.toUser.email)
+        const requestIn = db.collection('users').doc(request.toUser.uid)
             .collection('requestsIn')
             .doc();
-        const requestOut = db.collection('users').doc(request.fromUser.email)
+        const requestOut = db.collection('users').doc(request.fromUser.uid)
             .collection('requestsOut')
             .doc(requestIn.id);
 
@@ -905,12 +921,12 @@ class Data {
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
                     await global.db.collection('users')
-                        .doc(request.fromUser.email)
+                        .doc(request.fromUser.uid)
                         .collection('authPayments')
                         .doc(requestIn.id)
                         .set(payment);
                     await global.db.collection('users')
-                        .doc(request.toUser.email)
+                        .doc(request.toUser.uid)
                         .collection('authPayments')
                         .doc(requestIn.id)
                         .set(payment);
@@ -919,7 +935,7 @@ class Data {
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
                     await global.db.collection('users')
-                        .doc(request.fromUser.email)
+                        .doc(request.fromUser.uid)
                         .collection('sentPayments')
                         .doc(requestIn.id)
                         .set(payment);
@@ -930,12 +946,12 @@ class Data {
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
                     await global.db.collection('users')
-                        .doc(request.fromUser.email)
+                        .doc(request.fromUser.uid)
                         .collection('authPayments')
                         .doc(requestIn.id)
                         .set(payment);
                     await global.db.collection('users')
-                        .doc(request.toUser.email)
+                        .doc(request.toUser.uid)
                         .collection('authPayments')
                         .doc(requestIn.id)
                         .set(payment);
@@ -1513,7 +1529,7 @@ module.exports = {
             .collection('partitions').doc('test') : admin.firestore()
             .collection('partitions').doc('default');
         const dataProxy = new DataProxy(
-            (await Data.getUser(context.auth.token.email)),
+            (await Data.getUser(context.auth.uid)),
             context.auth.token,
             data.action,
             data.body,
