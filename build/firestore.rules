@@ -11,14 +11,14 @@ service cloud.firestore {
     }
     match /locations/{location} {
       allow read: if request.auth.uid != null;
-      allow update, delete: if request.auth.token.email in resource.data.supervisors;
-      allow create: if request.auth.token.email in request.resource.data.supervisors
+      allow update, delete: if request.auth.uid in resource.data.supervisors;
+      allow create: if request.auth.uid in request.resource.data.supervisors
 	&& request.auth.token.supervisor == true;
     }
     match /users/{supervisor}/dismissedCards/{card} {
       // Workaround to enable supervisors to dismiss cards (as we don't want
       // them deleting that actual document).
-      allow read, create: if request.auth.token.email == supervisor;
+      allow read, create: if request.auth.uid == supervisor;
     }
 
     // [SEARCH]
@@ -26,21 +26,21 @@ service cloud.firestore {
       allow read: if true;
     }
     // [USER PROFILES]
-    match /usersByEmail/{user} {
+    match /usersByEmail/{userEmail} {
       // TODO: Ensure that the client can't change the user.authenticated field
       // to become an admin or supervisor without actually knowing the code.
       allow read: if request.auth.uid != null;
-      allow create: if (request.auth.token.email == user
+      allow create: if (request.auth.token.email == userEmail
 	|| request.auth.token.supervisor)
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.payments.currentBalanceString == "$0.00"
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
-      allow delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.proxy
+      allow delete: if request.auth.token.email == userEmail
+	|| request.auth.token.uid in resource.data.proxy
 	|| request.auth.token.supervisor;
-      allow update: if (request.auth.token.email == user
-	|| request.auth.token.email in resource.data.proxy
+      allow update: if (request.auth.token.email == userEmail
+	|| request.auth.token.uid in resource.data.proxy
 	|| request.auth.token.supervisor) // TODO: Check if this user is at one
   	// of the supervisor's location(s)
 	&& (
@@ -70,11 +70,11 @@ service cloud.firestore {
 	&& request.resource.data.payments.currentBalanceString == "$0.00"
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
-      allow delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.proxy
+      allow delete: if request.auth.uid == user
+	|| request.auth.token.uid in resource.data.proxy
 	|| request.auth.token.supervisor;
-      allow update: if (request.auth.token.email == user
-	|| request.auth.token.email in resource.data.proxy
+      allow update: if (request.auth.uid == user
+	|| request.auth.token.uid in resource.data.proxy
 	|| request.auth.token.supervisor) // TODO: Check if this user is at one
   	// of the supervisor's location(s)
 	&& (
@@ -102,11 +102,11 @@ service cloud.firestore {
       allow read: if resource.data.location.id in request.auth.token.locations; 
     }
     match /users/{user}/requestsIn/{requestIn} {
-      allow read: if request.auth.token.email == user
-	|| request.auth.token.email == resource.data.fromUser.email
-	|| (request.auth.token.email in resource.data.fromUser.proxy
-	|| request.auth.token.email in resource.data.toUser.proxy);
-      allow read: if request.auth.token.email in
+      allow read: if request.auth.uid == user
+	|| request.auth.uid == resource.data.fromUser.uid
+	|| (request.auth.uid in resource.data.fromUser.proxy
+	|| request.auth.uid in resource.data.toUser.proxy);
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /{path=**}/modifiedRequestsIn/{requestIn} {
@@ -117,9 +117,9 @@ service cloud.firestore {
     match /users/{user}/modifiedRequestsIn/{requestIn} {
       // fromUser creates this document and the toUser dismisses it
       // Users should never need to update this document
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.for.toUser.proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.uid in resource.data.for.toUser.proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     } 
     match /{path=**}/canceledRequestsIn/{requestIn} {
@@ -129,9 +129,9 @@ service cloud.firestore {
     }
     match /users/{user}/canceledRequestsIn/{requestIn} {
       // fromUser creates this document and the toUser dismisses it
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.for.toUser.proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.uid in resource.data.for.toUser.proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
 
@@ -142,11 +142,11 @@ service cloud.firestore {
       allow read: if resource.data.location.id in request.auth.token.locations; 
     }
     match /users/{user}/requestsOut/{requestOut} {
-      allow read: if request.auth.token.email == user
-	|| request.auth.token.email == resource.data.toUser.email
-	|| (request.auth.token.email in resource.data.fromUser.proxy
-	|| request.auth.token.email in resource.data.toUser.proxy);
-      allow read: if request.auth.token.email in
+      allow read: if request.auth.uid == user
+	|| request.auth.uid == resource.data.toUser.uid
+	|| (request.auth.token.uid in resource.data.fromUser.proxy
+	|| request.auth.token.uid in resource.data.toUser.proxy);
+      allow read: if request.auth.token.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /{path=**}/modifiedRequestsOut/{requestOut} {
@@ -156,9 +156,9 @@ service cloud.firestore {
     }
     match /users/{user}/modifiedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.token.uid in resource.data.for.fromUser.proxy;
+      allow read: if request.auth.token.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     } 
     match /{path=**}/rejectedRequestsOut/{requestOut} {
@@ -168,9 +168,9 @@ service cloud.firestore {
     }
     match /users/{user}/rejectedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.token.uid in resource.data.for.fromUser.proxy;
+      allow read: if request.auth.token.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     } 
     match /{path=**}/approvedRequestsOut/{requestOut} {
@@ -180,9 +180,9 @@ service cloud.firestore {
     }
     match /users/{user}/approvedRequestsOut/{requestOut} {
       // toUser creates this document and the fromUser dismisses it
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.token.uid in resource.data.for.fromUser.proxy;
+      allow read: if request.auth.token.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
 
@@ -191,20 +191,20 @@ service cloud.firestore {
       // We have to specify that the given user can read all of their appts b/c
       // otherwise, we'd have to specify it in the query itself, which is too
       // much of a hassle and leads to confusing code.
-      allow read: if request.auth.token.email == user
-	|| request.auth.token.email in
-	[resource.data.attendees[0].email, resource.data.attendees[1].email]
-	|| request.auth.token.email in resource.data.attendees[0].proxy
-	|| request.auth.token.email in resource.data.attendees[1].proxy
+      allow read: if request.auth.uid == user
+	|| request.auth.token.uid in
+	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
+	|| request.auth.token.uid in resource.data.attendees[0].proxy
+	|| request.auth.token.uid in resource.data.attendees[1].proxy
 	|| resource.data.location.id in request.auth.token.locations;
-      allow read: if request.auth.token.email in
+      allow read: if request.auth.token.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /locations/{location}/appointments/{appt} {
-      allow read: if request.auth.token.email in
-	[resource.data.attendees[0].email, resource.data.attendees[1].email]
-	|| request.auth.token.email in resource.data.attendees[0].proxy
-	|| request.auth.token.email in resource.data.attendees[1].proxy
+      allow read: if request.auth.token.uid in
+	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
+	|| request.auth.token.uid in resource.data.attendees[0].proxy
+	|| request.auth.token.uid in resource.data.attendees[1].proxy
 	|| location in request.auth.token.locations;
     }
     match /locations/{location}/modifiedAppointments/{appt} {
@@ -212,12 +212,12 @@ service cloud.firestore {
     }
     match /users/{user}/modifiedAppointments/{appt} {
       // Either attendee can create and dismiss this card
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in
-	[resource.data.for.attendees[0].email, resource.data.for.attendees[1].email]
-	|| request.auth.token.email in resource.data.for.attendees[0].proxy
-	|| request.auth.token.email in resource.data.for.attendees[1].proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.uid in
+	[resource.data.for.attendees[0].uid, resource.data.for.attendees[1].uid]
+	|| request.auth.uid in resource.data.for.attendees[0].proxy
+	|| request.auth.uid in resource.data.for.attendees[1].proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /{path=**}/canceledAppointments/{appt} {
@@ -228,12 +228,12 @@ service cloud.firestore {
     }
     match /users/{user}/canceledAppointments/{appt} {
       // Either attendee can create and dismiss this card
-      allow read, delete: if request.auth.token.email == user
-	|| request.auth.token.email in
-	[resource.data.for.attendees[0].email, resource.data.for.attendees[1].email]
-	|| request.auth.token.email in resource.data.for.attendees[0].proxy
-	|| request.auth.token.email in resource.data.for.attendees[1].proxy;
-      allow read: if request.auth.token.email in
+      allow read, delete: if request.auth.uid == user
+	|| request.auth.uid in
+	[resource.data.for.attendees[0].uid, resource.data.for.attendees[1].uid]
+	|| request.auth.uid in resource.data.for.attendees[0].proxy
+	|| request.auth.uid in resource.data.for.attendees[1].proxy;
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /locations/{location}/canceledAppointments/{appt} {
@@ -244,35 +244,35 @@ service cloud.firestore {
 
     // [CLOCKINS AND CLOCKOUTS]
     match /users/{supervisor}/clockIns/{clockIn} {
-      allow read: if request.auth.token.email == supervisor;
+      allow read: if request.auth.uid == supervisor;
     }
     match /users/{supervisor}/approvedClockIns/{clockIn} {
-      allow read: if request.auth.token.email == resource.data.sentBy.email;
+      allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
     match /users/{user}/activeAppointments/{appt} {
-      allow read: if request.auth.token.email == user
+      allow read: if request.auth.uid == user
 	|| resource.data.location.id in request.auth.token.locations;
-      allow read: if request.auth.token.email in
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /locations/{location}/activeAppointments/{appt} {
       allow read: if location in request.auth.token.locations
-	|| request.auth.token.email == resource.data.attendees[0].email
-	|| request.auth.token.email == resource.data.attendees[1].email;
+	|| request.auth.uid == resource.data.attendees[0].uid
+	|| request.auth.uid == resource.data.attendees[1].uid;
     }
     match /users/{supervisor}/rejectedClockIns/{clockIn} {
-      allow read: if request.auth.token.email == resource.data.sentBy.email;
+      allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
     match /users/{supervisor}/clockOuts/{clockOut} {
-      allow read: if request.auth.token.email == supervisor;
+      allow read: if request.auth.uid == supervisor;
     }
     match /users/{supervisor}/approvedClockOuts/{clockOut} {
-      allow read: if request.auth.token.email == resource.data.sentBy.email;
+      allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
     match /users/{user}/pastAppointments/{appt} {
-      allow read: if request.auth.token.email == user
+      allow read: if request.auth.uid == user
 	|| resource.data.location.id in request.auth.token.locations;
-      allow read: if request.auth.token.email in
+      allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/users/$(user)).data.proxy;
     }
     match /locations/{location}/pastAppointments/{appt} {
@@ -280,59 +280,59 @@ service cloud.firestore {
 	&& location in request.auth.token.locations;
     }
     match /users/{supervisor}/rejectedClockOuts/{clockOut} {
-      allow read: if request.auth.token.email == resource.data.sentBy.email;
+      allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
 
     // [PAYMENTS]
     match /users/{user}/approvedPayments/{payment} {
-      allow create: if request.auth.token.email == user
-	|| request.auth.token.email == request.resource.data.from.email;
-      allow read: if request.auth.token.email == resource.data.to.email
-	|| request.auth.token.email == resource.data.from.email;
+      allow create: if request.auth.uid == user
+	|| request.auth.uid == request.resource.data.from.uid;
+      allow read: if request.auth.uid == resource.data.to.uid
+	|| request.auth.uid == resource.data.from.uid;
     }
     match /stripeAccounts/{user} {
       allow read: if request.auth.token.email == user;
     }
     match /users/{user}/sentPayments/{payment} {
-      allow create: if request.auth.token.email == user;
+      allow create: if request.auth.uid == user;
     }
     match /users/{user}/requestedPayments/{payment} {
-      allow create: if request.auth.token.email == 
-	request.resource.data.to.email;
-      allow read, delete: if request.auth.token.email == user;
+      allow create: if request.auth.uid == 
+	request.resource.data.to.uid;
+      allow read, delete: if request.auth.uid == user;
     }
     match /users/{user}/requestedPayouts/{payout} {
-      allow create, read: if request.auth.token.email == user;
+      allow create, read: if request.auth.uid == user;
     }
     match /users/{user}/deniedPayments/{payment} {
-      allow read: if request.auth.token.email == user;
-      allow create: if request.auth.token.email ==
-	request.resource.data.deniedBy.email;
+      allow read: if request.auth.uid == user;
+      allow create: if request.auth.uid ==
+	request.resource.data.deniedBy.uid;
     }
     match /users/{user}/approvedPayments/{payment} {
-      allow read: if request.auth.token.email == user;
-      allow create: if request.auth.token.email ==
-	request.resource.data.approvedBy.email;
+      allow read: if request.auth.uid == user;
+      allow create: if request.auth.uid ==
+	request.resource.data.approvedBy.uid;
     }
     match /users/{user}/needApprovalPayments/{payment} {
-      allow read, delete: if request.auth.token.email == user;
+      allow read, delete: if request.auth.uid == user;
     }
     match /users/{user}/authPayments/{payment} {
-      allow read: if request.auth.token.email == user;
-      allow create: if request.auth.token.email == request.resource.data.from.email
-	|| request.auth.token.email == request.resource.data.to.email;
+      allow read: if request.auth.uid == user;
+      allow create: if request.auth.uid == request.resource.data.from.uid
+	|| request.auth.uid == request.resource.data.to.uid;
       // When a request is canceled or rejected, client removes this document.
-      allow delete: if request.auth.token.email == resource.data.from.email
-	|| request.auth.token.email == resource.data.to.email;
+      allow delete: if request.auth.uid == resource.data.from.uid
+	|| request.auth.uid == resource.data.to.uid;
     }
     match /users/{user}/pastPayments/{payment} {
-      allow read: if request.auth.token.email == user;
+      allow read: if request.auth.uid == user;
     }
     match /users/{user}/paidPayments/{payment} {
-      allow read: if request.auth.token.email == user;
+      allow read: if request.auth.uid == user;
     }
     match /users/{user}/invalidPayments/{payment} {
-      allow read: if request.auth.token.email == user;
+      allow read: if request.auth.uid == user;
     }
 
     // [CHATS]
@@ -343,8 +343,8 @@ service cloud.firestore {
       match /messages/{message} {
         allow read, create: if request.auth.token.email in
 	  get(/databases/$(database)/documents/chats/$(chat)).data.chatterEmails;
-        allow update, delete: if request.auth.token.email == 
-	  resource.data.sentBy.email;
+        allow update, delete: if request.auth.token.uid == 
+	  resource.data.sentBy.uid;
       }
     }
   }
