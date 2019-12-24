@@ -43,9 +43,9 @@ class Tutorbook {
             id: 'NJp0Y6wyMh2fDdxSuRSx',
         };
         this.test = true;
-        this.functionsURL = (this.test) ? 'http://localhost:5001/tutorbook-77' +
-            '9d8/us-central1' : 'https://us-central1-tutorbook-779d8.cloudfun' +
-            'ctions.net';
+        this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
+            'ns.net';
+        //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-central1';
         this.db = (this.test) ? firebase.firestore().collection('partitions')
             .doc('test') : firebase.firestore().collection('partitions')
             .doc('default');
