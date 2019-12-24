@@ -27,6 +27,7 @@ class DataProxy {
                 name: user.name,
                 email: user.email,
                 id: user.id,
+                uid: user.uid,
                 photo: user.photo || 'https://tutorbook.app/app/img/' +
                     ((user.gender === 'Female') ? 'female.png' : 'male.png'),
                 type: user.type,
