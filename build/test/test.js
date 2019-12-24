@@ -89,7 +89,7 @@ function authedApp(auth) {
     return firebase.initializeTestApp({
         projectId,
         auth
-    }).firestore().collection("partitions").doc("test");
+    }).firestore().collection("partitions").doc("default");
 }
 
 function to(promise) {
@@ -313,7 +313,6 @@ describe("Tutorbook's REST API", () => {
             method: 'post',
             url: 'http://localhost:5001/tutorbook-779d8/us-central1/data',
             params: {
-                test: true,
                 user: uid,
                 action: action,
                 token: (await getToken(user)),
@@ -633,7 +632,7 @@ describe("Tutorbook's REST API", () => {
             if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
                 throw new Error(res.data.replace('[ERROR]', ''));
             assert(res.data.tutors.length === 1 &&
-                res.data.tutors[0] === TUTOR.email);
+                res.data.tutors[0] === TUTOR.uid);
             assert(res.data.pupils.length === 0);
             assert(res.data.appts.length === 3); // Tutors, pupils, & locations
         });
