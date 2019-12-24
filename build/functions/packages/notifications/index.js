@@ -39,14 +39,14 @@ const apptNotification = (req, res) => {
             res.send('[ERROR] Please specify who to send notifications to.');
             return console.warn('Request did not send any notifications.');
         }
-        const db = db.collection('users');
+        const users = db.collection('users');
         const token = await admin.auth().verifyIdToken(req.query.token);
         if (!token.supervisor) {
             res.send('[ERROR] Invalid supervisor authentication token.');
             return console.warn('Request did not send a valid supervisor ' +
                 'authentication token.');
         }
-        const supervisor = (await db.doc(token.email).get()).data();
+        const supervisor = (await users.doc(token.email).get()).data();
         const tutors = [];
         const pupils = [];
         const appts = [];
@@ -61,7 +61,7 @@ const apptNotification = (req, res) => {
             if (req.query.tutor === 'true' &&
                 tutors.indexOf(appt.for.toUser.email) < 0) {
                 tutors.push(appt.for.toUser.email);
-                const tutor = (await db.doc(appt.for.toUser.email).get())
+                const tutor = (await users.doc(appt.for.toUser.email).get())
                     .data();
                 await new SMS(tutor, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
@@ -71,7 +71,7 @@ const apptNotification = (req, res) => {
             if (req.query.pupil === 'true' &&
                 pupils.indexOf(appt.for.fromUser.email) < 0) {
                 pupils.push(appt.for.fromUser.email);
-                const pupil = (await db.doc(appt.for.fromUser.email).get())
+                const pupil = (await users.doc(appt.for.fromUser.email).get())
                     .data();
                 await new SMS(pupil, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
