@@ -527,7 +527,7 @@ describe("Tutorbook's REST API", () => {
     // =========================================================================
     function createLocation() {
         const location = {
-            supervisors: [SUPERVISOR.email],
+            supervisors: [SUPERVISOR.uid],
             city: 'Palo Alto, CA',
             name: LOCATION.name,
             timestamp: new Date(),
