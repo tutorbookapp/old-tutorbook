@@ -29,18 +29,22 @@ const customAuth = (req, res) => {
 const updateAuth = async (change, context) => {
     const profile = change.after.data();
     const id = context.params.id;
-    if (!profile) {
+    if (!profile)
         return console.warn('User (' + id + ') doc was deleted.');
-    } else if (!profile.uid || profile.uid === '') {
+    if (!profile.uid)
         return console.warn('User (' + id + ') did not have a uID.');
-    }
     const db = admin.firestore().collection('partitions').doc('default');
 
     // Check to see if the supervisor's id is in the codes collection
     const supervisorCodes = await db.collection('auth')
         .doc('supervisors')
         .get();
-    var validIDs = [];
+    var validIDs = [
+        'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+        '0vDQRIl7pJUmTzb4Rf4FRl6tCXj1',
+        'XXuoSC6QxTashOXvBwZEPz8QHWB3',
+        'YVMZlf3GMtcidSG1ud8faCgWMwk2',
+    ];
     if (supervisorCodes.exists) {
         Object.entries(supervisorCodes.data()).forEach((entry) => {
             validIDs.push(entry[1]);
@@ -48,12 +52,12 @@ const updateAuth = async (change, context) => {
     } else {
         console.warn('Supervisor auth codes do not exist, falling back to ' +
             'default IDs...');
-        validIDs = [
+        validIDs = validIDs.concat([
             'supervisor@tutorbook.app',
             'mlim@pausd.org',
             'psteward@pausd.org',
-            'lcollart@pausd.org'
-        ];
+            'lcollart@pausd.org',
+        ]);
     }
     if (profile.type === 'Supervisor' && profile.authenticated &&
         validIDs.indexOf(id) >= 0) { // SUPERVISOR
