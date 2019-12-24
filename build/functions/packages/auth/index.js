@@ -8,12 +8,18 @@ const cors = require('cors')({
 const customAuth = (req, res) => {
     return cors(req, res, async () => {
         const user = await admin.auth().getUserByEmail(req.query.user);
-        if (req.params.token !== functions.config().tests.key)
+        if (req.params.token !== functions.config().tests.key) {
+            console.error('[ERROR] Token did not match functions config tests' +
+                ' key.');
             return res.status(401).send('[ERROR] Token did not match ' +
                 'functions config tests key.');
+        }
         return admin.auth().createCustomToken(user.uid).then((token) => {
+            console.log('[DEBUG] Created custom auth token for user (' +
+                user.uid + ').');
             return res.status(200).json(token);
         }).catch((err) => {
+            console.error('[ERROR] While creating custom auth token:', err);
             return res.status(500).send('[ERROR] ' + err.message);
         });
     });
