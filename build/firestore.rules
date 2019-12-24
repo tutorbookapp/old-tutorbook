@@ -107,7 +107,7 @@ service cloud.firestore {
 	|| (request.auth.uid in resource.data.fromUser.proxy
 	|| request.auth.uid in resource.data.toUser.proxy);
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /{path=**}/modifiedRequestsIn/{requestIn} {
       // collectionGroup query rules for supervisors and admins
@@ -120,7 +120,7 @@ service cloud.firestore {
       allow read, delete: if request.auth.uid == user
 	|| request.auth.uid in resource.data.for.toUser.proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     } 
     match /{path=**}/canceledRequestsIn/{requestIn} {
       // collectionGroup query rules for supervisors and admins
@@ -132,7 +132,7 @@ service cloud.firestore {
       allow read, delete: if request.auth.uid == user
 	|| request.auth.uid in resource.data.for.toUser.proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
 
     // [REQUESTS OUT] 
@@ -147,7 +147,7 @@ service cloud.firestore {
 	|| (request.auth.uid in resource.data.fromUser.proxy
 	|| request.auth.uid in resource.data.toUser.proxy);
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /{path=**}/modifiedRequestsOut/{requestOut} {
       // collectionGroup query rules for supervisors and admins
@@ -159,7 +159,7 @@ service cloud.firestore {
       allow read, delete: if request.auth.uid == user
 	|| request.auth.uid in resource.data.for.fromUser.proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     } 
     match /{path=**}/rejectedRequestsOut/{requestOut} {
       // collectionGroup query rules for supervisors and admins
@@ -171,7 +171,7 @@ service cloud.firestore {
       allow read, delete: if request.auth.uid == user
 	|| request.auth.uid in resource.data.for.fromUser.proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     } 
     match /{path=**}/approvedRequestsOut/{requestOut} {
       // collectionGroup query rules for supervisors and admins
@@ -183,7 +183,7 @@ service cloud.firestore {
       allow read, delete: if request.auth.uid == user
 	|| request.auth.uid in resource.data.for.fromUser.proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
 
     // [APPOINTMENTS]
@@ -198,7 +198,7 @@ service cloud.firestore {
 	|| request.auth.uid in resource.data.attendees[1].proxy
 	|| resource.data.location.id in request.auth.token.locations;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /locations/{location}/appointments/{appt} {
       allow read: if request.auth.uid in
@@ -218,7 +218,7 @@ service cloud.firestore {
 	|| request.auth.uid in resource.data.for.attendees[0].proxy
 	|| request.auth.uid in resource.data.for.attendees[1].proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /{path=**}/canceledAppointments/{appt} {
       // collectionGroup query rules for supervisors and admins
@@ -234,7 +234,7 @@ service cloud.firestore {
 	|| request.auth.uid in resource.data.for.attendees[0].proxy
 	|| request.auth.uid in resource.data.for.attendees[1].proxy;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /locations/{location}/canceledAppointments/{appt} {
       // Only allow a user to create if they were already allowed to create a
@@ -253,7 +253,7 @@ service cloud.firestore {
       allow read: if request.auth.uid == user
 	|| resource.data.location.id in request.auth.token.locations;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /locations/{location}/activeAppointments/{appt} {
       allow read: if location in request.auth.token.locations
@@ -273,7 +273,7 @@ service cloud.firestore {
       allow read: if request.auth.uid == user
 	|| resource.data.location.id in request.auth.token.locations;
       allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/users/$(user)).data.proxy;
+	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }
     match /locations/{location}/pastAppointments/{appt} {
       allow read: if request.auth.token.supervisor == true
@@ -341,7 +341,7 @@ service cloud.firestore {
       allow create: if request.auth.uid in request.resource.data.chatterUIDs;
       match /messages/{message} {
         allow read, create: if request.auth.uid in
-	  get(/databases/$(database)/documents/chats/$(chat)).data.chatterUIDs;
+	  get(/databases/$(database)/documents/partitions/$(partition)/chats/$(chat)).data.chatterUIDs;
         allow update, delete: if request.auth.uid == 
 	  resource.data.sentBy.uid;
       }
