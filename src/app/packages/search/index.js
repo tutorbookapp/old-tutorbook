@@ -72,7 +72,6 @@ class SearchHeader {
                 } catch (e) {
                     console.warn('[ERROR] Could not render hit (' +
                         hit.objectID + ') b/c of', e);
-                    console.log('[DEBUG] Hit had name (' + hit.name + ').');
                 }
             });
         };
@@ -425,7 +424,6 @@ class Search {
         $(this.header).find('[data-fir-content="filter_description"]')
             .text(this.filterDescription);
         this.emptyResults();
-        console.log('[DEBUG] Getting search results...');
         this.getUsers().onSnapshot((snapshot) => {
             if (!snapshot.size) {
                 return that.recycler.empty();

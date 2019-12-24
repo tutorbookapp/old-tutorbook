@@ -385,7 +385,6 @@ class Matching {
         // Shows unmatched tutors/pupils and matched tutors/pupils (who haven't 
         // created past appts).
         await this.initDismissedCards();
-        console.log('[DEBUG] Getting proxied users...');
         window.app.db.collection('users')
             .where('proxy', 'array-contains', window.app.user.uid)
             .onSnapshot((snapshot) => {
@@ -414,8 +413,6 @@ class Matching {
             'approvedRequestsOut',
             'rejectedRequestsOut',
         ].forEach((subcollection) => {
-            console.log('[DEBUG] Listening to matches for proxy user (' + id +
-                ')...');
             this.queries[id].push(window.app.db.collection('users').doc(id)
                 .collection(subcollection).onSnapshot((snapshot) => {
                     if (!snapshot.size) {

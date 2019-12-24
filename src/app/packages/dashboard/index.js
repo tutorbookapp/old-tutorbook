@@ -139,7 +139,6 @@ class Dashboard {
                 $(list).find('#cards [id="' + doc.id + '"]').remove();
             },
         };
-        console.log('[DEBUG] Viewing ' + type + ' cards...');
         query.onSnapshot((snapshot) => {
             if (!snapshot.size) {
                 return recycler.empty(list);
