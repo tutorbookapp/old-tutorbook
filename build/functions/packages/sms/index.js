@@ -17,9 +17,19 @@ const getUser = require('utils').getUserFromPhone;
 class SMS {
 
     constructor(recipient, message) {
-        this.recipient = recipient;
-        this.message = message; // TODO: Alert sender if message fails
-        if (recipient.phone && recipient.phone !== '') this.send();
+        if (this.valid(recipient, message)) {
+            this.recipient = recipient;
+            this.message = message; // TODO: Alert sender if message fails
+            this.send();
+        }
+    }
+
+    valid(recipient, message) {
+        if (!recipient || !recipient.phone) return console.error('[ERROR] ' +
+            'Cannot send to undefined phone numbers.');
+        if (!message) return console.warn('[WARNING] Skipped sending empty ' +
+            'message.');
+        return true;
     }
 
     send() {

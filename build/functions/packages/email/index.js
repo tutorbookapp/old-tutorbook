@@ -22,29 +22,39 @@ class Email {
 
     constructor(type, user, data) {
         this.user = user;
-        switch (type) {
-            case 'welcome':
-                this.renderWelcome();
-                break;
-            case 'request':
-                this.renderNewRequest(data);
-                break;
-            case 'appt':
-                this.renderApprovedRequest(data);
-                break;
-            case 'rules':
-                this.renderRules(data);
-                break;
-            default:
-                this.renderDefault(data);
-                break;
-        };
-        this.send();
+        if (this.valid(user)) {
+            switch (type) {
+                case 'welcome':
+                    this.renderWelcome();
+                    break;
+                case 'request':
+                    this.renderNewRequest(data);
+                    break;
+                case 'appt':
+                    this.renderApprovedRequest(data);
+                    break;
+                case 'rules':
+                    this.renderRules(data);
+                    break;
+                default:
+                    this.renderDefault(data);
+                    break;
+            };
+            this.send();
+        }
+    }
+
+    valid(user) {
+        if (!user || !user.email) return console.error('[ERROR] Cannot send ' +
+            'to undefined email addresses.');
+        return true;
     }
 
     renderDefault(data) {
-        if (!data.message || !data.subject) throw new Error('Email needs a ' +
-            'subject and a message');
+        if (!data.message || !data.subject) return console.error('[ERROR] ' +
+            'Email needs a subject and a message.');
+        if (!this.user.name) return console.error('[ERROR] User must have a ' +
+            'valid name.');
         this.subject = data.subject;
         this.html = defaultEmail
             .replace('{ username }', this.user.name)
@@ -52,6 +62,8 @@ class Email {
     }
 
     async send() {
+        if (!this.user || !this.user.email) return console.error('[ERROR] ' +
+            'Cannot send to undefined email addresses.');
         const transporter = nodemailer.createTransport({
             host: 'smtp-relay.gmail.com',
             port: 465,
@@ -84,6 +96,8 @@ class Email {
     }
 
     renderNewRequest(request) { // Notifies tutor of a new request
+        if (!this.user.name) return console.error('[ERROR] User needs a valid' +
+            ' name.');
         const summary = request.fromUser.name + ' wants you as a ' +
             request.toUser.type.toLowerCase() + ' for ' + request.subject +
             ' on ' + request.time.day + 's at ' + request.time.from +
@@ -97,6 +111,8 @@ class Email {
     }
 
     renderApprovedRequest(approvedRequest) { // Notifies pupil about new appts
+        if (!this.user.name) return console.error('[ERROR] User needs a valid' +
+            ' name.');
         const request = approvedRequest.for;
         const approvedBy = approvedRequest.approvedBy;
         const summary = approvedBy.name + ' approved your lesson request. You' +
@@ -148,6 +164,8 @@ class Email {
     }
 
     renderWelcome() { // Renders welcome email (custom to user type)
+        if (!this.user.name) return console.error('[ERROR] User needs a valid' +
+            ' name.');
         this.subject = 'Welcome to Tutorbook';
         switch (this.user.type) {
             case 'Tutor':

@@ -4,12 +4,7 @@ const db = admin.firestore().collection('partitions').doc('default');
 class Webpush {
 
     constructor(id, title, body, data) {
-        if (!title || title === '' || typeof title !== 'string') {
-            throw new Error('Webpush must have a valid title.');
-        } else if (!body || body === '' || typeof body !== 'string') {
-            throw new Error('Webpush must have a valid body.');
-        }
-        db.collection('users') // Constructor can't be async
+        if (this.valid(title, body)) db.collection('users')
             .doc(id).get().then((userRef) => {
                 const token = userRef.data().notificationToken;
                 this.id = id;
@@ -40,6 +35,14 @@ class Webpush {
                 };
                 this.send();
             });
+    }
+
+    valid(title, body) {
+        if (!title || title === '' || typeof title !== 'string')
+            return console.error('[ERROR] Webpush must have a valid title.');
+        if (!body || body === '' || typeof body !== 'string')
+            return console.error('[ERROR] Webpush must have a valid body.');
+        return true;
     }
 
     send() {
