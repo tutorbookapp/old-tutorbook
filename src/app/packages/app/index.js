@@ -99,7 +99,21 @@ class Tutorbook {
             if (user) {
                 await this.initUser();
                 Utils.urlData();
-                if (this.user.authenticated) {
+                if (this.user.type === 'Supervisor' &&
+                    !this.userClaims.supervisor) {
+                    new NotificationDialog('Invalid Authentication', 'You ' +
+                        'have tried to login as a supervisor but lack the ' +
+                        'required custom authentication claims. Either wait ' +
+                        'a few minutes and try reloading the app or continue ' +
+                        '(by clicking OK or anywhere outside this dialog) ' +
+                        'with your current authentication claims (that denote' +
+                        ' you as a regular user). For more information, email' +
+                        ' help@tutorbook.app or text me directly at (650) 861' +
+                        '-2723.', () => {
+                            this.init();
+                            this.nav.start();
+                        }).view();
+                } else if (this.user.authenticated) {
                     this.init();
                     this.nav.start();
                 } else {
@@ -137,6 +151,7 @@ class Tutorbook {
         } else {
             this.user = Utils.filterProfile(profile);
             this.conciseUser = Utils.filterRequestUserData(profile);
+            this.userClaims = (await user.getIdTokenResult(true)).claims;
         }
     }
 

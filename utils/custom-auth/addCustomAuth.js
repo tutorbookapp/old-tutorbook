@@ -17,7 +17,16 @@ const addSupervisorAuth = (options) => {
     });
 };
 
-addSupervisorAuth({
+const removeSupervisorAuth = (options) => {
+    auth.setCustomUserClaims(options.uid, {
+        supervisor: false,
+        parent: false,
+        locations: [],
+        children: [],
+    });
+};
+
+removeSupervisorAuth({
     uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
     locationIds: ['NJp0Y6wyMh2fDdxSuRSx'],
 });
