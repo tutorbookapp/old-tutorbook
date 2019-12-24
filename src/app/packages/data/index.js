@@ -140,7 +140,7 @@ class Data {
             url: window.app.functionsURL + '/data',
             params: {
                 test: window.app.test,
-                user: window.app.user.id || window.app.user.email,
+                user: window.app.user.uid,
                 action: action,
                 token: (await firebase.auth().currentUser.getIdToken(true)),
             },

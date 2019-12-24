@@ -1027,6 +1027,7 @@ class Utils {
             name: user.name,
             email: user.email,
             phone: user.phone,
+            uid: user.uid,
             id: user.id,
             photo: user.photo,
             type: user.type,
@@ -1039,6 +1040,7 @@ class Utils {
         return { // Needed info to properly render various user headers
             name: user.name,
             email: user.email,
+            uid: user.uid,
             id: user.id,
             photo: user.photo,
             type: user.type,
