@@ -166,8 +166,8 @@ class Matching {
             return profile;
         };
 
-        const tutor = await profile(request.toUser.email);
-        const pupil = await profile(request.fromUser.email);
+        const tutor = await profile(request.toUser.uid);
+        const pupil = await profile(request.fromUser.uid);
 
         const subtitle = 'From ' + request.fromUser.name +
             ' to ' + request.toUser.name;

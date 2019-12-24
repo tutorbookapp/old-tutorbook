@@ -349,10 +349,10 @@ class SupervisorPastAppt extends Event {
             photoA: this.attendees[0].photo,
             photoB: this.attendees[1].photo,
             viewUserA: async () => {
-                new User((await Data.getUser(this.attendees[0].email))).view();
+                new User((await Data.getUser(this.attendees[0].uid))).view();
             },
             viewUserB: async () => {
-                new User(await Data.getUser(this.attendees[1].email)).view();
+                new User(await Data.getUser(this.attendees[1].uid)).view();
             },
             type: 'pastAppointments',
             showAction: true,
