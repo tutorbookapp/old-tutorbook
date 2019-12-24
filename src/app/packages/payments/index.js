@@ -11,6 +11,7 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const axios = require('axios');
 const Profile = require('@tutorbook/profile').default;
 const PaidProfile = require('@tutorbook/profile').paid;
 const TutorProfile = require('@tutorbook/profile').tutor;
