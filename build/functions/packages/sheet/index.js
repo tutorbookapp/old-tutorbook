@@ -42,7 +42,8 @@ async function updateGoogleSheet(locationName) {
         var grade = profile.grade;
         var url = 'https://' + (profile.location === 'Gunn Academic Center' ?
             'gunn.' : profile.location === 'Paly Peer Tutoring Center' ?
-            'paly.' : '') + 'tutorbook.app/app/users/' + profile.email;
+            'paly.' : '') + 'tutorbook.app/app/users/' + (profile.uid ||
+            profile.id || profile.email);
         var serviceHours = getDurationStringFromSecs(profile.secondsTutored);
 
         var firstAppt = await users[i].ref.collection('pastAppointments')
