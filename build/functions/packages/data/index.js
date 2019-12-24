@@ -546,7 +546,7 @@ class Data {
         clockIn.for = Data.cloneMap(appt);
 
         await ref.set(clockIn);
-        await db.collection('users').doc(global.app.user.id).update({
+        await db.collection('users').doc(global.app.user.uid).update({
             clockedIn: true
         });
         return {
@@ -573,7 +573,7 @@ class Data {
         clockOut.for = Data.cloneMap(appt);
 
         await ref.set(clockOut);
-        await db.collection('users').doc(global.app.user.id).update({
+        await db.collection('users').doc(global.app.user.uid).update({
             clockedOut: true
         });
         return {
