@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "await-to-js": "^2.1.1",
     "firebase-admin": "^8.4.0",
     "fs": "0.0.1-security",
     "nodemailer": "^6.3.0",
