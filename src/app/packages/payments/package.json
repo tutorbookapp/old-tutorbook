@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/payments",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.1.6",
-    "@tutorbook/data": "^0.1.6",
-    "@tutorbook/dialogs": "^0.1.6",
-    "@tutorbook/profile": "^0.1.6",
-    "@tutorbook/schedule": "^0.1.6",
-    "@tutorbook/utils": "^0.1.6"
+    "@tutorbook/card": "^0.2.0",
+    "@tutorbook/data": "^0.2.0",
+    "@tutorbook/dialogs": "^0.2.0",
+    "@tutorbook/profile": "^0.2.0",
+    "@tutorbook/schedule": "^0.2.0",
+    "@tutorbook/utils": "^0.2.0"
   },
   "repository": {
     "type": "git",
