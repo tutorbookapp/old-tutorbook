@@ -42,10 +42,7 @@ class Navigation {
         // Show lastView and update views
         // TODO: Fix errors in "Matching" view that require us to do this
         const lastView = window.app.nav.views.pop();
-        if (!lastView) {
-            // Show home if views is empty
-            return window.app.dashboard.view();
-        }
+        if (!lastView) return window.app.dashboard.view(); // Show home view
         $('.header').empty().append(lastView.header);
         $('.main').empty().append(lastView.main);
         window.scrollTo(lastView.scroll, lastView.scroll);

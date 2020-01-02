@@ -389,9 +389,8 @@ class Search {
     }
 
     async reViewUser(id) {
-        if (!this.users[id]) {
-            this.users[id] = new User((await Data.getUser(id)));
-        }
+        if (!this.users[id]) this.users[id] =
+            new User((await Data.getUser(id)));
         return this.users[id].reView();
     }
 
