@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/schedule-card",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,8 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@tutorbook/data": "^0.2.0",
-    "@tutorbook/dialogs": "^0.2.0",
-    "@tutorbook/utils": "^0.2.0"
+    "@tutorbook/dialogs": "^0.2.1",
+    "@tutorbook/utils": "^0.2.1"
   },
   "repository": {
     "type": "git",
