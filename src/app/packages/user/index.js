@@ -52,10 +52,17 @@ class User {
             title: 'View User',
             showEdit: (window.app.user.type === 'Supervisor' &&
                 this.profile.payments.type === 'Free'),
-            edit: () => {},
+            edit: () => {
+                new window.app.EditProfile(this.profile).view();
+            },
             showMatch: (window.app.user.type === 'Supervisor' &&
                 this.profile.payments.type === 'Free'),
-            match: () => {},
+            match: () => {
+                Data.updateUser(Utils.combineMaps(this.profile, {
+                    proxy: [window.app.user.uid],
+                }));
+                new window.app.MatchingDialog(this.profile).view();
+            },
         });
     }
 
@@ -141,21 +148,6 @@ class User {
 
         // HEADER
         MDCTopAppBar.attachTo(this.header);
-        Object.entries({
-            edit: () => {
-                new window.app.EditProfile(this.profile).view();
-            },
-            match: () => {
-                Data.updateUser(Utils.combineMaps(this.profile, {
-                    proxy: [window.app.user.uid],
-                }));
-                new window.app.MatchingDialog(this.profile).view();
-            },
-        }).forEach((entry) => {
-            $(this.header)
-                .find('[data-fir-click="' + entry[0] + '"]')[0]
-                .addEventListener('click', entry[1]);
-        });
     }
 
 };

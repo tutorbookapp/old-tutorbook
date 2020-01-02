@@ -247,12 +247,9 @@ class Render {
             'name': user.name || user.displayName,
             'email': user.email,
             'type': user.type || "",
-            'go_to_user': () => {},
+            'go_to_user': () => new User(user).view(),
         };
-        const profileHeader = this.template('profile-header', userData);
-        $(profileHeader).find('[data-fir-click="go_to_user"]')[0]
-            .addEventListener('click', () => new User(user).view());
-        return profileHeader;
+        return this.template('profile-header', userData);
     }
 
     userHeader(user) {
