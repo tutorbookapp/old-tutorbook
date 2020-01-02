@@ -52,18 +52,10 @@ class User {
             title: 'View User',
             showEdit: (window.app.user.type === 'Supervisor' &&
                 this.profile.payments.type === 'Free'),
-            edit: () => {
-                new window.app.EditProfile(this.profile).view();
-            },
+            edit: () => {},
             showMatch: (window.app.user.type === 'Supervisor' &&
                 this.profile.payments.type === 'Free'),
-            match: () => {
-                Data.updateUser(Utils.combineMaps(this.profile, {
-                    proxy: [window.app.user.uid],
-                }));
-                new window.app.MatchingDialog(this.profile).view();
-            },
-
+            match: () => {},
         });
     }
 
@@ -77,12 +69,7 @@ class User {
         this.manage();
     }
 
-    reView() {
-        if (window.app.user.type === 'Supervisor')
-            $(this.header).find('#edit').click(() => {
-                new window.app.EditProfile(this.profile).view();
-            }); // TODO: Why do the header click listeners go away but others don't?
-    }
+    reView() {}
 
     manage() {
         // GOOGLE MAP
@@ -128,7 +115,8 @@ class User {
             MDCRipple.attachTo(el);
             el.addEventListener('click', () => {
                 if (this.profile.payments.type === 'Paid') {
-                    return new StripeRequestDialog(el.innerText, this.profile).view();
+                    return new StripeRequestDialog(el.innerText, this.profile)
+                        .view();
                 }
                 return new NewRequestDialog(el.innerText, this.profile).view();
             });
@@ -153,6 +141,21 @@ class User {
 
         // HEADER
         MDCTopAppBar.attachTo(this.header);
+        Object.entries({
+            edit: () => {
+                new window.app.EditProfile(this.profile).view();
+            },
+            match: () => {
+                Data.updateUser(Utils.combineMaps(this.profile, {
+                    proxy: [window.app.user.uid],
+                }));
+                new window.app.MatchingDialog(this.profile).view();
+            },
+        }).forEach((entry) => {
+            $(this.header)
+                .find('[data-fir-click="' + entry[0] + '"]')[0]
+                .addEventListener('click', entry[1]);
+        });
     }
 
 };
