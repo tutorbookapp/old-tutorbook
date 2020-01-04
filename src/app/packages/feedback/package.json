@@ -11,7 +11,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/nicholaschiang/tutorbook.git",
+    "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/feedback"
   },
   "gitHead": "8442c34e048dad5475715b6846404a379a7fa182"

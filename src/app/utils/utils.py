@@ -29,5 +29,19 @@ def updateReqs(directory, prefix="@tutorbook/", vals=[]):
                     filedata = file.write(filedata)
 
 
+def changeRepoUrl(
+    directory,
+    oldUrl="github.com/nicholaschiang/tutorbook.git",
+    newUrl="github.com/tutorbookapp/tutorbook.git",
+):
+    for package in os.listdir(directory):
+        for jsonfile in os.listdir(f"{directory}{package}"):
+            if jsonfile == "package.json":
+                with open(f"{directory}{package}/{jsonfile}", "r") as file:
+                    filedata = file.read()
+                with open(f"{directory}{package}/{jsonfile}", "w") as file:
+                    file.write(filedata.replace(oldUrl, newUrl))
+
+
 if __name__ == "__main__":
-    updateReqs("../packages/")
+    changeRepoUrl("../packages/")
