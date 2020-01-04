@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/stats",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "Statistics screen for the Tutorbook web app.",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/stats"
   },
- "dependencies": {
-    "@tutorbook/card": "^0.2.1",
-    "@tutorbook/utils": "^0.2.1"
+  "dependencies": {
+    "@tutorbook/card": "^0.2.3",
+    "@tutorbook/utils": "^0.2.3"
   }
 }
