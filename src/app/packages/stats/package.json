@@ -9,7 +9,12 @@
   "keywords": [],
   "author": "Nicholas Chiang",
   "license": "MIT",
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/nicholaschiang/tutorbook.git",
+    "directory": "src/app/packages/stats"
+  },
+ "dependencies": {
     "@tutorbook/card": "^0.2.1",
     "@tutorbook/utils": "^0.2.1"
   }
