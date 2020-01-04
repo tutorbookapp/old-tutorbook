@@ -5,6 +5,7 @@ const cors = require('cors')({
     origin: true,
 });
 
+const Stats = require('stats');
 
 // Recieves a user, an action, and (optional) data. Performs requested action
 // (using the below `Data` class) and sends snackbar message response.
@@ -1501,28 +1502,49 @@ Data.types = [
 module.exports = {
     onRequest: (req, res) => { // Firebase Functions HTTP Request trigger
         return cors(req, res, async () => {
-            console.log('Responding to ' + req.query.action + ' action from ' +
-                req.query.user + '...');
-            global.db = (req.query.test) ? admin.firestore()
+            console.log('Responding to ' +
+                (req.query.test === 'true' ? 'test ' : 'live ') +
+                req.query.action + ' action from ' + req.query.user + '...');
+            global.db = (req.query.test === 'true') ? admin.firestore()
                 .collection('partitions').doc('test') : admin.firestore()
                 .collection('partitions').doc('default');
+            const user = await Data.getUser(req.query.user);
             const data = new DataProxy(
-                (await Data.getUser(req.query.user)),
+                user,
                 (await admin.auth().verifyIdToken(req.query.token)),
                 req.query.action,
                 req.body,
             );
             return data.act().then((result) => {
                 res.json(result);
-            }).catch((err) => {
+                if (!Stats.dataAction[req.query.action]) return console.warn(
+                    '[WARNING] Data action (' + req.query.action + ') not yet' +
+                    ' tracked.');
+                return Stats.dataAction[req.query.action](
+                    user,
+                    req.body,
+                    result,
+                );
+            }).catch(async (err) => {
                 console.error('Error while processing ' + req.query.action +
                     ' action from ' + req.query.user + ':', err.message);
                 res.send('[ERROR] ' + err.message);
+                if (!Stats.failedDataAction[req.query.action]) return console
+                    .warn('[WARNING] Failed data action (' + req.query.action +
+                        ') not yet tracked.');
+                await Stats.failedDataAction[req.query.action](
+                    user,
+                    req.body,
+                    err,
+                );
                 throw err;
             });
         });
     },
     onCall: async (data, context) => { // Firebase Function HTTPS Callable trigger
+        throw new Error('Tutorbook\'s onCall API is deprecated. Please use ' +
+            'the HTTPS REST API (hosted at https://tutorbook-779d8-us-central' +
+            '1.cloudfunctions.net/data) instead.');
         console.log('Responding to ' + data.action + ' action from ' +
             context.auth.token.email + '...');
         global.db = (data.test) ? admin.firestore()

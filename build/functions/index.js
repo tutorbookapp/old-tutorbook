@@ -10,6 +10,7 @@ const Data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
 const Search = require('search');
+const Stats = require('stats');
 
 // ============================================================================
 // SEARCH (VIA ALGOLIA) 
@@ -118,6 +119,10 @@ exports.updateHours = functions.firestore
 exports.sms = functions.https.onRequest(SMS.receive());
 
 exports.smsFallback = functions.https.onRequest(SMS.fallback);
+
+exports.userUpdateStat = functions.firestore
+    .document('/partitions/{partition}/users/{user}')
+    .onWrite(Stats.userUpdate);
 
 // ============================================================================
 // NOTIFICATIONS (EMAIL, SMS, & WEBPUSH)

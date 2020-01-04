@@ -3,6 +3,7 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 // App packages
+const Stats = require('@tutorbook/stats');
 const Dashboard = require('@tutorbook/dashboard').default;
 const SupervisorDashboard = require('@tutorbook/dashboard').supervisor;
 const Search = require('@tutorbook/search').default;
@@ -84,6 +85,8 @@ class Tutorbook {
             if (this.user.type === 'Supervisor') {
                 this.schedule = new SupervisorSchedule();
                 this.dashboard = new SupervisorDashboard();
+                this.matching = new Matching();
+                this.stats = new Stats();
             } else {
                 this.schedule = new Schedule();
                 this.dashboard = new Dashboard();
@@ -91,7 +94,6 @@ class Tutorbook {
             this.chats = new Chats(this);
             this.payments = new Payments();
             this.feedback = new Feedback(this);
-            this.matching = new Matching();
         };
 
         firebase.auth().onAuthStateChanged(async (user) => {

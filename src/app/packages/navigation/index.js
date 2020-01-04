@@ -70,6 +70,8 @@ class Navigation {
                 return window.app.chats.reView();
             case 'matching':
                 return window.app.matching.reView();
+            case 'stats':
+                return window.app.stats.reView();
             case 'schedule':
                 return window.app.schedule.reView();
             case 'payments':
@@ -163,6 +165,15 @@ class Navigation {
                         app.router.navigate('/app/home');
                     }
                 },
+                /*
+                 *'/app/stats': function() {
+                 *    if (app.user.type === 'Supervisor') {
+                 *        app.stats.view();
+                 *    } else {
+                 *        app.router.navigate('/app/home');
+                 *    }
+                 *},
+                 */
                 '/app/dashboard': function() {
                     app.dashboard.view();
                 },
@@ -241,6 +252,9 @@ class Navigation {
             showMatching: () => {
                 app.matching.view();
             },
+            showStats: () => {
+                app.stats.view();
+            },
             showChats: function() {
                 app.chats.view();
             },
@@ -277,8 +291,11 @@ class Navigation {
             case 'Tutorbook': // Home is selected
                 $('#nav-drawer .mdc-list #home').attr('class', 'mdc-list-item mdc-list-item--activated');
                 break;
-            case 'Matching': // Home is selected
+            case 'Matching':
                 $('#nav-drawer .mdc-list #matching').attr('class', 'mdc-list-item mdc-list-item--activated');
+                break;
+            case 'Stats':
+                $('#nav-drawer .mdc-list #stats').attr('class', 'mdc-list-item mdc-list-item--activated');
                 break;
             case 'Home':
                 $('#nav-drawer .mdc-list #home').attr('class', 'mdc-list-item mdc-list-item--activated');

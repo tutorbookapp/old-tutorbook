@@ -14,6 +14,9 @@ service cloud.firestore {
       allow update, delete: if request.auth.uid in resource.data.supervisors;
       allow create: if request.auth.uid in request.resource.data.supervisors
 	&& request.auth.token.supervisor == true;
+      match /recentActions/{recentAction} {
+        allow read, delete: if location in request.auth.token.locations;
+      }
     }
     match /users/{supervisor}/dismissedCards/{card} {
       // Workaround to enable supervisors to dismiss cards (as we don't want

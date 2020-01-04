@@ -227,6 +227,7 @@ class SupervisorDashboard extends Dashboard {
             );
         };
 
+        //add('Recent activity', 'activity');
         add('Schedule', 'schedule');
         add('Everything else', 'everything');
     }
@@ -245,6 +246,7 @@ class SupervisorDashboard extends Dashboard {
         super.viewDefaultCards();
         this.viewScheduleCards();
         this.viewShortcutCards();
+        //this.viewRecentActivityCards();
         this.viewEverythingElse();
     }
 
@@ -265,6 +267,65 @@ class SupervisorDashboard extends Dashboard {
         this.viewCard(scheduleShortcut(), def);
         this.viewCard(matchingShortcut(), def);
         this.viewCard(trackingShortcut(), def);
+    }
+
+    viewRecentActivityCards() {
+        const emptyCard = Card.renderCard(
+            'You\'re Done!',
+            'Hooray you\'re all caught up, for now...',
+            'No recent activity at the ' + window.app.location.name + ' that ' +
+            'you haven\'t already addressed. Note that (right now) we only ' +
+            'show cards for new requests, canceled requests, and updated ' +
+            'profiles. More updates coming soon!', {
+                great: () => {
+                    $(this.main).find('[id="Recent activity"]').hide();
+                    $(this.main).find('#activity').hide();
+                },
+            },
+        );
+        $(emptyCard).attr('id', 'empty-card');
+        const renderCard = (doc) => {
+            const action = doc.data();
+            const card = Card.renderCard(
+                action.title,
+                action.subtitle,
+                action.summary, {
+                    dismiss: () => {
+                        $(card).remove();
+                        return doc.ref.delete();
+                    },
+                },
+            );
+            $(card).attr('id', doc.id).attr('timestamp', action.timestamp);
+            return card;
+        };
+        const recycler = {
+            display: (doc) => {
+                $(this.main).find('[id="Recent activity"]').show().end()
+                    .find('#activity').show()
+                    .find('#cards')
+                    .find('#empty-card').remove().end()
+                    .append(renderCard(doc));
+            },
+            remove: (doc) => {
+                $(this.main).find('[id="Recent activity"]').show().end()
+                    .find('#activity').show()
+                    .find('#cards')
+                    .find('#empty-card').remove().end()
+                    .find('#' + doc.id).remove().end();
+            },
+            empty: () => {
+                $(this.main).find('#activity #cards').empty().append(emptyCard);
+            },
+        };
+        Utils.recycle({
+            activity: window.app.db
+                .collection('locations')
+                .doc(window.app.location.id)
+                .collection('recentActions')
+                .orderBy('timestamp')
+                .limit(10),
+        }, recycler);
     }
 
     viewEverythingElse() {

@@ -971,6 +971,12 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
                 <span class="mdc-list-item__text">Home</span>
             </a>
+            <!--
+               -<a id="stats" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showStats">
+               -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">equalizer</i>
+               -    <span class="mdc-list-item__text">Statistics</span>
+               -</a>
+	       -->
             <hr class="mdc-list-divider">
             <a id="search" class="mdc-list-item" data-fir-click="showSearch">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">search</i>
@@ -1734,6 +1740,37 @@ styling due to input el spacing. -->
             </div>
         </span>
     </li>
+</div>
+
+<!-- Service Hours Statistics Template -->
+<div hidden class="template" id="stats">
+    <div class="dashboard">
+        <div data-fir-if="welcome" class="header-welcome">
+            <h1 class="mdc-typography--headline1" data-fir-content="title">
+                App Statistics
+            </h1>
+            <h5 class="mdc-typography--subtitle1">
+                Track service hours, watch leader boards, and stay on top of app
+                activity.
+            </h5>
+        </div>
+        <div class="input-list-divider">
+            <h4 class="mdc-list-group__subheader">Recent activity</h4>
+            <hr class="mdc-list-divider">
+        </div>
+        <div class="mdc-layout-grid" id="activity">
+            <div class="mdc-layout-grid__inner" id="cards">
+            </div>
+        </div>
+        <div class="input-list-divider">
+            <h4 class="mdc-list-group__subheader">Service hours</h4>
+            <hr class="mdc-list-divider">
+        </div>
+        <div class="mdc-layout-grid" id="service-hrs">
+            <div class="mdc-layout-grid__inner" id="cards">
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Matching Template -->

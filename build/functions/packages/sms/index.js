@@ -52,6 +52,11 @@ class SMS {
         app.post('/', async (req, res) => {
             console.log('[DEBUG] Responding to request with phone (' +
                 req.body.From + ') and body (' + req.body.Body + ')...');
+            new SMS({
+                    phone: '+16508612723',
+                    name: 'Nicholas Chiang',
+                }, 'SMS from ' + (await getUser(req.body.From)).name + ' (' +
+                req.body.From + '): ' + req.body.Body);
             new Message({
                 message: req.body.Body,
                 from: (await getUser(req.body.From)),

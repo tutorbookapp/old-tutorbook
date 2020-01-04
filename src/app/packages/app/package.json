@@ -28,6 +28,7 @@
     "@tutorbook/schedule": "^0.2.1",
     "@tutorbook/search": "^0.2.1",
     "@tutorbook/snackbar": "^0.2.1",
+    "@tutorbook/stats": "^0.2.1",
     "@tutorbook/utils": "^0.2.1"
   },
   "repository": {

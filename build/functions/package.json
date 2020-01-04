@@ -37,6 +37,7 @@
     "sheet": "file:./packages/sheet",
     "sms": "file:./packages/sms",
     "utils": "file:./packages/utils",
-    "webpush": "file:./packages/webpush"
+    "webpush": "file:./packages/webpush",
+    "stats": "file:./packages/stats"
   }
 }

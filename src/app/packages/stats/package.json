@@ -1,0 +1,16 @@
+{
+  "name": "@tutorbook/stats",
+  "version": "0.2.1",
+  "description": "Statistics screen for the Tutorbook web app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nicholas Chiang",
+  "license": "MIT",
+  "dependencies": {
+    "@tutorbook/card": "^0.2.1",
+    "@tutorbook/utils": "^0.2.1"
+  }
+}
