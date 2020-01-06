@@ -1217,11 +1217,14 @@ styling due to input el spacing. -->
     <div data-fir-id="text" class="action-list-divider">
         <h4 class="mdc-list-group__subheader">
             <span data-fir-content="text">Label</span>
-            <button data-fir-click="remove_field" class="mdc-button mdc-button--unelevated">Remove</button>
-            <button data-fir-click="add_field" class="mdc-button mdc-button--unelevated">Add</button>
         </h4>
         <hr class="mdc-list-divider">
     </div>
+</div>
+
+<!-- MDC List Divider Action Button Template -->
+<div hidden class="template" id="list-divider-btn">
+    <button data-fir-click="action" data-fir-content="label" data-fir-id="label" class="mdc-button mdc-button--unelevated"></button>
 </div>
 
 <!-- MDC List Divider Template -->
@@ -1716,7 +1719,10 @@ styling due to input el spacing. -->
 <!-- User List Item Search Result Template -->
 <div hidden class="template" id="search-result-user">
     <li class="mdc-list-item" data-fir-id="id" data-fir-attr="type:paymentType" data-fir-click="go_to_user">
-        <img class="mdc-list-item__graphic" data-fir-attr="src:photo">
+        <img id="photo" class="mdc-list-item__graphic" data-fir-attr="src:photo">
+        <div id="checkmark" class="mdc-list-item__graphic">
+            <a class="material-icons">check</a>
+        </div>
         <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
             <span class="mdc-list-item__secondary-text">

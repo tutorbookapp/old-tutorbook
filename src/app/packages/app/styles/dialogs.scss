@@ -17,6 +17,10 @@
   color: #018786;
 }
 
+.dialog-input .action-list-divider button:disabled {
+  color: #9F9F9F;
+}
+
 /* Ensures that input-list-items completely wrap around inputs and don't cut
 them (or their floating labels) off short. */
 .input-list-item {

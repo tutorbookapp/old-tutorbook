@@ -5,18 +5,23 @@ const client = require('algoliasearch')(
 );
 
 class Algolia {
-    static update(change, context, indexID) {
+    static update(change, context, indexID, settings) {
         const index = client.initIndex(indexID);
         if (!change.after.exists) return index.deleteObject(context.params.id);
         const object = change.after.data();
         object.objectID = context.params.id;
         object.ref = change.after.ref.path;
+        object.partition = context.params.partition;
+        if (!settings) settings = {};
+        if (!settings.attributesForFaceting)
+            settings.attributesForFaceting = [];
+        settings.attributesForFaceting.push('filterOnly(partition)');
+        index.setSettings(settings);
         return index.saveObject(object);
     }
 
     static user(change, context) {
-        Algolia.update(change, context, 'users');
-        client.initIndex('users').setSettings({
+        Algolia.update(change, context, 'users', {
             attributesForFaceting: [
                 'filterOnly(payments.type)',
                 'filterOnly(location)',

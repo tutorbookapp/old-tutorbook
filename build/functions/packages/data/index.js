@@ -536,6 +536,8 @@ class Data {
 
         const db = global.db;
         const supervisor = await Data.getLocationSupervisor(appt.location.id);
+        const supervisorData = (await db.collection('users').doc(supervisor)
+            .get()).data();
         const apptRef = db.collection('users').doc(appt.attendees[0].uid)
             .collection('appointments').doc(id);
         const ref = db.collection('users').doc(supervisor)
@@ -551,6 +553,10 @@ class Data {
             clockedIn: true
         });
         return {
+            supervisor: {
+                name: supervisorData.name,
+                uid: supervisorData.uid,
+            },
             clockIn: clockIn,
             appt: appt,
             id: id,
@@ -568,6 +574,8 @@ class Data {
             .collection('appointments').doc(id);
         const ref = db.collection('users').doc(appt.supervisor)
             .collection('clockOuts').doc(id);
+        const supervisorData = (await db.collection('users')
+            .doc(appt.supervisor).get()).data();
 
         appt = (await apptRef.get()).data(); // Don't trust the client
         appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
@@ -578,6 +586,10 @@ class Data {
             clockedOut: true
         });
         return {
+            supervisor: {
+                name: supervisorData.name,
+                uid: supervisorData.uid,
+            },
             clockOut: clockOut,
             appt: appt,
             id: id,

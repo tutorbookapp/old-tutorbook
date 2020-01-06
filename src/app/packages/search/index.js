@@ -63,7 +63,10 @@ class SearchHeader {
                     'Any' ? [
                         'payments.type:Free',
                         'location:' + window.app.location.name,
-                    ] : undefined,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
             });
             $(this.el).find('#results').empty();
             res.hits.forEach((hit) => {

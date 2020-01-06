@@ -204,11 +204,16 @@ class Render {
     }
 
     actionDivider(text, actions) {
-        return this.template('action-list-divider', {
+        const divider = this.template('action-list-divider', {
             'text': text,
-            'add_field': actions.add,
-            'remove_field': actions.remove,
         });
+        Object.entries(actions).forEach((action) => {
+            $(divider).find('h4').append(this.template('list-divider-btn', {
+                action: action[1],
+                label: action[0],
+            }));
+        });
+        return divider;
     }
 
     listDivider(text) {

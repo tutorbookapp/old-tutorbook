@@ -58,11 +58,6 @@ class Dashboard {
 
     reView() {
         window.app.intercom.view(true);
-        this.reViewCards();
-    }
-
-    reViewCards() { // It's too hard to re-add all unique event listeners
-        this.viewDefaultCards(window.app.user.uid);
     }
 
     renderSelf() {
@@ -239,6 +234,7 @@ class SupervisorDashboard extends Dashboard {
 
     reView() {
         super.reView();
+        this.viewScheduleCards();
         this.search.manage();
     }
 

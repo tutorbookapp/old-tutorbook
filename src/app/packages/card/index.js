@@ -864,7 +864,8 @@ Card.renderActiveApptCard = function(doc) {
             const [err, res] = await to(Data.clockOut(appt, doc.id));
             if (err) return window.app.snackbar.view('Could not send clock ' +
                 'out request.');
-            window.app.snackbar.view('Sent clock out request.');
+            window.app.snackbar.view('Sent clock out request to ' +
+                res.supervisor.name + '.');
         };
     }
 
@@ -896,8 +897,6 @@ Card.renderApptCard = function(doc) {
     }
     const actions = {};
     var card;
-    var err;
-    var res;
     actions.cancel = function() {
         var summary = "Cancel sessions with " + withUser.name + " for " +
             appt.for.subject + " at " + appt.time.from + " on " +
@@ -905,7 +904,7 @@ Card.renderApptCard = function(doc) {
         new ConfirmationDialog('Cancel Appointment?', summary, async () => {
             $(card).hide();
             app.snackbar.view('Canceling appointment...');
-            [err, res] = await to(Data.cancelAppt(appt, doc.id));
+            const [err, res] = await to(Data.cancelAppt(appt, doc.id));
             if (err) {
                 $(card).show();
                 return app.snackbar.view('Could not cancel appointment.');

@@ -243,7 +243,7 @@ class Matching {
         window.app.nav.selected = 'Matching';
         window.app.view(this.header, this.main, '/app/matching');
         this.manage();
-        (this.cardsViewed) ? this.reViewCards(): this.viewCards();
+        (!this.cardsViewed) ? this.viewCards(): null;
     }
 
     reView() {
@@ -253,94 +253,6 @@ class Matching {
         });
         $(this.main).find('#pupil-button').click(() => {
             this.createPupil();
-        });
-        this.reViewCards();
-    }
-
-    reViewCards() { // Adds click listeners
-        const profiles = this.profiles; // EditProfileDialog map
-        const matches = this.matches; // MatchingDialog map
-        const users = this.users; // Raw user data map
-        const requestsOut = window.app.cards.requestsOut;
-        const approvedRequestsOut = window.app.cards.approvedRequestsOut;
-        const rejectedRequestsOut = window.app.cards.rejectedRequestsOut;
-
-        function add(el, actions) {
-            Object.entries(actions).forEach((entry) => {
-                var label = entry[0];
-                var action = entry[1];
-                if (label === 'options') {
-                    return add($(el).find('.mdc-list'), action);
-                }
-                $(el).find('[id="' + label + '"]').click(action);
-            });
-        };
-
-        function listen(el, actionMap) { // Adds click listeners to card buttons
-            return add(el, actionMap[$(el).attr('id')]);
-        };
-
-        $(this.main).find('#cards [type="requestsOut"]').each(async function() {
-            listen(this, requestsOut);
-        });
-        $(this.main).find('#cards [type="approvedRequestsOut"]')
-            .each(async function() {
-                listen(this, approvedRequestsOut);
-            });
-        $(this.main).find('#cards [type="rejectedRequestsOut"]')
-            .each(async function() {
-                listen(this, rejectedRequestsOut);
-            });
-        $(this.main).find('#cards [type="users"]').each(async function() {
-            var id = $(this).attr('id');
-            if (!!users[id]) {
-                var user = users[id];
-            } else {
-                var user = await Data.getUser(id);
-                users[id] = user;
-            }
-            if (!!profiles[id]) { // Use cached profile
-                var profile = profiles[id];
-            } else { // Get and create new profile
-                var profile = new EditProfile(user);
-                profiles[id] = profile;
-            }
-            $(this).find('#edit').click(() => {
-                profile.view();
-            });
-            $(this).find('.mdc-card__primary-action').click(() => {
-                profile.view();
-            });
-            $(this).find('#match').click(async () => {
-                if (!!matches[id]) {
-                    return matches[id].view();
-                }
-                var match = new MatchingDialog(user);
-                matches[id] = match;
-                return match.view();
-            });
-            $(this).find('#delete').click(() => {
-                new ConfirmationDialog('Delete Account?',
-                    'You are about to permanently delete ' + user.name +
-                    '\'s account data. This action cannot be undone. Please ensure ' +
-                    'to check with your fellow supervisors before continuing.', async () => {
-                        const [err, res] = await to(Data.deleteUser(id));
-                        if (err) {
-                            window.app.snackbar.view('Could not delete account.');
-                            console.error('Error while deleting proxy account:', err);
-                        }
-                        window.app.snackbar.view('Deleted account.');
-                    }).view();
-            });
-            $(this).find('#hide').click(() => {
-                $(this).remove();
-                Data.updateUser(Utils.combineMaps(profile, {
-                    proxy: [],
-                })).catch((err) => {
-                    window.app.snackbar.view('Could not hide ' + profile.name +
-                        '\'s card.');
-                });
-            });
         });
     }
 
@@ -562,9 +474,32 @@ class MatchingDialog {
     constructor(profile) {
         this.profile = profile;
         this.subject = profile.subjects[0];
+        const update = () => {
+            const btn = $(this.main).find('.action-list-divider button').last();
+            if (this.selectedUsers.length > 0)
+                return btn.removeAttr('disabled');
+            btn.attr('disabled', 'disabled');
+        };
+        Array.prototype.addUser = (item) => {
+            this.selectedUsers.push(item);
+            update();
+        };
+        Array.prototype.removeUser = (item) => {
+            this.selectedUsers.splice(
+                this.selectedUsers.findIndex(user => user.uid == item.uid),
+                1,
+            );
+            update();
+        };
+        this.selectedUsers = [];
         this.time = Utils.getAvailabilityStrings(profile.availability)[0];
         this.render = window.app.render;
-        this.search = new MatchingSearch(this.profile, this.subject, this.time);
+        this.search = new MatchingSearch(
+            this.profile,
+            this.subject,
+            this.time,
+            this.selectedUsers,
+        );
         this.renderSelf();
     }
 
@@ -625,16 +560,32 @@ class MatchingDialog {
             that.main.appendChild(that.render.listDivider(l));
         };
 
+        function addActionD(l, actions) { // Add action list divider
+            that.main.appendChild(that.render.actionDivider(l, actions));
+        };
+
         add(this.render.profileHeader(profile));
         addD('Matching for');
         add(s('Subject', this.subject, profile.subjects));
-        add(s('Time', this.time, Utils.getAvailabilityStrings(profile.availability)));
-        addD('Tutors for ' + this.subject);
+        add(s('Time', this.time, Utils.getAvailabilityStrings(
+            profile.availability)));
+        addActionD('Tutors for ' + this.subject, {
+            match: () => {
+                new ConfirmMatchDialog(
+                    this.profile,
+                    this.selectedUsers,
+                    this.subject,
+                    this.time
+                ).view();
+            },
+        });
+        $(this.main).find('.action-list-divider button').last()
+            .attr('disabled', 'disabled');
         add(this.search.main);
     }
 
     results() { // Render search results for given subject
-        $(this.main).find('.input-list-divider').last().find('h4')
+        $(this.main).find('.action-list-divider').last().find('h4 span')
             .text('Tutors for ' + this.subject);
         this.search.update(this.profile, this.subject, this.time);
     }
@@ -643,12 +594,13 @@ class MatchingDialog {
 
 class MatchingSearch extends Search {
 
-    constructor(pupil, subject, time) {
+    constructor(pupil, subject, time, selectedUsers) {
         super();
         this.pupil = pupil;
         this.time = time;
         this.subject = subject;
         this.filters.subject = subject;
+        this.selectedUsers = selectedUsers;
         this.filters.availability = (!!time && time !== '') ?
             Utils.parseAvailabilityString(time) : {};
         this.filters.type = 'Tutor';
@@ -665,14 +617,17 @@ class MatchingSearch extends Search {
     }
 
     renderResult(doc) {
-        const el = super.renderResult(doc);
-        $(el).off('click').click(() => {
-            new ConfirmMatchDialog(
-                this.pupil,
-                doc.data(),
-                this.subject,
-                this.time
-            ).view();
+        const el = super.renderResult(doc).cloneNode(true);
+        el.addEventListener('click', () => {
+            if ($(el).find('#checkmark').css('display') === 'none') {
+                $(el).find('#photo').css('display', 'none');
+                $(el).find('#checkmark').css('display', 'inherit');
+                this.selectedUsers.addUser(doc.data());
+            } else {
+                $(el).find('#photo').css('display', 'inherit');
+                $(el).find('#checkmark').css('display', 'none');
+                this.selectedUsers.removeUser(doc.data());
+            }
         });
         return el;
     }
@@ -681,16 +636,19 @@ class MatchingSearch extends Search {
 
 class ConfirmMatchDialog extends ConfirmationDialog {
 
-    constructor(pupil, tutor, subject, timeString) {
+    constructor(pupil, tutors, subject, timeString) {
         const title = 'Confirm Match?';
-        const message = 'You are about to create a match between ' +
-            pupil.name + ' (the pupil) and ' + tutor.name + ' (the tutor) ' +
-            'for ' + subject + '. Doing so will send ' +
-            tutor.name.split(' ')[0] + ' a lesson request for ' + timeString +
-            ' Are you sure you want to complete this match?';
+        var message = 'You are about to match ' + pupil.name + ' with and ' +
+            'send request(s) to: \n ';
+        tutors.forEach((tutor) => {
+            message += '\n \v \v \v - ' + tutor.name + ' (' + tutor.grade +
+                ' ' + tutor.type.toLowerCase() + ')';
+        });
+        message += '\n \n Doing so will send ' + tutors.length + ' lesson ' +
+            'request(s) for ' + subject + ' on ' + timeString + ' Are you ' +
+            'sure you want to complete this match?';
 
-        async function match() {
-            window.app.nav.back();
+        async function match(tutor) {
             const time = Utils.parseAvailabilityString(timeString);
             const request = {
                 subject: subject,
@@ -723,15 +681,30 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                 pupil.proxy.push(window.app.user.uid);
                 await Data.updateUser(pupil);
             }
-            window.app.snackbar.view('Creating match and sending request...');
-            const [err, res] = await to(Data.newRequest(request));
-            if (err) return window.app.snackbar.view('Could not create match ' +
-                'or send request to ' + tutor.email + '.');
-            window.app.snackbar.view('Created match and sent request to ' +
-                tutor.email + '.');
+            return Data.newRequest(request);
         };
 
-        super(title, message, match);
+        async function createMatches() {
+            window.app.nav.back();
+            window.app.snackbar.view('Creating match(es) and sending request' +
+                '(s)...');
+            var errored = 0;
+            await Promise.all(tutors.map(async (tutor) => {
+                const [err, res] = await to(match(tutor));
+                if (err) {
+                    window.app.snackbar.view('Could not create match or send ' +
+                        'request to ' + tutor.email + '.');
+                    errored++;
+                }
+            }));
+            if (errored) return setTimeout(() => window.app.snackbar.view(
+                errored + ' out of the ' + tutors.length + ' match(es) ' +
+                'errored and should be tried again.'), 2000);
+            window.app.snackbar.view('Created match(es) and sent request(s) ' +
+                'to ' + tutors.length + ' users.');
+        };
+
+        super(title, message, createMatches);
     }
 };
 

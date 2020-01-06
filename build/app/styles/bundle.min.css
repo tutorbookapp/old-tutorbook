@@ -5670,7 +5670,7 @@ svg.mdc-button__icon {
   /* @alternate */
   background-color: var(--mdc-theme-secondary, #018786); }
 
-@keyframes mdc-checkbox-fade-in-background-u13d00aab {
+@keyframes mdc-checkbox-fade-in-background-ub7dd0c71 {
   0% {
     border-color: rgba(0, 0, 0, 0.54);
     background-color: transparent; }
@@ -5682,7 +5682,7 @@ svg.mdc-button__icon {
     /* @alternate */
     background-color: var(--mdc-theme-secondary, #018786); } }
 
-@keyframes mdc-checkbox-fade-out-background-u13d00aab {
+@keyframes mdc-checkbox-fade-out-background-ub7dd0c71 {
   0%,
   80% {
     border-color: #018786;
@@ -5696,10 +5696,10 @@ svg.mdc-button__icon {
     background-color: transparent; } }
 
 .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-in-background-u13d00aab; }
+  animation-name: mdc-checkbox-fade-in-background-ub7dd0c71; }
 
 .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-out-background-u13d00aab; }
+  animation-name: mdc-checkbox-fade-out-background-ub7dd0c71; }
 
 .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
   border-color: rgba(0, 0, 0, 0.26);
@@ -6001,6 +6001,9 @@ svg.mdc-button__icon {
   float: right;
   background-color: #fff;
   color: #018786; }
+
+.dialog-input .action-list-divider button:disabled {
+  color: #9F9F9F; }
 
 /* Ensures that input-list-items completely wrap around inputs and don't cut
 them (or their floating labels) off short. */
@@ -8780,6 +8783,17 @@ svg.mdc-button__icon {
 
 .dialog-input #results {
   margin-top: -20px !important;
+}
+
+.mdc-list-item #checkmark {
+  display: none;
+  background: #6200EE;
+  color: #FFF;
+  text-align: center;
+}
+
+.mdc-list-item #checkmark .material-icons {
+  vertical-align: middle;
 }
 .mdc-snackbar__dismiss { /* Workaround for containing mismatched MDC versions */
   color: rgba(255, 255, 255, 0.87) !important;

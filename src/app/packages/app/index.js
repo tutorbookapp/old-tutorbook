@@ -187,7 +187,9 @@ class Tutorbook {
         console.log('──╚╝──╚═══╝──╚╝──╚═══╝╚╝╚═╝╚═══╝╚═══╝╚═══╝╚╝╚═╝');
         console.log('===============================================');
         console.log('Taking a look under the hood? We\'d love to have you on ' +
-            'the team. Email nicholaschiang@tutorbook.app for more info.');
+            'the team. Check out our open source code at https://github.com/' +
+            'tutorbookapp/tutorbook or email nicholaschiang@tutorbook.app for' +
+            ' more info.');
     }
 
     print() {

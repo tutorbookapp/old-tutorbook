@@ -1250,9 +1250,7 @@ class ViewApptDialog extends ViewRequestDialog {
         if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
             if (this.request.payment.type === 'Paid') {
                 $(this.main).find('.mdc-fab').click(async () => {
-                    var err;
-                    var res;
-                    [err, res] = await to(
+                    const [err, res] = await to(
                         Data.requestPaymentFor(this.appt, this.id)
                     );
                     if (err) return window.app.snackbar.view('Could not send ' +
@@ -1276,6 +1274,11 @@ class ViewApptDialog extends ViewRequestDialog {
     }
 
     async clockIn() {
+        const reset = () => {
+            clearInterval(this.timer);
+            this.timer = null;
+            $(this.main).find('.mdc-fab__label').text('ClockIn');
+        };
         this.timer = setInterval(() => {
             this.update();
         }, 10);
@@ -1283,34 +1286,54 @@ class ViewApptDialog extends ViewRequestDialog {
             window.app.snackbar.view('Clocking in for ' +
                 this.appt.for.toUser.name.split(' ')[0] + '...');
             const [e, r] = await to(Data.instantClockIn(this.appt, this.id));
-            if (e) return window.app.snackbar.view('Could not clock in.');
+            if (e) {
+                reset();
+                return window.app.snackbar.view('Could not clock in.');
+            }
             window.app.snackbar.view('Clocked in at ' + new Date(r.data
                 .clockIn.sentTimestamp).toLocaleTimeString() + '.');
         } else {
             window.app.snackbar.view('Sending request...');
             const [err, res] = await to(Data.clockIn(this.appt, this.id));
-            if (err) return window.app.snackbar.view('Could not send clock ' +
-                'in request.');
-            window.app.snackbar.view('Sent clock in request.');
+            if (err) {
+                reset();
+                return window.app.snackbar.view('Could not send clock ' +
+                    'in request.');
+            }
+            window.app.snackbar.view('Sent clock in request to ' +
+                res.supervisor.name + '.');
         }
     }
 
     async clockOut() {
+        const reset = () => {
+            this.timer = setInterval(() => {
+                this.update();
+            }, 10);
+            $(this.main).find('.mdc-fab__label').text('ClockOut');
+        };
         clearInterval(this.timer);
         this.timer = null;
         if (window.app.user.type === 'Supervisor') {
             window.app.snackbar.view('Clocking out for ' +
                 this.appt.for.toUser.name.split(' ')[0] + '...');
             const [e, r] = await to(Data.instantClockOut(this.appt, this.id));
-            if (e) return window.app.snackbar.view('Could not clock out.');
+            if (e) {
+                reset();
+                return window.app.snackbar.view('Could not clock out.');
+            }
             window.app.snackbar.view('Clocked out at ' + new Date(r.data
                 .clockOut.sentTimestamp).toLocaleTimeString() + '.');
         } else {
             window.app.snackbar.view('Sending request...');
             const [err, res] = await to(Data.clockOut(this.appt, this.id));
-            if (err) return window.app.snackbar.view('Could not send clock ' +
-                'out request.');
-            window.app.snackbar.view('Sent clock out request.');
+            if (err) {
+                reset();
+                return window.app.snackbar.view('Could not send clock ' +
+                    'out request.');
+            }
+            window.app.snackbar.view('Sent clock out request to ' +
+                res.supervisor.name + '.');
         }
     }
 

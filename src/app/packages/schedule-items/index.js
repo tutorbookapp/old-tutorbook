@@ -259,7 +259,8 @@ class ActiveAppt extends Event {
                 const [err, res] = await to(Data.clockOut(doc.data(), doc.id));
                 if (err) return window.app.snackbar.view('Could not send ' +
                     'clock out request.');
-                window.app.snackbar.view('Sent clock out request.');
+                window.app.snackbar.view('Sent clock out request to ' +
+                    res.supervisor.name + '.');
             },
         };
         this.renderSelf();
@@ -324,9 +325,21 @@ class PastAppt extends Event {
                     'Are you sure you want to permanently delete this ' +
                     'past appointment with ' + this.other.name +
                     '? This action cannot be undone.', async () => {
+                        $(this.el).hide();
+                        window.app.schedule.refresh();
+                        const [err, res] = await to(Data.deletePastAppt(
+                            doc.data(),
+                            doc.id,
+                        ));
+                        if (err) {
+                            $(this.el).show();
+                            return window.app.snackbar.view('Could not delete' +
+                                ' past appointment.');
+                        }
                         $(this.el).remove();
                         window.app.schedule.refresh();
-                        await Data.deletePastAppt(doc.data(), doc.id);
+                        return window.app.snackbar.view('Deleted past ' +
+                            'appointment.');
                     }).view();
             },
         };
@@ -363,10 +376,21 @@ class SupervisorPastAppt extends Event {
                     'past appointment between ' + this.attendees[0].name +
                     ' and ' + this.attendees[1].name + '? This action ' +
                     'cannot be undone.', async () => {
+                        $(this.el).hide();
+                        window.app.schedule.refresh();
+                        const [err, res] = await to(Data.deletePastAppt(
+                            doc.data(),
+                            doc.id,
+                        ));
+                        if (err) {
+                            $(this.el).show();
+                            return window.app.snackbar.view('Could not delete' +
+                                ' past appointment.');
+                        }
                         $(this.el).remove();
                         window.app.schedule.refresh();
-                        await Data.deletePastAppt(doc.data(), doc.id);
-                        window.app.snackbar.view('Deleted past appointment.');
+                        return window.app.snackbar.view('Deleted past ' +
+                            'appointment.');
                     }).view();
             },
         };
