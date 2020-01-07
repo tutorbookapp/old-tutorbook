@@ -3,9 +3,13 @@
     "site": "tutorbook-779d8",
     "public": "./",
     "ignore": [
-      "firebase.json",
+      "**/*.json",
+      "**/*.log",
+      "**/*.rules",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "functions/",
+      "test/"
     ],
     "rewrites": [
       {
