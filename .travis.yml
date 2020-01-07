@@ -12,6 +12,9 @@ node_js:
 cache:
   directories:
   - "/home/travis/.cache/firebase/emulators"
+before_install:
+- openssl aes-256-cbc -K $encrypted_643ae61e7902_key -iv $encrypted_643ae61e7902_iv
+  -in firebase/functions/.runtimeconfig.json.enc -out firebase/functions/.runtimeconfig.json -d
 install:
 - npm install -g firebase-tools
 - cd firebase/
@@ -22,11 +25,8 @@ before_script:
 - firebase emulators:start --only firestore,functions --project tutorbook-779d8 &>/dev/null
   &
 - sleep 5
-script:
 - cd ../
+script:
 - npm test
 - firebase deploy --project tutorbook-779d8 --except functions --token "$FIREBASE_TOKEN"
   --message "$TRAVIS_COMMIT_MESSAGE"
-before_install:
-- openssl aes-256-cbc -K $encrypted_643ae61e7902_key -iv $encrypted_643ae61e7902_iv
-  -in firebase/functions/.runtimeconfig.json.enc -out firebase/functions/.runtimeconfig.json -d
