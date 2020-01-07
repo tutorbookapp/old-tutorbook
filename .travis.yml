@@ -14,7 +14,7 @@ cache:
   - "/home/travis/.cache/firebase/emulators"
 install:
 - npm install -g firebase-tools
-- cd build/
+- cd firebase/
 - npm i
 - cd functions/
 - npm i
