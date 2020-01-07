@@ -26,7 +26,11 @@ const removeSupervisorAuth = (options) => {
     });
 };
 
-removeSupervisorAuth({
+addSupervisorAuth({
     uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
-    locationIds: ['NJp0Y6wyMh2fDdxSuRSx'],
+    locationIds: [
+        'NJp0Y6wyMh2fDdxSuRSx',
+        'fcKWyRWy124H4M34mS1r',
+        'WfAGnrtG87CJsYRnOmwn',
+    ],
 });
