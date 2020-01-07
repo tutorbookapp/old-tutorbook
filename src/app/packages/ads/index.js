@@ -40,7 +40,7 @@ class Ads {
     constructor() {
         this.dialogs = {
             moreFlexibility: {
-                timeout: 20000, // Ms to wait after trigger before calling view
+                timeout: 10000, // Ms to wait after trigger before calling view
                 view: () => new AdDialog().view(), // Function that shows ad
                 tests: ['type:Pupil', 'url:users'],
             },
