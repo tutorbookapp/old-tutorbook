@@ -29,6 +29,9 @@ const updateHours = async (appt, context) => {
     await axios({
         method: 'get',
         url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/updateSheet',
+        params: {
+            location: user.location || 'Any',
+        },
     });
     console.log('Updated ' + user.name + '\'s service hours on db and sheet.');
 };
