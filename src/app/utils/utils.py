@@ -44,4 +44,4 @@ def changeRepoUrl(
 
 
 if __name__ == "__main__":
-    changeRepoUrl("../packages/")
+    changeRepoUrl("../packages/", oldUrl="0.2.4", newUrl="0.2.5")
