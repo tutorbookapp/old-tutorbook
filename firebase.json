@@ -1,15 +1,13 @@
 {
   "hosting": {
     "site": "tutorbook-779d8",
-    "public": "./",
+    "public": "build/",
     "ignore": [
       "**/*.json",
       "**/*.log",
       "**/*.rules",
       "**/.*",
-      "**/node_modules/**",
-      "functions/",
-      "test/"
+      "**/node_modules/**"
     ],
     "rewrites": [
       {
@@ -19,11 +17,11 @@
     ]
   },
   "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "rules": "firebase/firestore.rules",
+    "indexes": "firebase/firestore.indexes.json"
   },
   "functions": {
-    "source": "functions"
+    "source": "firebase/functions"
   },
   "emulators": {
     "firestore": {
@@ -31,6 +29,6 @@
     }
   },
   "storage": {
-    "rules": "storage.rules"
+    "rules": "firebase/storage.rules"
   }
 }
