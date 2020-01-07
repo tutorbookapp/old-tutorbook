@@ -25,7 +25,6 @@ before_script:
 script:
 - cd ../
 - npm test
-after_script:
 - firebase deploy --project tutorbook-779d8 --except functions --token "$FIREBASE_TOKEN"
   --message "$TRAVIS_COMMIT_MESSAGE"
 before_install:
