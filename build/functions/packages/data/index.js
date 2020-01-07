@@ -82,7 +82,7 @@ class DataProxy {
                     ].indexOf(token.uid) >= 0 &&
                     user.type === 'Tutor' &&
                     user.payments.type === 'Paid' &&
-                    data.appt.payment.type === 'Paid'
+                    data.appt.for.payment.type === 'Paid'
                 );
                 await exists('appointments', data.id);
                 return Data.requestPaymentFor(data.appt, data.id);
@@ -169,7 +169,6 @@ class DataProxy {
 };
 
 
-// Straight from client-side implementation. TODO: Probably needs fine-tuning.
 class Data {
     constructor() {
         this.initTimes();
@@ -223,7 +222,7 @@ class Data {
         ];
         const approvedPaymentRef = db.collection('users')
             .doc(global.app.user.uid)
-            .collection('needApprovalPayments').doc(id);
+            .collection('requestedPayments').doc(id);
         await approvedPaymentRef.delete();
         payments.forEach(async (payment) => {
             await payment.set({
@@ -955,17 +954,12 @@ class Data {
                     break;
                 default:
                     console.warn('Invalid payment method (' + payment.method +
-                        '). Defaulting to PayPal...');
+                        '). Defaulting to Stripe...');
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
                     await global.db.collection('users')
                         .doc(request.fromUser.uid)
-                        .collection('authPayments')
-                        .doc(requestIn.id)
-                        .set(payment);
-                    await global.db.collection('users')
-                        .doc(request.toUser.uid)
-                        .collection('authPayments')
+                        .collection('sentPayments')
                         .doc(requestIn.id)
                         .set(payment);
                     break; // Not necessary (see: https://bit.ly/2AILLZj)

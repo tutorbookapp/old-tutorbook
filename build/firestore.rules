@@ -294,7 +294,7 @@ service cloud.firestore {
 	|| request.auth.uid == resource.data.from.uid;
     }
     match /stripeAccounts/{user} {
-      allow read: if request.auth.token.email == user;
+      allow read: if request.auth.uid == user;
     }
     match /users/{user}/sentPayments/{payment} {
       allow create: if request.auth.uid == user;
@@ -316,9 +316,6 @@ service cloud.firestore {
       allow read: if request.auth.uid == user;
       allow create: if request.auth.uid ==
 	request.resource.data.approvedBy.uid;
-    }
-    match /users/{user}/needApprovalPayments/{payment} {
-      allow read, delete: if request.auth.uid == user;
     }
     match /users/{user}/authPayments/{payment} {
       allow read: if request.auth.uid == user;

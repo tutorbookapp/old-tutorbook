@@ -72,8 +72,13 @@ class Payments {
 
     async initStripe() {
         // URL that opens Stripe's Express onboarding flow for Connect Accounts
-        const url = 'https://tutorbook.app/app';
-        const client = 'ca_Fv3pVzsbrh5FfoBxIRnO8dsbmD6XNtHX';
+        const url = window.app.test ? 'http://localhost:5005/app' : 'https://' +
+            ((window.app.location.name === 'Gunn Academic Center') ? 'gunn.' :
+                (window.app.location.name === 'Paly Peer Tutoring Center') ?
+                'paly.' : (window.app.location.name === 'JLS Library') ? 'jls.' :
+                '') + 'tutorbook.app/app';
+        const client = window.app.test ? 'ca_Fv3pF2bbTTRhgS5Buzieaikie2hUOR3C' :
+            'ca_Fv3pVzsbrh5FfoBxIRnO8dsbmD6XNtHX';
         this.setupURL = 'https://connect.stripe.com/express/oauth/' +
             'authorize?redirect_uri=' + url + '&client_id=' +
             client + '&stripe_user' +
@@ -84,10 +89,10 @@ class Payments {
             '&stripe_user[phone_number]=' + window.app.user.phone +
             '&stripe_user[country]=US&stripe_user[product_' +
             'description]=Tutoring%20services%20provided%20via%20' +
-            'Tutorbook.&stripe_user[url]=https://tutorbook.app/' +
-            'app/users/' + window.app.user.uid;
+            'Tutorbook.&stripe_user[url]=' + url +
+            '/users/' + window.app.user.uid;
         const doc = await window.app.db.collection('stripeAccounts')
-            .doc(window.app.user.id).get();
+            .doc(window.app.user.uid).get();
         if (!doc.exists && !window.app.redirectedFromStripe) {
             window.app.user.cards.setupStripe = true;
             await window.app.updateUser();
@@ -98,9 +103,16 @@ class Payments {
                 method: 'get',
                 url: window.app.functionsURL + '/accountURL',
                 params: {
-                    id: window.app.user.id,
+                    id: window.app.user.uid,
+                    test: window.app.test,
                 },
             }).then((res) => {
+                if (typeof res.data === 'string' &&
+                    res.data.indexOf('ERROR') > 0) {
+                    console.error('[ERROR] On server while fetching new ' +
+                        'Stripe Connect Account url:', res.data);
+                    return setTimeout(getAccountURL, 10000);
+                }
                 this.accountURL = res.data.url;
             }).catch((err) => {
                 console.error('Error while fetching new Stripe Connect Account ' +
@@ -244,6 +256,8 @@ class Payments {
             window.app.snackbar.view('Business type updated.');
         });
         const charge = a('[id="Hourly charge"]', async (s) => {
+            p.policy = p.policy.split(p.hourlyChargeString).join(s.value);
+            $(main).find('[id="Payment policy"] textarea').text(p.policy);
             p.hourlyCharge = new Number(s.value.replace('$', '')).valueOf();
             p.hourlyChargeString = s.value;
             await window.app.updateUser();
@@ -345,23 +359,35 @@ Payments.renderPastPayment = function(doc) {
     const payment = doc.data();
     const time = payment.timestamp.toDate();
     const title = 'Completed Payment';
+    const date = (time) => {
+        const res = new Date();
+        var hrs = new Number(time.split(':')[0]);
+        var mins = new Number(time.split(':')[1].split(' ')[0]);
+        if (time.split(' ')[0] === 'PM') hrs += 12;
+        res.setHours(hrs);
+        res.setMinutes(mins);
+        return res;
+    };
     if (window.app.user.email === payment.from.email) {
         var subtitle = 'You paid ' + payment.to.name + ' $' + payment.amount.toFixed(2) +
             ' for a ' + Utils.getDurationStringFromDates(
-                payment.for.clockIn.sentTimestamp.toDate(),
-                payment.for.clockOut.sentTimestamp.toDate()
+                date(payment.for.time.from),
+                date(payment.for.time.to),
+                true,
             ) + ' long lesson on ' + payment.for.for.subject + '.';
     } else if (window.app.user.email === payment.to.email) {
         var subtitle = payment.from.name + ' paid you $' + payment.amount.toFixed(2) +
             ' for a ' + Utils.getDurationStringFromDates(
-                payment.for.clockIn.sentTimestamp.toDate(),
-                payment.for.clockOut.sentTimestamp.toDate()
+                date(payment.for.time.from),
+                date(payment.for.time.to),
+                true,
             ) + ' long lesson on ' + payment.for.for.subject + '.';
     } else {
         var subtitle = payment.from.name + ' paid ' + payment.to.name + ' $' + payment.amount.toFixed(2) +
             ' for a ' + Utils.getDurationStringFromDates(
-                payment.for.clockIn.sentTimestamp.toDate(),
-                payment.for.clockOut.sentTimestamp.toDate()
+                date(payment.for.time.from),
+                date(payment.for.time.to),
+                true,
             ) + ' long lesson on ' + payment.for.for.subject + '.';
     }
     const meta_title = '$' + payment.amount.toFixed(2);

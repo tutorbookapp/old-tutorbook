@@ -44,7 +44,9 @@ class User {
     renderSelf() {
         this.main = this.render.template('user-view',
             Utils.combineMaps(this.profile, {
-                rate: '$' + this.profile.payments.hourlyCharge
+                rate: '$' + this.profile.payments.hourlyCharge,
+                paid: this.profile.payments.type === 'Paid',
+                free: this.profile.payments.type === 'Free',
             })
         );
 
@@ -73,12 +75,14 @@ class User {
             this.main,
             '/app/users/' + this.profile.uid
         );
-        this.manage();
+        !this.managed ? this.manage() : null;
     }
 
     reView() {}
 
     manage() {
+        this.managed = true;
+
         // GOOGLE MAP
         if (this.profile.payments.type === 'Paid') {
             const first =

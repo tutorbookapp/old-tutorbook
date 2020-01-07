@@ -127,9 +127,10 @@ class Utils {
         });
     }
 
-    static getDurationStringFromDates(start, end) {
+    static getDurationStringFromDates(start, end, readable) {
         const secs = (end.getTime() - start.getTime()) / 1000;
         const string = Utils.getDurationStringFromSecs(secs);
+        if (readable) return string.slice(0, -3);
         return string + '.00'; // For clockIn timers
     }
 
@@ -310,12 +311,14 @@ class Utils {
                 case 'code':
                     window.app.user.cards.setupStripe = false;
                     window.app.redirectedFromStripe = true; // For payments
+                    window.app.snackbar.view('Connecting payments account...');
                     axios({
                         method: 'GET',
                         url: window.app.functionsURL + '/initStripeAccount',
                         params: {
                             code: val.replace('/', ''),
-                            id: firebase.auth().currentUser.email,
+                            id: firebase.auth().currentUser.uid,
+                            test: window.app.test,
                         },
                     }).then((res) => {
                         window.app.snackbar.view(

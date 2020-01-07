@@ -58,6 +58,42 @@ user sees as they navigate throughout the app. -->
     </div>
 </div>
 
+<!-- Ad Dialog -->
+<div hidden class="template" id="ad-dialog">
+    <aside class="ad-dialog mdc-dialog mdc-dialog--scrollable">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <div class="mdc-dialog__content">
+                    <h5 class="ad-dialog__subtitle">
+                        Hire a Professional Paid Tutor
+                    </h5>
+                    <h2 class="ad-dialog__title">
+                        Need More Flexiblity?
+                    </h2>
+                    <p class="ad-dialog__content">
+                        Get ready to supercharge your studying with your own
+                        at-home private tutor.
+                    </p>
+                    <p class="ad-dialog__content">
+                        Get help where and when you need it; paid tutors work
+                        flexible hours to fit perfectly within your schedule
+                        and can travel to where ever works best for you.
+                    </p>
+                    <p class="ad-dialog__content">
+                        Work with the best when peers just won't cut it. Most
+                        of our paid tutors are skilled professors, teachers,
+                        and college students excited to share their knowledge.
+                    </p>
+                    <button class="mdc-button mdc-button--raised ad-dialog__button">
+                        Yes, Find a Private Tutor!
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </aside>
+</div>
+
 <!-- Appt Notification Dialog -->
 <div hidden class="template" id="dialog-appt">
     <aside class="mdc-dialog mdc-dialog--scrollable" id="dialog-appt">
@@ -105,7 +141,8 @@ user sees as they navigate throughout the app. -->
                 </div>
             </div>
             <div class="mdc-text-field-helper-line">
-                <div class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">You will not be charged until after your lesson</div>
+                <div id="msg" class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">You will not be charged until after your lesson.</div>
+                <div id="err" class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg">Invalid payment method, try again.</div>
             </div>
         </div>
     </li>
@@ -971,6 +1008,14 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">home</i>
                 <span class="mdc-list-item__text">Home</span>
             </a>
+            <a id="matching" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showMatching">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">wc</i>
+                <span class="mdc-list-item__text">Matching</span>
+            </a>
+            <a id="payments" data-fir-if="payments" class="mdc-list-item" data-fir-click="showPayments">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">payment</i>
+                <span class="mdc-list-item__text">Payments</span>
+            </a>
             <!--
                -<a id="stats" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showStats">
                -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">equalizer</i>
@@ -981,10 +1026,6 @@ needs to be rendered with a ton of click listeners.) -->
             <a id="search" class="mdc-list-item" data-fir-click="showSearch">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">search</i>
                 <span class="mdc-list-item__text">Search</span>
-            </a>
-            <a id="matching" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showMatching">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">wc</i>
-                <span class="mdc-list-item__text">Matching</span>
             </a>
             <a id="tutors" class="mdc-list-item" data-fir-click="showTutors">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">person</i>
@@ -998,10 +1039,6 @@ needs to be rendered with a ton of click listeners.) -->
             <a id="profile" class="mdc-list-item" data-fir-click="showProfile">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">account_circle</i>
                 <span class="mdc-list-item__text">Profile</span>
-            </a>
-            <a id="payments" data-fir-if="payments" class="mdc-list-item" data-fir-click="showPayments">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">payment</i>
-                <span class="mdc-list-item__text">Payments</span>
             </a>
             <a id="schedule" class="mdc-list-item" data-fir-click="showSchedule">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">calendar_today</i>
@@ -1057,16 +1094,16 @@ needs to be rendered with a ton of click listeners.) -->
                 <button id="pupil-button" data-fir-click="pupil" type="button" class="mdc-button mdc-button--raised">
                     Pupil
                 </button>
-                <button id="tutor-button" data-fir-click="tutor" type="button" class="mdc-button mdc-button--outlined">
+                <button id="tutor-button" data-fir-click="tutor" type="button" class="mdc-button mdc-button--raised">
                     Tutor
+                </button>
+                <button id="paid-tutor-button" data-fir-click="paidTutor" type="button" class="mdc-button mdc-button--outlined">
+                    Paid Tutor
                 </button>
                 <button id="expand-button" data-fir-click="expand" type="button" class="mdc-icon-button">
                     <i class="material-icons mdc-icon-button__icon">expand_more</i>
                 </button>
                 <div style="display:none" id="expand">
-                    <button id="paid-tutor-button" data-fir-click="paidTutor" type="button" class="mdc-button mdc-button--outlined">
-                        Paid Tutor
-                    </button>
                     <button id="supervisor-button" data-fir-click="supervisor" type="button" class="mdc-button mdc-button--outlined">
                         Supervisor
                     </button>

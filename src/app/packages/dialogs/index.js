@@ -630,7 +630,7 @@ class EditRequestDialog {
         this.id = id;
         this.render = window.app.render;
         this.utils = window.app.utils;
-        this.renderSelf();
+        this.rendering = this.renderSelf();
     }
 
     async renderSelf(profile) {
@@ -716,7 +716,7 @@ class EditRequestDialog {
 
     // Views the dialog and adds manager(s)
     async view() {
-        if (!this.main) await this.renderSelf();
+        if (!this.main) await this.rendering;
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         this.manage();
@@ -1116,7 +1116,9 @@ class StripeRequestDialog extends PaidRequestDialog {
             timestamp: new Date(),
             method: 'Stripe',
         };
-        this.stripe = Stripe('pk_live_rospM71ihUDYWBArO9JKmanT00L5dZ36vA');
+        this.stripe = Stripe(window.app.test ?
+            'pk_test_EhDaWOgtLwDUCGauIkrELrOu00J8OIBNuf' :
+            'pk_live_rospM71ihUDYWBArO9JKmanT00L5dZ36vA');
     }
 
     async sendRequest() {
@@ -1141,17 +1143,15 @@ class StripeRequestDialog extends PaidRequestDialog {
     managePayments() {
         const amountEl = $(this.main).find('#Amount')[0];
         const amountTextField = MDCTextField.attachTo(amountEl);
-        window.amountTextField = amountTextField;
         $(amountEl).find('input').attr('disabled', 'disabled');
 
         const methodEl = $(this.main).find('#Method')[0];
+        const err = $(methodEl).find('#err').hide();
+        const msg = $(methodEl).find('#msg');
 
-        function showErr(err) {
-            $(methodEl).find('.mdc-text-field-helper-text')
-                .text(err.message)
-                .addClass('mdc-text-field-helper-text--validation-msg');
-            $(methodEl).find('.mdc-text-field-helper-line')
-                .attr('style', 'visiblity:visible;');
+        function showErr(error) {
+            msg.hide();
+            err.text(error.message).show();
             $(methodEl).find('.mdc-text-field')
                 .addClass('mdc-text-field--invalid');
             $(methodEl).find('.mdc-floating-label')
@@ -1159,8 +1159,8 @@ class StripeRequestDialog extends PaidRequestDialog {
         };
 
         function hideErr() {
-            $(methodEl).find('.mdc-text-field-helper-line')
-                .attr('style', 'visibility:hidden;');
+            err.hide();
+            msg.show();
             $(methodEl).find('.mdc-text-field')
                 .removeClass('mdc-text-field--invalid');
             $(methodEl).find('.mdc-floating-label')
@@ -1250,6 +1250,7 @@ class ViewApptDialog extends ViewRequestDialog {
         if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
             if (this.request.payment.type === 'Paid') {
                 $(this.main).find('.mdc-fab').click(async () => {
+                    window.app.snackbar.view('Sending payment request...');
                     const [err, res] = await to(
                         Data.requestPaymentFor(this.appt, this.id)
                     );

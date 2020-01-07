@@ -1,0 +1,28 @@
+{
+  "name": "@tutorbook/ads",
+  "version": "0.2.4",
+  "description": "Ad package that primarily manages ad dialogs/popups for the Tutorbook web app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
+    "directory": "src/app/packages/ads"
+  },
+  "keywords": [
+    "Ads",
+    "Tutorbook",
+    "Web",
+    "App",
+    "PWA",
+    "Dialogs"
+  ],
+  "author": "Nicholas Chiang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tutorbookapp/tutorbook/issues"
+  },
+  "homepage": "https://github.com/tutorbookapp/tutorbook#readme"
+}

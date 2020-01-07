@@ -94,6 +94,7 @@ class Listener {
                     data.to.name.split(' ')[0] + ' $' + data.amount.toFixed(2) +
                     '?';
                 new ConfirmationDialog(title, summary, async () => {
+                    window.app.snackbar.view('Approving payment request...');
                     const [err, res] = await to(
                         Data.approvePayment(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +

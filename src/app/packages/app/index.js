@@ -3,6 +3,7 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 // App packages
+const Ads = require('@tutorbook/ads');
 const Stats = require('@tutorbook/stats');
 const Dashboard = require('@tutorbook/dashboard').default;
 const SupervisorDashboard = require('@tutorbook/dashboard').supervisor;
@@ -49,6 +50,7 @@ class Tutorbook {
         this.db = (this.test) ? firebase.firestore().collection('partitions')
             .doc('test') : firebase.firestore().collection('partitions')
             .doc('default');
+        if (this.test) document.title = '[Test] ' + document.title;
 
         // Helper packages
         this.render = new Render();
@@ -94,6 +96,7 @@ class Tutorbook {
             this.chats = new Chats(this);
             this.payments = new Payments();
             this.feedback = new Feedback(this);
+            this.ads = new Ads();
         };
 
         firebase.auth().onAuthStateChanged(async (user) => {
@@ -139,7 +142,10 @@ class Tutorbook {
         });
 
         window.scrollTo(0, 0);
-        (!!url) ? Utils.url(url): null;
+
+        if (!url) return;
+        Utils.url(url);
+        if (this.ads) this.ads.url(url);
     }
 
     async initUser() {

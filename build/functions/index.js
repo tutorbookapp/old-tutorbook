@@ -63,6 +63,12 @@ exports.processAuthPayment = functions.firestore
     .document('/partitions/{partition}/users/{pupil}/sentPayments/{payment}')
     .onCreate(Payments.processSentPayment);
 
+// 1b) Pupil or tutor cancels request or appt and `data` function deletes 
+// authPayment docs.
+exports.cancelAuthPayment = functions.firestore
+    .document('/partitions/{partition}/users/{user}/authPayments/{payment}')
+    .onDelete(Payments.cancelAuthPayment);
+
 // 2) Tutor clocks out & creates creates pastAppt docs (Function creates 
 // pendingPayments => asking pupil for payment approval).
 exports.askForPaymentApproval = functions.firestore
