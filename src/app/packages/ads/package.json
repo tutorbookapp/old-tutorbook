@@ -25,5 +25,8 @@
     "url": "https://github.com/tutorbookapp/tutorbook/issues"
   },
   "homepage": "https://github.com/tutorbookapp/tutorbook#readme",
-  "gitHead": "4520f2591eda8118e4c264d52e059206d6ad9e52"
+  "gitHead": "4520f2591eda8118e4c264d52e059206d6ad9e52",
+  "dependencies": {
+    "@tutorbook/data": "^0.2.5"
+  }
 }
