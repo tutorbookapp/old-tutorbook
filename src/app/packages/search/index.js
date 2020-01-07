@@ -170,6 +170,7 @@ class Search {
             type: 'Tutor',
             sort: 'Rating'
         };
+        this.validGrades = Data.grades; // Allow for manipulation of validGrades
         this.initDescription();
         // This has to be defined within a function to have access to `this`
         this.recycler = {
@@ -193,7 +194,7 @@ class Search {
 
     // Checks if the profile should show up in search results
     validResult(profile) {
-        if (Data.grades.indexOf(profile.grade) < 0) {
+        if (this.validGrades.indexOf(profile.grade) < 0) {
             return false;
         } else if (profile.subjects.length === 0) {
             return false;

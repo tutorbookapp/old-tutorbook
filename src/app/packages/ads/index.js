@@ -25,9 +25,10 @@ class AdDialog {
         this.dialog = new MDCDialog(this.main);
         $(this.main).find('button').click(() => {
             this.dialog.close();
-            Data.grades.push('Adult');
+            window.app.search.validGrades.push('Adult');
             window.app.search.view({
                 price: 'Paid',
+                location: 'Any',
             });
         });
     }
