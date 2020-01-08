@@ -84,6 +84,11 @@ class Data {
             throw new Error('Could not create user b/c id was undefined.');
         } else if (user.uid) {
             return window.app.db.collection('users').doc(user.uid).set(user);
+        } else if (window.app.user.type === 'Supervisor' &&
+            window.app.user.id !== user.id) {
+            return Data.post('createProxyUser', {
+                user: user,
+            });
         } else {
             console.warn('Using an email as a user ID is deprecated.');
             return window.app.db.collection('usersByEmail').doc(user.id ||

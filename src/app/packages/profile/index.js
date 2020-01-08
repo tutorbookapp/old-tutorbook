@@ -652,6 +652,7 @@ class NewProfile extends Profile {
                 break;
         };
         window.app.nav.back();
+        window.app.snackbar.view('Creating profile...');
         Data.createUser(this.profile).then(() => {
             window.app.snackbar.view('Created ' +
                 this.profile.type.toLowerCase() + ' profile for ' +

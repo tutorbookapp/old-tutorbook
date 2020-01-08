@@ -65,6 +65,9 @@ class DataProxy {
             case 'createLocation':
                 assert(token.supervisor);
                 return Data.createLocation(data.location, data.id);
+            case 'createProxyUser':
+                assert(token.supervisor);
+                return Data.createProxyUser(data.user);
             case 'createUser':
                 assert(token.uid === data.uid || token.supervisor);
                 return Data.createUser(data);
@@ -281,6 +284,25 @@ class Data {
             id: doc.id,
             location: location,
         };
+    }
+
+    static async createProxyUser(profile) {
+        var [err, user] = await to(admin.auth().getUserByEmail(profile.email));
+        if (err) var [err, user] = await to(admin.auth().createUser({
+            email: profile.email,
+            emailVerified: false,
+            displayName: profile.name,
+            photoURL: profile.photo ? profile.photo : 'https://tutorbook.app/' +
+                'app/img/' + ((profile.gender === 'Female') ? 'female.png' :
+                    'male.png'),
+            disabled: false,
+        }));
+        if (err) throw new Error('Could not create user b/c of ' + err.message);
+        return global.db.collection('users').doc(user.uid).set(
+            Data.combineMaps(profile, {
+                uid: user.uid,
+                photo: user.photoURL,
+            }));
     }
 
     static createUser(user) {
