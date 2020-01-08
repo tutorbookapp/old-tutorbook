@@ -257,8 +257,8 @@ class Profile {
                 ).view();
             });
         });
-        MDCRipple.attachTo($(this.main).find('[data-fir-click="delete"]')[0]);
         if (dontUpdate) return;
+        MDCRipple.attachTo($(this.main).find('[data-fir-click="delete"]')[0]);
         $(this.main).find('[data-fir-click="delete"]').click(() => {
             new ConfirmationDialog('Delete Account?',
                 'You are about to permanently delete all of your account data' +
@@ -690,21 +690,18 @@ class EditProfile extends NewProfile {
         });
         this.styleEmailInput();
         $(this.main).append(this.render.template('delete-user-input', {
-            delete: () => {
-                new ConfirmationDialog('Delete Account?',
-                    'You are about to permanently delete ' + this.profile.name +
-                    '\'s account data. This action cannot be undone. Please ensure ' +
-                    'to check with your fellow supervisors before continuing.', async () => {
-                        window.app.nav.back();
-                        const [err, res] = await to(
-                            Data.deleteUser(this.profile.id));
-                        if (err) {
-                            window.app.snackbar.view('Could not delete account.');
-                            console.error('Error while deleting proxy account:', err);
-                        }
-                        window.app.snackbar.view('Deleted account.');
-                    }).view();
-            },
+            delete: () => new ConfirmationDialog('Delete Account?',
+                'You are about to permanently delete ' + this.profile.name +
+                '\'s account data. This action cannot be undone. Please ' +
+                'ensure to check with your fellow supervisors before ' +
+                'continuing.', async () => {
+                    window.app.nav.back();
+                    const [err, res] = await to(
+                        Data.deleteUser(this.profile.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'delete account.');
+                    window.app.snackbar.view('Deleted account.');
+                }).view(),
         }));
         $(this.main).find('#Type').replaceWith(
             $(this.render.select('Type', this.profile.type, Data.types))
