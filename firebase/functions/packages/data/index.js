@@ -1,3 +1,4 @@
+const phone = require('phone');
 const to = require('await-to-js').default;
 const admin = require('firebase-admin');
 const assert = require('assert');
@@ -302,6 +303,7 @@ class Data {
             Data.combineMaps(profile, {
                 uid: user.uid,
                 photo: user.photoURL,
+                phone: phone(profile.phone)[0] || profile.phone,
             }));
     }
 
