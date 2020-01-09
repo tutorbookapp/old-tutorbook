@@ -1554,6 +1554,7 @@ module.exports = {
                     user,
                     req.body,
                     result,
+                    (req.query.test === 'true'),
                 );
             }).catch(async (err) => {
                 console.error('Error while processing ' + req.query.action +
@@ -1566,6 +1567,7 @@ module.exports = {
                     user,
                     req.body,
                     err,
+                    (req.query.test === 'true'),
                 );
                 throw err;
             });

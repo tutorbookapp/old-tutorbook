@@ -1,8 +1,9 @@
 const SMS = require('sms');
-const db = require('firebase-admin')
-    .firestore()
-    .collection('partitions')
-    .doc('default');
+const firestore = require('firebase-admin').firestore();
+const partitions = {
+    default: firestore.collection('partitions').doc('defualt'),
+    test: firestore.collection('partitions').doc('test'),
+};
 
 const notifyMe = (message) => {
     return new SMS({
@@ -16,7 +17,8 @@ const notifyMe = (message) => {
 // 2) Checking the location named in the user's document
 // 3) Checking the user's availability for location names
 // 4) Defaulting to the 'Gunn Academic Center'
-const getUserLocation = async (user) => {
+const getUserLocation = async (user, isTest) => {
+    const db = isTest ? partitions.test : partitions.default;
     const getIdFromName = async (name) => (await db
         .collection('locations')
         .where('name', '==', name)
@@ -31,14 +33,16 @@ const getUserLocation = async (user) => {
 };
 
 const failedDataAction = {
-    newRequest: (user, data, err) => {
+    newRequest: (user, data, err, isTest) => {
+        const db = isTest ? partitions.test : partitions.default;
         return console.error('[ERROR] The newRequest failedDataAction stat ' +
             'has not been implemented yet.');
     },
 };
 
 const dataAction = {
-    newRequest: async (user, data, res) => {
+    newRequest: async (user, data, res, isTest) => {
+        const db = isTest ? partitions.test : partitions.default;
         const r = data.request;
         const stat = {
             title: 'New Request',
@@ -54,12 +58,13 @@ const dataAction = {
             r.location.name + '.');
         return db
             .collection('locations')
-            .doc((await getUserLocation(user)))
+            .doc((await getUserLocation(user, isTest)))
             .collection('recentActions')
             .doc()
             .set(stat);
     },
-    cancelRequest: async (user, data, res) => {
+    cancelRequest: async (user, data, res, isTest) => {
+        const db = isTest ? partitions.test : partitions.default;
         const r = data.request;
         const stat = {
             title: 'Canceled Request',
@@ -75,7 +80,7 @@ const dataAction = {
             r.location.name + '.');
         return db
             .collection('locations')
-            .doc((await getUserLocation(user)))
+            .doc((await getUserLocation(user, isTest)))
             .collection('recentActions')
             .doc()
             .set(stat);
@@ -83,6 +88,8 @@ const dataAction = {
 };
 
 const userUpdate = async (change, context) => {
+    const isTest = context.params.partition === 'test';
+    const db = isTest ? partitions.test : partitions.default;
     if (!change.after.exists) {
         var user = change.before.data();
         var stat = {
@@ -124,7 +131,7 @@ const userUpdate = async (change, context) => {
     }
     return db
         .collection('locations')
-        .doc((await getUserLocation(user)))
+        .doc((await getUserLocation(user, isTest)))
         .collection('recentActions')
         .doc()
         .set(stat);
