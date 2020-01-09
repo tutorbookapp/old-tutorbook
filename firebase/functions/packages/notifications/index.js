@@ -66,7 +66,9 @@ const apptNotification = (req, res) => {
                 await new SMS(tutor, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
                     appt.subject + ' in the ' + appt.location.name + ' on ' +
-                    appt.time.day + ' at ' + appt.time.from + '.');
+                    appt.time.day + ' at ' + appt.time.from + '. Log into ' +
+                    'Tutorbook (https://tutorbook.app/app/) to edit, cancel, ' +
+                    'or clock into this appointment.');
             }
             if (req.query.pupil === 'true' &&
                 pupils.indexOf(appt.for.fromUser.uid) < 0) {
@@ -76,7 +78,9 @@ const apptNotification = (req, res) => {
                 await new SMS(pupil, supervisor.name + ' wanted to ' +
                     'remind you that you have a tutoring session for ' +
                     appt.subject + ' in the ' + appt.location.name + ' on ' +
-                    appt.time.day + ' at ' + appt.time.from + '.');
+                    appt.time.day + ' at ' + appt.time.from + '. Log into ' +
+                    'Tutorbook (https://tutorbook.app/app/) to view, edit, or' +
+                    ' cancel this appointment.');
             }
         }));
         return res.json({
