@@ -169,6 +169,7 @@ class Tutorbook {
     }
 
     signOut() {
+        this.intercom.logout();
         return firebase.auth().signOut();
     }
 
