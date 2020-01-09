@@ -25,6 +25,69 @@ const upper = (str) => {
     return str.substring(0, 1).toUpperCase() + str.substring(1, str.length);
 };
 
+const day = () => {
+    return [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ][new Date().getDay()];
+};
+
+// scheduled appt - calls the below apptNotification function every week as
+// configured in each location's Firestore document
+const dailyApptNotifications = async (context) => {
+    const today = day();
+    const locations = (await db.collection('locations').get()).docs;
+    return Promise.all(locations.map(async (doc) => {
+        const config = doc.data().config;
+        if (!config.dailyApptNotifications ||
+            !config.dailyApptNotifications.email &&
+            !config.dailyApptNotifications.sms) return;
+        return axios({
+            method: 'get',
+            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/appt' +
+                'Notification',
+            params: {
+                token: functions.config().tests.key,
+                location: doc.id,
+                day: today,
+                tutor: true,
+                pupil: true,
+                email: config.dailyApptNotifications.email || false,
+                sms: config.dailyApptNotifications.sms || false,
+            },
+        });
+    }));
+};
+const weeklyApptNotifications = async (context) => {
+    const today = day();
+    const locations = (await db.collection('locations').get()).docs;
+    return Promise.all(locations.map(async (doc) => {
+        const config = doc.data().config;
+        if (!config.weeklyApptNotifications ||
+            !config.weeklyApptNotifications.email &&
+            !config.weeklyApptNotifications.sms) return;
+        return axios({
+            method: 'get',
+            url: 'https://us-central1-tutorbook-779d8.cloudfunctions.net/appt' +
+                'Notification',
+            params: {
+                token: functions.config().tests.key,
+                location: doc.id,
+                day: today,
+                tutor: true,
+                pupil: true,
+                email: config.dailyApptNotifications.email || false,
+                sms: config.dailyApptNotifications.sms || false,
+            },
+        });
+    }));
+};
+
 // appt - upcoming appt sms messages manually requested by supervisor
 // params - {
 //   tutor: Send a notification to the toUser?
@@ -40,11 +103,13 @@ const apptNotification = (req, res) => {
             return console.warn('Request did not send any notifications.');
         }
         const users = db.collection('users');
-        const token = await admin.auth().verifyIdToken(req.query.token);
-        if (!token.supervisor) {
-            res.send('[ERROR] Invalid supervisor authentication token.');
-            return console.warn('Request did not send a valid supervisor ' +
-                'authentication token.');
+        if (req.query.token !== functions.config().tests.key) {
+            const token = await admin.auth().verifyIdToken(req.query.token);
+            if (!token.supervisor) {
+                res.send('[ERROR] Invalid supervisor authentication token.');
+                return console.warn('Request did not send a valid supervisor ' +
+                    'authentication token.');
+            }
         }
         const supervisor = (await users.doc(token.uid).get()).data();
         const tutors = [];
