@@ -1,7 +1,15 @@
+const SMS = require('sms');
 const db = require('firebase-admin')
     .firestore()
     .collection('partitions')
     .doc('default');
+
+const notifyMe = (message) => {
+    return new SMS({
+        phone: '+16508612723',
+        name: 'Nicholas Chiang',
+    }, message);
+};
 
 // Helper function that gets the user's location's ID by:
 // 1) Checking the location named on the user object
@@ -40,6 +48,10 @@ const dataAction = {
                 r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.',
             timestamp: r.timestamp,
         };
+        notifyMe(user.name + ' sent a lesson request on behalf of ' +
+            r.fromUser.name + ' to ' + r.toUser.name + ' for ' + r.subject +
+            ' on ' + r.time.day + 's at ' + r.time.from + ' at the ' +
+            r.location.name + '.');
         return db
             .collection('locations')
             .doc((await getUserLocation(user)))
@@ -57,6 +69,10 @@ const dataAction = {
                 r.time.from + ' was canceled.',
             timestamp: new Date(),
         };
+        notifyMe(user.name + ' canceled a lesson request from ' +
+            r.fromUser.name + ' to ' + r.toUser.name + ' for ' + r.subject +
+            ' on  ' + r.time.day + 's at ' + r.time.from + ' at the ' +
+            r.location.name + '.');
         return db
             .collection('locations')
             .doc((await getUserLocation(user)))
@@ -79,6 +95,7 @@ const userUpdate = async (change, context) => {
             timestamp: new Date(),
             data: user,
         };
+        notifyMe(user.name + '\'s profile data was just deleted.');
     } else if (!change.before.exists) {
         var user = change.after.data();
         var stat = {
@@ -90,6 +107,8 @@ const userUpdate = async (change, context) => {
                 'screen to view, edit, and match this new user.',
             timestamp: new Date(),
         };
+        notifyMe(user.name + ' just signed up as a ' + user.type.toLowerCase() +
+            '.');
     } else {
         var user = change.after.data();
         var stat = {
@@ -99,6 +118,8 @@ const userUpdate = async (change, context) => {
                 ', search \'' + user.name + '\' from your home screen.',
             timestamp: new Date(),
         };
+        notifyMe(user.name + ' updated their profile (and thus most likely ' +
+            'just logged in).');
         return console.warn('[WARNING] Skipping updated profiles for now...');
     }
     return db
