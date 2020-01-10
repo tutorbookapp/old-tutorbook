@@ -646,6 +646,10 @@ class MatchingSearch extends Search {
 
     renderResult(doc) {
         const el = super.renderResult(doc).cloneNode(true);
+        if (this.selectedUsers.findIndex(user => user.uid === doc.id) >= 0) {
+            $(el).find('#photo').css('display', 'none');
+            $(el).find('#checkmark').css('display', 'inherit');
+        }
         el.addEventListener('click', () => {
             if ($(el).find('#checkmark').css('display') === 'none') {
                 $(el).find('#photo').css('display', 'none');
