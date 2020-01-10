@@ -505,12 +505,14 @@ class NewProfile extends Profile {
             on: 'Others are able to see and request this user.',
             off: 'Others cannot see or request this user.',
         };
-        $(this.main).find('[id="Show profile"] .mdc-switch input').click(() => {
-            p.config.showProfile = !p.config.showProfile;
-            $(this.main)
-                .find('[id="Show profile"] .mdc-list-item__secondary-text')
-                .text((p.config.showProfile) ? d.on : d.off);
-        });
+        $(this.main)
+            .find('[id="Show profile"] .mdc-switch input')[0]
+            .addEventListener('click', () => {
+                p.config.showProfile = !p.config.showProfile;
+                $(this.main)
+                    .find('[id="Show profile"] .mdc-list-item__secondary-text')
+                    .text((p.config.showProfile) ? d.on : d.off);
+            });
 
         function t(q, action) {
             $($(main).find(q + ' input').first()).focusout(async () => {

@@ -619,6 +619,74 @@ class Data {
         };
     }
 
+    // Adds a 'booked' field to every availability window on the given user by:
+    // 1) Getting the user's appointments
+    // 2) Changing 'booked' to false for every appointment's time field
+    static async updateUserAvailability(uid) {
+        const doc = await global.db.collection('users').doc(uid).get();
+        // Availability is stored in Firestore as:
+        // 'Gunn Academic Center': {
+        //   'Monday': [
+        //     {
+        //       open: '2:45 PM',
+        //       close: '3:45 PM', 
+        //       booked: false,
+        //     },
+        //     {
+        //       open: 'A Period',
+        //       close: 'A Period',
+        //       booked: true,
+        //     },
+        //   ],
+        // },
+        const appts = (await doc.ref.collection('appointments').get()).docs;
+        const bookedAvailability = {};
+        appts.forEach((apptDoc) => {
+            const appt = apptDoc.data();
+            if (!bookedAvailability[appt.location.name])
+                bookedAvailability[appt.location.name] = {};
+            if (!bookedAvailability[appt.location.name][appt.time.day])
+                bookedAvailability[appt.location.name][appt.time.day] = [];
+            if (bookedAvailability[appt.location.name][appt.time.day]
+                .findIndex(t =>
+                    t.open === appt.time.from &&
+                    t.close === appt.time.to
+                ) >= 0) return;
+            bookedAvailability[appt.location.name][appt.time.day].push({
+                open: appt.time.from,
+                close: appt.time.to,
+                booked: true,
+            });
+        });
+        Object.entries(doc.data().availability || {}).forEach((loc) => {
+            // Iterate over locations in user's existing availability
+            if (!bookedAvailability[loc[0]]) bookedAvailability[loc[0]] = {};
+            // Iterate over days in each location
+            Object.entries(loc[1]).forEach((day) => {
+                if (!bookedAvailability[loc[0]][day[0]])
+                    bookedAvailability[loc[0]][day[0]] = [];
+                // Iterate over timeslots in each day in each location
+                day[1].forEach((timeslot) => {
+                    if (bookedAvailability[loc[0]][day[0]].findIndex(t =>
+                            t.open === timeslot.open &&
+                            t.close === timeslot.close
+                        ) < 0) {
+                        // User does not have an appt at this timeslot, add it to 
+                        // bookedAvailability as an unbooked timeslot.
+                        bookedAvailability[loc[0]][day[0]].push({
+                            open: timeslot.open,
+                            close: timeslot.close,
+                            booked: false,
+                        });
+                    }
+                });
+            });
+        });
+        return doc.ref.update({
+            availability: bookedAvailability,
+        });
+    }
+
     static async approveRequest(request, id) {
         const db = global.db;
         const requestIn = db.collection("users").doc(request.toUser.uid)
@@ -656,15 +724,12 @@ class Data {
             timestamp: new Date(),
         };
 
-        var err;
-        var res;
-        [err, res] = await to(approvedRequestOut.set({
+        var [err, res] = await to(approvedRequestOut.set({
             for: request,
             approvedBy: app.conciseUser,
             approvedTimestamp: new Date(),
         }));
-        if (err)
-            throw new Error('Error while adding approvedRequestOut:', err);
+        if (err) throw new Error('Error while adding approvedRequestOut:', err);
         [err, res] = await to(requestOut.delete());
         if (err) throw new Error('Error while deleting requestOut:', err);
         [err, res] = await to(requestIn.delete());
@@ -674,6 +739,8 @@ class Data {
             [err, res] = await to(appt.set(apptData));
             if (err) throw new Error('Error while creating appt doc:', err);
         }
+        Data.updateUserAvailability(request.fromUser.uid);
+        Data.updateUserAvailability(request.toUser.uid);
         return {
             request: request,
             appt: apptData,

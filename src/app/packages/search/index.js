@@ -164,6 +164,7 @@ class Search {
             grade: 'Any',
             subject: 'Any',
             gender: 'Any',
+            showBooked: false,
             availability: {},
             location: window.app.location.name,
             price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
@@ -314,6 +315,7 @@ class Search {
                 grade: 'Any',
                 subject: 'Any',
                 gender: 'Any',
+                showBooked: false,
                 availability: {},
                 location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
@@ -381,6 +383,7 @@ class Search {
                 grade: 'Any',
                 subject: 'Any',
                 gender: 'Any',
+                showBooked: false,
                 availability: {},
                 location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
@@ -503,7 +506,8 @@ class Search {
                 'availability.' + location + '.' + day,
                 'array-contains', {
                     open: from,
-                    close: to
+                    close: to,
+                    booked: this.filters.showBooked,
                 }
             );
         }

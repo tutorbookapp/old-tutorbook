@@ -282,7 +282,7 @@ class Utils {
     }
 
     static attachSelect(selectEl) {
-        if (typeof selectEl === 'string') selectEl = $(selectEl);
+        if (typeof selectEl === 'string') selectEl = $(selectEl)[0];
         var options = [];
         selectEl.querySelectorAll('.mdc-list-item').forEach((el) => {
             options.push(el.innerText);

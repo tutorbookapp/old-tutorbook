@@ -2,6 +2,9 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 import {
+    MDCSwitch
+} from '@material/switch/index';
+import {
     MDCTextField
 } from '@material/textfield/index';
 import {
@@ -474,11 +477,13 @@ class MatchingDialog {
     constructor(profile) {
         this.profile = profile;
         this.subject = profile.subjects[0];
+        this.selectedUsers = [];
         const update = () => {
-            const btn = $(this.main).find('.action-list-divider button').last();
-            if (this.selectedUsers.length > 0)
-                return btn.removeAttr('disabled');
-            btn.attr('disabled', 'disabled');
+            const btn = $(this.main).find('.action-list-divider #match').last();
+            if (this.selectedUsers.length > 0) {
+                return btn[0].removeAttribute('disabled');
+            }
+            btn[0].setAttribute('disabled', 'disabled');
         };
         Array.prototype.addUser = (item) => {
             this.selectedUsers.push(item);
@@ -491,7 +496,6 @@ class MatchingDialog {
             );
             update();
         };
-        this.selectedUsers = [];
         this.time = Utils.getAvailabilityStrings(profile.availability)[0];
         this.render = window.app.render;
         this.search = new MatchingSearch(
@@ -534,6 +538,25 @@ class MatchingDialog {
             this.time = s.value;
             this.results();
         });
+        const show = new MDCSwitch(
+            $(this.main).find('[id="Show booked users"] .mdc-switch')[0]
+        );
+        const d = {
+            on: 'Showing users with appointments during the selected timeslot.',
+            off: 'Showing users without appointments during the selected ' +
+                'timeslot.',
+        };
+        $(this.main)
+            .find('[id="Show booked users"] .mdc-switch input')[0]
+            .addEventListener('click', () => {
+                this.search.filters.showBooked = !this.search.filters
+                    .showBooked;
+                this.search.viewResults();
+                $(this.main)
+                    .find('[id="Show booked users"] .mdc-list-item__secondary' +
+                        '-text')
+                    .text((this.search.filters.showBooked) ? d.on : d.off);
+            });
     }
 
     renderSelf() { // TODO: Add hover-for-more-info on tutor search results
@@ -569,6 +592,11 @@ class MatchingDialog {
         add(s('Subject', this.subject, profile.subjects));
         add(s('Time', this.time, Utils.getAvailabilityStrings(
             profile.availability)));
+        add(this.render.switch('Show booked users', {
+            on: 'Showing users with appointments during the selected timeslot.',
+            off: 'Showing users without appointments during the selected ' +
+                'timeslot.',
+        }));
         addActionD('Tutors for ' + this.subject, {
             match: () => {
                 new ConfirmMatchDialog(
