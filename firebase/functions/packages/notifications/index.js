@@ -111,6 +111,7 @@ const apptNotification = (req, res) => {
                     'authentication token.');
             }
         }
+        // TODO: Pass uID as request param when not using actual token.
         const supervisor = (await users.doc(token.uid).get()).data();
         const tutors = [];
         const pupils = [];
