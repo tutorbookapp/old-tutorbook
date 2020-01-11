@@ -1037,6 +1037,9 @@ Card.renderCard = function(title, subtitle, summary, actions) {
         };
     } else if (actions.primary) {
         MDCRipple.attachTo($(card).find('.mdc-card__primary-action')[0]);
+    } else {
+        $(card).find('.mdc-card__primary-action')
+            .removeClass('mdc-card__primary-action');
     }
     const buttons = card.querySelector('.mdc-card__actions'); // Actions
     Object.entries(actions).forEach((entry) => {

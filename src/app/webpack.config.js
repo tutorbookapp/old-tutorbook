@@ -44,6 +44,7 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/profile.scss'),
                 path.resolve(__dirname, 'packages/app/styles/search.scss'),
                 path.resolve(__dirname, 'packages/app/styles/ads.scss'),
+                path.resolve(__dirname, 'packages/app/styles/dashboard.scss'),
 
                 // All other styling files are contained as CSS files
                 path.resolve(__dirname, 'packages/app/styles/loader.css'),

@@ -191,6 +191,16 @@ class Utils {
         return Utils.caps(name);
     }
 
+    static getType(type) {
+        if (type) return type;
+        if (location.toString().indexOf('type') >= 0) {
+            const pairs = location.toString().split('?');
+            const tPair = pairs[pairs.findIndex(p => p.indexOf('type') >= 0)];
+            return Utils.caps(tPair.split('=')[1].replace('/', ''));
+        }
+        return '';
+    }
+
     static filterProfile(profile) {
         return {
             'name': Utils.getName(profile),
@@ -199,7 +209,7 @@ class Utils {
             'id': profile.email || "", // Use email as ID
             'email': profile.email || "",
             'phone': Utils.getPhone(profile.phone),
-            'type': profile.type || "",
+            'type': Utils.getType(profile.type),
             'gender': profile.gender || "",
             'grade': profile.grade || "",
             'bio': profile.bio || "",

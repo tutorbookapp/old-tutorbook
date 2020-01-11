@@ -485,11 +485,11 @@ class MatchingDialog {
             }
             btn[0].setAttribute('disabled', 'disabled');
         };
-        Array.prototype.addUser = (item) => {
+        const addUser = (item) => {
             this.selectedUsers.push(item);
             update();
         };
-        Array.prototype.removeUser = (item) => {
+        const removeUser = (item) => {
             this.selectedUsers.splice(
                 this.selectedUsers.findIndex(user => user.uid == item.uid),
                 1,
@@ -503,6 +503,8 @@ class MatchingDialog {
             this.subject,
             this.time,
             this.selectedUsers,
+            addUser,
+            removeUser,
         );
         this.renderSelf();
     }
@@ -622,7 +624,7 @@ class MatchingDialog {
 
 class MatchingSearch extends Search {
 
-    constructor(pupil, subject, time, selectedUsers) {
+    constructor(pupil, subject, time, selectedUsers, addUser, removeUser) {
         super();
         this.pupil = pupil;
         this.time = time;
@@ -632,6 +634,8 @@ class MatchingSearch extends Search {
         this.filters.availability = (!!time && time !== '') ?
             Utils.parseAvailabilityString(time) : {};
         this.filters.type = 'Tutor';
+        this.addUser = addUser;
+        this.removeUser = removeUser;
     }
 
     update(pupil, subject, time) {
@@ -654,11 +658,11 @@ class MatchingSearch extends Search {
             if ($(el).find('#checkmark').css('display') === 'none') {
                 $(el).find('#photo').css('display', 'none');
                 $(el).find('#checkmark').css('display', 'inherit');
-                this.selectedUsers.addUser(doc.data());
+                this.addUser(doc.data());
             } else {
                 $(el).find('#photo').css('display', 'inherit');
                 $(el).find('#checkmark').css('display', 'none');
-                this.selectedUsers.removeUser(doc.data());
+                this.removeUser(doc.data());
             }
         });
         return el;

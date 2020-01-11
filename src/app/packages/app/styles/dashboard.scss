@@ -1,0 +1,37 @@
+.horz-layout-grid {
+  padding: 24px;
+  position: relative;
+  .mdc-icon-button {
+    position: absolute;
+    border-radius: 100%;
+    bottom: 45%;
+    background: #FFF;
+    opacity: 1;
+    z-index: 2;
+  }
+  #left {
+    left: 12px;
+  }
+  #right {
+    right: 12px;
+  }
+}
+
+.horz-layout-grid__inner {
+  white-space: nowrap;
+  overflow-x: scroll;
+  display: flex;
+}
+
+.horz-layout-grid__inner > .mdc-card {
+  display: inline-block;
+  margin-right: 24px;
+  white-space: normal;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: calc((100% - 48px) / 3);
+}
+
+.horz-layout-grid__inner > .mdc-card:last-child {
+  margin-right: 0;
+}

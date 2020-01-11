@@ -86,7 +86,7 @@ class Profile {
                 ' (including any appointments, requests, messages, or service' +
                 ' hours that you might have). This action cannot be undone. ' +
                 'Still sure you want to delete this account?', async () => {
-                    const [err, res] = await to(Data.deleteUser(p.id));
+                    const [err, res] = await to(Data.deleteUser(p.uid));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'delete account.');
                     window.app.signOut();
@@ -265,7 +265,7 @@ class Profile {
                 ' (including any appointments, requests, messages, or service' +
                 ' hours that you might have). This action cannot be undone. ' +
                 'Still sure you want to delete this account?', async () => {
-                    const [err, res] = await to(Data.deleteUser(p.id));
+                    const [err, res] = await to(Data.deleteUser(p.uid));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'delete account.');
                     window.app.signOut();
@@ -700,7 +700,7 @@ class EditProfile extends NewProfile {
                 'continuing.', async () => {
                     window.app.nav.back();
                     const [err, res] = await to(
-                        Data.deleteUser(this.profile.id));
+                        Data.deleteUser(this.profile.uid));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'delete account.');
                     window.app.snackbar.view('Deleted account.');
