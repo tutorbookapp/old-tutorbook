@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/templates",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "description": "",
   "main": "index.js",
   "scripts": {

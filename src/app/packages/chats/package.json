@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/chats",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@tutorbook/data": "^0.2.6",
-    "@tutorbook/utils": "^0.2.7"
+    "@tutorbook/utils": "^0.2.8"
   },
   "repository": {
     "type": "git",
