@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/search",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.2.6",
-    "@tutorbook/dialogs": "^0.2.8",
-    "@tutorbook/filters": "^0.2.8",
-    "@tutorbook/profile": "^0.2.8",
-    "@tutorbook/user": "^0.2.8",
-    "@tutorbook/utils": "^0.2.8"
+    "@tutorbook/data": "^0.2.9",
+    "@tutorbook/dialogs": "^0.2.9",
+    "@tutorbook/filters": "^0.2.9",
+    "@tutorbook/profile": "^0.2.9",
+    "@tutorbook/user": "^0.2.9",
+    "@tutorbook/utils": "^0.2.9"
   },
   "description": "",
   "repository": {

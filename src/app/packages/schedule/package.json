@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/schedule",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.2.8",
-    "@tutorbook/data": "^0.2.6",
-    "@tutorbook/dialogs": "^0.2.8",
-    "@tutorbook/schedule-items": "^0.2.8",
-    "@tutorbook/user": "^0.2.8",
-    "@tutorbook/utils": "^0.2.8"
+    "@tutorbook/card": "^0.2.9",
+    "@tutorbook/data": "^0.2.9",
+    "@tutorbook/dialogs": "^0.2.9",
+    "@tutorbook/schedule-items": "^0.2.9",
+    "@tutorbook/user": "^0.2.9",
+    "@tutorbook/utils": "^0.2.9"
   },
   "repository": {
     "type": "git",
