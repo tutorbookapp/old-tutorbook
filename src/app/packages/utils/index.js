@@ -201,6 +201,12 @@ class Utils {
         return '';
     }
 
+    static getAuth(profile) {
+        if (profile.authenticated) return profile.authenticated;
+        if (['Pupil', 'Tutor'].indexOf(profile.type) >= 0) return true;
+        return false;
+    }
+
     static filterProfile(profile) {
         return {
             'name': Utils.getName(profile),
@@ -236,7 +242,7 @@ class Utils {
                     ' No refunds will be issued unless covered by a Tutorbook ' +
                     'guarantee.',
             },
-            'authenticated': profile.authenticated || false,
+            'authenticated': Utils.getAuth(profile),
             'location': profile.location || (window.app) ? window.app.location.name : 'Gunn Academic Center',
             'children': profile.children || [],
             'secondsTutored': profile.secondsTutored || 0,

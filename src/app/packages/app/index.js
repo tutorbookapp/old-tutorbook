@@ -117,7 +117,12 @@ class Tutorbook {
                             this.init();
                             this.nav.start();
                         }).view();
-                } else if (this.user.authenticated) {
+                } else if (
+                    this.user.authenticated ||
+                    this.user.type === 'Tutor' ||
+                    this.user.type === 'Pupil'
+                ) {
+                    this.user.authenticated = true;
                     this.init();
                     this.nav.start();
                 } else {
