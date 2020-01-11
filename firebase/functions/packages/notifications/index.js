@@ -103,13 +103,11 @@ const apptNotification = (req, res) => {
             return console.warn('Request did not send any notifications.');
         }
         const users = db.collection('users');
-        if (req.query.token !== functions.config().tests.key) {
-            const token = await admin.auth().verifyIdToken(req.query.token);
-            if (!token.supervisor) {
-                res.send('[ERROR] Invalid supervisor authentication token.');
-                return console.warn('Request did not send a valid supervisor ' +
-                    'authentication token.');
-            }
+        const token = await admin.auth().verifyIdToken(req.query.token);
+        if (!token.supervisor) {
+            res.send('[ERROR] Invalid supervisor authentication token.');
+            return console.warn('Request did not send a valid supervisor ' +
+                'authentication token.');
         }
         // TODO: Pass uID as request param when not using actual token.
         const supervisor = (await users.doc(token.uid).get()).data();
