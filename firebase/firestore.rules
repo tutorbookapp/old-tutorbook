@@ -199,7 +199,8 @@ service cloud.firestore {
 	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
 	|| request.auth.uid in resource.data.attendees[0].proxy
 	|| request.auth.uid in resource.data.attendees[1].proxy
-	|| resource.data.location.id in request.auth.token.locations;
+	|| resource.data.location.id in request.auth.token.locations
+        || request.auth.token.supervisor;
       allow read: if request.auth.uid in
 	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
     }

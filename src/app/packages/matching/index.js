@@ -11,6 +11,7 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
+const ScheduleCard = require('@tutorbook/schedule-card');
 const Search = require('@tutorbook/search').default;
 const Card = require('@tutorbook/card');
 const Utils = require('@tutorbook/utils');
@@ -594,6 +595,7 @@ class MatchingDialog {
         add(s('Subject', this.subject, profile.subjects));
         add(s('Time', this.time, Utils.getAvailabilityStrings(
             profile.availability)));
+        add(this.renderSchedule());
         add(this.render.switch('Show booked users', {
             on: 'Showing users with appointments during the selected timeslot.',
             off: 'Showing users without appointments during the selected ' +
@@ -612,6 +614,28 @@ class MatchingDialog {
         $(this.main).find('.action-list-divider button').last()
             .attr('disabled', 'disabled');
         add(this.search.main);
+    }
+
+    renderSchedule() {
+        const schedule = new ScheduleCard({
+            appts: window.app.db.collection('users').doc(this.profile.uid)
+                .collection('appointments').orderBy('time.from'),
+        });
+        schedule.displayHook = (doc, type) => {
+            $(this.main).find(schedule.main).show();
+            const a = doc.data();
+            const other = Utils.getOther(this.profile, a.attendees);
+            $(schedule.main).find('#' + doc.id)
+                .find('h2 [id="Clock in"]').remove().end()
+                .find('h2 [data-fir-content="title"]').text(a.for.subject).end()
+                .find('h3').text(a.time.from + ' with ' + other.name).end()
+                .find('#menu').hide(); // TODO: Fix menu mdc-list-item styling.
+        };
+        schedule.emptyHook = (type) => {
+            $(this.main).find(schedule.main).hide();
+        };
+        schedule.viewAppts();
+        return $(schedule.main).hide()[0];
     }
 
     results() { // Render search results for given subject

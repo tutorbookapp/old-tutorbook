@@ -391,6 +391,7 @@ class Utils {
             result[map.location][map.day].push({
                 open: map.fromTime,
                 close: map.toTime,
+                booked: false,
             });
         });
         return result;

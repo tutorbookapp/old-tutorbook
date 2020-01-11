@@ -300,7 +300,8 @@ class EditAvailabilityDialog {
         });
 
         if (!profile) {
-            window.app.user.availability = Utils.parseAvailabilityStrings(strings);
+            window.app.user.availability = Utils
+                .parseAvailabilityStrings(strings);
             await window.app.updateUser();
             window.app.snackbar.view('Availability updated.');
         } else {

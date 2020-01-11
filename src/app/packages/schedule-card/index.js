@@ -56,8 +56,8 @@ class Event {
     renderSelf() {
         const title = this.attendees[0].name.split(' ')[0] + ' and ' +
             this.attendees[1].name.split(' ')[0];
-        const subtitle = ((Data.periods.indexOf(this.time.from) < 0) ?
-            'At ' : 'During ') + this.time.from;
+        const subtitle = this.for.subject + ((Data.periods.indexOf(this.time
+            .from) < 0) ? ' at ' : ' during ') + this.time.from;
         this.el = $(this.render.template('card-event', {
             title: title,
             subtitle: subtitle,
@@ -81,11 +81,12 @@ class Event {
     }
 
     manage() {
-        $(this.el).find('#menu').click(() => {
+        $(this.el).find('#menu')[0].addEventListener('click', () => {
             this.menu.open = true;
         });
         Object.entries(this.actions).forEach((entry) => {
-            $(this.el).find('[id="' + entry[0] + '"]').click(entry[1]);
+            $(this.el).find('[id="' + entry[0] + '"]')[0]
+                .addEventListener('click', entry[1]);
         });
     }
 };
@@ -163,12 +164,20 @@ class ActiveAppt extends Event {
 
 class ScheduleCard {
 
-    constructor() {
+    constructor(queries) {
         this.render = window.app.render;
         this.colors = {};
         this.events = {};
         this.appts = {};
         this.activeAppts = {};
+        this.queries = queries || (window.app.location.id ? {
+            appts: window.app.db.collection('locations')
+                .doc(window.app.location.id).collection('appointments')
+                .orderBy('time.from'),
+            activeAppts: window.app.db.collection('locations')
+                .doc(window.app.location.id).collection('activeAppointments')
+                .orderBy('time.from'),
+        } : {});
         this.renderSelf();
     }
 
@@ -200,6 +209,7 @@ class ScheduleCard {
                 $(this.main)
                     .find('#' + this[type][doc.id].time.day + ' .schedule-list')
                     .append(this[type][doc.id].el);
+                if (this.displayHook) this.displayHook(doc, type);
             },
             remove: (doc, type) => {
                 this[type][doc.id] = undefined;
@@ -223,16 +233,10 @@ class ScheduleCard {
                 } else {
                     $(this.main).find('[type="' + type + '"]').remove();
                 }
+                if (this.emptyHook) this.emptyHook(type);
             },
         };
-        Utils.recycle({
-            appts: window.app.db.collection('locations')
-                .doc(window.app.location.id).collection('appointments')
-                .orderBy('time.from'),
-            activeAppts: window.app.db.collection('locations')
-                .doc(window.app.location.id).collection('activeAppointments')
-                .orderBy('time.from'),
-        }, recycler);
+        Utils.recycle(this.queries, recycler);
     }
 };
 

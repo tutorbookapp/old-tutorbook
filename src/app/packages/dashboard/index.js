@@ -347,7 +347,7 @@ class SupervisorDashboard extends Dashboard {
         this.viewCard(trackingShortcut(), def);
     }
 
-    viewRecentActivityCards() {
+    async viewRecentActivityCards() {
         this.viewedRecentActivityCards = true;
         const renderCard = (doc) => {
             const action = doc.data();
@@ -389,14 +389,30 @@ class SupervisorDashboard extends Dashboard {
                 this.updateHorzScroller();
             },
         };
-        Utils.recycle({
-            activity: window.app.db
+        if (window.app.location.id) {
+            Utils.recycle({
+                activity: window.app.db
+                    .collection('locations')
+                    .doc(window.app.location.id)
+                    .collection('recentActions')
+                    .orderBy('timestamp')
+                    .limit(10),
+            }, recycler);
+        } else {
+            (await window.app.db
                 .collection('locations')
-                .doc(window.app.location.id)
-                .collection('recentActions')
-                .orderBy('timestamp')
-                .limit(10),
-        }, recycler);
+                .get()
+            ).forEach((doc) => {
+                Utils.recycle({
+                    activity: window.app.db
+                        .collection('locations')
+                        .doc(doc.id)
+                        .collection('recentActions')
+                        .orderBy('timestamp')
+                        .limit(10),
+                }, recycler);
+            });
+        }
     }
 
     viewEverythingElse() {

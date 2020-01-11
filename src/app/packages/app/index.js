@@ -168,9 +168,8 @@ class Tutorbook {
     }
 
     updateUser(user) {
-        if (!user) return window.app.db.collection('users')
-            .doc(this.user.uid).update(this.user);
-        return window.app.db.collection('users').doc(user.uid)
+        if (!user) user = this.user;
+        return Data.updateUser(user);
     }
 
     signOut() {
