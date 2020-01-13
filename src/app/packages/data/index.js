@@ -13,6 +13,23 @@ class Data {
         this.initLocations();
     }
 
+    static async getPDFBackup(params) {
+        return axios({
+            method: 'get',
+            url: window.app.functionsURL + 'backupAsPDF',
+            responseType: 'blob',
+            params: Data.combineMaps({
+                token: (await firebase.auth().currentUser.getIdToken(true)),
+                location: window.app.location.id,
+                test: window.app.test,
+                tutors: true,
+                pupils: true,
+            }, params),
+        }).then((res) => {
+            return window.URL.createObjectURL(new Blob([res.data]));
+        });
+    }
+
     // Adds a 'booked' field to every availability window on the given user by:
     // 1) Getting the user's appointments
     // 2) Changing 'booked' to false for every appointment's time field
@@ -182,7 +199,7 @@ class Data {
     static async notifyAppt(day, tutor, pupil) {
         return axios({
             method: 'get',
-            url: window.app.functionsURL + '/apptNotification',
+            url: window.app.functionsURL + 'apptNotification',
             params: {
                 token: (await firebase.auth().currentUser.getIdToken(true)),
                 location: window.app.location.id,
@@ -208,7 +225,7 @@ class Data {
     static async post(action, data) {
         return axios({
             method: 'post',
-            url: window.app.functionsURL + '/data',
+            url: window.app.functionsURL + 'data',
             params: {
                 test: window.app.test,
                 user: window.app.user.uid,

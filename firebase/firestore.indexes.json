@@ -605,6 +605,20 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "availability.`Gunn Academic Center`.Thursday",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "availability.`Gunn Academic Center`.Tuesday",
           "arrayConfig": "CONTAINS"
         },
@@ -909,6 +923,20 @@
         {
           "fieldPath": "avgRating",
           "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "location",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name",
+          "order": "ASCENDING"
         }
       ]
     },

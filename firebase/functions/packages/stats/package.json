@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "firebase-admin": "^8.9.0",
+    "firebase-functions": "^3.3.0",
     "sms": "file:../sms"
   }
 }

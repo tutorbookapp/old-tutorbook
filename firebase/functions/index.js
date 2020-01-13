@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin').initializeApp();
 
+const backupAsPDF = require('backups');
 const updateHours = require('hours');
 const updateSheet = require('sheet');
 const SMS = require('sms');
@@ -103,6 +104,8 @@ exports.processWeeklyPayouts = functions.https
 // ============================================================================
 // OTHER
 // ============================================================================
+
+exports.backupAsPDF = functions.https.onRequest(backupAsPDF);
 
 exports.getEmailFromPhone = functions.https.onRequest(Search.getEmailFromPhone);
 

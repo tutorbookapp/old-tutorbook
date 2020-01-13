@@ -330,7 +330,7 @@ class Utils {
                     window.app.snackbar.view('Connecting payments account...');
                     axios({
                         method: 'GET',
-                        url: window.app.functionsURL + '/initStripeAccount',
+                        url: window.app.functionsURL + 'initStripeAccount',
                         params: {
                             code: val.replace('/', ''),
                             id: firebase.auth().currentUser.uid,
@@ -772,8 +772,8 @@ class Utils {
 
     static getAvailabilityString(data) {
         if (Data.locations.indexOf(data.location) >= 0) {
-            return data.day + 's at the ' + data.location + ' from ' + data.fromTime +
-                ' to ' + data.toTime;
+            return data.day + 's at the ' + data.location + ' from ' +
+                data.fromTime + ' to ' + data.toTime;
         }
         return data.day + 's at ' + data.location + ' from ' + data.fromTime +
             ' to ' + data.toTime;
@@ -800,7 +800,7 @@ class Utils {
                 var day = time[0];
                 var openAndCloseTimes = time[1];
                 openAndCloseTimes.forEach((openAndCloseTime) => {
-                    availableTimes.push(this.getAvailabilityString({
+                    availableTimes.push(Utils.getAvailabilityString({
                         day: day,
                         location: location,
                         fromTime: openAndCloseTime.open,

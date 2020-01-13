@@ -252,6 +252,16 @@ Card.renderTutorsCard = function(doc) {
         snooze: () => {
             $('#cards [card-id="tutors"]').remove();
         },
+        backup: async () => {
+            window.app.snackbar.view('Generating PDF database backup...');
+            const [err, url] = await to(Data.getPDFBackup({
+                tutors: true,
+                pupils: false,
+            }));
+            if (err) window.app.snackbar.view('Could not generate PDF backup.');
+            window.app.snackbar.view(
+                'Generated PDF backup.', 'view', () => window.open(url), false);
+        },
         primary: () => {
             return window.app.dashboard.tutors.view();
         },
@@ -277,6 +287,16 @@ Card.renderPupilsCard = function(doc) {
     const actions = {
         snooze: () => {
             $('#cards [card-id="pupils"]').remove();
+        },
+        backup: async () => {
+            window.app.snackbar.view('Generating PDF database backup...');
+            const [err, url] = await to(Data.getPDFBackup({
+                tutors: false,
+                pupils: true,
+            }));
+            if (err) window.app.snackbar.view('Could not generate PDF backup.');
+            window.app.snackbar.view(
+                'Generated PDF backup.', 'view', () => window.open(url), false);
         },
         primary: () => {
             return window.app.dashboard.pupils.view();

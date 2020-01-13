@@ -2,6 +2,8 @@
 // CONFIG VARIABLES
 // =============================================================================
 
+const FUNCTIONS_URL = 'http://localhost:5001/tutorbook-779d8/us-central1/';
+//const FUNCTIONS_URL = 'https://us-central1-tutorbook-779d8.cloudfunctions.net/';
 const LOCATION = {
     name: 'Gunn Academic Center',
     id: 'NJp0Y6wyMh2fDdxSuRSx',
@@ -22,6 +24,7 @@ const TUTOR = {
     },
     secondsPupiled: 0,
     secondsTutored: 0,
+    location: LOCATION.name,
 };
 const PUPIL = {
     name: 'Pupil Tutorbook',
@@ -39,6 +42,7 @@ const PUPIL = {
     },
     secondsPupiled: 0,
     secondsTutored: 0,
+    location: LOCATION.name,
 };
 const SUPERVISOR = {
     name: 'Supervisor Tutorbook',
@@ -56,6 +60,7 @@ const SUPERVISOR = {
     },
     secondsPupiled: 0,
     secondsTutored: 0,
+    location: LOCATION.name,
 };
 
 // =============================================================================
@@ -311,7 +316,7 @@ describe("Tutorbook's REST API", () => {
         if (!uid) throw new Error('Unknown email (' + user + ').');
         return axios({
             method: 'post',
-            url: 'http://localhost:5001/tutorbook-779d8/us-central1/data',
+            url: FUNCTIONS_URL + 'data',
             params: {
                 user: uid,
                 action: action,
@@ -619,8 +624,7 @@ describe("Tutorbook's REST API", () => {
         [appt, id] = await approveRequest();
         return axios({
             method: 'get',
-            url: 'http://localhost:5001/tutorbook-779d8/us-central1/' +
-                'apptNotification',
+            url: FUNCTIONS_URL + 'apptNotification',
             params: {
                 token: (await getToken(SUPERVISOR.email)),
                 tutor: true,
@@ -635,6 +639,25 @@ describe("Tutorbook's REST API", () => {
                 res.data.tutors[0] === TUTOR.uid);
             assert(res.data.pupils.length === 0);
             assert(res.data.appts.length === 3); // Tutors, pupils, & locations
+        });
+    });
+
+    it("lets supervisors download PDF backups of database", async () => {
+        await createUsers();
+        await createLocation();
+        return axios({
+            method: 'get',
+            url: FUNCTIONS_URL + 'backupAsPDF',
+            responseType: 'stream',
+            params: {
+                token: (await getToken(SUPERVISOR.email)),
+                location: LOCATION.id,
+                test: false,
+                tutors: true,
+                pupils: true,
+            },
+        }).then((res) => {
+            res.data.pipe(fs.createWriteStream('test/backup-test.pdf'));
         });
     });
 });

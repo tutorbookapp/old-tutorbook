@@ -101,7 +101,7 @@ class Payments {
         const getAccountURL = () => {
             return axios({
                 method: 'get',
-                url: window.app.functionsURL + '/accountURL',
+                url: window.app.functionsURL + 'accountURL',
                 params: {
                     id: window.app.user.uid,
                     test: window.app.test,

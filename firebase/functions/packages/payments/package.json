@@ -14,8 +14,8 @@
     "axios": "^0.19.0",
     "cors": "^2.8.5",
     "email": "file:../email",
-    "firebase-admin": "^8.6.0",
-    "firebase-functions": "^3.2.0",
+    "firebase-admin": "^8.9.0",
+    "firebase-functions": "^3.3.0",
     "stripe": "^7.9.1"
   }
 }

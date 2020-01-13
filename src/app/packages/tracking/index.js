@@ -31,7 +31,7 @@ class Tracking {
                 window.app.snackbar.view('Updating sheet...');
                 axios({
                     method: 'get',
-                    url: window.app.functionsURL + '/updateSheet',
+                    url: window.app.functionsURL + 'updateSheet',
                     params: {
                         location: window.app.location.name,
                     },
