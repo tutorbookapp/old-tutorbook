@@ -643,7 +643,7 @@ describe("Tutorbook's REST API", () => {
     });
 
     it("lets supervisors download PDF backups of database", async () => {
-        await createUsers();
+        await approveRequest();
         await createLocation();
         return axios({
             method: 'get',

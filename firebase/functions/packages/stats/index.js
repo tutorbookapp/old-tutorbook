@@ -134,7 +134,7 @@ const dataAction = {
         const stat = {
             title: 'Canceled Appointment',
             subtitle: user.name.split(' ')[0] + ' canceled an appointment',
-            summary: r.fromUser.name + '\'s appointment for ' + a.subject +
+            summary: r.fromUser.name + '\'s appointment for ' + a.for.subject +
                 ' with ' + r.toUser.name + ' on ' + a.time.day + 's at ' +
                 a.time.from + ' was canceled by ' + user.name + '.',
             timestamp: new Date(),
@@ -147,7 +147,7 @@ const dataAction = {
         const stat = {
             title: 'Modified Appointment',
             subtitle: user.name.split(' ')[0] + ' modified an appointment',
-            summary: r.fromUser.name + '\'s appointment for ' + a.subject +
+            summary: r.fromUser.name + '\'s appointment for ' + a.for.subject +
                 ' with ' + r.toUser.name + ' on ' + a.time.day + 's at ' +
                 a.time.from + ' was modified by ' + user.name + '.',
             timestamp: new Date(),
@@ -160,8 +160,8 @@ const dataAction = {
         const stat = {
             title: 'Deleted Appointment',
             subtitle: user.name.split(' ')[0] + ' deleted a past appointment',
-            summary: r.fromUser.name + '\'s past appointment for ' + a.subject +
-                ' with ' + r.toUser.name + ' on ' +
+            summary: r.fromUser.name + '\'s past appointment for ' +
+                a.for.subject + ' with ' + r.toUser.name + ' on ' +
                 a.clockIn.sentTimestamp.toDate().toDateString() + ' was ' +
                 'deleted by ' + user.name + '.',
             timestamp: new Date(),

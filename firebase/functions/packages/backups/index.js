@@ -23,6 +23,12 @@ const styles = {
         padding: 8,
         textTransform: 'capitalize',
     },
+    h3: {
+        font: 'Poppins-SemiBold',
+        fontSize: 18,
+        padding: 6,
+        textTransform: 'capitalize',
+    },
     para: {
         font: 'Roboto-Regular',
         fontSize: 12,
@@ -46,13 +52,14 @@ const caps = (str) => {
 const parse = (key, val) => {
     switch (key) {
         case 'subjects':
-            return val.join(', ') + '.';
+            return (val.join(', ') || 'No subjects') + '.';
         case 'proxy':
-            return val.join(', ') + '.';
+            return (val.join(', ') || 'No proxies') + '.';
         case 'locations':
-            return val.join(', ') + '.';
+            return (val.join(', ') || 'No locations') + '.';
         case 'availability':
-            return getAvailabilityStrings(val).join(', ') + '.';
+            return (getAvailabilityStrings(val).join(', ') || 'No ' +
+                'availability') + '.';
         default:
             return 'Adding complex object-to-string conversion soon.';
     }
@@ -82,6 +89,24 @@ const enumerate = (ob, add, doc) => {
                 throw new Error('Unsupported field type: ' + typeof val);
         }
     });
+};
+
+const appts = async (ref, doc) => {
+    const tutor = (appt) => (appt.attendees[0].type === 'Tutor') ? appt
+        .attendees[0].name : appt.attendees[1].name;
+    const pupil = (appt) => (appt.attendees[0].type === 'Pupil') ? appt
+        .attendees[0].name : appt.attendees[1].name;
+    const appts = (await ref.collection('appointments').get()).docs;
+    if (appts.length === 0) return;
+    add('Weekly Appointments', styles.h3, doc);
+    appts.forEach((apptDoc) => {
+        const appt = apptDoc.data();
+        add(appt.time.day + 's - ' + appt.for.subject + ': ', styles.bold, doc);
+        add('Weekly appointment between ' + tutor(appt) + ' (the tutor) and ' +
+            pupil(appt) + ' (the pupil) at the ' + appt.location.name +
+            ' from ' + appt.time.from + ' until ' + appt.time.to + '.',
+            styles.para, doc);
+    }); // TODO: Add pastAppointments as well (make limit configurable in req).
 };
 
 const add = (text, style, doc) => {
@@ -126,18 +151,19 @@ const backupAsPDF = (req, res) => {
         });
         doc.y += (792 / 3) + styles.h1.padding;
         add(locationName.split(' ')[0] + ' Data Backup', styles.h1, doc);
-        (await db
-            .collection('users')
-            .where('location', '==', locationName)
-            .where('type', 'in', types)
-            .orderBy('name')
-            .get()
-        ).forEach((d) => {
-            const user = d.data();
+        for (d of (await db
+                .collection('users')
+                .where('location', '==', locationName)
+                .where('type', 'in', types)
+                .orderBy('name')
+                .get()
+            ).docs) {
+            var user = d.data();
             doc.addPage();
             add(user.name, styles.h2, doc);
             enumerate(user, add, doc);
-        });
+            await appts(d.ref, doc);
+        }
         doc.end();
     });
 };
