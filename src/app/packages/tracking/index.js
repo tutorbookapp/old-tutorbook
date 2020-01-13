@@ -40,7 +40,7 @@ class Tracking {
                         'not update sheet. Try again in a few minutes.');
                     window.app.snackbar.view('Updated sheet.', 'View', () => {
                         window.open(url);
-                    });
+                    }, false);
                 }).catch((err) => {
                     console.error('[ERROR] Could not update sheet:', err);
                     window.app.snackbar.view('Could not update sheet. Try ' +
