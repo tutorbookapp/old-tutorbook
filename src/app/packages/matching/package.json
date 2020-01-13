@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/matching",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.2.10",
+    "@tutorbook/card": "^0.2.11",
     "@tutorbook/data": "^0.2.10",
     "@tutorbook/dialogs": "^0.2.10",
     "@tutorbook/profile": "^0.2.10",
