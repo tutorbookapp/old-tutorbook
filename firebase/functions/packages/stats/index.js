@@ -1,7 +1,7 @@
 const SMS = require('sms');
 const firestore = require('firebase-admin').firestore();
 const partitions = {
-    default: firestore.collection('partitions').doc('defualt'),
+    default: firestore.collection('partitions').doc('default'),
     test: firestore.collection('partitions').doc('test'),
 };
 
@@ -23,11 +23,11 @@ const getUserLocation = async (user, isTest) => {
     const getIdFromName = async (name) => {
         const doc = (await db
             .collection('locations')
-            .where('name', '==', name)
+            .where('name', '==', name.trim())
             .limit(1)
             .get()
         ).docs[0];
-        if (!doc) throw new Error('No locations named ' + name + '.');
+        if (!doc) throw new Error('No locations named ' + name.trim() + '.');
         return doc.id;
     };
     if (user.location) return getIdFromName(user.location);
@@ -35,6 +35,7 @@ const getUserLocation = async (user, isTest) => {
     if (userSnap.location) return getIdFromName(userSnap.location);
     if (Object.keys(user.availability).length > 0)
         return getIdFromName(Object.entries(user.availability)[0][0]);
+    return 'NJp0Y6wyMh2fDdxSuRSx'; // Default to Gunn Academic Center
 };
 
 // Helper function that creates the recentAction document with the given stat 
