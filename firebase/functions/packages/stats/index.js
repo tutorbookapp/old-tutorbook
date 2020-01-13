@@ -20,12 +20,16 @@ const notifyMe = (message) => {
 // 4) Defaulting to the 'Gunn Academic Center'
 const getUserLocation = async (user, isTest) => {
     const db = isTest ? partitions.test : partitions.default;
-    const getIdFromName = async (name) => (await db
-        .collection('locations')
-        .where('name', '==', name)
-        .limit(1)
-        .get()
-    ).docs[0].id;
+    const getIdFromName = async (name) => {
+        const doc = (await db
+            .collection('locations')
+            .where('name', '==', name)
+            .limit(1)
+            .get()
+        ).docs[0];
+        if (!doc) throw new Error('No locations named ' + name + '.');
+        return doc.id;
+    };
     if (user.location) return getIdFromName(user.location);
     const userSnap = (await db.collection('users').doc(user.uid).get()).data();
     if (userSnap.location) return getIdFromName(userSnap.location);
