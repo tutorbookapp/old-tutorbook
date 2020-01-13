@@ -28,21 +28,23 @@ const getUserLocation = async (user, isTest) => {
             .get()
         ).docs[0];
         if (!doc) throw new Error('No locations named ' + name.trim() + '.');
+        console.log('[DEBUG] Got ' + name.trim() + ' (' + doc.id + ') data.');
         return doc.id;
     };
     if (user.location) return getIdFromName(user.location);
     const userSnap = (await db.collection('users').doc(user.uid).get()).data();
     if (userSnap.location) return getIdFromName(userSnap.location);
     if (Object.keys(user.availability).length > 0)
-        return getIdFromName(Object.entries(user.availability)[0][0]);
+        return getIdFromName(Object.keys(user.availability)[0]);
     return 'NJp0Y6wyMh2fDdxSuRSx'; // Default to Gunn Academic Center
 };
 
 // Helper function that creates the recentAction document with the given stat 
 // data.
 const createStat = async (user, stat, isTest) => {
-    console.log('[DEBUG] Creating ' + (isTest ? 'test' : 'live') + ' ' + stat
-        .title + ' stat triggered by ' + user.name + ' (' + user.uid + ')...');
+    console.log('[DEBUG] Creating ' + (isTest ? 'test' : 'live') + ' \'' + stat
+        .title + '\' stat triggered by ' + user.name + ' (' + user.uid +
+        ')...');
     const db = isTest ? partitions.test : partitions.default;
     if (!isTest) notifyMe('[SUBTITLE] ' + stat.subtitle + ' \n[SUMMARY] ' +
         stat.summary);
