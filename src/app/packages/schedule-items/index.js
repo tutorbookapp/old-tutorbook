@@ -65,12 +65,18 @@ class Appt extends Event {
                     'tutoring sessions with ' + this.other.name + ' for ' +
                     this.for.subject + ' at ' + this.time.from + ' at the ' +
                     this.location.name + '.', async () => {
-                        $(this.el).remove();
+                        window.app.snackbar.view('Canceling appointment...');
+                        $(this.el).hide();
                         window.app.schedule.refresh();
                         const [err, res] = await to(
                             Data.cancelAppt(doc.data(), doc.id));
-                        if (err) return window.app.snackbar.view('Could not ' +
-                            'cancel appointment.');
+                        if (err) {
+                            $(this.el).show();
+                            window.app.schedule.refresh();
+                            return window.app.snackbar.view('Could not cancel' +
+                                ' appointment.');
+                        }
+                        $(this.el).remove();
                         window.app.snackbar.view('Canceled appointment with ' +
                             this.other.email + '.');
                     }).view();
@@ -107,12 +113,18 @@ class SupervisorAppt extends Event {
                     ' and ' + this.attendees[1].name + ' for ' +
                     this.for.subject + ' at ' + this.time.from + ' at the ' +
                     this.location.name + '?', async () => {
-                        $(this.el).remove();
+                        window.app.snackbar.view('Canceling appointment...');
+                        $(this.el).hide();
                         window.app.schedule.refresh();
                         const [err, res] = await to(
                             Data.cancelAppt(doc.data(), doc.id));
-                        if (err) return window.app.snackbar.view('Could not ' +
-                            'cancel appointment.');
+                        if (err) {
+                            $(this.el).show();
+                            window.app.schedule.refresh();
+                            return window.app.snackbar.view('Could not cancel' +
+                                ' appointment.');
+                        }
+                        $(this.el).remove();
                         window.app.snackbar.view('Canceled appointment.');
                     }).view();
             },

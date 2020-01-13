@@ -42,11 +42,16 @@ class Event {
                     ' and ' + this.attendees[1].name + ' for ' +
                     this.for.subject + ' at ' + this.time.from + ' at the ' +
                     this.location.name + '.', async () => {
-                        $(this.el).remove();
+                        window.app.snackbar.view('Canceling appointment...');
+                        $(this.el).hide();
                         const [e, r] = await to(Data.cancelAppt(
                             Utils.filterApptData(this), this.id));
-                        if (e) return window.app.snackbar.view('Could ' +
-                            'not cancel appointment.');
+                        if (e) {
+                            $(this.el).show();
+                            return window.app.snackbar.view('Could not cancel' +
+                                ' appointment.');
+                        }
+                        $(this.el).remove();
                         window.app.snackbar.view('Canceled appointment.');
                     }).view();
             },

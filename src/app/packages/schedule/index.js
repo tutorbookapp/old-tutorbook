@@ -76,11 +76,11 @@ class Schedule {
 
     refresh() {
         var dates = [];
-        $(this.main).find('.appt-list-item').each(function(i) {
+        $(this.main).find('.appt-list-item:visible').each(function(i) {
             var date = new Date($(this).attr('timestamp'));
             dates.push(Utils.getEarliestDateWithDay(date).getTime());
         });
-        $(this.main).find('.date-list-divider').each(function(i) {
+        $(this.main).find('.date-list-divider:visible').each(function(i) {
             var date = new Date($(this).attr('timestamp'));
             if (dates.indexOf(date.getTime()) < 0) {
                 // Date is no longer needed
