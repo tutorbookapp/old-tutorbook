@@ -439,7 +439,6 @@ Card.renderAddChildrenCard = function() {
 // Render function that returns a MDC Card that shows a notification request
 // prompt when clicked.
 Card.renderSetupNotificationsCard = function() {
-    var that = this;
     const card = Card.renderCard(
         'Enable Notifications', 'Enable push notifications',
         (app.user.type === 'Tutor') ? 'Enable push notifications to be ' +
@@ -500,13 +499,12 @@ Card.renderSearchTutorsCard = function() {
 // Render function that returns a card that asks pupil's to set their availability
 // in case a tutor has to edit their request or appointment.
 Card.renderSetupAvailabilityCard = function(subtitle, summary) {
-    var that = this;
     const card = Card.renderCard(
         'Set Availability', 'Enable tutors to modify your requests',
         'Setting your availability allows tutors to modify your requests ' +
-        'to best fit within their schedule and yours. Once you setup availability,' +
-        ' you\'ll never have to worry about an appointment not fitting into' +
-        ' your day.', {
+        'to best fit within their schedule and yours. Once you setup ' +
+        'availability, you\'ll never have to worry about an appointment not ' +
+        'fitting into your day.', {
             primary: () => {
                 window.app.profile.view();
                 document.querySelector('.profile #Availability').scrollIntoView({
@@ -569,17 +567,19 @@ Card.renderSetupProfileCard = function() {
 Card.renderModifiedRequestInCard = function(doc) {
     const data = doc.data();
     const pronoun = Utils.getPronoun(data.modifiedBy.gender);
-    var that = this;
     if (app.user.type === 'Supervisor') {
-        var subtitle = data.modifiedBy.name + ' modified ' + pronoun + ' request to ' +
-            data.for.toUser.name;
-        var summary = data.modifiedBy.name.split(' ')[0] + ' modified ' + pronoun + ' lesson request' +
-            ' to ' + data.for.toUser.name.split(' ')[0] +
-            '. Please ensure to addresss these changes as necessary.';
+        var subtitle = data.modifiedBy.name + ' modified ' + pronoun +
+            ' request to ' + data.for.toUser.name;
+        var summary = data.modifiedBy.name.split(' ')[0] + ' modified ' +
+            pronoun + ' lesson request' + ' to ' +
+            data.for.toUser.name.split(' ')[0] + '. Please ensure to address ' +
+            'these changes as necessary.';
     } else {
-        var subtitle = data.modifiedBy.name + ' modified ' + pronoun + ' request to you';
-        var summary = data.modifiedBy.name.split(' ')[0] + ' modified ' + pronoun + ' lesson request' +
-            ' to you. Please ensure to addresss these changes as necessary.';
+        var subtitle = data.modifiedBy.name + ' modified ' + pronoun +
+            ' request to you';
+        var summary = data.modifiedBy.name.split(' ')[0] + ' modified ' +
+            pronoun + ' lesson request to you. Please ensure to address these' +
+            ' changes as necessary.';
     }
     return Card.renderCard('Modified Request', subtitle, summary, {
         primary: () => {
@@ -601,11 +601,11 @@ Card.renderCanceledRequestInCard = function(doc) {
             data.for.toUser.name;
         var summary = data.canceledBy.name.split(' ')[0] + ' canceled ' + pronoun +
             ' request to ' + data.for.toUser.name.split(' ')[0] + '. Please ' +
-            'ensure to addresss these changes as necessary.';
+            'ensure to address these changes as necessary.';
     } else {
         var subtitle = data.canceledBy.name + ' canceled ' + pronoun + ' request to you';
         var summary = data.canceledBy.name.split(' ')[0] + ' canceled ' + pronoun +
-            ' request to you. Please ensure to addresss these changes as ' +
+            ' request to you. Please ensure to address these changes as ' +
             'necessary.';
     }
     return Card.renderCard('Canceled Request', subtitle, summary, {
@@ -628,11 +628,11 @@ Card.renderModifiedRequestOutCard = function(doc) {
             '\'s request';
         var summary = data.modifiedBy.name.split(' ')[0] + ' modified ' +
             data.for.fromUser.name.split(' ')[0] +
-            '\'s lesson request. Please ensure to addresss these changes as necessary.';
+            '\'s lesson request. Please ensure to address these changes as necessary.';
     } else {
         var subtitle = data.modifiedBy.name + ' modified your request';
         var summary = data.modifiedBy.name.split(' ')[0] + ' modified the ' +
-            'lesson request you sent. Please ensure to addresss these changes as necessary.';
+            'lesson request you sent. Please ensure to address these changes as necessary.';
     }
     return Card.renderCard('Modified Request', subtitle, summary, {
         primary: () => {
@@ -652,11 +652,11 @@ Card.renderRejectedRequestOutCard = function(doc) {
         var subtitle = data.rejectedBy.name + ' rejected ' + data.for.fromUser.name + '\'s request';
         var summary = data.rejectedBy.name.split(' ')[0] + ' rejected ' +
             data.for.fromUser.name.split(' ')[0] +
-            '\'s lesson request. Please ensure to addresss these changes as necessary.';
+            '\'s lesson request. Please ensure to address these changes as necessary.';
     } else {
         var subtitle = data.rejectedBy.name + ' rejected your request';
         var summary = data.rejectedBy.name.split(' ')[0] + ' rejected the ' +
-            'request you sent. Please ensure to addresss these changes as necessary.';
+            'request you sent. Please ensure to address these changes as necessary.';
     }
     const actions = {
         primary: () => {
@@ -680,7 +680,7 @@ Card.renderApprovedRequestOutCard = function(doc) {
         data.approvedBy.name.split(' ')[0] + ' approved the request you sent';
     const summary = data.approvedBy.name + ((app.user.type === 'Supervisor') ? ' approved a ' +
             'request from ' + otherUser.name : ' approved the request you sent') +
-        '. Please ensure to addresss these changes as necessary.';
+        '. Please ensure to address these changes as necessary.';
     const actions = {
         primary: () => {
             // Show appointment
@@ -727,7 +727,7 @@ Card.renderModifiedApptCard = function(doc) {
     var subtitle = data.modifiedBy.name.split(' ')[0] + ' modified ' +
         'your appointment';
     var summary = data.modifiedBy.name + ' modified your ' +
-        'appointment together. Please ensure to addresss these changes as necessary.';
+        'appointment together. Please ensure to address these changes as necessary.';
     return Card.renderCard('Modified Appointment', subtitle, summary, {
         dismiss: () => {
             Card.remove(doc, 'modifiedAppointments');
@@ -750,9 +750,9 @@ Card.renderCanceledApptCard = function(doc) {
         'ensure to address these changes as necessary.' :
         ([data.for.attendees[0].email, data.for.attendees[1].email].indexOf(data.canceledBy.email) < 0) ?
         data.canceledBy.name + ' canceled your ' +
-        'appointment with ' + otherUser.name + '. Please ensure to addresss these changes as necessary.' :
+        'appointment with ' + otherUser.name + '. Please ensure to address these changes as necessary.' :
         data.canceledBy.name + ' canceled your ' +
-        'appointment together. Please ensure to addresss these changes as necessary.';
+        'appointment together. Please ensure to address these changes as necessary.';
     const subtitle = data.canceledBy.name.split(' ')[0] + ' canceled ' +
         ((app.user.type === 'Supervisor') ? Utils.getPronoun(data.canceledBy.gender) : 'your') +
         ' appointment';
