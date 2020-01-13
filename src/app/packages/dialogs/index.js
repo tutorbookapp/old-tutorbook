@@ -744,15 +744,18 @@ class EditRequestDialog {
         const locationSelect = Utils.attachSelect(locationEl);
         locationSelect.listen('MDCSelect:change', function() {
             if (locationSelect.value === 'Custom') {
-                $(dialog).find('#Location').replaceWith(that.render.locationInput((val) => {
-                    request.location.name = val.formatted_address;
-                    request.location.id = val.place_id;
-                }));
+                $(dialog).find('#Location').replaceWith(
+                    that.render.locationInput((val) => {
+                        request.location.name = val.formatted_address;
+                        request.location.id = val.place_id;
+                    }));
             } else {
                 request.location.name = locationSelect.value;
                 request.location.id = window.app.data // Only init data once
                     .locationsByName[locationSelect.value];
                 that.refreshDayAndTimeSelects(request, availability);
+                that.refreshTimeSelects(request, availability); // Just in case 
+                // refreshing the day select automatically selects a day.
             }
         });
 
