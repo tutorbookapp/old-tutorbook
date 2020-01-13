@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/login",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/utils": "^0.2.9"
+    "@tutorbook/utils": "^0.2.10"
   },
   "repository": {
     "type": "git",

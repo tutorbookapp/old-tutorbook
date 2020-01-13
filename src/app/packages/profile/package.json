@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/profile",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.2.9",
-    "@tutorbook/dialogs": "^0.2.9",
-    "@tutorbook/user": "^0.2.9",
-    "@tutorbook/utils": "^0.2.9"
+    "@tutorbook/data": "^0.2.10",
+    "@tutorbook/dialogs": "^0.2.10",
+    "@tutorbook/user": "^0.2.10",
+    "@tutorbook/utils": "^0.2.10"
   },
   "repository": {
     "type": "git",
