@@ -113,11 +113,11 @@ class Appt extends Event {
             '...');
         const [e, r] = await to(Data.instantClockIn(
             Utils.filterApptData(this), this.id));
+        $(this.el).css('background', this.color);
         if (e) return window.app.snackbar.view('Could not clock in.');
         window.app.snackbar.view('Clocked in for ' + this.for.toUser.name
             .split(' ')[0] + ' at ' + new Date(r.clockIn.sentTimestamp)
             .toLocaleTimeString() + '.');
-        $(this.el).css('background', this.color);
     }
 }
 
