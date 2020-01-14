@@ -16,15 +16,22 @@ const getUser = require('utils').getUserFromPhone;
 
 class SMS {
 
-    constructor(recipient, message) {
-        if (this.valid(recipient, message)) {
+    constructor(recipient, message, location) {
+        if (this.valid(recipient, message, location)) {
             this.recipient = recipient;
             this.message = message; // TODO: Alert sender if message fails
             this.send();
         }
     }
 
-    valid(recipient, message) {
+    valid(recipient, message, location) {
+        if ([
+                'Gunn Academic Center',
+                'JLS Library',
+                'Any',
+            ].indexOf(location || recipient.location) < 0) return console.error(
+            '[ERROR] Cannot send SMS to ' + (location || recipient.location) +
+            ' users.');
         if (!recipient || !recipient.phone) return console.error('[ERROR] ' +
             'Cannot send to undefined phone numbers.');
         if (!message) return console.warn('[WARNING] Skipped sending empty ' +

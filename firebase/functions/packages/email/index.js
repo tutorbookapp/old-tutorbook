@@ -20,9 +20,9 @@ const defaultEmail = fs.readFileSync('./html/default.html').toString();
 // Class that manages email templates
 class Email {
 
-    constructor(type, user, data) {
+    constructor(type, user, data, location) {
         this.user = user;
-        if (this.valid(user)) {
+        if (this.valid(user, location)) {
             switch (type) {
                 case 'welcome':
                     this.renderWelcome();
@@ -44,7 +44,14 @@ class Email {
         }
     }
 
-    valid(user) {
+    valid(user, location) {
+        if ([
+                'Gunn Academic Center',
+                'JLS Library',
+                'Any',
+            ].indexOf(location || user.location) < 0) return console.error(
+            '[ERROR] Cannot send SMS to ' + (location || user.location) +
+            ' users.');
         if (!user || !user.email) return console.error('[ERROR] Cannot send ' +
             'to undefined email addresses.');
         return true;
