@@ -17,13 +17,8 @@ const send = async (params) => {
         port: 465,
         secure: true,
         auth: {
-            user: 'notifications@tutorbook.app',
-            pass: 'SgFwORDncAfcPMpzGpQWSOdCVOXCPWkxBpbRerfXpcxELQDSnmmkMNNFrL' +
-                'AkFKINxErybCHBiVKGqIALIHZvnMDPVtBRiwkidsHB',
-            /*
-             *user: 'TODO: Add-Your-Email-Address-Here',
-             *pass: 'TODO: Add-Your-SMTP-Relay-Password-Here',
-             */
+            user: 'TODO: Add-Your-Email-Address-Here',
+            pass: 'TODO: Add-Your-SMTP-Relay-Password-Here',
         },
     });
 
@@ -86,48 +81,85 @@ String.prototype.replaceAll = function(search, replacement) {
 // =============================================================================
 // MAINTENANCE NOTIFICATION EMAIL
 // =============================================================================
-const SUBJECT = '[Important] Ignore notifications due to Tutorbook maintenance'
-const ADDRESS = 'nicholas.h.chiang@gmail.com';
-const FILENAME = './maintenance.html';
+/*
+ *const SUBJECT = '[Important] Ignore notifications due to Tutorbook maintenance'
+ *const ADDRESS = 'nicholas.h.chiang@gmail.com';
+ *const FILENAME = './maintenance.html';
+ *
+ *const to = require('await-to-js').default;
+ *const admin = require('firebase-admin');
+ *const serviceAccount = require('../admin-cred.json');
+ *
+ *admin.initializeApp({
+ *    credential: admin.credential.cert(serviceAccount),
+ *    databaseURL: 'https://tutorbook-779d8.firebaseio.com',
+ *});
+ *
+ *const db = admin
+ *    .firestore()
+ *    .collection('partitions')
+ *    .doc('default');
+ *const main = async () => {
+ *    const html = fs.readFileSync(FILENAME).toString();
+ *    return Promise.all((await db
+ *        .collection('users')
+ *        .get()
+ *    ).docs.map(async (user) => {
+ *        const profile = user.data();
+ *        if (!profile.email && !profile.id) return console.warn('[WARNING] ' +
+ *            'Could not find an email address for user (' + user.id + '), ' +
+ *            'skipping...');
+ *        if (!profile.name) return console.warn('[WARNING] Could not find a ' +
+ *            'valid name for user (' + user.id + '), skipping...');
+ *        const [err, res] = await to(send({
+ *            address: profile.email || profile.id,
+ *            subject: SUBJECT,
+ *            email: function() {
+ *                return html.replaceAll('{ username }', profile.name
+ *                    .split(' ')[0]);
+ *            }(),
+ *        }));
+ *        if (err) return console.error('[ERROR] Could not send email b/c of',
+ *            err);
+ *        console.log('[DEBUG] Sent email to ' + profile.name + ' (' + user.id +
+ *            ').');
+ *    }));
+ *};
+ *
+ *main();
+ */
 
-const to = require('await-to-js').default;
-const admin = require('firebase-admin');
-const serviceAccount = require('../admin-cred.json');
+// =============================================================================
+// PITCH TO OTHER SCHOOLS EMAIL(S)
+// =============================================================================
+const EMAILS = {
+    'Fremont High School\'s "Students for Success"': {
+        subject: '[Tutorbook] A better way to manage peer tutoring.',
+        address: 'miao_carroll@fuhsd.org',
+        filename: 'pitches/fremont.html',
+    },
+    'Homestead High School\'s Academic Center': {
+        subject: '[Tutorbook] A better way to manage peer tutoring.',
+        filename: 'pitches/homestead.html',
+    },
+    'Los Altos High School\'s Tutorial Center': {
+        subject: '[Tutorbook] A better way to manage peer tutoring.',
+        address: 'quyen.nguyen@mvla.net',
+        filename: 'pitches/los-altos.html',
+    },
+    'Mountain View High School\'s Tutorial Center': {
+        subject: '[Tutorbook] A better way to manage peer tutoring.',
+        address: 'nancy.rafati@mvla.net',
+        filename: 'pitches/mtn-view.html',
+    },
+};
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://tutorbook-779d8.firebaseio.com',
-});
-
-const db = admin
-    .firestore()
-    .collection('partitions')
-    .doc('default');
-const main = async () => {
-    const html = fs.readFileSync(FILENAME).toString();
-    return Promise.all((await db
-        .collection('users')
-        .get()
-    ).docs.map(async (user) => {
-        const profile = user.data();
-        if (!profile.email && !profile.id) return console.warn('[WARNING] ' +
-            'Could not find an email address for user (' + user.id + '), ' +
-            'skipping...');
-        if (!profile.name) return console.warn('[WARNING] Could not find a ' +
-            'valid name for user (' + user.id + '), skipping...');
-        const [err, res] = await to(send({
-            address: profile.email || profile.id,
-            subject: SUBJECT,
-            email: function() {
-                return html.replaceAll('{ username }', profile.name
-                    .split(' ')[0]);
-            }(),
-        }));
-        if (err) return console.error('[ERROR] Could not send email b/c of',
-            err);
-        console.log('[DEBUG] Sent email to ' + profile.name + ' (' + user.id +
-            ').');
-    }));
+const main = () => {
+    return Promise.all(Object.values(EMAILS).map(email => send({
+        address: email.address,
+        subject: email.subject,
+        email: fs.readFileSync(email.filename).toString(),
+    })));
 };
 
 main();
