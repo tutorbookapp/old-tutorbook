@@ -601,16 +601,17 @@ class MatchingDialog {
             off: 'Showing users without appointments during the selected ' +
                 'timeslot.',
         }));
-        addActionD('Tutors for ' + this.subject, {
-            match: () => {
-                new ConfirmMatchDialog(
-                    this.profile,
-                    this.selectedUsers,
-                    this.subject,
-                    this.time
-                ).view();
-            },
-        });
+        addActionD((profile.type === 'Tutor' ? 'Pupils' : 'Tutors') + ' for ' +
+            this.subject, {
+                match: () => {
+                    new ConfirmMatchDialog(
+                        this.profile,
+                        this.selectedUsers,
+                        this.subject,
+                        this.time
+                    ).view();
+                },
+            });
         $(this.main).find('.action-list-divider button').last()
             .attr('disabled', 'disabled');
         add(this.search.main);
@@ -640,7 +641,8 @@ class MatchingDialog {
 
     results() { // Render search results for given subject
         $(this.main).find('.action-list-divider').last().find('h4 span')
-            .text('Tutors for ' + this.subject);
+            .text((this.profile.type === 'Tutor' ? 'Pupils' : 'Tutors') +
+                ' for ' + this.subject);
         this.search.update(this.profile, this.subject, this.time);
     }
 };
@@ -657,7 +659,7 @@ class MatchingSearch extends Search {
         this.selectedUsers = selectedUsers;
         this.filters.availability = (!!time && time !== '') ?
             Utils.parseAvailabilityString(time) : {};
-        this.filters.type = 'Tutor';
+        this.filters.type = pupil.type === 'Tutor' ? 'Pupil' : 'Tutor';
         this.addUser = addUser;
         this.removeUser = removeUser;
     }
@@ -669,6 +671,7 @@ class MatchingSearch extends Search {
         this.filters.subject = subject;
         this.filters.availability = (!!time && time !== '') ?
             Utils.parseAvailabilityString(time) : {};
+        this.filters.type = pupil.type === 'Tutor' ? 'Pupil' : 'Tutor';
         this.viewResults();
     }
 
