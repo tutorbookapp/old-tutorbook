@@ -26,7 +26,7 @@ class Data {
                 pupils: true,
             }, params),
         }).then((res) => {
-            return window.URL.createObjectURL(new Blob([res.data]));
+            return window.URL.createObjectURL(res.data);
         });
     }
 
