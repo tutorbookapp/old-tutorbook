@@ -590,7 +590,7 @@ class MatchingDialog {
             that.main.appendChild(that.render.actionDivider(l, actions));
         };
 
-        add(this.render.userHeader(profile));
+        add(this.render.matchingUserHeader(profile));
         addD('Matching for');
         add(s('Subject', this.subject, profile.subjects));
         add(s('Time', this.time, Utils.getAvailabilityStrings(

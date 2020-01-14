@@ -247,12 +247,13 @@ class Render {
     }
 
     profileHeader(user) {
+        const userView = new User(user);
         const userData = {
             'pic': user.photo || user.photoURL,
             'name': user.name || user.displayName,
             'email': user.email,
-            'type': user.type || "",
-            'go_to_user': () => new User(user).view(),
+            'type': user.type || 'No type',
+            'go_to_user': () => userView.view(),
         };
         return this.template('profile-header', userData);
     }
@@ -268,6 +269,21 @@ class Render {
             'type': user.type || 'No type',
         };
         return this.template('user-header', userData);
+    }
+
+    matchingUserHeader(user) {
+        const userView = new User(user);
+        const userData = {
+            'pic': user.photo || user.photoURL,
+            'name': user.name || user.displayName,
+            'paid': ((user.payments) ? user.payments.type === 'Paid' : false),
+            'free': ((user.payments) ? user.payments.type === 'Free' : true),
+            'rate': '$' + ((user.payments) ? user.payments.hourlyCharge : 25),
+            'grade': user.grade || 'No grade',
+            'type': user.type || 'No type',
+            'go_to_user': () => userView.view(),
+        };
+        return this.template('matching-user-header', userData);
     }
 
     selectItem(label, val, vals) {

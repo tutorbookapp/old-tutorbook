@@ -1304,9 +1304,32 @@ styling due to input el spacing. -->
     </li>
 </div>
 
+<!-- Matching User Header Template -->
+<div hidden class="template" id="matching-user-header">
+    <li class="mdc-list-item">
+        <img class="mdc-list-item__graphic" data-fir-attr="src:pic">
+        <span class="mdc-list-item__text">
+            <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
+            <span class="mdc-list-item__secondary-text">
+                <i data-fir-if="paid" class="paid-icon material-icons">money</i>
+                <span data-fir-content="type"></span>
+                <span>•</span>
+                <span data-fir-if="paid" class="rate">
+                    <span class="charge" data-fir-content="rate"></span>
+                    <span class="hr">/hr</span>
+                </span>
+                <span data-fir-if="free" data-fir-content="grade"></span>
+            </span>
+        </span>
+        <div class="mdc-list-item__meta">
+            <button data-fir-click="go_to_user" class="mdc-button mdc-button--unelevated">View</button>
+        </div>
+    </li>
+</div>
+
 <!-- User Header Template -->
 <div hidden class="template" id="user-header">
-    <li class="mdc-list-item" data-fir-click="go_to_user">
+    <li class="mdc-list-item">
         <img class="mdc-list-item__graphic" data-fir-attr="src:pic">
         <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
