@@ -135,9 +135,6 @@ class Profile {
     }
 
     manageHeader() { // Enables users to update their profile pic
-        $(this.main).find('[data-fir-click="go_to_user"]').click(() => {
-            new User(this.profile).view();
-        });
         $(this.main).find('.profile-header .pic').mouseenter(() => {
             // Show the modify pic overlay
             $(this.main).find('.profile-header .pic').hide();

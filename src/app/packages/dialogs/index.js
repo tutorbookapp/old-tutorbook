@@ -1215,7 +1215,7 @@ class ViewApptDialog extends ViewRequestDialog {
                 $(this.main).append(this.render.fab('requestPayment'));
             } else {
                 $(this.render.listDivider('Hours clocked')).insertAfter(
-                    $(this.main).find('[data-fir-click="go_to_user"]').last()
+                    $(this.main).find('.user-header').last()
                 );
                 $(this.render.splitListItem(
                     this.render.textField('Current', '0:0:0.00'),
