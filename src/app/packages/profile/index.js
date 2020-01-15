@@ -44,7 +44,7 @@ class Profile {
     }
 
     reView() {
-        (!this.managed) ? this.manage(): this.reManage(); // Don't attach MDC twice
+        this.managed ? this.reManage() : this.manage(); // Don't attach MDC twice
     }
 
     reManage() { // MDC are already attached, just add textField listeners
@@ -69,16 +69,6 @@ class Profile {
         });
         const email = t('#Email', (input) => {
             p.email = input.val();
-        });
-        $('[id="Subject"]').each(function(i) { // So $ doesn't getElementById
-            $(this).click(() => {
-                new EditSubjectDialog($(this)[0]).view();
-            });
-        });
-        $('[id="Available"]').each(function(i) {
-            $(this).click(() => {
-                new EditAvailabilityDialog($(this)[0]).view();
-            });
         });
         $(this.main).find('[data-fir-click="delete"]').click(() => {
             new ConfirmationDialog('Delete Account?',
@@ -237,22 +227,20 @@ class Profile {
         });
         $(this.main).find('#Email input').attr('disabled', 'disabled');
         $(this.main).find('[id="Subject"]').each(function(i) {
-            const textField = MDCTextField.attachTo($(this)[0]);
-            $(this).click(() => {
-                new EditSubjectDialog(
-                    $(this)[0],
-                    (dontUpdate) ? p : undefined
-                ).view();
-            });
+            const textField = MDCTextField.attachTo(this);
+            const dialog = new EditSubjectDialog(
+                this,
+                dontUpdate ? p : undefined,
+            );
+            this.addEventListener('click', () => dialog.view());
         });
         $(this.main).find('[id="Available"]').each(function(i) {
-            const textField = MDCTextField.attachTo($(this)[0]);
-            $(this).click(() => {
-                new EditAvailabilityDialog(
-                    $(this)[0],
-                    (dontUpdate) ? p : undefined
-                ).view();
-            });
+            const textField = MDCTextField.attachTo(this);
+            const dialog = new EditAvailabilityDialog(
+                this,
+                dontUpdate ? p : undefined,
+            );
+            this.addEventListener('click', () => dialog.view());
         });
         if (dontUpdate) return;
         MDCRipple.attachTo($(this.main).find('[data-fir-click="delete"]')[0]);
@@ -371,10 +359,9 @@ class Profile {
 
     addAvailabilityInput() {
         const el = this.render.textFieldItem('Available', '');
+        const dialog = new EditAvailabilityDialog(el);
         MDCTextField.attachTo(el);
-        $(el).click(() => {
-            new EditAvailabilityDialog(el).view();
-        });
+        el.addEventListener('click', () => dialog.view());
         $(el).insertAfter(
             $(this.main).find('[id="Available"]').last().parent());
         el.scrollIntoView();
@@ -549,16 +536,6 @@ class NewProfile extends Profile {
                 return re.test(email.value.toLowerCase());
             },
         }];
-        $('[id="Subject"]').each(function(i) {
-            $(this).off('click').click(() => {
-                new EditSubjectDialog($(this)[0], p).view();
-            });
-        });
-        $('[id="Available"]').each(function(i) {
-            $(this).off('click').click(() => {
-                new EditAvailabilityDialog($(this)[0], p).view();
-            });
-        });
     }
 
     styleEmailInput() {
@@ -604,10 +581,9 @@ class NewProfile extends Profile {
 
     addAvailabilityInput() {
         const el = this.render.textFieldItem('Available', '');
+        const dialog = new EditAvailabilityDialog(el, this.profile);
         MDCTextField.attachTo(el);
-        $(el).click(() => {
-            new EditAvailabilityDialog(el, this.profile).view();
-        });
+        el.addEventListener('click', () => dialog.view());
         $(el).insertAfter(
             $(this.main).find('[id="Available"]').last().parent());
         el.scrollIntoView();
