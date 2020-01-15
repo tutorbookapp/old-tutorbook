@@ -278,7 +278,7 @@ class EditAvailabilityDialog {
             }
         });
 
-        this.refreshDaysAndTimes();
+        if (this.val.location) this.refreshDaysAndTimes();
     }
 
     static async updateAvailability(profile) {
@@ -361,6 +361,8 @@ class EditAvailabilityDialog {
 
     refreshDaysAndTimes() { // Update day and time selects based on location
         const location = this.data.locationDataByName[this.val.location];
+        if (!location) return console.warn('Cannot refresh days and times ' +
+            'w/out location.');
         var times = this.val.day ? this.utils.getLocationTimeWindowsByDay(
             this.val.day,
             location.hours,
