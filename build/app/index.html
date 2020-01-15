@@ -20,7 +20,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Tutorbook">
     <meta name="theme-color" content="#6200EE">
-    <meta name="description" content="App designed to optimize the process required to get a student with a qualified tutor.">
+    <meta name="description" content="Web app that enables schools to manage (online and in-person) peer tutoring like never before.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Add to homescreen for Safari on iOS -->
@@ -37,9 +37,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="styles/bundle.min.css" type="text/css">
-
-    <!-- For CodePen chat: https://codepen.io/Momciloo/pen/bEdbxY -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -87,16 +84,6 @@
 
     <div class="mdc-drawer-scrim"></div>
 
-    <div class="mdc-snackbar" id="snackbar">
-        <div class="mdc-snackbar__surface">
-            <div class="mdc-snackbar__label" role="status" aria-live="polite">
-            </div>
-            <div class="mdc-snackbar__actions">
-                <button class="mdc-icon-button material-icons mdc-snackbar__dismiss">close</button>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN VIEWS: these are what the user actually sees at any given point
 	    in time` -->
     <div class="dialogs"></div>
@@ -104,53 +91,6 @@
     <header class="header"></header>
 
     <main class="main mdc-top-app-bar--fixed-adjust"></main>
-
-
-    <!-- DIALOGS -->
-
-    <!-- Confirmation Dialog -->
-    <aside id="dialog-confirmation" class="mdc-dialog dialog-confirmation">
-        <div class="mdc-dialog__container">
-            <div class="mdc-dialog__surface">
-                <h2 class="mdc-dialog__title" data-fir-content="title">Confirm action?</h2>
-                <div class="mdc-dialog__content" data-fir-content="summary">
-                    Are you sure you want to continue this action?
-                </div>
-                <footer class="mdc-dialog__actions">
-                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-                        <span class="mdc-button__label">No</span>
-                    </button>
-                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
-                        <span class="mdc-button__label">Yes</span>
-                    </button>
-                </footer>
-            </div>
-        </div>
-        <div class="mdc-dialog__scrim"></div>
-    </aside>
-
-    <!-- Get Paid Dialog -->
-    <aside id="dialog-get-paid" class="mdc-dialog">
-        <div class="mdc-dialog__container">
-            <div class="mdc-dialog__surface">
-                <h2 class="mdc-dialog__title">Get Paid</h2>
-                <div class="mdc-dialog__content">
-                    We'll send you your money directly through PayPal with no hidden fees (besides
-                    our 10% commission) or 2-business-day waits. Just hit that button and you'll
-                    have access to your funds (via a PayPal notification) in under a minute.
-                </div>
-                <footer class="mdc-dialog__actions">
-                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
-                        <span class="mdc-button__label">Cancel</span>
-                    </button>
-                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
-                        <span class="mdc-button__label">PayPal Me</span>
-                    </button>
-                </footer>
-            </div>
-        </div>
-        <div class="mdc-dialog__scrim"></div>
-    </aside>
 
     <!-- SCRIPTS: these are the core of the app, responsible for responding to
 	    user interaction. -->
