@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/navigation",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,8 +13,8 @@
     "@material/drawer": "^3.2.0",
     "@material/ripple": "^3.2.0",
     "@tutorbook/data": "^0.2.12",
-    "@tutorbook/user": "^0.2.12",
-    "@tutorbook/utils": "^0.2.12",
+    "@tutorbook/user": "^0.2.13",
+    "@tutorbook/utils": "^0.2.13",
     "jquery": "^3.4.1",
     "navigo": "^7.1.2"
   },

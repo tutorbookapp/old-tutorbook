@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/render",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,8 +12,8 @@
   "dependencies": {
     "@tutorbook/data": "^0.2.12",
     "@tutorbook/templates": "^0.2.12",
-    "@tutorbook/user": "^0.2.12",
-    "@tutorbook/utils": "^0.2.12"
+    "@tutorbook/user": "^0.2.13",
+    "@tutorbook/utils": "^0.2.13"
   },
   "repository": {
     "type": "git",
