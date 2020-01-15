@@ -263,11 +263,10 @@ class EditAvailabilityDialog {
             this.val.day = s.value;
             this.refreshTimes();
         });
-        a('#To', (s) => {
-            this.val.toTime = s.value;
-        });
-        a('#From', (s) => {
-            this.val.fromTime = s.value;
+        a('#Time', (s) => {
+            this.val.fromTime = s.value.split(' to ')[0];
+            this.val.toTime = s.value.split(' to ')[1];
+            this.val.time = s.value;
         });
 
         this.dialog.listen('MDCDialog:closing', (event) => {
@@ -278,6 +277,8 @@ class EditAvailabilityDialog {
                 $(this.main).remove();
             }
         });
+
+        this.refreshDaysAndTimes();
     }
 
     static async updateAvailability(profile) {
@@ -312,15 +313,17 @@ class EditAvailabilityDialog {
     refreshTimes() { // Update time selects based on newly selected day
         if (Data.locations.indexOf(this.val.location) < 0) return;
         const location = this.data.locationDataByName[this.val.location];
-        const times = this.utils.getLocationTimesByDay(
+        const times = this.utils.getLocationTimeWindowsByDay(
             this.val.day,
-            location.hours
+            location.hours,
         );
+        const timeStrings = times.map(t => t.open + ' to ' + t.close);
         const that = this;
 
         if (times.length === 1) { // Only one available option (pre-select it)
-            this.val.fromTime = times[0];
-            this.val.toTime = times[0];
+            this.val.fromTime = times[0].open;
+            this.val.toTime = times[0].close;
+            this.val.time = timeStrings[0];
         } else if (times.length < 1) { // No available options
             return window.app.snackbar.view(location.name + ' does not have ' +
                 'any open hours.');
@@ -346,33 +349,38 @@ class EditAvailabilityDialog {
         };
 
         r(
-            '#To',
-            that.render.select('To', that.val.toTime, times),
+            '#Time',
+            that.render.select('Time', that.val.time, timeStrings),
             (s) => {
-                that.val.toTime = s.value;
-            }
-        );
-        r(
-            '#From',
-            that.render.select('From', that.val.fromTime, times),
-            (s) => {
-                that.val.fromTime = s.value;
+                that.val.fromTime = s.value.split(' to ')[0];
+                that.val.toTime = s.value.split(' to ')[1];
+                that.val.time = s.value;
             }
         );
     }
 
     refreshDaysAndTimes() { // Update day and time selects based on location
         const location = this.data.locationDataByName[this.val.location];
-        const times = this.utils.getLocationTimes(location.hours);
+        var times = this.val.day ? this.utils.getLocationTimeWindowsByDay(
+            this.val.day,
+            location.hours,
+        ) : this.utils.getLocationTimeWindows(location.hours);
+        var timeStrings = times.map(t => t.open + ' to ' + t.close);
         const days = Utils.getLocationDays(location.hours);
         const that = this;
 
-        if (times.length === 1) { // Only one available option (pre-select it)
-            this.val.fromTime = times[0];
-            this.val.toTime = times[0];
-        }
         if (days.length === 1) { // Only one available option (pre-select it)
             this.val.day = days[0];
+            times = this.utils.getLocationTimeWindowsByDay(
+                this.val.day,
+                location.hours,
+            );
+            timeStrings = times.map(t => t.open + ' to ' + t.close);
+        }
+        if (times.length === 1) { // Only one available option (pre-select it)
+            this.val.fromTime = times[0].open;
+            this.val.toTime = times[0].close;
+            this.val.time = timeStrings[0];
         }
         if (times.length < 1 || days.length < 1) { // No available options
             return window.app.snackbar.view(location.name + ' does not have ' +
@@ -407,17 +415,12 @@ class EditAvailabilityDialog {
             }
         );
         r(
-            '#To',
-            that.render.select('To', that.val.toTime, times),
+            '#Time',
+            that.render.select('Time', that.val.time, timeStrings),
             (s) => {
-                that.val.toTime = s.value;
-            }
-        );
-        r(
-            '#From',
-            that.render.select('From', that.val.fromTime, times),
-            (s) => {
-                that.val.fromTime = s.value;
+                that.val.fromTime = s.value.split(' to ')[0];
+                that.val.toTime = s.value.split(' to ')[1];
+                that.val.time = s.value;
             }
         );
     }
@@ -435,12 +438,11 @@ class EditAvailabilityDialog {
             content.appendChild(that.render.selectItem(l, v, d));
         };
 
-        addS('Location', v.location, Utils.concatArr(
-            [v.location], d.locationNames.concat(['Custom'])
-        ));
+        addS('Location', v.location, Utils.concatArr([v.location],
+            (window.location.name === 'Any' ? d.locationNames
+                .concat(['Custom']) : d.locationNames)));
         addS('Day', v.day, Data.days);
-        addS('From', v.fromTime, d.timeStrings);
-        addS('To', v.toTime, d.timeStrings);
+        addS('Time', v.time, d.timeStrings.map(t => t + ' to ' + t));
 
         $(this.main).find('.mdc-dialog__content').append(content);
     }

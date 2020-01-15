@@ -409,7 +409,9 @@ class Utils {
 
         // First check if this is a valid string. If it isn't we want to throw
         // an error so nothing else happens.
-        if (string.indexOf('at the') < 0 || string.indexOf('from') < 0 || string.indexOf('to') < 0) {
+        if (string.indexOf('at the') < 0 ||
+            string.indexOf('from') < 0 ||
+            string.indexOf('to') < 0) {
             if (openingDialog) {
                 return {
                     day: '',
@@ -418,8 +420,8 @@ class Utils {
                     toTime: '',
                 };
             }
-            window.app.snackbar.view('Invalid availability. Please click on the input ' +
-                'to re-select your availability.');
+            window.app.snackbar.view('Invalid availability. Please click on ' +
+                'the input to re-select your availability.');
             throw new Error('Invalid availabilityString:', string);
         }
 
@@ -459,6 +461,7 @@ class Utils {
             location: location,
             fromTime: fromTime,
             toTime: toTime,
+            time: fromTime + ' to ' + toTime,
         };
     }
 
@@ -536,6 +539,14 @@ class Utils {
         return days;
     }
 
+    getLocationTimeWindowsByDay(day, hours) {
+        const times = [];
+        hours[day].forEach((time) => {
+            times.push(time);
+        });
+        return times;
+    }
+
     // Helper function to return a list of all a location's times for a given
     // day.
     getLocationTimesByDay(day, hours) {
@@ -553,10 +564,26 @@ class Utils {
             times.push(time);
         });
 
-        // Now, we have an array of time maps (i.e. { open: '10:00 AM', close: '3:00 PM' })
+        // Now, we have an array of time maps (i.e. { open: '10:00 AM', close: 
+        // '3:00 PM' })
         var result = [];
         times.forEach((timeMap) => {
-            result = result.concat(this.getTimesBetween(timeMap.open, timeMap.close, day));
+            result = result.concat(
+                this.getTimesBetween(timeMap.open, timeMap.close, day));
+        });
+        return result;
+    }
+
+    getLocationTimeWindows(availability) {
+        const result = [];
+        Object.entries(availability).forEach((time) => {
+            var timeArray = time[1];
+            var day = time[0];
+            timeArray.forEach((time) => {
+                result.push(Utils.combineMaps(time, {
+                    day: day
+                }));
+            });
         });
         return result;
     }
@@ -573,7 +600,6 @@ class Utils {
         //   }
         //   ...
         // };
-        var that = this;
         var result = [];
         Object.entries(availability).forEach((time) => {
             var timeArray = time[1];
@@ -585,10 +611,12 @@ class Utils {
             });
         });
 
-        // Now, we have an array of time maps (i.e. { open: '10:00 AM', close: '3:00 PM' })
+        // Now, we have an array of time maps (i.e. { open: '10:00 AM', close: 
+        // '3:00 PM' })
         var times = [];
         result.forEach((timeMap) => {
-            times = times.concat(this.getTimesBetween(timeMap.open, timeMap.close, timeMap.day));
+            times = times.concat(
+                this.getTimesBetween(timeMap.open, timeMap.close, timeMap.day));
         });
         return times;
     }

@@ -2,6 +2,10 @@
 @import "@material/form-field/mdc-form-field";
 @import "@material/checkbox/mdc-checkbox";
 
+.mdc-menu .mdc-list-item {
+  white-space: nowrap;
+}
+
 #dialog-appt h4 {
   margin-left: 0;
   margin-bottom: 0;
