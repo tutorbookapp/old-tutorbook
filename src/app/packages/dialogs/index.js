@@ -554,7 +554,7 @@ class ViewRequestDialog {
         const request = this.request;
         const el = this.render.template('dialog-input');
         const otherUser = await Data.getUser(
-            Utils.getOtherUser(request.toUser, request.fromUser).uid
+            Utils.getOtherUser(request.fromUser, request.toUser).uid
         );
 
         function add(e) {
@@ -570,12 +570,12 @@ class ViewRequestDialog {
         };
 
         if (window.app.user.type === 'Supervisor') {
-            // NOTE: By default we show the toUser's availability for supervisors,
-            // and thus this "user" object is the toUser's data.
-            const fromUser = await Data.getUser(request.fromUser.uid);
-            addD('From ' + fromUser.type.toLowerCase());
-            add(this.render.userHeader(fromUser));
-            addD('To ' + otherUser.type.toLowerCase());
+            // NOTE: By default we show the fromUser's availability for 
+            // supervisors, and thus this "user" object is the toUser's data.
+            const toUser = await Data.getUser(request.toUser.uid);
+            addD('To ' + toUser.type.toLowerCase());
+            add(this.render.userHeader(toUser));
+            addD('From ' + otherUser.type.toLowerCase());
         }
         add(this.render.userHeader(otherUser));
         addD('At');
@@ -664,7 +664,7 @@ class EditRequestDialog {
         const that = this;
         const el = this.render.template('dialog-input');
         const user = profile || await Data.getUser(
-            Utils.getOtherUser(request.toUser, request.fromUser).uid
+            Utils.getOtherUser(request.fromUser, request.toUser).uid
         );
         // First, parse the user's availability map into location, day, and 
         // time arrays
@@ -708,12 +708,12 @@ class EditRequestDialog {
         };
 
         if (window.app.user.type === 'Supervisor') {
-            // NOTE: By default we show the toUser's availability for supervisors,
-            // and thus this "user" object is the toUser's data.
-            const fromUser = await Data.getUser(request.fromUser.uid);
-            addD('From ' + fromUser.type.toLowerCase());
-            addH(fromUser);
-            addD('To ' + user.type.toLowerCase());
+            // NOTE: By default we show the fromUser's availability for supervisors,
+            // and thus this "user" object is the fromUser's data.
+            const toUser = await Data.getUser(request.toUser.uid);
+            addD('To ' + toUser.type.toLowerCase());
+            addH(toUser);
+            addD('From ' + user.type.toLowerCase());
         };
         addH(user);
         addD('At');
@@ -1248,10 +1248,10 @@ class ViewApptDialog extends ViewRequestDialog {
             }
         }
         if (window.app.user.type === 'Supervisor') {
-            $(this.main).find('[id="To ' +
-                this.request.toUser.type.toLowerCase() + '"]').remove();
             $(this.main).find('[id="From ' +
-                this.request.fromUser.type.toLowerCase() + '"] h4'
+                this.request.fromUser.type.toLowerCase() + '"]').remove();
+            $(this.main).find('[id="To ' +
+                this.request.toUser.type.toLowerCase() + '"] h4'
             ).text('Attendees');
         }
         this.header = this.render.header('header-action', {
@@ -1434,10 +1434,10 @@ class EditApptDialog extends EditRequestDialog {
     async renderSelf() {
         await super.renderSelf();
         if (window.app.user.type === 'Supervisor') {
-            $(this.main).find('[id="To ' +
-                this.request.toUser.type.toLowerCase() + '"]').remove();
             $(this.main).find('[id="From ' +
-                this.request.fromUser.type.toLowerCase() + '"] h4'
+                this.request.fromUser.type.toLowerCase() + '"]').remove();
+            $(this.main).find('[id="To ' +
+                this.request.toUser.type.toLowerCase() + '"] h4'
             ).text('Attendees');
         }
         this.header = this.render.header('header-action', {
