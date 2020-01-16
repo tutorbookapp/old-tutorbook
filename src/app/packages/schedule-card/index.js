@@ -59,8 +59,8 @@ class Event {
     }
 
     renderSelf() {
-        const title = this.attendees[0].name.split(' ')[0] + ' and ' +
-            this.attendees[1].name.split(' ')[0];
+        const title = this.for.toUser.name.split(' ')[0] + ' and ' +
+            this.for.fromUser.name.split(' ')[0];
         const subtitle = this.for.subject + ((Data.periods.indexOf(this.time
             .from) < 0) ? ' at ' : ' during ') + this.time.from;
         this.el = $(this.render.template('card-event', {
