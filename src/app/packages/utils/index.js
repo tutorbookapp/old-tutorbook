@@ -461,7 +461,7 @@ class Utils {
             location: location,
             fromTime: fromTime,
             toTime: toTime,
-            time: fromTime + ' to ' + toTime,
+            time: fromTime !== toTime ? fromTime + ' to ' + toTime : fromTime,
         };
     }
 

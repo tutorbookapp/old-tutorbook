@@ -264,8 +264,13 @@ class EditAvailabilityDialog {
             this.refreshTimes();
         });
         a('#Time', (s) => {
-            this.val.fromTime = s.value.split(' to ')[0];
-            this.val.toTime = s.value.split(' to ')[1];
+            if (s.value.split(' to ').length > 1) {
+                this.val.fromTime = s.value.split(' to ')[0];
+                this.val.toTime = s.value.split(' to ')[1];
+            } else {
+                this.val.fromTime = s.value;
+                this.val.toTime = s.value;
+            }
             this.val.time = s.value;
         });
 
@@ -317,7 +322,8 @@ class EditAvailabilityDialog {
             this.val.day,
             location.hours,
         );
-        const timeStrings = times.map(t => t.open + ' to ' + t.close);
+        const timeStrings = times.map(t => t.open !== t.close ? t.open +
+            ' to ' + t.close : t.open);
         const that = this;
 
         if (times.length === 1) { // Only one available option (pre-select it)
@@ -352,8 +358,13 @@ class EditAvailabilityDialog {
             '#Time',
             that.render.select('Time', that.val.time, timeStrings),
             (s) => {
-                that.val.fromTime = s.value.split(' to ')[0];
-                that.val.toTime = s.value.split(' to ')[1];
+                if (s.value.split(' to ').length > 1) {
+                    that.val.fromTime = s.value.split(' to ')[0];
+                    that.val.toTime = s.value.split(' to ')[1];
+                } else {
+                    that.val.fromTime = s.value;
+                    that.val.toTime = s.value;
+                }
                 that.val.time = s.value;
             }
         );
@@ -367,7 +378,8 @@ class EditAvailabilityDialog {
             this.val.day,
             location.hours,
         ) : this.utils.getLocationTimeWindows(location.hours);
-        var timeStrings = times.map(t => t.open + ' to ' + t.close);
+        var timeStrings = times.map(t => t.open !== t.close ? t.open + ' to ' +
+            t.close : t.open);
         const days = Utils.getLocationDays(location.hours);
         const that = this;
 
@@ -420,8 +432,13 @@ class EditAvailabilityDialog {
             '#Time',
             that.render.select('Time', that.val.time, timeStrings),
             (s) => {
-                that.val.fromTime = s.value.split(' to ')[0];
-                that.val.toTime = s.value.split(' to ')[1];
+                if (s.value.split(' to ').length > 1) {
+                    that.val.fromTime = s.value.split(' to ')[0];
+                    that.val.toTime = s.value.split(' to ')[1];
+                } else {
+                    that.val.fromTime = s.value;
+                    that.val.toTime = s.value;
+                }
                 that.val.time = s.value;
             }
         );
@@ -444,7 +461,7 @@ class EditAvailabilityDialog {
             (window.location.name === 'Any' ? d.locationNames
                 .concat(['Custom']) : d.locationNames)));
         addS('Day', v.day, Data.days);
-        addS('Time', v.time, d.timeStrings.map(t => t + ' to ' + t));
+        addS('Time', v.time, d.timeStrings);
 
         $(this.main).find('.mdc-dialog__content').append(content);
     }
