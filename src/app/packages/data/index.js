@@ -642,6 +642,8 @@ Data.mathSubjects = [
     'Pre-Calculus A',
     'AP Statistics',
     'Applied Math',
+    'Geometry', // Paly
+    'Calculus',
     'Pre-Algebra', // JLS
     'Math 6',
     'Math 7',
@@ -698,6 +700,7 @@ Data.scienceSubjects = [
     'AP Physics 1',
     'AP Physics C',
     'APES Env Sci',
+    'Physics H', // Paly
     'Science 6', // JLS
     'Science 7',
     'Science 8',
@@ -804,6 +807,8 @@ Data.subjects = [
     'Pre-Calculus A',
     'AP Statistics',
     'Applied Math',
+    'Geometry', // Paly
+    'Calculus',
     'Pre-Algebra', // JLS
     'Math 6',
     'Math 7',
@@ -854,6 +859,7 @@ Data.subjects = [
     'AP Physics 1',
     'AP Physics C',
     'APES Env Sci',
+    'Physics H', // Paly
     'Science 6', // JLS
     'Science 7',
     'Science 8',
