@@ -183,14 +183,17 @@ const addUserServiceHours = async (d, doc, isTest) => {
         arr.pop();
         return arr;
     };
+    const timezone = {
+        timeZone: 'America/Los_Angeles',
+    };
     var a, cIn, cInSplit, cOut, cOutSplit,
         supervisor, duration, runningTotal = '00:00:00';
     for (appt of appts) {
         a = appt.data();
         cIn = a.clockIn.sentTimestamp.toDate();
-        cInSplit = cIn.toLocaleString('en-US').split(', ');
+        cInSplit = cIn.toLocaleString('en-US', timezone).split(', ');
         cOut = a.clockOut.sentTimestamp.toDate();
-        cOutSplit = cOut.toLocaleString('en-US').split(', ');
+        cOutSplit = cOut.toLocaleString('en-US', timezone).split(', ');
         supervisor = (await db.collection('users').doc(a.supervisor)
             .get()).data();
         duration = Utils.getDurationStringFromDates(cIn, cOut);
@@ -198,11 +201,11 @@ const addUserServiceHours = async (d, doc, isTest) => {
         table.rows.push([
             pop(cInSplit[0].split('/')).join('/'),
             pop(cInSplit[1].split(' ')[0].split(':')).join(':') + ' ' + cIn
-            .toLocaleString('en-US').split(' ')[2],
+            .toLocaleString('en-US', timezone).split(' ')[2],
             a.for.fromUser.name,
             a.for.subject,
             pop(cOutSplit[1].split(' ')[0].split(':')).join(':') + ' ' + cOut
-            .toLocaleString('en-US').split(' ')[2],
+            .toLocaleString('en-US', timezone).split(' ')[2],
             duration,
             a.for.fromUser.name.split(' ').map(n => n[0]).join('.') + '.',
             supervisor.name.split(' ').map(n => n[0]).join('.') + '.',
