@@ -19,15 +19,15 @@ const NotificationDialog = require('@tutorbook/dialogs').notify;
 
 class SearchHeader {
 
-    constructor() {
+    constructor(options) {
         this.render = window.app.render;
-        this.renderSelf();
+        this.renderSelf(options);
     }
 
-    renderSelf() {
-        this.el = this.render.header('header-search', {
+    renderSelf(options) {
+        this.el = this.render.header('header-search', Utils.combineMaps({
             'title': 'Tutorbook',
-        });
+        }, options));
     }
 
     manage() {

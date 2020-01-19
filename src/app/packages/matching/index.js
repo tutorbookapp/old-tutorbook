@@ -12,6 +12,7 @@ import {
 } from '@material/top-app-bar/index';
 
 const ScheduleCard = require('@tutorbook/schedule-card');
+const SearchHeader = require('@tutorbook/search').header;
 const Search = require('@tutorbook/search').default;
 const Card = require('@tutorbook/card');
 const Utils = require('@tutorbook/utils');
@@ -236,9 +237,10 @@ class Matching {
     }
 
     renderSelf() {
-        this.header = this.render.header('header-main', {
+        this.search = new SearchHeader({
             title: 'Matching',
         });
+        this.header = this.search.el;
         this.main = this.render.template('matching');
     }
 
@@ -248,10 +250,12 @@ class Matching {
         window.app.view(this.header, this.main, '/app/matching');
         if (!this.managed) this.manage();
         if (!this.cardsViewed) this.viewCards();
+        this.search.manage();
     }
 
     reView() {
         window.app.intercom.view(false);
+        this.search.manage();
     }
 
     manage() {
