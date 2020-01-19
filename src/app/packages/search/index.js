@@ -34,10 +34,6 @@ class SearchHeader {
         $(this.el).find('.search-box button').each(function() {
             MDCRipple.attachTo(this).unbounded = true;
         });
-        $(this.el).find('#clear-button').click(() => {
-            $(this.el).find('.search-box input').val('');
-            this.showInfoButton();
-        });
         $(this.el).find('#info-button').click(() => new NotificationDialog(
             'About Search',
             'Tutorbook\'s new search bar is an app-wide search feature to' +
@@ -81,6 +77,11 @@ class SearchHeader {
         };
         $(this.el).find('.search-box input').on('input', async () => search());
         search(); // TODO: Show filter prompts instead of initial results
+        $(this.el).find('#clear-button').click(() => {
+            $(this.el).find('.search-box input').val('');
+            this.showInfoButton();
+            search();
+        });
     }
 
     showInfoButton() {
