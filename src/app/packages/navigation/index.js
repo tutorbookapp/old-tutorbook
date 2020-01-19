@@ -21,6 +21,7 @@ class Navigation {
     constructor() {
         this.render = window.app.render;
         this.views = [];
+        this.menus = {};
         this.initRouter();
         this.initDrawer();
     }
@@ -82,28 +83,16 @@ class Navigation {
     manage() { // Define this here once so each class doesn't have to repeat it
         $('.mdc-ripple-upgraded--background-focused')
             .removeClass('mdc-ripple-upgraded--background-focused');
-        $('.mdc-top-app-bar [data-fir-click="navigation"]').click(() => {
-            this.viewDrawer();
-        });
-        $('.mdc-top-app-bar [data-fir-click="menu"]').click(() => {
-            this.viewMenu();
-        });
-        $('.mdc-top-app-bar [data-fir-click="sign_out"]').click(() => {
-            window.app.signOut();
-        });
-        $('.mdc-top-app-bar [data-fir-click="back"]').click(() => {
-            this.back();
-        });
-        $('.mdc-top-app-bar [data-fir-click="cancel"]').click(() => {
-            this.back();
-        });
     }
 
     viewMenu() {
-        if (!this.menu) {
-            this.menu = MDCMenu.attachTo($('.mdc-top-app-bar .mdc-menu')[0]);
+        const menu = $('header .mdc-top-app-bar .mdc-menu')[0];
+        if (!menu.hasAttribute('data-nav-id')) {
+            const id = Utils.genID();
+            $(menu).attr('data-nav-id', id);
+            this.menus[id] = new MDCMenu(menu);
         }
-        this.menu.open = true;
+        this.menus[$(menu).attr('data-nav-id')].open = true;
     }
 
     route(dest) {

@@ -137,15 +137,9 @@ class Tutorbook {
     }
 
     view(header, main, url) {
-        (!!this.nav) ? this.nav.update(): null; // We can view without init();
+        if (this.nav) this.nav.update(); // We can view without init();
         $('.header').empty().append(header);
         $('.main').empty().append(main);
-        $('[data-fir-click="navigation"]').click(() => {
-            this.nav.viewDrawer();
-        });
-        $('[data-fir-click="menu"]').click(() => {
-            this.nav.viewMenu();
-        });
 
         window.scrollTo(0, 0);
 
