@@ -27,7 +27,8 @@ const getUserLocation = async (user, isTest) => {
             .limit(1)
             .get()
         ).docs[0];
-        if (!doc) throw new Error('No locations named ' + name.trim() + '.');
+        if (!doc) return console.error('[ERROR] No locations named ' +
+            name.trim() + '.');
         console.log('[DEBUG] Got ' + name.trim() + ' (' + doc.id + ') data.');
         return doc.id;
     };
@@ -48,12 +49,14 @@ const createStat = async (user, stat, isTest) => {
     const db = isTest ? partitions.test : partitions.default;
     if (!isTest) notifyMe('[SUBTITLE] ' + stat.subtitle + ' \n[SUMMARY] ' +
         stat.summary);
-    return db
+    const locationID = await getUserLocation(user, isTest);
+    return locationID ? db
         .collection('locations')
-        .doc((await getUserLocation(user, isTest)))
+        .doc(locationID)
         .collection('recentActions')
         .doc()
-        .set(stat);
+        .set(stat) : console.warn('[WARNING] Could not create stat in ' +
+            'undefined location.');
 };
 
 // Stats triggered when a user attempts and fails to complete a data action.
@@ -154,11 +157,25 @@ const dataAction = {
         };
         return createStat(user, stat, isTest);
     },
+    modifyPastAppt: async (user, data, res, isTest) => {
+        const a = data.appt;
+        const r = a.for;
+        const stat = {
+            title: 'Modified Past Appointment',
+            subtitle: user.name.split(' ')[0] + ' modified a past appointment',
+            summary: r.fromUser.name + '\'s past appointment for ' +
+                a.for.subject + ' with ' + r.toUser.name + ' on ' +
+                a.clockIn.sentTimestamp.toDate().toDateString() + ' was ' +
+                'modified by ' + user.name + '.',
+            timestamp: new Date(),
+        };
+        return createStat(user, stat, isTest);
+    },
     deletePastAppt: async (user, data, res, isTest) => {
         const a = data.appt;
         const r = a.for;
         const stat = {
-            title: 'Deleted Appointment',
+            title: 'Deleted Past Appointment',
             subtitle: user.name.split(' ')[0] + ' deleted a past appointment',
             summary: r.fromUser.name + '\'s past appointment for ' +
                 a.for.subject + ' with ' + r.toUser.name + ' on ' +

@@ -136,11 +136,13 @@ class SupervisorAppt extends Event {
 class CanceledAppt extends Event {
     constructor(doc) {
         super(doc);
+        this.other = Utils.getOtherUser(this.for.attendees[0], this.for
+            .attendees[1]);
         this.title = "Canceled Appointment with " + this.canceledBy.name;
         this.subtitle = this.canceledBy.name + " canceled this upcoming " +
             "appointment. Please ensure to address these changes.";
         this.timestamp = Utils.getNextDateWithDay(this.for.time.day);
-        this.dialog = new ViewCanceledApptDialog(doc.data().for, doc.id);
+        this.dialog = new ViewCanceledApptDialog(doc.data(), doc.id);
         this.data = {
             type: 'canceledAppointments',
             showAction: true,
@@ -166,7 +168,7 @@ class SupervisorCanceledAppt extends Event {
         this.subtitle = this.canceledBy.name + " canceled this upcoming " +
             "appointment. Please ensure to address these changes.";
         this.timestamp = Utils.getNextDateWithDay(this.for.time.day);
-        this.dialog = new ViewCanceledApptDialog(doc.data().for, doc.id);
+        this.dialog = new ViewCanceledApptDialog(doc.data(), doc.id);
         this.data = {
             photoA: this.for.attendees[0].photo,
             photoB: this.for.attendees[1].photo,
@@ -195,6 +197,8 @@ class SupervisorCanceledAppt extends Event {
 class ModifiedAppt extends Event {
     constructor(doc) {
         super(doc);
+        this.other = Utils.getOtherUser(this.for.attendees[0], this.for
+            .attendees[1]);
         this.title = "Modified Appointment with " + this.modifiedBy.name;
         this.subtitle = this.modifiedBy.name + " modified this upcoming " +
             "appointment. Please ensure to address these changes.";

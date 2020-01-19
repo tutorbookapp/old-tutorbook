@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
+const to = require('await-to-js').default;
 const fs = require('fs');
 
 // Welcome email templates
@@ -81,21 +82,19 @@ class Email {
             }
         });
 
-        transporter.verify((err, success) => {
-            if (err) {
-                console.error('Error while verifying email transporter:', err);
-            } else {
-                console.log('Server is ready to take our message.');
-            }
-        });
+        const [err, res] = await to(transporter.verify());
+        if (err) return console.error('[ERROR] Could not verify email ' +
+            'transporter b/c of ' + err.message);
 
-        const info = await transporter.sendMail({
+        const [error, info] = await to(transporter.sendMail({
             from: '"Tutorbook" <notifications@tutorbook.app>',
             to: this.user.email,
             subject: this.subject,
             html: this.html,
-        });
-        console.log('Email sent:', info.messageId);
+        }));
+        if (error) return console.error('[ERROR] Could not send email b/c of ' +
+            error.message);
+        console.log('[DEBUG] Email (' + info.messageId + ') sent.');
     }
 
     toString() {

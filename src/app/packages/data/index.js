@@ -13,6 +13,23 @@ class Data {
         this.initLocations();
     }
 
+    static async getServiceHoursLog(params) {
+        return axios({
+            method: 'get',
+            url: window.app.functionsURL + 'serviceHoursAsPDF',
+            responseType: 'blob',
+            params: Data.combineMaps({
+                token: (await firebase.auth().currentUser.getIdToken(true)),
+                location: window.app.location.id,
+                test: window.app.test,
+                tutors: true,
+                pupils: true,
+            }, params),
+        }).then((res) => {
+            return window.URL.createObjectURL(res.data);
+        });
+    }
+
     static async getPDFBackup(params) {
         return axios({
             method: 'get',
@@ -362,6 +379,13 @@ class Data {
 
     static modifyAppt(appt, id) {
         return Data.post('modifyAppt', {
+            appt: appt,
+            id: id,
+        });
+    }
+
+    static modifyPastAppt(appt, id) {
+        return Data.post('modifyPastAppt', {
             appt: appt,
             id: id,
         });
@@ -948,6 +972,7 @@ Data.genders = [
 Data.types = [
     'Tutor',
     'Pupil',
+    'Teacher',
     'Parent',
     'Supervisor',
 ];

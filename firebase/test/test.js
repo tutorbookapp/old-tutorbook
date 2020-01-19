@@ -591,8 +591,41 @@ describe("Tutorbook's REST API", () => {
         return clockOut(SUPERVISOR.email);
     });
 
-    it("lets supervisors approve clock-out requests", async () => {
-        [clockOut, id] = await clockOut();
+    async function approveClockOut(user) {
+        [clockOutData, id] = await clockOut();
+        const res = await post(user || SUPERVISOR.email, 'approveClockOut', {
+            clockOut: clockOutData,
+            id: id,
+        });
+        return [res.data.appt, res.data.id];
+    };
+
+    it("lets supervisors approve clock-out requests", () => {
+        return approveClockOut();
+    });
+
+    function combineMaps(mapA, mapB) {
+        // NOTE: This function gives priority to mapB over mapA
+        var result = {};
+        for (var i in mapA) {
+            result[i] = mapA[i];
+        }
+        for (var i in mapB) {
+            result[i] = mapB[i];
+        }
+        return result;
+    };
+
+    it("lets supervisors modify past appointments", async () => {
+        const [appt, id] = await approveClockOut();
+        return post(SUPERVISOR.email, 'modifyPastAppt', {
+            appt: combineMaps(appt, {
+                clockIn: combineMaps(appt.clockIn, {
+                    sentTimestamp: new Date(),
+                }),
+            }),
+            id: id,
+        });
     });
 
     it("lets supervisors perform instant clock-ins", async () => {
@@ -658,6 +691,23 @@ describe("Tutorbook's REST API", () => {
             },
         }).then((res) => {
             res.data.pipe(fs.createWriteStream('test/backup-test.pdf'));
+        });
+    });
+
+    it("lets supervisors download PDF service hour sheets", async () => {
+        await approveClockOut();
+        return axios({
+            method: 'get',
+            url: FUNCTIONS_URL + 'serviceHoursAsPDF',
+            responseType: 'stream',
+            params: {
+                token: (await getToken(SUPERVISOR.email)),
+                location: LOCATION.id,
+                test: false,
+                uid: TUTOR.uid,
+            },
+        }).then((res) => {
+            res.data.pipe(fs.createWriteStream('test/service-hrs-test.pdf'));
         });
     });
 });

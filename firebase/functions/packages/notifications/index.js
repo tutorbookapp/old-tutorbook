@@ -100,14 +100,15 @@ const apptNotification = (req, res) => {
     return cors(req, res, async () => {
         if (!req.query.tutor && !req.query.pupil) {
             res.send('[ERROR] Please specify who to send notifications to.');
-            return console.warn('Request did not send any notifications.');
+            return console.warn('[WARNING] Request did not send any ' +
+                'notifications.');
         }
         const users = db.collection('users');
         const token = await admin.auth().verifyIdToken(req.query.token);
         if (!token.supervisor) {
             res.send('[ERROR] Invalid supervisor authentication token.');
-            return console.warn('Request did not send a valid supervisor ' +
-                'authentication token.');
+            return console.warn('[WARNING] Request did not send a valid ' +
+                'supervisor authentication token.');
         }
         // TODO: Pass uID as request param when not using actual token.
         const supervisor = (await users.doc(token.uid).get()).data();
@@ -158,15 +159,15 @@ const apptNotification = (req, res) => {
 // user - sms, email for new users (custom by user type)
 const userNotification = async (snap, context) => {
     const profile = snap.data();
-    if (!profile || !profile.name) return console.warn('Cannot send welcome ' +
-        'notifications to users without names.');
-    console.log('Sending ' + profile.name + ' <' + profile.email +
+    if (!profile || !profile.name) return console.warn('[WARNING] Cannot send' +
+        ' welcome notifications to users without names.');
+    console.log('[DEBUG] Sending ' + profile.name + ' <' + profile.email +
         '> welcome notifications...');
     await new Email('welcome', profile);
     await new SMS(profile, 'Welcome to Tutorbook! This is how ' +
         'you\'ll receive SMS notifications. To turn them off, go to ' +
         'settings and toggle SMS notifications off.');
-    console.log('Sent ' + profile.name + ' <' + profile.email +
+    console.log('[DEBUG] Sent ' + profile.name + ' <' + profile.email +
         '> welcome notifications.');
 };
 
@@ -256,8 +257,8 @@ const requestNotification = async (snap, context) => {
         ' to approve or modify this request.';
     await new SMS(user.data(), summary);
     await new Email('request', user.data(), request);
-    console.log('Sent request notification to ' + user.data().name + ' <' +
-        user.data().email + '> <' + user.data().phone + '>.');
+    console.log('[DEBUG] Sent request notification to ' + user.data().name +
+        ' <' + user.data().email + '> <' + user.data().phone + '>.');
 };
 
 // approvedRequestsOut - sms, webpush, email to pupil for approvedRequests
@@ -273,50 +274,58 @@ const approvedRequestNotification = async (snap, context) => {
         request.time.from + ' until ' + request.time.to + '.';
     await new SMS(user.data(), summary);
     await new Email('appt', user.data(), snap.data());
-    console.log('Sent appt notification to ' + user.data().name + ' <' +
+    console.log('[DEBUG] Sent appt notification to ' + user.data().name + ' <' +
         user.data().email + '> <' + user.data().phone + '>.');
 };
 
 // pendingClockIns - sms, webpush to the recipient of a clockIn request
 const clockIn = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // pendingClockOuts - sms, webpush to the recipient of a clockOut request
 const clockOut = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // modifiedRequestsIn - sms, webpush to tutor when request is modified
 const modifiedRequestIn = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // modifiedRequestsOut - sms, webpush to pupil when request is modified
 const modifiedRequestOut = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // canceledRequestsIn - sms, webpush to tutor when request is canceled
 const canceledRequestIn = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // rejectedRequestsOut - sms, webpush to pupil when request is rejected
 const rejectedRequestOut = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // modifiedAppointments - sms, webpush, email to other attendee when appt is
 // modified
 const modifiedAppt = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 // canceledAppointments - sms, webpush, email to other attendee when appt is
 // canceled
 const canceledAppt = async (snap, context) => {
-    console.warn('This notification function has not been implemented yet.');
+    console.warn('[WARNING] This notification function has not been ' +
+        'implemented yet.');
 };
 
 

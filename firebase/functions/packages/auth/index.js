@@ -30,9 +30,9 @@ const updateAuth = async (change, context) => {
     const profile = change.after.data();
     const id = context.params.id;
     if (!profile)
-        return console.warn('User (' + id + ') doc was deleted.');
+        return console.warn('[WARNING] User (' + id + ') doc was deleted.');
     if (!profile.uid)
-        return console.warn('User (' + id + ') did not have a uID.');
+        return console.warn('[WARNING] User (' + id + ') did not have a uID.');
     const db = admin.firestore().collection('partitions').doc('default');
 
     // Check to see if the supervisor's id is in the codes collection
@@ -50,8 +50,8 @@ const updateAuth = async (change, context) => {
             validIDs.push(entry[1]);
         });
     } else {
-        console.warn('Supervisor auth codes do not exist, falling back to ' +
-            'default IDs...');
+        console.warn('[WARNING] Supervisor auth codes do not exist, falling ' +
+            'back to default IDs...');
         validIDs = validIDs.concat([
             'supervisor@tutorbook.app',
             'mlim@pausd.org',
@@ -61,7 +61,7 @@ const updateAuth = async (change, context) => {
     }
     if (profile.type === 'Supervisor' && profile.authenticated &&
         validIDs.indexOf(id) >= 0) { // SUPERVISOR
-        console.log(profile.name + ' was a verified supervisor. ' +
+        console.log('[DEBUG] ' + profile.name + ' was a verified supervisor. ' +
             'Adding customAuth claims...');
         const locations = await db.collection('locations')
             .where('supervisors', 'array-contains', profile.uid)
@@ -77,16 +77,15 @@ const updateAuth = async (change, context) => {
                 locations: locationIDs,
                 children: [],
             }).then(() => {
-                console.log('Added supervisor customAuth to ' +
+                console.log('[DEBUG] Added supervisor customAuth to ' +
                     profile.name + '\'s account.');
             }).catch((err) => {
-                console.error('Error while adding ' +
-                    'supervisor customAuth to ' + profile.name +
-                    '\'s account:', err.message);
+                console.error('[ERROR] Could not add supervisor customAuth ' +
+                    'to ' + profile.name + '\'s account b/c of ' + err.message);
             });
     } else { // NOTHING
-        console.log(profile.name + ' was not a verified supervisor. ' +
-            'Ensuring that they don\'t have customAuth claims...');
+        console.log('[DEBUG] ' + profile.name + ' was not a verified ' +
+            'supervisor. Ensuring that they don\'t have customAuth claims...');
         return admin.auth()
             .setCustomUserClaims(profile.uid, {
                 supervisor: false,
@@ -95,11 +94,11 @@ const updateAuth = async (change, context) => {
                 children: [],
             })
             .then(() => {
-                console.log('Removed any customAuth claims from ' +
+                console.log('[DEBUG] Removed any customAuth claims from ' +
                     profile.name + '\'s account.');
-            }).catch((err) => {
-                console.error('Error while removing customAuth claims' +
-                    ' from ' + profile.name + '\'s account:', err.message);
+            }).catch((e) => {
+                console.error('[ERROR] Could not remove customAuth claims ' +
+                    'from ' + profile.name + '\'s account b/c of ' + e.message);
             });
     }
 };

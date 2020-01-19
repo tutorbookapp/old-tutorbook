@@ -632,8 +632,9 @@ class ViewRequestDialog {
         const dialog = this.main;
         // NOTE: We have to attach MDC Components after the view is shown or they
         // do not render correctly.
+        this.textFields = {};
         dialog.querySelectorAll('.mdc-text-field').forEach((el) => {
-            MDCTextField.attachTo(el);
+            this.textFields[el.id] = new MDCTextField(el);
         });
 
         // Disable all inputs
@@ -642,6 +643,21 @@ class ViewRequestDialog {
                 .forEach((el) => {
                     el.setAttribute('disabled', true);
                 });
+        });
+    }
+};
+
+class ViewCanceledRequestDialog extends ViewRequestDialog {
+    constructor(request) {
+        super(request.for);
+        this.canceledRequest = request;
+    }
+
+    async renderSelf() {
+        await super.renderSelf();
+        this.header = this.render.header('header-action', {
+            title: 'Canceled Request',
+            print: () => window.app.print(),
         });
     }
 };
@@ -1426,9 +1442,9 @@ class ViewApptDialog extends ViewRequestDialog {
 };
 
 class EditApptDialog extends EditRequestDialog {
-    constructor(appt, id) {
-        super(appt.for, id);
-        this.appt = window.app;
+    constructor(appt) {
+        super(appt.for);
+        this.appt = appt;
     }
 
     async renderSelf() {
@@ -1455,10 +1471,6 @@ class EditApptDialog extends EditRequestDialog {
 };
 
 class ViewPastApptDialog extends ViewApptDialog {
-    constructor(appt, id) {
-        super(appt, id);
-    }
-
     async renderSelf() {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -1492,16 +1504,74 @@ class ViewPastApptDialog extends ViewApptDialog {
             .find('#Total').replaceWith(this.render.textField(
                 'Clock out',
                 this.appt.clockOut.sentTimestamp.toDate().toLocaleTimeString()
-            ));
-        $(this.main).find('.mdc-fab').remove();
+            )).end().find('.mdc-fab').remove();
+    }
+
+    manage() {
+        super.manage();
+        const parse = (val) => {
+            console.log('[DEBUG] Parsing (' + val + ')...');
+            const split = val.split(':');
+            console.log('[DEBUG] Split (' + val + '):', split);
+            return {
+                hrs: new Number(split[0]),
+                mins: new Number(split[1]),
+                secs: new Number(split[2].split(' ')[0]),
+                ampm: val.split(' ')[1],
+            };
+        };
+        const valid = (val) => {
+            console.log('[DEBUG] Validating (' + val + ')...');
+            const parsed = parse(val);
+            if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
+            if (!(0 < parsed.mins < 60)) return false;
+            if (!(0 < parsed.secs < 60)) return false;
+            if (!(0 < parsed.hrs <= 12)) return false;
+            console.log('[DEBUG] Parsed value was valid:', parsed);
+            return true;
+        };
+        const update = (val, date) => {
+            const parsed = parse(val);
+            const hrs = parsed.ampm === 'PM' ? parsed.hrs + 12 : parsed.hrs;
+            date.setHours(hrs);
+            date.setMinutes(parsed.mins);
+            date.setSeconds(parsed.secs);
+        };
+        const edit = async (id, date) => {
+            const t = this.textFields['Clock in'];
+            const v = t.value;
+            if (!valid(v)) return t.valid = false;
+            update(v, date);
+            window.app.snackbar.view('Updating past appointment...');
+            console.log('[DEBUG] Updating past appointment:', this.appt);
+            const [err, res] = await to(Data.modifyPastAppt({
+                appt: this.appt,
+                id: this.id,
+            }));
+            if (err) return window.app.snackbar.view('Could not update past ' +
+                'appointment.');
+            window.app.snackbar.view('Updated past appointment.');
+        };
+        $(this.main).find('[id="Clock in"] input').removeAttr('disabled')
+            .focusout(async () => {
+                if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
+                    .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();
+                edit('Clock in', this.appt.clockIn.sentTimestamp);
+            }).end()
+            .find('[id="Clock out"] input').removeAttr('disabled')
+            .focusout(async () => {
+                if (this.appt.clockOut.sentTimestamp.toDate) this.appt.clockOut
+                    .sentTimestamp = this.appt.clockOut.sentTimestamp.toDate();
+                edit('Clock out', this.appt.clockOut.sentTimestamp);
+            }).end()
+            .find('[id="Time clocked"] input').removeAttr('disabled')
+            .focusout(async () => {
+                console.log('[TODO] Add duration editing data handling.');
+            });
     }
 };
 
 class ViewActiveApptDialog extends ViewApptDialog {
-    constructor(appt, id) {
-        super(appt, id);
-    }
-
     async renderSelf() {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -1523,8 +1593,9 @@ class ViewActiveApptDialog extends ViewApptDialog {
 };
 
 class ViewCanceledApptDialog extends ViewApptDialog {
-    constructor(appt, id) {
-        super(appt, id);
+    constructor(appt) {
+        super(appt.for);
+        this.canceledAppt = appt;
     }
 
     async renderSelf() {
@@ -1543,6 +1614,7 @@ class ViewCanceledApptDialog extends ViewApptDialog {
 
 module.exports = {
     viewRequest: ViewRequestDialog,
+    viewCanceledRequest: ViewCanceledRequestDialog,
     editRequest: EditRequestDialog,
     newRequest: NewRequestDialog,
     paidRequest: PaidRequestDialog,

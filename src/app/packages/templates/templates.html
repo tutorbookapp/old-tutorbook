@@ -1306,7 +1306,7 @@ styling due to input el spacing. -->
 
 <!-- Matching User Header Template -->
 <div hidden class="template" id="matching-user-header">
-    <li class="mdc-list-item">
+    <li class="mdc-list-item matching-user-header">
         <img class="mdc-list-item__graphic" data-fir-attr="src:pic">
         <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
@@ -1329,7 +1329,7 @@ styling due to input el spacing. -->
 
 <!-- User Header Template -->
 <div hidden class="template" id="user-header">
-    <li class="mdc-list-item">
+    <li class="mdc-list-item user-header">
         <img class="mdc-list-item__graphic" data-fir-attr="src:pic">
         <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
@@ -1763,6 +1763,9 @@ styling due to input el spacing. -->
             </span>
         </span>
         <span class="mdc-list-item__meta">
+            <button class="mdc-icon-button" data-fir-if="showHrs" data-fir-click="hrs">
+                <i class="material-icons">insert_drive_file</i>
+            </button>
             <button class="mdc-icon-button" data-fir-click="chat">
                 <i class="material-icons">chat</i>
             </button>
@@ -1855,14 +1858,20 @@ styling due to input el spacing. -->
             <div class="mdc-layout-grid__inner" id="cards">
             </div>
         </div>
-        <button id="tutor-button" data-fir-click="new_tutor" class="mdc-fab mdc-fab--extended">
-            <span class="mdc-fab__icon material-icons">person</span>
-            <span class="mdc-fab__label">Tutor</span>
-        </button>
         <button id="pupil-button" data-fir-click="new_pupil" class="mdc-fab mdc-fab--extended">
             <span class="mdc-fab__icon material-icons">person_outline</span>
             <span class="mdc-fab__label">Pupil</span>
         </button>
+        <button id="tutor-button" data-fir-click="new_tutor" class="mdc-fab mdc-fab--extended">
+            <span class="mdc-fab__icon material-icons">person</span>
+            <span class="mdc-fab__label">Tutor</span>
+        </button>
+        <!--
+           -<button id="teacher-button" data-fir-click="new_teacher" class="mdc-fab mdc-fab--extended">
+           -    <span class="mdc-fab__icon material-icons">school</span>
+           -    <span class="mdc-fab__label">Teacher</span>
+           -</button>
+	   -->
     </div>
 </div>
 

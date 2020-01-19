@@ -20,7 +20,7 @@ class DataProxy {
         });
         ['photo', 'grade', 'gender', 'payments', 'proxy'].forEach((attr) => {
             if (!user[attr] || user[attr] === '')
-                console.warn('User did not have a valid ' + attr +
+                console.warn('[WARNING] User did not have a valid ' + attr +
                     ', falling back to default...');
         });
         global.app = {
@@ -58,7 +58,7 @@ class DataProxy {
         const exists = async (collection, id) => {
             const doc = await global.db.collection('users').doc(user.uid)
                 .collection(collection).doc(id).get();
-            console.log('Does ' + user.id + ' have a(n) ' + collection +
+            console.log('[DEBUG] Does ' + user.id + ' have a(n) ' + collection +
                 ' doc (' + id + ')?', (doc.exists) ? 'Yes.' : 'No, erroring.');
             assert(doc.exists);
         };
@@ -132,6 +132,9 @@ class DataProxy {
                 ].indexOf(token.uid) >= 0 || token.supervisor);
                 if (!token.supervisor) await exists('appointments', data.id);
                 return Data.modifyAppt(data.appt, data.id);
+            case 'modifyPastAppt':
+                assert(token.supervisor);
+                return Data.modifyPastAppt(data.appt, data.id);
             case 'deletePastAppt':
                 assert([
                     data.appt.attendees[0].uid,
@@ -241,7 +244,8 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             var ref = await global.db.collection('usersByEmail').doc(id).get();
         } else {
             var ref = await global.db.collection('users').doc(id).get();
@@ -258,7 +262,8 @@ class Data {
         } else if (user.uid) {
             return global.db.collection('users').doc(user.uid).update(user);
         } else {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             return global.db.collection('usersByEmail').doc(user.id ||
                 user.email).update(user);
         }
@@ -268,7 +273,8 @@ class Data {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             return global.db.collection('usersByEmail').doc(id).delete();
         } else {
             return global.db.collection('users').doc(id).delete();
@@ -315,7 +321,8 @@ class Data {
         } else if (user.uid) {
             return global.db.collection('users').doc(user.uid).set(user);
         } else {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             return global.db.collection('usersByEmail').doc(user.id ||
                 user.email).set(user);
         }
@@ -363,6 +370,8 @@ class Data {
         const db = global.db;
         const ref = db.collection('users').doc(global.app.user.uid)
             .collection('clockIns').doc(id);
+        clockIn = (await ref.get()).data(); // Don't trust the client (and this
+        // will use the actual Timestamp() object for clockIn.sentTimestamp).
         const approvedClockIn = db.collection('users').doc(global.app.user.uid)
             .collection('approvedClockIns').doc();
         const activeAppts = [
@@ -376,8 +385,6 @@ class Data {
             .collection('activeAppointments')
             .doc(id),
         ];
-        clockIn = (await ref.get()).data(); // Don't trust the client (and this
-        // will use the actual Timestamp() object for clockIn.sentTimestamp).
         await ref.delete();
         await approvedClockIn.set(Data.combineMaps(clockIn, {
             approvedTimestamp: new Date(),
@@ -594,7 +601,7 @@ class Data {
 
         const db = global.db;
         const apptRef = db.collection('users').doc(appt.attendees[0].uid)
-            .collection('appointments').doc(id);
+            .collection('activeAppointments').doc(id);
         const ref = db.collection('users').doc(appt.supervisor)
             .collection('clockOuts').doc(id);
         const supervisorData = (await db.collection('users')
@@ -743,6 +750,35 @@ class Data {
         Data.updateUserAvailability(request.toUser.uid);
         return {
             request: request,
+            appt: apptData,
+            id: id,
+        };
+    }
+
+    static async modifyPastAppt(apptData, id) {
+        const db = global.db;
+        console.log('[DEBUG] Past appointment data before trimming:', apptData);
+        console.log('[DEBUG] Past appointment attendees before trimming:',
+            apptData.attendees);
+        apptData = Data.trimObject(apptData);
+        console.log('[DEBUG] Past appointment data after trimming:', apptData);
+        console.log('[DEBUG] Past appointment attendees after trimming:',
+            apptData.attendees);
+        const appts = [
+            db.collection('users').doc(apptData.attendees[0].uid)
+            .collection('pastAppointments')
+            .doc(id),
+            db.collection('users').doc(apptData.attendees[1].uid)
+            .collection('pastAppointments')
+            .doc(id),
+            db.collection('locations').doc(apptData.location.id)
+            .collection('pastAppointments')
+            .doc(id),
+        ];
+        await Promise.all(appts.map((appt) => {
+            return appt.update(apptData);
+        }));
+        return {
             appt: apptData,
             id: id,
         };
@@ -1044,8 +1080,8 @@ class Data {
                         .set(payment);
                     break;
                 default:
-                    console.warn('Invalid payment method (' + payment.method +
-                        '). Defaulting to Stripe...');
+                    console.warn('[WARNING] Invalid payment method (' + payment
+                        .method + '). Defaulting to Stripe...');
                     // Authorize payment for capture (after the tutor clocks
                     // out and the pupil approves payment).
                     await global.db.collection('users')
@@ -1591,6 +1627,7 @@ Data.grades = [
 Data.types = [
     'Tutor',
     'Pupil',
+    'Teacher',
     'Parent',
     'Supervisor',
 ];
@@ -1599,7 +1636,7 @@ Data.types = [
 module.exports = {
     onRequest: (req, res) => { // Firebase Functions HTTP Request trigger
         return cors(req, res, async () => {
-            console.log('Responding to ' +
+            console.log('[INFO] Responding to ' +
                 (req.query.test === 'true' ? 'test ' : 'live ') +
                 req.query.action + ' action from ' + req.query.user + '...');
             global.db = (req.query.test === 'true') ? admin.firestore()
@@ -1625,7 +1662,7 @@ module.exports = {
                 );
             }).catch(async (err) => {
                 console.error('Error while processing ' + req.query.action +
-                    ' action from ' + req.query.user + ':', err.message);
+                    ' action from ' + req.query.user + ':', err);
                 res.send('[ERROR] ' + err.message);
                 if (!Stats.failedDataAction[req.query.action]) return console
                     .warn('[WARNING] Failed data action (' + req.query.action +
@@ -1644,7 +1681,7 @@ module.exports = {
         throw new Error('Tutorbook\'s onCall API is deprecated. Please use ' +
             'the HTTPS REST API (hosted at https://tutorbook-779d8-us-central' +
             '1.cloudfunctions.net/data) instead.');
-        console.log('Responding to ' + data.action + ' action from ' +
+        console.log('[INFO] Responding to ' + data.action + ' action from ' +
             context.auth.token.email + '...');
         global.db = (data.test) ? admin.firestore()
             .collection('partitions').doc('test') : admin.firestore()

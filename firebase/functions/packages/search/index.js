@@ -18,7 +18,8 @@ async function getUID(profile) {
                 ((profile.gender === 'Female') ? 'female.png' : 'male.png'),
             disabled: false,
         }));
-        if (err) return console.error(err.message);
+        if (err) return console.error('[ERROR] Could not get uID b/c of ' + err
+            .message);
     }
     return user.uid;
 };
@@ -49,32 +50,32 @@ const updateSearch = async (change, context) => {
     const search = db.collection('search');
     if (!profile) {
         const before = change.before.data();
-        console.log('User doc (' + before.email + ') was deleted.');
+        console.log('[DEBUG] User doc (' + before.email + ') was deleted.');
         if (before.uid &&
             before.uid !== '' &&
             (await search.doc(before.uid).get()).exists
         ) {
-            console.log('Deleting (' + before.email + ') search doc...');
+            console.log('[DEBUG] Deleting (' + before.email + ') search doc...');
             return search.doc(before.uid).delete();
         }
         return;
     }
     if (!profile.config || !profile.config.showProfile) {
-        console.log('Hiding (' + profile.email + ') search doc...');
+        console.log('[DEBUG] Hiding (' + profile.email + ') search doc...');
         if (profile.uid &&
             profile.uid !== '' &&
             (await search.doc(profile.uid).get()).exists
         ) {
-            console.log('Deleting (' + profile.email + ') search doc...');
+            console.log('[DEBUG] Deleting (' + profile.email + ') search doc...');
             return search.doc(profile.uid).delete();
         }
         return;
     }
     if (!profile.uid || profile.uid === '') {
-        console.log('Updating (' + profile.email + ') auth user...');
+        console.log('[DEBUG] Updating (' + profile.email + ') auth user...');
         profile.uid = await getUID(profile);
-        if (!profile.uid) return console.warn('Could not get uID. You\'re ' +
-            'probably running tests with a local functions emulator.');
+        if (!profile.uid) return console.warn('[WARNING] Could not get uID. ' +
+            'You\'re probably running tests with a local functions emulator.');
         await search.collection('users').doc(context.params.id)
             .update({
                 uid: profile.uid
@@ -91,12 +92,12 @@ const updateSearch = async (change, context) => {
     const needed = ['name', 'email', 'id', 'type', 'subjects', 'availability'];
     for (var i = 0; i < needed.length; i++) {
         if (missing(profile, needed[i]))
-            return console.warn('Profile did not have a valid ' + needed[i] +
-                ', skipping...');
+            return console.warn('[WARNING] Profile did not have a valid ' +
+                needed[i] + ', skipping...');
     }
     ['photo', 'grade', 'gender', 'payments', 'proxy', 'bio'].forEach((attr) => {
         if (missing(profile, attr))
-            console.warn('Profile did not have a valid ' + attr +
+            console.warn('[WARNING] Profile did not have a valid ' + attr +
                 ', falling back to default...');
     });
     const filtered = {
@@ -128,7 +129,7 @@ const updateSearch = async (change, context) => {
                 'guarantee.',
         },
     };
-    console.log('Updating (' + profile.email + ') search doc...');
+    console.log('[DEBUG] Updating (' + profile.email + ') search doc...');
     return search.doc(profile.uid).set(filtered);
 };
 

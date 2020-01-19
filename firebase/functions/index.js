@@ -1,9 +1,9 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin').initializeApp();
 
-const backupAsPDF = require('backups');
 const updateHours = require('hours');
 const updateSheet = require('sheet');
+const PDF = require('pdf');
 const SMS = require('sms');
 const Algolia = require('algolia');
 const Auth = require('auth');
@@ -12,6 +12,16 @@ const Notify = require('notifications');
 const Payments = require('payments');
 const Search = require('search');
 const Stats = require('stats');
+
+// ============================================================================
+// DATA EXPORTATION
+// ============================================================================
+
+exports.serviceHoursAsPDF = functions.https.onRequest(PDF.hrs);
+
+exports.backupAsPDF = functions.https.onRequest(PDF.backup);
+
+exports.updateSheet = functions.https.onRequest(updateSheet);
 
 // ============================================================================
 // SEARCH (VIA ALGOLIA) 
@@ -70,14 +80,19 @@ exports.cancelAuthPayment = functions.firestore
     .document('/partitions/{partition}/users/{user}/authPayments/{payment}')
     .onDelete(Payments.cancelAuthPayment);
 
-// 2) Tutor clocks out & creates creates pastAppt docs (Function creates 
+// 2) TODO: Tutor clocks out & creates creates pastAppt docs (Function creates 
 // pendingPayments => asking pupil for payment approval).
-exports.askForPaymentApproval = functions.firestore
-    .document('/partitions/{partition}/users/{user}/pastAppointments/{appt}')
-    .onCreate(Payments.askForPayment);
+/*
+ *exports.askForPaymentApproval = functions.firestore
+ *    .document('/partitions/{partition}/users/{user}/pastAppointments/{appt}')
+ *    .onCreate(Payments.askForPayment);
+ */
+
+// 2) Tutor clicks "Request Payment" FAB in ViewApptDialog which creates a
+// requestedPayment doc in the pupil's subcollections (via the data REST API).
 
 // 3) Pupil approves payment by creating approvedPayment docs (Function
-// processes payment & creates pastPayment docs).
+// sends payment to the tutor minus our 10% fee & creates pastPayment docs).
 exports.processPayment = functions.firestore
     .document('/partitions/{partition}/users/{user}/approvedPayments/{payment}')
     .onCreate(Payments.processPayment);
@@ -86,8 +101,8 @@ exports.increaseBalance = functions.firestore
     .document('/partitions/{partition}/users/{user}/pastPayments/{payment}')
     .onCreate(Payments.updateBalance);
 
-// 4) Tutor requests payout by creating requestedPayout doc (Function sends
-// payout & creates pastPayout doc).
+// 4) TODO: Tutor requests payout by creating requestedPayout doc (Function 
+// sends payout & creates pastPayout doc).
 exports.processPayout = functions.firestore
     .document('/partitions/{partition}/users/{tutor}/requestedPayouts/{payout}')
     .onCreate(Payments.processPayout);
@@ -105,11 +120,7 @@ exports.processWeeklyPayouts = functions.https
 // OTHER
 // ============================================================================
 
-exports.backupAsPDF = functions.https.onRequest(backupAsPDF);
-
 exports.getEmailFromPhone = functions.https.onRequest(Search.getEmailFromPhone);
-
-exports.updateSheet = functions.https.onRequest(updateSheet);
 
 // user - When a newUser document is modified, check if they're a verified
 // supervisor and if so, ensure that they have customAuth setup

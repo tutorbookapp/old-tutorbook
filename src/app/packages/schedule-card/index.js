@@ -16,8 +16,6 @@ const Utils = require('@tutorbook/utils');
 const EditApptDialog = require('@tutorbook/dialogs').editAppt;
 const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
 const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
-const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;
-const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
 class Event {

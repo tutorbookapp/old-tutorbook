@@ -11,10 +11,13 @@ import to from 'await-to-js';
 // Dialogs
 const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
 const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
+const ViewCanceledRequestDialog = require('@tutorbook/dialogs')
+    .viewCanceledRequest;
 const EditApptDialog = require('@tutorbook/dialogs').editAppt;
 const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
 const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
 const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
+const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
 // Users
@@ -1044,14 +1047,15 @@ Card.renderCard = function(title, subtitle, summary, actions) {
         $(card).find('.dashboard-card__primary-action')
             .removeClass('mdc-card__primary-action');
         Object.entries(actions.options).forEach((entry) => {
-            $(card).find('.mdc-list').append(app.render.template('card-action', {
-                label: entry[0],
-                action: entry[1],
-            }));
+            $(card).find('.mdc-list').append(window.app.render.template(
+                'card-action', {
+                    label: entry[0],
+                    action: entry[1],
+                }));
         });
         new MDCRipple($(card).find('.mdc-icon-button')[0]).unbounded = true;
         const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
-        $(card).find('#menu').click(() => {
+        $(card).find('#menu')[0].addEventListener('click', () => {
             menu.open = true;
         });
         actions.menu = () => {

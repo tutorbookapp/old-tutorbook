@@ -5,6 +5,48 @@ class Utils {
 
     constructor() {}
 
+    static addDurationStrings(current, duration) {
+        // Formatted as: Hr:Min:Sec.Millisec
+        var currentHours = new Number(current.split(':')[0]);
+        var currentMinutes = new Number(current.split(':')[1]);
+        var currentSeconds = new Number(current.split(':')[2].split('.')[0]);
+        var durationHours = new Number(duration.split(':')[0]);
+        var durationMinutes = new Number(duration.split(':')[1]);
+        var durationSeconds = new Number(duration.split(':')[2].split('.')[0]);
+
+        // Add the two durations
+        currentHours += durationHours;
+        currentMinutes += durationMinutes;
+        currentSeconds += durationSeconds;
+
+        // Parse the current values to ensure they are formatted correctly
+        if (currentSeconds >= 60) {
+            currentMinutes += parseInt(currentSeconds / 60);
+            currentSeconds = currentSeconds % 60;
+        }
+        if (currentMinutes >= 60) {
+            currentHours += parseInt(currentMinutes / 60);
+            currentMinutes = currentMinutes % 60;
+        }
+
+        const f = (num) => ("0" + num).slice(-2);
+        return f(currentHours) + ':' + f(currentMinutes) + ':' +
+            f(currentSeconds);
+    }
+
+    static getDurationStringFromDates(start, end) {
+        const secs = (end.getTime() - start.getTime()) / 1000;
+        return Utils.getDurationStringFromSecs(secs);
+    }
+
+    static getDurationStringFromSecs(secs) {
+        // See: https://www.codespeedy.com/convert-seconds-to-hh-mm-ss-format-
+        // in-javascript/
+        const time = new Date(null);
+        time.setSeconds(secs);
+        return time.toISOString().substr(11, 8);
+    }
+
     static getAvailabilityString(data) {
         if ([
                 'Gunn Academic Center',

@@ -6,6 +6,7 @@ import {
 } from '@material/top-app-bar/index';
 
 import $ from 'jquery';
+import to from 'await-to-js';
 
 const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
@@ -127,6 +128,16 @@ class SearchHeader {
         listItemData.chat = async () => {
             (await window.app.chats.newWith(profile)).view();
         };
+        listItemData.hrs = async () => {
+            window.app.snackbar.view('Generating service hour log...');
+            const [err, res] = await to(Data.getServiceHoursLog({
+                uid: profile.uid,
+            }));
+            if (err) return window.app.snackbar.view('Could not generate ' +
+                'service hour log.');
+            window.app.snackbar.view('Generated service hour log.', 'view',
+                () => window.open(res), false);
+        };
         listItemData.grade = profile.grade || 'No Grade';
         listItemData.type = profile.type || 'No Type';
 
@@ -136,10 +147,12 @@ class SearchHeader {
             listItemData.free = false;
             listItemData.rate = '$' + profile.payments.hourlyCharge.toFixed(0);
             listItemData.paymentType = 'paid';
+            listItemData.showHrs = false;
         } else {
             listItemData.free = true;
             listItemData.paid = false;
             listItemData.paymentType = 'free';
+            if (profile.type === 'Tutor') listItemData.showHrs = true;
         }
 
         el = this.render.template('search-hit-user', listItemData);

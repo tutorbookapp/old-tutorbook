@@ -362,8 +362,12 @@ class Profile {
         const dialog = new EditAvailabilityDialog(el);
         MDCTextField.attachTo(el);
         el.addEventListener('click', () => dialog.view());
-        $(el).insertAfter(
-            $(this.main).find('[id="Available"]').last().parent());
+        if ($(this.main).find('[id="Available"]').length) {
+            $(el).insertAfter(
+                $(this.main).find('[id="Available"]').last().parent());
+        } else {
+            $(el).insertAfter($(this.main).find('[id="Availability"]'));
+        }
         el.scrollIntoView();
         $(el).click();
     }

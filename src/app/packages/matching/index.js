@@ -246,30 +246,25 @@ class Matching {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Matching';
         window.app.view(this.header, this.main, '/app/matching');
-        this.manage();
-        (!this.cardsViewed) ? this.viewCards(): null;
+        if (!this.managed) this.manage();
+        if (!this.cardsViewed) this.viewCards();
     }
 
     reView() {
         window.app.intercom.view(false);
-        $(this.main).find('#tutor-button').click(() => {
-            this.createTutor();
-        });
-        $(this.main).find('#pupil-button').click(() => {
-            this.createPupil();
-        });
     }
 
     manage() {
+        this.managed = true;
         MDCTopAppBar.attachTo(this.header);
         // Adds listeners to the fabs to create tutor and pupil accounts
         $(this.main).find('.mdc-fab').each(function() {
             MDCRipple.attachTo($(this)[0]);
         });
-        $(this.main).find('#tutor-button').click(() => {
+        $(this.main).find('#tutor-button')[0].addEventListener('click', () => {
             this.createTutor();
         });
-        $(this.main).find('#pupil-button').click(() => {
+        $(this.main).find('#pupil-button')[0].addEventListener('click', () => {
             this.createPupil();
         });
     }

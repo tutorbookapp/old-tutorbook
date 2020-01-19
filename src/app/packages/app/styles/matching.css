@@ -8,6 +8,28 @@
   }
 }
 
+/*
+ *.matching #tutor-button {
+ *  bottom: calc(2rem + 48px) !important; [> Adjust for existing mdc-fab <]
+ *}
+ *
+ *@media(min-width: 1024px) {
+ *  .matching #tutor-button {
+ *    bottom: calc(2.5rem + 48px) !important; [> Adjust for existing mdc-fab <]
+ *  }
+ *}
+ *
+ *.matching #pupil-button {
+ *  bottom: calc(3rem + 96px) !important; [> Adjust for existing mdc-fab <]
+ *}
+ *
+ *@media(min-width: 1024px) {
+ *  .matching #pupil-button {
+ *    bottom: calc(3.5rem + 96px) !important; [> Adjust for existing mdc-fab <]
+ *  }
+ *}
+ */
+
 .dialog-input #results .mdc-list-item:first-child{
   margin-top: 0 !important;
 }
