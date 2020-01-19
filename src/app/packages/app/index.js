@@ -41,10 +41,9 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Paly Peer Tutoring Center',
-            id: 'fcKWyRWy124H4M34mS1r',
+            name: 'Any',
         };
-        this.test = true;
+        this.test = false;
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
             'ns.net/';
         //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-
