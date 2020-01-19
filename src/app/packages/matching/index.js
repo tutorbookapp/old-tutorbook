@@ -61,9 +61,7 @@ class Matching {
                     that.removeUserQuery($(this).attr('id'));
                 });
                 if ($(this.main).find('.mdc-card').length) return;
-                $(this.renderEmpty()).insertAfter(
-                    $(this.main).find('.header-welcome')
-                );
+                $(this.main).prepend(this.renderEmpty());
             },
         };
         this.matchesRecycler = {
@@ -457,17 +455,11 @@ class Matching {
     }
 
     renderEmpty() {
-        if ($(this.main).find('.centered-text').length) {
-            return;
-        }
-        const text = this.render.template('centered-text', {
-            text: 'No matches or proxy accounts so far.'
+        if ($(this.main).find('.centered-text').length) return;
+        return this.render.template('centered-text', {
+            text: 'Click the "Pupil" or "Tutor" button to start your first ' +
+                'match.'
         });
-        // TODO: Center this within the remaining space (i.e. Right now it's
-        // centered relative to the whole screen. We want it to be centered
-        // relative to the unfilled part of the screen).
-        $(text).css('margin-top', '120px');
-        return text;
     }
 };
 
