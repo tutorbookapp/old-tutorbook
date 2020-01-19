@@ -330,6 +330,7 @@ class Render {
                 'settings': () => {
                     window.app.settings.view();
                 },
+                print: () => window.app.print(),
             }, data));
         return headerEl;
     }

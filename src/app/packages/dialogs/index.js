@@ -601,18 +601,12 @@ class ViewRequestDialog {
                 new EditRequestDialog(this.request, this.id).view();
             },
             showEdit: true,
-            print: () => {
-                window.app.print();
-            },
             showApprove: window.app.user.email === this.request.toUser.email,
             approve: async () => {
                 window.app.nav.back();
                 window.app.snackbar.view('Approving request...');
                 await Data.approveRequest(this.request, this.id);
                 window.app.snackbar.view('Approved request.');
-            },
-            cancel: () => {
-                window.app.nav.back();
             },
         });
 
@@ -659,7 +653,6 @@ class ViewCanceledRequestDialog extends ViewRequestDialog {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Canceled Request',
-            print: () => window.app.print(),
         });
     }
 };
@@ -746,9 +739,6 @@ class EditRequestDialog {
         const header = this.render.header('header-action', {
             title: 'Edit Request',
             ok: () => {},
-            cancel: () => {
-                window.app.nav.back();
-            },
         });
 
         this.header = header;
@@ -1003,9 +993,6 @@ class NewRequestDialog extends EditRequestDialog {
         this.header = this.render.header('header-action', { // Override header
             title: 'New Request',
             send: () => {},
-            cancel: () => {
-                window.app.nav.back();
-            },
         });
     }
 
@@ -1277,12 +1264,6 @@ class ViewApptDialog extends ViewRequestDialog {
             edit: () => {
                 new EditApptDialog(this.appt, this.id).view();
             },
-            print: () => {
-                window.app.print();
-            },
-            cancel: () => {
-                window.app.nav.back();
-            },
             title: 'Upcoming Appointment',
         });
     }
@@ -1465,9 +1446,6 @@ class EditApptDialog extends EditRequestDialog {
                 await Data.modifyAppt(this.appt, this.id);
                 window.app.snackbar.view('Modified appointment.');
             },
-            cancel: () => {
-                window.app.nav.back();
-            },
         });
     }
 };
@@ -1477,9 +1455,6 @@ class ViewPastApptDialog extends ViewApptDialog {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Past Appointment',
-            print: () => {
-                window.app.print();
-            },
             showDelete: true,
             delete: () => {
                 return new ConfirmationDialog('Delete Past Appointment?',
@@ -1604,9 +1579,6 @@ class ViewCanceledApptDialog extends ViewApptDialog {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Canceled Appointment',
-            print: () => {
-                window.app.print();
-            },
         });
         $(this.main).find('[id="Hours clocked"]').remove();
         $(this.main).find('#Current').parent().remove();

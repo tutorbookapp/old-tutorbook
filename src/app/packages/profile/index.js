@@ -449,9 +449,6 @@ class NewProfile extends Profile {
         super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'New Profile',
-            cancel: () => {
-                window.app.nav.back();
-            },
             ok: () => {
                 this.createProfile();
             },
@@ -661,9 +658,6 @@ class EditProfile extends NewProfile {
         super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Edit Profile',
-            cancel: () => {
-                window.app.nav.back();
-            },
             ok: () => {
                 this.updateProfile();
             },
