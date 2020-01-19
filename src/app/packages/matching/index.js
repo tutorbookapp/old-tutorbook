@@ -457,8 +457,7 @@ class Matching {
     renderEmpty() {
         if ($(this.main).find('.centered-text').length) return;
         return this.render.template('centered-text', {
-            text: 'Click the "Pupil" or "Tutor" button to start your first ' +
-                'match.'
+            text: 'Click the "Pupil" or "Tutor" button to start matching.',
         });
     }
 };
