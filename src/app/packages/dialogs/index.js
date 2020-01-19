@@ -152,7 +152,9 @@ class SubjectSelectDialog {
     }
 
     renderSelf() {
-        this.main = this.render.template('dialog-subjects');
+        this.main = this.render.template('dialog-subjects', {
+            back: () => this.section('page-all'),
+        });
         this.pages = this.main.querySelectorAll('.page');
         const that = this;
 
