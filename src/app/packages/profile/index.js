@@ -459,10 +459,12 @@ class NewProfile extends Profile {
         );
         const renderHit = (hit) => {
             const profile = new EditProfile(Utils.filterProfile(hit));
-            const el = window.app.renderHit(hit, this.render).cloneNode(true);
-            $(el).find('button').remove();
-            el.addEventListener('click', () => {
+            const el = window.app.renderHit(hit, this.render);
+            $(el).find('[data-fir-click="edit"]').remove();
+            el.addEventListener('click', (event) => {
+                if ($(event.target).closest('button').length) return;
                 profile.view();
+                window.app.nav.views.pop(); // TODO: Don't open UserView at all.
                 window.app.nav.views.pop(); // Don't keep old NewProfile view.
             });
             return el;
