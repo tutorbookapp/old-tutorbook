@@ -1012,6 +1012,10 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">wc</i>
                 <span class="mdc-list-item__text">Matching</span>
             </a>
+            <a id="chats" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showChats">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">chat</i>
+                <span class="mdc-list-item__text">Messages</span>
+            </a>
             <a id="payments" data-fir-if="payments" class="mdc-list-item" data-fir-click="showPayments">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">payment</i>
                 <span class="mdc-list-item__text">Payments</span>
@@ -1044,7 +1048,7 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">calendar_today</i>
                 <span class="mdc-list-item__text">Schedule</span>
             </a>
-            <a id="chats" class="mdc-list-item" data-fir-click="showChats">
+            <a id="chats" class="mdc-list-item" data-fir-if-not="supervisor" data-fir-click="showChats">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">chat</i>
                 <span class="mdc-list-item__text">Messages</span>
             </a>
