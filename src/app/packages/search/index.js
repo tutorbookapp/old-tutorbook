@@ -26,7 +26,9 @@ class SearchHeader {
 
     renderSelf(options) {
         this.el = this.render.header('header-search', Utils.combineMaps({
-            'title': 'Tutorbook',
+            title: 'Tutorbook',
+            placeholder: window.app.onMobile ? 'Search users' : 'Search users' +
+                ' by name, subject, availability, and more',
         }, options));
     }
 
