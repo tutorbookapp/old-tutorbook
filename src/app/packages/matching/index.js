@@ -397,8 +397,10 @@ class Matching {
 
     renderCard(doc) {
         const profile = doc.data();
-        this.users[doc.id] = profile; // Store raw user data
         const dialog = new EditProfile(profile);
+        const match = new MatchingDialog(profile);
+        this.users[doc.id] = profile; // Store raw user data
+        this.matches[doc.id] = match; // Store matching dialogs in cache
         this.profiles[doc.id] = dialog; // Store profiles in cache
         const title = (profile.type === 'Tutor') ? 'Tutor Account' :
             (profile.type === 'Pupil') ? 'Pupil Account' : 'Proxy Account';
@@ -409,38 +411,34 @@ class Matching {
             Utils.getPronoun(profile.gender) + ' profile.';
         var card;
         const actions = {
-            hide: () => {
-                $(card).remove();
+            hide: async () => {
+                $(card).hide();
                 this.removeUserQuery(doc.id);
-                Data.updateUser(Utils.combineMaps(profile, {
-                    proxy: [],
-                })).catch((err) => {
+                const [err, res] = await to(Data.updateUser(Utils.combineMaps(
+                    profile, {
+                        proxy: [],
+                    })));
+                if (err) {
                     window.app.snackbar.view('Could not hide ' + profile.name +
                         '\'s card.');
-                });
+                    $(card).show();
+                    return this.addUserQuery(doc.id);
+                }
+                $(card).remove();
             },
-            delete: () => {
-                new ConfirmationDialog('Delete Proxy Account?',
-                    'You are about to permanently delete ' + profile.name +
-                    '\'s account data. This action cannot be undone. Please ensure ' +
-                    'to check with your fellow supervisors before continuing.', async () => {
-                        const [err, res] = await to(Data.deleteUser(doc.id));
-                        if (err) window.app.snackbar.view('Could not delete ' +
-                            'account.');
-                        window.app.snackbar.view('Deleted account.');
-                    }).view();
-            },
-            primary: () => {
-                dialog.view();
-            },
+            delete: () => new ConfirmationDialog('Delete Proxy Account?',
+                'You are about to permanently delete ' + profile.name +
+                '\'s account data. This action cannot be undone. Please ' +
+                'ensure to check with your fellow supervisors before ' +
+                'continuing.', async () => {
+                    const [err, res] = await to(Data.deleteUser(doc.id));
+                    if (err) window.app.snackbar.view('Could not delete ' +
+                        'account.');
+                    window.app.snackbar.view('Deleted account.');
+                }).view(),
+            match: () => match.view(),
+            primary: () => dialog.view(),
         };
-        if (profile.type === 'Pupil') {
-            const match = new MatchingDialog(profile);
-            this.matches[doc.id] = match;
-            actions.match = () => {
-                match.view();
-            };
-        }
 
         card = Card.renderCard(title, subtitle, summary, actions);
         card.setAttribute('id', doc.id);
