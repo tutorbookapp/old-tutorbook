@@ -457,9 +457,9 @@ class Matching {
 
 // Class that enables supervisors to create matches for pupils
 class MatchingDialog {
-    constructor(profile) {
+    constructor(profile, options) {
         this.profile = profile;
-        this.subject = profile.subjects[0];
+        this.subject = options.subject || profile.subjects[0];
         this.selectedUsers = [];
         const update = () => {
             const btn = $(this.main).find('.action-list-divider #match').last();

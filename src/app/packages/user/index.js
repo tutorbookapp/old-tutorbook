@@ -125,10 +125,13 @@ class User {
         this.main.querySelectorAll('#subjects .mdc-list-item').forEach((el) => {
             MDCRipple.attachTo(el);
             el.addEventListener('click', () => {
-                if (this.profile.payments.type === 'Paid') {
+                if (window.app.user.type === 'Supervisor')
+                    return new window.app.MatchingDialog(this.profile, {
+                        subject: el.innerText,
+                    }).view();
+                if (this.profile.payments.type === 'Paid')
                     return new StripeRequestDialog(el.innerText, this.profile)
                         .view();
-                }
                 return new NewRequestDialog(el.innerText, this.profile).view();
             });
         });
