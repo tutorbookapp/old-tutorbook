@@ -1,0 +1,17 @@
+@import "@material/snackbar/mdc-snackbar";
+
+@media (min-width: $mdc-snackbar-mobile-breakpoint) {
+  .mdc-snackbar {
+    @include mdc-snackbar-position-leading;
+  }
+}
+
+@media (min-width: $mdc-snackbar-mobile-breakpoint) {
+  .mdc-snackbar {
+    @include mdc-snackbar-viewport-margin($mdc-snackbar-viewport-margin-wide);
+  }
+}
+
+.mdc-snackbar {
+  @include mdc-snackbar-label-ink-color(rgba(255, 255, 255, 0.87));
+}

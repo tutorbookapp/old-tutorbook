@@ -24,7 +24,7 @@ class Snackbar {
             }
             var snackbar = new MDCSnackbar(el);
             snackbar.labelText = message;
-            snackbar.timeoutMs = 4000;
+            snackbar.timeoutMs = message.endsWith('...') ? -1 : 4000;
             snackbar.listen('MDCSnackbar:closed', () => {
                 $(el).remove();
             });

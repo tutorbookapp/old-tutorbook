@@ -45,6 +45,7 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/search.scss'),
                 path.resolve(__dirname, 'packages/app/styles/ads.scss'),
                 path.resolve(__dirname, 'packages/app/styles/dashboard.scss'),
+                path.resolve(__dirname, 'packages/app/styles/snackbar.scss'),
 
                 // All other styling files are contained as CSS files
                 path.resolve(__dirname, 'packages/app/styles/loader.css'),
@@ -56,7 +57,6 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/filters.css'),
                 path.resolve(__dirname, 'packages/app/styles/history.css'),
                 path.resolve(__dirname, 'packages/app/styles/matching.css'),
-                path.resolve(__dirname, 'packages/app/styles/snackbar.css'),
             ]
         },
         output: {
