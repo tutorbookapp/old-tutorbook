@@ -21,6 +21,9 @@ class SearchHeader {
 
     constructor(options) {
         this.render = window.app.render;
+        if (!options) options = {};
+        this.index = options.index ? options.index : algolia.initIndex('users');
+        if (options.search) this.search = options.search;
         this.renderSelf(options);
     }
 
@@ -30,6 +33,30 @@ class SearchHeader {
             placeholder: window.app.onMobile ? 'Search users' : 'Search users' +
                 ' by name, subject, availability, and more',
         }, options));
+    }
+
+    async search(that) {
+        const query = $(that.el).find('.search-box input').val();
+        query.length > 0 ? that.showClearButton() : that.showInfoButton();
+        const res = await that.index.search({
+            query: query,
+            facetFilters: window.app.location.name === 'Any' ? [
+                'partition:' + (window.app.test ? 'test' : 'default'),
+            ] : [
+                'payments.type:Free',
+                'location:' + window.app.location.name,
+                'partition:' + (window.app.test ? 'test' : 'default'),
+            ],
+        });
+        $(that.el).find('#results').empty();
+        res.hits.forEach((hit) => {
+            try {
+                $(that.el).find('#results').append(that.renderHit(hit));
+            } catch (e) {
+                console.warn('[ERROR] Could not render hit (' + hit.objectID +
+                    ') b/c of', e);
+            }
+        });
     }
 
     manage() {
@@ -52,42 +79,17 @@ class SearchHeader {
             if (!clicked && open) return this.hideResults();
             if (clicked && !open) return this.showResults();
         });
-        const index = algolia.initIndex('users');
-        const search = async () => {
-            const query = $(this.el).find('.search-box input').val();
-            (query.length > 0) ? this.showClearButton(): this.showInfoButton();
-            const res = await index.search({
-                query: query,
-                facetFilters: window.app.location.name !==
-                    'Any' ? [
-                        'payments.type:Free',
-                        'location:' + window.app.location.name,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ],
-            });
-            $(this.el).find('#results').empty();
-            res.hits.forEach((hit) => {
-                try {
-                    $(this.el).find('#results').append(this.renderHit(hit));
-                } catch (e) {
-                    console.warn('[ERROR] Could not render hit (' +
-                        hit.objectID + ') b/c of', e);
-                }
-            });
-        };
-        $(this.el).find('.search-box input').on('input', async () => search())
+        $(this.el).find('.search-box input').on('input', () => this.search(this))
             .focusout(() => {
                 if (!$(this.el).find('.search-results li:hover').length)
                     this.hideResults();
             })
             .focus(() => this.showResults());
-        search(); // TODO: Show filter prompts instead of initial results
+        this.search(this); // TODO: Show filter prompts instead of results
         $(this.el).find('#clear-button').click(() => {
             $(this.el).find('.search-box input').val('');
             this.showInfoButton();
-            search();
+            this.search(this);
         });
     }
 

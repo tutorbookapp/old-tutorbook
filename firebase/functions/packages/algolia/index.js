@@ -30,7 +30,11 @@ class Algolia {
     }
 
     static appt(change, context) {
-        Algolia.update(change, context, 'appts');
+        Algolia.update(change, context, 'appts', {
+            attributesForFaceting: [
+                'filterOnly(location.id)',
+            ],
+        });
     }
 
     static activeAppt(change, context) {

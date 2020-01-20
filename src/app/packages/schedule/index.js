@@ -8,6 +8,9 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const algolia = require('algoliasearch')
+    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
+const SearchHeader = require('@tutorbook/search').header;
 const Card = require('@tutorbook/card');
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
@@ -96,19 +99,22 @@ class Schedule {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Schedule';
         window.app.view(this.header, this.main, '/app/schedule');
-        this.manage();
+        this.search.manage();
+        if (!this.managed) this.manage();
         this.viewAppts();
     }
 
     manage() {
+        this.managed = true;
         MDCTopAppBar.attachTo(this.header);
         MDCRipple.attachTo($(this.main).find('#load-more')[0]);
-        $(this.main).find('#load-more').click(() => {
+        $(this.main).find('#load-more')[0].addEventListener('click', () => {
             this.loadMore();
         });
     }
 
     reView() {
+        this.search.manage();
         this.viewAppts(); // TODO: Just re-attach listeners
     }
 
@@ -142,10 +148,47 @@ class Schedule {
         }, this.recycler);
     }
 
+    renderHit(hit) {
+        const doc = {
+            data: () => Utils.filterApptData(hit),
+            id: hit.objectID,
+        };
+        const el = window.app.user.type === 'Supervisor' ?
+            new SupervisorAppt(doc).el : new Appt(doc).el;
+        MDCRipple.attachTo(el);
+        return $(el).find('button').remove().end()[0];
+    }
+
     renderSelf() {
-        this.header = this.render.header('header-main', {
+        this.search = new SearchHeader({
             title: 'Schedule',
+            placeholder: window.app.onMobile ? 'Search appointments' : 'Searc' +
+                'h appointments by subject, location, time, and more',
+            index: algolia.initIndex('appts'),
+            search: async (that) => {
+                const qry = $(that.el).find('.search-box input').val();
+                qry.length > 0 ? that.showClearButton() : that.showInfoButton();
+                const res = await that.index.search({
+                    query: qry,
+                    facetFilters: window.app.location.name === 'Any' ? [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'location.id:' + window.app.location.id,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
+                });
+                $(that.el).find('#results').empty();
+                res.hits.forEach((hit) => {
+                    try {
+                        $(that.el).find('#results').append(this.renderHit(hit));
+                    } catch (e) {
+                        console.warn('[ERROR] Could not render hit (' +
+                            hit.objectID + ') b/c of', e);
+                    }
+                });
+            },
         });
+        this.header = this.search.el;
         this.main = this.render.template('schedule', {
             welcome: !window.app.onMobile,
             summary: (window.app.user.type === 'Supervisor' ? 'View all past, ' +

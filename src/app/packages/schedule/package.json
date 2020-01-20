@@ -14,6 +14,7 @@
     "@tutorbook/data": "^0.2.14",
     "@tutorbook/dialogs": "^0.2.14",
     "@tutorbook/schedule-items": "^0.2.14",
+    "@tutorbook/search": "^0.2.14",
     "@tutorbook/user": "^0.2.14",
     "@tutorbook/utils": "^0.2.14"
   },
