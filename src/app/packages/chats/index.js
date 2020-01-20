@@ -26,7 +26,8 @@ class Chats {
                 }
             },
             display: (doc) => {
-                // We don't want to display user's that do not have a valid profile
+                // We don't want to display user's that do not have a valid 
+                // profile
                 if (window.app.nav.selected === 'Messages') {
                     var listItem = this.renderChatItem(doc);
                     return this.viewChat(listItem);
@@ -93,11 +94,12 @@ class Chats {
     renderSelf() {
         this.main = this.render.template('chats', {
             welcomeTitle: 'Messages',
-            welcomeSubtitle: (window.app.user.type === 'Tutor') ? 'Answer your students\'s ' +
-                'questions, market yourself to prospective students, and manage' +
-                ' appointments with students all in one place.' : 'Ask your tutor' +
-                ' questions, re-schedule appointments, and talk to prospective' +
-                ' tutors all in one place.',
+            welcomeSubtitle: (window.app.user.type === 'Tutor') ? 'Answer ' +
+                'your students\'s questions, market yourself to prospective ' +
+                'students, and manage appointments with students all in one ' +
+                'place.' : 'Ask your tutor questions, re-schedule ' +
+                'appointments, and talk to prospective tutors all in one ' +
+                'place.',
             showWelcome: !window.app.onMobile,
         });
         this.header = this.render.header('header-main', {
@@ -133,9 +135,8 @@ class Chats {
     // Function that returns the user's current chats (we will support filtering
     // chats in the future).
     getChats() {
-        const db = window.app.db;
-        return db.collection('chats')
-            .where('chatterEmails', 'array-contains', window.app.user.email);
+        return window.app.db.collection('chats')
+            .where('chatterUIDs', 'array-contains', window.app.user.uid);
     }
 
     // Helper function that empties the current chat list to display new ones
@@ -143,8 +144,8 @@ class Chats {
         return $('main #chats').empty();
     }
 
-    // Data action function that deletes the chat and TODO: sends out deleted chat
-    // notifications to the other users on the chat.
+    // Data action function that deletes the chat and TODO: sends out deleted 
+    // chat notifications to the other users on the chat.
     deleteChat(chat, id) {
         const db = window.app.db;
         return db.collection('chats').doc(id).delete();
@@ -251,8 +252,8 @@ class Chats {
                 user.email,
             ],
             createdBy: window.app.conciseUser,
-            name: '', // Right now, we just use the chatter's names as the chat name
-            photo: '', // Right now, we just use the chatter's photos as the chat photo
+            name: '', // Use the chatter's names as the chat name
+            photo: '', // Use the chatter's photos as the chat photo
         };
         const ref = db.collection('chats').doc();
         await ref.set(chat);
@@ -306,19 +307,14 @@ class Chat {
     }
 
     renderSelf() {
+        const name = Utils.getOtherUser(this.chat.chatters[0], this.chat
+            .chatters[1]).name;
+        const that = this;
         this.header = this.render.header('header-back', {
-            title: 'Chat with ' + Utils
-                .getOtherUser(this.chat.chatters[0], this.chat.chatters[1]).name,
+            title: 'Chat with ' + name,
         });
         this.main = this.render.template('chat', {
-            attach: () => {
-                console.log('TODO: Implement attaching files');
-            },
-            emoji: () => {
-                console.log('TODO: Implement emoji options');
-            },
             send: async () => {
-                // Enter key hit
                 const input = 'main .chat .write input';
                 $(input).attr('disabled', 'disabled');
                 const message = $(input).val();
@@ -326,16 +322,17 @@ class Chat {
                 $(input).removeAttr('disabled');
                 (message !== '') ? await that.sendMessage(message): null;
             },
+            placeholder: 'Message ' + name + '...',
         });
     }
 
     // Manager function that sends messages
     manage() {
+        MDCRipple.attachTo($(this.main).find('button')[0]).unbounded = true;
         MDCTopAppBar.attachTo(this.header);
         const that = this;
         $(this.main).find('.write input').keyup(async function(e) {
-            if (e.keyCode == 13) {
-                // Enter key hit
+            if (e.keyCode == 13) { // Enter key hit
                 $(this).attr('disabled', 'disabled');
                 const message = $(this).val();
                 $(this).val('');
