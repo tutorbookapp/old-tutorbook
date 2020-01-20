@@ -7877,6 +7877,43 @@ svg.mdc-button__icon {
 
 #media-capture {
   display: none; }
+
+.search-input-list-item .search-results #results {
+  margin-top: 0 !important; }
+
+.search-input-list-item {
+  position: initial; }
+
+.search-input-list-item .search-results {
+  position: absolute;
+  max-height: 30vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background: #FFF;
+  border-radius: 0px 0px 7px 7px;
+  width: calc(100% - 32px);
+  /* Size of mdc-list minus list-item padding. */
+  z-index: 1;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  .search-input-list-item .search-results li button {
+    color: #5F6368 !important; }
+
+#name-list-item .search-results {
+  top: 225px; }
+
+#email-list-item .search-results {
+  top: 305px; }
+
+.search-input-list-item .search-box--elevated {
+  border-radius: 7px 7px 0px 0px !important;
+  background: #FFF !important;
+  border-bottom: 1px solid #E0E0E0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+.search-input-list-item .search-box {
+  border-radius: 7px;
+  padding: 11px;
+  width: 100%; }
 .mdc-top-app-bar {
   background-color: #6200ee;
   /* @alternate */

@@ -28,6 +28,7 @@ const MatchingDialog = require('@tutorbook/matching').dialog;
 // Dependency cycle workarounds
 const EditProfile = require('@tutorbook/profile').edit;
 const NotificationDialog = require('@tutorbook/dialogs').notify;
+const renderHit = require('@tutorbook/search').header.renderHit;
 const renderCard = require('@tutorbook/card').renderCard;
 
 // Helper packages
@@ -43,7 +44,7 @@ class Tutorbook {
         this.location = {
             name: 'Any',
         };
-        this.test = false;
+        this.test = true;
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
             'ns.net/';
         //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-
@@ -64,6 +65,7 @@ class Tutorbook {
         this.EditProfile = EditProfile;
         this.NotificationDialog = NotificationDialog;
         this.MatchingDialog = MatchingDialog;
+        this.renderHit = renderHit;
         this.renderCard = renderCard;
 
         // App packages

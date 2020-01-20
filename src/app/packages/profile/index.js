@@ -17,7 +17,8 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-// TODO: Make these dialog classes
+const algolia = require('algoliasearch')
+    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
 const EditSubjectDialog = require('@tutorbook/dialogs').editSubject;
 const NotificationDialog = require('@tutorbook/dialogs').notify;
@@ -456,12 +457,46 @@ class NewProfile extends Profile {
         $(this.main).find('.profile-header').replaceWith(
             this.render.listDivider('Basic info')
         );
-        $(this.render.textFieldItem('Name', this.profile.name))
+        const renderHit = (hit) => {
+            const profile = new EditProfile(Utils.filterProfile(hit));
+            const el = window.app.renderHit(hit, this.render).cloneNode(true);
+            $(el).find('button').remove();
+            el.addEventListener('click', () => {
+                profile.view();
+                window.app.nav.views.pop(); // Don't keep old NewProfile view.
+            });
+            return el;
+        };
+        const index = algolia.initIndex('users');
+        const search = async (textFieldItem) => {
+            const query = $(textFieldItem).find('.search-box input').val();
+            const res = await index.search({
+                query: query,
+                facetFilters: window.app.location.name !==
+                    'Any' ? [
+                        'payments.type:Free',
+                        'location:' + window.app.location.name,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
+            });
+            $(textFieldItem).find('#results').empty();
+            res.hits.forEach((hit) => {
+                try {
+                    $(textFieldItem).find('#results').append(renderHit(hit));
+                } catch (e) {
+                    console.warn('[ERROR] Could not render hit (' +
+                        hit.objectID + ') b/c of', e);
+                }
+            });
+        };
+        $(this.render.searchTextFieldItem('Name', this.profile.name, search))
             .insertAfter($(this.main).find('[id="Basic info"]'));
-        $(this.render.textFieldItem('Email', this.profile.email))
-            .insertAfter($(this.main).find('#Name').parent());
+        $(this.render.searchTextFieldItem('Email', this.profile.email, search))
+            .insertAfter($(this.main).find('#Name').parent().parent());
         $(this.render.listDivider('Visibility'))
-            .insertAfter($(this.main).find('#Email').first().parent());
+            .insertAfter($(this.main).find('#Email').first().parent().parent());
         $(this.render.switch('Show profile', {
             on: 'Others are able to see and request this user.',
             off: 'Others cannot see or request this user.',
@@ -680,6 +715,10 @@ class EditProfile extends NewProfile {
         $(this.main).find('#Type').replaceWith(
             $(this.render.select('Type', this.profile.type, Data.types))
             .attr('style', 'width:50% !important;'));
+        $(this.main).find('#Name').parent().parent().replaceWith(
+            this.render.textFieldItem('Name', this.profile.name));
+        $(this.main).find('#Email').first().parent().parent().replaceWith(
+            this.render.textFieldItem('Email', this.profile.email));
     }
 
     updateProfile() {

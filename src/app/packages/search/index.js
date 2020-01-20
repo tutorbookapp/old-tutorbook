@@ -47,8 +47,8 @@ class SearchHeader {
                 $target.closest($(this.el).find('.search-results')).length ||
                 $target.closest($(this.el).find('.search-box')).length;
             const open = $(this.el).find('.search-results').is(':visible');
-            return (!clicked && open) ? this.hideResults() :
-                (clicked && !open) ? this.showResults() : undefined;
+            if (!clicked && open) return this.hideResults();
+            if (clicked && !open) return this.showResults();
         });
         const index = algolia.initIndex('users');
         const search = async () => {
@@ -75,7 +75,12 @@ class SearchHeader {
                 }
             });
         };
-        $(this.el).find('.search-box input').on('input', async () => search());
+        $(this.el).find('.search-box input').on('input', async () => search())
+            .focusout(() => {
+                if (!$(this.el).find('.search-results li:hover').length)
+                    this.hideResults();
+            })
+            .focus(() => this.showResults());
         search(); // TODO: Show filter prompts instead of initial results
         $(this.el).find('#clear-button').click(() => {
             $(this.el).find('.search-box input').val('');
@@ -108,7 +113,11 @@ class SearchHeader {
             .removeClass('search-box--elevated');
     }
 
-    renderHit(hit) { // TODO: Remove code duplication from Search()
+    renderHit(hit) {
+        return SearchHeader.renderHit(hit, this.render);
+    }
+
+    static renderHit(hit, render) { // TODO: Remove code duplication from Search()
         var el;
         const profile = Utils.filterProfile(hit);
         const match = new window.app.MatchingDialog(profile);
@@ -156,7 +165,7 @@ class SearchHeader {
             if (profile.type === 'Tutor') listItemData.showHrs = true;
         }
 
-        el = this.render.template('search-hit-user', listItemData);
+        el = render.template('search-hit-user', listItemData);
         MDCRipple.attachTo(el);
         $(el).find('button').each(function() {
             MDCRipple.attachTo(this).unbounded = true;

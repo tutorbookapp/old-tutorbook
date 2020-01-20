@@ -296,6 +296,41 @@ class Render {
         return el;
     }
 
+    searchTextFieldItem(label, val, search) {
+        const textFieldItem = this.template('search-input-list-item', {
+            label: label,
+            text: val,
+            id: label.toLowerCase() + '-list-item',
+        });
+        const hideResults = () => {
+            $(textFieldItem).find('.search-results').hide();
+            $(textFieldItem).find('.search-box')
+                .removeClass('search-box--elevated');
+        };
+        const showResults = () => {
+            $(textFieldItem).find('.search-results').show();
+            $(textFieldItem).find('.search-box')
+                .addClass('search-box--elevated');
+        };
+        $(document).click((event) => {
+            const $target = $(event.target);
+            const clicked =
+                $target.closest($(textFieldItem).find('.search-results')).length ||
+                $target.closest($(textFieldItem).find('.search-box')).length;
+            const open = $(textFieldItem).find('.search-results').is(':visible');
+            if (!clicked && open) return hideResults();
+            if (clicked && !open) return showResults();
+        });
+        $(textFieldItem).find('.search-box input')
+            .on('input', () => search(textFieldItem))
+            .focusout(() => {
+                if (!$(textFieldItem).find('.search-results li:hover').length)
+                    hideResults();
+            })
+            .focus(() => showResults());
+        return textFieldItem;
+    }
+
     textFieldItem(label, val) {
         return this.inputItem(this.textField(label, val));
     }
