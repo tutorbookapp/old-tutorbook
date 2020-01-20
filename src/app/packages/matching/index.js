@@ -430,9 +430,6 @@ class Matching {
                         window.app.snackbar.view('Deleted account.');
                     }).view();
             },
-            edit: () => {
-                dialog.view();
-            },
             primary: () => {
                 dialog.view();
             },
@@ -446,9 +443,6 @@ class Matching {
         }
 
         card = Card.renderCard(title, subtitle, summary, actions);
-        MDCRipple.attachTo($(card).find('.mdc-card__primary-action')[0]);
-        MDCRipple.attachTo($(card).find('#edit')[0]);
-        MDCRipple.attachTo($(card).find('#delete')[0]);
         card.setAttribute('id', doc.id);
         card.setAttribute('type', 'users');
         return card;
