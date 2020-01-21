@@ -21,7 +21,7 @@ class Algolia {
     }
 
     static user(change, context) {
-        Algolia.update(change, context, 'users', {
+        return Algolia.update(change, context, 'users', {
             attributesForFaceting: [
                 'filterOnly(payments.type)',
                 'filterOnly(location)',
@@ -30,7 +30,7 @@ class Algolia {
     }
 
     static appt(change, context) {
-        Algolia.update(change, context, 'appts', {
+        return Algolia.update(change, context, 'appts', {
             attributesForFaceting: [
                 'filterOnly(location.id)',
             ],
@@ -38,15 +38,15 @@ class Algolia {
     }
 
     static activeAppt(change, context) {
-        Algolia.update(change, context, 'activeAppts');
+        return Algolia.update(change, context, 'activeAppts');
     }
 
     static pastAppt(change, context) {
-        Algolia.update(change, context, 'pastAppts');
+        return Algolia.update(change, context, 'pastAppts');
     }
 
     static chat(change, context) {
-        Algolia.update(change, context, 'chats');
+        return Algolia.update(change, context, 'chats');
     }
 };
 
