@@ -28,10 +28,10 @@ class Message {
         var chat;
         (await db
             .collection('chats')
-            .where('chatterEmails', 'array-contains', this.to.email)
+            .where('chatterUIDs', 'array-contains', this.to.uid)
             .get()
         ).forEach((doc) => {
-            if (doc.data().chatterEmails.indexOf(this.from.email) >= 0)
+            if (doc.data().chatterUIDs.indexOf(this.from.uid) >= 0)
                 chat = doc.ref
         });
         if (!chat) {
@@ -49,6 +49,10 @@ class Message {
                 chatterEmails: [
                     this.to.email,
                     this.from.email,
+                ],
+                chatterUIDs: [
+                    this.to.uid,
+                    this.from.uid,
                 ],
                 createdBy: this.from,
                 name: '',
