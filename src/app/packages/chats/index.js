@@ -8,66 +8,15 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const algolia = require('algoliasearch')
+    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const Utils = require('@tutorbook/utils');
-
-class SupervisorChats extends Chats {
-
-    renderHit(hit) {
-        return this.renderChatItem({
-            data: () => Utils.filterChatData(hit),
-            id: hit.objectID,
-        });
-    }
-
-    renderSelf() {
-        super.renderSelf();
-        this.search = new SearchHeader({
-            title: 'Messages',
-            placeholder: 'Search messages',
-            index: algolia.initIndex('chats'),
-            search: async (that) => {
-                const qry = $(that.el).find('.search-box input').val();
-                qry.length > 0 ? that.showClearButton() : that.showInfoButton();
-                const res = await that.index.search({
-                    query: qry,
-                    facetFilters: window.app.location.name === 'Any' ? [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
-                        'location.id:' + window.app.location.id,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ],
-                });
-                $(that.el).find('#results').empty();
-                res.hits.forEach((hit) => {
-                    try {
-                        $(that.el).find('#results').append(this.renderHit(hit));
-                    } catch (e) {
-                        console.warn('[ERROR] Could not render hit (' +
-                            hit.objectID + ') b/c of', e);
-                    }
-                });
-            },
-        });
-        this.header = this.search.el;
-    }
-
-    view() {
-        super.view();
-        this.search.manage();
-    }
-
-    reView() {
-        super.reView();
-        this.search.manage();
-    }
-};
 
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.
 class Chats {
 
-    constructor(app) {
-        this.app = app;
+    constructor() {
         this.chats = {}; // Store chat objects in cache for responsiveness
         this.chatsByUID = {};
         this.render = window.app.render;
@@ -305,6 +254,7 @@ class Chats {
                 window.app.user.email,
                 user.email,
             ],
+            location: window.app.location,
             createdBy: window.app.conciseUser,
             name: '', // We just use the chatter name as the chat name
             photo: '', // We just use the chatter photo as the chat photo
@@ -315,6 +265,57 @@ class Chats {
     }
 };
 
+class SupervisorChats extends Chats {
+
+    renderHit(hit) {
+        return this.renderChatItem({
+            data: () => Utils.filterChatData(hit),
+            id: hit.objectID,
+        });
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        this.search = new window.app.SearchHeader({
+            title: 'Messages',
+            placeholder: 'Search messages',
+            index: algolia.initIndex('chats'),
+            search: async (that) => {
+                const qry = $(that.el).find('.search-box input').val();
+                qry.length > 0 ? that.showClearButton() : that.showInfoButton();
+                const res = await that.index.search({
+                    query: qry,
+                    facetFilters: window.app.location.name === 'Any' ? [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'location.id:' + window.app.location.id,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
+                });
+                $(that.el).find('#results').empty();
+                res.hits.forEach((hit) => {
+                    try {
+                        $(that.el).find('#results').append(this.renderHit(hit));
+                    } catch (e) {
+                        console.warn('[ERROR] Could not render hit (' +
+                            hit.objectID + ') b/c of', e);
+                    }
+                });
+            },
+        });
+        this.header = this.search.el;
+    }
+
+    view() {
+        super.view();
+        this.search.manage();
+    }
+
+    reView() {
+        super.reView();
+        this.search.manage();
+    }
+};
 
 class Chat {
 
@@ -324,9 +325,8 @@ class Chat {
         this.render = window.app.render;
         this.recycler = {
             remove: (doc) => {
-                if (window.app.nav.selected === 'Messages') {
-                    return $(".main .chat #messages [id='doc-" + doc.id + "']").remove();
-                }
+                if (window.app.nav.selected === 'Messages') return $('.main ' +
+                    '.chat #messages [id="doc-' + doc.id + '"]').remove();
             },
             display: (doc) => {
                 // We don't want to display user's that do not have a valid profile

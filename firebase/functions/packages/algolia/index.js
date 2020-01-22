@@ -46,7 +46,11 @@ class Algolia {
     }
 
     static chat(change, context) {
-        return Algolia.update(change, context, 'chats');
+        return Algolia.update(change, context, 'chats', {
+            attributesForFaceting: [
+                'filterOnly(location.id)',
+            ],
+        });
     }
 };
 

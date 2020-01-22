@@ -13,6 +13,7 @@ const PaidProfile = require('@tutorbook/profile').paid;
 const TutorProfile = require('@tutorbook/profile').tutor;
 const Schedule = require('@tutorbook/schedule').default;
 const Chats = require('@tutorbook/chats').default;
+const SupervisorChats = require('@tutorbook/chats').supervisor;
 const SupervisorSchedule = require('@tutorbook/schedule').supervisor;
 const Payments = require('@tutorbook/payments');
 const Feedback = require('@tutorbook/feedback');
@@ -26,6 +27,7 @@ const Matching = require('@tutorbook/matching').default;
 const MatchingDialog = require('@tutorbook/matching').dialog;
 
 // Dependency cycle workarounds
+const SearchHeader = require('@tutorbook/search').header;
 const EditProfile = require('@tutorbook/profile').edit;
 const NotificationDialog = require('@tutorbook/dialogs').notify;
 const renderHit = require('@tutorbook/search').header.renderHit;
@@ -63,6 +65,7 @@ class Tutorbook {
         this.initOnMobile();
 
         // Dependency cycle workarounds
+        this.SearchHeader = SearchHeader;
         this.EditProfile = EditProfile;
         this.NotificationDialog = NotificationDialog;
         this.MatchingDialog = MatchingDialog;
@@ -93,11 +96,12 @@ class Tutorbook {
                 this.dashboard = new SupervisorDashboard();
                 this.matching = new Matching();
                 this.stats = new Stats();
+                this.chats = new SupervisorChats();
             } else {
                 this.schedule = new Schedule();
                 this.dashboard = new Dashboard();
+                this.chats = new Chats();
             }
-            this.chats = new Chats(this);
             this.payments = new Payments();
             this.feedback = new Feedback(this);
             this.ads = new Ads();

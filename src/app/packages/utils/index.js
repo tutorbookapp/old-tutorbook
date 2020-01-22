@@ -990,6 +990,7 @@ class Utils {
             createdBy: Utils.filterRequestUserData(data.createdBy),
             name: data.name || '', // We use the chatter name as the chat name
             photo: data.photo || '', // Use the chatter photo as the chat photo
+            location: data.location || window.app.location,
         };
     }
 
