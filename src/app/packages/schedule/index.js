@@ -99,7 +99,7 @@ class Schedule {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Schedule';
         window.app.view(this.header, this.main, '/app/schedule');
-        this.search.manage();
+        if (this.search) this.search.manage();
         if (!this.managed) this.manage();
         this.viewAppts();
     }
@@ -114,7 +114,7 @@ class Schedule {
     }
 
     reView() {
-        this.search.manage();
+        if (this.search) this.search.manage();
         this.viewAppts(); // TODO: Just re-attach listeners
     }
 
@@ -160,35 +160,43 @@ class Schedule {
     }
 
     renderSelf() {
-        this.search = new SearchHeader({
-            title: 'Schedule',
-            placeholder: window.app.onMobile ? 'Search appointments' : 'Searc' +
-                'h appointments by subject, location, time, and more',
-            index: algolia.initIndex('appts'),
-            search: async (that) => {
-                const qry = $(that.el).find('.search-box input').val();
-                qry.length > 0 ? that.showClearButton() : that.showInfoButton();
-                const res = await that.index.search({
-                    query: qry,
-                    facetFilters: window.app.location.name === 'Any' ? [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
-                        'location.id:' + window.app.location.id,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ],
-                });
-                $(that.el).find('#results').empty();
-                res.hits.forEach((hit) => {
-                    try {
-                        $(that.el).find('#results').append(this.renderHit(hit));
-                    } catch (e) {
-                        console.warn('[ERROR] Could not render hit (' +
-                            hit.objectID + ') b/c of', e);
-                    }
-                });
-            },
-        });
-        this.header = this.search.el;
+        if (window.app.user.type === 'Supervisor') this.search =
+            new SearchHeader({
+                title: 'Schedule',
+                placeholder: window.app.onMobile ? 'Search appointments' : 'S' +
+                    'earch appointments by subject, location, time, and more',
+                index: algolia.initIndex('appts'),
+                search: async (that) => {
+                    const qry = $(that.el).find('.search-box input').val();
+                    qry.length > 0 ? that.showClearButton() : that
+                        .showInfoButton();
+                    const res = await that.index.search({
+                        query: qry,
+                        facetFilters: window.app.location.name === 'Any' ? [
+                            'partition:' + (window.app.test ?
+                                'test' : 'default'),
+                        ] : [
+                            'location.id:' + window.app.location.id,
+                            'partition:' + (window.app.test ?
+                                'test' : 'default'),
+                        ],
+                    });
+                    $(that.el).find('#results').empty();
+                    res.hits.forEach((hit) => {
+                        try {
+                            $(that.el).find('#results').append(this
+                                .renderHit(hit));
+                        } catch (e) {
+                            console.warn('[ERROR] Could not render hit (' +
+                                hit.objectID + ') b/c of', e);
+                        }
+                    });
+                },
+            });
+        this.header = window.app.user.type === 'Supervisor' ?
+            this.search.el : this.render.header('header-main', {
+                title: 'Schedule',
+            });
         this.main = this.render.template('schedule', {
             welcome: !window.app.onMobile,
             summary: (window.app.user.type === 'Supervisor' ? 'View all past, ' +
