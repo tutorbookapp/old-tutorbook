@@ -967,9 +967,29 @@ class Utils {
             },
             location: data.location,
             timestamp: data.timestamp,
-            id: data.id || '', // NOTE: We use this to be able to access and update the
-            // Firestore document across different functions within the app all
-            // using the same `this.currentRequest` map.
+            id: data.id || '', // NOTE: We use this to be able to access and 
+            // update the Firestore document across different functions within 
+            // the app all using the same `this.currentRequest` map.
+        };
+    }
+
+    static filterMessageData(data) {
+        return {
+            message: data.message,
+            sentBy: Utils.filterRequestUserData(data.sentBy),
+            timestamp: data.timestamp,
+        };
+    }
+
+    static filterChatData(data) {
+        return {
+            chatters: data.chatters,
+            chatterEmails: data.chatterEmails,
+            chatterUIDs: data.chatterUIDs,
+            lastMessage: Utils.filterMessageData(data.lastMessage),
+            createdBy: Utils.filterRequestUserData(data.createdBy),
+            name: data.name || '', // We use the chatter name as the chat name
+            photo: data.photo || '', // Use the chatter photo as the chat photo
         };
     }
 

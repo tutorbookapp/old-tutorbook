@@ -10,6 +10,58 @@ import to from 'await-to-js';
 
 const Utils = require('@tutorbook/utils');
 
+class SupervisorChats extends Chats {
+
+    renderHit(hit) {
+        return this.renderChatItem({
+            data: () => Utils.filterChatData(hit),
+            id: hit.objectID,
+        });
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        this.search = new SearchHeader({
+            title: 'Messages',
+            placeholder: 'Search messages',
+            index: algolia.initIndex('chats'),
+            search: async (that) => {
+                const qry = $(that.el).find('.search-box input').val();
+                qry.length > 0 ? that.showClearButton() : that.showInfoButton();
+                const res = await that.index.search({
+                    query: qry,
+                    facetFilters: window.app.location.name === 'Any' ? [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'location.id:' + window.app.location.id,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
+                });
+                $(that.el).find('#results').empty();
+                res.hits.forEach((hit) => {
+                    try {
+                        $(that.el).find('#results').append(this.renderHit(hit));
+                    } catch (e) {
+                        console.warn('[ERROR] Could not render hit (' +
+                            hit.objectID + ') b/c of', e);
+                    }
+                });
+            },
+        });
+        this.header = this.search.el;
+    }
+
+    view() {
+        super.view();
+        this.search.manage();
+    }
+
+    reView() {
+        super.reView();
+        this.search.manage();
+    }
+};
+
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.
 class Chats {
@@ -17,7 +69,7 @@ class Chats {
     constructor(app) {
         this.app = app;
         this.chats = {}; // Store chat objects in cache for responsiveness
-        this.chatsByEmail = {};
+        this.chatsByUID = {};
         this.render = window.app.render;
         this.recycler = {
             remove: (doc) => {
@@ -158,17 +210,17 @@ class Chats {
     // Render function that returns a chat list item
     renderChatItem(doc) {
 
-        function getOther(emails) {
-            if (emails[0] !== window.app.user.email) {
-                return emails[0];
+        function getOther(UIDs) {
+            if (UIDs[0] !== window.app.user.uid) {
+                return UIDs[0];
             }
-            return emails[1];
+            return UIDs[1];
         };
 
         const that = this;
         const chat = new Chat(doc.id, doc.data());
         this.chats[doc.id] = chat;
-        this.chatsByEmail[getOther(doc.data().chatterEmails)] = chat;
+        this.chatsByUID[getOther(doc.data().chatterUIDs)] = chat;
         const el = this.render.template('chat-list-item',
             Utils.combineMaps(doc.data(), {
                 open_chat: () => {
@@ -216,21 +268,19 @@ class Chats {
     // Creates a new chat with the given user
     async newWith(user) {
         // First, check if we have a stored chat object for the given user
-        if (!!this.chatsByEmail[user.email]) {
-            return this.chatsByEmail[user.email];
-        }
+        if (this.chatsByUID[user.uid]) return this.chatsByUID[user.uid];
 
         // Second, check if the user already has a chat with the given user
         const db = window.app.db;
         const chats = await db.collection('chats')
-            .where('chatterEmails', 'array-contains', window.app.user.email)
+            .where('chatterUIDs', 'array-contains', window.app.user.uid)
             .get();
         const docs = [];
         chats.forEach((chat) => {
             docs.push(chat);
         });
         for (var i = 0; i < docs.length; i++) {
-            if (docs[i].data().chatterEmails.indexOf(user.email) >= 0) {
+            if (docs[i].data().chatterUIDs.indexOf(user.uid) >= 0) {
                 return new Chat(docs[i].id, docs[i].data());
             }
         }
@@ -247,13 +297,17 @@ class Chats {
                 window.app.conciseUser,
                 conciseUser,
             ],
+            chatterUIDs: [
+                window.app.user.uid,
+                user.uid,
+            ],
             chatterEmails: [
                 window.app.user.email,
                 user.email,
             ],
             createdBy: window.app.conciseUser,
-            name: '', // Use the chatter's names as the chat name
-            photo: '', // Use the chatter's photos as the chat photo
+            name: '', // We just use the chatter name as the chat name
+            photo: '', // We just use the chatter photo as the chat photo
         };
         const ref = db.collection('chats').doc();
         await ref.set(chat);
@@ -448,5 +502,6 @@ class Chat {
 
 module.exports = {
     default: Chats,
+    supervisor: SupervisorChats,
     chat: Chat,
 };
