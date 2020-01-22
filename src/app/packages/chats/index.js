@@ -287,9 +287,11 @@ class SupervisorChats extends Chats {
                     query: qry,
                     facetFilters: window.app.location.name === 'Any' ? [
                         'partition:' + (window.app.test ? 'test' : 'default'),
+                        'chatterUIDs:' + window.app.user.uid,
                     ] : [
                         'location.id:' + window.app.location.id,
                         'partition:' + (window.app.test ? 'test' : 'default'),
+                        'chatterUIDs:' + window.app.user.uid,
                     ],
                 });
                 $(that.el).find('#results').empty();

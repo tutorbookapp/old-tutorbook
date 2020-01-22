@@ -49,6 +49,7 @@ class Algolia {
         return Algolia.update(change, context, 'chats', {
             attributesForFaceting: [
                 'filterOnly(location.id)',
+                'filterOnly(chatterUIDs)',
             ],
         });
     }
