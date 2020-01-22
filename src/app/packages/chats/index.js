@@ -278,7 +278,7 @@ class SupervisorChats extends Chats {
         super.renderSelf();
         this.search = new window.app.SearchHeader({
             title: 'Messages',
-            placeholder: 'Search messages',
+            placeholder: 'Search your messages',
             index: algolia.initIndex('chats'),
             search: async (that) => {
                 const qry = $(that.el).find('.search-box input').val();
