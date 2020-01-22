@@ -49,13 +49,23 @@ async function main() {
     //(await doc.ref.collection('pastAppointments').get()) // PAST
     //.forEach((doc) => algolia(doc, 'pastAppts'));
     //});
-    (await db.collection('chats').get()) // CHATS
-    .forEach((doc) => algolia(doc, 'chats', {
-        attributesForFaceting: [
-            'filterOnly(location.id)',
-            'filterOnly(partition)',
-        ],
+    await Promise.all((await db.collection('chats').get()).docs.map((d) => {
+        return d.ref.update({
+            location: {
+                name: 'Gunn Academic Center',
+                id: 'NJp0Y6wyMh2fDdxSuRSx',
+            },
+        });
     }));
+    /*
+     *(await db.collection('chats').get()) // CHATS
+     *.forEach((doc) => algolia(doc, 'chats', {
+     *    attributesForFaceting: [
+     *        'filterOnly(location.id)',
+     *        'filterOnly(partition)',
+     *    ],
+     *}));
+     */
 }
 
 main();
