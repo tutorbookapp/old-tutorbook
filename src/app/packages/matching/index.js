@@ -226,11 +226,11 @@ class Matching {
                     window.app.snackbar.view('Approved request and created ' +
                         'appointment.');
                 },
+                'Raw Data': () => Utils.viewRaw(doc),
             },
         };
         const card = Card.renderCard('Pending Match', subtitle, summary, actions);
         window.app.cards.requestsOut[doc.id] = actions; // Store actions & dialogs
-
         return card;
     }
 

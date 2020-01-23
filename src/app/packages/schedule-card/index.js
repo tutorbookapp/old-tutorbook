@@ -53,6 +53,10 @@ class Event {
                         window.app.snackbar.view('Canceled appointment.');
                     }).view();
             },
+            'Raw Data': () => Utils.viewRaw({
+                data: () => appt,
+                id: id,
+            }),
         };
     }
 

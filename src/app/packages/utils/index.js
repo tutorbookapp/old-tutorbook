@@ -15,6 +15,18 @@ class Utils {
         this.data = new Data();
     }
 
+    static viewRaw(doc) {
+        const json = JSON.stringify({
+            data: doc.data(),
+            id: doc.id,
+        }, null, 2);
+        const w = window.open();
+        w.document.open();
+        w.document.write('<html><body><pre>' + json + '</pre>' +
+            '</body></html>');
+        w.document.close();
+    }
+
     static getNextDateWithDay(day) {
         const now = new Date();
         const date = new Date(
