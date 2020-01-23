@@ -597,9 +597,7 @@ class ViewRequestDialog {
 
         const header = this.render.header('header-action', {
             title: 'View Request',
-            edit: () => {
-                new EditRequestDialog(this.request, this.id).view();
-            },
+            edit: () => new EditRequestDialog(this.request, this.id).view(),
             showEdit: true,
             showApprove: window.app.user.email === this.request.toUser.email,
             approve: async () => {
@@ -760,13 +758,14 @@ class EditRequestDialog {
         window.requestDialog = this;
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
-        this.manage();
+        if (!this.managed) this.manage();
     }
 
     async modifyRequest() {
         window.app.nav.back();
-        await Data.modifyRequest(this.request, this.id);
-        window.app.snackbar.view('Request updated.');
+        const [err, res] = await to(Data.modifyRequest(this.request, this.id));
+        if (err) return window.app.snackbar.view('Could not modify request.');
+        window.app.snackbar.view('Modified request.');
     }
 
     sendRequest() {} // Added in NewRequestDialog
@@ -774,6 +773,7 @@ class EditRequestDialog {
     updateAmount() {} // Added in PaidRequestDialog
 
     manage() {
+        this.managed = true;
         const availability = this.user.availability;
         const request = this.request;
         const dialog = this.main;
@@ -830,16 +830,17 @@ class EditRequestDialog {
         [locationSelect, daySelect, timeslotSelect, subjectSelect].forEach(
             (input) => this.req.push({
                 input: input,
+                id: input.root_.id,
                 valid: () => input.value !== '',
             }));
 
         // Only update or send request when the check button is clicked
         MDCTopAppBar.attachTo(this.header);
-        document.querySelector('.header #ok').addEventListener('click', () => {
+        $(this.header).find('#ok')[0].addEventListener('click', () => {
             request.message = messageTextField.value;
             if (that.valid) that.modifyRequest();
         });
-        document.querySelector('.header #send').addEventListener('click', () => {
+        $(this.header).find('#send')[0].addEventListener('click', () => {
             request.message = messageTextField.value;
             if (that.valid) that.sendRequest();
         });
@@ -904,9 +905,11 @@ class EditRequestDialog {
             that.refreshTimeSelects(request, a);
         });
 
+        this.req = this.req.filter(r => ['Day', 'Time'].indexOf(r.id) < 0);
         [daySelect, timeslotSelect].forEach((input) => {
             this.req.push({
                 input: input,
+                id: input.root_.id,
                 valid: () => input.value !== '',
             });
         });
@@ -954,8 +957,10 @@ class EditRequestDialog {
             }
             that.updateAmount();
         });
+        this.req = this.req.filter(r => r.id !== 'Time');
         this.req.push({
             input: timeslotSelect,
+            id: 'Time',
             valid: () => timeslotSelect.value !== '',
         });
         this.valid; // Update valid input styling 
@@ -1026,10 +1031,6 @@ class NewRequestDialog extends EditRequestDialog {
             title: 'New Request',
             send: () => {},
         });
-    }
-
-    manage() {
-        super.manage();
     }
 
     async sendRequest() { // Override modify to create a new request
@@ -1291,9 +1292,7 @@ class ViewApptDialog extends ViewRequestDialog {
         }
         this.header = this.render.header('header-action', {
             showEdit: true,
-            edit: () => {
-                new EditApptDialog(this.appt, this.id).view();
-            },
+            edit: () => new EditApptDialog(this.appt, this.id).view(),
             title: 'Upcoming Appointment',
         });
     }
@@ -1455,8 +1454,8 @@ class ViewApptDialog extends ViewRequestDialog {
 };
 
 class EditApptDialog extends EditRequestDialog {
-    constructor(appt) {
-        super(appt.for);
+    constructor(appt, id) {
+        super(appt.for, id);
         this.appt = appt;
     }
 
@@ -1471,12 +1470,16 @@ class EditApptDialog extends EditRequestDialog {
         }
         this.header = this.render.header('header-action', {
             title: 'Edit Appointment',
-            ok: async () => {
-                window.app.nav.back();
-                await Data.modifyAppt(this.appt, this.id);
-                window.app.snackbar.view('Modified appointment.');
-            },
+            ok: () => {},
         });
+    }
+
+    async modifyRequest() {
+        window.app.nav.back();
+        const [err, res] = await to(Data.modifyAppt(this.appt, this.id));
+        if (err) return window.app.snackbar.view('Could not modify ' +
+            'appointment.');
+        window.app.snackbar.view('Modified appointment.');
     }
 };
 
@@ -1550,7 +1553,6 @@ class ViewPastApptDialog extends ViewApptDialog {
             if (!valid(v)) return t.valid = false;
             update(v, date);
             window.app.snackbar.view('Updating past appointment...');
-            console.log('[DEBUG] Updating past appointment:', this.appt);
             const [err, res] = await to(Data.modifyPastAppt({
                 appt: this.appt,
                 id: this.id,

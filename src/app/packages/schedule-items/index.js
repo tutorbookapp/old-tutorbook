@@ -9,7 +9,6 @@ const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 const User = require('@tutorbook/user');
 
-const EditApptDialog = require('@tutorbook/dialogs').editAppt;
 const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
 const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
 const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;

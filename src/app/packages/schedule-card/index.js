@@ -29,10 +29,10 @@ class Event {
         this.type = type;
         this.actions = {
             'View': () => {
-                new ViewApptDialog(Utils.filterApptData(this)).view();
+                new ViewApptDialog(Utils.filterApptData(this), this.id).view();
             },
             'Edit': () => {
-                new EditApptDialog(Utils.filterApptData(this)).view();
+                new EditApptDialog(Utils.filterApptData(this), this.id).view();
             },
             'Cancel': () => {
                 return new ConfirmationDialog('Cancel Appointment?',

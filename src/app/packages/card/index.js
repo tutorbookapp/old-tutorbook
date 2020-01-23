@@ -13,7 +13,6 @@ const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
 const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
 const ViewCanceledRequestDialog = require('@tutorbook/dialogs')
     .viewCanceledRequest;
-const EditApptDialog = require('@tutorbook/dialogs').editAppt;
 const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
 const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
 const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
@@ -824,7 +823,7 @@ Card.renderRequestOutCard = function(doc) {
         request.location.name + '. Tap to learn more and edit your request.';
     const actions = {};
     actions.primary = function() {
-        new ViewRequestDialog(request).view();
+        new ViewRequestDialog(request, doc.id).view();
     };
     var card;
     actions.cancel = function() {
