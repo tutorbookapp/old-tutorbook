@@ -31,13 +31,21 @@ class Snackbar {
             $('body').prepend(el);
             return snackbar.open();
         };
-        if ($('.mdc-snackbar--open').length) {
+        const c = () => {
             $('.mdc-snackbar--open') // 1) Animate open snackbars closed
                 .removeClass('mdc-snackbar--open')
                 .addClass('mdc-snackbar--closing');
-            const r = () => {
-                $('.mdc-snackbar').remove(); // 2) Remove all closed snackbars
-            };
+        };
+        const r = () => {
+            $('.mdc-snackbar').remove(); // 2) Remove all closed snackbars
+        };
+        if ($('.mdc-snackbar--opening').length) {
+            setTimeout(c, 100);
+            setTimeout(r, 200);
+            setTimeout(v, 250); // 3) Show new snackbar
+
+        } else if ($('.mdc-snackbar--open').length) {
+            c();
             setTimeout(r, 100);
             setTimeout(v, 150); // 3) Show new snackbar
         } else {
