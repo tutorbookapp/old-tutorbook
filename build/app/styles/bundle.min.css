@@ -7534,6 +7534,8 @@ a.mdc-list-item {
   .chat .write button {
     padding: 0;
     float: right; }
+    .chat .write button :disabled {
+      color: #6E7EA5; }
 .mdc-button {
   font-family: Roboto, sans-serif;
   -moz-osx-font-smoothing: grayscale;

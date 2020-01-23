@@ -106,5 +106,8 @@
   button {
     padding: 0;
     float: right;
+    :disabled {
+      color: #6E7EA5;
+    }
   }
 }

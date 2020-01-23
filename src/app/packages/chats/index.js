@@ -327,21 +327,22 @@ class Chat {
         this.render = window.app.render;
         this.recycler = {
             remove: (doc) => {
-                if (window.app.nav.selected === 'Messages') return $('.main ' +
-                    '.chat #messages [id="doc-' + doc.id + '"]').remove();
+                if (window.app.nav.selected === 'Messages') return $(this.main)
+                    .find('#messages [id="doc-' + doc.id + '"]').remove();
             },
             display: (doc) => {
-                // We don't want to display user's that do not have a valid profile
+                // We don't display users that do not have a valid profile
                 if (window.app.nav.selected === 'Messages') {
-                    $('.main .chat .centered-text').remove();
+                    $(this.main).find('.centered-text').remove();
                     var message = this.renderMessage(doc);
                     this.viewMessage(message);
                 }
             },
             empty: () => {
                 if (window.app.nav.selected === 'Messages') {
-                    $('.main .chat #messages').empty();
-                    return $('.main .chat').prepend(this.renderEmptyMessages());
+                    $(this.main).find('#messages').empty();
+                    if (!$(this.main).find('.centered-text').length)
+                        $('.main .chat').prepend(this.renderEmptyMessages());
                 }
             },
         };
@@ -371,11 +372,13 @@ class Chat {
         });
         this.main = this.render.template('chat', {
             send: async () => {
-                const input = 'main .chat .write input';
-                $(input).attr('disabled', 'disabled');
-                const message = $(input).val();
-                $(input).val('');
-                $(input).removeAttr('disabled');
+                const input = $(this.main).find('.write input');
+                const btn = $(this.main).find('.write button');
+                input.attr('disabled', 'disabled');
+                btn.attr('disabled', 'disabled');
+                const message = input.val();
+                input.val('');
+                input.removeAttr('disabled');
                 (message !== '') ? await that.sendMessage(message): null;
             },
             placeholder: 'Message ' + name + '...',
@@ -388,8 +391,12 @@ class Chat {
         MDCTopAppBar.attachTo(this.header);
         const that = this;
         $(this.main).find('.write input').keyup(async function(e) {
+            const btn = $(that.main).find('.write button');
+            $(this).val() === '' ? btn.attr('disabled', 'disabled') : btn
+                .removeAttr('disabled');
             if (e.keyCode == 13) { // Enter key hit
                 $(this).attr('disabled', 'disabled');
+                btn.attr('disabled', 'disabled');
                 const message = $(this).val();
                 $(this).val('');
                 $(this).removeAttr('disabled');
