@@ -44,8 +44,7 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Paly Peer Tutoring Center',
-            id: 'fcKWyRWy124H4M34mS1r',
+            name: 'Any',
         };
         this.test = false;
         this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
