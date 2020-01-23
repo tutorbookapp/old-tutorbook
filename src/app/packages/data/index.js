@@ -473,6 +473,22 @@ class Data {
                 this.locationIDs.push(doc.id);
             }
         });
+        this.initPeriods();
+    }
+
+    initPeriods() { // Use local location data to add periods to local data
+        const locations = Object.values(this.locationDataByID);
+        const times = [];
+        locations.forEach((location) => {
+            Object.values(location.hours).forEach(arr => arr.forEach(slot => {
+                if (times.indexOf(slot.open) < 0) times.push(slot.open);
+                if (times.indexOf(slot.close) < 0) times.push(slot.close);
+            }));
+        });
+        this.periods = [];
+        times.forEach(time => {
+            if (this.timeStrings.indexOf(time) < 0) this.periods.push(time);
+        });
     }
 
     initTimes() {
@@ -617,7 +633,7 @@ Data.gunnSchedule = {
 };
 
 Data.periods = [
-    'A Period',
+    'A Period', // Gunn
     'B Period',
     'C Period',
     'D Period',
@@ -625,6 +641,14 @@ Data.periods = [
     'F Period',
     'G Period',
     'Flex',
+    '3rd Period', // Paly
+    '4th Period',
+    '5th Period',
+    '6th Period',
+    '7th Period',
+    'Lunch',
+    'Tutorial',
+    'Afterschool',
 ];
 
 Data.locations = ['Gunn Academic Center', 'Paly Peer Tutoring Center'];

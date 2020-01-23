@@ -409,7 +409,7 @@ class Render {
 
         // NOTE: All of this changes once you add the data manager (as we want
         // to only show those times that are specified by the location supervisor)
-        const times = Data.periods.concat(Data.timeStrings);
+        const times = window.app.data.periods.concat(Data.timeStrings);
         const fromTimeEl = this.select(
             'From',
             data.fromTime || '',

@@ -12,7 +12,7 @@ const Data = require('@tutorbook/data');
 class Utils {
 
     constructor() {
-        this.data = new Data();
+        this.data = window.app ? window.app.data || new Data() : new Data();
     }
 
     static wrap(str, maxWidth) { // See https://bit.ly/2GePdNV
@@ -513,7 +513,7 @@ class Utils {
     getTimesBetween(start, end, day) {
         var times = [];
         // First check if the time is a period
-        if (Data.periods.indexOf(start) >= 0) {
+        if (this.data.periods.indexOf(start) >= 0) {
             // Check the day given and return the times between those two
             // periods on that given day.
             var periods = Data.gunnSchedule[day];
