@@ -298,21 +298,27 @@ class Matching {
         // Shows unmatched tutors/pupils and matched tutors/pupils (who haven't 
         // created past appts).
         await this.initDismissedCards();
-        window.app.db.collection('users')
+        window.app.listeners.push(window.app.db.collection('users')
             .where('proxy', 'array-contains', window.app.user.uid)
-            .onSnapshot((snapshot) => {
-                if (!snapshot.size) {
-                    return this.recycler.empty();
-                }
-
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'removed') {
-                        this.recycler.remove(change.doc);
-                    } else {
-                        this.recycler.display(change.doc);
+            .onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not get proxy users.');
+                    console.error('Could not get proxy users b/c of ', err);
+                },
+                next: (snapshot) => {
+                    if (!snapshot.size) {
+                        return this.recycler.empty();
                     }
-                });
-            });
+
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            this.recycler.remove(change.doc);
+                        } else {
+                            this.recycler.display(change.doc);
+                        }
+                    });
+                },
+            }));
         // Shows pending matches (and approved/rejected matches).
         // NOTE: We would also be able to do this without collectionGroup
         // queries (by using the recycler to update a set of queries for
@@ -327,28 +333,36 @@ class Matching {
             'rejectedRequestsOut',
         ].forEach((subcollection) => {
             this.queries[id].push(window.app.db.collection('users').doc(id)
-                .collection(subcollection).onSnapshot((snapshot) => {
-                    if (!snapshot.size) {
-                        return this.matchesRecycler.empty(subcollection, id);
-                    }
-
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === 'removed') {
-                            this.matchesRecycler.remove(
-                                change.doc,
-                                subcollection,
-                                id,
-                            );
-                        } else {
-                            this.matchesRecycler.display(
-                                change.doc,
-                                subcollection,
-                                id,
-                            );
+                .collection(subcollection).onSnapshot({
+                    error: (err) => {
+                        window.app.snackbar.view('Could not get matches.');
+                        console.error('Could not get (' + id + ') matches b/c' +
+                            ' of ', err);
+                    },
+                    next: (snapshot) => {
+                        if (!snapshot.size) {
+                            return this.matchesRecycler.empty(subcollection, id);
                         }
-                    });
+
+                        snapshot.docChanges().forEach((change) => {
+                            if (change.type === 'removed') {
+                                this.matchesRecycler.remove(
+                                    change.doc,
+                                    subcollection,
+                                    id,
+                                );
+                            } else {
+                                this.matchesRecycler.display(
+                                    change.doc,
+                                    subcollection,
+                                    id,
+                                );
+                            }
+                        });
+                    },
                 }));
         });
+        window.app.listeners = window.app.listeners.concat(this.queries[id]);
     }
 
     removeUserQuery(id) { // Removes a listener for a given user
@@ -696,6 +710,13 @@ class ConfirmMatchDialog extends ConfirmationDialog {
 
         async function match(tutor) {
             const time = Utils.parseAvailabilityString(timeString);
+            console.log('[DEBUG] Creating match on ' + timeString + '...');
+            console.log('[DEBUG] Got ' + time.location + ' id:', window.app.data
+                .locationsByName[time.location]);
+            if (!window.app.data.locationsByName[time.location]) {
+                window.app.snackbar.view('Request location was not found.');
+                throw new Error('Request location was not found.');
+            }
             const request = {
                 subject: subject,
                 time: {
@@ -708,8 +729,9 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                     ' most likely turned in a paper tutor request that you ' +
                     'are now receiving digitally.',
                 location: {
-                    name: time.location,
-                    id: window.app.data.locationsByName[time.location],
+                    name: time.location || window.app.location.name,
+                    id: window.app.data.locationsByName[time.location] || window
+                        .app.location.id,
                 },
                 fromUser: Utils.filterRequestUserData(pupil),
                 toUser: Utils.filterRequestUserData(tutor),
@@ -720,14 +742,23 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                     method: 'PayPal',
                 },
             };
-            if (!pupil.proxy) {
-                pupil.proxy = [window.app.user.uid];
-                await Data.updateUser(pupil);
-            } else if (pupil.proxy.indexOf(window.app.user.uid) < 0) {
-                pupil.proxy.push(window.app.user.uid);
-                await Data.updateUser(pupil);
-            }
-            return Data.newRequest(request);
+            const send = async () => {
+                if (!pupil.proxy) {
+                    pupil.proxy = [window.app.user.uid];
+                    await Data.updateUser(pupil);
+                } else if (pupil.proxy.indexOf(window.app.user.uid) < 0) {
+                    pupil.proxy.push(window.app.user.uid);
+                    await Data.updateUser(pupil);
+                }
+                return Data.newRequest(request);
+            };
+            if (window.app.location.name !== time.location)
+                new ConfirmationDialog('Confirm Location', 'The request ' +
+                    'location (the ' + time.location + ') did not match your ' +
+                    'app partition\'s location (the ' +
+                    window.app.location.name + '). Are you sure you want to ' +
+                    'send this request?', send, true).view();
+            return send();
         };
 
         async function createMatches() {

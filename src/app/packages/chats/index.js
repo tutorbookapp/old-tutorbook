@@ -112,19 +112,25 @@ class Chats {
     viewChats() {
         var that = this;
         this.emptyChats();
-        this.getChats().onSnapshot((snapshot) => {
-            if (!snapshot.size) {
-                return that.recycler.empty();
-            }
-
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'removed') {
-                    that.recycler.remove(change.doc);
-                } else {
-                    that.recycler.display(change.doc);
+        window.app.listeners.push(this.getChats().onSnapshot({
+            error: (err) => {
+                window.app.snackbar.view('Could not get chats.');
+                console.error('Could not get chats b/c of ', err);
+            },
+            next: (snapshot) => {
+                if (!snapshot.size) {
+                    return that.recycler.empty();
                 }
-            });
-        });
+
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        that.recycler.remove(change.doc);
+                    } else {
+                        that.recycler.display(change.doc);
+                    }
+                });
+            },
+        }));
     }
 
     renderEmpty() {
@@ -408,19 +414,25 @@ class Chat {
     // View function that shows the messages of the chat
     viewMessages() {
         this.emptyMessages();
-        this.getMessages().onSnapshot((snapshot) => {
-            if (!snapshot.size) {
-                return this.recycler.empty();
-            }
-
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'removed') {
-                    this.recycler.remove(change.doc);
-                } else {
-                    this.recycler.display(change.doc);
+        window.app.listeners.push(this.getMessages().onSnapshot({
+            error: (err) => {
+                window.app.snackbar.view('Could not get messages.');
+                console.error('Could not get messages b/c of ', err);
+            },
+            next: (snapshot) => {
+                if (!snapshot.size) {
+                    return this.recycler.empty();
                 }
-            });
-        });
+
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        this.recycler.remove(change.doc);
+                    } else {
+                        this.recycler.display(change.doc);
+                    }
+                });
+            },
+        }));
     }
 
     // Helper function that empties the current chat list to display new ones

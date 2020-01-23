@@ -48,6 +48,7 @@ class Tutorbook {
             id: 'NJp0Y6wyMh2fDdxSuRSx',
         };
         this.test = false;
+        this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
             'ns.net/';
         //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-
@@ -175,6 +176,7 @@ class Tutorbook {
     }
 
     signOut() {
+        this.listeners.forEach(unsubscribe => unsubscribe());
         this.intercom.logout();
         return firebase.auth().signOut();
     }

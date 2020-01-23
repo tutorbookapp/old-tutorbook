@@ -137,18 +137,24 @@ class Dashboard {
                 $(list).find('#cards [id="' + doc.id + '"]').remove();
             },
         };
-        query.onSnapshot((snapshot) => {
-            if (!snapshot.size) {
-                return recycler.empty(list);
-            }
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'removed') {
-                    recycler.remove(change.doc, list);
-                } else {
-                    recycler.display(change.doc, list);
+        window.app.listeners.push(query.onSnapshot({
+            error: (err) => {
+                window.app.snackbar.view('Could not get dashboard cards.');
+                console.error('Could not get dashboard cards b/c of ', err);
+            },
+            next: (snapshot) => {
+                if (!snapshot.size) {
+                    return recycler.empty(list);
                 }
-            });
-        });
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        recycler.remove(change.doc, list);
+                    } else {
+                        recycler.display(change.doc, list);
+                    }
+                });
+            },
+        }));
     }
 
     emptyCards(list) {

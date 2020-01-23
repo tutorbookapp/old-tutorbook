@@ -15,6 +15,34 @@ class Utils {
         this.data = new Data();
     }
 
+    static wrap(str, maxWidth) { // See https://bit.ly/2GePdNV
+        const testWhite = (x) => {
+            const white = new RegExp(/^\s$/);
+            return white.test(x.charAt(0));
+        };
+        const newLineStr = "\n";
+        var res = '';
+        while (str.length > maxWidth) {
+            var found = false;
+            // Inserts new line at first whitespace of the line
+            for (var i = maxWidth - 1; i >= 0; i--) {
+                if (testWhite(str.charAt(i))) {
+                    res = res + [str.slice(0, i), newLineStr].join('');
+                    str = str.slice(i + 1);
+                    found = true;
+                    break;
+                }
+            }
+            // Inserts new line at maxWidth position, the word is too long to 
+            // wrap
+            if (!found) {
+                res += [str.slice(0, maxWidth), newLineStr].join('');
+                str = str.slice(maxWidth);
+            }
+        }
+        return res + str;
+    }
+
     static viewRaw(doc) {
         const json = JSON.stringify({
             data: doc.data(),
@@ -123,7 +151,7 @@ class Utils {
         Object.entries(queries).forEach((entry) => {
             var subcollection = entry[0];
             var query = entry[1];
-            query.onSnapshot((snapshot) => {
+            window.app.listeners.push(query.onSnapshot((snapshot) => {
                 if (!snapshot.size) {
                     return recycler.empty(subcollection);
                 }
@@ -135,7 +163,7 @@ class Utils {
                         recycler.display(change.doc, subcollection);
                     }
                 });
-            });
+            }));
         });
     }
 

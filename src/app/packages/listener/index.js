@@ -40,15 +40,22 @@ class Listener {
             },
         };
         const db = window.app.db.collection('users').doc(window.app.user.uid);
-        db.collection('clockIns').onSnapshot((snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'removed') {
-                    clockIns.remove(change.doc);
-                } else {
-                    clockIns.display(change.doc);
-                }
-            });
-        });
+        window.app.listeners.push(db.collection('clockIns').onSnapshot({
+            error: (err) => {
+                window.app.snackbar.view('Could not listen to clock-in ' +
+                    'requests. Reload to try again.');
+                console.error('Could not listen to clock-ins b/c of ', err);
+            },
+            next: (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        clockIns.remove(change.doc);
+                    } else {
+                        clockIns.display(change.doc);
+                    }
+                });
+            },
+        }));
         const clockOuts = {
             remove: (doc) => {},
             display: (doc) => {
@@ -68,15 +75,22 @@ class Listener {
                 }, true).view();
             },
         };
-        db.collection('clockOuts').onSnapshot((snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'removed') {
-                    clockOuts.remove(change.doc);
-                } else {
-                    clockOuts.display(change.doc);
-                }
-            });
-        });
+        window.app.listeners.push(db.collection('clockOuts').onSnapshot({
+            error: (err) => {
+                window.app.snackbar.view('Could not listen to clock-out ' +
+                    'requests. Reload to try again.');
+                console.error('Could not listen to clock-outs b/c of ', err);
+            },
+            next: (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        clockOuts.remove(change.doc);
+                    } else {
+                        clockOuts.display(change.doc);
+                    }
+                });
+            },
+        }));
     }
 
     tutor() {}
@@ -104,16 +118,25 @@ class Listener {
                 }, true).view();
             }
         };
-        window.app.db.collection('users').doc(window.app.user.uid)
-            .collection('requestedPayments').onSnapshot((snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'removed') {
-                        payments.remove(change.doc);
-                    } else {
-                        payments.display(change.doc);
-                    }
-                });
-            });
+        window.app.listeners.push(window.app.db.collection('users')
+            .doc(window.app.user.uid)
+            .collection('requestedPayments').onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not listen to requested ' +
+                        'payments. Reload to try again.');
+                    console.error('Could not listen to requested payments b/c' +
+                        ' of ', err);
+                },
+                next: (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            payments.remove(change.doc);
+                        } else {
+                            payments.display(change.doc);
+                        }
+                    });
+                },
+            }));
     }
 
 };

@@ -457,19 +457,31 @@ class Search {
         $(this.header).find('[data-fir-content="filter_description"]')
             .text(this.filterDescription);
         this.emptyResults();
-        this.getUsers().onSnapshot((snapshot) => {
-            if (!snapshot.size) {
-                return that.recycler.empty();
-            }
-
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'removed') {
-                    that.recycler.remove(change.doc);
-                } else {
-                    that.recycler.display(change.doc);
+        window.app.listeners.push(this.getUsers().onSnapshot({
+            error: (err) => {
+                new NotificationDialog('Search Error', 'Sorry, but we can\'t ' +
+                    'seem to search with those filters. Tutorbook seems to ' +
+                    'have encountered this database error:\n\n' +
+                    Utils.wrap(err.message, 50) + '\n\n Try changing your ' +
+                    'filters or contact me with the above error message at ' +
+                    'nicholaschiang@tutorbook.app or (650) 861-2723.',
+                    () => {}).view();
+                console.error('Could not show search results b/c of ', err);
+            },
+            next: (snapshot) => {
+                if (!snapshot.size) {
+                    return that.recycler.empty();
                 }
-            });
-        });
+
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        that.recycler.remove(change.doc);
+                    } else {
+                        that.recycler.display(change.doc);
+                    }
+                });
+            },
+        }));
     }
 
     // Empties search results
