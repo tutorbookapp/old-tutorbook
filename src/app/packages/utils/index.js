@@ -739,6 +739,7 @@ class Utils {
                 timeslot.close);
             if (d === day) return times.filter(Boolean);
         }
+        return this.getUserAvailableTimeslots(availability);
     }
 
     // Helper function to return a user's available times for a given day and 

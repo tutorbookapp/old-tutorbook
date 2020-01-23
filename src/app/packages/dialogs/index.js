@@ -814,7 +814,7 @@ class EditRequestDialog {
                 request.time.from = timeslotSelect.value;
                 request.time.to = timeslotSelect.value;
             }
-            that.updateAmount();
+            if (that.valid) that.updateAmount();
         });
 
         // FOR
@@ -891,7 +891,7 @@ class EditRequestDialog {
                 request.time.from = timeslotSelect.value;
                 request.time.to = timeslotSelect.value;
             }
-            that.updateAmount();
+            if (that.valid) that.updateAmount();
         });
 
         const dayEl = this.render.select('Day', request.time.day || '', days);
@@ -913,7 +913,7 @@ class EditRequestDialog {
                 valid: () => input.value !== '',
             });
         });
-        this.valid; // Update valid input styling 
+        if (this.valid) this.updateAmount(); // Update valid input styling 
     }
 
     refreshTimeSelects(request, a) {
@@ -955,7 +955,7 @@ class EditRequestDialog {
                 request.time.from = timeslotSelect.value;
                 request.time.to = timeslotSelect.value;
             }
-            that.updateAmount();
+            if (that.valid) that.updateAmount();
         });
         this.req = this.req.filter(r => r.id !== 'Time');
         this.req.push({
@@ -963,7 +963,7 @@ class EditRequestDialog {
             id: 'Time',
             valid: () => timeslotSelect.value !== '',
         });
-        this.valid; // Update valid input styling 
+        if (this.valid) this.updateAmount(); // Update valid input styling 
     }
 };
 
@@ -1186,12 +1186,9 @@ class StripeRequestDialog extends PaidRequestDialog {
 
     async sendRequest() {
         const res = await this.stripe.createToken(this.card);
-        if (res.error) {
-            $(this.main).find('#Method')[0].scrollIntoView({
-                behavior: 'smooth'
-            });
-            return window.app.snackbar.view(res.error.message);
-        }
+        if (res.error) return $(this.main).find('#Method')[0].scrollIntoView({
+            behavior: 'smooth'
+        });
         this.payment.transaction = res.token;
         return super.sendRequest();
     }
