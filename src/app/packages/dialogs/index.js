@@ -665,6 +665,7 @@ class EditRequestDialog {
         this.id = id;
         this.render = window.app.render;
         this.utils = window.app.utils;
+        this.req = []; // Required fields
         this.rendering = this.renderSelf();
     }
 
@@ -684,9 +685,8 @@ class EditRequestDialog {
                 user.availability,
                 request.location.name
             ) : Utils.getUserAvailableDays(user.availability);
-        const timeslots =
-            (request.time && request.time.day && request.location &&
-                request.location.name) ? utils.getUserAvailableTimeslotsForDay(
+        const timeslots = (request.time.day && request.location.name) ?
+            utils.getUserAvailableTimeslotsForDay(
                 user.availability,
                 request.time.day,
                 request.location.name,
@@ -745,6 +745,15 @@ class EditRequestDialog {
         this.user = user;
     }
 
+    get valid() {
+        var valid = true;
+        this.req.forEach((req) => {
+            if (!req.valid()) return valid = req.input.valid = false;
+            req.input.valid = true;
+        });
+        return valid;
+    }
+
     // Views the dialog and adds manager(s)
     async view() {
         if (!this.main) await this.rendering;
@@ -785,8 +794,6 @@ class EditRequestDialog {
                 request.location.id = window.app.data // Only init data once
                     .locationsByName[locationSelect.value];
                 that.refreshDayAndTimeSelects(request, availability);
-                that.refreshTimeSelects(request, availability); // Just in case 
-                // refreshing the day select automatically selects a day.
             }
         });
 
@@ -820,15 +827,21 @@ class EditRequestDialog {
         const messageEl = dialog.querySelector('#Message');
         const messageTextField = MDCTextField.attachTo(messageEl);
 
+        [locationSelect, daySelect, timeslotSelect, subjectSelect].forEach(
+            (input) => this.req.push({
+                input: input,
+                valid: () => input.value !== '',
+            }));
+
         // Only update or send request when the check button is clicked
         MDCTopAppBar.attachTo(this.header);
         document.querySelector('.header #ok').addEventListener('click', () => {
             request.message = messageTextField.value;
-            that.modifyRequest();
+            if (that.valid) that.modifyRequest();
         });
         document.querySelector('.header #send').addEventListener('click', () => {
             request.message = messageTextField.value;
-            that.sendRequest();
+            if (that.valid) that.sendRequest();
         });
     }
 
@@ -837,21 +850,19 @@ class EditRequestDialog {
         const that = this;
         const days = Utils.getUserAvailableDaysForLocation(a, request.location
             .name);
-        const timeslots = this.utils.getUserAvailableTimeslotsForDay(
-            a,
-            days[0],
-            request.location.name
-        );
-
+        if (days.length === 1) request.time.day = days[0];
+        const timeslots = (request.time.day && request.location.name) ?
+            this.utils.getUserAvailableTimeslotsForDay(
+                a,
+                request.time.day,
+                request.location.name,
+            ) : this.utils.getUserAvailableTimeslots(a);
         if (timeslots.length === 1 && timeslots[0].indexOf(' to ') > 0) {
             request.time.from = timeslots[0].split(' to ')[0];
             request.time.to = timeslots[0].split(' to ')[1];
         } else if (timeslots.length === 1) {
             request.time.from = timeslots[0];
             request.time.to = timeslots[0];
-        }
-        if (days.length === 1) {
-            request.time.day = days[0];
         }
 
         // If there are only no options, make sure to tell the user so they don't
@@ -892,6 +903,14 @@ class EditRequestDialog {
             request.time.day = daySelect.value;
             that.refreshTimeSelects(request, a);
         });
+
+        [daySelect, timeslotSelect].forEach((input) => {
+            this.req.push({
+                input: input,
+                valid: () => input.value !== '',
+            });
+        });
+        this.valid; // Update valid input styling 
     }
 
     refreshTimeSelects(request, a) {
@@ -899,7 +918,7 @@ class EditRequestDialog {
         const that = this;
         const timeslots = this.utils.getUserAvailableTimeslotsForDay(
             a,
-            days[0],
+            request.time.day,
             request.location.name
         );
 
@@ -935,6 +954,11 @@ class EditRequestDialog {
             }
             that.updateAmount();
         });
+        this.req.push({
+            input: timeslotSelect,
+            valid: () => timeslotSelect.value !== '',
+        });
+        this.valid; // Update valid input styling 
     }
 };
 
@@ -1050,12 +1074,10 @@ class PaidRequestDialog extends NewRequestDialog {
         };
     }
 
-    async sendRequest() {
-        if (!this.payment.transaction) {
-            window.app.snackbar.view('Please add a valid payment method.');
-            return;
-        }
-        await super.sendRequest();
+    sendRequest() {
+        if (!this.payment.transaction) return window.app.snackbar.view(
+            'Please add a valid payment method.');
+        return super.sendRequest();
     }
 
     async renderSelf() {
@@ -1170,7 +1192,7 @@ class StripeRequestDialog extends PaidRequestDialog {
             return window.app.snackbar.view(res.error.message);
         }
         this.payment.transaction = res.token;
-        super.sendRequest();
+        return super.sendRequest();
     }
 
     renderPayments() {
