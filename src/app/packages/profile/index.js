@@ -458,14 +458,22 @@ class NewProfile extends Profile {
             this.render.listDivider('Basic info')
         );
         const renderHit = (hit) => {
-            const profile = new EditProfile(Utils.filterProfile(hit));
+            const user = Utils.filterProfile(Utils.combineMaps(hit, {
+                proxy: hit.proxy && hit.proxy.indexOf(window.app.user.uid) <
+                    0 ? hit.proxy.concat([window.app.user.uid]) :
+                    !hit.proxy ? [window.app.user.uid] : hit.proxy,
+            }));
+            const profile = new EditProfile(user);
             const el = window.app.renderHit(hit, this.render);
             $(el).find('[data-fir-click="edit"]').remove();
-            el.addEventListener('click', (event) => {
+            el.addEventListener('click', async (event) => {
                 if ($(event.target).closest('button').length) return;
                 profile.view();
                 window.app.nav.views.pop(); // TODO: Don't open UserView at all.
                 window.app.nav.views.pop(); // Don't keep old NewProfile view.
+                const [err, res] = await to(Data.updateUser(user));
+                if (err) window.app.snackbar.view('Could not add ' + user.name +
+                    ' to matching workspace.');
             });
             return el;
         };
