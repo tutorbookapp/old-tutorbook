@@ -44,8 +44,7 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Gunn Academic Center',
-            id: 'NJp0Y6wyMh2fDdxSuRSx',
+            name: 'Any',
         };
         this.test = false;
         this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
