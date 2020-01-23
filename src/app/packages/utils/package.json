@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/utils",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.3.0",
+    "@tutorbook/data": "^0.3.2",
     "@tutorbook/templates": "^0.3.1",
     "axios": "^0.19.0",
     "phone": "^2.4.3"
