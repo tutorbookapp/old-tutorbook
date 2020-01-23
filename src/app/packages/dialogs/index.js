@@ -603,7 +603,10 @@ class ViewRequestDialog {
             approve: async () => {
                 window.app.nav.back();
                 window.app.snackbar.view('Approving request...');
-                await Data.approveRequest(this.request, this.id);
+                const [err, res] = await to(Data.approveRequest(this.request,
+                    this.id));
+                if (err) return window.app.snackbar.view('Could not approve ' +
+                    'request.');
                 window.app.snackbar.view('Approved request.');
             },
         });
