@@ -800,7 +800,7 @@ class TutorProfile extends Profile {
             });
         }, 200);
         const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
-        $(card).find('button').click(() => {
+        $(card).find('button')[0].addEventListener('click', () => {
             menu.open = true;
         });
         $(card).find('button').each(function() {
