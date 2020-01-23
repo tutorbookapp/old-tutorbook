@@ -670,7 +670,6 @@ class EditRequestDialog {
 
     async renderSelf(profile) {
         const request = this.request;
-        const app = window.app;
         const utils = this.utils;
         const that = this;
         const el = this.render.template('dialog-input');
@@ -679,25 +678,26 @@ class EditRequestDialog {
         );
         // First, parse the user's availability map into location, day, and 
         // time arrays
-        const userLocations = Utils.getUserAvailableLocations(user.availability);
-        const userDays =
-            (!!request.location && !!request.location.name) ?
+        const locations = Utils.getUserAvailableLocations(user.availability);
+        const days = (request.location && request.location.name) ?
             Utils.getUserAvailableDaysForLocation(
                 user.availability,
                 request.location.name
             ) : Utils.getUserAvailableDays(user.availability);
-        const userTimes =
-            (!!request.time && !!request.time.day && !!request.location &&
-                !!request.location.name) ? utils.getUserAvailableTimesForDay(
+        const timeslots =
+            (request.time && request.time.day && request.location &&
+                request.location.name) ? utils.getUserAvailableTimeslotsForDay(
                 user.availability,
                 request.time.day,
                 request.location.name,
-            ) : utils.getUserAvailableTimes(user.availability);
+            ) : utils.getUserAvailableTimeslots(user.availability);
+        const timeslot = request.time.from === request.time.to ? request.time
+            .from || '' : request.time.from + ' to ' + request.time.to;
 
         // If there are only no options, make sure to tell the user so they don't
         // think that it's a bug (that the only select options are the ones that
         // were already selected).
-        if (userLocations.length < 1 && userDays < 1 && userTimes < 1) {
+        if (locations.length < 1 && days < 1 && timeslots < 1) {
             window.app.snackbar
                 .view(user.name + ' does not have any other availability.');
         }
@@ -719,19 +719,18 @@ class EditRequestDialog {
         };
 
         if (window.app.user.type === 'Supervisor') {
-            // NOTE: By default we show the fromUser's availability for supervisors,
-            // and thus this "user" object is the fromUser's data.
+            // NOTE: By default we show the fromUser's availability for 
+            // supervisors, and thus this "user" object is the fromUser's data.
             const toUser = await Data.getUser(request.toUser.uid);
             addD('To ' + toUser.type.toLowerCase());
             addH(toUser);
             addD('From ' + user.type.toLowerCase());
-        };
+        }
         addH(user);
         addD('At');
-        addS('Location', request.location.name, userLocations.concat(['Custom']));
-        addS('Day', request.time.day, userDays);
-        addS('From', request.time.from, userTimes);
-        addS('To', request.time.to, userTimes);
+        addS('Location', request.location.name, locations.concat(['Custom']));
+        addS('Day', request.time.day, days);
+        addS('Time', timeslot, timeslots);
         addD('For');
         addS('Subject', request.subject, user.subjects);
         add(this.render.textAreaItem('Message', request.message));
@@ -749,6 +748,7 @@ class EditRequestDialog {
     // Views the dialog and adds manager(s)
     async view() {
         if (!this.main) await this.rendering;
+        window.requestDialog = this;
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         this.manage();
@@ -797,17 +797,16 @@ class EditRequestDialog {
             that.refreshTimeSelects(request, availability);
         });
 
-        const fromTimeEl = dialog.querySelector('#From');
-        const fromTimeSelect = Utils.attachSelect(fromTimeEl);
-        fromTimeSelect.listen('MDCSelect:change', () => {
-            request.time.from = fromTimeSelect.value;
-            that.updateAmount();
-        });
-
-        const toTimeEl = dialog.querySelector('#To');
-        const toTimeSelect = Utils.attachSelect(toTimeEl);
-        toTimeSelect.listen('MDCSelect:change', () => {
-            request.time.to = toTimeSelect.value;
+        const timeslotEl = dialog.querySelector('#Time');
+        const timeslotSelect = Utils.attachSelect(timeslotEl);
+        timeslotSelect.listen('MDCSelect:change', () => {
+            if (timeslotSelect.value.indexOf(' to ') > 0) {
+                request.time.from = timeslotSelect.value.split(' to ')[0];
+                request.time.to = timeslotSelect.value.split(' to ')[1];
+            } else {
+                request.time.from = timeslotSelect.value;
+                request.time.to = timeslotSelect.value;
+            }
             that.updateAmount();
         });
 
@@ -835,17 +834,21 @@ class EditRequestDialog {
 
     refreshDayAndTimeSelects(request, a) {
         if (!a[request.location.name]) return; // Custom location
-        var that = this;
-        var days = Utils.getUserAvailableDaysForLocation(a, request.location.name);
-        var times = this.utils.getUserAvailableTimesForDay(
+        const that = this;
+        const days = Utils.getUserAvailableDaysForLocation(a, request.location
+            .name);
+        const timeslots = this.utils.getUserAvailableTimeslotsForDay(
             a,
             days[0],
             request.location.name
         );
 
-        if (times.length === 1) {
-            request.time.from = times[0];
-            request.time.to = times[0];
+        if (timeslots.length === 1 && timeslots[0].indexOf(' to ') > 0) {
+            request.time.from = timeslots[0].split(' to ')[0];
+            request.time.to = timeslots[0].split(' to ')[1];
+        } else if (timeslots.length === 1) {
+            request.time.from = timeslots[0];
+            request.time.to = timeslots[0];
         }
         if (days.length === 1) {
             request.time.day = days[0];
@@ -854,31 +857,37 @@ class EditRequestDialog {
         // If there are only no options, make sure to tell the user so they don't
         // think this it's a bug (this the only select options are the ones this
         // were already selected).
-        if (days.length < 1 && times.length < 1) {
+        if (days.length < 1 && timeslots.length < 1) {
             window.app.snackbar.view(request.toUser.name + ' does not have any ' +
                 'availability at the ' + request.location.name + '.');
             return;
         }
 
-        var toTimeEl = this
-            .render.select('To', request.time.to || '', times)
-        var oldToTimeEl = document.querySelector('main .dialog-input')
-            .querySelector('#To');
-        oldToTimeEl.parentNode.insertBefore(toTimeEl, oldToTimeEl);
-        oldToTimeEl.parentNode.removeChild(oldToTimeEl);
-        var toTimeSelect = Utils.attachSelect(toTimeEl);
-        toTimeSelect.listen('MDCSelect:change', function() {
-            request.time.to = toTimeSelect.value;
+        const timeslot = request.time.from === request.time.to ? request.time
+            .from || '' : request.time.from + ' to ' + request.time.to;
+        const timeslotEl = this.render.select('Time', timeslot, timeslots)
+        const oldTimeslotEl = document.querySelector('main .dialog-input')
+            .querySelector('#Time');
+        oldTimeslotEl.parentNode.insertBefore(timeslotEl, oldTimeslotEl);
+        oldTimeslotEl.parentNode.removeChild(oldTimeslotEl);
+        const timeslotSelect = Utils.attachSelect(timeslotEl);
+        timeslotSelect.listen('MDCSelect:change', function() {
+            if (timeslotSelect.value.indexOf(' to ') > 0) {
+                request.time.from = timeslotSelect.value.split(' to ')[0];
+                request.time.to = timeslotSelect.value.split(' to ')[1];
+            } else {
+                request.time.from = timeslotSelect.value;
+                request.time.to = timeslotSelect.value;
+            }
             that.updateAmount();
         });
 
-        var dayEl = this
-            .render.select('Day', request.time.day || '', days);
-        var oldDayEl = document.querySelector('main .dialog-input')
+        const dayEl = this.render.select('Day', request.time.day || '', days);
+        const oldDayEl = document.querySelector('main .dialog-input')
             .querySelector('#Day');
         oldDayEl.parentNode.insertBefore(dayEl, oldDayEl);
         oldDayEl.parentNode.removeChild(oldDayEl);
-        var daySelect = Utils.attachSelect(dayEl);
+        const daySelect = Utils.attachSelect(dayEl);
         daySelect.listen('MDCSelect:change', function() {
             request.time.day = daySelect.value;
             that.refreshTimeSelects(request, a);
@@ -887,48 +896,43 @@ class EditRequestDialog {
 
     refreshTimeSelects(request, a) {
         if (!a[request.location.name]) return; // Custom location
-        var that = this;
-        var times = this.utils.getUserAvailableTimesForDay(
+        const that = this;
+        const timeslots = this.utils.getUserAvailableTimeslotsForDay(
             a,
-            request.time.day,
+            days[0],
             request.location.name
         );
 
-        if (times.length === 1) {
-            request.time.from = times[0];
-            request.time.to = times[0];
+        if (timeslots.length === 1 && timeslots[0].indexOf(' to ') > 0) {
+            request.time.from = timeslots[0].split(' to ')[0];
+            request.time.to = timeslots[0].split(' to ')[1];
+        } else if (timeslots.length === 1) {
+            request.time.from = timeslots[0];
+            request.time.to = timeslots[0];
         }
 
         // If there are only no options, make sure to tell the user so they don't
         // think this it's a bug (this the only select options are the ones this
         // were already selected).
-        if (times.length < 1) {
-            window.app.snackbar.view(request.toUser.name + ' does not have any ' +
-                'availability on ' + request.day + 's.');
-            return;
-        }
+        if (timeslots.length < 1) return window.app.snackbar.view(request.toUser
+            .name + ' does not have any availability on ' + request.day + 's.');
 
-        var toTimeEl = this
-            .render.select('To', request.time.to || '', times)
-        var oldToTimeEl = document.querySelector('main .dialog-input')
-            .querySelector('#To');
-        oldToTimeEl.parentNode.insertBefore(toTimeEl, oldToTimeEl);
-        oldToTimeEl.parentNode.removeChild(oldToTimeEl);
-        var toTimeSelect = Utils.attachSelect(toTimeEl);
-        toTimeSelect.listen('MDCSelect:change', function() {
-            request.time.to = toTimeSelect.value;
-            that.updateAmount();
-        });
-
-        var fromTimeEl = this
-            .render.select('From', request.time.from || '', times);
-        var oldFromTimeEl = document.querySelector('main .dialog-input')
-            .querySelector('#From');
-        oldFromTimeEl.parentNode.insertBefore(fromTimeEl, oldFromTimeEl);
-        oldFromTimeEl.parentNode.removeChild(oldFromTimeEl);
-        var fromTimeSelect = Utils.attachSelect(fromTimeEl);
-        fromTimeSelect.listen('MDCSelect:change', function() {
-            request.time.from = fromTimeSelect.value;
+        const timeslot = request.time.from === request.time.to ? request.time
+            .from || '' : request.time.from + ' to ' + request.time.to;
+        const timeslotEl = this.render.select('Time', timeslot, timeslots)
+        const oldTimeslotEl = document.querySelector('main .dialog-input')
+            .querySelector('#Time');
+        oldTimeslotEl.parentNode.insertBefore(timeslotEl, oldTimeslotEl);
+        oldTimeslotEl.parentNode.removeChild(oldTimeslotEl);
+        const timeslotSelect = Utils.attachSelect(timeslotEl);
+        timeslotSelect.listen('MDCSelect:change', function() {
+            if (timeslotSelect.value.indexOf(' to ') > 0) {
+                request.time.from = timeslotSelect.value.split(' to ')[0];
+                request.time.to = timeslotSelect.value.split(' to ')[1];
+            } else {
+                request.time.from = timeslotSelect.value;
+                request.time.to = timeslotSelect.value;
+            }
             that.updateAmount();
         });
     }
@@ -964,15 +968,18 @@ class NewRequestDialog extends EditRequestDialog {
         // Check to see if we can pre-select for the user
         const locations = Utils.getUserAvailableLocations(user.availability);
         const days = Utils.getUserAvailableDays(user.availability);
-        const times = utils.getUserAvailableTimes(user.availability);
+        const timeslots = utils.getUserAvailableTimeslots(user.availability);
         if (locations.length === 1) {
             request.location.name = locations[0];
             request.location.id =
                 window.app.data.locationsByName[request.location.name];
         }
-        if (times.length === 1) {
-            request.time.from = times[0];
-            request.time.to = times[0];
+        if (timeslots.length === 1 && timeslots[0].indexOf(' to ') > 0) {
+            request.time.from = timeslots[0].split(' to ')[0];
+            request.time.to = timeslots[0].split(' to ')[1];
+        } else if (timeslots.length === 1) {
+            request.time.from = timeslots[0];
+            request.time.to = timeslots[0];
         }
         if (days.length === 1) {
             request.time.day = days[0];
@@ -980,7 +987,8 @@ class NewRequestDialog extends EditRequestDialog {
 
         // No options for the user to select
         if (locations.length < 1 && days.length < 1 && times.length < 1) {
-            window.app.snackbar.view(user.name + ' does not have any availability.');
+            window.app.snackbar.view(user.name + ' does not have any ' +
+                'availability.');
             throw new Error(user.name + ' does not have any availability.');
         }
 

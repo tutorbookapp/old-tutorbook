@@ -719,7 +719,30 @@ class Utils {
         }
     }
 
-    // Helper function to return a user's available times for a given day and location
+    getUserAvailableTimeslots(availability) {
+        var times = [];
+        for (var locationHours of Object.values(availability)) {
+            for (var timeslots of Object.values(locationHours)) {
+                times = times.concat(timeslots.map(timeslot => timeslot.open ===
+                    timeslot.close ? timeslot.open : timeslot.open + ' to ' +
+                    timeslot.close));
+            }
+        }
+        return times.filter(Boolean);
+    }
+
+    getUserAvailableTimeslotsForDay(availability, day, location) {
+        for (var entry of Object.entries(availability[location])) {
+            var d = entry[0];
+            var times = entry[1].map(timeslot => timeslot.open ===
+                timeslot.close ? timeslot.open : timeslot.open + ' to ' +
+                timeslot.close);
+            if (d === day) return times.filter(Boolean);
+        }
+    }
+
+    // Helper function to return a user's available times for a given day and 
+    // location
     getUserAvailableTimesForDay(availability, day, location) {
         // NOTE: Availability is stored in the Firestore database as:
         // availability: {
@@ -736,15 +759,13 @@ class Utils {
             Object.entries(availability[location]).forEach((entry) => {
                 var d = entry[0];
                 var t = entry[1];
-                if (d === day) {
-                    times = t;
-                }
+                if (d === day) times = t;
             });
 
-            var that = this;
             var result = [];
             times.forEach((time) => {
-                result = result.concat(that.getTimesBetween(time.open, time.close, day));
+                result = result.concat(this.getTimesBetween(time.open, time
+                    .close, day));
             });
             return result;
         } catch (e) {
