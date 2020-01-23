@@ -1041,7 +1041,9 @@ Card.renderCard = function(title, subtitle, summary, actions) {
         title: title,
         subtitle: subtitle,
         summary: summary,
-        actions: actions,
+        actions: Utils.combineMaps({
+            primary: () => {},
+        }, actions),
     });
     if (typeof actions.options === 'object') {
         $(card).find('.dashboard-card__primary-action')
