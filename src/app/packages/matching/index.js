@@ -440,18 +440,21 @@ class Matching {
                 }
                 $(card).remove();
             },
-            delete: () => new ConfirmationDialog('Delete Proxy Account?',
-                'You are about to permanently delete ' + profile.name +
-                '\'s account data. This action cannot be undone. Please ' +
-                'ensure to check with your fellow supervisors before ' +
-                'continuing.', async () => {
-                    const [err, res] = await to(Data.deleteUser(doc.id));
-                    if (err) window.app.snackbar.view('Could not delete ' +
-                        'account.');
-                    window.app.snackbar.view('Deleted account.');
-                }).view(),
             match: () => match.view(),
-            primary: () => dialog.view(),
+            options: {
+                'Edit': () => dialog.view(),
+                'Delete': () => new ConfirmationDialog('Delete Proxy Account?',
+                    'You are about to permanently delete ' + profile.name +
+                    '\'s account data. This action cannot be undone. Please ' +
+                    'ensure to check with your fellow supervisors before ' +
+                    'continuing.', async () => {
+                        const [err, res] = await to(Data.deleteUser(doc.id));
+                        if (err) window.app.snackbar.view('Could not delete ' +
+                            'account.');
+                        window.app.snackbar.view('Deleted account.');
+                    }).view(),
+                'Raw Data': () => Utils.viewRaw(doc),
+            },
         };
 
         card = Card.renderCard(title, subtitle, summary, actions);
