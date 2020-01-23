@@ -368,9 +368,7 @@ class Matching {
     removeUserQuery(id) { // Removes a listener for a given user
         // See: https://stackoverflow.com/questions/46642652/how-to-remove-
         // listener-for-documentsnapshot-events-google-cloud-firestore#46644561
-        this.queries[id].forEach((unsubscribe) => {
-            unsubscribe();
-        });
+        this.queries[id].forEach((unsubscribe) => unsubscribe());
         $(this.main).find('[user="' + id + '"]').remove();
     }
 
