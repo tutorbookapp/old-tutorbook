@@ -1081,7 +1081,7 @@ Card.renderCard = function(title, subtitle, summary, actions) {
     $(card)
         .find('.mdc-button, .mdc-list-item')
         .each(function() {
-            MDCRipple.attachTo($(this)[0]);
+            MDCRipple.attachTo(this);
         });
     return card;
 };
