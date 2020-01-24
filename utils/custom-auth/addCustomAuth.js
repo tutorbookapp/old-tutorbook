@@ -9,7 +9,7 @@ admin.initializeApp({
 const auth = admin.auth();
 
 const addSupervisorAuth = (options) => {
-    auth.setCustomUserClaims(options.uid, {
+    return auth.setCustomUserClaims(options.uid, {
         supervisor: true,
         parent: false,
         locations: options.locationIds,
@@ -18,7 +18,7 @@ const addSupervisorAuth = (options) => {
 };
 
 const removeSupervisorAuth = (options) => {
-    auth.setCustomUserClaims(options.uid, {
+    return auth.setCustomUserClaims(options.uid, {
         supervisor: false,
         parent: false,
         locations: [],
@@ -26,11 +26,24 @@ const removeSupervisorAuth = (options) => {
     });
 };
 
+const createUser = (user) => {
+    return auth.createUser(user);
+};
+
+/*
+ *createUser({
+ *    email: 'dluu@pausd.org',
+ *    emailVerified: false,
+ *    displayName: 'Diane Luu',
+ *    photoURL: 'https://www.google.com/s2/u/3/photos/private/AIbEiAIAAABECLz8h' +
+ *        'ZH_ueKopwEiC3ZjYXJkX3Bob3RvKihlYzE4NGY3Y2ZiNTZmZDEwZDNkYjc5ZjkzMzgxM' +
+ *        'mY2N2YxYzZiNzM4MAHmhhGklYzXpzQov7BVCWZ0YMtuqA?sz=40',
+ *    disabled: false,
+ *});
+ */
 addSupervisorAuth({
-    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+    uid: 'ON8HMcTZCodjBdMmZsRHT01C4242',
     locationIds: [
-        'NJp0Y6wyMh2fDdxSuRSx',
-        'fcKWyRWy124H4M34mS1r',
         'WfAGnrtG87CJsYRnOmwn',
     ],
 });
