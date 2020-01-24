@@ -320,8 +320,9 @@ class EditAvailabilityDialog {
     }
 
     refreshTimes() { // Update time selects based on newly selected day
-        if (Data.locations.indexOf(this.val.location) < 0) return;
         const location = this.data.locationDataByName[this.val.location];
+        if (!location) return console.warn('Cannot refresh days and times ' +
+            'w/out location data.');
         const times = this.utils.getLocationTimeWindowsByDay(
             this.val.day,
             location.hours,
