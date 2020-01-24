@@ -465,7 +465,8 @@ class SupervisorDashboard extends Dashboard {
                     dashboard.remove(doc);
                 },
                 display: (doc) => {
-                    this[entry[0]].num++;
+                    if (!$(dashboard.main).find('#' + doc.id).length)
+                        this[entry[0]].num++;
                     dashboard.display(doc);
                 },
             });
