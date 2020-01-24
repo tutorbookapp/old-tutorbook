@@ -275,63 +275,65 @@ class Navigation {
     }
 
     viewDrawer() {
-        $('#nav-drawer .mdc-list-item--activated').attr('class', 'mdc-list-item');
+        const active = 'mdc-list-item--activated';
+        $('#nav-drawer .' + active).attr('class', 'mdc-list-item');
+        $('#nav-drawer [style="display: none;"]').remove();
         switch (this.selected) {
             case 'Tutorbook': // Home is selected
-                $('#nav-drawer .mdc-list #home').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #home').addClass(active);
                 break;
             case 'Matching':
-                $('#nav-drawer .mdc-list #matching').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #matching').addClass(active);
                 break;
             case 'Stats':
-                $('#nav-drawer .mdc-list #stats').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #stats').addClass(active);
                 break;
             case 'Home':
-                $('#nav-drawer .mdc-list #home').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #home').addClass(active);
                 break;
             case 'Schedule':
-                $('#nav-drawer .mdc-list #schedule').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #schedule').addClass(active);
                 break;
             case 'Messages':
-                $('#nav-drawer .mdc-list #chats').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #chats').addClass(active);
                 break;
             case 'Accounts':
-                $('#nav-drawer .mdc-list #accounts').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #accounts').addClass(active);
                 break;
             case 'Locations':
-                $('#nav-drawer .mdc-list #locations').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #locations').addClass(active);
                 break;
             case 'History':
-                $('#nav-drawer .mdc-list #history').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #history').addClass(active);
                 break;
             case 'Payments':
-                $('#nav-drawer .mdc-list #payments').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #payments').addClass(active);
                 break;
             case 'Search':
-                $('#nav-drawer .mdc-list #search').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #search').addClass(active);
                 break;
             case 'Settings':
-                $('#nav-drawer .mdc-list #settings').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #settings').addClass(active);
                 break;
             case 'Tutors':
-                $('#nav-drawer .mdc-list #tutors').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #tutors').addClass(active);
                 break;
             case 'Pupils':
-                $('#nav-drawer .mdc-list #pupils').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #pupils').addClass(active);
                 break;
             case 'Profile':
-                $('#nav-drawer .mdc-list #profile').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #profile').addClass(active);
                 break;
             case 'Help & Feedback':
-                $('#nav-drawer .mdc-list #feedback').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #feedback').addClass(active);
                 break;
             default:
-                $('#nav-drawer .mdc-list #home').attr('class', 'mdc-list-item mdc-list-item--activated');
+                $('#nav-drawer .mdc-list #home').addClass(active);
         };
-        document.querySelectorAll('#nav-drawer .mdc-list-item').forEach((el) => {
-            MDCRipple.attachTo(el);
+        $('#nav-drawer .mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
         });
-        return MDCDrawer.attachTo(document.querySelector('#nav-drawer')).open = true;
+        return MDCDrawer.attachTo($('#nav-drawer')[0]).open = true;
     }
 
 };
