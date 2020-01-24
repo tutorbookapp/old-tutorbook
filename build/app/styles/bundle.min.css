@@ -5670,7 +5670,7 @@ svg.mdc-button__icon {
   /* @alternate */
   background-color: var(--mdc-theme-secondary, #018786); }
 
-@keyframes mdc-checkbox-fade-in-background-ufac81993 {
+@keyframes mdc-checkbox-fade-in-background-uf49bebe3 {
   0% {
     border-color: rgba(0, 0, 0, 0.54);
     background-color: transparent; }
@@ -5682,7 +5682,7 @@ svg.mdc-button__icon {
     /* @alternate */
     background-color: var(--mdc-theme-secondary, #018786); } }
 
-@keyframes mdc-checkbox-fade-out-background-ufac81993 {
+@keyframes mdc-checkbox-fade-out-background-uf49bebe3 {
   0%,
   80% {
     border-color: #018786;
@@ -5696,10 +5696,10 @@ svg.mdc-button__icon {
     background-color: transparent; } }
 
 .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-in-background-ufac81993; }
+  animation-name: mdc-checkbox-fade-in-background-uf49bebe3; }
 
 .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-out-background-ufac81993; }
+  animation-name: mdc-checkbox-fade-out-background-uf49bebe3; }
 
 .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
   border-color: rgba(0, 0, 0, 0.26);
@@ -6039,6 +6039,16 @@ them (or their floating labels) off short. */
 .dialog-form__content {
   padding-left: 0px !important;
   padding-right: 0px !important; }
+
+#dialog-group #all-filters-list {
+  border: 1px solid #C2C2C2;
+  border-radius: 8px;
+  margin-top: 20px;
+  padding-bottom: 8px; }
+
+#dialog-group .mdc-text-field {
+  width: 100%;
+  margin-top: 20px; }
 .mdc-switch {
   display: inline-block;
   position: relative;
@@ -7514,7 +7524,7 @@ a.mdc-list-item {
 .chat .write {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  right: 20px;
   height: 48px;
   padding: 0 2px 0 8px;
   background-color: #eceff1;
@@ -9363,4 +9373,45 @@ svg.mdc-button__icon {
 
 .mdc-list-item #checkmark .material-icons {
   vertical-align: middle;
+}
+#supervisor-chats .mdc-list-group__subheader {
+  color: #5F6368;
+  font-weight: 500;
+}
+
+.chats-container {
+  width: 30vw;
+  height: calc(100vh - 64px);
+  min-width: 400px;
+  max-width: 500px;
+  border-right: 1px solid #E0E0E0;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.messages-container {
+  width: 70vw;
+  height: calc(100vh - 64px);
+  max-width: calc(100vw - 400px);
+  min-width: calc(100vw - 500px);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+
+.messages-container .chat .write {
+  width: calc(70vw - 40px);
+  max-width: calc(100vw - 440px);
+  min-width: calc(100vw - 540px);
+}
+
+.chats-container .mdc-list-item {
+  margin: 8px 8px;
+  padding: 0 8px;
+  border-radius: 8px;
+}
+
+.chats-container .mdc-list-item--selected span {
+  color: var(--mdc-theme-primary, #6200ee);
 }

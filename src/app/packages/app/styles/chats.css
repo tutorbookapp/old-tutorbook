@@ -1,0 +1,41 @@
+#supervisor-chats .mdc-list-group__subheader {
+  color: #5F6368;
+  font-weight: 500;
+}
+
+.chats-container {
+  width: 30vw;
+  height: calc(100vh - 64px);
+  min-width: 400px;
+  max-width: 500px;
+  border-right: 1px solid #E0E0E0;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.messages-container {
+  width: 70vw;
+  height: calc(100vh - 64px);
+  max-width: calc(100vw - 400px);
+  min-width: calc(100vw - 500px);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+
+.messages-container .chat .write {
+  width: calc(70vw - 40px);
+  max-width: calc(100vw - 440px);
+  min-width: calc(100vw - 540px);
+}
+
+.chats-container .mdc-list-item {
+  margin: 8px 8px;
+  padding: 0 8px;
+  border-radius: 8px;
+}
+
+.chats-container .mdc-list-item--selected span {
+  color: var(--mdc-theme-primary, #6200ee);
+}

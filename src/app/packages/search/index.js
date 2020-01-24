@@ -12,7 +12,7 @@ const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const EditProfile = require('@tutorbook/profile').edit;
 const User = require('@tutorbook/user');
-const FilterDialog = require('@tutorbook/filters');
+const FilterDialog = require('@tutorbook/filters').default;
 const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 const NotificationDialog = require('@tutorbook/dialogs').notify;

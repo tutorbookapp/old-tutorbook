@@ -11,6 +11,7 @@ import to from 'await-to-js';
 const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const Utils = require('@tutorbook/utils');
+const NewGroupDialog = require('@tutorbook/filters').group;
 
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.
@@ -21,88 +22,99 @@ class Chats {
         this.chatsByUID = {};
         this.render = window.app.render;
         this.recycler = {
-            remove: (doc) => {
-                if (window.app.nav.selected === 'Messages') {
-                    return $(".main #chats [id='doc-" + doc.id + "']").remove();
-                }
-            },
-            display: (doc) => {
-                // We don't want to display user's that do not have a valid 
-                // profile
-                if (window.app.nav.selected === 'Messages') {
-                    var listItem = this.renderChatItem(doc);
-                    return this.viewChat(listItem);
-                }
-            },
-            empty: () => {
-                if (window.app.nav.selected === 'Messages') {
-                    return $('.main #chats').empty().append(this.renderEmpty());
-                }
-            },
+            remove: (doc) => $(this.main).find('#chats [id="doc-' + doc.id +
+                '"]').remove(),
+            display: (doc) => this.viewChat(this.renderChatItem(doc)),
+            empty: () => $(this.main).find('#chats').empty().append(
+                this.renderEmpty()),
         };
         this.renderSelf();
     }
 
     viewChat(listItem) {
-        const list = $(this.main).find('.mdc-list');
+        const list = $(this.main).find('#chats');
         const existing = $(list).find('#' + $(listItem).attr('id'));
         if (existing.length) {
-            return $(existing).replaceWith(listItem);
+            if (existing.hasClass('mdc-list-item--selected')) $(listItem)
+                .addClass('mdc-list-item--selected');
+            return existing.replaceWith(listItem);
         }
-        list.append(listItem);
+        list.prepend(listItem);
     }
 
     // View function that shows the user a mdc-list of their current chats
-    view() {
-        MDCTopAppBar.attachTo(this.header);
+    view(chat) {
         window.app.intercom.view(true);
         window.app.nav.selected = 'Messages';
-        window.app.view(this.header, this.main, '/app/messages');
-        this.viewChats();
+        if (!this.managed) this.manage();
+        if (!this.chatsViewed) this.viewChats();
+        if (chat) this.chats[chat.id] = chat;
+        var viewingChat, attemptsToViewChat = 0;
+        const viewChat = () => {
+            if (attemptsToViewChat > 3 && viewingChat) {
+                window.clearInterval(viewingChat);
+                window.app.snackbar.view('Could not open chat.');
+            }
+            attemptsToViewChat++;
+            try {
+                $(this.main).find('.chats-container').scrollTop($(this.main)
+                    .find('.messages-container').empty().append(chat.main).end()
+                    .find('.mdc-list .mdc-list-item--selected')
+                    .removeClass('mdc-list-item--selected').end()
+                    .find('.mdc-list #' + chat.id)
+                    .addClass('mdc-list-item--selected').position().top);
+                window.app.view(this.header, this.main, '/app/messages/' +
+                    chat.id);
+                chat.viewMessages();
+                chat.manage();
+                if (viewingChat) window.clearInterval(viewingChat);
+            } catch (err) {
+                console.warn('Trying again to open chat b/c of', err);
+            }
+        };
+        if (chat && $(this.main).find('#chats #' + chat.id).length) {
+            viewChat();
+        } else if (chat) {
+            viewingChat = window.setInterval(viewChat, 100);
+        } else if ($(this.main).find('.mdc-list-item--selected').length) {
+            this.chats[$(this.main).find('.mdc-list-item--selected')
+                .attr('id')].view();
+        } else if ($(this.main).find('.messages-container .chat').length) {
+            this.chats[$(this.main).find('.messages-container .chat')
+                .attr('id')].view();
+        } else {
+            window.app.view(this.header, this.main, '/app/messages');
+        }
     }
 
     reView() {
-        MDCTopAppBar.attachTo(this.header);
-        this.reViewChats();
+        window.app.intercom.view(true);
+        window.app.nav.selected = 'Messages';
+        if (!this.managed) this.manage();
+        if (!this.chatsViewed) this.viewChats();
     }
 
-    reViewChats() {
-        const chats = this.chats;
-        const that = this;
-        $('main .mdc-list-item').each(async function() {
-            const id = $(this).attr('id').trim();
-            if (!!chats[id]) { // Use cached chat object
-                return $(this).click(() => {
-                    chats[id].view();
-                });
-            }
-            const doc = await that.getChat(id); // Create and cache chat
-            const chat = new Chat(doc.id, doc.data());
-            chats[id] = chat;
-            $(this).click(() => {
-                chat.view();
-            });
-        });
+    manage() {
+        this.managed = true;
+        MDCTopAppBar.attachTo(this.header);
     }
 
     async chat(id) {
-        if (!this.chats[id])
-            this.chats[id] = new Chat(id, (await this.getChat(id)).data());
+        if (!this.chats[id]) {
+            const [err, chat] = await to(this.getChat(id));
+            if (err) {
+                window.app.snackbar.view('Could not open chat.');
+                return this.view();
+            }
+            this.chats[id] = new Chat(id, chat.data());
+        }
         this.chats[id].view();
     }
 
     // Render function that returns the chat view
     renderSelf() {
-        this.main = this.render.template('chats', {
-            welcomeTitle: 'Messages',
-            welcomeSubtitle: (window.app.user.type === 'Tutor') ? 'Answer ' +
-                'your students\'s questions, market yourself to prospective ' +
-                'students, and manage appointments with students all in one ' +
-                'place.' : 'Ask your tutor questions, re-schedule ' +
-                'appointments, and talk to prospective tutors all in one ' +
-                'place.',
-            showWelcome: !window.app.onMobile,
-        });
+        this.main = window.app.onMobile ? this.render.template('chats-mobile') :
+            this.render.template('chats-desktop');
         this.header = this.render.header('header-main', {
             title: 'Messages',
         });
@@ -110,8 +122,8 @@ class Chats {
 
     // View function that shows all the chats that the currentUser is a part of
     viewChats() {
-        var that = this;
-        this.emptyChats();
+        this.chatsViewed = true;
+        $(this.main).find('#chats').empty();
         window.app.listeners.push(this.getChats().onSnapshot({
             error: (err) => {
                 window.app.snackbar.view('Could not get chats.');
@@ -119,14 +131,14 @@ class Chats {
             },
             next: (snapshot) => {
                 if (!snapshot.size) {
-                    return that.recycler.empty();
+                    return this.recycler.empty();
                 }
 
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === 'removed') {
-                        that.recycler.remove(change.doc);
+                        this.recycler.remove(change.doc);
                     } else {
-                        that.recycler.display(change.doc);
+                        this.recycler.display(change.doc);
                     }
                 });
             },
@@ -143,12 +155,8 @@ class Chats {
     // chats in the future).
     getChats() {
         return window.app.db.collection('chats')
-            .where('chatterUIDs', 'array-contains', window.app.user.uid);
-    }
-
-    // Helper function that empties the current chat list to display new ones
-    emptyChats() {
-        return $('main #chats').empty();
+            .where('chatterUIDs', 'array-contains', window.app.user.uid)
+            .orderBy('lastMessage.timestamp');
     }
 
     // Data action function that deletes the chat and TODO: sends out deleted 
@@ -172,49 +180,21 @@ class Chats {
             return UIDs[1];
         };
 
-        const that = this;
         const chat = new Chat(doc.id, doc.data());
         this.chats[doc.id] = chat;
         this.chatsByUID[getOther(doc.data().chatterUIDs)] = chat;
         const el = this.render.template('chat-list-item',
             Utils.combineMaps(doc.data(), {
-                open_chat: () => {
-                    chat.view();
-                },
+                open_chat: () => chat.view(),
                 id: doc.id,
-                photo: Utils.getOtherUser(
+                photo: doc.data().photo || Utils.getOtherUser(
                     doc.data().chatters[0],
                     doc.data().chatters[1]
                 ).photo,
-                name: Utils.getOtherUser(
+                name: doc.data().name || Utils.getOtherUser(
                     doc.data().chatters[0],
                     doc.data().chatters[1]
                 ).name,
-                showAction: false, // TODO: Add delete action for chats.
-                actionLabel: 'Delete',
-                action: () => {
-                    return new ConfirmationDialog('Delete Chat?', 'Are you ' +
-                            'sure you want to permanently delete this chat?' +
-                            ' Once you do, no one will be able to view their' +
-                            ' past messages. This action cannot be undone.')
-                        .view()
-                        .listen('MDCDialog:closing', async (event) => {
-                            if (event.detail.action === 'yes') {
-                                $('main .chats #doc-' + doc.id).remove();
-                                [err, res] = await to(
-                                    that.deleteChat(doc.data(), doc.id)
-                                );
-                                if (err) {
-                                    console.error('Error while deleting chat:',
-                                        err);
-                                    return window.app.snackbar.view(
-                                        'Could not delete chat.'
-                                    );
-                                }
-                                window.app.snackbar.view('Deleted chat.');
-                            }
-                        });
-                },
             }));
         MDCRipple.attachTo(el);
         return el;
@@ -272,6 +252,32 @@ class Chats {
 };
 
 class SupervisorChats extends Chats {
+    constructor() {
+        super();
+        this.announcements = {};
+    }
+
+    async chat(id) {
+        if (this.chats[id]) return this.chats[id].view();
+        if (this.announcements[id]) return this.announcements[id].view();
+        const [err, chat] = await to(this.getChat(id));
+        if (err) {
+            const [e, announcement] = await to(this.getAnnouncement(id));
+            if (e) {
+                window.app.snackbar.view('Could not open chat.');
+                return this.view();
+            }
+            this.announcements[id] = new AnnouncementChat(announcement);
+            return this.announcements[id].view();
+        }
+        this.chats[id] = new Chat(id, chat.data());
+        this.chats[id].view();
+    }
+
+    getAnnouncement(id) {
+        return window.app.db.collection('locations').doc(window.app.location.id)
+            .collection('announcements').doc(id).get();
+    }
 
     renderHit(hit) {
         return this.renderChatItem({
@@ -282,6 +288,12 @@ class SupervisorChats extends Chats {
 
     renderSelf() {
         super.renderSelf();
+        $(this.main).find('#chats').replaceWith(
+            this.render.template('supervisor-chats-list', {
+                newAnnouncement: () => new NewGroupDialog({
+                    groupNum: Object.values(this.announcements).length + 1,
+                }).view(),
+            }));
         this.search = new window.app.SearchHeader({
             title: 'Messages',
             placeholder: 'Search your messages',
@@ -314,14 +326,88 @@ class SupervisorChats extends Chats {
         this.header = this.search.el;
     }
 
-    view() {
-        super.view();
+    view(chat) {
+        super.view(chat);
         this.search.manage();
     }
 
     reView() {
         super.reView();
         this.search.manage();
+    }
+
+    viewChats() {
+        super.viewChats();
+        this.viewAnnouncements();
+    }
+
+    manage() {
+        super.manage();
+        MDCRipple.attachTo($(this.main).find('#new-announcement')[0]);
+    }
+
+    viewAnnouncement(listItem) {
+        const list = $(this.main).find('#announcements');
+        const existing = $(list).find('#' + $(listItem).attr('id'));
+        if (existing.length) {
+            if (existing.hasClass('mdc-list-item--selected')) $(listItem)
+                .addClass('mdc-list-item--selected');
+            return existing.replaceWith(listItem);
+        }
+        list.prepend(listItem);
+    }
+
+    viewAnnouncements() {
+        const recycler = {
+            display: (doc) => this.viewAnnouncement(
+                this.renderAnnouncementItem(doc)),
+            remove: (doc) => $(this.main).find('#announcements #' + doc.id)
+                .remove(),
+            empty: () => $(this.main).find('#announcements').find('.mdc-list-' +
+                'item:not([id="new-announcement"])').remove(),
+        };
+        $(this.main).find('#announcements').find('.mdc-list-item:not([id="new' +
+            '-announcement"])').remove();
+        window.app.listeners = window.app.listeners.concat(
+            this.getAnnouncements().map(qry => qry.onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not get announcements.');
+                    console.error('Could not get announcements b/c of ', err);
+                },
+                next: (snapshot) => {
+                    if (!snapshot.size) {
+                        return recycler.empty();
+                    }
+
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            recycler.remove(change.doc);
+                        } else {
+                            recycler.display(change.doc);
+                        }
+                    });
+                },
+            })));
+    }
+
+    getAnnouncements() {
+        return window.app.data.locationIDs.map(id => window.app.db
+            .collection('locations').doc(id).collection('announcements')
+            .orderBy('lastMessage.timestamp'));
+    }
+
+    renderAnnouncementItem(doc) {
+        const chat = new AnnouncementChat(doc);
+        this.announcements[doc.id] = chat;
+        const el = this.render.template('chat-list-item',
+            Utils.combineMaps(doc.data(), {
+                open_chat: () => chat.view(),
+                id: doc.id,
+                photo: doc.data().photo,
+                name: doc.data().name,
+            }));
+        MDCRipple.attachTo(el);
+        return el;
     }
 };
 
@@ -333,23 +419,17 @@ class Chat {
         this.render = window.app.render;
         this.recycler = {
             remove: (doc) => {
-                if (window.app.nav.selected === 'Messages') return $(this.main)
-                    .find('#messages [id="doc-' + doc.id + '"]').remove();
+                return $(this.main).find('#messages [id="doc-' + doc.id + '"]')
+                    .remove();
             },
             display: (doc) => {
-                // We don't display users that do not have a valid profile
-                if (window.app.nav.selected === 'Messages') {
-                    $(this.main).find('.centered-text').remove();
-                    var message = this.renderMessage(doc);
-                    this.viewMessage(message);
-                }
+                $(this.main).find('.centered-text').remove();
+                this.viewMessage(this.renderMessage(doc));
             },
             empty: () => {
-                if (window.app.nav.selected === 'Messages') {
-                    $(this.main).find('#messages').empty();
-                    if (!$(this.main).find('.centered-text').length)
-                        $('.main .chat').prepend(this.renderEmptyMessages());
-                }
+                $(this.main).find('#messages').empty();
+                if (!$(this.main).find('.centered-text').length)
+                    $('.main .chat').prepend(this.renderEmptyMessages());
             },
         };
         this.renderSelf();
@@ -357,6 +437,8 @@ class Chat {
 
     // View function that opens up a chat view
     view() {
+        if ($(window.app.chats.main).find('.messages-container').length)
+            return window.app.chats.view(this);
         window.app.intercom.view(false);
         window.app.nav.selected = 'Messages';
         window.app.view(this.header, this.main, '/app/messages/' + this.id);
@@ -370,8 +452,8 @@ class Chat {
     }
 
     renderSelf() {
-        const name = Utils.getOtherUser(this.chat.chatters[0], this.chat
-            .chatters[1]).name;
+        const name = this.chat.name || Utils.getOtherUser(this.chat.chatters[0],
+            this.chat.chatters[1]).name;
         const that = this;
         this.header = this.render.header('header-back', {
             title: 'Chat with ' + name,
@@ -388,6 +470,7 @@ class Chat {
                 (message !== '') ? await that.sendMessage(message): null;
             },
             placeholder: 'Message ' + name + '...',
+            id: this.id,
         });
     }
 
@@ -413,7 +496,7 @@ class Chat {
 
     // View function that shows the messages of the chat
     viewMessages() {
-        this.emptyMessages();
+        $(this.main).find('#messages').empty();
         window.app.listeners.push(this.getMessages().onSnapshot({
             error: (err) => {
                 window.app.snackbar.view('Could not get messages.');
@@ -433,11 +516,6 @@ class Chat {
                 });
             },
         }));
-    }
-
-    // Helper function that empties the current chat list to display new ones
-    emptyMessages() {
-        return $('main #messages').empty();
     }
 
     // Adds message to chat view in correct order
@@ -488,7 +566,7 @@ class Chat {
         const db = window.app.db;
         return db.collection('chats').doc(this.id).collection('messages')
             .orderBy('timestamp', 'desc')
-            .limit(30); // TODO: Add infinite scrolling for past messages
+            .limit(50); // TODO: Add infinite scrolling for past messages
     }
 
     renderEmptyMessages() {
@@ -499,24 +577,48 @@ class Chat {
 
     // Data flow function that sends a message based on the currentChat's id
     async sendMessage(txt) {
-        if (txt === '') {
-            return;
-        }
+        if (txt === '') return;
         const db = window.app.db;
-        const message = db.collection('chats').doc(this.id)
+        const ref = db.collection('chats').doc(this.id)
             .collection('messages').doc();
-        await message.set({
+        const msg = {
             sentBy: window.app.conciseUser,
             timestamp: new Date(),
             message: txt,
-        });
+        };
+        const [err, res] = await to(ref.set(msg));
+        if (err) return window.app.snackbar.view('Could not send message.');
         const chat = db.collection('chats').doc(this.id);
         return chat.update({
-            lastMessage: {
-                sentBy: window.app.conciseUser,
-                timestamp: new Date(),
-                message: txt,
-            },
+            lastMessage: msg,
+        });
+    }
+};
+
+class AnnouncementChat extends Chat {
+    constructor(doc) {
+        super(doc.id, doc.data());
+        this.doc = doc;
+        this.ref = doc.ref;
+    }
+
+    getMessages() {
+        return this.ref.collection('messages').orderBy('timestamp', 'desc')
+            .limit(50);
+    }
+
+    async sendMessage(txt) {
+        if (txt === '') return;
+        const ref = this.ref.collection('messages').doc();
+        const msg = {
+            sentBy: window.app.conciseUser,
+            timestamp: new Date(),
+            message: txt,
+        };
+        const [e, res] = await to(ref.set(msg));
+        if (e) return window.app.snackbar.view('Could not send announcement.');
+        return this.ref.update({
+            lastMessage: msg,
         });
     }
 };

@@ -57,6 +57,7 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/filters.css'),
                 path.resolve(__dirname, 'packages/app/styles/history.css'),
                 path.resolve(__dirname, 'packages/app/styles/matching.css'),
+                path.resolve(__dirname, 'packages/app/styles/chats.css'),
             ]
         },
         output: {

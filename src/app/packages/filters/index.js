@@ -4,13 +4,18 @@ import {
 import {
     MDCRipple
 } from '@material/ripple/index';
+import {
+    MDCTextField
+} from '@material/textfield/index';
 
 import $ from 'jquery';
+import to from 'await-to-js';
 
 const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 
 class FilterDialog {
+
     constructor(filters) {
         this.filters = filters || {
             grade: 'Any',
@@ -26,22 +31,27 @@ class FilterDialog {
         this.renderSelf();
     }
 
-    // Opens filter dialog
     view() {
         $('body').prepend(this.el);
+        if (!this.managed) this.manage();
+        this.dialog.open();
+    }
+
+    manage() {
+        this.managed = true;
         this.dialog = MDCDialog.attachTo(this.el);
         this.dialog.autoStackButtons = false;
         this.dialog.listen('MDCDialog:closing', (event) => {
             $(this.el).remove();
-            if (event.detail.action === 'accept') {
-                window.app.search.viewResults();
-            }
+            if (event.detail.action === 'accept') this.accept();
         });
         this.el.querySelectorAll('.mdc-list-item').forEach((el) => {
             MDCRipple.attachTo(el);
         });
+    }
 
-        this.dialog.open();
+    accept() {
+        window.app.search.viewResults();
     }
 
     renderSelf() {
@@ -508,10 +518,65 @@ class FilterDialog {
             that.refreshTimeSelects(availableTime);
         });
     }
+};
+
+class NewGroupDialog extends FilterDialog {
+
+    constructor(options = {}) {
+        super();
+        this.defaultName = window.app.location.name + ' Group #' + (options
+            .groupNum || 1);
+        this.name = options.name || this.defaultName;
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        const description = 'Filter users to create a new announcement group.' +
+            ' Messages sent to this group will then be sent to all users who ' +
+            'fit within the specified filters.';
+        const nameEl = this.render.textField('Name', this.name);
+        $(this.el)
+            .find('#page-all .mdc-dialog__title').text('New Group').end()
+            .find('[data-mdc-dialog-action="accept"]').text('Create').end()
+            .find('#page-all .mdc-dialog__content').prepend(nameEl)
+            .prepend(description).end()
+            .attr('id', 'dialog-group');
+    }
+
+    accept() {
+        const group = {
+            lastMessage: {
+                message: 'No messages so far. Click to send the first one.',
+                sentBy: window.app.conciseUser,
+                timestamp: new Date(),
+            },
+            chatters: [
+                window.app.conciseUser,
+            ],
+            chatterUIDs: [
+                window.app.user.uid,
+            ],
+            chatterEmails: [
+                window.app.user.email,
+            ],
+            location: window.app.location,
+            createdBy: window.app.conciseUser,
+            name: this.name || this.defaultName,
+            photo: 'https://tutorbook.app/app/img/male.png',
+            filters: this.filters,
+        };
+        return window.app.db.collection('locations').doc(window.app.location.id)
+            .collection('announcements').doc().set(group);
+    }
 
     manage() {
-        // stub
+        super.manage();
+        const nameTextField = new MDCTextField($(this.el).find('#Name')[0]);
+        nameTextField.value = this.name;
     }
 };
 
-module.exports = FilterDialog;
+module.exports = {
+    default: FilterDialog,
+    group: NewGroupDialog,
+};

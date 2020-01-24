@@ -103,7 +103,7 @@ class Appt extends Event {
 
     constructor(appt, id, colors) {
         super(appt, id, colors || {}, 'appts');
-        this.actions['Clock in'] = async () => {
+        this.actions['Clock-in'] = async () => {
             this.clockIn();
         };
         this.renderSelf();
@@ -128,7 +128,7 @@ class ActiveAppt extends Event {
 
     constructor(appt, id, colors) {
         super(appt, id, colors || {}, 'activeAppts');
-        this.actions['Clock out'] = async () => {
+        this.actions['Clock-out'] = async () => {
             this.clockOut();
         };
         this.actions['View'] = () => {

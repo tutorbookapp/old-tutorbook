@@ -1453,7 +1453,7 @@ styling due to input el spacing. -->
 
 <!-- Messages List Template -->
 <div hidden class="template" id="chat">
-    <div class="chat">
+    <div class="chat" data-fir-id="id">
         <div id="messages">
         </div>
         <div class="write">
@@ -1643,18 +1643,48 @@ styling due to input el spacing. -->
 </div>
 
 <!-- Chats List Template -->
-<div hidden class="template" id="chats">
+<div hidden class="template" id="chats-mobile">
     <div class="chats">
-        <div data-fir-if="showWelcome" class="header-welcome">
-            <h1 class="mdc-typography--headline1" data-fir-content="welcomeTitle">
-                Payments
-            </h1>
-            <h5 class="mdc-typography--subtitle1" data-fir-content="welcomeSubtitle">
-                Manage your payment methods, preferences, and history.
-            </h5>
-        </div>
         <ul id="chats" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
         </ul>
+    </div>
+</div>
+
+<!-- Supervisor Chat List Template -->
+<div hidden class="template" id="supervisor-chats-list">
+    <div id="supervisor-chats" class="mdc-list-group">
+        <h3 class="mdc-list-group__subheader">Announcements</h3>
+        <hr class="mdc-list-divider">
+        <ul id="announcements" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
+            <li id="new-announcement" class="mdc-list-item" data-fir-click="newAnnouncement">
+                <div id="checkmark" style="display:inherit;" class="mdc-list-item__graphic">
+                    <a class="material-icons">add</a>
+                </div>
+                <span class="mdc-list-item__text">
+                    <span class="mdc-list-item__primary-text">New Announcement Group</span>
+                    <span class="mdc-list-item__secondary-text">Create a new announcement group to bulk message.</span>
+                </span>
+            </li>
+        </ul>
+        <h3 class="mdc-list-group__subheader">Conversations</h3>
+        <hr class="mdc-list-divider">
+        <ul id="chats" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
+        </ul>
+    </div>
+</div>
+
+<!-- Desktop Chat Interface Template -->
+<div hidden class="template" id="chats-desktop">
+    <div class="chats">
+        <div class="chats-container">
+            <ul id="chats" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
+            </ul>
+        </div>
+        <div class="messages-container">
+            <div class="centered-text mdc-typography mdc-typography--subtitle1">
+                Select a chat to message.
+            </div>
+        </div>
     </div>
 </div>
 

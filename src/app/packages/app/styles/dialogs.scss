@@ -65,3 +65,15 @@ them (or their floating labels) off short. */
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+
+#dialog-group #all-filters-list {
+  border: 1px solid #C2C2C2;
+  border-radius: 8px;
+  margin-top: 20px;
+  padding-bottom: 8px;
+}
+
+#dialog-group .mdc-text-field {
+  width: 100%;
+  margin-top: 20px;
+}

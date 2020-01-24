@@ -55,7 +55,7 @@ class Tutorbook {
         this.db = (this.test) ? firebase.firestore().collection('partitions')
             .doc('test') : firebase.firestore().collection('partitions')
             .doc('default');
-        if (this.test) document.title = '[Test] ' + document.title;
+        if (this.test) document.title = '[Demo] ' + document.title;
 
         // Helper packages
         this.render = new Render();
@@ -145,8 +145,8 @@ class Tutorbook {
 
     view(header, main, url) {
         if (this.nav) this.nav.update(); // We can view without init();
-        $('.header').empty().append(header);
-        $('.main').empty().append(main);
+        if (header) $('.header').empty().append(header);
+        if (main) $('.main').empty().append(main);
 
         window.scrollTo(0, 0);
 

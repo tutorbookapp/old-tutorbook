@@ -625,7 +625,7 @@ class MatchingDialog {
             const a = doc.data();
             const other = Utils.getOther(this.profile, a.attendees);
             $(schedule.main).find('#' + doc.id)
-                .find('h2 [id="Clock in"]').remove().end()
+                .find('h2 [id="Clock-in"]').remove().end()
                 .find('h2 [data-fir-content="title"]').text(a.for.subject).end()
                 .find('h3').text(a.time.from + ' with ' + other.name).end()
                 .find('#menu').hide(); // TODO: Fix menu mdc-list-item styling.

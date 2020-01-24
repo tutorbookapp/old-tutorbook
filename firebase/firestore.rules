@@ -17,6 +17,12 @@ service cloud.firestore {
       match /recentActions/{recentAction} {
         allow read, delete: if location in request.auth.token.locations;
       }
+      match /announcements/{announcement} {
+        allow read, write: if location in request.auth.token.locations;
+        match /messages/{message} {
+          allow read, create: if location in request.auth.token.locations;
+        }
+      }
     }
     match /users/{supervisor}/dismissedCards/{card} {
       // Workaround to enable supervisors to dismiss cards (as we don't want

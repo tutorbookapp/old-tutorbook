@@ -1508,11 +1508,11 @@ class ViewPastApptDialog extends ViewApptDialog {
                 this.appt.clockOut.sentTimestamp.toDate()
             ))).insertAfter($(this.main).find('#Current').parent());
         $(this.main).find('#Current').replaceWith($(this.render.textField(
-                'Clock in',
+                'Clock-in',
                 this.appt.clockIn.sentTimestamp.toDate().toLocaleTimeString()
             )).attr('style', 'margin-right:20px;')).end()
             .find('#Total').replaceWith(this.render.textField(
-                'Clock out',
+                'Clock-out',
                 this.appt.clockOut.sentTimestamp.toDate().toLocaleTimeString()
             )).end().find('.mdc-fab').remove();
     }
@@ -1548,7 +1548,7 @@ class ViewPastApptDialog extends ViewApptDialog {
             date.setSeconds(parsed.secs);
         };
         const edit = async (id, date) => {
-            const t = this.textFields['Clock in'];
+            const t = this.textFields['Clock-in'];
             const v = t.value;
             if (!valid(v)) return t.valid = false;
             update(v, date);
@@ -1561,17 +1561,17 @@ class ViewPastApptDialog extends ViewApptDialog {
                 'appointment.');
             window.app.snackbar.view('Updated past appointment.');
         };
-        $(this.main).find('[id="Clock in"] input').removeAttr('disabled')
+        $(this.main).find('[id="Clock-in"] input').removeAttr('disabled')
             .focusout(async () => {
                 if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
                     .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();
-                edit('Clock in', this.appt.clockIn.sentTimestamp);
+                edit('Clock-in', this.appt.clockIn.sentTimestamp);
             }).end()
-            .find('[id="Clock out"] input').removeAttr('disabled')
+            .find('[id="Clock-out"] input').removeAttr('disabled')
             .focusout(async () => {
                 if (this.appt.clockOut.sentTimestamp.toDate) this.appt.clockOut
                     .sentTimestamp = this.appt.clockOut.sentTimestamp.toDate();
-                edit('Clock out', this.appt.clockOut.sentTimestamp);
+                edit('Clock-out', this.appt.clockOut.sentTimestamp);
             }).end()
             .find('[id="Time clocked"] input').removeAttr('disabled')
             .focusout(async () => {
