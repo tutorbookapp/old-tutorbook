@@ -133,7 +133,7 @@ class Dashboard {
             display: (doc, list) => {
                 if (actions && typeof actions.display === "function")
                     actions.display(doc);
-                this.viewCard(new Card(doc, id, type).el, list);
+                this.viewCard(new Card(doc, id, type, 4).el, list);
             },
             remove: (doc, list) => {
                 if (actions && typeof actions.remove === "function")
@@ -167,13 +167,9 @@ class Dashboard {
 
     // Adds card based on priority and/or timestamp (highest priority on the top 
     // followed by the most recent).
-    viewCard(card, list) {
-        list = list || $(this.main).find('#default');
-        var existing = $(list)
-            .find('#cards [id="' + $(card).attr('id') + '"]');
-        if (existing.length) {
-            return $(existing).replaceWith(card);
-        }
+    viewCard(card, list = $(this.main).find('#default')) {
+        var existing = $(list).find('#cards [id="' + $(card).attr('id') + '"]');
+        if (existing.length) return $(existing).replaceWith(card);
         // First, find the cards with the same priority as this card
         existing = $(list)
             .find('#cards [priority="' + $(card).attr('priority') + '"]');
@@ -193,16 +189,14 @@ class Dashboard {
             }
         } else {
             // Add by priority
-            existing = $(list)
-                .find('#cards .mdc-card');
+            existing = $(list).find('#cards .mdc-card');
             for (var i = 0; i < existing.length; i++) {
                 var child = existing[i];
                 var priority = $(child).attr('priority');
-                if (priority && priority > $(card).attr('priority')) {
-                    return $(card).insertAfter(child);
-                }
+                if (priority && priority > $(card).attr('priority'))
+                    return $(card).insertBefore(child);
             }
-            $(list).find('#cards').prepend(card);
+            $(list).find('#cards').append(card);
         }
     }
 };

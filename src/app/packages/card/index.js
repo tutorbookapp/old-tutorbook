@@ -30,18 +30,15 @@ const Utils = require('@tutorbook/utils');
 // Class this renders each card based on the given doc, queryID, and type
 class Card {
 
-    constructor(doc, queryID, type, priority) {
+    constructor(doc, queryID, type, priority = 5) {
         this.render = app.render;
         this.el = this.getCardFromType(type, doc);
-        this.el.setAttribute('timestamp',
+        $(this.el).attr('timestamp',
             (doc.data && doc.data().timestamp && doc.data().timestamp.toDate) ?
             doc.data().timestamp.toDate() : new Date()
-        );
-        this.el.setAttribute('priority', priority || 1);
-        this.el.setAttribute('query', queryID);
-        if (!!doc.id) { // Setup cards w/out IDs
-            this.el.setAttribute('id', doc.id);
-        }
+        ).attr('query', queryID);
+        if (!$(this.el).attr('priority')) $(this.el).attr('priority', priority);
+        if (doc.id) $(this.el).attr('id', doc.id);
     }
 
     getCardFromType(type, doc) {
@@ -492,7 +489,9 @@ Card.renderSearchTutorsCard = function() {
             },
         });
 
-    card.setAttribute('id', 'searchTutorsCard');
+    $(card)
+        .attr('id', 'searchTutorsCard')
+        .attr('priority', 1);
 
     return card;
 };
