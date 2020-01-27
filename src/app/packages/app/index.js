@@ -169,8 +169,7 @@ class Tutorbook {
         }
     }
 
-    updateUser(user) {
-        if (!user) user = this.user;
+    updateUser(user = this.user) {
         return Data.updateUser(user);
     }
 

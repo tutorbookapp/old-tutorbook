@@ -47,6 +47,15 @@ class Data {
         });
     }
 
+    // Sets the user's preferred location based on:
+    // 1) Their availability
+    // 2) The location of this app instance
+    static updateUserLocation(user) {
+        const availLoc = Object.keys(user.availability)[0];
+        user.location = window.app.data.locationNames.indexOf(availLoc) >= 0 ?
+            availLoc : window.app.location.name;
+    }
+
     // Adds a 'booked' field to every availability window on the given user by:
     // 1) Getting the user's appointments
     // 2) Changing 'booked' to false for every appointment's time field
@@ -157,6 +166,7 @@ class Data {
 
     static async updateUser(user) {
         await Data.updateUserAvailability(user);
+        Data.updateUserLocation(user);
         if (!user) {
             throw new Error('Cannot update an undefined user.');
         } else if (!user.id && !user.email && !user.uid) {
