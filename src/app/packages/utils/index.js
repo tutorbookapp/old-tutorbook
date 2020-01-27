@@ -788,7 +788,8 @@ class Utils {
             'location does not have any availability. The ' + location +
             ' may no longer be open at these times or this user may no longer' +
             ' be available. Ask the user and location to update their ' +
-            'availability or cancel this request and create a new one.').view();
+            'availability or cancel this request and create a new one.',
+            () => {}).view();
     }
 
     // Helper function to return all of a user's possible days based on their
