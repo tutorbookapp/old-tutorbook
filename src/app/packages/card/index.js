@@ -11,8 +11,12 @@ import to from 'await-to-js';
 // Dialogs
 const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
 const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
+const ViewModifiedRequestDialog = require('@tutorbook/dialogs')
+    .viewModifiedRequest;
 const ViewCanceledRequestDialog = require('@tutorbook/dialogs')
     .viewCanceledRequest;
+const ViewRejectedRequestDialog = require('@tutorbook/dialogs')
+    .viewRejectedRequest;
 const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
 const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
 const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;

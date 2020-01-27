@@ -643,6 +643,18 @@ class ViewRequestDialog {
     }
 };
 
+class ViewModifiedRequestDialog extends ViewRequestDialog {
+    constructor(request) {
+        super(request.for);
+        this.modifiedRequest = request;
+    }
+
+    async renderSelf() {
+        await super.renderSelf();
+        $(this.header).find('.mdc-top-app-bar__title').text('Modified Request');
+    }
+};
+
 class ViewCanceledRequestDialog extends ViewRequestDialog {
     constructor(request) {
         super(request.for);
@@ -653,6 +665,20 @@ class ViewCanceledRequestDialog extends ViewRequestDialog {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Canceled Request',
+        });
+    }
+};
+
+class ViewRejectedRequestDialog extends ViewRequestDialog {
+    constructor(request) {
+        super(request.for);
+        this.rejectedRequest = request;
+    }
+
+    async renderSelf() {
+        await super.renderSelf();
+        this.header = this.render.header('header-action', {
+            title: 'Rejected Request',
         });
     }
 };
@@ -1619,7 +1645,9 @@ class ViewCanceledApptDialog extends ViewApptDialog {
 
 module.exports = {
     viewRequest: ViewRequestDialog,
+    viewModifiedRequest: ViewModifiedRequestDialog,
     viewCanceledRequest: ViewCanceledRequestDialog,
+    viewRejectedRequest: ViewRejectedRequestDialog,
     editRequest: EditRequestDialog,
     newRequest: NewRequestDialog,
     paidRequest: PaidRequestDialog,
