@@ -207,10 +207,8 @@ class Search {
                     '"]').remove();
             },
             display: (doc) => {
-                // We don't want to display user's app do not have a valid profile
-                if (this.validResult(doc.data())) {
+                if (this.validResult(doc.data()))
                     return this.viewResult(this.renderResult(doc));
-                }
             },
             empty: () => {
                 return $(this.main).find('#results').empty()
@@ -390,10 +388,6 @@ class Search {
             results.insertBefore(listItem, existingLocationCard);
             results.removeChild(existingLocationCard);
         } else {
-            // We want to add paid tutors to the top of the search results
-            if (listItem.getAttribute('type') === 'paid') {
-                return $(results).prepend(listItem);
-            }
             // add
             results.append(listItem);
         }
