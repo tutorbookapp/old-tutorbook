@@ -202,10 +202,10 @@ class EditSubjectDialog extends SubjectSelectDialog {
                 user.subjects.push($(this).val());
             }
         });
-        if (!profile) {
-            await window.app.updateUser();
-            window.app.snackbar.view('Subjects updated.');
-        }
+        Utils.updateSetupProfileCard(user);
+        if (profile) return;
+        await window.app.updateUser();
+        window.app.snackbar.view('Subjects updated.');
     }
 };
 
@@ -309,14 +309,12 @@ class EditAvailabilityDialog {
             }
         });
 
-        if (!profile) {
-            window.app.user.availability = Utils
-                .parseAvailabilityStrings(strings);
-            await window.app.updateUser();
-            window.app.snackbar.view('Availability updated.');
-        } else {
-            profile.availability = Utils.parseAvailabilityStrings(strings);
-        }
+        const user = profile || window.app.user;
+        user.availability = Utils.parseAvailabilityStrings(strings);
+        Utils.updateSetupProfileCard(user);
+        if (profile) return;
+        await window.app.updateUser();
+        window.app.snackbar.view('Availability updated.');
     }
 
     refreshTimes() { // Update time selects based on newly selected day

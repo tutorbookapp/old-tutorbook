@@ -15,6 +15,16 @@ class Utils {
         this.data = window.app ? window.app.data || new Data() : new Data();
     }
 
+    static updateSetupProfileCard(p) {
+        for (var key of ['type', 'grade', 'gender', 'phone', 'email']) {
+            if (!p[key]) return p.cards.setupProfile = true;
+        }
+        if (!p.subjects.length) return p.cards.setupProfile = true;
+        if (!Object.values(p.availability).length)
+            return p.cards.setupProfile = true;
+        p.cards.setupProfile = false;
+    }
+
     static wrap(str, maxWidth) { // See https://bit.ly/2GePdNV
         const testWhite = (x) => {
             const white = new RegExp(/^\s$/);

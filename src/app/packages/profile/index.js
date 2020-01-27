@@ -160,8 +160,8 @@ class Profile {
 
     manage(dontUpdate) {
         this.managed = true;
-        MDCTopAppBar.attachTo($('.mdc-top-app-bar')[0]);
-        $('.mdc-top-app-bar .material-icons').each(function() {
+        MDCTopAppBar.attachTo(this.header);
+        $(this.header).find('.material-icons').each(function() {
             MDCRipple.attachTo($(this)[0]).unbounded = true;
         });
         this.manageHeader();
@@ -176,9 +176,8 @@ class Profile {
         function t(q, action) { // Attach and return MDCTextField
             $(that.main).find(q + ' input').focusout(async () => {
                 action();
-                if (dontUpdate) {
-                    return;
-                }
+                Utils.updateSetupProfileCard(p);
+                if (dontUpdate) return;
                 await window.app.updateUser(p);
                 window.app.snackbar.view('Profile updated.');
             });
@@ -188,12 +187,10 @@ class Profile {
         function listen(s, action) { // Adds select listeners
             s.listen('MDCSelect:change', async () => {
                 action();
-                if (dontUpdate) {
-                    return;
-                }
+                Utils.updateSetupProfileCard(p);
+                if (dontUpdate) return;
                 await window.app.updateUser(p);
                 window.app.snackbar.view('Profile updated.');
-
             });
         };
 
