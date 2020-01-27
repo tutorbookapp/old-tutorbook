@@ -533,7 +533,8 @@ Card.renderSetupAvailabilityCard = function(subtitle, summary) {
 Card.renderSetupProfileCard = function() {
     const subtitle = 'Help the right people find you';
     const summary = 'Customize your profile to help others find, message, ' +
-        'and request you as their tutor or pupil.';
+        'and request you as their tutor or pupil. Add your phone number for ' +
+        'SMS notifications.';
     const actions = {
         snooze: () => {
             window.app.user.cards.setupProfile = false;
