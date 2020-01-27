@@ -61,6 +61,7 @@ class Dashboard {
 
     reView() {
         window.app.intercom.view(true);
+        this.viewSetupCards();
     }
 
     renderSelf() {
@@ -74,6 +75,16 @@ class Dashboard {
             title: 'Welcome, ' + window.app.user.name.split(' ')[0],
             subtitle: 'We\'re glad you\'re here. Below are some ' +
                 'friendly suggestions for what to do next.',
+        });
+    }
+
+    viewSetupCards() {
+        Data.setupCards.forEach(type => {
+            if (window.app.user.cards[type]) return this.viewCard(
+                new Card(true, Utils.genID(), type, 2).el,
+                $(this.main).find('#default'),
+            );
+            $(this.main).find('#default #' + type + 'Card').remove();
         });
     }
 
@@ -100,14 +111,7 @@ class Dashboard {
                 .orderBy('timestamp', 'desc');
             this.viewCards(query, subcollection, 'default');
         });
-        Data.setupCards.forEach((type) => {
-            if (!!window.app.user.cards[type]) {
-                this.viewCard(
-                    new Card(true, Utils.genID(), type, 2).el,
-                    $(this.main).find('#default')
-                );
-            }
-        });
+        this.viewSetupCards();
         if (window.app.user.type === 'Tutor' &&
             window.app.user.payments.type === 'Free') this.viewCard(
             window.app.profile.renderServiceHourCard(),

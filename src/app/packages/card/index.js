@@ -342,7 +342,7 @@ Card.renderMatchesCard = function(doc) {
 Card.renderSetupStripeCard = function() {
     const actions = {
         snooze: () => {
-            $('#cards #setup-payments-card').remove();
+            $('#cards #setupStripeCard').remove();
         },
         setup: () => {
             window.location = window.app.payments.setupURL;
@@ -359,7 +359,7 @@ Card.renderSetupStripeCard = function() {
         actions
     );
     $(card)
-        .attr('id', 'setup-payments-card')
+        .attr('id', 'setupStripeCard')
         .attr('priority', 10)
         .attr('timestamp', new Date());
     return card;
@@ -382,12 +382,12 @@ Card.renderSetupLocationCard = function() {
         dismiss: () => {
             window.app.user.cards.setupLocation = false;
             window.app.updateUser();
-            $('main #cards #setup-location-card').remove();
+            $('main #cards #setupLocationCard').remove();
         }
     });
 
     // Setting the id allows to locating the individual user card
-    card.setAttribute('id', 'setup-location-card');
+    card.setAttribute('id', 'setupLocationCard');
 
     return card;
 };
@@ -451,19 +451,19 @@ Card.renderSetupNotificationsCard = function() {
         'notified about important app activity.', {
             primary: () => {
                 window.app.notify.getPermission();
-                $('#setup-notifications-card').remove();
+                $('#setupNotificationsCard').remove();
             },
             snooze: () => {
                 window.app.user.cards.setupNotifications = false;
                 window.app.updateUser();
-                $('#setup-notifications-card').remove();
+                $('#setupNotificationsCard').remove();
             },
             enable: () => {
                 window.app.notify.getPermission();
-                $('#setup-notifications-card').remove();
+                $('#setupNotificationsCard').remove();
             },
         });
-    card.setAttribute('id', 'setup-notifications-card');
+    card.setAttribute('id', 'setupNotificationsCard');
 
     return card;
 };
@@ -478,7 +478,7 @@ Card.renderSearchTutorsCard = function() {
             dismiss: () => {
                 window.app.user.cards.searchTutors = false;
                 window.app.updateUser();
-                $('main #cards #setup-tutors-card').remove();
+                $('main #cards #searchTutorsCard').remove();
             },
             primary: () => {
                 window.app.search.view({
@@ -492,7 +492,7 @@ Card.renderSearchTutorsCard = function() {
             },
         });
 
-    card.setAttribute('id', 'setup-tutors-card');
+    card.setAttribute('id', 'searchTutorsCard');
 
     return card;
 };
@@ -516,7 +516,7 @@ Card.renderSetupAvailabilityCard = function(subtitle, summary) {
             snooze: () => {
                 window.app.user.cards.setupAvailability = false;
                 window.app.updateUser();
-                $('#setup-availability-card').remove();
+                $('#setupAvailabilityCard').remove();
             },
             setup: () => {
                 window.app.profile.view();
@@ -525,7 +525,7 @@ Card.renderSetupAvailabilityCard = function(subtitle, summary) {
                 });
             },
         });
-    card.setAttribute('id', 'setup-availability-card');
+    card.setAttribute('id', 'setupAvailabilityCard');
 
     return card;
 };
@@ -541,7 +541,7 @@ Card.renderSetupProfileCard = function() {
         snooze: () => {
             window.app.user.cards.setupProfile = false;
             window.app.updateUser();
-            $('main #cards #setup-profile-card').remove();
+            $('main #cards #setupProfileCard').remove();
         },
         setup: () => {
             window.app.profile.view();
@@ -552,7 +552,7 @@ Card.renderSetupProfileCard = function() {
     };
     const card = Card.renderCard('Setup Profile', subtitle, summary, actions);
     // Setting the id allows to locating the individual user card
-    card.setAttribute('id', 'setup-profile-card');
+    card.setAttribute('id', 'setupProfileCard');
 
     return card;
 };

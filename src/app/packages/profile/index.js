@@ -56,6 +56,7 @@ class Profile {
         function t(q, action) {
             $(that.main.querySelector(q + ' input')).focusout(async () => {
                 action($(that.main).find(q + ' input'));
+                Utils.updateSetupProfileCard(p);
                 await window.app.updateUser(that.profile);
                 window.app.snackbar.view('Profile updated.');
             });
@@ -733,7 +734,8 @@ class EditProfile extends NewProfile {
         this.profile.id = this.profile.email;
         window.app.nav.back();
         Data.updateUser(this.profile).then(() => {
-            window.app.snackbar.view('Updated ' + this.profile.name + '\'s profile.');
+            window.app.snackbar.view('Updated ' + this.profile.name + '\'s ' +
+                'profile.');
         }).catch((err) => {
             console.error('Error while updating profile for ' +
                 this.profile.email + ':', err);
