@@ -89,28 +89,40 @@ class Dashboard {
     }
 
     // Views the default user cards for given userID
-    viewDefaultCards(id) {
-        if (!id) id = window.app.user.uid;
+    viewDefaultCards(id = window.app.user.uid) {
         this.emptyCards('default');
-        [
-            'requestsIn',
-            'canceledRequestsIn',
-            'modifiedRequestsIn',
-            'requestsOut',
-            'modifiedRequestsOut',
-            'rejectedRequestsOut',
-            'approvedRequestsOut',
-            'appointments',
-            'activeAppointments',
-            'modifiedAppointments',
-            'canceledAppointments',
-        ].forEach((subcollection) => {
-            const query = window.app.db.collection('users')
-                .doc(id)
-                .collection(subcollection)
-                .orderBy('timestamp', 'desc');
-            this.viewCards(query, subcollection, 'default');
-        });
+        Object.entries({
+            timestamp: [
+                'requestsIn',
+                'requestsOut',
+                'appointments',
+            ],
+            canceledTimestamp: [
+                'canceledRequestsIn',
+                'canceledAppointments',
+            ],
+            modifiedTimestamp: [
+                'modifiedRequestsIn',
+                'modifiedRequestsOut',
+                'modifiedAppointments',
+            ],
+            approvedTimestamp: [
+                'approvedRequestsOut',
+            ],
+            rejectedTimestamp: [
+                'rejectedRequestsOut',
+            ],
+            'clockIn.sentTimestamp': [
+                'activeAppointments',
+            ],
+        }).forEach(([sortField, subcollectionsList]) => subcollectionsList
+            .forEach((subcollection) => {
+                const query = window.app.db.collection('users')
+                    .doc(id)
+                    .collection(subcollection)
+                    .orderBy(sortField, 'desc');
+                this.viewCards(query, subcollection, 'default');
+            }));
         this.viewSetupCards();
         if (window.app.user.type === 'Tutor' &&
             window.app.user.payments.type === 'Free') this.viewCard(
