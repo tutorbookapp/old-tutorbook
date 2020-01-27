@@ -45,8 +45,8 @@ class FilterDialog {
             $(this.el).remove();
             if (event.detail.action === 'accept') this.accept();
         });
-        this.el.querySelectorAll('.mdc-list-item').forEach((el) => {
-            MDCRipple.attachTo(el);
+        $(this.el).find('.mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
         });
     }
 
@@ -261,6 +261,7 @@ class FilterDialog {
             );
 
             dialog.querySelectorAll('#page-all .mdc-list-item').forEach(function(el) {
+                MDCRipple.attachTo(el);
                 el.addEventListener('click', function() {
                     var id = el.id.split('-').slice(1).join('-');
                     that.page(id);
