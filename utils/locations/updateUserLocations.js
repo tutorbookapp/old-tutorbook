@@ -14,7 +14,8 @@ function updateUser(user) {
     return db.collection('users').doc(user.uid).update(user).then(() => {
         console.log('[DEBUG] Updated ' + user.email + '\'s user profile doc.');
     }).catch((err) => {
-        console.error('[ERROR] Error while updating ' + user.email + '\'s profile doc:', err);
+        console.error('[ERROR] Error while updating ' + user.email + '\'s ' +
+            'profile doc:', err);
     });
 };
 
@@ -23,13 +24,12 @@ function main() {
     console.log('[INFO] Updating user\'s visibility to visible...');
     return db.collection('users').get().then((snapshot) => {
         return snapshot.forEach((doc) => {
-            var user = doc.data();
+            const user = doc.data();
             if (user.location === 'Any' && (user.email.indexOf('pausd') > 0 ||
                     user.availability['Gunn Academic Center'] !== undefined)) {
                 user.location = 'Gunn Academic Center';
             }
-            user.uid = doc.id;
-            updateUser(user);
+            return updateUser(user);
         });
     }).then(() => {
         console.log('[INFO] Updated all user\'s visibility to visible.');
