@@ -9021,6 +9021,11 @@ svg.mdc-button__icon {
 
 .mdc-snackbar .mdc-snackbar__label {
   color: rgba(255, 255, 255, 0.87); }
+
+.mdc-snackbar .mdc-icon-button {
+  --mdc-ripple-fg-size: 20px !important;
+  --mdc-ripple-left: 8px !important;
+  --mdc-ripple-top: 8px !important; }
 .card-schedule #loader {
   display: block;
   text-align: center;

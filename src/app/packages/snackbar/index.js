@@ -1,6 +1,9 @@
 import {
     MDCSnackbar
 } from "@material/snackbar/index";
+import {
+    MDCRipple
+} from "@material/ripple/index";
 
 import $ from 'jquery';
 
@@ -22,14 +25,17 @@ class Snackbar {
             } else {
                 var el = this.render.snackbar(label, action, true);
             }
-            var snackbar = new MDCSnackbar(el);
-            snackbar.labelText = message;
-            snackbar.timeoutMs = message.endsWith('...') ? -1 : 4000;
-            snackbar.listen('MDCSnackbar:closed', () => {
-                $(el).remove();
+            $(el).find('button').each(function() {
+                MDCRipple.attachTo(this).unbounded =
+                    $(this).hasClass('mdc-icon-button');
             });
+            const snackbar = new MDCSnackbar(el);
+            snackbar.labelText = message;
+            //snackbar.timeoutMs = message.endsWith('...') ? -1 : 4000;
+            snackbar.timeoutMs = -1;
+            snackbar.listen('MDCSnackbar:closed', () => $(el).remove());
             $('body').prepend(el);
-            return snackbar.open();
+            snackbar.open();
         };
         const c = () => {
             $('.mdc-snackbar--open') // 1) Animate open snackbars closed
