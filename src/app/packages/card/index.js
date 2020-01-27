@@ -504,27 +504,23 @@ Card.renderSearchTutorsCard = function() {
 // Render function that returns a card that asks pupil's to set their 
 // availability in case a tutor has to edit their request or appointment.
 Card.renderSetupAvailabilityCard = function(subtitle, summary) {
+    const setAvailability = () => {
+        window.app.profile.view();
+        $(window.app.profile.main).find('#Availability')[0].scrollIntoView({
+            behavior: 'smooth'
+        });
+    };
     const card = Card.renderCard(
         'Set Availability', 'Enable tutors to modify your requests',
         'Setting your availability allows tutors to modify requests ' +
         'while still fitting within timeslots you select (think Calendly).', {
-            primary: () => {
-                window.app.profile.view();
-                $('.profile #Availability')[0].scrollIntoView({
-                    behavior: 'smooth'
-                });
-            },
+            primary: () => setAvailability(),
             snooze: () => {
                 window.app.user.cards.setupAvailability = false;
                 window.app.updateUser();
                 $('#setupAvailabilityCard').remove();
             },
-            setup: () => {
-                window.app.profile.view();
-                $('.profile #Availability')[0].scrollIntoView({
-                    behavior: 'smooth'
-                });
-            },
+            setup: () => setAvailability(),
         });
     card.setAttribute('id', 'setupAvailabilityCard');
 
@@ -535,9 +531,9 @@ Card.renderSetupAvailabilityCard = function(subtitle, summary) {
 // Render function that returns a MDC Card that shows a profile setup dialog (i.e.
 // the profile view but with select helper text and the header-action headerEl)
 Card.renderSetupProfileCard = function() {
-    const subtitle = 'Help us find the right people for you';
-    const summary = 'Customize your profile to help ' +
-        'others find, message, and request you as their tutor or pupil.';
+    const subtitle = 'Help the right people find you';
+    const summary = 'Customize your profile to help others find, message, ' +
+        'and request you as their tutor or pupil.';
     const actions = {
         snooze: () => {
             window.app.user.cards.setupProfile = false;

@@ -16,12 +16,16 @@ class Utils {
     }
 
     static updateSetupProfileCard(p) {
+        if (!Object.values(p.availability).length) {
+            return p.type === 'Tutor' ? p.cards.setupProfile = true : p.cards
+                .setupAvailability = true;
+        } else if (p.type !== 'Tutor') {
+            return p.cards.setupAvailability = false;
+        }
         for (var key of ['type', 'grade', 'gender', 'phone', 'email']) {
             if (!p[key]) return p.cards.setupProfile = true;
         }
         if (!p.subjects.length) return p.cards.setupProfile = true;
-        if (!Object.values(p.availability).length)
-            return p.cards.setupProfile = true;
         p.cards.setupProfile = false;
     }
 
