@@ -501,18 +501,16 @@ Card.renderSearchTutorsCard = function() {
 };
 
 
-// Render function that returns a card that asks pupil's to set their availability
-// in case a tutor has to edit their request or appointment.
+// Render function that returns a card that asks pupil's to set their 
+// availability in case a tutor has to edit their request or appointment.
 Card.renderSetupAvailabilityCard = function(subtitle, summary) {
     const card = Card.renderCard(
         'Set Availability', 'Enable tutors to modify your requests',
-        'Setting your availability allows tutors to modify your requests ' +
-        'to best fit within their schedule and yours. Once you setup ' +
-        'availability, you\'ll never have to worry about an appointment not ' +
-        'fitting into your day.', {
+        'Setting your availability allows tutors to modify requests ' +
+        'while still fitting within timeslots you select (think Calendly).', {
             primary: () => {
                 window.app.profile.view();
-                document.querySelector('.profile #Availability').scrollIntoView({
+                $('.profile #Availability')[0].scrollIntoView({
                     behavior: 'smooth'
                 });
             },
@@ -523,7 +521,7 @@ Card.renderSetupAvailabilityCard = function(subtitle, summary) {
             },
             setup: () => {
                 window.app.profile.view();
-                document.querySelector('.profile #Availability').scrollIntoView({
+                $('.profile #Availability')[0].scrollIntoView({
                     behavior: 'smooth'
                 });
             },
