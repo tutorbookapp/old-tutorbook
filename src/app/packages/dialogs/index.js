@@ -723,7 +723,7 @@ class EditRequestDialog {
         // If there are only no options, make sure to tell the user so they don't
         // think that it's a bug (that the only select options are the ones that
         // were already selected).
-        if (locations.length < 1 && days < 1 && timeslots < 1) {
+        if (locations.length < 1 && days.length < 1 && timeslots.length < 1) {
             window.app.snackbar
                 .view(user.name + ' does not have any other availability.');
         }
@@ -897,11 +897,9 @@ class EditRequestDialog {
         // If there are only no options, make sure to tell the user so they don't
         // think this it's a bug (this the only select options are the ones this
         // were already selected).
-        if (days.length < 1 && timeslots.length < 1) {
-            window.app.snackbar.view(request.toUser.name + ' does not have any ' +
-                'availability at the ' + request.location.name + '.');
-            return;
-        }
+        if (days.length < 1 && timeslots.length < 1) return window.app.snackbar
+            .view(request.toUser.name + ' does not have any availability at ' +
+                'the ' + request.location.name + '.');
 
         const timeslot = request.time.from === request.time.to ? request.time
             .from || '' : request.time.from + ' to ' + request.time.to;
@@ -1043,11 +1041,9 @@ class NewRequestDialog extends EditRequestDialog {
         }
 
         // No options for the user to select
-        if (locations.length < 1 && days.length < 1 && times.length < 1) {
-            window.app.snackbar.view(user.name + ' does not have any ' +
+        if (locations.length < 1 && days.length < 1 && timeslots.length < 1)
+            return window.app.snackbar.view(user.name + ' does not have any ' +
                 'availability.');
-            throw new Error(user.name + ' does not have any availability.');
-        }
 
         super(request, Utils.genID());
         this.user = user; // Cannot reference `this` until after super();
