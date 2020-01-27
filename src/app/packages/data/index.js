@@ -327,16 +327,8 @@ class Data {
             return supervisors[0]; // TODO: How do we check to see if a given
             // supervisor is actually active on the app right now?
         } catch (e) {
-            console.warn('Error while getting a location supervisor:', e);
-            /*
-             *new NotificationDialog('Update Availability?', 'The availability ' +
-             *    ' shown here is not up-to-date. The ' + location + ' may ' +
-             *    'no longer be open at these times or this user may no longer ' +
-             *    'be available (they can change their availability from their ' +
-             *    'profile). Please cancel this request and ' +
-             *    'create a new one.').view();
-             *    TODO: Show a notification dialog without creating a dependency loop
-             */
+            console.warn('Could not get location (' + id + ') supervisor b/c ' +
+                'of ', e);
             window.app.snackbar.view('Could not find location supervisor.');
             window.app.nav.back();
         }

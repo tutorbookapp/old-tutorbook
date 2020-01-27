@@ -714,18 +714,9 @@ class Utils {
         } catch (e) {
             // This is most likely b/c the user's profile's location we deleted
             // or changed somehow
-            console.log('Getting userAvailableDaysForLocation ' + location +
-                ' from availability:', availability);
-            console.warn('Error while getting userAvailableDaysForLocation:', e);
-            var that = this;
-            new window.app.NotificationDialog('Update Availability?', 'The availability ' +
-                    ' shown here is not up-to-date. The ' + location + ' may ' +
-                    'no longer be open at these times or this user may no longer ' +
-                    'be available (they can change their availability from their ' +
-                    'profile). Please cancel this request and ' +
-                    'create a new one.')
-                .view();
-            return this.getUserAvailableDays(availability);
+            console.warn('Error while getting userAvailableDaysForLocation (' +
+                location + '):', e);
+            Utils.viewNoAvailabilityDialog(location);
         }
     }
 
@@ -782,19 +773,18 @@ class Utils {
         } catch (e) {
             // This is most likely b/c the user's profile's location we deleted
             // or changed somehow
-            console.log('Getting userAvailableTimesForDay ' + day + ' at the ' +
-                location + ' from availability:', availability);
-            console.warn('Error while getting userAvailableTimesForDay:', e);
-            var that = this;
-            new window.app.NotificationDialog('Update Availability?', 'The availability ' +
-                    ' shown here is not up-to-date. The ' + location + ' may ' +
-                    'no longer be open at these times or this user may no longer ' +
-                    'be available (they can change their availability from their ' +
-                    'profile). Please cancel this request and ' +
-                    'create a new one.')
-                .view();
-            return this.getUserAvailableTimes(availability);
+            console.warn('Error while getting userAvailableTimesForDay (' +
+                day + 's at the ' + location + '):', e);
+            Utils.viewNoAvailabilityDialog(location);
         }
+    }
+
+    static viewNoAvailabilityDialog(location) {
+        new window.app.NotificationDialog('No Availability', 'This user or ' +
+            'location does not have any availability. The ' + location +
+            ' may no longer be open at these times or this user may no longer' +
+            ' be available. Ask the user and location to update their ' +
+            'availability or cancel this request and create a new one.').view();
     }
 
     // Helper function to return all of a user's possible days based on their
