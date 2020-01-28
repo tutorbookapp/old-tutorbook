@@ -348,20 +348,23 @@ const serviceHoursAsPDF = (req, res) => {
             if (token.locations.indexOf(req.query.location) < 0) return res
                 .status(400).send('[ERROR] Token\'s locations did not contain' +
                     ' requested location.');
-            const locations = (await db.collection('locations').get()).docs;
-            if (locations.map(d => d.id).indexOf(req.query.location) < 0)
-                return res.status(400).send('[ERROR] Requested location doesn' +
-                    '\'t exist.');
-            const locationName = locations[locations
-                .findIndex(d => d.id === req.query.location)].data().name;
-            const users = (await db.collection('users')
-                .where('location', '==', locationName)
+            const location = await db.collection('locations').doc(req.query
+                .location).get();
+            if (!location.exists) return res.status(400).send('[ERROR] ' +
+                'Requested location doesn\'t exist.');
+            const users = Utils.concatArr((await db.collection('users')
+                .where('locations', 'array-contains', location.data().name)
+                .where('type', '==', 'Tutor')
                 .orderBy('name')
                 .get()
-            ).docs;
-            for (user of users) {
-                await addUserServiceHours(user, docDefinition, isTest);
-            }
+            ).docs, (await db.collection('users')
+                .where('location', '==', location.data().name)
+                .where('type', '==', 'Tutor')
+                .orderBy('name')
+                .get()
+            ).docs);
+            await Promise.all(users.map(user => addUserServiceHours(user,
+                docDefinition, isTest)));
         } else {
             return res.status(400).send('[ERROR] Request did not send a valid' +
                 ' location ID or user ID to export service hours for.');

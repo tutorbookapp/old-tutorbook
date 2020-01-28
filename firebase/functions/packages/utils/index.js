@@ -5,6 +5,21 @@ class Utils {
 
     constructor() {}
 
+    static concatArr(arrA, arrB) {
+        var result = [];
+        arrA.forEach((item) => {
+            if (result.indexOf(item) < 0 && item !== '') {
+                result.push(item);
+            }
+        });
+        arrB.forEach((item) => {
+            if (result.indexOf(item) < 0 && item !== '') {
+                result.push(item);
+            }
+        });
+        return result;
+    }
+
     static addDurationStrings(current, duration) {
         // Formatted as: Hr:Min:Sec.Millisec
         var currentHours = new Number(current.split(':')[0]);
