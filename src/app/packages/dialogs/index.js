@@ -1364,7 +1364,7 @@ class ViewApptDialog extends ViewRequestDialog {
             const [e, r] = await to(Data.instantClockIn(this.appt, this.id));
             if (e) {
                 reset();
-                return window.app.snackbar.view('Could not clock in.');
+                return window.app.snackbar.view('Could not clock-in.');
             }
             window.app.snackbar.view('Clocked in at ' + new Date(r.data
                 .clockIn.sentTimestamp).toLocaleTimeString() + '.');
@@ -1373,10 +1373,10 @@ class ViewApptDialog extends ViewRequestDialog {
             const [err, res] = await to(Data.clockIn(this.appt, this.id));
             if (err) {
                 reset();
-                return window.app.snackbar.view('Could not send clock ' +
+                return window.app.snackbar.view('Could not send clock-' +
                     'in request.');
             }
-            window.app.snackbar.view('Sent clock in request to ' +
+            window.app.snackbar.view('Sent clock-in request to ' +
                 res.supervisor.name + '.');
         }
     }
@@ -1396,7 +1396,7 @@ class ViewApptDialog extends ViewRequestDialog {
             const [e, r] = await to(Data.instantClockOut(this.appt, this.id));
             if (e) {
                 reset();
-                return window.app.snackbar.view('Could not clock out.');
+                return window.app.snackbar.view('Could not clock-out.');
             }
             window.app.snackbar.view('Clocked out at ' + new Date(r.data
                 .clockOut.sentTimestamp).toLocaleTimeString() + '.');
@@ -1405,10 +1405,10 @@ class ViewApptDialog extends ViewRequestDialog {
             const [err, res] = await to(Data.clockOut(this.appt, this.id));
             if (err) {
                 reset();
-                return window.app.snackbar.view('Could not send clock ' +
+                return window.app.snackbar.view('Could not send clock-' +
                     'out request.');
             }
-            window.app.snackbar.view('Sent clock out request to ' +
+            window.app.snackbar.view('Sent clock-out request to ' +
                 res.supervisor.name + '.');
         }
     }

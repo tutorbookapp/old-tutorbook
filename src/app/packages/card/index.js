@@ -884,9 +884,9 @@ Card.renderActiveApptCard = function(doc) {
         actions.clockout = async () => {
             window.app.snackbar.view('Sending request...');
             const [err, res] = await to(Data.clockOut(appt, doc.id));
-            if (err) return window.app.snackbar.view('Could not send clock ' +
+            if (err) return window.app.snackbar.view('Could not send clock-' +
                 'out request.');
-            window.app.snackbar.view('Sent clock out request to ' +
+            window.app.snackbar.view('Sent clock-out request to ' +
                 res.supervisor.name + '.');
         };
     }
