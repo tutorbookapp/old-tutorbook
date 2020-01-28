@@ -146,7 +146,7 @@ const backupAsPDF = (req, res) => {
     });
 };
 
-const addUserServiceHours = async (d, docDefinition, isTest) => {
+const addUserServiceHours = async (d, docDefinition, isTest, url) => {
     console.log('[DEBUG] Adding ' + d.data().name + ' (' + d.id + ')\'s ' +
         (isTest ? 'test' : 'live') + ' service hour data to PDF...');
     const db = isTest ? partitions.test : partitions.default;
@@ -254,7 +254,7 @@ const addUserServiceHours = async (d, docDefinition, isTest) => {
             'All of ' + d.data().name.split(' ')[0] + '\'s past appointments ' +
             'as recorded on the Tutorbook web app. Go to ',
             {
-                text: 'tutorbook.app',
+                text: url.replace('https://', '') || 'tutorbook.app',
                 bold: true,
             },
             ' to view, edit, or clock-in to any of these tutoring appointments.',
@@ -339,11 +339,21 @@ const serviceHoursAsPDF = (req, res) => {
             pageOrientation: 'portrait',
             pageMargins: [20, 25, 20, 25],
         };
+        const getLocationURL = async (options) => {
+            if (options.id) return (await db.collection('locations').doc(options
+                .id).get()).data().url;
+            if (options.name) return (await db.collection('locations').where(
+                'name', '==', options.name).limit(1).get()).docs[0].data().url;
+        };
         if (req.query.uid) {
             const user = await db.collection('users').doc(req.query.uid).get();
             if (!user.exists) return res.status(400).send('[ERROR] Requested ' +
                 'user (' + req.query.uid + ') did not exist.');
-            await addUserServiceHours(user, docDefinition, isTest);
+            const url = await getLocationURL({
+                name: user.location,
+                id: req.query.location,
+            });
+            await addUserServiceHours(user, docDefinition, isTest, url);
         } else if (req.query.location) {
             if (token.locations.indexOf(req.query.location) < 0) return res
                 .status(400).send('[ERROR] Token\'s locations did not contain' +
@@ -364,7 +374,7 @@ const serviceHoursAsPDF = (req, res) => {
                 .get()
             ).docs);
             await Promise.all(users.map(user => addUserServiceHours(user,
-                docDefinition, isTest)));
+                docDefinition, isTest, location.data().url)));
         } else {
             return res.status(400).send('[ERROR] Request did not send a valid' +
                 ' location ID or user ID to export service hours for.');
