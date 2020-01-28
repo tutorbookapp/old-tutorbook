@@ -785,7 +785,7 @@ class Data {
         // approvedRequestOut doc, then we check if there is an appt doc
         // already created).
         if (!request.location.id) request.location.id =
-            await getLocationIdFromName(request.location.name);
+            await Data.getLocationIdFromName(request.location.name);
         const appts = [
             db.collection('users').doc(request.fromUser.uid)
             .collection('appointments')
