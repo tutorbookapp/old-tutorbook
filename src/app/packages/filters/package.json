@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@tutorbook/data": "^0.3.2",
+    "@tutorbook/dialogs": "^0.3.3",
     "@tutorbook/templates": "^0.3.3",
     "@tutorbook/utils": "^0.3.3"
   },

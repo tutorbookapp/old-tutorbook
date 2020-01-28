@@ -40,8 +40,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding-right: 12px;
   font-weight: bold;
+  width: calc(100% - 40px);
 }
 
 #active-filters #filter > span {
@@ -51,5 +51,8 @@
 @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
   #active-filters #clear {
     display: none;
+  }
+  #active-filters #filter {
+    width: calc(100% - 20px);
   }
 }

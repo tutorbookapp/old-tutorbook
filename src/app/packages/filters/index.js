@@ -11,6 +11,7 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
 const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 
@@ -55,10 +56,10 @@ class FilterDialog {
     }
 
     renderSelf() {
-        const dialog = this.render.template('dialog-filter');
-        const pages = dialog.querySelectorAll('.page');
+        this.el = this.render.template('dialog-filter');
+        const pages = this.el.querySelectorAll('.page');
 
-        dialog.querySelector('#reset-button').addEventListener('click', () => {
+        this.el.querySelector('#reset-button').addEventListener('click', () => {
             Object.entries({
                 grade: 'Any',
                 subject: 'Any',
@@ -73,12 +74,12 @@ class FilterDialog {
         });
 
         Utils.replaceElement(
-            dialog.querySelector('#availability-list'),
+            this.el.querySelector('#availability-list'),
             this.renderInputAvailability()
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#grade-list'),
+            this.el.querySelector('#grade-list'),
             this.render.template('dialog-filter-item-list', {
                 items: ['Any'].concat(Data.grades)
             })
@@ -86,14 +87,14 @@ class FilterDialog {
 
         if (window.app.location.name === 'Any') {
             Utils.replaceElement(
-                dialog.querySelector('#price-list'),
+                this.el.querySelector('#price-list'),
                 this.render.template('dialog-filter-item-list', {
                     items: ['Any'].concat(Data.prices)
                 })
             );
         } else {
             Utils.replaceElement(
-                dialog.querySelector('#price-list'),
+                this.el.querySelector('#price-list'),
                 'Due to PAUSD guidelines, we can only show free service-hour' +
                 ' peer tutors on this website. To filter by price and view ' +
                 'more professional tutors, go to the root partition at https:' +
@@ -102,76 +103,76 @@ class FilterDialog {
         }
 
         Utils.replaceElement(
-            dialog.querySelector('#gender-list'),
+            this.el.querySelector('#gender-list'),
             this.render.template('dialog-filter-item-list', {
                 items: ['Any'].concat(Data.genders)
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#type-list'),
+            this.el.querySelector('#type-list'),
             this.render.template('dialog-filter-item-list', {
                 items: ['Any'].concat(Data.types)
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#math-list'),
+            this.el.querySelector('#math-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.mathSubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#tech-list'),
+            this.el.querySelector('#tech-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.techSubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#art-list'),
+            this.el.querySelector('#art-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.artSubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#science-list'),
+            this.el.querySelector('#science-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.scienceSubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#history-list'),
+            this.el.querySelector('#history-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.historySubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#language-list'),
+            this.el.querySelector('#language-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.languageSubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#english-list'),
+            this.el.querySelector('#english-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.englishSubjects
             })
         );
 
         Utils.replaceElement(
-            dialog.querySelector('#life-skills-list'),
+            this.el.querySelector('#life-skills-list'),
             this.render.template('dialog-filter-item-list', {
                 items: Data.lifeSkills
             })
         );
 
-        dialog.querySelectorAll('#page-subject .mdc-list-item').forEach((el) => {
+        this.el.querySelectorAll('#page-subject .mdc-list-item').forEach((el) => {
             el.addEventListener('click', () => {
                 var id = el.id.split('-').slice(1).join('-');
                 if (id === 'page-all') {
@@ -211,24 +212,18 @@ class FilterDialog {
             });
         });
 
-        dialog.querySelectorAll('.back').forEach((el) => {
+        this.el.querySelectorAll('.back').forEach((el) => {
             el.addEventListener('click', () => {
                 this.page('page-all');
             });
         });
-        dialog.querySelectorAll('.back-subjects').forEach((el) => {
+        this.el.querySelectorAll('.back-subjects').forEach((el) => {
             el.addEventListener('click', () => {
                 this.page('page-subject');
             });
         });
 
-        this.el = dialog;
         this.page('page-all');
-    }
-
-    static getFilterAvailabilityString(data) {
-        const str = Utils.getAvailabilityString(data);
-        return Utils.shortenString(str, 20);
     }
 
     page(id) {
@@ -236,17 +231,19 @@ class FilterDialog {
         const dialog = this.el;
         const pages = dialog.querySelectorAll('.page');
 
+        function getAvailabilityString(data) {
+            const str = Utils.getAvailabilityString(data);
+            return Utils.shortenString(str, 20);
+        };
+
         function clearFilters(filters) {
             // Helper function to get rid of the 'Any' selected option for
             // better rendering.
             var result = {};
             for (var filter in filters) {
                 if (filters[filter] !== 'Any' && Object.keys(filters[filter]).length !== 0) {
-                    if (filter === 'availability') {
-                        result[filter] = that.getFilterAvailabilityString(filters[filter]);
-                    } else {
-                        result[filter] = filters[filter];
-                    }
+                    result[filter] = filter === 'availability' ?
+                        getAvailabilityString(filters[filter]) : filters[filter];
                 } else {
                     result[filter] = '';
                 }
@@ -279,245 +276,25 @@ class FilterDialog {
 
         if (id === 'page-all') {
             renderAllList();
-        } else if (id === 'page-availability') {
-            Utils.replaceElement(
-                dialog.querySelector('#availability-list'),
-                this.renderInputAvailability()
-            );
-            this.addInputAvailabilityManager(dialog);
+        } else if (id === 'page-availability' &&
+            !this.availabilityDialog.managed) {
+            this.availabilityDialog.manage();
         }
     }
 
     renderInputAvailability() {
-        const data = Utils.cloneMap(this.filters.availability);
-        const dayEl = this.render.select('Day', data.day || '', Data.days);
-        const locationEl = this.render.select(
-            'Location',
-            data.location || Data.locations[1] || '',
-            Data.locations
-        );
-
-        // NOTE: All of this changes once you add the data manager (as we want
-        // to only show those times that are specified by the location supervisor)
-        const times = window.app.data.periods.concat(Data.timeStrings);
-        const fromTimeEl = this.render.select(
-            'From',
-            data.fromTime || '',
-            [data.fromTime].concat(times)
-        );
-        const toTimeEl = this.render.select(
-            'To',
-            data.toTime || '',
-            [data.toTime].concat(times)
-        );
-
-        const content = this.render.template('input-wrapper');
-        content.appendChild(this.render.inputItem(locationEl));
-        content.appendChild(this.render.inputItem(dayEl));
-        content.appendChild(this.render.inputItem(fromTimeEl));
-        content.appendChild(this.render.inputItem(toTimeEl));
-
-        return content;
-    }
-
-    addInputAvailabilityManager() {
-        const view = this.el.querySelector('.dialog-form__content');
-        var that = this;
-        var availableTime = Utils.cloneMap(this.filters.availability);
-
-        // Show the default values and only rerender once the user chooses
-        // a location. NOTE: We also have to rerender the timeSelects when
-        // a day is chosen and we have to rerender the fromTimeSelect when
-        // the toTimeSelect is chosen (as we don't want to be able to input
-        // negative time) and vice versa.
-
-        var daySelect = this.attachSelect(view.querySelector('#Day'));
-        daySelect.listen('MDCSelect:change', function() {
-            availableTime.day = daySelect.value;
-            that.refreshTimeSelects(availableTime);
-        });
-
-        var toTimeSelect = this.attachSelect(view.querySelector('#To'));
-        toTimeSelect.listen('MDCSelect:change', function() {
-            availableTime.toTime = toTimeSelect.value;
-        });
-
-        var fromTimeSelect = this.attachSelect(
-            view.querySelector('#From')
-        );
-        fromTimeSelect.listen('MDCSelect:change', function() {
-            availableTime.fromTime = fromTimeSelect.value;
-        });
-
-        const locationSelect = this.attachSelect(
-            view.querySelector('#Location')
-        );
-        locationSelect.listen('MDCSelect:change', function() {
-            availableTime.location = locationSelect.value;
-            // Now, contrain the other select menus to values that this location
-            // has for available times.
-            that.refreshDayAndTimeSelects(availableTime);
-        });
-
-        // Check to see if a location was selected. If there is a location
-        // selected, make sure to only render those options that it's supervisor has
-        // specified in their location management view.
-        if (!!availableTime.location && availableTime.location !== '') {
-            // Re-render all of the selects to match the selected location
-            this.refreshDayAndTimeSelects(availableTime);
-
-            if (!!availableTime.day && availableTime.day !== '') {
-                // Re-render all fo the time selects to match the selected day
-                this.refreshTimeSelects(availableTime);
-            }
-        }
-
-        function invalid(select) {
-            // TODO: Make the select styling actually work within this dialog
-            window.app.snackbar.view('Please select a valid availability.');
-            select.required = true;
-            select.valid = false;
-        };
-
-        function validTime(time) {
-            var valid = true;
-            if (time.location === '') {
-                invalid(locationSelect);
-                valid = false;
-            }
-            if (time.day === '') {
-                invalid(daySelect);
-                valid = false;
-            }
-            if (time.toTime === '') {
-                invalid(toTimeSelect);
-                valid = false;
-            }
-            if (time.fromTime === '') {
-                invalid(fromTimeSelect);
-                valid = false;
-            }
-            return valid;
-        };
-
-        this.el.querySelector('#ok-button').addEventListener('click', () => {
-            if (validTime(availableTime)) {
-                // Update the textField value to match the new value
-                that.filters.availability = availableTime;
-                that.page('page-all');
-            }
-        });
-    }
-
-    async initLocationData() {
-        this.locationData = {};
-        const snapshot = await window.app.db.collection('locations').get();
-        snapshot.forEach((ref) => {
-            const location = ref.data();
-            this.locationData[location.name] = location;
-        });
-    }
-
-    refreshTimeSelects() {
-        var location = this.locationData[availableTime.location];
-        // Set the available days based on the location's
-        // availability.
-
-        var times = Utils.getLocationTimesByDay(
-            availableTime.day,
-            location.hours
-        );
-
-        if (times.length === 1) {
-            availableTime.fromTime = times[0];
-            availableTime.toTime = times[0];
-        }
-
-        // If there are only no options, make sure to tell the user so they don't
-        // think that it's a bug (that the only select options are the ones that
-        // were already selected).
-        if (times.length < 1) {
-            window.app.snackbar.view(location.name + ' does not have any open ' +
-                'hours.');
-            return;
-        }
-
-        var toTimeEl = that
-            .render.select('To', availableTime.toTime || '', times)
-        var oldToTimeEl = document.querySelector('.mdc-dialog--open #To');
-        oldToTimeEl.parentNode.insertBefore(toTimeEl, oldToTimeEl);
-        oldToTimeEl.parentNode.removeChild(oldToTimeEl);
-        var toTimeSelect = Utils.attachSelect(toTimeEl);
-        toTimeSelect.listen('MDCSelect:change', function() {
-            availableTime.toTime = toTimeSelect.value;
-        });
-
-        var fromTimeEl = that
-            .render.select('From', availableTime.fromTime || '', times);
-        var oldFromTimeEl = document.querySelector('.mdc-dialog--open #From');
-        oldFromTimeEl.parentNode.insertBefore(fromTimeEl, oldFromTimeEl);
-        oldFromTimeEl.parentNode.removeChild(oldFromTimeEl);
-        var fromTimeSelect = Utils.attachSelect(fromTimeEl);
-        fromTimeSelect.listen('MDCSelect:change', function() {
-            availableTime.fromTime = fromTimeSelect.value;
-        });
-    }
-
-    refreshDayAndTimeSelects() {
-        var location = this.locationData[availableTime.location];
-        // Set the available days based on the location's
-        // availability.
-
-        var times = Utils.getLocationTimes(location.hours);
-        var days = Utils.getLocationDays(location.hours);
-
-        if (times.length === 1) {
-            availableTime.fromTime = times[0];
-            availableTime.toTime = times[0];
-        }
-        if (days.length === 1) {
-            availableTime.day = days[0];
-        }
-
-        // If there are only no options, make sure to tell the user so they don't
-        // think that it's a bug (that the only select options are the ones that
-        // were already selected).
-        if (days.length < 1 && times.length < 1) {
-            that.viewSnackbar(location.name + ' does not have any open ' +
-                'hours.');
-            return;
-        }
-
-        var toTimeEl = that
-            .render.select('To', availableTime.toTime || '', times)
-        var oldToTimeEl = document.querySelector('.mdc-dialog--open #To')
-        oldToTimeEl.parentNode.insertBefore(toTimeEl, oldToTimeEl);
-        oldToTimeEl.parentNode.removeChild(oldToTimeEl);
-        var toTimeSelect = Utils.attachSelect(toTimeEl);
-        toTimeSelect.listen('MDCSelect:change', function() {
-            availableTime.toTime = toTimeSelect.value;
-        });
-
-        var fromTimeEl = that
-            .render.select('From', availableTime.fromTime || '', times);
-        var oldFromTimeEl = document.querySelector('.mdc-dialog--open #From');
-        oldFromTimeEl.parentNode.insertBefore(fromTimeEl, oldFromTimeEl);
-        oldFromTimeEl.parentNode.removeChild(oldFromTimeEl);
-        var fromTimeSelect = Utils.attachSelect(fromTimeEl);
-        fromTimeSelect.listen('MDCSelect:change', function() {
-            availableTime.fromTime = fromTimeSelect.value;
-        });
-
-        var dayEl = that
-            .render.select('Day', availableTime.day || '', days);
-        var oldDayEl = document.querySelector('.mdc-dialog--open #Day');
-        oldDayEl.parentNode.insertBefore(dayEl, oldDayEl);
-        oldDayEl.parentNode.removeChild(oldDayEl);
-        var daySelect = Utils.attachSelect(dayEl);
-        daySelect.listen('MDCSelect:change', function() {
-            availableTime.day = daySelect.value;
-            that.refreshTimeSelects(availableTime);
-        });
+        const textField = this.render.textField('Stub', '');
+        this.availabilityDialog = new EditAvailabilityDialog(textField, {});
+        this.availabilityDialog.val = Utils.cloneMap(this.filters.availability);
+        this.availabilityDialog.renderSelf();
+        $(this.el).find('#page-availability #ok-button')[0]
+            .addEventListener('click', () => {
+                if (!this.availabilityDialog.valid) return;
+                this.filters.availability = this.availabilityDialog.val;
+                this.page('page-all');
+            });
+        return this.availabilityDialog.main = $(this.availabilityDialog.main)
+            .find('.mdc-dialog__content')[0];
     }
 };
 

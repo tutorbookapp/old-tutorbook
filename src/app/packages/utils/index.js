@@ -15,6 +15,11 @@ class Utils {
         this.data = window.app ? window.app.data || new Data() : new Data();
     }
 
+    static shortenString(str, length = 100, ending = '...') {
+        return str.length > length ? str.substring(0, length - ending.length) +
+            ending : str;
+    }
+
     static updateSetupProfileCard(p) {
         if (!Object.values(p.availability).length) {
             return p.type === 'Tutor' ? p.cards.setupProfile = true : p.cards

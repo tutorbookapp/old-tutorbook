@@ -231,10 +231,11 @@ class EditAvailabilityDialog {
         $('body').prepend(this.main);
         this.dialog = MDCDialog.attachTo(this.main);
         this.dialog.open();
-        this.manage();
+        if (!this.managed) this.manage();
     }
 
     manage() {
+        this.managed = true;
         const that = this;
 
         function s(q) { // Attach select based on query
@@ -252,6 +253,9 @@ class EditAvailabilityDialog {
             return listen(s(q), action);
         };
 
+        $(this.main).find('.mdc-select .mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+        });
         this.locationSelect = a('#Location', (s) => {
             if (s.value === 'Custom') {
                 $(this.main).find('#Location').replaceWith(
@@ -279,30 +283,11 @@ class EditAvailabilityDialog {
             this.val.time = s.value;
         });
 
-        function invalid(select) {
-            select.required = true;
-            select.valid = false;
-        };
+        if (this.val.location) this.refreshDaysAndTimes();
+        if (!$(this.main).find('#ok-button').length) return;
 
-        function validTime(time) {
-            var valid = true;
-            if (time.location === '') {
-                invalid(that.locationSelect);
-                valid = false;
-            }
-            if (time.day === '') {
-                invalid(that.daySelect);
-                valid = false;
-            }
-            if (time.toTime === '' || time.fromTime === '') {
-                invalid(that.timeslotSelect);
-                valid = false;
-            }
-            return valid;
-        };
-
-        $(this.main).find('#ok-button').click(() => {
-            if (validTime(this.val)) this.dialog.close('ok');
+        $(this.main).find('#ok-button')[0].addEventListener('click', () => {
+            if (this.valid) this.dialog.close('ok');
         });
         this.dialog.listen('MDCDialog:closing', (event) => {
             if (event.detail.action === 'ok') {
@@ -312,8 +297,29 @@ class EditAvailabilityDialog {
                 $(this.main).remove();
             }
         });
+    }
 
-        if (this.val.location) this.refreshDaysAndTimes();
+    get valid() {
+
+        function invalid(select) {
+            select.required = true;
+            select.valid = false;
+        };
+
+        var valid = true;
+        if (this.val.location === '') {
+            invalid(this.locationSelect);
+            valid = false;
+        }
+        if (this.val.day === '') {
+            invalid(this.daySelect);
+            valid = false;
+        }
+        if (this.val.toTime === '' || this.val.fromTime === '') {
+            invalid(this.timeslotSelect);
+            valid = false;
+        }
+        return valid;
     }
 
     static async updateAvailability(profile) {
@@ -362,6 +368,10 @@ class EditAvailabilityDialog {
         } else if (times.length < 1) { // No available options
             return window.app.snackbar.view(location.name + ' does not have ' +
                 'any open hours.');
+        } else if (timeStrings.indexOf(this.val.time) < 0) {
+            this.val.fromTime = '';
+            this.val.toTime = '';
+            this.val.time = '';
         }
 
         function s(q) { // Attach select based on query
@@ -381,6 +391,9 @@ class EditAvailabilityDialog {
 
         function r(q, el, action, id = 'timeslotSelect') { // Replaces select, 
             // adds listener, and stores select for validation purposes.
+            $(el).find('.mdc-list-item').each(function() {
+                MDCRipple.attachTo(this);
+            });
             $(that.main).find(q).replaceWith(el);
             that[id] = a(q, action);
         };
@@ -421,16 +434,20 @@ class EditAvailabilityDialog {
                 location.hours,
             );
             timeStrings = times.map(t => t.open + ' to ' + t.close);
+        } else if (days.indexOf(this.val.day) < 0) {
+            this.val.day = '';
         }
         if (times.length === 1) { // Only one available option (pre-select it)
             this.val.fromTime = times[0].open;
             this.val.toTime = times[0].close;
             this.val.time = timeStrings[0];
+        } else if (timeStrings.indexOf(this.val.time) < 0) {
+            this.val.fromTime = '';
+            this.val.toTime = '';
+            this.val.time = '';
         }
-        if (times.length < 1 || days.length < 1) { // No available options
-            return window.app.snackbar.view(location.name + ' does not have ' +
-                'any open hours.');
-        }
+        if (times.length < 1 || days.length < 1) return window.app.snackbar
+            .view(location.name + ' does not have any open hours.');
 
         function s(q) { // Attach select based on query
             return Utils.attachSelect($(that.main).find(q)[0]);
@@ -448,6 +465,9 @@ class EditAvailabilityDialog {
         };
 
         function r(q, el, action, id) { // Replaces select and adds listener
+            $(el).find('.mdc-list-item').each(function() {
+                MDCRipple.attachTo(this);
+            });
             $(that.main).find(q).replaceWith(el);
             that[id] = a(q, action);
         };
@@ -493,11 +513,11 @@ class EditAvailabilityDialog {
             content.appendChild(that.render.selectItem(l, v, d));
         };
 
-        addS('Location', v.location, Utils.concatArr([v.location],
+        addS('Location', v.location || '', Utils.concatArr([v.location || ''],
             (window.location.name === 'Any' ? d.locationNames
                 .concat(['Custom']) : d.locationNames)));
-        addS('Day', v.day, Data.days);
-        addS('Time', v.time, d.timeStrings);
+        addS('Day', v.day || '', Data.days);
+        addS('Time', v.time || '', d.timeStrings);
 
         $(this.main).find('.mdc-dialog__content').append(content);
     }
