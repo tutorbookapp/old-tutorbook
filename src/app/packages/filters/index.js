@@ -227,15 +227,15 @@ class FilterDialog {
         this.page('page-all');
     }
 
+    getAvailabilityString(data) {
+        const str = Utils.getAvailabilityString(data);
+        return Utils.shortenString(str, 20);
+    }
+
     page(id) {
         var that = this;
         const dialog = this.el;
         const pages = dialog.querySelectorAll('.page');
-
-        function getAvailabilityString(data) {
-            const str = Utils.getAvailabilityString(data);
-            return Utils.shortenString(str, 20);
-        };
 
         function clearFilters(filters) {
             // Helper function to get rid of the 'Any' selected option for
@@ -244,7 +244,7 @@ class FilterDialog {
             for (var filter in filters) {
                 if (filters[filter] !== 'Any' && Object.keys(filters[filter]).length !== 0) {
                     result[filter] = filter === 'availability' ?
-                        getAvailabilityString(filters[filter]) : filters[filter];
+                        that.getAvailabilityString(filters[filter]) : filters[filter];
                 } else {
                     result[filter] = '';
                 }
@@ -306,6 +306,11 @@ class NewGroupDialog extends FilterDialog {
         this.defaultName = window.app.location.name + ' Group #' + (options
             .groupNum || 1);
         this.name = options.name || this.defaultName;
+    }
+
+    getAvailabilityString(data) {
+        const str = Utils.getAvailabilityString(data);
+        return Utils.shortenString(str, 50);
     }
 
     renderSelf() {
