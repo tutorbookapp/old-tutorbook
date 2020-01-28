@@ -22,8 +22,6 @@ class Data {
                 token: (await firebase.auth().currentUser.getIdToken(true)),
                 location: window.app.location.id,
                 test: window.app.test,
-                tutors: true,
-                pupils: true,
             }, params),
         }).then((res) => {
             return window.URL.createObjectURL(res.data);

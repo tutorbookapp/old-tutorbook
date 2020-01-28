@@ -3,6 +3,7 @@ const Utils = require('@tutorbook/utils');
 const axios = require('axios');
 
 import $ from 'jquery';
+import to from 'await-to-js';
 
 // Class that manages the "Service Hour Tracking" card in the supervisor's
 // dashboard view.
@@ -24,9 +25,7 @@ class Tracking {
             'tutoring appointment).';
         var card;
         const actions = {
-            snooze: () => {
-                $(card).remove();
-            },
+            snooze: () => $(card).remove(),
             update: () => {
                 window.app.snackbar.view('Updating sheet...');
                 axios({
@@ -47,12 +46,15 @@ class Tracking {
                         'again in a few minutes.');
                 });
             },
-            view: () => {
-                window.open(url);
+            export: async () => {
+                window.app.snackbar.view('Generating service hour logs...');
+                const [err, res] = await to(Data.getServiceHoursLog());
+                if (err) return window.app.snackbar.view('Could not generate ' +
+                    'service hour logs.');
+                window.app.snackbar.view('Generated service hour logs.', 'view',
+                    () => window.open(res), true);
             },
-            primary: () => {
-                window.open(url);
-            },
+            primary: () => window.open(url),
         };
         card = Card.renderCard(title, subtitle, summary, actions);
         $(card)
