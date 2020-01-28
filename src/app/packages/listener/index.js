@@ -31,12 +31,14 @@ class Listener {
                     Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
                     data.for.time.from + '. Approve this clock-in?';
                 new ConfirmationDialog(title, summary, async () => {
+                    window.app.snackbar.view('Approving clock-in request...');
                     const [err, res] = await to(
                         Data.approveClockIn(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'approve clock-in request.');
                     window.app.snackbar.view('Approved clock-in request.');
                 }, true, async () => {
+                    window.app.snackbar.view('Rejecting clock-in request...');
                     const [err, res] = await to(
                         Data.rejectClockIn(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
@@ -73,12 +75,14 @@ class Listener {
                     Utils.getOther(data.sentBy, data.for.attendees).name +
                     ' ending at ' + data.for.time.to + '. Approve this clock-out?';
                 new ConfirmationDialog(title, summary, async () => {
+                    window.app.snackbar.view('Approving clock-out request...');
                     const [err, res] = await to(
                         Data.approveClockOut(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
                         'approve clock-out request.');
                     window.app.snackbar.view('Approved clock-out request.');
                 }, true, async () => {
+                    window.app.snackbar.view('Rejecting clock-out request...');
                     const [err, res] = await to(
                         Data.rejectClockOut(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
