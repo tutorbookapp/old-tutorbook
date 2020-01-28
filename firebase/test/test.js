@@ -7,6 +7,7 @@ const FUNCTIONS_URL = 'http://localhost:5001/tutorbook-779d8/us-central1/';
 const LOCATION = {
     name: 'Gunn Academic Center',
     id: 'NJp0Y6wyMh2fDdxSuRSx',
+    url: 'https://gunn.tutorbook.app',
 };
 const TUTOR = {
     name: 'Tutor Tutorbook',
@@ -532,8 +533,8 @@ describe("Tutorbook's REST API", () => {
     function createLocation() {
         const location = {
             supervisors: [SUPERVISOR.uid],
-            city: 'Palo Alto, CA',
             name: LOCATION.name,
+            url: LOCATION.url,
             timestamp: new Date(),
         };
         return post(SUPERVISOR.email, 'createLocation', {
@@ -694,7 +695,7 @@ describe("Tutorbook's REST API", () => {
         });
     });
 
-    it("lets supervisors download PDF service hour sheets", async () => {
+    it("lets supervisors download individual's service hour logs", async () => {
         await approveClockOut();
         return axios({
             method: 'get',
@@ -708,6 +709,22 @@ describe("Tutorbook's REST API", () => {
             },
         }).then((res) => {
             res.data.pipe(fs.createWriteStream('test/service-hrs-test.pdf'));
+        });
+    });
+
+    it("lets supervisors download everyone's service hour logs", async () => {
+        await approveClockOut();
+        return axios({
+            method: 'get',
+            url: FUNCTIONS_URL + 'serviceHoursAsPDF',
+            responseType: 'stream',
+            params: {
+                token: (await getToken(SUPERVISOR.email)),
+                location: LOCATION.id,
+                test: false,
+            },
+        }).then((res) => {
+            res.data.pipe(fs.createWriteStream('test/all-service-hrs-test.pdf'));
         });
     });
 });
