@@ -104,10 +104,18 @@ class DataProxy {
             case 'instantClockOut':
                 assert(token.supervisor);
                 return Data.instantClockOut(data.appt, data.id);
+            case 'rejectClockIn':
+                assert(token.supervisor);
+                await exists('clockIns', data.id);
+                return Data.rejectClockIn(data.clockIn, data.id);
             case 'approveClockIn':
                 assert(token.supervisor);
                 await exists('clockIns', data.id);
                 return Data.approveClockIn(data.clockIn, data.id);
+            case 'rejectClockOut':
+                assert(token.supervisor);
+                await exists('clockOuts', data.id);
+                return Data.rejectClockOut(data.clockOut, data.id);
             case 'approveClockOut':
                 assert(token.supervisor);
                 await exists('clockOuts', data.id);
@@ -366,6 +374,26 @@ class Data {
         };
     }
 
+    static async rejectClockIn(clockIn, id) {
+        const db = global.db;
+        const ref = db.collection('users').doc(global.app.user.uid)
+            .collection('clockIns').doc(id);
+        clockIn = (await ref.get()).data(); // Don't trust the client (and this
+        // will use the actual Timestamp() object for clockIn.sentTimestamp).
+        const rejectedClockIn = db.collection('users').doc(global.app.user.uid)
+            .collection('rejectedClockIns').doc();
+        const rejectedClockInData = Data.combineMaps(clockIn, {
+            rejectedTimestamp: new Date(),
+            rejectedBy: global.app.conciseUser,
+        });
+        await ref.delete();
+        await rejectedClockIn.set(rejectedClockInData);
+        return {
+            clockIn: rejectedClockInData,
+            id: rejectedClockIn.id,
+        };
+    }
+
     static async approveClockIn(clockIn, id) {
         const db = global.db;
         const ref = db.collection('users').doc(global.app.user.uid)
@@ -469,6 +497,42 @@ class Data {
             clockOut: clockOut,
             appt: appt,
             id: pastApptID,
+        };
+    }
+
+    static async rejectClockOut(clockOutData, id) {
+        // Tedious work around of the infinite loop
+        const db = global.db;
+        const clockOut = db.collection('users').doc(global.app.user.uid)
+            .collection('clockOuts').doc(id);
+        clockOutData = (await clockOut.get()).data(); // Don't trust client
+        const rejectedClockOutData = Data.combineMaps(clockOutData, {
+            rejectedTimestamp: new Date(),
+            rejectedBy: global.app.conciseUser,
+        });
+        const appt = Data.cloneMap(rejectedClockOutData.for);
+        const rejectedClockOut = db.collection('users').doc(global.app.user.uid)
+            .collection('rejectedClockOuts').doc();
+        const activeAppts = [
+            db.collection('users').doc(appt.attendees[0].uid)
+            .collection('activeAppointments')
+            .doc(id),
+            db.collection('users').doc(appt.attendees[1].uid)
+            .collection('activeAppointments')
+            .doc(id),
+            db.collection('locations').doc(appt.location.id)
+            .collection('activeAppointments')
+            .doc(id),
+        ];
+        // Actually mess with docs
+        await clockOut.delete();
+        await rejectedClockOut.set(rejectedClockOutData);
+        for (var i = 0; i < activeAppts.length; i++) {
+            await activeAppts[i].delete();
+        }
+        return {
+            clockOut: rejectedClockOutData,
+            id: rejectedClockOut.id,
         };
     }
 
