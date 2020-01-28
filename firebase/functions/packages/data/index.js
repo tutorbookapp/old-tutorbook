@@ -550,6 +550,14 @@ class Data {
         return clone;
     }
 
+    static async getLocationIdFromName(name) {
+        const doc = (await global.db.collection('locations')
+            .where('name', '==', name).limit(1).get()).docs[0];
+        if (!doc || !doc.exists) throw new Error('Location (' + name + ') did' +
+            ' not exist.');
+        return doc.id;
+    }
+
     static async getLocationSupervisor(id) {
         const doc = await global.db.collection('locations')
             .doc(id).get();
@@ -712,6 +720,8 @@ class Data {
         // the Firestore rules are setup (i.e. first we check if there is an
         // approvedRequestOut doc, then we check if there is an appt doc
         // already created).
+        if (!request.location.id) request.location.id =
+            await getLocationIdFromName(request.location.name);
         const appts = [
             db.collection('users').doc(request.fromUser.uid)
             .collection('appointments')
