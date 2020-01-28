@@ -260,6 +260,23 @@ class Utils {
         return '';
     }
 
+    static getLocation(profile) {
+        // TODO: Bug here is that data.locationNames only includes name of the 
+        // current app location (unless partition is 'Any').
+        const valid = window.app.data.locationNames;
+        if (valid.indexOf(profile.location) >= 0) return profile.location;
+        // This uses the most recently added availability (i.e. the last key).
+        for (var loc of Object.keys(profile.availability).reverse()) {
+            if (valid.indexOf(loc) >= 0) return loc;
+        }
+        return window.app.location.name || '';
+    }
+
+    static getLocations(profile) {
+        return Utils.concatArr(Object.keys(profile.availability),
+            [window.app.location.name]);
+    }
+
     static getAuth(profile) {
         if (profile.authenticated) return profile.authenticated;
         if (['Pupil', 'Tutor'].indexOf(profile.type) >= 0) return true;
@@ -302,7 +319,8 @@ class Utils {
                     'guarantee.',
             },
             'authenticated': Utils.getAuth(profile),
-            'location': profile.location || (window.app) ? window.app.location.name : 'Gunn Academic Center',
+            'location': Utils.getLocation(profile),
+            'locations': Utils.getLocations(profile),
             'children': profile.children || [],
             'secondsTutored': profile.secondsTutored || 0,
             'secondsPupiled': profile.secondsPupiled || 0,

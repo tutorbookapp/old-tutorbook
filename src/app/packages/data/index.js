@@ -47,13 +47,33 @@ class Data {
         });
     }
 
+    static concatArr(arrA, arrB) {
+        var result = [];
+        arrA.forEach((item) => {
+            if (result.indexOf(item) < 0 && item !== '') {
+                result.push(item);
+            }
+        });
+        arrB.forEach((item) => {
+            if (result.indexOf(item) < 0 && item !== '') {
+                result.push(item);
+            }
+        });
+        return result;
+
+    }
+
     // Sets the user's preferred location based on:
     // 1) Their availability
     // 2) The location of this app instance
     static updateUserLocation(user) {
-        const availLoc = Object.keys(user.availability)[0];
-        user.location = window.app.data.locationNames.indexOf(availLoc) >= 0 ?
-            availLoc : window.app.location.name;
+        // TODO: Bug here is that data.locationNames only includes name of the 
+        // current app location (unless partition is 'Any').
+        const locs = Object.keys(user.availability);
+        // This uses the most recently added availability (i.e. the last key).
+        locs.forEach(loc => user.location = window.app.data.locationNames
+            .indexOf(loc) >= 0 ? loc : window.app.location.name);
+        user.locations = Data.concatArr(locs, [window.app.location.name]);
     }
 
     // Adds a 'booked' field to every availability window on the given user by:
@@ -606,7 +626,8 @@ Data.emptyProfile = {
     authenticated: false,
     secondsTutored: 0,
     secondsPupiled: 0,
-    location: (window.app) ? window.app.location.name : 'Gunn Academic Center',
+    location: window.app ? window.app.location.name || '' : '',
+    locations: window.app ? [window.app.location.name] : [],
 };
 
 Data.gunnSchedule = {
