@@ -29,14 +29,20 @@ class Listener {
                     Utils.getTimeString(data.sentTimestamp) + ' for ' +
                     Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
                     Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
-                    data.for.time.from + '. Approve this clock in?';
+                    data.for.time.from + '. Approve this clock-in?';
                 new ConfirmationDialog(title, summary, async () => {
                     const [err, res] = await to(
                         Data.approveClockIn(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
-                        'approve clock in request.');
-                    window.app.snackbar.view('Approved clock in request.');
-                }, true).view();
+                        'approve clock-in request.');
+                    window.app.snackbar.view('Approved clock-in request.');
+                }, true, async () => {
+                    const [err, res] = await to(
+                        Data.rejectClockIn(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'reject clock-in request.');
+                    window.app.snackbar.view('Rejected clock-in request.');
+                }).view();
             },
         };
         const db = window.app.db.collection('users').doc(window.app.user.uid);
@@ -65,14 +71,20 @@ class Listener {
                     Utils.getTimeString(data.sentTimestamp) + ' for ' +
                     Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
                     Utils.getOther(data.sentBy, data.for.attendees).name +
-                    ' ending at ' + data.for.time.to + '. Approve this clock out?';
+                    ' ending at ' + data.for.time.to + '. Approve this clock-out?';
                 new ConfirmationDialog(title, summary, async () => {
                     const [err, res] = await to(
                         Data.approveClockOut(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
-                        'approve clock out request.');
-                    window.app.snackbar.view('Approved clock out request.');
-                }, true).view();
+                        'approve clock-out request.');
+                    window.app.snackbar.view('Approved clock-out request.');
+                }, true, async () => {
+                    const [err, res] = await to(
+                        Data.rejectClockOut(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'reject clock-out request.');
+                    window.app.snackbar.view('Rejected clock-out request.');
+                }).view();
             },
         };
         window.app.listeners.push(db.collection('clockOuts').onSnapshot({

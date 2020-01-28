@@ -295,9 +295,23 @@ class Data {
         });
     }
 
+    static rejectClockIn(clockIn, id) {
+        return Data.post('rejectClockIn', {
+            clockIn: clockIn,
+            id: id,
+        });
+    }
+
     static approveClockIn(clockIn, id) {
         return Data.post('approveClockIn', {
             clockIn: clockIn,
+            id: id,
+        });
+    }
+
+    static rejectClockOut(clockOut, id) {
+        return Data.post('rejectClockOut', {
+            clockOut: clockOut,
             id: id,
         });
     }

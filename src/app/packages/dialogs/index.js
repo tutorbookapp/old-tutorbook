@@ -505,11 +505,12 @@ class NotificationDialog {
 class ConfirmationDialog {
 
     // Renders the dialog with the given message and title
-    constructor(title, message, action, forceAction) {
+    constructor(title, message, action, forceAction, noAction) {
         this.forceAction = forceAction;
         this.title = title;
         this.message = message;
         this.action = action || window.app.nav.back;
+        this.noAction = noAction || window.app.nav.back;
         this.render = window.app.render;
         this.renderSelf();
     }
@@ -531,9 +532,7 @@ class ConfirmationDialog {
         }
         this.dialog.listen('MDCDialog:closed', (event) => {
             $(this.el).remove();
-            if (event.detail.action === 'yes') {
-                this.action();
-            }
+            event.detail.action === 'yes' ? this.action() : this.noAction();
         });
         this.dialog.open();
     }
