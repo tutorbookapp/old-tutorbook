@@ -1,6 +1,6 @@
 const Utils = require('utils');
 const PDFDocument = require('pdfkit');
-const PDFDocumentWithTables = require('./pdfkit-with-tables.js');
+const PdfPrinter = require('pdfmake');
 const cors = require('cors')({
     origin: true,
 });
@@ -146,7 +146,7 @@ const backupAsPDF = (req, res) => {
     });
 };
 
-const addUserServiceHours = async (d, doc, isTest) => {
+const addUserServiceHours = async (d, docDefinition, isTest) => {
     console.log('[DEBUG] Adding ' + d.data().name + ' (' + d.id + ')\'s ' +
         (isTest ? 'test' : 'live') + ' service hour data to PDF...');
     const db = isTest ? partitions.test : partitions.default;
@@ -155,29 +155,19 @@ const addUserServiceHours = async (d, doc, isTest) => {
     if (!appts.length) return console.warn('[WARNING] Did not fetch any ' +
         'pastAppts, skipping ' + d.data().name + ' (' + d.id + ')...');
     const table = {
-        headers: [
-            'Date',
-            'Clock-in',
-            'Pupil name',
-            'Subject',
-            'Clock-out',
-            'Duration',
-            'Initials',
-            'Verification',
-            'Total',
+        headerRows: 1,
+        style: 'serviceHoursTable',
+        widths: ['auto', 'auto', 'auto', '*', 'auto', 47, 'auto', 'auto', 47],
+        body: [
+            ['Date', 'Clock-in', 'Pupil name', 'Subject', 'Clock-out',
+                'Duration', 'Initials', 'Verify', 'Total',
+            ].map(t => {
+                return {
+                    text: t,
+                    style: 'cellHeader',
+                };
+            }),
         ],
-        cols: [
-            0.08, // Date
-            0.10, // Clock-in time
-            0.16, // Pupil name
-            0.17, // Subject
-            0.10, // Clock-out time
-            0.10, // Duration
-            0.08, // Pupil initials
-            0.11, // Supervisor initials
-            0.10, // Running total
-        ],
-        rows: [],
     };
     const pop = (arr) => {
         arr.pop();
@@ -198,30 +188,80 @@ const addUserServiceHours = async (d, doc, isTest) => {
             .get()).data();
         duration = Utils.getDurationStringFromDates(cIn, cOut);
         runningTotal = Utils.addDurationStrings(runningTotal, duration);
-        table.rows.push([
-            pop(cInSplit[0].split('/')).join('/'),
-            pop(cInSplit[1].split(' ')[0].split(':')).join(':') + ' ' + cIn
-            .toLocaleString('en-US', timezone).split(' ')[2],
-            a.for.fromUser.name,
-            a.for.subject,
-            pop(cOutSplit[1].split(' ')[0].split(':')).join(':') + ' ' + cOut
-            .toLocaleString('en-US', timezone).split(' ')[2],
-            duration,
-            a.for.fromUser.name.split(' ').map(n => n[0]).join('.') + '.',
-            supervisor.name.split(' ').map(n => n[0]).join('.') + '.',
-            runningTotal,
-        ]);
+        table.body.push([{
+            text: pop(cInSplit[0].split('/')).join('/'),
+            style: 'cell',
+            noWrap: true,
+        }, {
+            text: pop(cInSplit[1].split(' ')[0].split(':')).join(':') + ' ' +
+                cIn.toLocaleString('en-US', timezone).split(' ')[2],
+            style: 'cell',
+            noWrap: true,
+        }, {
+            text: a.for.fromUser.name,
+            style: 'cell',
+            noWrap: true,
+        }, {
+            text: a.for.subject,
+            style: 'cell',
+        }, {
+            text: pop(cOutSplit[1].split(' ')[0].split(':')).join(':') + ' ' +
+                cOut.toLocaleString('en-US', timezone).split(' ')[2],
+            style: 'cell',
+            noWrap: true,
+        }, {
+            text: duration,
+            style: 'cell',
+        }, {
+            text: a.for.fromUser.name.split(' ').map(n => n[0]).join('.') + '.',
+            style: 'cell',
+            noWrap: true,
+        }, {
+            text: supervisor.name.split(' ').map(n => n[0]).join('.') + '.',
+            style: 'cell',
+            noWrap: true,
+        }, {
+            text: runningTotal,
+            style: 'cell',
+        }]);
     }
-    doc.addPage({
-        margin: 24,
-    });
-    add(d.data().name, styles.h2, doc);
-    doc.table(table, {
-        prepareHeader: () => doc.font(styles.bold.font)
-            .fontSize(styles.bold.fontSize - 2),
-        prepareRow: (row, i) => doc.font(styles.para.font)
-            .fontSize(styles.para.fontSize - 2),
-        columnSpacing: 10,
+    const numOfSingleRowsPerHeaderPage = 23;
+    const numOfSingleRowsPerPage = 25;
+    const emptyCells = [];
+    for (var i = 0; i < 9; i++) {
+        emptyCells.push({
+            text: '',
+            style: 'emptyCell',
+        });
+    }
+    if (appts.length <= numOfSingleRowsPerHeaderPage) {
+        for (var count = 0; count < numOfSingleRowsPerHeaderPage -
+            appts.length; count++) {
+            table.body.push(emptyCells);
+        }
+    } else {
+        for (var count = 0; count < numOfSingleRowsPerPage -
+            (appts.length - numOfSingleRowsPerHeaderPage) %
+            numOfSingleRowsPerPage; count++) {
+            table.body.push(emptyCells);
+        }
+    }
+    docDefinition.content.push({
+        text: d.data().name + ' - Service Hours',
+        style: 'header',
+    }, {
+        text: [
+            'All of ' + d.data().name.split(' ')[0] + '\'s past appointments ' +
+            'as recorded on the Tutorbook web app. Go to ',
+            {
+                text: 'tutorbook.app',
+                bold: true,
+            },
+            ' to view, edit, or clock-in to any of these tutoring appointments.',
+        ],
+        style: 'subheader',
+    }, {
+        table: table,
     });
 };
 
@@ -244,25 +284,67 @@ const serviceHoursAsPDF = (req, res) => {
         if (!token.supervisor) return res.status(400).send('[ERROR] Given ' +
             'authentication token lacks supervisor custom auth.');
         const db = isTest ? partitions.test : partitions.default;
-        const doc = new PDFDocumentWithTables({
-            autoFirstPage: false,
-        });
-        doc.pipe(res);
-        Object.values(styles).forEach((style) => {
-            doc.registerFont(style.font, 'fonts/' + style.font + '.ttf');
-        });
+        const fonts = {
+            Roboto: {
+                normal: 'fonts/Roboto-Regular.ttf',
+                bold: 'fonts/Roboto-Bold.ttf',
+            },
+            Poppins: {
+                normal: 'fonts/Poppins-Regular.ttf',
+                bolditalics: 'fonts/Poppins-SemiBold.ttf', // Workaround
+                bold: 'fonts/Poppins-Bold.ttf',
+            },
+        };
+        const printer = new PdfPrinter(fonts);
+        const docDefinition = {
+            info: {
+                title: 'Tutorbook Service Hours Log',
+                author: 'Tutorbook',
+                subject: 'Community Service Hours Log',
+                creator: 'Tutorbook',
+                producer: 'Tutorbook',
+                keywords: 'Tutorbook App, Peer Tutoring, Community Service',
+            },
+            content: [],
+            styles: {
+                header: {
+                    font: 'Poppins',
+                    fontSize: 18,
+                    bold: true,
+                    margin: [0, 0, 0, 4],
+                },
+                subheader: {
+                    font: 'Poppins',
+                    fontSize: 12,
+                    margin: [0, 0, 0, 10],
+                },
+                emptyCell: {
+                    font: 'Poppins',
+                    margin: [0, 23.5, 0, 0],
+                },
+                cell: {
+                    font: 'Poppins',
+                    fontSize: 11,
+                    margin: [0, 4, 0, 4],
+                },
+                cellHeader: {
+                    font: 'Poppins',
+                    fontSize: 10,
+                    bold: true,
+                    italics: true,
+                    color: 'black',
+                },
+            },
+            pageSize: 'LETTER',
+            pageOrientation: 'portrait',
+            pageMargins: [20, 25, 20, 25],
+        };
         if (req.query.uid) {
             const user = await db.collection('users').doc(req.query.uid).get();
             if (!user.exists) return res.status(400).send('[ERROR] Requested ' +
                 'user (' + req.query.uid + ') did not exist.');
-            await addUserServiceHours(user, doc, isTest);
+            await addUserServiceHours(user, docDefinition, isTest);
         } else if (req.query.location) {
-            doc.addPage();
-            doc.image('img/text-logo-bg.png', 612 / 8, 792 / 3, {
-                width: 612 * 3 / 4,
-            });
-            doc.y += (792 / 3) + styles.h1.padding;
-            add(locationName.split(' ')[0] + ' Service Hours', styles.h1, doc);
             if (token.locations.indexOf(req.query.location) < 0) return res
                 .status(400).send('[ERROR] Token\'s locations did not contain' +
                     ' requested location.');
@@ -278,12 +360,14 @@ const serviceHoursAsPDF = (req, res) => {
                 .get()
             ).docs;
             for (user of users) {
-                await addUserServiceHours(user, doc, isTest);
+                await addUserServiceHours(user, docDefinition, isTest);
             }
         } else {
             return res.status(400).send('[ERROR] Request did not send a valid' +
                 ' location ID or user ID to export service hours for.');
         }
+        const doc = printer.createPdfKitDocument(docDefinition);
+        doc.pipe(res);
         return doc.end();
     });
 };
