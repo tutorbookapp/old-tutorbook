@@ -6,9 +6,21 @@ admin.initializeApp({
     databaseURL: 'https://tutorbook-779d8.firebaseio.com',
 });
 
+const db = admin.firestore().collection('partitions').doc('default');
 const auth = admin.auth();
 
-const addSupervisorAuth = (options) => {
+const addSupervisorAuth = async (options) => {
+    await Promise.all(options.locationIds.map(async (id) => {
+        const location = await db.collection('locations').doc(id).get();
+        if (location.exists && location.data().supervisors.indexOf(options
+                .uid) < 0) {
+            console.log('Adding uID (' + options.uid + ') to location ' +
+                'with supervisors:', location.data().supervisors);
+            return location.ref.update({
+                supervisors: [options.uid].concat(location.data().supervisors),
+            });
+        }
+    }));
     return auth.setCustomUserClaims(options.uid, {
         supervisor: true,
         parent: false,
@@ -30,26 +42,46 @@ const createUser = (user) => {
     return auth.createUser(user);
 };
 
-/*
- *createUser({
- *    email: 'dluu@pausd.org',
- *    emailVerified: false,
- *    displayName: 'Diane Luu',
- *    photoURL: 'https://www.google.com/s2/u/3/photos/private/AIbEiAIAAABECLz8h' +
- *        'ZH_ueKopwEiC3ZjYXJkX3Bob3RvKihlYzE4NGY3Y2ZiNTZmZDEwZDNkYjc5ZjkzMzgxM' +
- *        'mY2N2YxYzZiNzM4MAHmhhGklYzXpzQov7BVCWZ0YMtuqA?sz=40',
- *    disabled: false,
- *});
- */
-addSupervisorAuth({
-    uid: 'ON8HMcTZCodjBdMmZsRHT01C4242',
-    locationIds: [
-        'WfAGnrtG87CJsYRnOmwn',
-    ],
-});
-addSupervisorAuth({
-    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
-    locationIds: [
-        'NJp0Y6wyMh2fDdxSuRSx',
-    ],
-});
+const createAndAuth = async (user, locations) => {
+    try {
+        user = await createUser(user);
+    } catch (e) {
+        console.warn('Could not create ' + user.name + '\'s account b/c of', e);
+        user = await auth.getUserByEmail(user.email);
+    }
+    return addSupervisorAuth({
+        uid: user.uid,
+        locationIds: locations,
+    });
+};
+
+const createAndAuthMany = async (users, locations) => {
+    for (var user of users) {
+        await createAndAuth(user, locations);
+    }
+};
+
+createAndAuthMany([{
+    name: 'Molly Hawkinson',
+    email: 'mhawkinson@pausd.org',
+}, {
+    name: 'Amy Sheward',
+    email: 'asheward@pausd.org',
+}, {
+    name: 'Ander Lucia',
+    email: 'alucia@pausd.org',
+}, {
+    name: 'Sue Duffek',
+    email: 'sduffek@pausd.org',
+}, {
+    name: 'Ashley Lucey',
+    email: 'alucey@pausd.org',
+}, {
+    name: 'Diane Luu',
+    email: 'dluu@pausd.org',
+}, {
+    name: 'Samuel Franco Fewell',
+    email: 'sfrancofewell@pausd.org',
+}], [
+    'WfAGnrtG87CJsYRnOmwn',
+]);
