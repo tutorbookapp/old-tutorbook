@@ -1,5 +1,6 @@
 const Card = require('@tutorbook/card');
 const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
 const axios = require('axios');
 
 import $ from 'jquery';
