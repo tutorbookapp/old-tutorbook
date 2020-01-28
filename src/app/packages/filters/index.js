@@ -22,10 +22,11 @@ class FilterDialog {
             grade: 'Any',
             subject: 'Any',
             gender: 'Any',
+            showBooked: false,
             availability: {},
             location: window.app.location.name,
             price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
-            type: 'Any',
+            type: 'Tutor',
             sort: 'Rating'
         };
         this.render = window.app.render;

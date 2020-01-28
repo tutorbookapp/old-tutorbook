@@ -540,7 +540,7 @@ class Search {
                 'array-contains', {
                     open: from,
                     close: to,
-                    booked: this.filters.showBooked,
+                    booked: this.filters.showBooked || false,
                 }
             );
         }
