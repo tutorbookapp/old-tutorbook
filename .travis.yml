@@ -16,8 +16,8 @@ jobs:
   include:
   - stage: test
     before_install:
-    - openssl aes-256-cbc -K $encrypted_643ae61e7902_key -iv
-      $encrypted_643ae61e7902_iv -in firebase/functions/.runtimeconfig.json.enc
+    - openssl aes-256-cbc -K $encrypted_c7b1ade89059_key -iv
+      $encrypted_c7b1ade89059_iv -in firebase/functions/.runtimeconfig.json.enc
       -out firebase/functions/.runtimeconfig.json -d
     install:
     - npm install -g firebase-tools
