@@ -342,7 +342,6 @@ class Utils {
             }
         });
         return result;
-
     }
 
     static getOtherUser(userA, userB) {
