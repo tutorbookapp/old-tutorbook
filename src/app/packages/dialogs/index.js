@@ -245,13 +245,14 @@ class EditAvailabilityDialog {
             s.listen('MDCSelect:change', () => {
                 action(s);
             });
+            return s;
         };
 
         function a(q, action) { // Attaches select and adds listener
-            listen(s(q), action);
+            return listen(s(q), action);
         };
 
-        a('#Location', (s) => {
+        this.locationSelect = a('#Location', (s) => {
             if (s.value === 'Custom') {
                 $(this.main).find('#Location').replaceWith(
                     this.render.locationInput((val) => {
@@ -263,11 +264,11 @@ class EditAvailabilityDialog {
                 this.refreshDaysAndTimes();
             }
         });
-        a('#Day', (s) => {
+        this.daySelect = a('#Day', (s) => {
             this.val.day = s.value;
             this.refreshTimes();
         });
-        a('#Time', (s) => {
+        this.timeslotSelect = a('#Time', (s) => {
             if (s.value.split(' to ').length > 1) {
                 this.val.fromTime = s.value.split(' to ')[0];
                 this.val.toTime = s.value.split(' to ')[1];
@@ -278,6 +279,31 @@ class EditAvailabilityDialog {
             this.val.time = s.value;
         });
 
+        function invalid(select) {
+            select.required = true;
+            select.valid = false;
+        };
+
+        function validTime(time) {
+            var valid = true;
+            if (time.location === '') {
+                invalid(that.locationSelect);
+                valid = false;
+            }
+            if (time.day === '') {
+                invalid(that.daySelect);
+                valid = false;
+            }
+            if (time.toTime === '' || time.fromTime === '') {
+                invalid(that.timeslotSelect);
+                valid = false;
+            }
+            return valid;
+        };
+
+        $(this.main).find('#ok-button').click(() => {
+            if (validTime(this.val)) this.dialog.close('ok');
+        });
         this.dialog.listen('MDCDialog:closing', (event) => {
             if (event.detail.action === 'ok') {
                 $(this.input).find('input')
@@ -346,15 +372,17 @@ class EditAvailabilityDialog {
             s.listen('MDCSelect:change', () => {
                 action(s);
             });
+            return s;
         };
 
         function a(q, action) { // Attaches select and adds listener
-            listen(s(q), action);
+            return listen(s(q), action);
         };
 
-        function r(q, el, action) { // Replaces select and adds listener
+        function r(q, el, action, id = 'timeslotSelect') { // Replaces select, 
+            // adds listener, and stores select for validation purposes.
             $(that.main).find(q).replaceWith(el);
-            a(q, action);
+            that[id] = a(q, action);
         };
 
         r(
@@ -412,15 +440,16 @@ class EditAvailabilityDialog {
             s.listen('MDCSelect:change', () => {
                 action(s);
             });
+            return s;
         };
 
         function a(q, action) { // Attaches select and adds listener
-            listen(s(q), action);
+            return listen(s(q), action);
         };
 
-        function r(q, el, action) { // Replaces select and adds listener
+        function r(q, el, action, id) { // Replaces select and adds listener
             $(that.main).find(q).replaceWith(el);
-            a(q, action);
+            that[id] = a(q, action);
         };
 
         r(
@@ -429,7 +458,8 @@ class EditAvailabilityDialog {
             (s) => {
                 that.val.day = s.value;
                 that.refreshTimes();
-            }
+            },
+            'daySelect',
         );
         r(
             '#Time',
@@ -443,7 +473,8 @@ class EditAvailabilityDialog {
                     that.val.toTime = s.value;
                 }
                 that.val.time = s.value;
-            }
+            },
+            'timeslotSelect',
         );
     }
 
@@ -451,6 +482,8 @@ class EditAvailabilityDialog {
         this.main = this.render.template('dialog-form', {
             title: 'Edit Availability'
         });
+        $(this.main).find('[data-mdc-dialog-action="ok"]').removeAttr('data-' +
+            'mdc-dialog-action');
         const content = this.render.template('input-wrapper');
         const v = this.val;
         const d = this.data;
