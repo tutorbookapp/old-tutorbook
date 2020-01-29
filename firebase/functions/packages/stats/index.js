@@ -160,13 +160,13 @@ const dataAction = {
     modifyPastAppt: async (user, data, res, isTest) => {
         const a = data.appt;
         const r = a.for;
+        const dateString = new Date(a.clockIn.sentTimestamp).toDateString();
         const stat = {
             title: 'Modified Past Appointment',
             subtitle: user.name.split(' ')[0] + ' modified a past appointment',
             summary: r.fromUser.name + '\'s past appointment for ' +
-                a.for.subject + ' with ' + r.toUser.name + ' on ' +
-                a.clockIn.sentTimestamp.toDate().toDateString() + ' was ' +
-                'modified by ' + user.name + '.',
+                a.for.subject + ' with ' + r.toUser.name + ' on ' + dateString +
+                ' was modified by ' + user.name + '.',
             timestamp: new Date(),
         };
         return createStat(user, stat, isTest);

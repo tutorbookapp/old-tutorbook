@@ -831,13 +831,30 @@ class Data {
 
     static async modifyPastAppt(apptData, id) {
         const db = global.db;
-        console.log('[DEBUG] Past appointment data before trimming:', apptData);
-        console.log('[DEBUG] Past appointment attendees before trimming:',
-            apptData.attendees);
+        ['clockIn', 'clockOut'].forEach(key => {
+            if (typeof apptData[key].sentTimestamp === 'object') {
+                apptData[key].sentTimestamp = new admin.firestore.Timestamp(
+                    apptData[key].sentTimestamp._seconds,
+                    apptData[key].sentTimestamp._nanoseconds,
+                ).toDate();
+            } else {
+                apptData[key].sentTimestamp = new Date(apptData[key]
+                    .sentTimestamp);
+            }
+        });
         apptData = Data.trimObject(apptData);
-        console.log('[DEBUG] Past appointment data after trimming:', apptData);
-        console.log('[DEBUG] Past appointment attendees after trimming:',
-            apptData.attendees);
+        console.log('[DEBUG] Trimmed past appointment clockIn sentTimestamp:',
+            apptData.clockIn.sentTimestamp);
+        console.log('[DEBUG] Is the clockIn a Date() object? ' +
+            (apptData.clockIn.sentTimestamp.getTime ? 'Yes' : 'No'));
+        console.log('[DEBUG] Is the clockIn a Timestamp() object? ' +
+            (apptData.clockIn.sentTimestamp.toDate ? 'Yes' : 'No'));
+        console.log('[DEBUG] Trimmed past appointment clockOut sentTimestamp:',
+            apptData.clockOut.sentTimestamp);
+        console.log('[DEBUG] Is the clockOut a Date() object? ' +
+            (apptData.clockOut.sentTimestamp.getTime ? 'Yes' : 'No'));
+        console.log('[DEBUG] Is the clockOut a Timestamp() object? ' +
+            (apptData.clockOut.sentTimestamp.toDate ? 'Yes' : 'No'));
         const appts = [
             db.collection('users').doc(apptData.attendees[0].uid)
             .collection('pastAppointments')
@@ -1101,7 +1118,7 @@ class Data {
                     result[entry[0]] = entry[1].trim();
                     break;
                 case 'object': // Yay recursion!
-                    if (!entry[1].getTime) {
+                    if (!entry[1].getTime && !entry[1].toDate) {
                         result[entry[0]] = Data.trimObject(entry[1]);
                     } else { // It's a timestamp (don't try to trim it)
                         result[entry[0]] = entry[1];

@@ -563,7 +563,7 @@ class ConfirmationDialog {
         this.title = title;
         this.message = message;
         this.action = action || window.app.nav.back;
-        this.noAction = noAction || window.app.nav.back;
+        this.noAction = noAction || function() {};
         this.render = window.app.render;
         this.renderSelf();
     }
@@ -1593,9 +1593,7 @@ class ViewPastApptDialog extends ViewApptDialog {
     manage() {
         super.manage();
         const parse = (val) => {
-            console.log('[DEBUG] Parsing (' + val + ')...');
             const split = val.split(':');
-            console.log('[DEBUG] Split (' + val + '):', split);
             return {
                 hrs: new Number(split[0]),
                 mins: new Number(split[1]),
@@ -1604,13 +1602,11 @@ class ViewPastApptDialog extends ViewApptDialog {
             };
         };
         const valid = (val) => {
-            console.log('[DEBUG] Validating (' + val + ')...');
             const parsed = parse(val);
             if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
-            if (!(0 < parsed.mins < 60)) return false;
-            if (!(0 < parsed.secs < 60)) return false;
-            if (!(0 < parsed.hrs <= 12)) return false;
-            console.log('[DEBUG] Parsed value was valid:', parsed);
+            if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
+            if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
+            if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
             return true;
         };
         const update = (val, date) => {
@@ -1620,33 +1616,38 @@ class ViewPastApptDialog extends ViewApptDialog {
             date.setMinutes(parsed.mins);
             date.setSeconds(parsed.secs);
         };
-        const edit = async (id, date) => {
-            const t = this.textFields['Clock-in'];
+        const editClockingTime = async (id) => {
+            if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
+                .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();
+            if (this.appt.clockOut.sentTimestamp.toDate) this.appt.clockOut
+                .sentTimestamp = this.appt.clockOut.sentTimestamp.toDate();
+            const date = id === 'Clock-in' ? this.appt.clockIn.sentTimestamp :
+                this.appt.clockOut.sentTimestamp;
+            const t = this.textFields[id];
             const v = t.value;
-            if (!valid(v)) return t.valid = false;
+            if (!valid(v)) return setTimeout(() => t.valid = false, 50);
             update(v, date);
             window.app.snackbar.view('Updating past appointment...');
-            const [err, res] = await to(Data.modifyPastAppt({
-                appt: this.appt,
-                id: this.id,
-            }));
+            $(this.main).find('[id="Time clocked"] input').val(
+                Utils.getDurationStringFromDates(
+                    this.appt.clockIn.sentTimestamp,
+                    this.appt.clockOut.sentTimestamp,
+                ));
+            const [err, res] = await to(Data.modifyPastAppt(this.appt,
+                this.id));
             if (err) return window.app.snackbar.view('Could not update past ' +
                 'appointment.');
             window.app.snackbar.view('Updated past appointment.');
         };
         $(this.main).find('[id="Clock-in"] input').removeAttr('disabled')
             .focusout(async () => {
-                if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
-                    .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();
-                edit('Clock-in', this.appt.clockIn.sentTimestamp);
+                editClockingTime('Clock-in', this.appt.clockIn.sentTimestamp);
             }).end()
             .find('[id="Clock-out"] input').removeAttr('disabled')
             .focusout(async () => {
-                if (this.appt.clockOut.sentTimestamp.toDate) this.appt.clockOut
-                    .sentTimestamp = this.appt.clockOut.sentTimestamp.toDate();
-                edit('Clock-out', this.appt.clockOut.sentTimestamp);
+                editClockingTime('Clock-out', this.appt.clockOut.sentTimestamp);
             }).end()
-            .find('[id="Time clocked"] input').removeAttr('disabled')
+            .find('[id="Time clocked"] input') // TODO: Add duration editing.
             .focusout(async () => {
                 console.log('[TODO] Add duration editing data handling.');
             });

@@ -44,9 +44,10 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1';
         this.location = {
-            name: 'Any',
+            name: 'Gunn Academic Center',
+            id: 'NJp0Y6wyMh2fDdxSuRSx',
         };
-        this.test = false;
+        this.test = true;
         this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
             'ns.net/';
