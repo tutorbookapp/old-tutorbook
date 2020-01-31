@@ -903,6 +903,7 @@ class EditRequestDialog {
                 request.time.to = timeslotSelect.value;
             }
             if (that.valid) that.updateAmount();
+            if (that.updateClockingTimes) that.updateClockingTimes();
         });
 
         // FOR
@@ -949,9 +950,11 @@ class EditRequestDialog {
         if (timeslots.length === 1 && timeslots[0].indexOf(' to ') > 0) {
             request.time.from = timeslots[0].split(' to ')[0];
             request.time.to = timeslots[0].split(' to ')[1];
+            if (this.updateClockingTimes) this.updateClockingTimes();
         } else if (timeslots.length === 1) {
             request.time.from = timeslots[0];
             request.time.to = timeslots[0];
+            if (this.updateClockingTimes) this.updateClockingTimes();
         }
 
         // If there are only no options, make sure to tell the user so they don't
@@ -978,6 +981,7 @@ class EditRequestDialog {
                 request.time.to = timeslotSelect.value;
             }
             if (that.valid) that.updateAmount();
+            if (that.updateClockingTimes) that.updateClockingTimes();
         });
 
         const dayEl = this.render.select('Day', request.time.day || '', days);
@@ -1014,9 +1018,11 @@ class EditRequestDialog {
         if (timeslots.length === 1 && timeslots[0].indexOf(' to ') > 0) {
             request.time.from = timeslots[0].split(' to ')[0];
             request.time.to = timeslots[0].split(' to ')[1];
+            if (this.updateClockingTimes) this.updateClockingTimes();
         } else if (timeslots.length === 1) {
             request.time.from = timeslots[0];
             request.time.to = timeslots[0];
+            if (this.updateClockingTimes) this.updateClockingTimes();
         }
 
         // If there are only no options, make sure to tell the user so they don't
@@ -1042,6 +1048,7 @@ class EditRequestDialog {
                 request.time.to = timeslotSelect.value;
             }
             if (that.valid) that.updateAmount();
+            if (that.updateClockingTimes) that.updateClockingTimes();
         });
         this.req = this.req.filter(r => r.id !== 'Time');
         this.req.push({
@@ -1634,6 +1641,10 @@ class NewPastApptDialog extends EditApptDialog {
             $(el).find('button').remove();
             el.addEventListener('click', () => {
                 this.request[type === 'Tutor' ? 'toUser' : 'fromUser'] = user;
+                this.appt.attendees = [
+                    Utils.cloneMap(this.request.toUser),
+                    Utils.cloneMap(this.request.fromUser),
+                ];
                 $(this.main).find('#' + type).find('input').val(user.name);
                 this.refreshData();
                 window.setTimeout(() => {
@@ -1706,24 +1717,81 @@ class NewPastApptDialog extends EditApptDialog {
         const addS = (l, v = '', d = []) => {
             add(this.render.selectItem(l, v, Utils.concatArr([v], d)));
         };
-        const addT = (label, val = '') => {
-            add(this.render.textFieldItem(label, val));
+        const t = (label, val = new Date().toLocaleTimeString()) => {
+            return this.render.textField(label, val);
         };
 
         addD('Attendees');
         addST('Tutor', '', searchTutors);
         addST('Pupil', '', searchPupils);
-        addD('Clocked');
-        addT('Clock-in', new Date().toLocaleTimeString());
-        addT('Clock-out', new Date().toLocaleTimeString());
-        addT('Time clocked', '00:00:00.00');
         addD('At');
         addS('Location');
         addS('Day');
         addS('Time');
+        add(this.render.splitListItem(
+            t('Date', new Date().toLocaleDateString()),
+            t('Clock-in'),
+            t('Clock-out'),
+        ));
+        add(this.render.textFieldItem('Time clocked', '00:00:00.00'));
         addD('For');
         addS('Subject');
         add(this.render.textAreaItem('Message', ''));
+    }
+
+    // TODO: Refactor this code and get rid of repetitive helper function 
+    // definitions (e.g. move them to more detailed names under utils).
+    updateClockingTimes() {
+        const timestring = (str) => {
+            const split = str.split(' ');
+            split[0] += ':00';
+            return split.join(' ');
+        };
+        const parse = (val) => {
+            const split = val.split(':');
+            return {
+                hrs: new Number(split[0]),
+                mins: new Number(split[1]),
+                secs: new Number(split[2].split(' ')[0]),
+                ampm: val.split(' ')[1],
+            };
+        };
+        const valid = (val) => {
+            try {
+                const parsed = parse(val);
+                if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
+                if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
+                if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
+                if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
+                return true;
+            } catch (e) {
+                return false;
+            }
+        };
+        const update = (val, date) => {
+            const parsed = parse(val);
+            const hrs = parsed.ampm === 'PM' ? parsed.hrs + 12 : parsed.hrs;
+            date.setHours(hrs);
+            date.setMinutes(parsed.mins);
+            date.setSeconds(parsed.secs);
+        };
+        const editTime = async (t) => {
+            const request = t.root_.id === 'Clock-in' ? this.appt.clockIn : this
+                .appt.clockOut;
+            if (!valid(t.value)) return setTimeout(() => t.valid = false, 50);
+            update(t.value, request.sentTimestamp);
+            update(t.value, request.approvedTimestamp);
+            $(this.main).find('[id="Time clocked"] input').val(
+                Utils.getDurationStringFromDates(
+                    this.appt.clockIn.sentTimestamp,
+                    this.appt.clockOut.sentTimestamp,
+                ));
+        };
+
+        this.clockInTextField.value = timestring(this.request.time.from);
+        this.clockOutTextField.value = timestring(this.request.time.to);
+        editTime(this.clockInTextField);
+        editTime(this.clockOutTextField);
     }
 
     refreshData() {
@@ -1780,12 +1848,16 @@ class NewPastApptDialog extends EditApptDialog {
 
         this.req = this.req.filter(r => ['Location', 'Subject']
             .indexOf(r.id) < 0);
-        [this.locationSelect, this.subjectSelect].forEach(input => {
-            this.req.push({
-                input: input,
-                id: input.root_.id,
-                valid: () => input.value !== '',
-            });
+        this.req.push({
+            input: this.subjectSelect,
+            id: 'Subject',
+            valid: () => this.subjectSelect.value !== '',
+        });
+        this.req.push({
+            input: this.locationSelect,
+            id: 'Location',
+            valid: () => window.app.data.locationsByName[this.locationSelect
+                .value],
         });
         this.refreshDayAndTimeSelects(this.request, this.availability);
     }
@@ -1818,12 +1890,16 @@ class NewPastApptDialog extends EditApptDialog {
             };
         };
         const valid = (val) => {
-            const parsed = parse(val);
-            if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
-            if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
-            if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
-            if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
-            return true;
+            try {
+                const parsed = parse(val);
+                if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
+                if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
+                if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
+                if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
+                return true;
+            } catch (e) {
+                return false;
+            }
         };
         const update = (val, date) => {
             const parsed = parse(val);
@@ -1832,28 +1908,29 @@ class NewPastApptDialog extends EditApptDialog {
             date.setMinutes(parsed.mins);
             date.setSeconds(parsed.secs);
         };
-        const editClockingTime = async (id) => {
-            if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
-                .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();
-            if (this.appt.clockOut.sentTimestamp.toDate) this.appt.clockOut
-                .sentTimestamp = this.appt.clockOut.sentTimestamp.toDate();
-            const date = id === 'Clock-in' ? this.appt.clockIn.sentTimestamp :
-                this.appt.clockOut.sentTimestamp;
-            const t = this.textFields[id];
-            const v = t.value;
-            if (!valid(v)) return setTimeout(() => t.valid = false, 50);
-            update(v, date);
-            window.app.snackbar.view('Updating past appointment...');
+        const editTime = async (t) => {
+            const request = t.root_.id === 'Clock-in' ? this.appt.clockIn : this
+                .appt.clockOut;
+            if (!valid(t.value)) return setTimeout(() => t.valid = false, 50);
+            update(t.value, request.sentTimestamp);
+            update(t.value, request.approvedTimestamp);
             $(this.main).find('[id="Time clocked"] input').val(
                 Utils.getDurationStringFromDates(
                     this.appt.clockIn.sentTimestamp,
                     this.appt.clockOut.sentTimestamp,
                 ));
-            const [err, res] = await to(Data.modifyPastAppt(this.appt,
-                this.id));
-            if (err) return window.app.snackbar.view('Could not update past ' +
-                'appointment.');
-            window.app.snackbar.view('Updated past appointment.');
+        };
+        const editDate = (t) => {
+            const newDate = new Date(t.value);
+            if (newDate.toString() === 'Invalid Date')
+                return setTimeout(() => t.valid = false, 50);
+            [this.appt.clockIn, this.appt.clockOut].forEach(oldDate => {
+                ['sentTimestamp', 'approvedTimestamp'].forEach(key => {
+                    oldDate[key].setDate(newDate.getDate());
+                    oldDate[key].setFullYear(newDate.getFullYear());
+                    oldDate[key].setMonth(newDate.getMonth());
+                });
+            });
         };
 
         this.managed = true;
@@ -1864,8 +1941,18 @@ class NewPastApptDialog extends EditApptDialog {
             MDCRipple.attachTo(this);
         });
 
-        this.tutorTextField = t('#Tutor', () => {});
-        this.pupilTextField = t('#Pupil', () => {});
+        // TODO: Why do we have to set a timeout for all of this invalidation?
+        // TODO: Find a better way to workaround the fact that when the user 
+        // clicks on a result the text field unfocuses and causes it to be 
+        // marked as invalid (as the result clicker hasn't updated our data).
+        this.tutorTextField = t('#Tutor', t => setTimeout(() => {
+            if (!Object.keys(this.request.toUser).length)
+                setTimeout(() => t.valid = false, 50);
+        }, 500));
+        this.pupilTextField = t('#Pupil', t => setTimeout(() => {
+            if (!Object.keys(this.request.fromUser).length)
+                setTimeout(() => t.valid = false, 50);
+        }, 500));
         this.locationSelect = a('#Location', (s) => {
             const locationIDs = window.app.data.locationsByName;
             if (!locationIDs[s.value]) return s.valid = false;
@@ -1887,26 +1974,54 @@ class NewPastApptDialog extends EditApptDialog {
                 this.request.time.from = s.value;
                 this.request.time.to = s.value;
             }
-            this.request.time = s.value;
+            this.updateClockingTimes();
         });
         this.subjectSelect = a('#Subject', s => this.request.subject = s.value);
         this.messageTextField = t('#Message', t => this.request.message = t
             .value, 'textarea');
-        this.clockInTextField = t('[id="Clock-in"]', t =>
-            editClockingTime('Clock-in', this.appt.clockIn.sentTimestamp));
-        this.clockOutTextField = t('[id="Clock-out"]', t =>
-            editClockingTime('Clock-out', this.appt.clockOut.sentTimestamp));
+        this.dateTextField = t('#Date', t => editDate(t));
+        this.clockInTextField = t('[id="Clock-in"]', t => editTime(t));
+        this.clockOutTextField = t('[id="Clock-out"]', t => editTime(t));
         this.durationTextField = t('[id="Time clocked"]', t => {});
+        $(this.main).find('[id="Time clocked"] input').attr('disabled', true);
 
         [
-            this.tutorTextField, this.pupilTextField, this.locationSelect,
-            this.subjectSelect, this.daySelect, this.timeslotSelect,
-            this.clockInTextField, this.clockOutTextField,
+            this.tutorTextField, this.pupilTextField, this.subjectSelect,
+            this.daySelect, this.timeslotSelect,
         ].forEach(input => {
             this.req.push({
                 input: input,
                 id: input.root_.id,
                 valid: () => input.value !== '',
+            });
+        });
+        this.req.push({
+            input: this.locationSelect,
+            id: 'Location',
+            valid: () => window.app.data.locationsByName[this.locationSelect
+                .value],
+        });
+        this.req.push({
+            input: this.dateTextField,
+            id: 'Date',
+            valid: () => new Date(this.dateTextField.value).toString() !==
+                'Invalid Date',
+        });
+        this.req.push({
+            input: this.tutorTextField,
+            id: 'Tutor',
+            valid: () => Object.keys(this.request.toUser).length,
+        });
+        this.req.push({
+            input: this.pupilTextField,
+            id: 'Pupil',
+            valid: () => Object.keys(this.request.fromUser).length,
+        });
+        [this.clockInTextField, this.clockOutTextField].forEach(input => {
+            this.req.push({
+                input: input,
+                id: input.root_.id,
+                valid: () => valid(input.value),
             });
         });
     }
@@ -1958,12 +2073,16 @@ class ViewPastApptDialog extends ViewApptDialog {
             };
         };
         const valid = (val) => {
-            const parsed = parse(val);
-            if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
-            if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
-            if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
-            if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
-            return true;
+            try {
+                const parsed = parse(val);
+                if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
+                if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
+                if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
+                if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
+                return true;
+            } catch (e) {
+                return false;
+            }
         };
         const update = (val, date) => {
             const parsed = parse(val);
@@ -1972,6 +2091,8 @@ class ViewPastApptDialog extends ViewApptDialog {
             date.setMinutes(parsed.mins);
             date.setSeconds(parsed.secs);
         };
+        // TODO: Right now we only change the sentTimestamp. We want to change
+        // the sentTimestamp and the approvedTimestamp relative to each other.
         const editClockingTime = async (id) => {
             if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
                 .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();

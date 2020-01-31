@@ -193,14 +193,13 @@ class Render {
         };
     }
 
-    splitListItem(inputA, inputB) {
-        const listItem = this.template('input-list-item');
-        inputB.setAttribute('style', 'width:50% !important;');
-        inputA.setAttribute('style', 'width:50% !important; ' +
-            'margin-right:20px !important;');
-        listItem.append(inputA);
-        listItem.append(inputB);
-        return listItem;
+    splitListItem(inputA, inputB, inputC) {
+        $(inputA).css('margin-right', '20px');
+        if (inputC) $(inputB).css('margin-right', '20px');
+        return $(this.template('input-list-item'))
+            .append(inputA)
+            .append(inputB)
+            .append(inputC)[0];
     }
 
     actionDivider(text, actions) {

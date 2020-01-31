@@ -15,6 +15,7 @@ const Card = require('@tutorbook/card');
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
+const NewPastApptDialog = require('@tutorbook/dialogs').newPastAppt;
 const ApptNotificationDialog = require('@tutorbook/dialogs').notifyAppt;
 
 const Appt = require('@tutorbook/schedule-items').appt;
@@ -309,6 +310,18 @@ class SupervisorSchedule extends Schedule {
             },
         });
         this.header = this.search.el;
+        $(this.main).append(this.render.template('fab-labeled', {
+            id: 'new-past-appt-btn',
+            icon: 'add',
+            label: 'Record',
+        }));
+    }
+
+    manage() {
+        super.manage();
+        const btn = $(this.main).find('#new-past-appt-btn')[0];
+        btn.addEventListener('click', () => new NewPastApptDialog().view());
+        MDCRipple.attachTo(btn);
     }
 
     view() {

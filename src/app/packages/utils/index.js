@@ -888,19 +888,26 @@ class Utils {
     }
 
     static combineAvailability(availA, availB) {
+        const concatTimeslots = (slotsA, slotsB) => {
+            slotsA.forEach(slot => {
+                if (slotsB.findIndex(t => t.open === slot.open && t.close ===
+                        slot.close) < 0) slotsB.push(slot);
+            });
+            return slotsB;
+        };
         const combined = {};
         for (var l in availA) { // Location
             if (!combined[l]) combined[l] = {};
             for (var d in availA[l]) { // Day
                 if (!combined[l][d]) combined[l][d] = []; // Timeslots
-                combined[l][d] = Utils.concatArr(combined[l][d], availA[l][d]);
+                combined[l][d] = concatTimeslots(combined[l][d], availA[l][d]);
             }
         }
         for (var l in availB) { // Location
             if (!combined[l]) combined[l] = {};
             for (var d in availB[l]) { // Day
                 if (!combined[l][d]) combined[l][d] = []; // Timeslots
-                combined[l][d] = Utils.concatArr(combined[l][d], availB[l][d]);
+                combined[l][d] = concatTimeslots(combined[l][d], availB[l][d]);
             }
         }
         return combined;
