@@ -143,6 +143,7 @@ class Data {
         return bookedAvailability;
     }
 
+    // TODO: Make this dynamically configurable in each location's document.
     static get grades() {
         const highSchool = ['Senior', 'Junior', 'Sophomore', 'Freshman'];
         const middleSchool = ['8th Grade', '7th Grade', '6th Grade'];
@@ -158,6 +159,8 @@ class Data {
             case 'Gunn':
                 return highSchool;
             case 'Paly':
+                return highSchool;
+            case 'Woodside':
                 return highSchool;
             case 'JLS':
                 return middleSchool;
