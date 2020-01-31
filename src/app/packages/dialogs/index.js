@@ -20,6 +20,8 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const algolia = require('algoliasearch')
+    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
@@ -299,6 +301,9 @@ class EditAvailabilityDialog {
         });
     }
 
+    // TODO: What are the MDC guidelines for styling inputs as invalid? Should
+    // we only style when the user tries to submit the form? Or as the user is
+    // filling out the form?
     get valid() {
 
         function invalid(select) {
@@ -823,6 +828,9 @@ class EditRequestDialog {
         this.user = user;
     }
 
+    // TODO: What are the MDC guidelines for styling inputs as invalid? Should
+    // we only style when the user tries to submit the form? Or as the user is
+    // filling out the form?
     get valid() {
         var valid = true;
         this.req.forEach((req) => {
@@ -1050,7 +1058,7 @@ class NewRequestDialog extends EditRequestDialog {
 
     // Creates editRequestDialog based on the given subject and toUser
     constructor(subject, user) {
-        const utils = new Utils();
+        const utils = window.app.utils || new Utils();
         const request = {
             'subject': subject,
             'fromUser': window.app.conciseUser,
@@ -1419,8 +1427,8 @@ class ViewApptDialog extends ViewRequestDialog {
                 reset();
                 return window.app.snackbar.view('Could not clock-in.');
             }
-            window.app.snackbar.view('Clocked in at ' + new Date(r.data
-                .clockIn.sentTimestamp).toLocaleTimeString() + '.');
+            window.app.snackbar.view('Clocked in at ' + new Date(r.clockIn
+                .sentTimestamp).toLocaleTimeString() + '.');
         } else {
             window.app.snackbar.view('Sending request...');
             const [err, res] = await to(Data.clockIn(this.appt, this.id));
@@ -1451,8 +1459,8 @@ class ViewApptDialog extends ViewRequestDialog {
                 reset();
                 return window.app.snackbar.view('Could not clock-out.');
             }
-            window.app.snackbar.view('Clocked out at ' + new Date(r.data
-                .clockOut.sentTimestamp).toLocaleTimeString() + '.');
+            window.app.snackbar.view('Clocked out at ' + new Date(r.clockOut
+                .sentTimestamp).toLocaleTimeString() + '.');
         } else {
             window.app.snackbar.view('Sending request...');
             const [err, res] = await to(Data.clockOut(this.appt, this.id));
@@ -1553,6 +1561,354 @@ class EditApptDialog extends EditRequestDialog {
         if (err) return window.app.snackbar.view('Could not modify ' +
             'appointment.');
         window.app.snackbar.view('Modified appointment.');
+    }
+};
+
+class NewPastApptDialog extends EditApptDialog {
+    constructor() {
+        const utils = window.app.utils || new Utils();
+        const appt = {
+            attendees: [],
+            for: {
+                subject: '',
+                fromUser: {},
+                toUser: {},
+                timestamp: new Date(),
+                location: {},
+                message: '',
+                time: {
+                    day: '',
+                    from: '',
+                    to: '',
+                },
+                payment: {
+                    type: 'Free',
+                    method: 'PayPal',
+                    amount: 0,
+                },
+            },
+            time: {
+                day: '',
+                from: '',
+                to: '',
+            },
+            clockIn: {
+                sentBy: window.app.conciseUser,
+                sentTimestamp: new Date(),
+                approvedBy: window.app.conciseUser,
+                approvedTimestamp: new Date(),
+            },
+            clockOut: {
+                sentBy: window.app.conciseUser,
+                sentTimestamp: new Date(),
+                approvedBy: window.app.conciseUser,
+                approvedTimestamp: new Date(),
+            },
+            location: {},
+            timestamp: new Date(),
+        };
+        super(appt, Utils.genID());
+        window.newPastApptDialog = this;
+    }
+
+    renderSelf() {
+        this.header = this.render.header('header-action', {
+            title: 'New Record',
+            ok: async () => {
+                if (!this.valid) return;
+                this.appt.time = Utils.cloneMap(this.request.time);
+                this.appt.location = Utils.cloneMap(this.request.location);
+                window.app.nav.back();
+                window.app.snackbar.view('Creating past appointment...');
+                const [err, res] = await to(Data.newPastAppt(this.appt));
+                if (err) return window.app.snackbar.view('Could not create ' +
+                    'past appointment.');
+                window.app.snackbar.view('Created past appointment.');
+            },
+        });
+        this.main = this.render.template('dialog-input');
+
+        const renderHit = (hit, type) => {
+            const user = Utils.filterProfile(hit);
+            const el = window.app.renderHit(hit, this.render).cloneNode(true);
+            $(el).find('button').remove();
+            el.addEventListener('click', () => {
+                this.request[type === 'Tutor' ? 'toUser' : 'fromUser'] = user;
+                $(this.main).find('#' + type).find('input').val(user.name);
+                this.refreshData();
+                window.setTimeout(() => {
+                    const opp = type === 'Tutor' ? 'Pupil' : 'Location';
+                    $(this.main).find('#' + opp + ' input').click();
+                    if (opp !== 'Location') this[opp.toLowerCase() +
+                        'TextField'].focus();
+                }, 50);
+            });
+            return el;
+        };
+        const index = algolia.initIndex('users');
+        const searchPupils = async (textFieldItem) => {
+            const query = $(textFieldItem).find('.search-box input').val();
+            const res = await index.search({
+                query: query,
+                facetFilters: window.app.location.name !==
+                    'Any' ? [ // TODO: Add type facetFilter here.
+                        'payments.type:Free',
+                        'location:' + window.app.location.name,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
+            });
+            $(textFieldItem).find('#results').empty();
+            res.hits.forEach((hit) => {
+                try {
+                    $(textFieldItem).find('#results').append(
+                        renderHit(hit, 'Pupil'));
+                } catch (e) {
+                    console.warn('[ERROR] Could not render hit (' +
+                        hit.objectID + ') b/c of', e);
+                }
+            });
+        };
+        const searchTutors = async (textFieldItem) => {
+            const query = $(textFieldItem).find('.search-box input').val();
+            const res = await index.search({
+                query: query,
+                facetFilters: window.app.location.name !==
+                    'Any' ? [ // TODO: Add type facetFilter here.
+                        'payments.type:Free',
+                        'location:' + window.app.location.name,
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ] : [
+                        'partition:' + (window.app.test ? 'test' : 'default'),
+                    ],
+            });
+            $(textFieldItem).find('#results').empty();
+            res.hits.forEach((hit) => {
+                try {
+                    $(textFieldItem).find('#results').append(
+                        renderHit(hit, 'Tutor'));
+                } catch (e) {
+                    console.warn('[ERROR] Could not render hit (' +
+                        hit.objectID + ') b/c of', e);
+                }
+            });
+        };
+        const add = (e) => {
+            this.main.appendChild(e);
+        };
+        const addD = (label) => {
+            add(this.render.listDivider(label));
+        };
+        const addST = (label, val, search) => {
+            add(this.render.searchTextFieldItem(label, val, search));
+        };
+        const addS = (l, v = '', d = []) => {
+            add(this.render.selectItem(l, v, Utils.concatArr([v], d)));
+        };
+        const addT = (label, val = '') => {
+            add(this.render.textFieldItem(label, val));
+        };
+
+        addD('Attendees');
+        addST('Tutor', '', searchTutors);
+        addST('Pupil', '', searchPupils);
+        addD('Clocked');
+        addT('Clock-in', new Date().toLocaleTimeString());
+        addT('Clock-out', new Date().toLocaleTimeString());
+        addT('Time clocked', '00:00:00.00');
+        addD('At');
+        addS('Location');
+        addS('Day');
+        addS('Time');
+        addD('For');
+        addS('Subject');
+        add(this.render.textAreaItem('Message', ''));
+    }
+
+    refreshData() {
+        const s = (q) => { // Attach select based on query
+            return Utils.attachSelect($(this.main).find(q)[0]);
+        };
+        const listen = (s, action) => { // Add change listener
+            s.listen('MDCSelect:change', () => {
+                action(s);
+            });
+            return s;
+        };
+        const a = (q, action) => { // Attaches select and adds listener
+            return listen(s(q), action);
+        };
+        const r = (q, el, action, id) => { // Replaces select and adds listener
+            $(el).find('.mdc-list-item').each(function() {
+                MDCRipple.attachTo(this);
+            });
+            $(this.main).find(q).replaceWith(el);
+            return a(q, action);
+        };
+
+        this.availability = Utils.combineAvailability(this.request.fromUser
+            .availability, this.request.toUser.availability);
+        const names = Object.keys(this.availability);
+        if (names.length === 1) this.request.location = {
+            name: names[0],
+            id: window.app.data.locationsByName[names[0]],
+        };
+        this.locationSelect = r(
+            '#Location',
+            this.render.select('Location', this.request.location.name, names),
+            s => {
+                const locationIDs = window.app.data.locationsByName;
+                if (!locationIDs[s.value]) return s.valid = false;
+                this.request.location = {
+                    name: s.value,
+                    id: locationIDs[s.value],
+                };
+                this.refreshDayAndTimeSelects(this.request, this.availability);
+            });
+        if (names.length === 1 && !window.app.data.locationsByName[names[0]])
+            this.locationSelect.valid = false;
+
+        this.subjects = Utils.concatArr(this.request.fromUser.subjects, this
+            .request.toUser.subjects);
+        if (this.subjects.length === 1) this.request.subject = this.subjects[0];
+        this.subjectSelect = r(
+            '#Subject',
+            this.render.select('Subject', this.request.subject, this.subjects),
+            s => this.request.subject = s.value,
+        );
+
+        this.req = this.req.filter(r => ['Location', 'Subject']
+            .indexOf(r.id) < 0);
+        [this.locationSelect, this.subjectSelect].forEach(input => {
+            this.req.push({
+                input: input,
+                id: input.root_.id,
+                valid: () => input.value !== '',
+            });
+        });
+        this.refreshDayAndTimeSelects(this.request, this.availability);
+    }
+
+    manage() {
+        const t = (q, action, i = 'input') => {
+            const t = new MDCTextField($(this.main).find(q).first()[0]);
+            $(this.main).find(q + ' ' + i).first().focusout(() => action(t));
+            return t;
+        };
+        const s = (q) => { // Attach select based on query
+            return Utils.attachSelect($(this.main).find(q)[0]);
+        };
+        const listen = (s, action) => { // Add change listener
+            s.listen('MDCSelect:change', () => {
+                action(s);
+            });
+            return s;
+        };
+        const a = (q, action) => { // Attaches select and adds listener
+            return listen(s(q), action);
+        };
+        const parse = (val) => {
+            const split = val.split(':');
+            return {
+                hrs: new Number(split[0]),
+                mins: new Number(split[1]),
+                secs: new Number(split[2].split(' ')[0]),
+                ampm: val.split(' ')[1],
+            };
+        };
+        const valid = (val) => {
+            const parsed = parse(val);
+            if (['AM', 'PM'].indexOf(parsed.ampm) < 0) return false;
+            if (!(0 <= parsed.mins && parsed.mins < 60)) return false;
+            if (!(0 <= parsed.secs && parsed.mins < 60)) return false;
+            if (!(0 <= parsed.hrs && parsed.hrs <= 12)) return false;
+            return true;
+        };
+        const update = (val, date) => {
+            const parsed = parse(val);
+            const hrs = parsed.ampm === 'PM' ? parsed.hrs + 12 : parsed.hrs;
+            date.setHours(hrs);
+            date.setMinutes(parsed.mins);
+            date.setSeconds(parsed.secs);
+        };
+        const editClockingTime = async (id) => {
+            if (this.appt.clockIn.sentTimestamp.toDate) this.appt.clockIn
+                .sentTimestamp = this.appt.clockIn.sentTimestamp.toDate();
+            if (this.appt.clockOut.sentTimestamp.toDate) this.appt.clockOut
+                .sentTimestamp = this.appt.clockOut.sentTimestamp.toDate();
+            const date = id === 'Clock-in' ? this.appt.clockIn.sentTimestamp :
+                this.appt.clockOut.sentTimestamp;
+            const t = this.textFields[id];
+            const v = t.value;
+            if (!valid(v)) return setTimeout(() => t.valid = false, 50);
+            update(v, date);
+            window.app.snackbar.view('Updating past appointment...');
+            $(this.main).find('[id="Time clocked"] input').val(
+                Utils.getDurationStringFromDates(
+                    this.appt.clockIn.sentTimestamp,
+                    this.appt.clockOut.sentTimestamp,
+                ));
+            const [err, res] = await to(Data.modifyPastAppt(this.appt,
+                this.id));
+            if (err) return window.app.snackbar.view('Could not update past ' +
+                'appointment.');
+            window.app.snackbar.view('Updated past appointment.');
+        };
+
+        this.managed = true;
+        MDCTopAppBar.attachTo(this.header);
+        $(this.header).find('.mdc-icon-button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
+        }).end().find('.mdc-select,.search-results li').each(function() {
+            MDCRipple.attachTo(this);
+        });
+
+        this.tutorTextField = t('#Tutor', () => {});
+        this.pupilTextField = t('#Pupil', () => {});
+        this.locationSelect = a('#Location', (s) => {
+            const locationIDs = window.app.data.locationsByName;
+            if (!locationIDs[s.value]) return s.valid = false;
+            this.request.location = {
+                name: s.value,
+                id: locationIDs[s.value],
+            };
+            this.refreshDayAndTimeSelects(this.request, this.availability);
+        });
+        this.daySelect = a('#Day', (s) => {
+            this.val.day = s.value;
+            this.refreshTimeSelects(this.request, this.availability);
+        });
+        this.timeslotSelect = a('#Time', (s) => {
+            if (s.value.split(' to ').length > 1) {
+                this.request.time.from = s.value.split(' to ')[0];
+                this.request.time.to = s.value.split(' to ')[1];
+            } else {
+                this.request.time.from = s.value;
+                this.request.time.to = s.value;
+            }
+            this.request.time = s.value;
+        });
+        this.subjectSelect = a('#Subject', s => this.request.subject = s.value);
+        this.messageTextField = t('#Message', t => this.request.message = t
+            .value, 'textarea');
+        this.clockInTextField = t('[id="Clock-in"]', t =>
+            editClockingTime('Clock-in', this.appt.clockIn.sentTimestamp));
+        this.clockOutTextField = t('[id="Clock-out"]', t =>
+            editClockingTime('Clock-out', this.appt.clockOut.sentTimestamp));
+        this.durationTextField = t('[id="Time clocked"]', t => {});
+
+        [
+            this.tutorTextField, this.pupilTextField, this.locationSelect,
+            this.subjectSelect, this.daySelect, this.timeslotSelect,
+            this.clockInTextField, this.clockOutTextField,
+        ].forEach(input => {
+            this.req.push({
+                input: input,
+                id: input.root_.id,
+                valid: () => input.value !== '',
+            });
+        });
     }
 };
 
@@ -1705,6 +2061,7 @@ module.exports = {
     editAppt: EditApptDialog,
     notifyAppt: ApptNotificationDialog,
     viewPastAppt: ViewPastApptDialog,
+    newPastAppt: NewPastApptDialog,
     viewActiveAppt: ViewActiveApptDialog,
     viewCanceledAppt: ViewCanceledApptDialog,
     notify: NotificationDialog,

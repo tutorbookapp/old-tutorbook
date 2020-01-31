@@ -5508,7 +5508,7 @@ svg.mdc-button__icon {
   /* @alternate */
   background-color: var(--mdc-theme-secondary, #018786); }
 
-@keyframes mdc-checkbox-fade-in-background-u8e148e07 {
+@keyframes mdc-checkbox-fade-in-background-ua4075fe3 {
   0% {
     border-color: rgba(0, 0, 0, 0.54);
     background-color: transparent; }
@@ -5520,7 +5520,7 @@ svg.mdc-button__icon {
     /* @alternate */
     background-color: var(--mdc-theme-secondary, #018786); } }
 
-@keyframes mdc-checkbox-fade-out-background-u8e148e07 {
+@keyframes mdc-checkbox-fade-out-background-ua4075fe3 {
   0%,
   80% {
     border-color: #018786;
@@ -5534,10 +5534,10 @@ svg.mdc-button__icon {
     background-color: transparent; } }
 
 .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-in-background-u8e148e07; }
+  animation-name: mdc-checkbox-fade-in-background-ua4075fe3; }
 
 .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-out-background-u8e148e07; }
+  animation-name: mdc-checkbox-fade-out-background-ua4075fe3; }
 
 .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
   border-color: rgba(0, 0, 0, 0.26);
@@ -7225,6 +7225,9 @@ a.mdc-list-item {
   right: -54.888891%;
   left: auto; }
 
+.schedule .mdc-fab {
+  z-index: 1; }
+
 #load-more {
   margin-bottom: 50px; }
 
@@ -7690,43 +7693,6 @@ svg.mdc-button__icon {
 
 #media-capture {
   display: none; }
-
-.search-input-list-item .search-results #results {
-  margin-top: 0 !important; }
-
-.search-input-list-item {
-  position: initial; }
-
-.search-input-list-item .search-results {
-  position: absolute;
-  max-height: 30vh;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  background: #FFF;
-  border-radius: 0px 0px 7px 7px;
-  width: calc(100% - 32px);
-  /* Size of mdc-list minus list-item padding. */
-  z-index: 1;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-  .search-input-list-item .search-results li button {
-    color: #5F6368 !important; }
-
-#name-list-item .search-results {
-  top: 225px; }
-
-#email-list-item .search-results {
-  top: 305px; }
-
-.search-input-list-item .search-box--elevated {
-  border-radius: 7px 7px 0px 0px !important;
-  background: #FFF !important;
-  border-bottom: 1px solid #E0E0E0;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-
-.search-input-list-item .search-box {
-  border-radius: 7px;
-  padding: 11px;
-  width: 100%; }
 .mdc-top-app-bar {
   background-color: #6200ee;
   /* @alternate */
@@ -9114,6 +9080,58 @@ svg.mdc-button__icon {
 
 .search #results .mdc-list-item:first-child {
   margin-top: 59px; /* For filters div */
+}
+
+.search-input-list-item .search-results #results {
+  margin-top: 0 !important;
+}
+
+.search-input-list-item {
+  position: initial;
+}
+
+.search-input-list-item .search-results {
+  position: absolute;
+  max-height: 30vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background: #FFF;
+  border-radius: 0px 0px 7px 7px;
+  width: calc(100% - 32px); /* Size of mdc-list minus list-item padding. */
+  z-index: 1;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  li button {
+    color: #5F6368 !important;
+  }
+}
+
+#name-list-item .search-results {
+  top: 225px;
+}
+
+#email-list-item .search-results {
+  top: 305px;
+}
+
+#tutor-list-item .search-results {
+  top: 225px;
+}
+
+#pupil-list-item .search-results {
+  top: 305px;
+}
+
+.search-input-list-item .search-box--elevated {
+  border-radius: 7px 7px 0px 0px !important;
+  background: #FFF !important;
+  border-bottom: 1px solid #E0E0E0;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+  
+.search-input-list-item .search-box {
+  border-radius: 7px;
+  padding: 11px;
+  width: 100%;
 }
 #filters .mdc-layout-grid {
   border-top-color: white;

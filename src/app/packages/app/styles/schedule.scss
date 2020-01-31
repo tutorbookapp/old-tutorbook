@@ -2,6 +2,10 @@
 @import "@material/layout-grid/mdc-layout-grid";
 @import "@material/linear-progress/mdc-linear-progress";
 
+.schedule .mdc-fab {
+  z-index: 1;
+}
+
 #load-more {
   margin-bottom: 50px;
 }

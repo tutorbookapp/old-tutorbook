@@ -329,7 +329,7 @@ class Utils {
         };
     }
 
-    static concatArr(arrA, arrB) {
+    static concatArr(arrA = [], arrB = []) {
         var result = [];
         arrA.forEach((item) => {
             if (result.indexOf(item) < 0 && item !== '') {
@@ -877,7 +877,7 @@ class Utils {
 
     static combineMaps(mapA, mapB) {
         // NOTE: This function gives priority to mapB over mapA
-        var result = {};
+        const result = {};
         for (var i in mapA) {
             result[i] = mapA[i];
         }
@@ -885,6 +885,25 @@ class Utils {
             result[i] = mapB[i];
         }
         return result;
+    }
+
+    static combineAvailability(availA, availB) {
+        const combined = {};
+        for (var l in availA) { // Location
+            if (!combined[l]) combined[l] = {};
+            for (var d in availA[l]) { // Day
+                if (!combined[l][d]) combined[l][d] = []; // Timeslots
+                combined[l][d] = Utils.concatArr(combined[l][d], availA[l][d]);
+            }
+        }
+        for (var l in availB) { // Location
+            if (!combined[l]) combined[l] = {};
+            for (var d in availB[l]) { // Day
+                if (!combined[l][d]) combined[l][d] = []; // Timeslots
+                combined[l][d] = Utils.concatArr(combined[l][d], availB[l][d]);
+            }
+        }
+        return combined;
     }
 
     static getAvailabilityString(data) {

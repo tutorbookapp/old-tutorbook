@@ -421,6 +421,12 @@ class Data {
         });
     }
 
+    static newPastAppt(appt) {
+        return Data.post('newPastAppt', {
+            appt: appt,
+        });
+    }
+
     static modifyPastAppt(appt, id) {
         return Data.post('modifyPastAppt', {
             appt: appt,

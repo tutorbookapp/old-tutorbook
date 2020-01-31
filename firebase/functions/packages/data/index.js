@@ -140,6 +140,9 @@ class DataProxy {
                 ].indexOf(token.uid) >= 0 || token.supervisor);
                 if (!token.supervisor) await exists('appointments', data.id);
                 return Data.modifyAppt(data.appt, data.id);
+            case 'newPastAppt':
+                assert(token.supervisor);
+                return Data.newPastAppt(data.appt);
             case 'modifyPastAppt':
                 assert(token.supervisor);
                 return Data.modifyPastAppt(data.appt, data.id);
@@ -829,6 +832,37 @@ class Data {
         };
     }
 
+    static async newPastAppt(appt) {
+        ['clockIn', 'clockOut'].forEach(key => {
+            ['sentTimestamp', 'approvedTimestamp'].forEach(time => {
+                if (typeof appt[key][time] === 'object') {
+                    appt[key][time] = new admin.firestore.Timestamp(
+                        appt[key][time]._seconds,
+                        appt[key][time]._nanoseconds,
+                    ).toDate();
+                } else {
+                    appt[key][time] = new Date(appt[key][time]);
+                }
+            });
+        });
+        appt = Data.trimObject(appt);
+        const db = global.db;
+        const appts = [
+            db.collection('users').doc(appt.attendees[0].uid)
+            .collection('pastAppointments').doc(),
+        ];
+        const id = appts[0].id;
+        appts.push(db.collection('users').doc(appt.attendees[1].uid)
+            .collection('pastAppointments').doc(id));
+        appts.push(db.collection('locations').doc(appt.location.id)
+            .collection('pastAppointments').doc(id));
+        await Promise.all(appts.map(doc => doc.set(appt)));
+        return {
+            appt: appt,
+            id: id,
+        };
+    }
+
     static async modifyPastAppt(apptData, id) {
         const db = global.db;
         ['clockIn', 'clockOut'].forEach(key => {
@@ -843,18 +877,6 @@ class Data {
             }
         });
         apptData = Data.trimObject(apptData);
-        console.log('[DEBUG] Trimmed past appointment clockIn sentTimestamp:',
-            apptData.clockIn.sentTimestamp);
-        console.log('[DEBUG] Is the clockIn a Date() object? ' +
-            (apptData.clockIn.sentTimestamp.getTime ? 'Yes' : 'No'));
-        console.log('[DEBUG] Is the clockIn a Timestamp() object? ' +
-            (apptData.clockIn.sentTimestamp.toDate ? 'Yes' : 'No'));
-        console.log('[DEBUG] Trimmed past appointment clockOut sentTimestamp:',
-            apptData.clockOut.sentTimestamp);
-        console.log('[DEBUG] Is the clockOut a Date() object? ' +
-            (apptData.clockOut.sentTimestamp.getTime ? 'Yes' : 'No'));
-        console.log('[DEBUG] Is the clockOut a Timestamp() object? ' +
-            (apptData.clockOut.sentTimestamp.toDate ? 'Yes' : 'No'));
         const appts = [
             db.collection('users').doc(apptData.attendees[0].uid)
             .collection('pastAppointments')

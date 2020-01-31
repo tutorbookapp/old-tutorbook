@@ -543,9 +543,7 @@ class NewProfile extends Profile {
             });
 
         function t(q, action) {
-            $($(main).find(q + ' input').first()).focusout(async () => {
-                action();
-            });
+            $(main).find(q + ' input').first().focusout(action);
             return new MDCTextField($(main).find(q).first()[0]);
         };
 
