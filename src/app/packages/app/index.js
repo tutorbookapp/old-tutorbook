@@ -112,6 +112,7 @@ class Tutorbook {
                 await this.initUser();
                 Utils.urlData();
                 if (this.user.type === 'Supervisor' &&
+                    this.user.authenticated &&
                     !this.userClaims.supervisor) {
                     new NotificationDialog('Invalid Authentication', 'You ' +
                         'have tried to login as a supervisor but lack the ' +

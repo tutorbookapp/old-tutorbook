@@ -141,8 +141,7 @@ class Login {
 
     static async codeSignIn() {
         // First, we check if they have a valid supervisor code.
-        const doc = await Login.getSupervisorCodes();
-        const codes = doc.data();
+        const codes = (await Login.getSupervisorCodes()).data();
         const dialogEl = window.app.render.template('dialog-code-signup');
         const dialog = MDCDialog.attachTo(dialogEl);
 
@@ -165,12 +164,14 @@ class Login {
         const confirmButton = dialogEl.querySelector('#confirm-button');
         confirmButton.addEventListener('click', () => {
             try {
-                if (codes[codeTextField.value] === firebase.auth().currentUser.email) {
+                if (codes[firebase.auth().currentUser.uid] ===
+                    codeTextField.value) {
                     dialog.close();
                     window.app.user.authenticated = true;
                     window.app.updateUser();
-                    window.app.snackbar.view('Code authenticated. Successfuly created ' +
-                        window.app.user.type.toLowerCase() + ' account.');
+                    window.app.snackbar.view('Code authenticated. ' +
+                        'Successfully created ' + window.app.user.type
+                        .toLowerCase() + ' account.');
                     window.app.init();
                     window.app.loader(false);
                     window.app.nav.start();
@@ -188,7 +189,8 @@ class Login {
         dialog.listen('MDCDialog:closing', (event) => {
             if (event.detail.action === 'close') {
                 firebase.auth().signOut();
-                window.app.snackbar.view('Could not verify account. Logged out.');
+                window.app.snackbar.view('Could not verify account. Logged ' +
+                    'out.');
             }
             $(dialogEl).remove();
         });

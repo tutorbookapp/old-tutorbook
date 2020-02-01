@@ -36,29 +36,10 @@ const updateAuth = async (change, context) => {
     const db = admin.firestore().collection('partitions').doc('default');
 
     // Check to see if the supervisor's id is in the codes collection
-    const supervisorCodes = await db.collection('auth')
-        .doc('supervisors')
-        .get();
-    var validIDs = [
-        'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
-        '0vDQRIl7pJUmTzb4Rf4FRl6tCXj1',
-        'XXuoSC6QxTashOXvBwZEPz8QHWB3',
-        'YVMZlf3GMtcidSG1ud8faCgWMwk2',
-    ];
-    if (supervisorCodes.exists) {
-        Object.entries(supervisorCodes.data()).forEach((entry) => {
-            validIDs.push(entry[1]);
-        });
-    } else {
-        console.warn('[WARNING] Supervisor auth codes do not exist, falling ' +
-            'back to default IDs...');
-        validIDs = validIDs.concat([
-            'supervisor@tutorbook.app',
-            'mlim@pausd.org',
-            'psteward@pausd.org',
-            'lcollart@pausd.org',
-        ]);
-    }
+    const codes = await db.collection('auth').doc('supervisors').get();
+    if (!codes.exists) throw new Error('Supervisor codes did not exist.');
+    const validIDs = Object.keys(codes.data());
+
     if (profile.type === 'Supervisor' && profile.authenticated &&
         validIDs.indexOf(id) >= 0) { // SUPERVISOR
         console.log('[DEBUG] ' + profile.name + ' was a verified supervisor. ' +
