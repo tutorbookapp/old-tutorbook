@@ -36,19 +36,5 @@
     "webpack-cli": "^3.3.6",
     "webpack-merge": "^4.2.1"
   },
-  "homepage": "https://github.com/nicholaschiang/tutorbook#readme",
-  "dependencies": {
-    "@material/button": "^3.1.0",
-    "@material/dialog": "^3.1.0",
-    "@material/list": "^3.2.0",
-    "@material/menu": "^3.1.0",
-    "@material/menu-surface": "^3.1.0",
-    "@material/ripple": "^3.1.0",
-    "@material/select": "^3.1.0",
-    "@material/snackbar": "^3.1.0",
-    "@material/top-app-bar": "^1.1.1",
-    "jquery": "^3.4.1",
-    "plyr": "^3.5.6",
-    "scrollreveal": "^4.0.5"
-  }
+  "homepage": "https://github.com/nicholaschiang/tutorbook#readme"
 }

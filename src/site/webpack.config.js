@@ -31,23 +31,12 @@ function getStyleUse(bundleFilename) {
 
 module.exports = [{
         entry: {
-            'bundle.min.css': [
-                // SCSS files contain imports that regard that section of the app 
-                // Main.scss contains imports that appear in multiple sections
-                path.resolve(__dirname, 'styles/menu.scss'),
-                path.resolve(__dirname, 'styles/search-results.scss'),
-
-                // All other styling files are contained as CSS files
-                path.resolve(__dirname, 'styles/plyr.css'),
-                path.resolve(__dirname, 'styles/search.css'),
-                path.resolve(__dirname, 'styles/filters.css'),
-                path.resolve(__dirname, 'styles/scroller.css'),
-            ]
+            'index.css': [],
         },
         output: {
             // This is necessary for webpack to compile, but we never reference this js file.
             filename: '[name]',
-            path: path.resolve(__dirname, '../../build/site/styles/'),
+            path: path.resolve(__dirname, '../../build/'),
         },
         module: {
             rules: [{
@@ -86,16 +75,11 @@ module.exports = [{
     },
     {
         entry: {
-            'bundle.min.js': [
-                path.resolve(__dirname, 'scripts/menu.js'),
-                path.resolve(__dirname, 'scripts/plyr.js'),
-                path.resolve(__dirname, 'scripts/search.js'),
-                path.resolve(__dirname, 'scripts/search-animation.js'),
-            ]
+            'index.js': [],
         },
         output: {
             filename: '[name]',
-            path: path.resolve(__dirname, '../../build/site/scripts/'),
+            path: path.resolve(__dirname, '../../build/'),
         },
         module: {
             rules: [{
