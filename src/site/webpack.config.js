@@ -31,10 +31,11 @@ function getStyleUse(bundleFilename) {
 
 module.exports = [{
         entry: {
-            'index.css': [],
+            'index.css': [
+                path.resolve(__dirname, 'packages/site/index.scss'),
+            ],
         },
         output: {
-            // This is necessary for webpack to compile, but we never reference this js file.
             filename: '[name]',
             path: path.resolve(__dirname, '../../build/'),
         },
@@ -69,13 +70,15 @@ module.exports = [{
             ]
         },
         plugins: [
-            new ExtractTextPlugin("bundle.min.css"),
+            new ExtractTextPlugin('index.css'),
         ],
         watch: true,
     },
     {
         entry: {
-            'index.js': [],
+            'index.js': [
+                path.resolve(__dirname, 'packages/site/index.js'),
+            ],
         },
         output: {
             filename: '[name]',
