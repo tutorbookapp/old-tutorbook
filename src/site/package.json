@@ -1,6 +1,7 @@
 {
   "name": "tutorbook-site",
-  "version": "0.0.1",
+  "private": true,
+  "version": "0.0.0",
   "description": "Landing page for Tutorbook mentor matching app.",
   "main": "index.js",
   "scripts": {
