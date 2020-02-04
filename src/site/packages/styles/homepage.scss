@@ -1,0 +1,51 @@
+#layout-wrapper.homepage-dis .section--heroEmailCapture .headline {
+  max-width: 550px;
+}
+
+@media (min-width: 990px) {
+  #layout-wrapper.homepage-dis .section--heroEmailCapture .headline {
+    max-width: 670px;
+  }
+}
+
+@media (min-width: 1440px) {
+  #layout-wrapper.homepage-dis .section--heroEmailCapture .headline {
+    max-width: 1024px;
+  }
+}
+
+#layout-wrapper.homepage-dis .section--heroEmailCapture .background-aux-content {
+  bottom: -120px;
+}
+
+#layout-wrapper.homepage-dis .section--logoParty {
+  margin-bottom: 0;
+}
+
+#layout-wrapper.homepage-dis .section--logoParty .logo-party {
+  padding: 60px 0;
+}
+
+@media (min-width: 768px) {
+  #layout-wrapper.homepage-dis .section--logoParty .logo-party {
+    padding: 125px 0 70px;
+  }
+}
+
+#layout-wrapper.homepage-dis .section--logoParty .cta-link {
+  background-color: transparent;
+  color: #181818;
+  border: 0;
+}
+
+#layout-wrapper.homepage-dis .section--featureSpotlightVertical {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+#layout-wrapper.homepage-dis .section--largeTestimonial {
+  margin-top: -18px;
+}

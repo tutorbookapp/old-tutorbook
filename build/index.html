@@ -29,51 +29,61 @@
     <meta name="apple-mobile-web-app-title" content="Tutorbook">
     <meta name="apple-mobile-web-app-status-bar-style" content="#6200EE">
 
-    <link rel="stylesheet" href="/index.css" type="text/css">
+    <!-- Tile icon for Win8 -->
+    <!-- <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F"> -->
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-1152123171216113",
-            enable_page_level_ads: true
-        });
-    </script>
+    <!-- Redirect Script -->
+    <script src="/redirect.js"></script>
+
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700" rel="stylesheet">
+
+    <!-- Site Styling -->
+    <link rel="stylesheet" href="/index.css" type="text/css">
 </head>
 
 <body>
-    <div id="loader">
-        <div class="loader">
-            <svg viewBox="0 0 32 32" width="32" height="32">
-                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-            </svg>
-        </div>
-    </div>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1">
-    </script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+    <!--
+   -Welcome to...
+   -╔════╗╔╗─╔╗╔════╗╔═══╗╔═══╗╔══╗─╔═══╗╔═══╗╔╗╔═╗
+   -║╔╗╔╗║║║─║║║╔╗╔╗║║╔═╗║║╔═╗║║╔╗║─║╔═╗║║╔═╗║║║║╔╝
+   -╚╝║║╚╝║║─║║╚╝║║╚╝║║─║║║╚═╝║║╚╝╚╗║║─║║║║─║║║╚╝╝─
+   -──║║──║║─║║──║║──║║─║║║╔╗╔╝║╔═╗║║║─║║║║─║║║╔╗║─
+   -──║║──║╚═╝║──║║──║╚═╝║║║║╚╗║╚═╝║║╚═╝║║╚═╝║║║║╚╗
+   -──╚╝──╚═══╝──╚╝──╚═══╝╚╝╚═╝╚═══╝╚═══╝╚═══╝╚╝╚═╝
+   -Taking a look under the hood? We'd love to have you on the team.
+   -Check out our open source code at https://github.com/tutorbookapp/tutorbook
+   -or email nicholaschiang@tutorbook.app for more info.
+   -->
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+    <site-header></site-header>
 
-        gtag('config', 'UA-146872354-1');
-    </script>
+    <hero-email-capture></hero-email-capture>
 
+    <feature-spotlight-vertical></feature-spotlight-vertical>
+
+    <heading-block></heading-block>
+
+    <spotlight-features></spotlight-features>
+
+    <email-capture></email-capture>
+
+    <site-footer></site-footer>
+
+    <!-- Firebase Backend-->
     <script src="/__/firebase/6.0.2/firebase-app.js"></script>
     <script src="/__/firebase/6.0.2/firebase-auth.js"></script>
+    <script src="/__/firebase/6.4.0/firebase-storage.js"></script>
     <script src="/__/firebase/6.0.2/firebase-firestore.js"></script>
     <script src="/__/firebase/6.0.2/firebase-messaging.js"></script>
     <!--<script src="/__/firebase/init.js"></script>-->
     <script src="/init.js"></script>
 
-    <!-- This script checks to see if there is a user signed in. If there is, we
-	    redirect straight to the app. If there isn't we show the site. -->
+    <!-- Site Script -->
     <script src="/index.js"></script>
+
 </body>
 
 </html>

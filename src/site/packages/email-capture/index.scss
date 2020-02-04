@@ -1,0 +1,105 @@
+@import "@tutorbook/site-styles/general";
+
+.email-capture {
+  margin-bottom: 60px;
+  margin-top: 80px;
+}
+
+.email-capture__content {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  background-color: unset;
+  background-image: unset;
+  background-size: unset;
+  background-position: center center;
+}
+
+.email-capture__background {
+  display: grid;
+  background-color: #3700B3;
+  background-image: unset;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 8px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-column: 2 / span 12;
+  padding: 60px 0;
+}
+
+.email-capture__text-container {
+  padding-bottom: 20px;
+  grid-column: 2 / span 10;
+  text-align: center;
+}
+
+.email-capture__heading {
+  margin-bottom: 16px;
+  word-break: break-word;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #FFF;
+}
+
+.email-capture__subheading {
+  font-size: 16px;
+  font-weight: 400;
+  -webkit-letter-spacing: 0.02em;
+  -moz-letter-spacing: 0.02em;
+  -ms-letter-spacing: 0.02em;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: #FFF;
+}
+
+.email-capture__form {
+  grid-column: 2 / span 10;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+
+  .email-capture {
+    margin-top: 100px;
+  }
+
+  .email-capture__background {
+    padding: 60px 0;
+    max-width: 1290px;
+    margin: 0 auto;
+  }
+
+  .email-capture__heading {
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  .email-capture__background {
+    grid-column: content;
+    padding: 100px 0;
+    grid-template-columns: [gutter-left] 1fr [email-text] 4fr [gap] 1fr [form] 5fr [gutter-right] 1fr;
+  }
+
+  .email-capture__content {
+    grid-column-gap: 24px;
+    grid-template-columns: [left-gutter] 1fr [content] 12fr [right-gutter] 1fr;
+  }
+
+  .email-capture__text-container {
+    grid-column: email-text;
+    text-align: left;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    padding-bottom: 0;
+  }
+
+  .email-capture__form {
+    grid-column: form;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+  }
+}

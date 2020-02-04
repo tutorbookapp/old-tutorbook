@@ -1,0 +1,106 @@
+@import "@tutorbook/site-styles/general";
+
+.spotlight {
+  margin-top: 80px;
+  margin-bottom: 120px;
+  padding-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.spotlight__wrapper {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: [left-gutter] 2fr [content] 10fr [right-gutter] 2fr;
+  text-align: center;
+  background-color: #3700B3;
+  padding: 100px 0;
+  position: relative;
+}
+
+.spotlight__wrapper::before {
+  top: -17px;
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  height: 18px;
+  left: -3vw;
+  -webkit-mask-image: url("border.svg");
+  mask-image: url("border.svg");
+  -webkit-mask-repeat: repeat no-repeat;
+  mask-repeat: repeat no-repeat;
+  width: 106vw;
+  z-index: -1;
+}
+
+.spotlight__wrapper::after {
+  bottom: -17px;
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  height: 18px;
+  left: -3vw;
+  -webkit-mask-image: url("border.svg");
+  mask-image: url("border.svg");
+  -webkit-mask-repeat: repeat no-repeat;
+  mask-repeat: repeat no-repeat;
+  width: 106vw;
+  z-index: -1;
+}
+
+.spotlight__content {
+  display: grid;
+  grid-column: content;
+  //margin: 0 0 56px 0;
+}
+
+.spotlight__heading {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #FFF;
+}
+
+.spotlight__cta {
+  margin-top: 36px;
+}
+
+.spotlight__lower-content {
+  grid-row: 2;
+  grid-column: 1 / -1;
+  padding: 0 40px;
+}
+
+@media (min-width: 768px) {
+  .spotlight {
+    margin-bottom: 130px;
+  }
+  .spotlight__wrapper {
+    display: grid;
+    text-align: center;
+    padding: 160px 0;
+    grid-template-columns: [left-gutter] 1fr [content] 2fr [right-gutter] 1fr;
+  }
+  .spotlight__content {
+    //margin: 0 auto 80px;
+    max-width: 1290px;
+  }
+  .spotlight__heading {
+    line-height: 1;
+  }
+  .spotlight__lower-content {
+    padding: 0 12vw;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 990px) {
+  .spotlight__heading {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+}

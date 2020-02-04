@@ -31,7 +31,7 @@ function getStyleUse(bundleFilename) {
 
 module.exports = [{
         entry: {
-            'bundle.min.css': [
+            'index.css': [
                 // SCSS files contain imports that regard that section of the app 
                 // Main.scss contains imports that appear in multiple sections
                 path.resolve(__dirname, 'packages/app/styles/main.scss'),
@@ -51,7 +51,6 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/loader.css'),
                 path.resolve(__dirname, 'packages/app/styles/payments.css'),
                 path.resolve(__dirname, 'packages/app/styles/clock.css'),
-                path.resolve(__dirname, 'packages/app/styles/fonts.css'),
                 path.resolve(__dirname, 'packages/app/styles/user.css'),
                 path.resolve(__dirname, 'packages/app/styles/search.css'),
                 path.resolve(__dirname, 'packages/app/styles/filters.css'),
@@ -63,7 +62,7 @@ module.exports = [{
         output: {
             // This is necessary for webpack to compile, but we never reference this js file.
             filename: '[name]',
-            path: path.resolve(__dirname, '../../build/app/styles/'),
+            path: path.resolve(__dirname, '../../build/app/'),
         },
         module: {
             rules: [{
@@ -92,19 +91,19 @@ module.exports = [{
             ]
         },
         plugins: [
-            new ExtractTextPlugin("bundle.min.css"),
+            new ExtractTextPlugin('index.css'),
         ],
         watch: true,
     },
     {
         entry: {
-            'bundle.min.js': [
+            'index.js': [
                 path.resolve(__dirname, 'packages/app/index.js'),
             ]
         },
         output: {
             filename: '[name]',
-            path: path.resolve(__dirname, '../../build/app/scripts/'),
+            path: path.resolve(__dirname, '../../build/app/'),
         },
         module: {
             rules: [{

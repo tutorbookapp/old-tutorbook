@@ -1,0 +1,122 @@
+@import "@tutorbook/site-styles/general";
+
+.cta-button {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 12px 21px;
+  text-decoration: none;
+  text-align: center;
+  transition: all 200ms;
+  cursor: pointer;
+}
+
+.cta-button[data-focus-visible-added] {
+  position: relative;
+}
+
+.cta-button[data-focus-visible-added]:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  bottom: -6px;
+  left: -6px;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.cta-button:focus {
+  outline: 0;
+}
+
+.cta-button--small {
+  padding: 6px 24px;
+}
+
+.cta-button--wide {
+  width: 100%;
+}
+
+.cta-button--black-fill {
+  background-color: #181818;
+  border: 2px solid #181818;
+  color: #ffffff;
+}
+
+.cta-button--black-fill:hover {
+  background-color: #ffffff;
+  border: 2px solid #181818;
+  color: #181818;
+}
+
+.cta-button--teal-fill {
+  background-color: #6afdef;
+  border: 2px solid #6afdef;
+  color: #181818;
+}
+
+.cta-button--teal-fill:hover {
+  border: 2px solid #a1fff6;
+  background-color: #a1fff6;
+}
+
+.cta-button--black-outline {
+  background-color: transparent;
+  border: 2px solid #181818;
+  color: #181818;
+}
+
+.cta-button--black-outline:hover {
+  background-color: #181818;
+  border: 2px solid #181818;
+  color: #ffffff;
+}
+
+.cta-button--white-outline {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+
+.cta-button--white-outline:hover {
+  background-color: transparent;
+  border: 2px solid #6afdef;
+  color: #6afdef;
+}
+
+.cta-button--link-only-black {
+  color: #181818;
+  padding: 0;
+}
+
+.cta-button--link-only-black:hover .cta-link__arrow {
+  transform: translateX(4px);
+}
+
+.cta-button--black-fill-transparent-hover {
+  background-color: #181818;
+  border: 2px solid #181818;
+  color: #ffffff;
+}
+
+.cta-button--black-fill-transparent-hover:hover {
+  background-color: transparent;
+  border: 2px solid #181818;
+  color: #181818;
+}
+
+.cta-button--black-fill-transparent-hover .arrow {
+  fill: #ffffff;
+}
+
+.cta-button--black-fill-transparent-hover:hover .arrow,
+.cta-button--black-fill-transparent-hover:focus .arrow {
+  fill: #181818;
+}
+
+.cta-button__arrow {
+  margin-left: 8px;
+  transition: transform 200ms;
+  height: 10px;
+}

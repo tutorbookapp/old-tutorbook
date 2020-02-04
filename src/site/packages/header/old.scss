@@ -1,0 +1,44 @@
+@import "@tutorbook/site-styles/general";
+
+.site-header {
+  position: sticky;
+  top: 0;
+  background-color: #FFF;
+  width: 100%;
+  padding: 30px 40px;
+  margin: 20px auto 0 auto;
+  z-index: 100;
+}
+
+.site-header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1290px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.site-header__wordmark-title {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.site-header__menu {
+  display: flex;
+  align-items: center;
+}
+
+.site-header__menu-item-wrapper {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.site-header__menu-item {
+  display: inline-block;
+  position: relative;
+  border: none;
+  width: auto;
+  padding: 12px;
+  cursor: pointer;
+}

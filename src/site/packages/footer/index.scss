@@ -1,0 +1,190 @@
+@import "@tutorbook/site-styles/general";
+
+ul,li {
+  display: inline-block;
+}
+
+footer {
+  display: grid;
+  grid-template-columns: 1fr [content] 12fr 1fr; 
+}
+
+.footer__sitemap-title {
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+.footer-section__header {
+  margin: 0 0 8px;
+}
+
+.footer-section__list-item {
+  width: 100%;
+  margin: 0;
+}
+
+.content-wrapper {
+  grid-area: content;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  max-width: 1290px;
+  margin: 40px auto;
+}
+
+@media (min-width: 768px) {
+  .content-wrapper {
+    //grid-template-columns: 2fr 1fr;
+    grid-column-gap: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    //grid-template-columns: 3fr 1fr;
+    grid-column-gap: 24px;
+  }
+}
+
+.primary-links {
+  -moz-column-count: 2;
+  column-count: 2;
+  -moz-column-gap: 10px;
+  column-gap: 10px;
+}
+
+@media (min-width: 990px) {
+  .primary-links {
+    -moz-column-count: 3;
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1200px) {
+  .primary-links {
+    -moz-column-count: 4;
+    column-count: 4;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+  }
+}
+
+.primary-links__list-item {
+  padding-bottom: 36px;
+  width: 100%;
+  -moz-column-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.secondary-links {
+  grid-row-start: 4;
+  display: flex;
+  padding: 20px 0;
+  margin-left: -15px;
+}
+
+.secondary-links__link {
+  color: #181818;
+  text-decoration: none;
+  padding: 15px;
+}
+
+.secondary-links__link[data-focus-visible-added] {
+  position: relative;
+}
+
+.secondary-links__link[data-focus-visible-added]:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.secondary-links__link:hover, .secondary-links__link:focus {
+  outline: none;
+  text-decoration: underline;
+}
+
+.extra-content {
+  grid-row-start: 2;
+  grid-column: span 2;
+}
+
+.blog-content {
+  grid-row-start: 3;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+  padding: 20px 0;
+}
+
+@media (min-width: 768px) {
+  .blog-content {
+    grid-row-start: 1;
+    grid-column-start: 2;
+    border: none;
+    padding-top: 0;
+  }
+}
+
+.footer__link {
+  display: block;
+  padding: 6px 0;
+  color: #181818;
+  text-decoration: none;
+  position: relative;
+  outline: none;
+  font-weight: 400;
+}
+
+.footer__link[data-focus-visible-added] {
+  position: relative;
+}
+
+.footer__link[data-focus-visible-added]:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  bottom: -6px;
+  left: -6px;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.footer__link:hover {
+  text-decoration: underline;
+}
+
+.footer__link--blog {
+  margin-top: 10px;
+}
+
+.footer__link--blog > a[data-focus-visible-added] {
+  position: relative;
+}
+
+.footer__link--blog > a[data-focus-visible-added]:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  bottom: -6px;
+  left: -6px;
+  border: 3px solid black;
+  border-radius: 10px;
+}

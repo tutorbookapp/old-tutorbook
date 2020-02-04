@@ -1,0 +1,89 @@
+@import "@tutorbook/site-styles/general";
+
+.hero {
+  padding-top: 70px;
+}
+
+.hero__wrapper-two-columns {
+  display: grid;
+  grid-template-columns: [left-gutter] 1fr [content] 12fr [right-gutter] 1fr;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 50px 0;
+}
+
+.hero__wrapper {
+  grid-column: content;
+  position: relative;
+  display: grid;
+  grid-template-columns: [left-content] 7fr [right-content-sm] 1fr [right-content-lg] 5fr;
+  grid-column-gap: 24px;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+}
+
+.hero__content {
+  display: grid;
+  text-align: center;
+  justify-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  z-index: 1;
+  position: relative;
+  grid-column: left-content / span 3;
+}
+
+.hero__headline {
+  margin-bottom: 30px;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hero__subheading {
+  margin-bottom: 36px;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: unset;
+  font-weight: 400;
+  max-width: 600px;
+}
+
+.hero__email-form {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 12px;
+  email-form {
+    width: 100%;
+  }
+}
+
+@media (min-width: 990px) {
+  .hero__headline {
+    max-width: 760px;
+    font-size: 60px;
+  }
+  .hero__subheading {
+    font-size: 20px;
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero__headline {
+    max-width: 1204px;
+    font-size: 80px;
+  }
+  .hero__subheading {
+    font-size: 24px;
+    max-width: 800px;
+  }
+}

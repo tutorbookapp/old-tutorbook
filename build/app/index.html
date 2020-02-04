@@ -31,12 +31,15 @@
 
     <!-- Tile icon for Win8 -->
     <!-- <meta name="msapplication-TileColor" content="#3372DF">
-  <meta name="msapplication-navbutton-color" content="#303F9F"> -->
-    <!-- App Styling -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
+    <meta name="msapplication-navbutton-color" content="#303F9F"> -->
+
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="styles/bundle.min.css" type="text/css">
+
+    <!-- App Styling -->
+    <link rel="stylesheet" href="/app/index.css" type="text/css">
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -63,6 +66,7 @@
    -or email nicholaschiang@tutorbook.app for more info.
    -->
 
+    <!-- Circular Loader -->
     <div id="loader">
         <div class="loader">
             <svg viewBox="0 0 32 32" width="32" height="32">
@@ -71,8 +75,7 @@
         </div>
     </div>
 
-    <!-- NOTE: These divs have to be above everything else, or they won't function
-	    properly. -->
+    <!-- These divs must be above everything else to function properly. -->
     <aside id="nav-drawer" class="mdc-drawer mdc-drawer--modal">
         <div class="mdc-drawer__header">
             <h3 class="mdc-drawer__title">Tutorbook</h3>
@@ -81,19 +84,12 @@
         <div class="mdc-drawer__content">
         </div>
     </aside>
-
     <div class="mdc-drawer-scrim"></div>
 
-    <!-- MAIN VIEWS: these are what the user actually sees at any given point
-	    in time` -->
+    <!-- Main views (that are manipulated by our bundled app script). -->
     <div class="dialogs"></div>
-
     <header class="header"></header>
-
     <main class="main mdc-top-app-bar--fixed-adjust"></main>
-
-    <!-- SCRIPTS: these are the core of the app, responsible for responding to
-	    user interaction. -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1">
@@ -125,7 +121,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cnOqJVOjhQLlBjrLRalB-Vrad9iXayk&libraries=places"></script>
 
     <!-- App Script -->
-    <script src="scripts/bundle.min.js"></script>
+    <script src="/app/index.js"></script>
 
     <!-- Intercom Integration -->
     <script>

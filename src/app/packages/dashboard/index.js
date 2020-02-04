@@ -72,7 +72,7 @@ class Dashboard {
             // If the user is viewing on mobile, we don't
             // want to show the welcome message in huge text.
             welcome: !window.app.onMobile,
-            title: 'Welcome, ' + window.app.user.name.split(' ')[0],
+            name: window.app.user.name.split(' ')[0],
             subtitle: 'We\'re glad you\'re here. Below are some ' +
                 'friendly suggestions for what to do next.',
         });

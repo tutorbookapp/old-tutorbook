@@ -213,49 +213,48 @@ class Navigation {
     }
 
     initDrawer() {
-        var app = window.app;
         const destinations = {
             showSearch: function() {
-                app.search.view();
+                window.app.search.view();
             },
             showTutors: function() {
-                app.search.view({
+                window.app.search.view({
                     type: 'Tutor'
                 });
             },
             showPupils: function() {
-                app.search.view({
+                window.app.search.view({
                     type: 'Pupil'
                 });
             },
             showHome: function() {
-                app.dashboard.view();
+                window.app.dashboard.view();
             },
             showSchedule: function() {
-                app.schedule.view();
+                window.app.schedule.view();
             },
             showProfile: function() {
-                app.profile.view();
+                window.app.profile.view();
             },
-            supervisor: app.user.type === 'Supervisor',
+            supervisor: window.app.user.type === 'Supervisor',
             showMatching: () => {
-                app.matching.view();
+                window.app.matching.view();
             },
             showStats: () => {
-                app.stats.view();
+                window.app.stats.view();
             },
             showChats: function() {
-                app.chats.view();
+                window.app.chats.view();
             },
             showSettings: function() {
-                app.settings.view();
+                window.app.settings.view();
             },
-            payments: app.user.config.showPayments || false,
+            payments: window.app.user.config.showPayments || false,
             showPayments: () => {
-                app.payments.view();
+                window.app.payments.view();
             },
             showHelp: function() {
-                app.feedback.view();
+                window.app.feedback.view();
             },
         }
 

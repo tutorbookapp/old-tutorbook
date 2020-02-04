@@ -2,6 +2,11 @@
 @import "@material/form-field/mdc-form-field";
 @import "@material/checkbox/mdc-checkbox";
 
+.mdc-select .mdc-select__selected-text {
+  overflow: hidden;
+  margin-right: 36px;
+}
+
 .mdc-menu .mdc-list-item {
   white-space: nowrap;
 }

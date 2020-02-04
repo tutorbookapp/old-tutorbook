@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "app/packages/*",
+    "site/packages/*"
+  ],
+  "version": "0.3.7"
+}

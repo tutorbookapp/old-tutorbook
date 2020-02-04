@@ -1,0 +1,36 @@
+.heading-block {
+  padding: 0 10%;
+  text-align: center;
+  display: block;
+}
+
+.heading-block__heading {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .heading-block {
+    padding: 0 14%;
+  }
+  .heading-block__heading {
+    line-height: 1;
+  }
+}
+
+@media (min-width: 990px) {
+  .heading-block {
+    padding: 0 18%;
+  }
+  .heading-block__heading {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading-block {
+    padding: 0 20%;
+  }
+}

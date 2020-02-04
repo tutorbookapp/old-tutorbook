@@ -1,0 +1,23 @@
+.checkbox {
+  cursor: pointer;
+}
+
+.checkbox__icon-wrap {
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+}
+
+.checkbox__checked-icon,
+.checkbox__unchecked-icon {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 1;
+  top: 1px;
+}
+
+.checkbox__unchecked-icon {
+  background: #e6e6e6;
+}
