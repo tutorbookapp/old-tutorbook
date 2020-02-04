@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/card",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.3.7",
-    "@tutorbook/dialogs": "^0.3.7",
-    "@tutorbook/profile": "^0.3.7",
-    "@tutorbook/user": "^0.3.7",
-    "@tutorbook/utils": "^0.3.7"
+    "@tutorbook/data": "^0.4.0",
+    "@tutorbook/dialogs": "^0.4.0",
+    "@tutorbook/profile": "^0.4.0",
+    "@tutorbook/user": "^0.4.0",
+    "@tutorbook/utils": "^0.4.0"
   },
   "repository": {
     "type": "git",

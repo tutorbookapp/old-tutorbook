@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/cta-button",
-  "version": "1.0.0",
+  "version": "0.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/site-styles": "^1.0.0"
+    "@tutorbook/site-styles": "^0.4.0"
   }
 }
