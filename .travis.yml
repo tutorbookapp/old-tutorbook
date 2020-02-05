@@ -3,10 +3,7 @@ notifications:
 branches:
   only:
   - master
-  - gunn
-  - paly
-  - jls
-  - woodside
+  - *-app
 language: node_js
 node_js:
 - '10.10'
