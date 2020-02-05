@@ -18385,6 +18385,7 @@ var Utils = function () {
             var valid = window.app.data.locationNames;
             if (valid.indexOf(profile.location) >= 0) return profile.location;
             // This uses the most recently added availability (i.e. the last key).
+            if (!profile.availability) return window.app.location.name || '';
             var _iteratorNormalCompletion4 = true;
             var _didIteratorError4 = false;
             var _iteratorError4 = undefined;
@@ -18415,7 +18416,7 @@ var Utils = function () {
     }, {
         key: 'getLocations',
         value: function getLocations(profile) {
-            return Utils.concatArr(Object.keys(profile.availability), [window.app.location.name]);
+            return profile.availability ? Utils.concatArr(Object.keys(profile.availability), [window.app.location.name]) : [window.app.location.name];
         }
     }, {
         key: 'getAuth',

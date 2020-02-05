@@ -266,6 +266,7 @@ class Utils {
         const valid = window.app.data.locationNames;
         if (valid.indexOf(profile.location) >= 0) return profile.location;
         // This uses the most recently added availability (i.e. the last key).
+        if (!profile.availability) return window.app.location.name || '';
         for (var loc of Object.keys(profile.availability).reverse()) {
             if (valid.indexOf(loc) >= 0) return loc;
         }
@@ -273,8 +274,10 @@ class Utils {
     }
 
     static getLocations(profile) {
-        return Utils.concatArr(Object.keys(profile.availability),
-            [window.app.location.name]);
+        return profile.availability ? Utils.concatArr(Object.keys(profile
+            .availability), [window.app.location.name]) : [window.app.location
+            .name
+        ];
     }
 
     static getAuth(profile) {
