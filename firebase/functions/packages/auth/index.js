@@ -37,8 +37,6 @@ const updateAuth = async (change, context) => {
     const codes = await db.collection('auth').doc('supervisors').get();
     if (!codes.exists) throw new Error('Supervisor codes did not exist.');
     const validIDs = Object.keys(codes.data());
-    console.log('[DEBUG] Checking if supervisor (' + uid + ') is in list of ' +
-        'valid supervisor uIDs...', validIDs);
 
     if (profile.type === 'Supervisor' && profile.authenticated &&
         validIDs.indexOf(uid) >= 0) { // SUPERVISOR
@@ -50,7 +48,7 @@ const updateAuth = async (change, context) => {
         return admin.auth().setCustomUserClaims(uid, {
             supervisor: true,
             parent: false,
-            locations: locations.map(doc => doc.id),
+            locations: locations.docs.map(doc => doc.id),
             children: [],
         }).then(() => console.log('[DEBUG] Added supervisor customAuth to ' +
             profile.name + '\'s account.')).catch((err) => console.error(
