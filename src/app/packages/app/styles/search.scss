@@ -2,6 +2,10 @@
 @import "@material/icon-button/mdc-icon-button";
 @import "@material/elevation/mdc-elevation";
 
+.search-results li button {
+  color: #5F6368 !important;
+}
+
 #search-app-bar { /* Emulate Google Drive's Top App Bar */
   @include mdc-top-app-bar-fill-color(#FFF);
   @include mdc-top-app-bar-ink-color(#5F6368); 
