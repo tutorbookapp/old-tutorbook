@@ -170,18 +170,22 @@ class Utils {
         Object.entries(queries).forEach((entry) => {
             var subcollection = entry[0];
             var query = entry[1];
-            window.app.listeners.push(query.onSnapshot((snapshot) => {
-                if (!snapshot.size) {
-                    return recycler.empty(subcollection);
-                }
-
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'removed') {
-                        recycler.remove(change.doc, subcollection);
-                    } else {
-                        recycler.display(change.doc, subcollection);
+            window.app.listeners.push(query.onSnapshot({
+                error: (err) => console.error('Could not get ' + subcollection +
+                    ' data snapshot b/c of ', err),
+                next: (snapshot) => {
+                    if (!snapshot.size) {
+                        return recycler.empty(subcollection);
                     }
-                });
+
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            recycler.remove(change.doc, subcollection);
+                        } else {
+                            recycler.display(change.doc, subcollection);
+                        }
+                    });
+                },
             }));
         });
     }

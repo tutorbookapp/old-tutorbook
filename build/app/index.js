@@ -18277,18 +18277,23 @@ var Utils = function () {
             Object.entries(queries).forEach(function (entry) {
                 var subcollection = entry[0];
                 var query = entry[1];
-                window.app.listeners.push(query.onSnapshot(function (snapshot) {
-                    if (!snapshot.size) {
-                        return recycler.empty(subcollection);
-                    }
-
-                    snapshot.docChanges().forEach(function (change) {
-                        if (change.type === 'removed') {
-                            recycler.remove(change.doc, subcollection);
-                        } else {
-                            recycler.display(change.doc, subcollection);
+                window.app.listeners.push(query.onSnapshot({
+                    error: function error(err) {
+                        return console.error('Could not get ' + subcollection + ' data snapshot b/c of ', err);
+                    },
+                    next: function next(snapshot) {
+                        if (!snapshot.size) {
+                            return recycler.empty(subcollection);
                         }
-                    });
+
+                        snapshot.docChanges().forEach(function (change) {
+                            if (change.type === 'removed') {
+                                recycler.remove(change.doc, subcollection);
+                            } else {
+                                recycler.display(change.doc, subcollection);
+                            }
+                        });
+                    }
                 }));
             });
         }
