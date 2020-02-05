@@ -43,8 +43,7 @@ class Schedule {
         this.recycler = {
             remove: (doc, type) => {
                 $(this.main)
-                    .find('[id="' + doc.id + '"]')
-                    .find('[type="' + type + '"]')
+                    .find('[id="' + doc.id + '"][type="' + type + '"]')
                     .remove();
                 this.refresh();
             },

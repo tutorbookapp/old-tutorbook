@@ -7226,6 +7226,7 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
                 showDelete: true,
                 delete: function _delete() {
                     return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment between ' + _this32.appt.attendees[0].name + ' and ' + _this32.appt.attendees[1].name + '? This action ' + 'cannot be undone.', async function () {
+                        window.app.snackbar.view('Deleting past ' + 'appointment...');
                         window.app.nav.back();
                         await Data.deletePastAppt(_this32.appt, _this32.id);
                         window.app.snackbar.view('Deleted past appointment.');
@@ -22926,6 +22927,7 @@ var PastAppt = function (_Event9) {
                 return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment with ' + _this11.other.name + '? This action cannot be undone.', async function () {
                     (0, _jquery2.default)(_this11.el).hide();
                     window.app.schedule.refresh();
+                    window.app.snackbar.view('Deleting past ' + 'appointment...');
 
                     var _ref9 = await (0, _awaitToJs2.default)(Data.deletePastAppt(doc.data(), doc.id)),
                         _ref10 = _slicedToArray(_ref9, 2),
@@ -22979,6 +22981,7 @@ var SupervisorPastAppt = function (_Event10) {
                 return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment between ' + _this12.attendees[0].name + ' and ' + _this12.attendees[1].name + '? This action ' + 'cannot be undone.', async function () {
                     (0, _jquery2.default)(_this12.el).hide();
                     window.app.schedule.refresh();
+                    window.app.snackbar.view('Deleting past ' + 'appointment...');
 
                     var _ref11 = await (0, _awaitToJs2.default)(Data.deletePastAppt(doc.data(), doc.id)),
                         _ref12 = _slicedToArray(_ref11, 2),
@@ -27598,7 +27601,7 @@ var Schedule = function () {
         this.limit = 10; // How many pastAppointments to load
         this.recycler = {
             remove: function remove(doc, type) {
-                (0, _jquery2.default)(_this.main).find('[id="' + doc.id + '"]').find('[type="' + type + '"]').remove();
+                (0, _jquery2.default)(_this.main).find('[id="' + doc.id + '"][type="' + type + '"]').remove();
                 _this.refresh();
             },
             display: function display(doc, type) {

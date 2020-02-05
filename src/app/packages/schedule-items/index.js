@@ -342,6 +342,8 @@ class PastAppt extends Event {
                     '? This action cannot be undone.', async () => {
                         $(this.el).hide();
                         window.app.schedule.refresh();
+                        window.app.snackbar.view('Deleting past ' +
+                            'appointment...');
                         const [err, res] = await to(Data.deletePastAppt(
                             doc.data(),
                             doc.id,
@@ -393,6 +395,8 @@ class SupervisorPastAppt extends Event {
                     'cannot be undone.', async () => {
                         $(this.el).hide();
                         window.app.schedule.refresh();
+                        window.app.snackbar.view('Deleting past ' +
+                            'appointment...');
                         const [err, res] = await to(Data.deletePastAppt(
                             doc.data(),
                             doc.id,

@@ -2039,6 +2039,8 @@ class ViewPastApptDialog extends ViewApptDialog {
                     'past appointment between ' + this.appt.attendees[0].name +
                     ' and ' + this.appt.attendees[1].name + '? This action ' +
                     'cannot be undone.', async () => {
+                        window.app.snackbar.view('Deleting past ' +
+                            'appointment...');
                         window.app.nav.back();
                         await Data.deletePastAppt(this.appt, this.id);
                         window.app.snackbar.view('Deleted past appointment.');

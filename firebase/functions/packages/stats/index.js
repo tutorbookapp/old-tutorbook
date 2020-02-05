@@ -174,13 +174,15 @@ const dataAction = {
     deletePastAppt: async (user, data, res, isTest) => {
         const a = data.appt;
         const r = a.for;
+        const clockIn = a.clockIn.sentTimestamp.getTime ? a.clockIn
+            .sentTimestamp : a.clockIn.sentTimestamp.toDate ? a.clockIn
+            .sentTimestamp.toDate() : new Date(a.clockIn.sentTimestamp);
         const stat = {
             title: 'Deleted Past Appointment',
             subtitle: user.name.split(' ')[0] + ' deleted a past appointment',
             summary: r.fromUser.name + '\'s past appointment for ' +
                 a.for.subject + ' with ' + r.toUser.name + ' on ' +
-                a.clockIn.sentTimestamp.toDate().toDateString() + ' was ' +
-                'deleted by ' + user.name + '.',
+                clockIn.toDateString() + ' was deleted by ' + user.name + '.',
             timestamp: new Date(),
         };
         return createStat(user, stat, isTest);
