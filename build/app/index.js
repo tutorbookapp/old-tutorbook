@@ -105716,11 +105716,11 @@ var Login = function () {
                     // 3) Setting up their first payment method
                     // We want them to set availability so that tutors can edit their
                     // requests as needed.
-                    Utils.url('/app/home?cards=searchTutors+setupNotifications+setupAvailability?auth=true?type=Pupil');
+                    Utils.url('/app/home?cards=searchTutors+setupNotifications+' + 'setupAvailability?auth=true?type=Pupil');
                     Login.viewGoogleSignIn();
                 },
                 paidTutor: function paidTutor() {
-                    Utils.url('/app/home?cards=setupProfile+setupNotifications?payments=true?auth=true?type=Tutor');
+                    Utils.url('/app/home?cards=setupProfile+setupNotifications?' + 'payments=true?auth=true?type=Tutor');
                     Login.viewGoogleSignIn();
                 },
                 tutor: function tutor() {
@@ -105728,7 +105728,7 @@ var Login = function () {
                     // 1) Their profile (i.e. subjects, availability, locations)
                     // 2) Linking Google Calendar or iCal to their account
                     // 3) Setting up their first deposit/payment method
-                    Utils.url('/app/home?cards=setupProfile+setupNotifications?auth=true?type=Tutor');
+                    Utils.url('/app/home?cards=setupProfile+setupNotifications?' + 'auth=true?type=Tutor');
                     Login.viewGoogleSignIn();
                 },
                 parent: function parent() {
@@ -105736,7 +105736,7 @@ var Login = function () {
                     // 1) Creating children accounts
                     // 2) Searching for a tutor
                     // 3) Enabling notifications (i.e. adding phone #, etc.)
-                    Utils.url('/app/home?cards=searchTutors+setupNotifications+setupAvailability?auth=true?type=Parent');
+                    Utils.url('/app/home?cards=searchTutors+setupNotifications+' + 'setupAvailability?auth=true?type=Parent');
                     Login.viewGoogleSignIn();
                     /* TODO: Right now, we just show the pupil cards.
                      *Utils.url('/app/home?cards=searchTutors+addChildren+setupNotifications?auth=true?type=Parent');
@@ -105749,7 +105749,7 @@ var Login = function () {
                     // 2) Linking Google Calendar or iCal to their account
                     // 3) Setting up their first location or applying to be a supervisor
                     // for an existing location
-                    Utils.url('/app/home?cards=setupNotifications?auth=false?type=Supervisor');
+                    Utils.url('/app/home?cards=setupNotifications?auth=false?' + 'type=Supervisor');
                     Login.viewGoogleSignIn();
                 }
             });
@@ -105814,7 +105814,7 @@ var Login = function () {
             var codeEl = dialogEl.querySelector('#code-input');
             var codeTextField = _index3.MDCTextField.attachTo(codeEl);
 
-            (0, _jquery2.default)(dialogEl).find('#description').text('To ensure that you are ' + 'an authenticated ' + window.app.user.type.toLowerCase() + ', please' + ' enter the verification code that you were assigned after ' + 'your application was processed.');
+            (0, _jquery2.default)(dialogEl).find('#description').text('To ensure that you are ' + 'an authenticated ' + window.app.user.type.toLowerCase() + ', ' + 'please enter the verification code that you were assigned after ' + 'your application was processed.');
 
             dialog.autoStackButtons = false;
             dialog.scrimClickAction = '';
