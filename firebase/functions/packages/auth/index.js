@@ -28,59 +28,46 @@ const customAuth = (req, res) => {
 
 const updateAuth = async (change, context) => {
     const profile = change.after.data();
-    const id = context.params.id;
+    const uid = context.params.id;
     if (!profile)
-        return console.warn('[WARNING] User (' + id + ') doc was deleted.');
-    if (!profile.uid)
-        return console.warn('[WARNING] User (' + id + ') did not have a uID.');
+        return console.warn('[WARNING] User (' + uid + ') doc was deleted.');
     const db = admin.firestore().collection('partitions').doc('default');
 
     // Check to see if the supervisor's id is in the codes collection
     const codes = await db.collection('auth').doc('supervisors').get();
     if (!codes.exists) throw new Error('Supervisor codes did not exist.');
     const validIDs = Object.keys(codes.data());
+    console.log('[DEBUG] Checking if supervisor (' + uid + ') is in list of ' +
+        'valid supervisor uIDs...', validIDs);
 
     if (profile.type === 'Supervisor' && profile.authenticated &&
-        validIDs.indexOf(id) >= 0) { // SUPERVISOR
+        validIDs.indexOf(uid) >= 0) { // SUPERVISOR
         console.log('[DEBUG] ' + profile.name + ' was a verified supervisor. ' +
             'Adding customAuth claims...');
         const locations = await db.collection('locations')
-            .where('supervisors', 'array-contains', profile.uid)
+            .where('supervisors', 'array-contains', uid)
             .get();
-        var locationIDs = [];
-        locations.forEach((doc) => {
-            locationIDs.push(doc.id);
-        });
-        return admin.auth()
-            .setCustomUserClaims(profile.uid, {
-                supervisor: true,
-                parent: false,
-                locations: locationIDs,
-                children: [],
-            }).then(() => {
-                console.log('[DEBUG] Added supervisor customAuth to ' +
-                    profile.name + '\'s account.');
-            }).catch((err) => {
-                console.error('[ERROR] Could not add supervisor customAuth ' +
-                    'to ' + profile.name + '\'s account b/c of ' + err.message);
-            });
+        return admin.auth().setCustomUserClaims(uid, {
+            supervisor: true,
+            parent: false,
+            locations: locations.map(doc => doc.id),
+            children: [],
+        }).then(() => console.log('[DEBUG] Added supervisor customAuth to ' +
+            profile.name + '\'s account.')).catch((err) => console.error(
+            '[ERROR] Could not add supervisor customAuth to ' + profile.name +
+            '\'s account b/c of ' + err.message));
     } else { // NOTHING
         console.log('[DEBUG] ' + profile.name + ' was not a verified ' +
             'supervisor. Ensuring that they don\'t have customAuth claims...');
-        return admin.auth()
-            .setCustomUserClaims(profile.uid, {
-                supervisor: false,
-                parent: false,
-                locations: [],
-                children: [],
-            })
-            .then(() => {
-                console.log('[DEBUG] Removed any customAuth claims from ' +
-                    profile.name + '\'s account.');
-            }).catch((e) => {
-                console.error('[ERROR] Could not remove customAuth claims ' +
-                    'from ' + profile.name + '\'s account b/c of ' + e.message);
-            });
+        return admin.auth().setCustomUserClaims(uid, {
+            supervisor: false,
+            parent: false,
+            locations: [],
+            children: [],
+        }).then(() => console.log('[DEBUG] Removed any customAuth claims from' +
+            ' ' + profile.name + '\'s account.')).catch((e) => console.error(
+            '[ERROR] Could not remove customAuth claims from ' + profile.name +
+            '\'s account b/c of ' + e.message));
     }
 };
 
