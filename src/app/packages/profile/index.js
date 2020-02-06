@@ -754,7 +754,7 @@ class TutorProfile extends Profile {
         $(this.main).find('#Bio').replaceWith($(this.render.textField(
             'Service hours',
             Utils.getDurationStringFromSecs(this.profile.secondsTutored || 0),
-        )).attr('style', 'width:50%!important;margin-right:20px;'));
+        )).attr('style', 'margin-right:20px;'));
     }
 
     manage(dontUpdate) {
