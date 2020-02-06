@@ -19322,6 +19322,16 @@ var Data = function () {
             }
         }
     }], [{
+        key: 'addToWorkspace',
+        value: function addToWorkspace(uid) {
+            var proxy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+            return Data.updateUser({
+                uid: uid,
+                proxy: Data.concatArr(proxy, [window.app.user.uid])
+            });
+        }
+    }, {
         key: 'getServiceHoursLog',
         value: async function getServiceHoursLog(params) {
             return axios({

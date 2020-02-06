@@ -13,6 +13,13 @@ class Data {
         this.initLocations();
     }
 
+    static addToWorkspace(uid, proxy = []) {
+        return Data.updateUser({
+            uid: uid,
+            proxy: Data.concatArr(proxy, [window.app.user.uid]),
+        });
+    }
+
     static async getServiceHoursLog(params) {
         return axios({
             method: 'get',
