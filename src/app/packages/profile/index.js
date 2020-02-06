@@ -718,9 +718,8 @@ class EditProfile extends NewProfile {
                     window.app.snackbar.view('Deleted account.');
                 }).view(),
         }));
-        $(this.main).find('#Type').replaceWith(
-            $(this.render.select('Type', this.profile.type, Data.types))
-            .attr('style', 'width:50% !important;'));
+        $(this.main).find('#Type').replaceWith(this.render.select('Type', this
+            .profile.type, Data.types));
         $(this.main).find('#Name').parent().parent().replaceWith(
             this.render.textFieldItem('Name', this.profile.name));
         $(this.main).find('#Email').first().parent().parent().replaceWith(

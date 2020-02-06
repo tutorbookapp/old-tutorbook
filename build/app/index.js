@@ -22273,7 +22273,7 @@ var EditProfile = function (_NewProfile) {
                     }).view();
                 }
             }));
-            (0, _jquery2.default)(this.main).find('#Type').replaceWith((0, _jquery2.default)(this.render.select('Type', this.profile.type, Data.types)).attr('style', 'width:50% !important;'));
+            (0, _jquery2.default)(this.main).find('#Type').replaceWith(this.render.select('Type', this.profile.type, Data.types));
             (0, _jquery2.default)(this.main).find('#Name').parent().parent().replaceWith(this.render.textFieldItem('Name', this.profile.name));
             (0, _jquery2.default)(this.main).find('#Email').first().parent().parent().replaceWith(this.render.textFieldItem('Email', this.profile.email));
         }
