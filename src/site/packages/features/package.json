@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/features",
-  "version": "0.4.0",
+  "version": "0.4.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/feature-spotlight": "^0.4.0"
+    "@tutorbook/feature-spotlight": "^0.4.4"
   }
 }
