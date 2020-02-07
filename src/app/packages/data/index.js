@@ -192,6 +192,19 @@ class Data {
         throw new Error('User (' + id + ') did not exist.');
     }
 
+    static deleteLocation(id) {
+        return Data.post('deleteLocation', {
+            id: id,
+        });
+    }
+
+    static updateLocation(location, id) {
+        return Data.post('updateLocation', {
+            location: location,
+            id: id,
+        });
+    }
+
     static async updateUser(user) {
         await Data.updateUserAvailability(user);
         Data.updateUserLocation(user);
@@ -602,6 +615,17 @@ Data.prices = [
     'Free',
     'Paid',
 ];
+
+Data.emptyLocation = {
+    name: '',
+    description: '',
+    city: 'Palo Alto, CA',
+    hours: {},
+    config: {},
+    supervisors: [],
+    timestamp: new Date(),
+    url: 'https://tutorbook.app',
+};
 
 Data.emptyProfile = {
     name: '',

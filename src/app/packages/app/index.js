@@ -25,6 +25,7 @@ const Listener = require('@tutorbook/listener');
 const Login = require('@tutorbook/login');
 const Matching = require('@tutorbook/matching').default;
 const MatchingDialog = require('@tutorbook/matching').dialog;
+const Config = require('@tutorbook/config');
 
 // Dependency cycle workarounds
 const SearchHeader = require('@tutorbook/search').header;
@@ -96,6 +97,7 @@ class Tutorbook {
                 this.dashboard = new SupervisorDashboard();
                 this.matching = new Matching();
                 this.stats = new Stats();
+                this.config = new Config();
                 this.chats = new SupervisorChats();
             } else {
                 this.schedule = new Schedule();

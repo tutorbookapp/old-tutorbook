@@ -530,17 +530,18 @@ describe("Tutorbook's REST API", () => {
     // =========================================================================
     // CLOCK-INs/OUTs
     // =========================================================================
-    function createLocation() {
+    async function createLocation() {
         const location = {
             supervisors: [SUPERVISOR.uid],
             name: LOCATION.name,
             url: LOCATION.url,
             timestamp: new Date(),
         };
-        return post(SUPERVISOR.email, 'createLocation', {
+        const res = await post(SUPERVISOR.email, 'createLocation', {
             location: location,
             id: LOCATION.id,
         });
+        return [res.data.location, res.data.id];
     };
 
     async function clockIn(user) {
@@ -653,6 +654,30 @@ describe("Tutorbook's REST API", () => {
     // =========================================================================
     // TODO: SUPERVISORs
     // =========================================================================
+    it("lets supervisors create locations", async () => {
+        await createUsers();
+        return createLocation();
+    });
+
+    it("lets supervisors update locations", async () => {
+        await createUsers();
+        [location, id] = await createLocation();
+        return post(SUPERVISOR.email, 'updateLocation', {
+            location: combineMaps(location, {
+                description: 'This is a modified description.',
+            }),
+            id: id,
+        });
+    });
+
+    it("lets supervisors delete locations", async () => {
+        await createUsers();
+        [location, id] = await createLocation();
+        return post(SUPERVISOR.email, 'deleteLocation', {
+            id: id,
+        });
+    });
+
     it("lets supervisors send reminder messages", async () => {
         await createUsers();
         [appt, id] = await approveRequest();

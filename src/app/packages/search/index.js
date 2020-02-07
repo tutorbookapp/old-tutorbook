@@ -19,9 +19,8 @@ const NotificationDialog = require('@tutorbook/dialogs').notify;
 
 class SearchHeader {
 
-    constructor(options) {
+    constructor(options = {}) {
         this.render = window.app.render;
-        if (!options) options = {};
         this.index = options.index ? options.index : algolia.initIndex('users');
         if (options.search) this.search = options.search;
         this.renderSelf(options);
@@ -30,6 +29,8 @@ class SearchHeader {
     renderSelf(options) {
         this.el = this.render.header('header-search', Utils.combineMaps({
             title: 'Tutorbook',
+            wordmark: false,
+            logo: false,
             placeholder: window.app.onMobile ? 'Search users' : 'Search users' +
                 ' by name, subject, availability, and more',
         }, options));

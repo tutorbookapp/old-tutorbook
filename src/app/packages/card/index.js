@@ -1060,8 +1060,21 @@ Card.renderCard = function(title, subtitle, summary, actions) {
         actions.menu = () => {
             menu.open = true;
         };
+    } else if (actions.primary && Object.keys(actions).length < 2) {
+        MDCRipple.attachTo(card);
+        $(card).find('.mdc-card__primary-action')
+            .removeClass('mdc-card__primary-action').end()
+            .find('.mdc-card__actions').remove().end()
+            .find('.dashboard-card__secondary').css('padding-bottom', '1rem')
+            .end().addClass('mdc-card__primary-action')
+            .css('border-radius', '4px');
     } else if (actions.primary) {
         MDCRipple.attachTo($(card).find('.mdc-card__primary-action')[0]);
+    } else if (Object.keys(actions).length < 1) {
+        $(card)
+            .find('.mdc-card__actions').remove()
+            .find('.mdc-card__primary-action')
+            .removeClass('mdc-card__primary-action');
     } else {
         $(card).find('.mdc-card__primary-action')
             .removeClass('mdc-card__primary-action');

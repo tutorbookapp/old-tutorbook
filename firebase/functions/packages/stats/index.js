@@ -187,6 +187,44 @@ const dataAction = {
         };
         return createStat(user, stat, isTest);
     },
+    createLocation: async (user, data, res, isTest) => {
+        const l = data.location;
+        const created = l.timestamp.getTime ? l.timestamp : l.timestamp.toDate ?
+            l.timestamp.toDate() : new Date(l.timestamp);
+        const stat = {
+            title: 'New Location',
+            subtitle: user.name.split(' ')[0] + ' created the ' + l.name,
+            summary: user.name + ' created the ' + l.name + ' on ' + created
+                .toDateString() + '. Contact +1 (650) 861-2723 for more ' +
+                'information.',
+            timestamp: created,
+        };
+        return createStat(user, stat, isTest);
+    },
+    updateLocation: async (user, data, res, isTest) => {
+        const l = data.location;
+        const stat = {
+            title: 'Updated Location',
+            subtitle: user.name.split(' ')[0] + ' updated the ' + l.name,
+            summary: user.name + ' updated the ' + l.name + '\'s ' +
+                'configuration data. Contact +1 (650) 861-2723 for more ' +
+                'information.',
+            timestamp: new Date(),
+        };
+        return createStat(user, stat, isTest);
+    },
+    deleteLocation: async (user, data, res, isTest) => {
+        const l = data.location;
+        const stat = {
+            title: 'Deleted Location',
+            subtitle: user.name.split(' ')[0] + ' deleted the ' + l.name,
+            summary: user.name + ' deleted the ' + l.name + '\'s ' +
+                'configuration data. Contact +1 (650) 861-2723 for more ' +
+                'information.',
+            timestamp: new Date(),
+        };
+        return createStat(user, stat, isTest);
+    },
 };
 
 // Stat triggered whenever a user modifies their profile document.

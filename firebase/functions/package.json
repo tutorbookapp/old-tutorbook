@@ -23,6 +23,7 @@
     "@firebase/app": "^0.5.1",
     "algolia": "file:./packages/algolia",
     "auth": "file:./packages/auth",
+    "awesome-new-gunn-schedule-package": "^1.0.2",
     "cors": "^2.8.5",
     "data": "file:./packages/data",
     "email": "file:./packages/email",

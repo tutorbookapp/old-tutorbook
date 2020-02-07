@@ -334,6 +334,11 @@ class Render {
         return this.inputItem(this.textField(label, val));
     }
 
+    textFieldWithErrItem(label, val, err) {
+        return $(this.inputItem(this.textFieldWithErr(label, val, err)))
+            .addClass('err-input-list-item')[0]
+    }
+
     inputItem(el) {
         const inputListItemEl = this.template('input-list-item');
         inputListItemEl.appendChild(el);
@@ -375,6 +380,14 @@ class Render {
             // NOTE: By adding this or statement, we can still render empty 
             // textAreas even when val is null, undefined, or false.
             'text': val || ''
+        });
+    }
+
+    textFieldWithErr(label, val = '', err = 'Invalid response, try again.') {
+        return this.template('err-text-field', {
+            label: label,
+            text: val,
+            err: err,
         });
     }
 

@@ -1,6 +1,10 @@
 @import "@tutorbook/site-styles/general";
 
 body {
-  overflow-x: hidden;
+  outline: 0;
+}
+
+main {
+  overflow: hidden;
   outline: 0;
 }

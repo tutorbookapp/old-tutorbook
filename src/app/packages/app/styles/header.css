@@ -1,0 +1,10 @@
+.mdc-top-app-bar__wordmark,
+.mdc-top-app-bar__logo {
+  max-height: 20px;
+}
+
+.mdc-top-app-bar__title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}

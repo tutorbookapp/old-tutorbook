@@ -1,0 +1,20 @@
+{
+  "name": "@tutorbook/config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tutorbook/card": "^0.4.2",
+    "@tutorbook/data": "^0.4.0",
+    "@tutorbook/dialogs": "^0.4.2",
+    "@tutorbook/horz-scroller": "^1.0.0",
+    "@tutorbook/search": "^0.4.2",
+    "@tutorbook/utils": "^0.4.2"
+  }
+}

@@ -17,5 +17,8 @@ li, ul {
   color: #181818; }
 
 body {
-  overflow-x: hidden;
+  outline: 0; }
+
+main {
+  overflow: hidden;
   outline: 0; }

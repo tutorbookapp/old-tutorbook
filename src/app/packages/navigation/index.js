@@ -71,8 +71,8 @@ class Navigation {
                 return window.app.chats.reView();
             case 'matching':
                 return window.app.matching.reView();
-            case 'stats':
-                return window.app.stats.reView();
+            case 'config':
+                return window.app.config.reView();
             case 'schedule':
                 return window.app.schedule.reView();
             case 'payments':
@@ -154,15 +154,13 @@ class Navigation {
                         app.router.navigate('/app/home');
                     }
                 },
-                /*
-                 *'/app/stats': function() {
-                 *    if (app.user.type === 'Supervisor') {
-                 *        app.stats.view();
-                 *    } else {
-                 *        app.router.navigate('/app/home');
-                 *    }
-                 *},
-                 */
+                '/app/config': function() {
+                    if (app.user.type === 'Supervisor') {
+                        app.config.view();
+                    } else {
+                        app.router.navigate('/app/home');
+                    }
+                },
                 '/app/dashboard': function() {
                     app.dashboard.view();
                 },
@@ -240,8 +238,8 @@ class Navigation {
             showMatching: () => {
                 window.app.matching.view();
             },
-            showStats: () => {
-                window.app.stats.view();
+            showConfig: () => {
+                window.app.config.view();
             },
             showChats: function() {
                 window.app.chats.view();
@@ -284,8 +282,8 @@ class Navigation {
             case 'Matching':
                 $('#nav-drawer .mdc-list #matching').addClass(active);
                 break;
-            case 'Stats':
-                $('#nav-drawer .mdc-list #stats').addClass(active);
+            case 'Config':
+                $('#nav-drawer .mdc-list #config').addClass(active);
                 break;
             case 'Home':
                 $('#nav-drawer .mdc-list #home').addClass(active);

@@ -13,6 +13,7 @@
     "@tutorbook/ads": "^0.4.3",
     "@tutorbook/card": "^0.4.3",
     "@tutorbook/chats": "^0.4.3",
+    "@tutorbook/config": "^1.0.0",
     "@tutorbook/dashboard": "^0.4.3",
     "@tutorbook/data": "^0.4.3",
     "@tutorbook/dialogs": "^0.4.3",

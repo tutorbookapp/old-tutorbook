@@ -66,6 +66,14 @@ class DataProxy {
             case 'createLocation':
                 assert(token.supervisor);
                 return Data.createLocation(data.location, data.id);
+            case 'updateLocation':
+                assert(token.supervisor && token.locations.indexOf(data.id) >=
+                    0);
+                return Data.updateLocation(data.location, data.id);
+            case 'deleteLocation':
+                assert(token.supervisor && token.locations.indexOf(data.id) >=
+                    0);
+                return Data.deleteLocation(data.id);
             case 'createProxyUser':
                 assert(token.supervisor);
                 return Data.createProxyUser(data.user);
@@ -293,13 +301,35 @@ class Data {
     }
 
     static async createLocation(location, id) {
-        if (!location)
-            throw new Error('Could not create location b/c it was undefined.');
-        const doc = (id) ? global.db.collection('locations').doc(id) : global.db
+        location = Data.trimObject(location);
+        const ref = id ? global.db.collection('locations').doc(id) : global.db
             .collection('locations').doc();
-        await doc.set(location);
+        if ((await ref.get()).exists) console.warn('[WARNING] Location (' + id +
+            ') already existed.');
+        await ref.set(location);
         return {
-            id: doc.id,
+            id: ref.id,
+            location: location,
+        };
+    }
+
+    static async updateLocation(location, id) {
+        console.log('[DEBUG] Location before trimming:', location);
+        location = Data.trimObject(location);
+        console.log('[DEBUG] Location after trimming:', location);
+        await global.db.collection('locations').doc(id).update(location);
+        return {
+            id: id,
+            location: location,
+        };
+    }
+
+    static async deleteLocation(id) {
+        const ref = global.db.collection('locations').doc(id);
+        const location = (await ref.get()).data();
+        await ref.delete();
+        return {
+            id: id,
             location: location,
         };
     }
@@ -1134,20 +1164,30 @@ class Data {
 
     static trimObject(ob) {
         const result = {};
-        Object.entries(ob).forEach((entry) => {
-            switch (typeof entry[1]) {
+        Object.entries(ob).forEach(([key, val]) => {
+            switch (typeof val) {
                 case 'string':
-                    result[entry[0]] = entry[1].trim();
+                    result[key] = val.trim();
+                    const date = new Date(val.trim());
+                    if (date.toString() !== 'Invalid Date')
+                        result[key] = date;
                     break;
-                case 'object': // Yay recursion!
-                    if (!entry[1].getTime && !entry[1].toDate) {
-                        result[entry[0]] = Data.trimObject(entry[1]);
-                    } else { // It's a timestamp (don't try to trim it)
-                        result[entry[0]] = entry[1];
+                case 'object':
+                    if (val instanceof Array) { // Array
+                        result[key] = val;
+                    } else if (val._seconds && val._nanoseconds) { // Timestamp
+                        result[key] = new admin.firestore.Timestamp(
+                            val._seconds,
+                            val._nanoseconds,
+                        );
+                    } else if (!val.getTime && !val.toDate) { // Map
+                        result[key] = Data.trimObject(val);
+                    } else { // Timestamp or Date 
+                        result[key] = val;
                     }
                     break;
                 default:
-                    result[entry[0]] = entry[1];
+                    result[key] = val;
             };
         });
         return result;

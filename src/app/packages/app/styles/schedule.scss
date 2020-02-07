@@ -28,6 +28,9 @@
 .card-schedule .schedule-header-text {
   padding-left: 4px;
   margin-bottom: -20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .card-event {
@@ -73,6 +76,11 @@
   margin-left: -90px;
   height: 0px;
   margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: #181818;
 }
 
 .schedule .mdc-list-item__graphic {

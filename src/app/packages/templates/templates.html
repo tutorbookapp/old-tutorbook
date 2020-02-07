@@ -119,7 +119,8 @@ user sees as they navigate throughout the app. -->
     <div class="delete-user-input">
         <button class="mdc-button" data-fir-click="delete">
             <i class="mdc-button__icon material-icons">delete</i>
-            <span class="mdc-button__label">Delete account</span>
+            <span class="mdc-button__label" data-fir-if-not="label">Delete account</span>
+            <span class="mdc-button__label" data-fir-if="label" data-fir-content="label">Delete account</span>
         </button>
     </div>
 </div>
@@ -843,11 +844,17 @@ user sees as they navigate throughout the app. -->
 </div>
 
 <div hidden class="template" id="header-search">
-    <header id="search-app-bar" class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <header id="search-app-bar" class="header-search mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                 <div class="button mdc-top-app-bar__navigation-icon" data-fir-click="navigation"><i class="material-icons">menu</i></div>
-                <span class="mdc-top-app-bar__title" data-fir-content="title">Tutorbook</span>
+                <span class="mdc-top-app-bar__title" data-fir-if="title" data-fir-content="title">Tutorbook</span>
+                <span class="mdc-top-app-bar__title" data-fir-if="wordmark">
+                    <img class="mdc-top-app-bar__wordmark" src="wordmark.svg">
+                </span>
+                <span class="mdc-top-app-bar__title" data-fir-if="logo">
+                    <img class="mdc-top-app-bar__logo" src="logo.svg">
+                </span>
             </section>
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-middle">
                 <div class="search-box">
@@ -885,7 +892,7 @@ user sees as they navigate throughout the app. -->
 </div>
 
 <div hidden class="template" id="header-main">
-    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <header class="header-main mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                 <div class="button mdc-top-app-bar__navigation-icon" data-fir-click="navigation"><i class="material-icons">menu</i></div>
@@ -941,7 +948,7 @@ user sees as they navigate throughout the app. -->
 </div>
 
 <div hidden class="template" id="header-action">
-    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <header class="header-action mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                 <a data-fir-click="cancel" class="mdc-top-app-bar__navigation-icon material-icons">close</a>
@@ -962,7 +969,7 @@ user sees as they navigate throughout the app. -->
 
 <!-- Filter Header Template -->
 <div hidden class="template" id="header-filter">
-    <header class="mdc-top-app-bar mdc-top-app-bar--fixed">
+    <header class="header-filter mdc-top-app-bar mdc-top-app-bar--fixed">
         <div class="mdc-top-app-bar__row">
             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                 <div class="button mdc-top-app-bar__navigation-icon" data-fir-click="navigation"><i class="material-icons">menu</i></div>
@@ -1018,12 +1025,6 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">payment</i>
                 <span class="mdc-list-item__text">Payments</span>
             </a>
-            <!--
-               -<a id="stats" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showStats">
-               -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">equalizer</i>
-               -    <span class="mdc-list-item__text">Statistics</span>
-               -</a>
-	       -->
             <hr class="mdc-list-divider">
             <a id="search" class="mdc-list-item" data-fir-click="showSearch">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">search</i>
@@ -1050,12 +1051,10 @@ needs to be rendered with a ton of click listeners.) -->
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">chat</i>
                 <span class="mdc-list-item__text">Messages</span>
             </a>
-            <!--
-   -<a id="settings" class="mdc-list-item" data-fir-click="showSettings">
-   -    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
-   -    <span class="mdc-list-item__text">Settings</span>
-   -</a>
-   -->
+            <a id="config" class="mdc-list-item" data-fir-if="supervisor" data-fir-click="showConfig">
+                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>
+                <span class="mdc-list-item__text">Configuration</span>
+            </a>
         </nav>
     </div>
 </div>
@@ -1417,6 +1416,25 @@ styling due to input el spacing. -->
                 <label class="mdc-floating-label" for="stub">Stub</label>
             </div>
             <div class="mdc-notched-outline__trailing"></div>
+        </div>
+    </div>
+</div>
+
+<!-- MDC TextField Template -->
+<div hidden class="template" id="err-text-field">
+    <div class="err-text-field">
+        <div class="mdc-text-field mdc-text-field--outlined" data-fir-id="label">
+            <input type="text" class="mdc-text-field__input" data-fir-attr="value:text">
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label class="mdc-floating-label" data-fir-attr="for:label" data-fir-content="label">Label</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <div class="mdc-text-field-helper-line">
+            <div id="err" data-fir-content="err" class="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg">Invalid response, try again.</div>
         </div>
     </div>
 </div>
@@ -1964,9 +1982,28 @@ styling due to input el spacing. -->
     </div>
 </div>
 
+<!-- Configuration Screen Template -->
+<div hidden class="template" id="config">
+    <div class="config">
+        <div data-fir-if="welcome" class="header-welcome">
+            <h1 class="mdc-typography--headline1">
+                Configuration
+            </h1>
+            <h5 class="mdc-typography--subtitle1">
+                Manage locations, available subjects and grades, and your
+                school's bell schedule.
+            </h5>
+        </div>
+        <div class="mdc-layout-grid" id="default">
+            <div class="mdc-layout-grid__inner" id="cards">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Dashboard Grid Template -->
 <div hidden class="template" id="dashboard">
-    <div class=" dashboard">
+    <div class="dashboard">
         <div data-fir-if="welcome" class="header-welcome">
             <h1 class="mdc-typography--headline1">
                 Welcome, <span data-fir-content="name"></span>
@@ -1985,7 +2022,7 @@ styling due to input el spacing. -->
 
 <!-- Horz Scroller Card Grid Template -->
 <div hidden class="template" id="horz-cards">
-    <div class="horz-layout-grid">
+    <div class="horz-layout-grid" data-fir-id="id">
         <button id="left" style="display:none;" class="mdc-icon-button mdc-elevation--z4 material-icons">
             chevron_left
         </button>

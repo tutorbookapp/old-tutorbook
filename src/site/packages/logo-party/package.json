@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/logo-in-party": "^1.0.0",
     "@tutorbook/site-styles": "^0.4.0",
     "jquery": "^3.4.1"
   }

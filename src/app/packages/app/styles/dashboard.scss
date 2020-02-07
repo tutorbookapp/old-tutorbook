@@ -1,3 +1,13 @@
+.dashboard .input-list-divider h4,
+.config .input-list-divider h4,
+.schedule .input-list-divider h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  font-color: #181818;
+  letter-spacing: 0;
+}
+
 .horz-layout-grid {
   padding: 24px;
   position: relative;

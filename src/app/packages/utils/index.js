@@ -929,7 +929,84 @@ class Utils {
             ' to ' + data.toTime;
     }
 
-    static getAvailabilityStrings(availability) {
+    static parseHourStrings(strings) {
+        // @param [
+        //   'Fridays from 10:00 AM to 3:00 PM',
+        //   'Fridays from 10:00 AM to 3:00 PM',
+        //   'Tuesdays from 10:00 AM to 3:00 PM',
+        // ]
+        // @return hours: {
+        //   Friday: [
+        //     { open: '10:00 AM', close: '3:00 PM' },
+        //     { open: '10:00 AM', close: '3:00 PM' },
+        //   ],
+        //   Tuesday: [
+        //     { open: '10:00 AM', close: '3:00 PM' },
+        //   ],
+        // }
+        const timeslots = strings.map(str => Utils.parseHourString(str));
+        const hours = {};
+        timeslots.forEach(timeslot => {
+            if (!hours[timeslot.day]) hours[timeslot.day] = [];
+            if (hours[timeslot.day].findIndex(t => t.open === timeslot.open &&
+                    t.close === timeslot.close) < 0) hours[timeslot.day].push({
+                open: timeslot.open,
+                close: timeslot.close,
+            });
+        });
+        return hours;
+    }
+
+    static parseHourString(string) {
+        // @param 'Fridays from 10:00 AM to 3:00 PM'
+        // @return {
+        //   day: 'Friday',
+        //   open: '10:00 AM',
+        //   close: '3:00 PM',
+        // }
+        try {
+            const split = string.split(' ');
+            return {
+                day: split[0] || '',
+                open: split[2] && split[3] ? split[2] + ' ' + split[3] : '',
+                close: split[5] && split[6] ? split[5] + ' ' + split[6] : '',
+            };
+        } catch (e) {
+            console.warn('[WARNING] Could not parse hour string:', string);
+            return {
+                day: '',
+                open: '',
+                close: '',
+            };
+        }
+    }
+
+    static getHourString(hour) {
+        return hour.day + 's from ' + hour.open + ' to ' + hour.close;
+    }
+
+    static getHourStrings(hours = {}) {
+        // @param hours: {
+        //   Friday: [
+        //     { open: '10:00 AM', close: '3:00 PM' },
+        //     { open: '10:00 AM', close: '3:00 PM' },
+        //   ],
+        //   Tuesday: [
+        //     { open: '10:00 AM', close: '3:00 PM' },
+        //   ],
+        // }
+        // @return [
+        //   'Fridays from 10:00 AM to 3:00 PM',
+        //   'Fridays from 10:00 AM to 3:00 PM',
+        //   'Tuesdays from 10:00 AM to 3:00 PM',
+        // ]
+        const strings = [];
+        Object.entries(hours).forEach(([day, times]) => times.forEach(t =>
+            strings.push(day + 's from ' + t.open + ' to ' + t.close)));
+        return strings;
+    }
+
+    static getAvailabilityStrings(availability = {}) {
         // NOTE: User availability is stored in the Firestore database as:
         // availability: {
         // 	Gunn Academic Center: {

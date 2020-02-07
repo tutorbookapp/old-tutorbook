@@ -16,6 +16,7 @@ const EditProfile = require('@tutorbook/profile').edit;
 const MatchingDialog = require('@tutorbook/matching').dialog;
 const ScheduleCard = require('@tutorbook/schedule-card');
 const SearchHeader = require('@tutorbook/search').header;
+const HorzScroller = require('@tutorbook/horz-scroller');
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('@tutorbook/matching').default
@@ -222,112 +223,34 @@ class Dashboard {
 // 3) Everything else (e.g. cards w/ #s => "125 Tutors" or "56 Pupils")
 class SupervisorDashboard extends Dashboard {
 
-    constructor() {
-        super();
-        this.currentHorzScroll = 0;
-    }
-
     renderSelf() {
         super.renderSelf();
         const that = this;
         this.search = new SearchHeader();
+        this.horz = new HorzScroller('activity');
         this.header = this.search.el;
 
         function add(label, id) {
-            $(that.main).append(
-                that.render.divider(label)
-            );
-            $(that.main).append(
-                $(that.render.template('cards')).attr('id', id)
-            );
+            $(that.main)
+                .append(that.render.divider(label))
+                .append($(that.render.template('cards')).attr('id', id));
         };
 
-        function addHorz(label, id) {
-            $(that.main).append(
-                that.render.divider(label)
-            );
-            $(that.main).append(
-                $(that.render.template('horz-cards')).attr('id', id)
-            );
+        function addHorz(label) {
+            $(that.main)
+                .append(that.render.divider(label))
+                .append(that.horz.el);
         };
 
-        addHorz('Recent activity', 'activity');
+        addHorz('Recent activity');
         add('Schedule', 'schedule');
         add('Everything else', 'everything');
     }
 
     view() {
         super.view();
-        this.managed ? this.reManage() : this.manage();
+        this.horz.managed ? this.horz.reManage() : this.horz.manage();
         this.search.manage();
-    }
-
-    reManage() {
-        $(this.main).find('.horz-layout-grid__inner').scrollLeft(this
-            .currentHorzScroll);
-    }
-
-    updateHorzScroller(scroll) {
-        // 1) Get the scroller's width by adding all cards's widths
-        const scrollerWidth = () => {
-            var count = 0,
-                width = 0;
-            $(this.main).find('.horz-layout-grid .mdc-card').each(function() {
-                width += new Number($(this).css('width').replace('px', ''));
-                count++;
-            });
-            return [width / count, width];
-        };
-        // 2) Save the current horizontal scroll for when user reViews dashboard
-        if (scroll === undefined) scroll = $(this.main)
-            .find('.horz-layout-grid__inner')
-            .scrollLeft();
-        this.currentHorzScroll = scroll;
-        // 3) Show or hide nav btns based on the current scroll position
-        const left = $(this.main).find('.horz-layout-grid #left');
-        const right = $(this.main).find('.horz-layout-grid #right');
-        const [card, width] = scrollerWidth();
-        const noScrolling = width <= document.body.clientWidth - 48;
-        (noScrolling || scroll <= 0) ? left.hide(): left.show();
-        (noScrolling || scroll + 3 * card >= width) ? right.hide(): right
-            .show();
-    }
-
-    manage() {
-        this.managed = true;
-        const that = this;
-        $(this.main).find('.horz-layout-grid #left').each(function() {
-            MDCRipple.attachTo(this).unbounded = true;
-            this.addEventListener('click', () => {
-                // 1) Get the current horizontal scroll left
-                const horz = $(this).parent().find('.horz-layout-grid__inner');
-                const current = horz.scrollLeft();
-                // 2) Get the width of each mdc-card (how much we must scroll)
-                const width = $(this).parent().find('.mdc-card').css('width');
-                const left = new Number(width.replace('px', '')) + 24;
-                // 3) Scroll to the new position (and always round up)
-                const scroll = Math.round(current - (left + 0.5));
-                horz.animate({
-                    scrollLeft: scroll,
-                }, 200);
-                // 4) Update scrollPosition and which scroll buttons are showing
-                that.updateHorzScroller(scroll);
-            });
-        });
-        $(this.main).find('.horz-layout-grid #right').each(function() {
-            MDCRipple.attachTo(this).unbounded = true;
-            this.addEventListener('click', () => {
-                const horz = $(this).parent().find('.horz-layout-grid__inner');
-                const current = horz.scrollLeft();
-                const width = $(this).parent().find('.mdc-card').css('width');
-                const left = new Number(width.replace('px', '')) + 24;
-                const scroll = Math.round(current + (left + 0.5));
-                horz.animate({
-                    scrollLeft: scroll,
-                }, 200);
-                that.updateHorzScroller(scroll);
-            });
-        });
     }
 
     reView() {
@@ -388,7 +311,7 @@ class SupervisorDashboard extends Dashboard {
                     .find('#cards')
                     .find('#empty-card').remove().end()
                     .prepend(renderCard(doc));
-                this.updateHorzScroller();
+                this.horz.update();
             },
             remove: (doc) => {
                 $(this.main).find('[id="Recent activity"]').show().end()
@@ -396,13 +319,13 @@ class SupervisorDashboard extends Dashboard {
                     .find('#cards')
                     .find('#empty-card').remove().end()
                     .find('#' + doc.id).remove().end();
-                this.updateHorzScroller();
+                this.horz.update();
             },
             empty: () => {
                 $(this.main).find('#activity #cards').empty().end()
                     .find('[id="Recent activity"]').hide().end()
                     .find('#activity').hide();
-                this.updateHorzScroller();
+                this.horz.update();
             },
         };
         if (window.app.location.id) {
@@ -443,11 +366,6 @@ class SupervisorDashboard extends Dashboard {
                 .where('type', '==', 'Pupil')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
-            /*
-             *appts: window.app.db.collection('locations')
-             *    .doc(window.app.data.locationsByName[window.app.location.name])
-             *    .collection('appointments'),
-             */
         };
         Object.entries(queries).forEach((entry) => {
             var dashboard = new ProxyDashboard(

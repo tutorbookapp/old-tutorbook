@@ -12,7 +12,9 @@
 
 .user-view-list-divider .mdc-list-group__subheader {
   color: #018786 !important; /* or #3700B3 */
-  font-weight: 500;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
 }
 
 .user-view .description {

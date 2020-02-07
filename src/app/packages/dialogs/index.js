@@ -740,6 +740,310 @@ class ViewRejectedRequestDialog extends ViewRequestDialog {
     }
 };
 
+class EditHourDialog {
+    constructor(textField) {
+        this.render = window.app.render;
+        this.data = window.app.data;
+        this.textField = textField;
+        this.val = Utils.parseHourString(textField.value);
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        this.main = this.render.template('dialog-form', {
+            title: 'Edit Hours'
+        });
+        $(this.main).find('[data-mdc-dialog-action="ok"]').removeAttr('data-' +
+            'mdc-dialog-action');
+
+        const content = this.render.template('input-wrapper');
+        const add = (el) => $(content).append(el);
+        const addS = (l, v, d) => add(this.render.selectItem(l, v, d));
+        const addT = (l, p, v = '') => {
+            add(this.render.textFieldWithErrItem(l, v));
+            $(content).find('#' + l + ' input').attr('placeholder', p);
+        }
+
+        addS('Day', this.val.day || '', Data.days);
+        addT('Open', '3:45 PM', this.val.open);
+        addT('Close', '4:45 PM', this.val.close);
+
+        $(this.main).find('.mdc-dialog__content').append(content);
+    }
+
+    view() {
+        $('body').prepend(this.main);
+        window.editHoursDialog = this;
+        this.dialog = MDCDialog.attachTo(this.main);
+        this.dialog.open();
+        if (!this.managed) this.manage();
+    }
+
+    manage() {
+        const t = (q, a) => {
+            const t = new MDCTextField($(this.main).find(q)[0]);
+            t.useNativeValidation = false;
+            $(this.main).find(q + ' input').focusout(() => a(t));
+            return t;
+        };
+
+        this.managed = true;
+        this.daySelect = Utils.attachSelect($(this.main).find('#Day')[0]);
+        this.openTextField = t('#Open', t => this.updateOpenTime(t));
+        this.closeTextField = t('#Close', t => this.updateCloseTime(t));
+
+        $(this.main).find('#ok-button')[0].addEventListener('click', () => {
+            if (this.valid) {
+                this.dialog.close('ok');
+            }
+        });
+        this.dialog.listen('MDCDialog:closing', (event) => {
+            if (event.detail.action === 'ok')
+                this.textField.value = Utils.getHourString(this.val);
+            $(this.main).remove();
+        });
+    }
+
+    err(t, msg) { // TODO: Show err msg styling when called from get valid().
+        t.valid = false;
+        t.required = true;
+        $(t.root_).parent()
+            .find('.mdc-text-field-helper-text').text(msg).end()
+            .find('.mdc-text-field-helper-line').show().end()
+            .parent().css('margin', '8px 0').end();
+        return false;
+    }
+
+    validate(t) {
+        t.valid = true;
+        $(t.root_).parent()
+            .find('.mdc-text-field-helper-line').hide().end()
+            .parent().css('margin', '0').end().end();
+        return t.value;
+    }
+
+    get valid() { // We can't use && if we want to validate every input.
+        var valid = true;
+        valid = this.updateOpenTime() && valid;
+        valid = this.updateCloseTime() && valid;
+        valid = this.updateDay() && valid;
+        return valid;
+    }
+
+    updateOpenTime(t = this.openTextField) {
+        const ind = this.data.timeStrings.indexOf(t.value);
+        if (ind < 0) {
+            return this.err(t, 'Time must be formatted like 3:45 PM.');
+        } else if (ind > this.data.timeStrings.indexOf(this.val.close)) {
+            return this.err(t, 'Opening time cannot be after closing time.');
+        }
+        this.val.open = this.validate(t);
+        this.val.close = this.validate(this.closeTextField);
+        return true;
+    }
+
+    updateCloseTime(t = this.closeTextField) {
+        const ind = this.data.timeStrings.indexOf(t.value);
+        if (ind < 0) {
+            return this.err(t, 'Time must be formatted like 4:45 PM.');
+        } else if (ind < this.data.timeStrings.indexOf(this.val.open)) {
+            return this.err(t, 'Closing time cannot be before opening time.');
+        }
+        this.val.close = this.validate(t);
+        this.val.open = this.validate(this.openTextField);
+        return true;
+    }
+
+    updateDay(s = this.daySelect) {
+        if (Data.days.indexOf(s.value) < 0) {
+            s.required = true;
+            return s.valid = false;
+        }
+        this.val.day = s.value;
+        return true;
+    }
+};
+
+class EditLocationDialog {
+    constructor(location, id) {
+        const sync = (m) => Object.entries(m).forEach(([k, v]) => this[k] = v);
+        sync(Data.emptyLocation);
+        sync(location);
+        this.id = id;
+        this.render = window.app.render;
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        this.header = this.render.header('header-action', {
+            ok: async () => {
+                if (!this.valid) return;
+                window.app.nav.back();
+                window.app.snackbar.view('Updating location...');
+                const [err, res] = await to(Data.updateLocation(Utils
+                    .filterLocationData(this), this.id));
+                if (err) return window.app.snackbar.view('Could not update ' +
+                    'location.');
+                window.app.snackbar.view('Updated location.');
+            },
+            title: 'Edit Location',
+        });
+        this.main = this.render.template('dialog-input');
+
+        const add = (e) => this.main.appendChild(e);
+        const addD = (label) => add(this.render.listDivider(label));
+        const addActionD = (l, a) => add(this.render.actionDivider(l, a));
+        const addS = (l, v = '', d = []) => add(this.render.selectItem(l, v,
+            Utils.concatArr([v], d)));
+        const addT = (l, v = '') => add(this.render.textFieldItem(l, v));
+
+        addD('Basic info');
+        addT('Name', this.name);
+        add(this.render.textAreaItem('Description', this.description));
+        addActionD('Open hours', {
+            add: () => this.addHourInput(),
+            remove: () => this.removeHourInput(),
+        });
+        this.addHourInputs();
+        /*TODO: Add supervisor user search inputs.
+         *addActionD('Supervisors', {
+         *    add: () => this.addSupervisorInput(),
+         *    remove: () => this.removeSupervisorInput(),
+         *});
+         *this.addSupervisorInputs();
+         */
+        add(this.render.template('delete-user-input', {
+            label: 'Delete Location',
+            delete: () => new ConfirmationDialog('Delete Location?', 'You are' +
+                ' about to permanently delete all ' + this.name + ' data. ' +
+                'This action cannot be undone. Please ensure to check with ' +
+                'your fellow supervisors before continuing.', async () => {
+                    window.app.nav.back();
+                    window.app.snackbar.view('Deleting location...');
+                    const [err, res] = await to(Data
+                        .deleteLocation(this.id));
+                    if (err) return window.app.snackbar.view('Could ' +
+                        'not delete location.');
+                    window.app.snackbar.view('Deleted location.');
+                }).view(),
+        }));
+    }
+
+    view() {
+        window.locationDialog = this;
+        window.app.intercom.view(true);
+        window.app.view(this.header, this.main);
+        if (!this.managed) this.manage();
+    }
+
+    manage() {
+        this.managed = true;
+        MDCTopAppBar.attachTo(this.header);
+        $(this.header).find('.mdc-icon-button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
+        });
+        $(this.main).find('.mdc-button').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        const hourInputs = this.hourInputs = [];
+        const t = (q) => new MDCTextField($(this.main).find(q)[0]);
+        const ts = (q) => {
+            const res = [];
+            $(this.main).find(q).each(function() {
+                res.push(new MDCTextField(this));
+            });
+            return res;
+        };
+        this.nameTextField = t('#Name');
+        $(this.main).find('#Name input').attr('disabled', 'disabled');
+        this.descriptionTextArea = t('#Description');
+        this.supervisorTextFields = ts('[id="Supervisor"]');
+        $(this.main).find('[id="Open"]').each(function() {
+            const textField = new MDCTextField(this);
+            hourInputs.push(textField);
+            const dialog = new EditHourDialog(textField);
+            this.addEventListener('click', () => dialog.view());
+        });
+    }
+
+    get valid() { // Updates location hours and description
+        const strings = [];
+        $(this.main).find('[id="Open"] input').each(function() {
+            if ($(this).val()) strings.push($(this).val());
+        });
+        this.hours = Utils.parseHourStrings(strings);
+        this.description = this.descriptionTextArea.value;
+        return true;
+    }
+
+    addHourInput() {
+        const el = this.render.textFieldItem('Open', '');
+        const textField = new MDCTextField(el);
+        const dialog = new EditHourDialog(textField);
+        el.addEventListener('click', () => dialog.view());
+        this.hourInputs.push(textField);
+        $(el).insertAfter($(this.main).find('[id="Open"]').last().parent());
+        dialog.view();
+    }
+
+    removeHourInput() {
+        this.hourInputs.pop();
+        $(this.main).find('[id="Open"]').last().parent().remove();
+    }
+
+    addHourInputs() {
+        const add = (t = '') => $(this.main).append(this.render.textFieldItem(
+            'Open', t));
+        Utils.getHourStrings(this.hours).forEach(timeslot => {
+            add(timeslot);
+        });
+        add(); // Add empty input
+    }
+
+    addSupervisorInput() {
+        const elA = this.render.textField('Supervisor', '');
+        const elB = this.render.textField('Supervisor', '');
+        const el = this.render.splitListItem(elA, elB);
+        this.supervisorTextFields.push(new MDCTextField(elA));
+        this.supervisorTextFields.push(new MDCTextField(elB));
+        $(el).insertAfter($(this.main).find('[id="Supervisor"]').last()
+            .parent());
+    }
+
+    removeSupervisorInput() {
+        this.supervisorTextFields.pop();
+        this.supervisorTextFields.pop();
+        $(this.main).find('[id="Supervisor"]').last().parent().remove();
+    }
+
+    addSupervisorInputs() {
+        const add = (e, el) => $(this.main).append(this.render
+            .splitListItem(e, el));
+        const t = (v = '') => this.render.textField('Supervisor', v);
+        for (var i = 0; i < this.supervisors.length; i += 2) {
+            var supA = this.supervisors[i];
+            var supB = this.supervisors[i + 1];
+            add(t(subA), t(subB));
+        }
+        add(t(), t()); // Add empty inputs
+    }
+};
+
+class NewLocationDialog extends EditLocationDialog {
+    constructor() {
+        const location = {};
+        super(location, Utils.genID());
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        this.header = this.render.header('header-action', {
+            ok: () => console.log('[TODO] Create new location.'),
+            title: 'New Location',
+        });
+    }
+};
+
 class EditRequestDialog {
 
     // Renders the dialog for the given request
@@ -2192,4 +2496,6 @@ module.exports = {
     selectSubject: SubjectSelectDialog,
     editAvailability: EditAvailabilityDialog,
     confirm: ConfirmationDialog,
+    editLocation: EditLocationDialog,
+    newLocation: NewLocationDialog,
 };

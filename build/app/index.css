@@ -5056,13 +5056,18 @@ svg.mdc-button__icon {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 4.5rem;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  color: #181818; }
   .header-welcome h1 span {
     color: #6200EE; }
 
 .header-welcome h5 {
   font-family: 'Poppins', sans-serif;
-  font-weight: 500; }
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0;
+  color: #181818;
+  margin-bottom: 10px; }
 
 .login {
   text-align: center; }
@@ -5524,7 +5529,7 @@ svg.mdc-button__icon {
   /* @alternate */
   background-color: var(--mdc-theme-secondary, #018786); }
 
-@keyframes mdc-checkbox-fade-in-background-uca8da243 {
+@keyframes mdc-checkbox-fade-in-background-u755cca4a {
   0% {
     border-color: rgba(0, 0, 0, 0.54);
     background-color: transparent; }
@@ -5536,7 +5541,7 @@ svg.mdc-button__icon {
     /* @alternate */
     background-color: var(--mdc-theme-secondary, #018786); } }
 
-@keyframes mdc-checkbox-fade-out-background-uca8da243 {
+@keyframes mdc-checkbox-fade-out-background-u755cca4a {
   0%,
   80% {
     border-color: #018786;
@@ -5550,10 +5555,10 @@ svg.mdc-button__icon {
     background-color: transparent; } }
 
 .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-in-background-uca8da243; }
+  animation-name: mdc-checkbox-fade-in-background-u755cca4a; }
 
 .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-out-background-uca8da243; }
+  animation-name: mdc-checkbox-fade-out-background-u755cca4a; }
 
 .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
   border-color: rgba(0, 0, 0, 0.26);
@@ -5843,6 +5848,16 @@ svg.mdc-button__icon {
 
 .mdc-ripple-upgraded--background-focused .mdc-checkbox__background::before {
   content: none; }
+
+.err-input-list-item {
+  transition: 200ms all; }
+
+.err-text-field {
+  width: 100%;
+  padding-top: 6px; }
+
+.err-text-field .mdc-text-field-helper-line {
+  display: hidden; }
 
 .mdc-select .mdc-select__selected-text {
   overflow: hidden;
@@ -7265,7 +7280,10 @@ a.mdc-list-item {
 
 .card-schedule .schedule-header-text {
   padding-left: 4px;
-  margin-bottom: -20px; }
+  margin-bottom: -20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500; }
 
 .card-event {
   margin-bottom: 10px !important;
@@ -7300,7 +7318,12 @@ a.mdc-list-item {
 .schedule .date-label {
   margin-left: -90px;
   height: 0px;
-  margin-top: 10px; }
+  margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: #181818; }
 
 .schedule .mdc-list-item__graphic {
   border-radius: 100%; }
@@ -8646,6 +8669,15 @@ svg.mdc-button__icon {
   background-repeat: no-repeat;
   background-size: 52%;
   background-position: bottom left; }
+.dashboard .input-list-divider h4,
+.config .input-list-divider h4,
+.schedule .input-list-divider h4 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  font-color: #181818;
+  letter-spacing: 0; }
+
 .horz-layout-grid {
   padding: 24px;
   position: relative; }
@@ -9004,7 +9036,9 @@ svg.mdc-button__icon {
 
 .user-view-list-divider .mdc-list-group__subheader {
   color: #018786 !important; /* or #3700B3 */
-  font-weight: 500;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
 }
 
 .user-view .description {
@@ -9297,4 +9331,14 @@ svg.mdc-button__icon {
 
 .chats-container .mdc-list-item--selected span {
   color: var(--mdc-theme-primary, #6200ee);
+}
+.mdc-top-app-bar__wordmark,
+.mdc-top-app-bar__logo {
+  max-height: 20px;
+}
+
+.mdc-top-app-bar__title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
 }

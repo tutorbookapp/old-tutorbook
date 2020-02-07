@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-const templateString = require('!html-loader?modules!./templates.html');
+const templateString = require('./templates.html');
 
 // Class that reads in a string of templates and stores the DOM Nodes in an
 // easily accessible array.

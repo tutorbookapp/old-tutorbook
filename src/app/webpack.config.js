@@ -57,6 +57,7 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/history.css'),
                 path.resolve(__dirname, 'packages/app/styles/matching.css'),
                 path.resolve(__dirname, 'packages/app/styles/chats.css'),
+                path.resolve(__dirname, 'packages/app/styles/header.css'),
             ]
         },
         output: {
@@ -114,6 +115,12 @@ module.exports = [{
                         presets: ['es2015']
                     },
                 }],
+            }, {
+                test: /\.html$/,
+                use: 'html-loader',
+            }, {
+                test: /\.svg$/,
+                use: 'svg-url-loader',
             }]
         },
         watch: true,
