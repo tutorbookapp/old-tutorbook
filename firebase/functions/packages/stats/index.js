@@ -232,6 +232,8 @@ const userUpdate = async (change, context) => {
     const isTest = context.params.partition === 'test';
     if (!change.after.exists) {
         var user = change.before.data();
+        if (!user.name) return console.warn('[WARNING] Could not create stat ' +
+            'for user without name.');
         var stat = {
             title: 'Deleted Account',
             subtitle: user.name.split(' ')[0] + '\'s account was deleted',
@@ -244,6 +246,8 @@ const userUpdate = async (change, context) => {
         };
     } else if (!change.before.exists) {
         var user = change.after.data();
+        if (!user.name) return console.warn('[WARNING] Could not create stat ' +
+            'for user without name.');
         var stat = {
             title: 'New User',
             subtitle: user.name.split(' ')[0] + ' signed up' + (user.type ?
@@ -256,6 +260,8 @@ const userUpdate = async (change, context) => {
         };
     } else {
         var user = change.after.data();
+        if (!user.name) return console.warn('[WARNING] Could not create stat ' +
+            'for user without name.');
         var stat = {
             title: 'Updated Profile',
             subtitle: user.name.split(' ')[0] + '\'s profile was modified',

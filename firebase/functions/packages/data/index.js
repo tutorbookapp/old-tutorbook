@@ -808,8 +808,6 @@ class Data {
         const requestOut = db.collection('users').doc(request.fromUser.uid)
             .collection('requestsOut')
             .doc(id);
-        // TODO: Right now we don't allow supervisors to approve requests.
-        // Shoud we?
         const approvedRequestOut = db.collection('users')
             .doc(request.fromUser.uid)
             .collection('approvedRequestsOut')
