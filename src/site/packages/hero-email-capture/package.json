@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/hero-email-capture",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/checkmarks": "^0.4.4",
-    "@tutorbook/site-styles": "^0.4.4"
-  }
+    "@tutorbook/checkmarks": "^0.4.5",
+    "@tutorbook/site-styles": "^0.4.5"
+  },
+  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
 }

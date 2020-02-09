@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/templates",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,5 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/templates"
   },
-  "gitHead": "4520f2591eda8118e4c264d52e059206d6ad9e52"
+  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
 }

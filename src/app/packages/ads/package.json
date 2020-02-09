@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/ads",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Ad package that primarily manages ad dialogs/popups for the Tutorbook web app.",
   "main": "index.js",
   "scripts": {
@@ -25,8 +25,8 @@
     "url": "https://github.com/tutorbookapp/tutorbook/issues"
   },
   "homepage": "https://github.com/tutorbookapp/tutorbook#readme",
-  "gitHead": "4520f2591eda8118e4c264d52e059206d6ad9e52",
+  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79",
   "dependencies": {
-    "@tutorbook/data": "^0.4.4"
+    "@tutorbook/data": "^0.4.5"
   }
 }

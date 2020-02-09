@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/heading-block",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,5 +8,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
 }

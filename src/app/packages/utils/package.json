@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/utils",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.4.4",
-    "@tutorbook/templates": "^0.4.4",
+    "@tutorbook/data": "^0.4.5",
+    "@tutorbook/templates": "^0.4.5",
     "axios": "^0.19.0",
     "phone": "^2.4.3"
   },
@@ -20,5 +20,5 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/utils"
   },
-  "gitHead": "4520f2591eda8118e4c264d52e059206d6ad9e52"
+  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
 }

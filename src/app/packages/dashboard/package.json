@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/dashboard",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,23 +10,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.4.4",
-    "@tutorbook/data": "^0.4.4",
-    "@tutorbook/dialogs": "^0.4.4",
-    "@tutorbook/horz-scroller": "^0.4.4",
-    "@tutorbook/matching": "^0.4.4",
-    "@tutorbook/profile": "^0.4.4",
-    "@tutorbook/schedule": "^0.4.4",
-    "@tutorbook/schedule-card": "^0.4.4",
-    "@tutorbook/search": "^0.4.4",
-    "@tutorbook/tracking": "^0.4.4",
-    "@tutorbook/user": "^0.4.4",
-    "@tutorbook/utils": "^0.4.4"
+    "@tutorbook/card": "^0.4.5",
+    "@tutorbook/data": "^0.4.5",
+    "@tutorbook/dialogs": "^0.4.5",
+    "@tutorbook/horz-scroller": "^0.4.5",
+    "@tutorbook/matching": "^0.4.5",
+    "@tutorbook/profile": "^0.4.5",
+    "@tutorbook/schedule": "^0.4.5",
+    "@tutorbook/schedule-card": "^0.4.5",
+    "@tutorbook/search": "^0.4.5",
+    "@tutorbook/tracking": "^0.4.5",
+    "@tutorbook/user": "^0.4.5",
+    "@tutorbook/utils": "^0.4.5"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/dashboard"
   },
-  "gitHead": "4520f2591eda8118e4c264d52e059206d6ad9e52"
+  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
 }
