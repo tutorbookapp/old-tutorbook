@@ -39,7 +39,8 @@ class Event {
                 title: this.title,
                 subtitle: this.subtitle,
                 timestamp: this.timestamp,
-                go_to_appt: () => {
+                go_to_appt: event => {
+                    if ($(event.target).closest('button,img').length) return;
                     this.dialog.view();
                 },
             }, this.data));

@@ -13,6 +13,7 @@ const EditLocationDialog = require('@tutorbook/dialogs').editLocation;
 const NewLocationDialog = require('@tutorbook/dialogs').newLocation;
 const Card = require('@tutorbook/card');
 const HorzScroller = require('@tutorbook/horz-scroller');
+const HrsConfig = require('@tutorbook/hrs-config');
 
 // Creates a configuration screen to manage all data unique to each school or
 // location. Enables supervisors to:
@@ -28,6 +29,8 @@ class Config {
         this.search = new SearchHeader({
             title: 'Configuration',
         });
+        this.hrsConfig = new HrsConfig();
+        this.locations = {};
         this.horz = new HorzScroller('locations');
         this.renderSelf();
     }
@@ -71,14 +74,11 @@ class Config {
 
     viewConfigCards() {
         [{
-            title: 'Subjects and Grades',
-            subtitle: 'Configure subjects and grades',
-            summary: 'Contact us to edit the subjects and grade levels ' +
-                'students can select.',
+            title: 'Service Hour Rules',
+            subtitle: 'Configure service hour rules',
+            summary: 'Contact us to setup custom service hour rounding rules.',
             actions: {
-                primary: () => window.open('mailto:nc26459@pausd.us?subject=' +
-                    '[Tutorbook Help] Configure the ' + window.app.location
-                    .name + '\'s subjects and grades on Tutorbook.'),
+                primary: () => this.hrsConfig.view(),
             },
         }, {
             title: 'Bell Schedule',
@@ -91,16 +91,27 @@ class Config {
                     '\'s bell schedule to Tutorbook.'),
             },
         }, {
-            title: 'Service Hour Rules',
-            subtitle: 'Configure service hour rules',
-            summary: 'Contact us to setup custom service hour rounding rules.',
+            title: 'Subjects and Grades',
+            subtitle: 'Configure subjects and grades',
+            summary: 'Contact us to edit the subjects and grade levels ' +
+                'students can select.',
             actions: {
                 primary: () => window.open('mailto:nc26459@pausd.us?subject=' +
-                    '[Tutorbook Help] Setup custom service hour tracking ' +
-                    'rules for ' + window.app.location.name + ' students.'),
+                    '[Tutorbook Help] Configure the ' + window.app.location
+                    .name + '\'s subjects and grades on Tutorbook.'),
             },
         }].forEach(c => $(this.main).find('#cards').append(Card.renderCard(
             c.title, c.subtitle, c.summary, c.actions)));
+    }
+
+    updateHrsConfig() {
+        this.hrsConfig = new HrsConfig(Object.entries(this.locations).map(
+            ([id, l]) => Utils.combineMaps(l.config.hrs, {
+                location: {
+                    id: id,
+                    name: l.name,
+                },
+            })));
     }
 
     viewLocationCards() {
@@ -114,7 +125,9 @@ class Config {
         const recycler = {
             display: doc => {
                 $(empty).remove();
-                const d = doc.data();
+                const d = Utils.filterLocationData(doc.data());
+                this.locations[doc.id] = d;
+                this.updateHrsConfig();
                 const dialog = new EditLocationDialog(d, doc.id);
                 const actions = {
                     delete: () => new ConfirmationDialog('Delete Location?',
@@ -142,11 +155,20 @@ class Config {
                 const existing = $(this.main).find('#locations #' + doc.id);
                 if (existing.length) return $(existing).replaceWith(card);
                 $(this.main).find('#locations #cards').append(card);
+                this.horz.update();
             },
-            remove: doc => $(this.main).find('#locations #cards #' + doc.id)
-                .remove(),
-            empty: () => $(this.main).find('#locations #cards').empty()
-                .append(empty),
+            remove: doc => {
+                this.locations[doc.id] = undefined;
+                this.updateHrsConfig();
+                $(this.main).find('#locations #cards #' + doc.id).remove();
+                this.horz.update();
+            },
+            empty: () => {
+                this.locations = {};
+                this.updateHrsConfig();
+                $(this.main).find('#locations #cards').empty().append(empty);
+                this.horz.update();
+            },
         };
         Utils.recycle(queries, recycler);
     }

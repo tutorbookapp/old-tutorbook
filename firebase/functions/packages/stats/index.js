@@ -188,7 +188,7 @@ const dataAction = {
         return createStat(user, stat, isTest);
     },
     createLocation: async (user, data, res, isTest) => {
-        const l = data.location;
+        const l = res.location;
         const created = l.timestamp.getTime ? l.timestamp : l.timestamp.toDate ?
             l.timestamp.toDate() : new Date(l.timestamp);
         const stat = {
@@ -202,7 +202,7 @@ const dataAction = {
         return createStat(user, stat, isTest);
     },
     updateLocation: async (user, data, res, isTest) => {
-        const l = data.location;
+        const l = res.location;
         const stat = {
             title: 'Updated Location',
             subtitle: user.name.split(' ')[0] + ' updated the ' + l.name,
@@ -214,7 +214,7 @@ const dataAction = {
         return createStat(user, stat, isTest);
     },
     deleteLocation: async (user, data, res, isTest) => {
-        const l = data.location;
+        const l = res.location;
         const stat = {
             title: 'Deleted Location',
             subtitle: user.name.split(' ')[0] + ' deleted the ' + l.name,
@@ -244,14 +244,14 @@ const userUpdate = async (change, context) => {
         };
     } else if (!change.before.exists) {
         var user = change.after.data();
-        console.log('[DEBUG] ' + user.name + ' signed up:', user);
         var stat = {
             title: 'New User',
-            subtitle: user.name.split(' ')[0] + ' signed up as a ' +
-                user.type.toLowerCase(),
-            summary: user.name + ' is a new ' + user.type.toLowerCase() +
-                ' on Tutorbook. Search \'' + user.name + '\' from your home ' +
-                'screen to view, edit, and match this new user.',
+            subtitle: user.name.split(' ')[0] + ' signed up' + (user.type ?
+                ' as a ' + user.type.toLowerCase() : ''),
+            summary: user.name + ' is a new ' +
+                (user.type.toLowerCase() || 'user') + ' on Tutorbook. Search ' +
+                '\'' + user.name + '\' from your home screen to view, edit, ' +
+                'and match this new user.',
             timestamp: new Date(),
         };
     } else {

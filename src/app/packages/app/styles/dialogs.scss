@@ -3,16 +3,19 @@
 @import "@material/checkbox/mdc-checkbox";
 
 .err-input-list-item {
-  transition: 200ms all;
+  transition: 50ms all;
+}
+
+.err-input-list-item--errored {
+  padding-top: 8px !important;
 }
 
 .err-text-field {
   width: 100%;
-  padding-top: 6px;
 }
 
 .err-text-field .mdc-text-field-helper-line {
-  display: hidden;
+  display: none;
 }
 
 .mdc-select .mdc-select__selected-text {

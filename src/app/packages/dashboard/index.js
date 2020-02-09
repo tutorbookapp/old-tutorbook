@@ -296,7 +296,7 @@ class SupervisorDashboard extends Dashboard {
                 action.summary, {
                     dismiss: () => {
                         $(card).remove();
-                        this.updateHorzScroller();
+                        this.horz.update();
                         return doc.ref.delete();
                     },
                 },
@@ -376,12 +376,8 @@ class SupervisorDashboard extends Dashboard {
                 entry[0]);
             this[entry[0]] = {
                 num: 0,
-                view: () => {
-                    dashboard.view();
-                },
-                reView: () => {
-                    dashboard.reView();
-                },
+                view: () => dashboard.view(),
+                reView: () => dashboard.reView(),
             };
             this.viewCards(entry[1], entry[0], 'everything', {
                 empty: () => {
@@ -440,26 +436,7 @@ class ProxyDashboard extends Dashboard {
         Utils.url(this.url);
     }
 
-    reView() {
-        window.app.intercom.view(true);
-        $(this.main).find('.mdc-card').each(function() {
-            const id = $(this).attr('id');
-            $(this).find('#view').click(() => {
-                User.viewUser(id);
-            }).end().find('#primary').click(() => {
-                User.viewUser(id);
-            }).end().find('#edit').click(async () => {
-                const p = await Data.getUser(id);
-                new EditProfile(p).view();
-            }).end().find('#match').click(async () => {
-                const p = await Data.getUser(id);
-                Data.updateUser(Utils.combineMaps(p, {
-                    proxy: [window.app.user.uid],
-                }));
-                new MatchingDialog(p).view();
-            });
-        });
-    }
+    reView() {}
 
     viewDefaultCards() {}
 

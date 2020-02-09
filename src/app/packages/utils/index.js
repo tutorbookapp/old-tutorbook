@@ -1,6 +1,12 @@
 import {
     MDCSelect
 } from '@material/select/index';
+import {
+    MDCRipple
+} from '@material/ripple/index';
+import {
+    MDCTopAppBar
+} from '@material/top-app-bar/index';
 
 import $ from 'jquery';
 
@@ -13,6 +19,20 @@ class Utils {
 
     constructor() {
         this.data = window.app ? window.app.data || new Data() : new Data();
+    }
+
+    static sync(obj, root) {
+        Object.entries(obj).forEach(([k, v]) => root[k] = Utils.clone(v));
+    }
+
+    static identicalMaps(mapA, mapB) { // Thanks to https://bit.ly/2H4Nz1S
+        if (mapA.size !== mapB.size) return false;
+        for (var [key, val] of Object.entries(mapA)) {
+            if (typeof val === 'object' && !Utils.identicalMaps(mapB[key], val))
+                return false;
+            if (typeof val !== 'object' && mapB[key] !== val) return false;
+        }
+        return true;
     }
 
     static shortenString(str, length = 100, ending = '...') {
@@ -380,20 +400,28 @@ class Utils {
         }
     }
 
+    static attachHeader(headerEl = 'header .mdc-top-app-bar') {
+        if (typeof headerEl === 'string') headerEl = $(headerEl)[0];
+        $(headerEl).find('.mdc-icon-button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
+        });
+        $(headerEl).find('.mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        return MDCTopAppBar.attachTo(headerEl);
+    }
+
     static attachSelect(selectEl) {
         if (typeof selectEl === 'string') selectEl = $(selectEl)[0];
-        var options = [];
-        selectEl.querySelectorAll('.mdc-list-item').forEach((el) => {
-            options.push(el.innerText);
+        const ops = [];
+        $(selectEl).find('.mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+            if (ops.indexOf(this.innerText) < 0) ops.push(this.innerText);
         });
-        const selected = selectEl
-            .querySelector('.mdc-select__selected-text')
-            .innerText;
+        const selected = $(selectEl).find('.mdc-select__selected-text').text();
         const select = MDCSelect.attachTo(selectEl);
         // Render empty selects even when val is null, undefined, or false.
-        if (selected !== '') {
-            select.selectedIndex = options.indexOf(selected);
-        }
+        if (selected !== '') select.selectedIndex = ops.indexOf(selected);
         return select;
     }
 
@@ -556,7 +584,7 @@ class Utils {
     getTimesBetween(start, end, day) {
         var times = [];
         // First check if the time is a period
-        if (this.data.periods.indexOf(start) >= 0) {
+        if (this.data.periods[day].indexOf(start) >= 0) {
             // Check the day given and return the times between those two
             // periods on that given day.
             var periods = Data.gunnSchedule[day];
@@ -967,7 +995,7 @@ class Utils {
         try {
             const split = string.split(' ');
             return {
-                day: split[0] || '',
+                day: split[0].slice(0, -1) || '',
                 open: split[2] && split[3] ? split[2] + ' ' + split[3] : '',
                 close: split[5] && split[6] ? split[5] + ' ' + split[6] : '',
             };
@@ -1068,10 +1096,21 @@ class Utils {
         return result;
     }
 
+    static clone(val) {
+        return val instanceof Array ? Utils.cloneArr(val) :
+            val instanceof firebase.firestore.Timestamp ? val.toDate() :
+            val instanceof Date ? new Date(val) :
+            val instanceof Object ? Utils.cloneMap(val) : val;
+    }
+
+    static cloneArr(arr) {
+        return arr.map(i => Utils.clone(i));
+    }
+
     static cloneMap(map) {
-        var clone = {};
+        const clone = {};
         for (var i in map) {
-            clone[i] = map[i];
+            clone[i] = Utils.clone(map[i]);
         }
         return clone;
     }
@@ -1097,10 +1136,19 @@ class Utils {
     // Helper function that takes in a map and returns only those values that
     // correspond with location data.
     static filterLocationData(data) {
+        const hrsConfig = {
+            'threshold': Data.thresholds[0],
+            'rounding': Data.roundings[0],
+            'timeThreshold': Data.timeThresholds[0],
+        };
         return {
             'name': data.name,
             'city': data.city,
-            'hours': data.hours,
+            'hours': Utils.cloneMap(data.hours),
+            'config': {
+                'hrs': data.config ? Utils.cloneMap(data.config.hrs ||
+                    hrsConfig) : hrsConfig,
+            },
             'description': data.description,
             'supervisors': data.supervisors,
             'timestamp': data.timestamp,

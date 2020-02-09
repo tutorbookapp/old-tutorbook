@@ -346,7 +346,7 @@ class Render {
     }
 
     header(id, data) {
-        var headerEl = this.template(id,
+        const headerEl = this.template(id,
             Utils.combineMaps({
                 'cancel': () => {
                     window.app.nav.back();
@@ -421,7 +421,8 @@ class Render {
 
         // NOTE: All of this changes once you add the data manager (as we want
         // to only show those times that are specified by the location supervisor)
-        const times = window.app.data.periods.concat(Data.timeStrings);
+        const times = (window.app.data.periods[data.day] || [])
+            .concat(Data.timeStrings);
         const fromTimeEl = this.select(
             'From',
             data.fromTime || '',

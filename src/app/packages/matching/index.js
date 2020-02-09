@@ -472,8 +472,7 @@ class Matching {
 
 // Class that enables supervisors to create matches for pupils
 class MatchingDialog {
-    constructor(profile, options) {
-        if (!options) options = {};
+    constructor(profile, options = {}) {
         this.profile = profile;
         this.subject = options.subject || profile.subjects[0];
         this.selectedUsers = [];

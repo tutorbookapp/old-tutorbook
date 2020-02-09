@@ -192,53 +192,27 @@ class Card {
 
 Card.renderUserCard = (doc) => {
     const p = doc.data();
-    const title = p.name;
-    const subtitle = p.grade + ' ' + p.type;
-    var summary = p.bio;
-    if (p.subjects.length === 0) {
-        summary += ' Hasn\'t specified subjects.';
-    } else {
-        summary += ' ' + p.type + ' for ';
-        p.subjects.forEach((subject) => {
-            summary += subject + ', ';
+    const card = Card.renderCard(p.name, p.grade && p.type ? p.grade + ' ' +
+        p.type : p.type || p.grade, '', {
+            options: {
+                View: () => User.viewUser(p.uid),
+                Edit: () => new EditProfile(p).view(),
+                Match: () => new window.app.MatchingDialog(p).view(),
+                Delete: () => new ConfirmationDialog('Delete Account?',
+                    'You are about to permanently delete ' + p.name +
+                    '\'s account data. This action cannot be undone. Please ' +
+                    'ensure to check with your fellow supervisors before ' +
+                    'continuing.', async () => {
+                        const [err, res] = await to(Data.deleteUser(p.uid));
+                        if (err) return window.app.snackbar.view('Could not ' +
+                            'delete ' + p.name + '\'s account.');
+                        window.app.snackbar.view('Deleted account.');
+                    }).view(),
+                'Raw Data': () => Utils.viewRaw(doc),
+            },
         });
-        summary = summary.substring(0, summary.length - 2) + '.';
-    }
-    if (Object.keys(p.availability).length > 0 &&
-        p.availability[window.app.location.name]) {
-        summary += ' Available on ';
-        Object.entries(p.availability[window.app.location.name]).forEach((entry) => {
-            var day = entry[0];
-            var time = entry[1][0].open;
-            summary += day + 's at ' + time + ', ';
-        });
-        summary = summary.substring(0, summary.length - 2) + '.';
-    } else {
-        summary += ' Does not have any availability.';
-    }
-    if (summary.length > 100) {
-        summary = summary.substring(0, 100) + '...';
-    }
-    const actions = {
-        primary: () => {
-            User.viewUser(p.email);
-        },
-        view: () => {
-            User.viewUser(p.email);
-        },
-        edit: () => {
-            new EditProfile(p).view();
-        },
-    };
-    if (p.type === 'Pupil') actions.match = () => {
-        Data.updateUser(Utils.combineMaps(p, {
-            proxy: [window.app.user.uid],
-        }));
-        new window.app.MatchingDialog(p).view();
-    };
-    const card = Card.renderCard(title, subtitle, summary, actions);
-    $(card).addClass('mdc-layout-grid__cell--span-2');
-    return card;
+    return $(card).addClass('mdc-layout-grid__cell--span-2')
+        .find('.dashboard-card__secondary').remove().end()[0];
 };
 
 
@@ -1034,7 +1008,7 @@ Card.renderNeedApprovalPaymentCard = function(doc) {
 
 
 Card.renderCard = function(title, subtitle, summary, actions) {
-    const card = app.render.template('card-empty', {
+    const card = window.app.render.template('card-empty', {
         title: title,
         subtitle: subtitle,
         summary: summary,
@@ -1045,6 +1019,8 @@ Card.renderCard = function(title, subtitle, summary, actions) {
     if (typeof actions.options === 'object') {
         $(card).find('.dashboard-card__primary-action')
             .removeClass('mdc-card__primary-action');
+        if (Object.entries(actions).length < 2) $(card)
+            .find('.mdc-card__actions').remove();
         Object.entries(actions.options).forEach((entry) => {
             $(card).find('.mdc-list').append(window.app.render.template(
                 'card-action', {
@@ -1090,12 +1066,9 @@ Card.renderCard = function(title, subtitle, summary, actions) {
             );
         }
     });
-    $(card)
-        .find('.mdc-button, .mdc-list-item')
-        .each(function() {
-            MDCRipple.attachTo(this);
-        });
-    return card;
+    return $(card).find('.mdc-button, .mdc-list-item').each(function() {
+        MDCRipple.attachTo(this);
+    }).end()[0];
 };
 
 

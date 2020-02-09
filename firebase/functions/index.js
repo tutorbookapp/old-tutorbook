@@ -1,8 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin').initializeApp();
 
-const updateHours = require('hours');
 const updateSheet = require('sheet');
+const Hours = require('hours');
 const PDF = require('pdf');
 const SMS = require('sms');
 const Algolia = require('algolia');
@@ -22,6 +22,19 @@ exports.serviceHoursAsPDF = functions.https.onRequest(PDF.hrs);
 exports.backupAsPDF = functions.https.onRequest(PDF.backup);
 
 exports.updateSheet = functions.https.onRequest(updateSheet);
+
+// ============================================================================
+// SERVICE HOUR TRACKING
+// ============================================================================
+
+exports.updateHours = functions.firestore
+    .document('/partitions/{partition}/users/{user}/pastAppointments/{appt}')
+    .onCreate(Hours.update);
+
+exports.roundHours = functions.firestore
+    .document('/partitions/{partition}/locations/{location}/pastAppointments' +
+        '/{appt}')
+    .onCreate(Hours.round);
 
 // ============================================================================
 // SEARCH (VIA ALGOLIA) 
@@ -131,10 +144,6 @@ exports.updateCustomAuth = functions.firestore
 exports.auth = functions.https.onRequest(Auth.custom);
 
 exports.data = functions.https.onRequest(Data.onRequest);
-
-exports.updateHours = functions.firestore
-    .document('/partitions/{partition}/users/{user}/pastAppointments/{appt}')
-    .onCreate(updateHours);
 
 exports.sms = functions.https.onRequest(SMS.receive());
 

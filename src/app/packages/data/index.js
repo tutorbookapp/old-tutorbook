@@ -541,16 +541,21 @@ class Data {
 
     initPeriods() { // Use local location data to add periods to local data
         const locations = Object.values(this.locationDataByID);
-        const times = [];
-        locations.forEach((location) => {
-            Object.values(location.hours).forEach(arr => arr.forEach(slot => {
-                if (times.indexOf(slot.open) < 0) times.push(slot.open);
-                if (times.indexOf(slot.close) < 0) times.push(slot.close);
+        const times = {};
+        locations.forEach(location => {
+            Object.entries(location.hours).forEach(([d, a]) => a.forEach(s => {
+                if (!times[d]) times[d] = [];
+                if (times[d].indexOf(s.open) < 0) times[d].push(s.open);
+                if (times[d].indexOf(s.close) < 0) times[d].push(s.close);
             }));
         });
-        this.periods = [];
-        times.forEach(time => {
-            if (this.timeStrings.indexOf(time) < 0) this.periods.push(time);
+        this.periods = {};
+        Object.entries(times).forEach(([day, times]) => {
+            if (!this.periods[day]) this.periods[day] = [];
+            times.forEach(time => {
+                if (this.timeStrings.indexOf(time) < 0)
+                    this.periods[day].push(time);
+            });
         });
     }
 
@@ -616,12 +621,27 @@ Data.prices = [
     'Paid',
 ];
 
+// Round clocking times to the nearest (e.g. '5 Minutes' : 4:23 PM --> 4:25 PM).
+Data.timeThresholds = ['Minute', '5 Minutes', '10 Minutes', '30 Minutes'];
+
+// Always round service hour durations (e.g. 'Up' : 23 mins --> 30 mins).
+Data.roundings = ['Up', 'Down', 'Normally'];
+
+// Round durations to the nearest (e.g. 'Minute' : 23.3 mins --> 23 mins).
+Data.thresholds = ['Minute', '5 Minutes', '15 Minutes', '30 Minutes', 'Hour'];
+
 Data.emptyLocation = {
     name: '',
     description: '',
     city: 'Palo Alto, CA',
     hours: {},
-    config: {},
+    config: {
+        hrs: {
+            timeThreshold: Data.timeThresholds[0],
+            threshold: Data.thresholds[0],
+            rounding: Data.roundings[0],
+        },
+    },
     supervisors: [],
     timestamp: new Date(),
     url: 'https://tutorbook.app',

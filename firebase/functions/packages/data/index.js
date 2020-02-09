@@ -317,10 +317,11 @@ class Data {
         console.log('[DEBUG] Location before trimming:', location);
         location = Data.trimObject(location);
         console.log('[DEBUG] Location after trimming:', location);
-        await global.db.collection('locations').doc(id).update(location);
+        const ref = global.db.collection('locations').doc(id);
+        await ref.update(location);
         return {
             id: id,
-            location: location,
+            location: (await ref.get()).data(),
         };
     }
 

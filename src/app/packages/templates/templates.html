@@ -1082,11 +1082,11 @@ needs to be rendered with a ton of click listeners.) -->
         </div>
         <div id="page-login" class="page">
             <div class="button-container">
-                <button id="login-button" data-fir-click="login" type="button" class="mdc-button mdc-button--raised">
-                    Login
-                </button>
-                <button id="signup-button" data-fir-click="signup" type="button" class="mdc-button mdc-button--outlined">
+                <button id="signup-button" data-fir-click="signup" type="button" class="mdc-button mdc-button--raised">
                     Signup
+                </button>
+                <button id="login-button" data-fir-click="login" type="button" class="mdc-button mdc-button--outlined">
+                    Login
                 </button>
             </div>
         </div>
@@ -1228,10 +1228,10 @@ styling due to input el spacing. -->
 
 <!-- Event List Item Template -->
 <div hidden class="template" id="supervisor-appt-list-item">
-    <li class="appt-list-item mdc-list-item" data-fir-attr="type:type,timestamp:timestamp" data-fir-id="id">
+    <li class="appt-list-item mdc-list-item" data-fir-click="go_to_appt" data-fir-attr="type:type,timestamp:timestamp" data-fir-id="id">
         <img class="mdc-list-item__graphic" data-fir-click="viewUserA" data-fir-attr="src:photoA">
         <img class="mdc-list-item__graphic" data-fir-click="viewUserB" data-fir-attr="src:photoB">
-        <span class="mdc-list-item__text" data-fir-click="go_to_appt">
+        <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="title"></span>
             <span class="mdc-list-item__secondary-text" data-fir-content="subtitle">
             </span>
@@ -1244,9 +1244,9 @@ styling due to input el spacing. -->
 
 <!-- Event List Item Template -->
 <div hidden class="template" id="appt-list-item">
-    <li class="appt-list-item mdc-list-item" data-fir-attr="type:type,timestamp:timestamp" data-fir-id="id">
+    <li class="appt-list-item mdc-list-item" data-fir-click="go_to_appt" data-fir-attr="type:type,timestamp:timestamp" data-fir-id="id">
         <img class="mdc-list-item__graphic" data-fir-attr="src:photo" data-fir-click="viewUser">
-        <span class="mdc-list-item__text" data-fir-click="go_to_appt">
+        <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="title"></span>
             <span class="mdc-list-item__secondary-text" data-fir-content="subtitle">
             </span>

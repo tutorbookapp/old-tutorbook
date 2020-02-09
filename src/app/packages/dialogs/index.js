@@ -25,7 +25,6 @@ const algolia = require('algoliasearch')
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
-
 class ApptNotificationDialog {
 
     constructor() {
@@ -783,34 +782,37 @@ class EditHourDialog {
         const t = (q, a) => {
             const t = new MDCTextField($(this.main).find(q)[0]);
             t.useNativeValidation = false;
-            $(this.main).find(q + ' input').focusout(() => a(t));
+            $(this.main).find(q + ' input')[0].addEventListener('focusout',
+                () => a(t));
             return t;
+        };
+        const s = (q, a = () => {}) => {
+            const s = Utils.attachSelect($(this.main).find(q)[0]);
+            s.listen('MDCSelect:change', () => a(s));
+            return s;
         };
 
         this.managed = true;
-        this.daySelect = Utils.attachSelect($(this.main).find('#Day')[0]);
+        this.daySelect = s('#Day', s => this.updateDay(s));
         this.openTextField = t('#Open', t => this.updateOpenTime(t));
         this.closeTextField = t('#Close', t => this.updateCloseTime(t));
 
         $(this.main).find('#ok-button')[0].addEventListener('click', () => {
-            if (this.valid) {
-                this.dialog.close('ok');
-            }
+            if (this.valid) this.dialog.close('ok');
         });
         this.dialog.listen('MDCDialog:closing', (event) => {
-            if (event.detail.action === 'ok')
-                this.textField.value = Utils.getHourString(this.val);
+            if (event.detail.action === 'ok') this.textField.value =
+                Utils.getHourString(this.val);
             $(this.main).remove();
         });
     }
 
     err(t, msg) { // TODO: Show err msg styling when called from get valid().
         t.valid = false;
-        t.required = true;
+        t.helperTextContent = msg;
         $(t.root_).parent()
-            .find('.mdc-text-field-helper-text').text(msg).end()
             .find('.mdc-text-field-helper-line').show().end()
-            .parent().css('margin', '8px 0').end();
+            .parent().addClass('err-input-list-item--errored');
         return false;
     }
 
@@ -818,7 +820,7 @@ class EditHourDialog {
         t.valid = true;
         $(t.root_).parent()
             .find('.mdc-text-field-helper-line').hide().end()
-            .parent().css('margin', '0').end().end();
+            .parent().removeClass('err-input-list-item--errored');
         return t.value;
     }
 
@@ -830,61 +832,71 @@ class EditHourDialog {
         return valid;
     }
 
-    updateOpenTime(t = this.openTextField) {
+    updateOpenTime(t = this.openTextField, update = true) {
+        const periods = this.data.periods[this.val.day] || [];
+        const periodsInd = periods.indexOf(t.value);
         const ind = this.data.timeStrings.indexOf(t.value);
-        if (ind < 0) {
-            return this.err(t, 'Time must be formatted like 3:45 PM.');
-        } else if (ind > this.data.timeStrings.indexOf(this.val.close)) {
-            return this.err(t, 'Opening time cannot be after closing time.');
+        if (ind < 0 && periodsInd > periods.indexOf(this.val.close)) return this
+            .err(t, 'Opening period can\'t be after closing period.');
+        if (!periods.length || periodsInd < 0) {
+            if (ind < 0) return this.err(t, 'Time is formatted incorrectly or' +
+                ' isn\'t on ' + this.val.day + '\'s bell schedule.');
+            if (ind > this.data.timeStrings.indexOf(this.val.close)) return this
+                .err(t, 'Opening time can\'t be after closing time.');
         }
         this.val.open = this.validate(t);
-        this.val.close = this.validate(this.closeTextField);
+        if (update) this.updateCloseTime(this.closeTextField, false);
         return true;
     }
 
-    updateCloseTime(t = this.closeTextField) {
+    updateCloseTime(t = this.closeTextField, update = true) {
+        const periods = this.data.periods[this.val.day] || [];
+        const periodsInd = periods.indexOf(t.value);
         const ind = this.data.timeStrings.indexOf(t.value);
-        if (ind < 0) {
-            return this.err(t, 'Time must be formatted like 4:45 PM.');
-        } else if (ind < this.data.timeStrings.indexOf(this.val.open)) {
-            return this.err(t, 'Closing time cannot be before opening time.');
+        if (ind < 0 && periodsInd < periods.indexOf(this.val.open)) return this
+            .err(t, 'Closing period can\'t be before opening period.');
+        if (!periods.length || periodsInd < 0) {
+            if (ind < 0) return this.err(t, 'Time is formatted incorrectly or' +
+                ' isn\'t on ' + this.val.day + '\'s bell schedule.');
+            if (ind < this.data.timeStrings.indexOf(this.val.open)) return this
+                .err(t, 'Closing time can\'t ' + 'be before opening time.');
         }
         this.val.close = this.validate(t);
-        this.val.open = this.validate(this.openTextField);
+        if (update) this.updateOpenTime(this.openTextField, false);
         return true;
     }
 
     updateDay(s = this.daySelect) {
-        if (Data.days.indexOf(s.value) < 0) {
-            s.required = true;
-            return s.valid = false;
-        }
+        if (Data.days.indexOf(s.value) < 0) return s.valid = false;
         this.val.day = s.value;
+        if (this.openTextField.value)
+            this.updateOpenTime(this.openTextField, false);
+        if (this.closeTextField.value)
+            this.updateCloseTime(this.closeTextField, false);
         return true;
     }
 };
 
 class EditLocationDialog {
     constructor(location, id) {
-        const sync = (m) => Object.entries(m).forEach(([k, v]) => this[k] = v);
-        sync(Data.emptyLocation);
-        sync(location);
+        Utils.sync(Data.emptyLocation, this);
+        Utils.sync(Utils.filterLocationData(location), this);
         this.id = id;
+        this.location = Utils.filterLocationData(location);
         this.render = window.app.render;
         this.renderSelf();
     }
 
     renderSelf() {
         this.header = this.render.header('header-action', {
-            ok: async () => {
-                if (!this.valid) return;
+            ok: () => this.save(),
+            cancel: () => {
+                if (this.changed) return new ConfirmationDialog('Discard ' +
+                    'Changes?', 'Are you sure that you want to discard your ' +
+                    'changes to the ' + this.name + '? Save your changes by ' +
+                    'clicking \'No\' or anywhere outside of this dialog.',
+                    () => this.reset(), false, () => this.save()).view();
                 window.app.nav.back();
-                window.app.snackbar.view('Updating location...');
-                const [err, res] = await to(Data.updateLocation(Utils
-                    .filterLocationData(this), this.id));
-                if (err) return window.app.snackbar.view('Could not update ' +
-                    'location.');
-                window.app.snackbar.view('Updated location.');
             },
             title: 'Edit Location',
         });
@@ -894,12 +906,17 @@ class EditLocationDialog {
         const addD = (label) => add(this.render.listDivider(label));
         const addActionD = (l, a) => add(this.render.actionDivider(l, a));
         const addS = (l, v = '', d = []) => add(this.render.selectItem(l, v,
-            Utils.concatArr([v], d)));
+            Utils.concatArr(d, [v])));
         const addT = (l, v = '') => add(this.render.textFieldItem(l, v));
 
         addD('Basic info');
         addT('Name', this.name);
         add(this.render.textAreaItem('Description', this.description));
+        addD('Service hour rules');
+        addS('Round service hours', this.config.hrs.rounding, Data.roundings);
+        addS('To the nearest', this.config.hrs.threshold, Data.thresholds);
+        addS('Round times to the nearest', this.config.hrs.timeThreshold, Data
+            .timeThresholds);
         addActionD('Open hours', {
             add: () => this.addHourInput(),
             remove: () => this.removeHourInput(),
@@ -930,7 +947,6 @@ class EditLocationDialog {
     }
 
     view() {
-        window.locationDialog = this;
         window.app.intercom.view(true);
         window.app.view(this.header, this.main);
         if (!this.managed) this.manage();
@@ -947,6 +963,11 @@ class EditLocationDialog {
         });
         const hourInputs = this.hourInputs = [];
         const t = (q) => new MDCTextField($(this.main).find(q)[0]);
+        const s = (q, a = () => {}) => {
+            const s = Utils.attachSelect($(this.main).find(q)[0]);
+            s.listen('MDCSelect:change', () => a(s));
+            return s;
+        };
         const ts = (q) => {
             const res = [];
             $(this.main).find(q).each(function() {
@@ -957,6 +978,18 @@ class EditLocationDialog {
         this.nameTextField = t('#Name');
         $(this.main).find('#Name input').attr('disabled', 'disabled');
         this.descriptionTextArea = t('#Description');
+        this.roundingSelect = s('[id="Round service hours"]', s => {
+            if (Data.roundings.indexOf(s.value) < 0) return s.valid = false;
+            this.config.hrs.rounding = s.value;
+        });
+        this.thresholdSelect = s('[id="To the nearest"]', s => {
+            if (Data.thresholds.indexOf(s.value) < 0) return s.valid = false;
+            this.config.hrs.threshold = s.value;
+        });
+        this.timeThresholdSelect = s('[id="Round times to the nearest"]', s => {
+            if (Data.timeThresholds.indexOf(s.value) < 0) return s.valid = false;
+            this.config.hrs.timeThreshold = s.value;
+        });
         this.supervisorTextFields = ts('[id="Supervisor"]');
         $(this.main).find('[id="Open"]').each(function() {
             const textField = new MDCTextField(this);
@@ -966,13 +999,53 @@ class EditLocationDialog {
         });
     }
 
+    async save() {
+        if (!this.valid) return;
+        window.app.nav.back();
+        window.app.snackbar.view('Updating location...');
+        this.location = Utils.filterLocationData(this);
+        const [err, res] = await to(Data.updateLocation(Utils
+            .filterLocationData(this), this.id));
+        if (err) return window.app.snackbar.view('Could not update location.');
+        window.app.snackbar.view('Updated location.');
+    }
+
+    reset() {
+        window.app.nav.back();
+        Utils.sync(this.location, this);
+        this.renderSelf();
+        this.managed = false;
+    }
+
+    get changed() {
+        this.valid; // Update location hours and description
+        for (var [key, val] of Object.entries(this.location)) {
+            if (typeof val === 'object' ? !Utils.identicalMaps(this[key], val) :
+                this[key] !== val) return true;
+        }
+        return false;
+    }
+
     get valid() { // Updates location hours and description
         const strings = [];
+        const invalid = s => {
+            s.required = true;
+            return s.valid = false;
+        };
         $(this.main).find('[id="Open"] input').each(function() {
             if ($(this).val()) strings.push($(this).val());
         });
         this.hours = Utils.parseHourStrings(strings);
         this.description = this.descriptionTextArea.value;
+        if (Data.thresholds.indexOf(this.thresholdSelect.value) < 0)
+            return invalid(this.thresholdSelect);
+        if (Data.roundings.indexOf(this.roundingSelect.value) < 0)
+            return invalid(this.roundingSelect);
+        if (Data.timeThresholds.indexOf(this.timeThresholdSelect.value) < 0)
+            return invalid(this.timeThresholdSelect);
+        this.config.hrs.threshold = this.thresholdSelect.value;
+        this.config.hrs.rounding = this.roundingSelect.value;
+        this.config.hrs.timeThreshold = this.timeThresholdSelect.value;
         return true;
     }
 

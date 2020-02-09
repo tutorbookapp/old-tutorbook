@@ -117,10 +117,11 @@ class Login {
     }
 
     manage() {
-        ['.mdc-button', '.mdc-fab', '.material-icons'].forEach((component) => {
-            $(this.main).find(component).each(function() {
-                MDCRipple.attachTo($(this)[0]);
-            });
+        $(this.main).find('.mdc-button').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        $(this.main).find('.mdc-icon-button').each(function() {
+            MDCRipple.attachTo(this).unbounded = true;
         });
     }
 
