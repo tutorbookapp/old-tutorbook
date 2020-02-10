@@ -15,5 +15,6 @@
   }],
   "theme_color": "#6200EE",
   "background_color": "#6200EE",
-  "description": "Web app that enables peer tutoring like never before."
+  "gcm_sender_id": "103953800507",
+  "description": "App designed to optimize the process required to get a student with an appropriate tutor."
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64mm"
+   height="64mm"
+   viewBox="0 0 64.000001 64.000001"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="icon-only.svg"
+   inkscape:export-filename="/home/nchiang/repos/tutorbook/public/favicon/apple-touch-icon.png"
+   inkscape:export-xdpi="41.525509"
+   inkscape:export-ydpi="41.525509">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="65.411032"
+     inkscape:cy="133.86469"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g3773"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="845"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Background"
+     transform="translate(-56.518351,-62.582371)" />
+  <g
+     inkscape:label="Logo"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-56.518351,-62.582371)">
+    <g
+       id="g3787"
+       transform="matrix(4.3627161,0,0,4.3627161,43.430203,37.146689)">
+      <path
+         id="path3767"
+         d="M 0,0 H 24 V 24 H 0 Z"
+         inkscape:connector-curvature="0"
+         style="clip-rule:evenodd;fill:none;fill-rule:evenodd" />
+      <g
+         id="g3773"
+         style="clip-rule:evenodd;fill:#6200ee;fill-opacity:1;fill-rule:evenodd">
+        <path
+           id="path3769"
+           d="m 7.6325561,16.832561 2.3162781,-2.269953 c -0.3011162,-0.03088 -0.5250231,-0.04633 -0.7720927,-0.04633 -2.0614874,0 -6.1767414,1.034605 -6.1767414,3.088372 v 1.544185 h 6.9488341 z m 1.5441854,-3.860463 c 1.7063245,0 3.0883705,-1.382046 3.0883705,-3.0883713 0,-1.7063251 -1.382046,-3.088371 -3.0883705,-3.088371 -1.7063249,0 -3.0883707,1.3820459 -3.0883707,3.088371 0,1.7063253 1.3820458,3.0883713 3.0883707,3.0883713"
+           inkscape:connector-curvature="0"
+           style="fill:#6200ee;fill-opacity:1;stroke-width:0.77209264" />
+        <path
+           id="path3771"
+           d="m 12.627996,19.534885 -2.6791618,-2.702324 1.0809288,-1.088651 1.598233,1.605953 3.960835,-3.991719 1.080929,1.08865 z"
+           inkscape:connector-curvature="0"
+           style="fill:#6200ee;fill-opacity:1;stroke-width:0.77209264" />
+      </g>
+    </g>
+  </g>
+</svg>
