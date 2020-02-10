@@ -3,9 +3,7 @@
     "site": "tutorbook-779d8",
     "public": "build/",
     "ignore": [
-      "**/*.json",
       "**/*.log",
-      "**/*.rules",
       "**/.*",
       "**/node_modules/**"
     ],
