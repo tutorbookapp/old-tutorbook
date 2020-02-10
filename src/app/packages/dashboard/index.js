@@ -1,7 +1,4 @@
 import {
-    MDCTopAppBar
-} from '@material/top-app-bar/index';
-import {
     MDCRipple
 } from '@material/ripple/index';
 
@@ -56,7 +53,7 @@ class Dashboard {
         window.app.nav.selected = 'Home';
         window.app.intercom.view(true);
         window.app.view(this.header, this.main, '/app/home');
-        MDCTopAppBar.attachTo(this.header);
+        Utils.attachHeader(this.header);
         this.viewDefaultCards(window.app.user.uid);
     }
 

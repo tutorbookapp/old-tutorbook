@@ -46,13 +46,9 @@ class Email {
     }
 
     valid(user, location) {
-        if ([
-                'Gunn Academic Center',
-                'JLS Library',
-                'Any',
-            ].indexOf(location || user.location) < 0) return console.error(
-            '[ERROR] Cannot send SMS to ' + (location || user.location) +
-            ' users.');
+        if ((location || user.location) === 'Paly Peer Tutoring Center')
+            return console.error('[ERROR] Cannot send emails to ' + (location ||
+                user.location) + ' users.');
         if (!user || !user.email) return console.error('[ERROR] Cannot send ' +
             'to undefined email addresses.');
         return true;

@@ -168,6 +168,11 @@ exports.newUserNotification = functions.firestore
     .document('/partitions/{partition}/users/{id}')
     .onCreate(Notify.user);
 
+exports.announcementNotification = functions.firestore
+    .document('/partitions/{partition}/locations/{location}/announcements' +
+        '/{announcement}/messages/{message}')
+    .onCreate(Notify.announcement);
+
 exports.messageNotification = functions.firestore
     .document('/partitions/{partition}/chats/{chat}/messages/{message}')
     .onCreate(Notify.message);

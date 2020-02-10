@@ -21,6 +21,22 @@ class Utils {
         this.data = window.app ? window.app.data || new Data() : new Data();
     }
 
+    static visible(opts = {}) {
+        if (!opts.el) return false;
+
+        const element = typeof opts.el === 'string' ? $(opts.el)[0] : opts.el;
+        const pageTop = opts.pageTop || $(window).scrollTop();
+        const pageBottom = opts.pageBottom || pageTop + $(window).height();
+        const elementTop = $(element).offset().top;
+        const elementBottom = elementTop + $(element).height();
+
+        if (opts.partiallyInView) {
+            return ((elementTop <= pageBottom) && (elementBottom >= pageTop));
+        } else {
+            return ((pageTop < elementTop) && (pageBottom > elementBottom));
+        }
+    }
+
     static sync(obj, root) {
         Object.entries(obj).forEach(([k, v]) => root[k] = Utils.clone(v));
     }

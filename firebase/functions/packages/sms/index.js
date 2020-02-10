@@ -16,26 +16,23 @@ const getUser = require('utils').getUserFromPhone;
 
 class SMS {
 
-    constructor(recipient, message, location) {
-        if (this.valid(recipient, message, location)) {
+    constructor(recipient, message, isTest = false) {
+        if (this.valid(recipient, message, isTest)) {
             this.recipient = recipient;
             this.message = message; // TODO: Alert sender if message fails
             this.send();
         }
     }
 
-    valid(recipient, message, location) {
-        if ([
-                'Gunn Academic Center',
-                'JLS Library',
-                'Any',
-            ].indexOf(location || recipient.location) < 0) return console.error(
-            '[ERROR] Cannot send SMS to ' + (location || recipient.location) +
-            ' users.');
+    valid(recipient, message, isTest) {
+        if (recipient.location === 'Paly Peer Tutoring Center') return console
+            .error('[ERROR] Cannot send SMS to ' + (location || recipient
+                .location) + ' users.');
         if (!recipient || !recipient.phone) return console.error('[ERROR] ' +
             'Cannot send to undefined phone numbers.');
         if (!message) return console.warn('[WARNING] Skipped sending empty ' +
             'message.');
+        if (isTest) return console.warn('[WARNING] Skipping test messages.');
         return true;
     }
 

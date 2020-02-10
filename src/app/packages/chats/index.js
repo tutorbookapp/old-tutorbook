@@ -1,9 +1,6 @@
 import {
     MDCRipple
 } from '@material/ripple/index';
-import {
-    MDCTopAppBar
-} from '@material/top-app-bar/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -22,11 +19,11 @@ class Chats {
         this.chatsByUID = {};
         this.render = window.app.render;
         this.recycler = {
-            remove: (doc) => $(this.main).find('#chats [id="doc-' + doc.id +
+            remove: doc => $(this.main).find('#chats [id="doc-' + doc.id +
                 '"]').remove(),
-            display: (doc) => this.viewChat(this.renderChatItem(doc)),
-            empty: () => $(this.main).find('#chats').empty().append(
-                this.renderEmpty()),
+            display: doc => this.viewChat(this.renderChatItem(doc)),
+            empty: () => $(this.main).find('#chats .mdc-list-item:not([id="' +
+                'new-chat"])').empty().append(this.renderEmpty()),
         };
         this.renderSelf();
     }
@@ -39,32 +36,39 @@ class Chats {
                 .addClass('mdc-list-item--selected');
             return existing.replaceWith(listItem);
         }
-        list.prepend(listItem);
+        list.append(listItem);
     }
 
     // View function that shows the user a mdc-list of their current chats
     view(chat) {
         window.app.intercom.view(true);
         window.app.nav.selected = 'Messages';
+        const chats = $(this.main).find('.chats-container');
+        const scroll = chats.scrollTop();
         if (!this.managed) this.manage();
         if (!this.chatsViewed) this.viewChats();
         if (chat) this.chats[chat.id] = chat;
+        window.visible = Utils.visible;
         var viewingChat, attemptsToViewChat = 0;
         const viewChat = () => {
-            if (attemptsToViewChat > 3 && viewingChat) {
+            if (attemptsToViewChat > 10 && viewingChat) {
                 window.clearInterval(viewingChat);
                 window.app.snackbar.view('Could not open chat.');
             }
             attemptsToViewChat++;
             try {
-                $(this.main).find('.chats-container').scrollTop($(this.main)
+                const scrolledInView = $(this.main)
                     .find('.messages-container').empty().append(chat.main).end()
                     .find('.mdc-list .mdc-list-item--selected')
                     .removeClass('mdc-list-item--selected').end()
                     .find('.mdc-list #' + chat.id)
-                    .addClass('mdc-list-item--selected').position().top);
+                    .addClass('mdc-list-item--selected')[0].offsetTop - 10;
                 window.app.view(this.header, this.main, '/app/messages/' +
                     chat.id);
+                $(this.main).find('.chats-container').scrollTop(Utils.visible({
+                    el: $(this.main).find('#' + chat.id)[0],
+                    pageTop: scroll,
+                }) ? scroll : scrolledInView);
                 chat.viewMessages();
                 chat.manage();
                 if (viewingChat) window.clearInterval(viewingChat);
@@ -75,7 +79,7 @@ class Chats {
         if (chat && $(this.main).find('#chats #' + chat.id).length) {
             viewChat();
         } else if (chat) {
-            viewingChat = window.setInterval(viewChat, 100);
+            viewingChat = window.setInterval(viewChat, 150);
         } else if ($(this.main).find('.mdc-list-item--selected').length) {
             this.chats[$(this.main).find('.mdc-list-item--selected')
                 .attr('id')].view();
@@ -96,7 +100,8 @@ class Chats {
 
     manage() {
         this.managed = true;
-        MDCTopAppBar.attachTo(this.header);
+        Utils.attachHeader(this.header);
+        MDCRipple.attachTo($(this.main).find('#chats #new-chat')[0]);
     }
 
     async chat(id) {
@@ -113,8 +118,11 @@ class Chats {
 
     // Render function that returns the chat view
     renderSelf() {
-        this.main = window.app.onMobile ? this.render.template('chats-mobile') :
-            this.render.template('chats-desktop');
+        this.main = window.app.onMobile ? this.render.template('chats-mobile', {
+            newChat: () => new NewChatDialog().view(),
+        }) : this.render.template('chats-desktop', {
+            newChat: () => new NewChatDialog().view(),
+        });
         this.header = this.render.header('header-main', {
             title: 'Messages',
         });
@@ -123,16 +131,14 @@ class Chats {
     // View function that shows all the chats that the currentUser is a part of
     viewChats() {
         this.chatsViewed = true;
-        $(this.main).find('#chats').empty();
+        $(this.main).find('#chats .mdc-list-item:not([id="new-chat"])').remove();
         window.app.listeners.push(this.getChats().onSnapshot({
             error: (err) => {
                 window.app.snackbar.view('Could not get chats.');
                 console.error('Could not get chats b/c of ', err);
             },
             next: (snapshot) => {
-                if (!snapshot.size) {
-                    return this.recycler.empty();
-                }
+                if (!snapshot.size) return this.recycler.empty();
 
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === 'removed') {
@@ -156,7 +162,7 @@ class Chats {
     getChats() {
         return window.app.db.collection('chats')
             .where('chatterUIDs', 'array-contains', window.app.user.uid)
-            .orderBy('lastMessage.timestamp');
+            .orderBy('lastMessage.timestamp', 'desc');
     }
 
     // Data action function that deletes the chat and TODO: sends out deleted 
@@ -185,7 +191,10 @@ class Chats {
         this.chatsByUID[getOther(doc.data().chatterUIDs)] = chat;
         const el = this.render.template('chat-list-item',
             Utils.combineMaps(doc.data(), {
-                open_chat: () => chat.view(),
+                open_chat: () => {
+                    $(el).addClass('mdc-list-item--selected');
+                    chat.view();
+                },
                 id: doc.id,
                 photo: doc.data().photo || Utils.getOtherUser(
                     doc.data().chatters[0],
@@ -301,7 +310,7 @@ class SupervisorChats extends Chats {
             search: async (that) => {
                 const qry = $(that.el).find('.search-box input').val();
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();
-                const res = await that.index.search({
+                const [err, res] = await to(that.index.search({
                     query: qry,
                     facetFilters: window.app.location.name === 'Any' ? [
                         'partition:' + (window.app.test ? 'test' : 'default'),
@@ -311,7 +320,9 @@ class SupervisorChats extends Chats {
                         'partition:' + (window.app.test ? 'test' : 'default'),
                         'chatterUIDs:' + window.app.user.uid,
                     ],
-                });
+                }));
+                if (err) return console.error('Could not search messages b/c ' +
+                    'of', err);
                 $(that.el).find('#results').empty();
                 res.hits.forEach((hit) => {
                     try {
@@ -349,12 +360,12 @@ class SupervisorChats extends Chats {
     viewAnnouncement(listItem) {
         const list = $(this.main).find('#announcements');
         const existing = $(list).find('#' + $(listItem).attr('id'));
-        if (existing.length) {
+        if (existing.length) { // TODO: Why am I doing this?
             if (existing.hasClass('mdc-list-item--selected')) $(listItem)
                 .addClass('mdc-list-item--selected');
             return existing.replaceWith(listItem);
         }
-        list.prepend(listItem);
+        list.append(listItem);
     }
 
     viewAnnouncements() {
@@ -393,7 +404,7 @@ class SupervisorChats extends Chats {
     getAnnouncements() {
         return window.app.data.locationIDs.map(id => window.app.db
             .collection('locations').doc(id).collection('announcements')
-            .orderBy('lastMessage.timestamp'));
+            .orderBy('lastMessage.timestamp', 'desc'));
     }
 
     renderAnnouncementItem(doc) {
@@ -401,7 +412,10 @@ class SupervisorChats extends Chats {
         this.announcements[doc.id] = chat;
         const el = this.render.template('chat-list-item',
             Utils.combineMaps(doc.data(), {
-                open_chat: () => chat.view(),
+                open_chat: () => {
+                    $(el).addClass('mdc-list-item--selected');
+                    chat.view();
+                },
                 id: doc.id,
                 photo: doc.data().photo,
                 name: doc.data().name,
@@ -477,7 +491,7 @@ class Chat {
     // Manager function that sends messages
     manage() {
         MDCRipple.attachTo($(this.main).find('button')[0]).unbounded = true;
-        MDCTopAppBar.attachTo(this.header);
+        Utils.attachHeader(this.header);
         const that = this;
         $(this.main).find('.write input').keyup(async function(e) {
             const btn = $(that.main).find('.write button');

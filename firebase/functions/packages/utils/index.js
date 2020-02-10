@@ -1,9 +1,125 @@
-const db = require('firebase-admin').firestore().collection('partitions')
-    .doc('default');
+const admin = require('firebase-admin');
+const firestore = admin.firestore();
+const partitions = {
+    test: firestore.collection('partitions').doc('test'),
+    default: firestore.collection('partitions').doc('default'),
+};
 
 class Utils {
 
     constructor() {}
+
+    static filterRequestUserData(user) {
+        return { // Needed info to properly render various user headers
+            name: user.name,
+            email: user.email,
+            uid: user.uid,
+            id: user.id,
+            photo: user.photo,
+            type: user.type,
+            grade: user.grade,
+            gender: user.gender, // Used to render gender pronouns correctly
+            hourlyCharge: user.payments ? user.payments.hourlyCharge : 0,
+            payments: user.payments,
+            proxy: user.proxy,
+        };
+    }
+
+    static async getFilteredUsers(filters, isTest = false) {
+        return (await Utils.getFilterQuery(filters, isTest).get()).docs
+            .filter(d => {
+                const profile = d.data();
+                if (Object.keys(filters.availability).length !== 0 &&
+                    filters.subject !== 'Any' &&
+                    profile.subjects.indexOf(filters.subject) < 0) {
+                    return false;
+                }
+                return true;
+            }).map(d => d.data());
+    }
+
+    static getFilterQuery(filters, isTest = false) {
+        const db = isTest ? partitions.test : partitions.default;
+        var query = db.collection('users');
+
+        if (filters.location !== 'Any') {
+            query = query.where('location', '==', filters.location);
+        }
+
+        if (filters.grade !== 'Any') {
+            query = query.where('grade', '==', filters.grade);
+        }
+
+        if (filters.gender !== 'Any') {
+            query = query.where('gender', '==', filters.gender);
+        }
+
+        if (filters.type !== 'Any') {
+            query = query.where('type', '==', filters.type);
+        }
+
+        if (Object.keys(filters.availability).length !== 0) {
+            // NOTE: User availability is stored in the Firestore database as:
+            // availability: {
+            // 	Gunn Academic Center: {
+            //     Friday: [
+            //       { open: '10:00 AM', close: '3:00 PM' },
+            //       { open: '10:00 AM', close: '3:00 PM' },
+            //     ],
+            //   },
+            //   Paly Tutoring Center: {
+            //   ...
+            //   },
+            // };
+            // And it is referenced here in the filters as:
+            // availability: {
+            //  	location: 'Gunn Academic Center',
+            //  	day: 'Monday',
+            //  	fromTime: 'A Period',
+            //  	toTime: 'B Period',
+            // };
+            var location = filters.availability.location;
+            var day = filters.availability.day;
+            var from = filters.availability.fromTime;
+            var to = filters.availability.toTime;
+            query = query.where(
+                'availability.' + location + '.' + day,
+                'array-contains', {
+                    open: from,
+                    close: to,
+                    booked: filters.showBooked || false,
+                }
+            );
+        }
+
+        switch (filters.price) {
+            case 'Any':
+                break;
+            case 'Free':
+                query = query.where('payments.type', '==', 'Free');
+                break;
+            default:
+                query = query.where('payments.type', '==', 'Paid');
+                break;
+        };
+
+        if (filters.subject !== 'Any' &&
+            Object.keys(filters.availability).length === 0) {
+            // NOTE: We can only include one array-contains statement in any given
+            // Firestore query. So, to do this, we check if the users in the 
+            // resulting query have this subject (in the searchRecycler).
+            query = query
+                .where('subjects', 'array-contains', filters.subject);
+        }
+
+        if (filters.sort === 'Rating') {
+            query = query.orderBy('avgRating', 'desc');
+        } else if (filters.sort === 'Reviews') {
+            query = query.orderBy('numRatings', 'desc');
+        }
+
+        return query;
+    }
 
     static concatArr(arrA, arrB) {
         var result = [];
@@ -148,7 +264,8 @@ class Utils {
         }
     }
 
-    static async getSupervisorForLocation(locationName) {
+    static async getSupervisorForLocation(locationName, isTest = false) {
+        const db = isTest ? partitions.test : partitions.default;
         var supervisorId;
         (await db
             .collection('locations')
@@ -164,6 +281,7 @@ class Utils {
     }
 
     static async getUserFromPhone(phone) {
+        const db = isTest ? partitions.test : partitions.default;
         var user;
         (await db
             .collection('users')

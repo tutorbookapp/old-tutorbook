@@ -6,11 +6,11 @@ const partitions = {
 };
 
 // Helper function that sends me an SMS notification for important events.
-const notifyMe = (message) => {
+const notifyMe = (message, isTest = false) => {
     return new SMS({
         phone: '+16508612723',
         name: 'Nicholas Chiang',
-    }, message);
+    }, message, isTest);
 };
 
 // Helper function that gets the user's location's ID by:
@@ -48,7 +48,7 @@ const createStat = async (user, stat, isTest) => {
         ')...');
     const db = isTest ? partitions.test : partitions.default;
     if (!isTest) notifyMe('[SUBTITLE] ' + stat.subtitle + ' \n[SUMMARY] ' +
-        stat.summary);
+        stat.summary, isTest);
     const locationID = await getUserLocation(user, isTest);
     return locationID ? db
         .collection('locations')

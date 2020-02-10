@@ -232,40 +232,38 @@ class FilterDialog {
         return Utils.shortenString(str, 20);
     }
 
-    page(id) {
-        var that = this;
-        const dialog = this.el;
-        const pages = dialog.querySelectorAll('.page');
-
-        function clearFilters(filters) {
-            // Helper function to get rid of the 'Any' selected option for
-            // better rendering.
-            var result = {};
-            for (var filter in filters) {
-                if (filters[filter] !== 'Any' && Object.keys(filters[filter]).length !== 0) {
-                    result[filter] = filter === 'availability' ?
-                        that.getAvailabilityString(filters[filter]) : filters[filter];
-                } else {
-                    result[filter] = '';
-                }
-            }
-            return result;
-        };
-
-        function renderAllList() {
-            Utils.replaceElement(
-                dialog.querySelector('#all-filters-list'),
-                that.render.template('dialog-filter-list', clearFilters(that.filters))
-            );
-
-            dialog.querySelectorAll('#page-all .mdc-list-item').forEach(function(el) {
-                MDCRipple.attachTo(el);
-                el.addEventListener('click', function() {
-                    var id = el.id.split('-').slice(1).join('-');
-                    that.page(id);
-                });
+    renderAllList() {
+        Utils.replaceElement(
+            this.el.querySelector('#all-filters-list'),
+            this.render.template('dialog-filter-list', this.clearFilters()),
+        );
+        const that = this;
+        $(this.el).find('#page-all .mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+            this.addEventListener('click', function() {
+                that.page(this.id.split('-').slice(1).join('-'));
             });
-        };
+        });
+    }
+
+    clearFilters(filters = this.filters) {
+        // Helper function to get rid of the 'Any' selected option for
+        // better rendering.
+        var result = {};
+        for (var filter in filters) {
+            if (filters[filter] !== 'Any' && Object.keys(filters[filter])
+                .length !== 0) {
+                result[filter] = filter === 'availability' ? this
+                    .getAvailabilityString(filters[filter]) : filters[filter];
+            } else {
+                result[filter] = '';
+            }
+        }
+        return result;
+    }
+
+    page(id) {
+        const pages = this.el.querySelectorAll('.page');
 
         pages.forEach(function(sel) {
             if (sel.id === id) {
@@ -276,7 +274,7 @@ class FilterDialog {
         });
 
         if (id === 'page-all') {
-            renderAllList();
+            this.renderAllList();
         } else if (id === 'page-availability' &&
             !this.availabilityDialog.managed) {
             this.availabilityDialog.manage();
@@ -306,6 +304,7 @@ class NewGroupDialog extends FilterDialog {
         this.defaultName = window.app.location.name + ' Group #' + (options
             .groupNum || 1);
         this.name = options.name || this.defaultName;
+        this.filters.showBooked = true;
     }
 
     getAvailabilityString(data) {
@@ -320,11 +319,18 @@ class NewGroupDialog extends FilterDialog {
             'fit within the specified filters.';
         const nameEl = this.render.textField('Name', this.name);
         $(this.el)
+            .find('#show-page-availability span').text('Any Appointments').end()
+            .find('#page-availability h2').text('Appointments').end()
             .find('#page-all .mdc-dialog__title').text('New Group').end()
             .find('[data-mdc-dialog-action="accept"]').text('Create').end()
             .find('#page-all .mdc-dialog__content').prepend(nameEl)
             .prepend(description).end()
             .attr('id', 'dialog-group');
+    }
+
+    renderAllList() {
+        super.renderAllList();
+        $(this.el).find('#show-page-availability span').text('Any Appointments');
     }
 
     accept() {
@@ -345,7 +351,7 @@ class NewGroupDialog extends FilterDialog {
             ],
             location: window.app.location,
             createdBy: window.app.conciseUser,
-            name: this.name || this.defaultName,
+            name: this.nameTextField.value || this.name || this.defaultName,
             photo: 'https://tutorbook.app/app/img/male.png',
             filters: this.filters,
         };
@@ -355,8 +361,8 @@ class NewGroupDialog extends FilterDialog {
 
     manage() {
         super.manage();
-        const nameTextField = new MDCTextField($(this.el).find('#Name')[0]);
-        nameTextField.value = this.name;
+        this.nameTextField = new MDCTextField($(this.el).find('#Name')[0]);
+        this.nameTextField.value = this.name;
     }
 };
 

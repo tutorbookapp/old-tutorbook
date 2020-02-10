@@ -37,9 +37,10 @@ class SearchHeader {
     }
 
     async search(that) {
+        console.log('[DEBUG] Searching users with default function...');
         const query = $(that.el).find('.search-box input').val();
         query.length > 0 ? that.showClearButton() : that.showInfoButton();
-        const res = await that.index.search({
+        const [err, res] = await to(that.index.search({
             query: query,
             facetFilters: window.app.location.name === 'Any' ? [
                 'partition:' + (window.app.test ? 'test' : 'default'),
@@ -48,8 +49,10 @@ class SearchHeader {
                 'location:' + window.app.location.name,
                 'partition:' + (window.app.test ? 'test' : 'default'),
             ],
-        });
+        }));
+        if (err) return console.error('Could not search users b/c of', err);
         $(that.el).find('#results').empty();
+        console.log('[DEBUG] Viewing ' + res.hits.length + ' search hits...');
         res.hits.forEach((hit) => {
             try {
                 $(that.el).find('#results').append(that.renderHit(hit));
