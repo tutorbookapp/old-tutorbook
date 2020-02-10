@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/site",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,19 +10,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@tutorbook/cta-link": "^0.4.5",
-    "@tutorbook/email-capture": "^0.4.5",
-    "@tutorbook/email-form": "^0.4.5",
-    "@tutorbook/feature-announcement": "^0.4.5",
-    "@tutorbook/feature-spotlight-vertical": "^0.4.5",
-    "@tutorbook/features": "^0.4.5",
-    "@tutorbook/footer": "^0.4.5",
-    "@tutorbook/header": "^0.4.5",
-    "@tutorbook/heading-block": "^0.4.5",
-    "@tutorbook/hero-email-capture": "^0.4.5",
-    "@tutorbook/large-testimonial": "^0.4.5",
-    "@tutorbook/logo-party": "^0.4.5",
-    "@tutorbook/site-styles": "^0.4.5"
+    "@tutorbook/cta-link": "^0.4.6",
+    "@tutorbook/email-capture": "^0.4.6",
+    "@tutorbook/email-form": "^0.4.6",
+    "@tutorbook/feature-announcement": "^0.4.6",
+    "@tutorbook/feature-spotlight-vertical": "^0.4.6",
+    "@tutorbook/features": "^0.4.6",
+    "@tutorbook/footer": "^0.4.6",
+    "@tutorbook/header": "^0.4.6",
+    "@tutorbook/heading-block": "^0.4.6",
+    "@tutorbook/hero-email-capture": "^0.4.6",
+    "@tutorbook/large-testimonial": "^0.4.6",
+    "@tutorbook/logo-party": "^0.4.6",
+    "@tutorbook/site-styles": "^0.4.6"
   },
   "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
 }
