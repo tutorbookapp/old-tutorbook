@@ -2,7 +2,7 @@ const $ = require('jquery');
 const html = require('./index.html');
 const css = require('./index.scss').toString();
 
-const DEFAULT_POLICY = 'terms';
+const DEFAULT_POLICY = 'privacy';
 
 class Legal extends HTMLElement {
     constructor() {

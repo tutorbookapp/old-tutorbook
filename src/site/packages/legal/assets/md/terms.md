@@ -84,7 +84,7 @@ Since the functionality of the Company it’s only to be the intermediary betwee
 
 The Company expressly disclaims any liability that may arise among the users of its services that derive from any of its platforms. The Company is not responsible for disputes, claims, losses, damages of any kind that may arise before, during and after the tutor-student interaction. The Company reserves the right, but not the obligation, to monitor the interaction and disputes between both users or any conflict between the users and the educational institution.
 
-## 11. Block, Suspension, and/or Removal of Users
+## 11. Suspension and Removal of Users
 
 Regardless of the fact that the service provided by the Company is provided directly to educational institutions, it reserves the right to block access or remove, partially or totally, student-type users or tutor-type users, who disseminate content or execute actions that may result: abusive, defamatory, obscene, offensive, fraudulent, contrived or misleading, infringement of copyright, trademarks, confidentiality, industrial secrets or any intellectual property rights of a third party, or in any way contravene the provisions of these Terms of use. As well as restrict access to any administrator of the platforms that is part of the educational institution (employees, teachers, etc.)
 
