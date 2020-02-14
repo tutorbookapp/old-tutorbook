@@ -90,6 +90,12 @@ We collect information to:
 - connect pupils with tutors
 - track tutor service hours
 
+## Where We Store the Information We Collect
+
+All of our datastores are spread across 3 regional Google Cloud Platform ("GCP") resource locations (one multi-region location). Data is stored across GCP's `nam5` [multi-region location](https://cloud.google.com/security/) that consists of the `us-central1` and `us-central2` regional resource locations with additional metadata stored in the Oklahoma private region. See [https://cloud.google.com/security/](https://cloud.google.com/security/) for details of GCP security infrastructure.
+
+For additional details on our data storage infrastructure, see our [Security Policy](https://tutorbook.app/legal#security).
+
 ## Information We Share
 
 We share the following profile information with other users at your school:

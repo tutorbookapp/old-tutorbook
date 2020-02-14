@@ -25,7 +25,7 @@ At Tutorbook we take the protection of customer data extremely seriously. This T
 
 - All of our services run in the cloud. Tutorbook does not run our own routers, load balancers, DNS servers, or physical servers.
 - All of our services and data are hosted in Firebase-supported GCP facilities in the USA and protected by Google security, as described at [https://firebase.google.com/support/privacy](https://firebase.google.com/support/privacy).
-- All of our infrastructure is spread across 3 regional GCP resource locations (one multi-region location) and will continue to work should any one of those locations fail unexpectedly. Data is stored across GCP's `[nam5](https://cloud.google.com/firestore/docs/locations#location-mr)` multi-region location that consists of the `us-central1` and `us-central2` regional resource locations with additional data stored in the Oklahoma private region. See [https://cloud.google.com/security/](https://cloud.google.com/security/) for details of GCP security infrastructure.
+- All of our infrastructure is spread across 3 regional GCP resource locations (one multi-region location) and will continue to work should any one of those locations fail unexpectedly. Data is stored across GCP's `nam5` [multi-region location](https://cloud.google.com/firestore/docs/locations#location-mr) that consists of the `us-central1` and `us-central2` regional resource locations with additional metadata stored in the Oklahoma private region. See [https://cloud.google.com/security/](https://cloud.google.com/security/) for details of GCP security infrastructure.
 - Tutorbook uses a backup solution for datastores that contain customer data.
 
 ## Data
