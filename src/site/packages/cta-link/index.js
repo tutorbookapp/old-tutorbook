@@ -1,5 +1,5 @@
 const $ = require('jquery');
-const html = require('!html-loader?modules!./index.html');
+const html = require('./index.html');
 const css = require('./index.scss').toString();
 
 class CTALink extends HTMLElement {

@@ -1,3 +1,4 @@
+const Legal = require('@tutorbook/legal');
 const EmailForm = require('@tutorbook/email-form');
 const CTALink = require('@tutorbook/cta-link');
 const Header = require('@tutorbook/header');

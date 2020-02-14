@@ -21,6 +21,7 @@
     "@tutorbook/heading-block": "^0.4.6",
     "@tutorbook/hero-email-capture": "^0.4.6",
     "@tutorbook/large-testimonial": "^0.4.6",
+    "@tutorbook/legal": "^1.0.0",
     "@tutorbook/logo-party": "^0.4.6",
     "@tutorbook/site-styles": "^0.4.6"
   },
