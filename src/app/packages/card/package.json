@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/card",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,16 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.4.6",
-    "@tutorbook/dialogs": "^0.4.6",
-    "@tutorbook/profile": "^0.4.6",
-    "@tutorbook/user": "^0.4.6",
-    "@tutorbook/utils": "^0.4.6"
+    "@tutorbook/data": "^0.4.7",
+    "@tutorbook/dialogs": "^0.4.7",
+    "@tutorbook/profile": "^0.4.7",
+    "@tutorbook/user": "^0.4.7",
+    "@tutorbook/utils": "^0.4.7"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/card"
   },
-  "gitHead": "136e4f5e88ebce18de2e216bdb2301204ea5ef79"
+  "gitHead": "b3940d1eea7797c7a47a3ec9a210656b08d72d59"
 }
