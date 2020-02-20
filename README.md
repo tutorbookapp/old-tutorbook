@@ -31,49 +31,105 @@ to find something that you'd be interested in working on. Then, checkout from
 
 ### File Structure
 
-Our app primarily consists of 28 (and counting)
-[subpackages](https://npmjs.com/org/tutorbook) (included in `src/app/packages`)
-managed by [lerna](https://lerna.js.org) that are
-[webpacked](https://webpack.js.org) into three files for distribution (included
-in `build/app`):
+#### Progressive Web App
+
+Our progressive web app
+([PWA](https://developers.google.com/web/progressive-web-apps/)) primarily
+consists of 28 (and counting) [subpackages](https://npmjs.com/org/tutorbook)
+(included in `src/app/packages`) managed by [lerna](https://lerna.js.org) that
+are [webpacked](https://webpack.js.org) into three files for distribution
+(included in `build/app`):
 
 ```
 .
 ├── build
 │   ├── app
 │   │   ├── index.html
-│   │   ├── scripts
-│   │   │   └── bundle.min.js
-│   │   └── styles
-│   │       └── bundle.min.css
-│   ├── index.html
-│   └── site
+│   │   ├── index.js
+│   │   ├── index.css
+│   │   └── img
+│   │       └── bot.png
+│   └── favicon
+│       └── manifest.json
 └── src
-    ├── app
-    │   ├── lerna.json
-    │   ├── package-lock.json
-    │   └── packages
-    │       ├── app
-    │       │   ├── index.js
-    │       │   ├── package.json
-    │       │   └── styles
-    │       │       ├── cards.scss
-    │       │       ├── chat.scss
-    │       │       ├── profile.scss
-    │       │       ├── search.css
-    │       │       ├── user.css
-    │       │       └── welcome.scss
-    │       ├── dialogs
-    │       │   ├── index.js
-    │       │   └── package.json
-    │       ├── render
-    │       │   ├── index.js
-    │       │   └── package.json
-    │       └── templates
-    │           ├── index.js
-    │           ├── package.json
-    │           └── templates.html
+    ├── lerna.json
+    ├── package.json
+    └── app
+        ├── package.json
+        ├── package-lock.json
+        ├── webpack.config.js
+        └── packages
+            ├── app
+            │   ├── index.js
+            │   ├── package.json
+            │   └── styles
+            │       ├── cards.scss
+            │       ├── chat.scss
+            │       ├── profile.scss
+            │       ├── search.css
+            │       ├── user.css
+            │       └── welcome.scss
+            ├── dialogs
+            │   ├── index.js
+            │   └── package.json
+            ├── render
+            │   ├── index.js
+            │   └── package.json
+            └── templates
+                ├── index.js
+                ├── package.json
+                └── templates.html
+```
+
+#### Marketing and Legalities Website
+
+Our marketing and legalities website consists of 18 (and counting) subpackages
+that define [Custom HTML Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) that are used in `build/index.html`:
+
+```
+.
+├── build
+│   ├── favicon
+│   │   └── manifest.json
+│   ├── legal
+│   │   └── index.html
+│   ├── index.html
+│   ├── index.js
+│   └── index.css
+└── src
+    ├── lerna.json
+    ├── package.json
     └── site
+        ├── package.json
+        ├── package-lock.json
+        ├── webpack.config.js
+        └── packages
+            ├── site
+            │   ├── index.js
+            │   ├── index.scss
+            │   └── package.json
+            ├── styles
+            │   ├── search.scss
+            │   ├── reset.scss
+            │   ├── general.scss
+            │   └── package.json
+            ├── legal
+            │   ├── index.js
+            │   ├── index.scss
+            │   ├── index.html
+            │   ├── package.json
+            │   └── assets
+            │       ├── html
+            │       │   └── terms.html
+            │       ├── md
+            │       │   └── terms.md
+            │       └── generate.js
+            └── cta-link
+                ├── index.js
+                ├── index.scss
+                ├── index.html
+                ├── package.json
+                └── templates.html
 ```
 
 ### Developing
@@ -108,5 +164,31 @@ $ git clone https://github.com/tutorbookapp/tutorbook.git && cd tutorbook/
 ```
 $ git checkout -b $my_branch && cd src/app/packages
 ```
-6. From there, `cd` into your desired package, make your changes, commit them to
+6. Follow the instructions included below to start a webpack development server
+   (to see your updates affect the app live).
+7. From there, `cd` into your desired package, make your changes, commit them to
    your branch off of `develop`, and open a PR on GitHub.
+
+#### Start a Development Server
+
+To [webpack](https://webpack.js.org/) the app packages and see your changes
+live, run the following commands from `src/app/`:
+
+```
+$ npm i
+$ npm run pack
+```
+
+To start a development server, first install
+[Google's Firebase CLI](https://firebase.google.com/docs/cli/) by running:
+
+```
+$ npm i -g firebase-tools
+```
+
+Then, run the following command from anywhere in the repository and visit
+[http://localhost:5000/](http://localhost:5000/) to see your version of the app:
+
+```
+$ firebase serve --only hosting
+```
