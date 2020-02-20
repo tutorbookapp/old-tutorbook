@@ -10,6 +10,7 @@
   "author": "Nicholas Chiang",
   "license": "ISC",
   "dependencies": {
+    "message": "file:../message",
     "firebase-admin": "^8.9.1",
     "firebase-functions": "^3.3.0"
   }

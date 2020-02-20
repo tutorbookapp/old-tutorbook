@@ -1378,6 +1378,7 @@ class Utils {
             grade: user.grade,
             gender: user.gender, // We need this to render gender pronouns correctly
             hourlyCharge: (!!user.payments) ? user.payments.hourlyCharge : 0,
+            location: user.location || window.app.location.name,
             payments: user.payments,
             proxy: user.proxy,
         };

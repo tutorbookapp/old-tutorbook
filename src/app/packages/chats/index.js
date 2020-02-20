@@ -7,6 +7,8 @@ import to from 'await-to-js';
 
 const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
+const Chat = require('@tutorbook/chat').default;
+const AnnouncementChat = require('@tutorbook/chat').announcement;
 const Utils = require('@tutorbook/utils');
 const NewGroupDialog = require('@tutorbook/filters').group;
 
@@ -271,7 +273,9 @@ class SupervisorChats extends Chats {
         if (this.announcements[id]) return this.announcements[id].view();
         const [err, chat] = await to(this.getChat(id));
         if (err) {
-            const [e, announcement] = await to(this.getAnnouncement(id));
+            const attempt = this.getAnnouncement(id);
+            if (!attempt) return this.view();
+            const [e, announcement] = await to(attempt);
             if (e) {
                 window.app.snackbar.view('Could not open chat.');
                 return this.view();
@@ -284,6 +288,8 @@ class SupervisorChats extends Chats {
     }
 
     getAnnouncement(id) {
+        if (!window.app.location.id) return console.error('Couldn\'t get ' +
+            'announcement group chat (' + id + ') without location id.');
         return window.app.db.collection('locations').doc(window.app.location.id)
             .collection('announcements').doc(id).get();
     }
@@ -425,220 +431,7 @@ class SupervisorChats extends Chats {
     }
 };
 
-class Chat {
-
-    constructor(id, chat) {
-        this.id = id;
-        this.chat = chat;
-        this.render = window.app.render;
-        this.recycler = {
-            remove: (doc) => {
-                return $(this.main).find('#messages [id="doc-' + doc.id + '"]')
-                    .remove();
-            },
-            display: (doc) => {
-                $(this.main).find('.centered-text').remove();
-                this.viewMessage(this.renderMessage(doc));
-            },
-            empty: () => {
-                $(this.main).find('#messages').empty();
-                if (!$(this.main).find('.centered-text').length)
-                    $('.main .chat').prepend(this.renderEmptyMessages());
-            },
-        };
-        this.renderSelf();
-    }
-
-    // View function that opens up a chat view
-    view() {
-        if ($(window.app.chats.main).find('.messages-container').length)
-            return window.app.chats.view(this);
-        window.app.intercom.view(false);
-        window.app.nav.selected = 'Messages';
-        window.app.view(this.header, this.main, '/app/messages/' + this.id);
-        this.viewMessages();
-        this.manage();
-    }
-
-    toString() {
-        return 'Chat between ' + this.chat.chatters[0].name + ' and ' +
-            this.chat.chatters[1].name;
-    }
-
-    renderSelf() {
-        const name = this.chat.name || Utils.getOtherUser(this.chat.chatters[0],
-            this.chat.chatters[1]).name;
-        const that = this;
-        this.header = this.render.header('header-back', {
-            title: 'Chat with ' + name,
-        });
-        this.main = this.render.template('chat', {
-            send: async () => {
-                const input = $(this.main).find('.write input');
-                const btn = $(this.main).find('.write button');
-                input.attr('disabled', 'disabled');
-                btn.attr('disabled', 'disabled');
-                const message = input.val();
-                input.val('');
-                input.removeAttr('disabled');
-                (message !== '') ? await that.sendMessage(message): null;
-            },
-            placeholder: 'Message ' + name + '...',
-            id: this.id,
-        });
-    }
-
-    // Manager function that sends messages
-    manage() {
-        MDCRipple.attachTo($(this.main).find('button')[0]).unbounded = true;
-        Utils.attachHeader(this.header);
-        const that = this;
-        $(this.main).find('.write input').keyup(async function(e) {
-            const btn = $(that.main).find('.write button');
-            $(this).val() === '' ? btn.attr('disabled', 'disabled') : btn
-                .removeAttr('disabled');
-            if (e.keyCode == 13) { // Enter key hit
-                $(this).attr('disabled', 'disabled');
-                btn.attr('disabled', 'disabled');
-                const message = $(this).val();
-                $(this).val('');
-                $(this).removeAttr('disabled');
-                (message !== '') ? await that.sendMessage(message): null;
-            }
-        });
-    }
-
-    // View function that shows the messages of the chat
-    viewMessages() {
-        $(this.main).find('#messages').empty();
-        window.app.listeners.push(this.getMessages().onSnapshot({
-            error: (err) => {
-                window.app.snackbar.view('Could not get messages.');
-                console.error('Could not get messages b/c of ', err);
-            },
-            next: (snapshot) => {
-                if (!snapshot.size) {
-                    return this.recycler.empty();
-                }
-
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'removed') {
-                        this.recycler.remove(change.doc);
-                    } else {
-                        this.recycler.display(change.doc);
-                    }
-                });
-            },
-        }));
-    }
-
-    // Adds message to chat view in correct order
-    viewMessage(message) {
-        var messages = $('.main .chat #messages')[0];
-        var id = message.getAttribute('id');
-        var timestamp = message.getAttribute('timestamp');
-
-        var existingMessage = messages.querySelector('[id="' + id + '"]');
-        if (!!existingMessage) {
-            // modify
-            messages.insertBefore(message, existingMessage);
-            messages.removeChild(existingMessage);
-        } else {
-            // Add by timestamp
-            for (var i = 0; i < messages.children.length; i++) {
-                var child = messages.children[i];
-                var time = child.getAttribute('timestamp');
-                // If there is a request that was sent later (more recently)
-                // Then this request will appear after that request
-                if (time && time > timestamp) {
-                    $(message).insertBefore(child);
-                    return $(this.main).find('#messages .bubble:last-child')[0]
-                        .scrollIntoView();
-                }
-            }
-            // Append it normally
-            $(messages).append(message);
-            $(this.main).find('#messages .bubble:last-child')[0]
-                .scrollIntoView();
-        }
-    }
-
-    // Render function that returns a message div with the given message as text
-    renderMessage(doc) {
-        const el = this.render.template('message', Utils.combineMaps(doc.data(), {
-            id: 'doc-' + doc.id,
-            timestamp: doc.data().timestamp.toDate().getTime(),
-        }));
-        if (doc.data().sentBy.email === window.app.user.email) {
-            el.setAttribute('class', 'bubble me');
-        }
-        return el;
-    }
-
-    // Data action function that gets the messages for the currentChat.
-    getMessages() {
-        const db = window.app.db;
-        return db.collection('chats').doc(this.id).collection('messages')
-            .orderBy('timestamp', 'desc')
-            .limit(50); // TODO: Add infinite scrolling for past messages
-    }
-
-    renderEmptyMessages() {
-        return this.render.template('centered-text', {
-            text: 'No messages so far.',
-        });
-    }
-
-    // Data flow function that sends a message based on the currentChat's id
-    async sendMessage(txt) {
-        if (txt === '') return;
-        const db = window.app.db;
-        const ref = db.collection('chats').doc(this.id)
-            .collection('messages').doc();
-        const msg = {
-            sentBy: window.app.conciseUser,
-            timestamp: new Date(),
-            message: txt,
-        };
-        const [err, res] = await to(ref.set(msg));
-        if (err) return window.app.snackbar.view('Could not send message.');
-        const chat = db.collection('chats').doc(this.id);
-        return chat.update({
-            lastMessage: msg,
-        });
-    }
-};
-
-class AnnouncementChat extends Chat {
-    constructor(doc) {
-        super(doc.id, doc.data());
-        this.doc = doc;
-        this.ref = doc.ref;
-    }
-
-    getMessages() {
-        return this.ref.collection('messages').orderBy('timestamp', 'desc')
-            .limit(50);
-    }
-
-    async sendMessage(txt) {
-        if (txt === '') return;
-        const ref = this.ref.collection('messages').doc();
-        const msg = {
-            sentBy: window.app.conciseUser,
-            timestamp: new Date(),
-            message: txt,
-        };
-        const [e, res] = await to(ref.set(msg));
-        if (e) return window.app.snackbar.view('Could not send announcement.');
-        return this.ref.update({
-            lastMessage: msg,
-        });
-    }
-};
-
 module.exports = {
     default: Chats,
     supervisor: SupervisorChats,
-    chat: Chat,
 };

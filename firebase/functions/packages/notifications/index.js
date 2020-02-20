@@ -151,7 +151,8 @@ const apptNotification = (req, res) => {
                     appt.subject + ' in the ' + appt.location.name + ' on ' +
                     appt.time.day + ' at ' + appt.time.from + '. Log into ' +
                     'Tutorbook (https://tutorbook.app/app/) to edit, cancel, ' +
-                    'or clock into this appointment.', req.query.test === 'true');
+                    'or clock into this appointment.',
+                    req.query.test === 'true').send();
             }
             if (req.query.pupil === 'true' &&
                 pupils.indexOf(appt.for.fromUser.uid) < 0) {
@@ -163,7 +164,8 @@ const apptNotification = (req, res) => {
                     appt.subject + ' in the ' + appt.location.name + ' on ' +
                     appt.time.day + ' at ' + appt.time.from + '. Log into ' +
                     'Tutorbook (https://tutorbook.app/app/) to view, edit, or' +
-                    ' cancel this appointment.', req.query.test === 'true');
+                    ' cancel this appointment.',
+                    req.query.test === 'true').send();
             }
         }));
         return res.json({
@@ -181,10 +183,16 @@ const userNotification = async (snap, context) => {
         ' welcome notifications to users without names.');
     console.log('[DEBUG] Sending ' + profile.name + ' <' + profile.email +
         '> welcome notifications...');
-    await new Email('welcome', profile);
-    await new SMS(profile, 'Welcome to Tutorbook! This is how ' +
-        'you\'ll receive SMS notifications. To turn them off, go to ' +
-        'settings and toggle SMS notifications off.', getTest(context));
+    await new Email('welcome', profile).send();
+    await new SMS({
+        recipient: profile,
+        body: 'Welcome to Tutorbook! This is how you\'ll receive SMS ' +
+            'notifications.',
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + profile.name.split(' ')[0] + ' welcome ' +
+            'notifications.',
+    }).send();
     console.log('[DEBUG] Sent ' + profile.name + ' <' + profile.email +
         '> welcome notifications.');
 };
@@ -268,58 +276,69 @@ const announcementNotification = async (snap, context) => {
 
 // messages - sms, webpush for new messages
 const messageNotification = async (snap, context) => {
+    const msg = snap.data();
+    if (msg.sentBy.name === 'Operator') return console.log('[DEBUG] Skipping ' +
+        'message (' + msg.message + ') sent by Operator.');
+    if (msg.type === 'Announcement') return console.log('[DEBUG] Skipping ' +
+        'announcement message.');
     const db = getDB(context);
-    const chat = await db.collection('chats')
-        .doc(context.params.chat).get();
-    return chat.data().chatterUIDs.forEach(async (uid) => {
-        if (uid !== snap.data().sentBy.uid) {
-            await new SMS((await db.collection('users')
-                    .doc(uid).get()).data(),
-                snap.data().sentBy.name.split(' ')[0] +
-                ' says: ' + snap.data().message,
-                getTest(context),
-            );
-            await new Webpush(
-                uid,
-                'Message from ' + snap.data().sentBy.name.split(' ')[0],
-                snap.data().message, {
-                    id: context.params.chat
-                },
-            );
-        }
-    });
-};
-
-// chats - sms, webpush for all other recipients to a new chat group
-const chatNotification = (snap, context) => {
-    const chat = snap.data();
-    const body = chat.createdBy.name + ' wants to chat with you. Log ' +
-        'into Tutorbook (https://tutorbook.app/app/messages) to respond ' +
-        'to ' + getPronoun(chat.createdBy.gender) + ' messages.';
-    const title = 'Chat with ' + chat.createdBy.name;
-    // Send notification to all the other people on the chat
-    return chat.chatters.forEach(async (chatter) => {
-        if (chatter.uid !== chat.createdBy.uid) {
-            await new SMS((await admin
-                .firestore()
-                .collection('users')
-                .doc(chatter.uid)
-                .get()
-            ).data(), body, getTest(context));
-            await new Webpush(chatter.uid, title, body);
-        }
-    });
+    const chatRef = db.collection('chats').doc(context.params.chat);
+    const chat = (await chatRef.get()).data();
+    return Promise.all(chat.chatterUIDs.map(async (uid) => {
+        if (uid === msg.sentBy.uid) return console.log('[DEBUG] Skipping ' +
+            'notifications for sender.');
+        const recipient = (await db.collection('users').doc(uid).get()).data();
+        /*
+         *const sms = new RegExp('^Could not send [\\w\\s]*\'s message to ' +
+         *    recipient.name.split(' ')[0] + ' via SMS\\.$');
+         *const webpush = new RegExp('^Could not send ' +
+         *    recipient.name.split(' ')[0] + ' a webpush notification about ' +
+         *    '[\\w\\s]*\'s message\\.$');
+         *if (sms.test(msg.message)) console.log('[DEBUG] Skipping SMS ' +
+         *    'notifications for original recipient to whom we could not send ' +
+         *    'SMS notifications in the first place.');
+         *if (webpush.test(msg.message)) console.log('[DEBUG] Skipping webpush ' +
+         *    'notifications for original recipient to whom we could not send ' +
+         *    'webpush notifications in the first place.');
+         */
+        await new SMS({
+            recipient: recipient,
+            sender: msg.sentBy,
+            body: msg.sentBy.name.split(' ')[0] + ' says: ' + msg.message,
+            botOnSuccess: false,
+            botMessage: 'Sent ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
+                'message to ' + recipient.name.split(' ')[0] + ' via SMS.',
+            isTest: getTest(context),
+        }).send();
+        await new Webpush({
+            recipient: recipient,
+            sender: msg.sentBy,
+            title: 'Message from ' + msg.sentBy.name.split(' ')[0],
+            body: msg.message,
+            botOnSuccess: false,
+            botMessage: 'Sent ' + recipient.name.split(' ')[0] + ' a webpush ' +
+                'notification about ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
+                'message.',
+            data: {
+                id: context.params.chat
+            },
+        }).send();
+    }));
 };
 
 // feedback - sms to me for new feedback
-const feedbackNotification = async (snap, context) => {
-    await new SMS({
+const feedbackNotification = (snap, context) => {
+    const d = snap.data();
+    return new SMS({
+        recipient: {
             phone: '+16508612723',
             email: 'nc26459@pausd.us',
             id: 'nc26459@pausd.us',
             location: 'Test Location',
-        }, 'Feedback from ' + snap.data().from.name + ': ' +
-        snap.data().message, getTest(context));
+        },
+        body: 'Feedback from ' + d.from.name + ':\n' + d.message,
+        isTest: getTest(context),
+    }).send();
 };
 
 // appts - email location rules to new 'tutor matches'
@@ -334,30 +353,38 @@ const rulesNotification = async (snap, context) => {
     const supervisorId = (await db.collection('locations')
         .doc(context.params.location).get()).data().supervisors[0];
     const supervisor = (await users.doc(supervisorId).get()).data();
-    [tutor, pupil, supervisor].forEach(async (user) => {
-        await new Email('rules', user, {
+    return Promise.all([tutor, pupil, supervisor].map(user => {
+        return new Email('rules', user, {
             appt: appt,
             tutor: tutor,
             pupil: pupil,
             supervisor: supervisor,
-        });
-    });
+        }).send();
+    }));
 };
 
 // requestsIn - sms, webpush, email to tutor for new requests
 const requestNotification = async (snap, context) => {
     const db = getDB(context);
     const request = snap.data();
-    const user = await db.collection('users')
-        .doc(context.params.user).get();
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
     const summary = request.fromUser.name + ' wants you as a ' +
-        request.toUser.type.toLowerCase() + ' for ' + request.subject +
-        '. Log into your Tutorbook dashboard (https://tutorbook.app/app)' +
-        ' to approve or modify this request.';
-    await new SMS(user.data(), summary, getTest(context));
-    await new Email('request', user.data(), request);
-    console.log('[DEBUG] Sent request notification to ' + user.data().name +
-        ' <' + user.data().email + '> <' + user.data().phone + '>.');
+        request.toUser.type.toLowerCase() + ' for ' + request.subject + '. ' +
+        'Login to Tutorbook (https://tutorbook.app) to approve or modify this' +
+        ' request.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' an SMS notification ' +
+            'about ' + request.fromUser.name.split(' ')[0] + '\'s lesson ' +
+            'request for ' + request.subject + '.',
+    }).send();
+    await new Email('request', u, request).send();
+    console.log('[DEBUG] Sent new lesson request notification to ' + u.name +
+        ' <' + u.email + '> <' + u.phone + '>.');
 };
 
 // approvedRequestsOut - sms, webpush, email to pupil for approvedRequests
@@ -365,17 +392,25 @@ const approvedRequestNotification = async (snap, context) => {
     const db = getDB(context);
     const approvedBy = snap.data().approvedBy;
     const request = snap.data().for;
-    const user = await db.collection('users')
-        .doc(context.params.user).get();
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
     const summary = approvedBy.name + ' approved your lesson request. You' +
-        ' now have tutoring appointments for ' + request.subject +
-        ' with ' + request.toUser.name.split(' ')[0] + ' on ' +
-        request.time.day + 's at the ' + request.location.name + ' from ' +
-        request.time.from + ' until ' + request.time.to + '.';
-    await new SMS(user.data(), summary, getTest(context));
-    await new Email('appt', user.data(), snap.data());
-    console.log('[DEBUG] Sent appt notification to ' + user.data().name + ' <' +
-        user.data().email + '> <' + user.data().phone + '>.');
+        ' now have tutoring appointments for ' + request.subject + ' with ' +
+        request.toUser.name.split(' ')[0] + ' on ' + request.time.day + 's at' +
+        ' the ' + request.location.name + ' from ' + request.time.from +
+        ' until ' + request.time.to + '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' an SMS notification ' +
+            'about ' + getPronoun(u.gender) + ' new appointment with ' +
+            request.toUser.name.split(' ')[0] + ' for ' + request.subject + '.',
+    }).send();
+    await new Email('appt', u, snap.data()).send();
+    console.log('[DEBUG] Sent appt notification to ' + u.name + ' <' + u.email +
+        '> <' + u.phone + '>.');
 };
 
 // pendingClockIns - sms, webpush to the recipient of a clockIn request
@@ -392,40 +427,189 @@ const clockOut = async (snap, context) => {
 
 // modifiedRequestsIn - sms, webpush to tutor when request is modified
 const modifiedRequestIn = async (snap, context) => {
-    console.warn('[WARNING] This notification function has not been ' +
-        'implemented yet.');
+    const db = getDB(context);
+    const modifiedBy = snap.data().modifiedBy;
+    const r = snap.data().for;
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
+    const summary = modifiedBy.name + ' modified ' + (modifiedBy.uid === r
+            .fromUser.uid ? getPronoun(modifiedBy.gender) : r.fromUser.name
+            .split(' ')[0] + '\'s') + ' lesson request to you for ' +
+        r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a modified request ' +
+            'notification via SMS.',
+    }).send();
+    await new Webpush({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: false,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a modified request ' +
+            'webpush notification.',
+    }).send();
+    console.log('[DEBUG] Sent modified request notification to ' + u.name +
+        ' <' + u.email + '> <' + u.phone + '>.');
 };
 
 // modifiedRequestsOut - sms, webpush to pupil when request is modified
 const modifiedRequestOut = async (snap, context) => {
-    console.warn('[WARNING] This notification function has not been ' +
-        'implemented yet.');
+    const db = getDB(context);
+    const modifiedBy = snap.data().modifiedBy;
+    const r = snap.data().for;
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
+    const summary = modifiedBy.name + ' modified your lesson request for ' +
+        r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a modified request ' +
+            'notification via SMS.',
+    }).send();
+    await new Webpush({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: false,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a modified request ' +
+            'webpush notification.',
+    }).send();
+    console.log('[DEBUG] Sent modified request notification to ' + u.name +
+        ' <' + u.email + '> <' + u.phone + '>.');
 };
 
 // canceledRequestsIn - sms, webpush to tutor when request is canceled
 const canceledRequestIn = async (snap, context) => {
-    console.warn('[WARNING] This notification function has not been ' +
-        'implemented yet.');
+    const db = getDB(context);
+    const canceledBy = snap.data().canceledBy;
+    const r = snap.data().for;
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
+    const summary = canceledBy.name + ' canceled ' + (canceledBy.uid === r
+            .fromUser.uid ? getPronoun(canceledBy.gender) : r.fromUser.name
+            .split(' ')[0] + '\'s') + ' lesson request to you for ' +
+        r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a canceled request ' +
+            'notification via SMS.',
+    }).send();
+    await new Webpush({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: false,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a canceled request ' +
+            'webpush notification.',
+    }).send();
+    console.log('[DEBUG] Sent canceled request notification to ' + u.name +
+        ' <' + u.email + '> <' + u.phone + '>.');
 };
 
 // rejectedRequestsOut - sms, webpush to pupil when request is rejected
 const rejectedRequestOut = async (snap, context) => {
-    console.warn('[WARNING] This notification function has not been ' +
-        'implemented yet.');
+    const db = getDB(context);
+    const rejectedBy = snap.data().rejectedBy;
+    const r = snap.data().for;
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
+    const summary = rejectedBy.name + ' rejected your lesson request ' +
+        (rejectedBy.uid !== r.toUser.uid ? 'to ' + r.toUser.name + ' ' : '') +
+        'for ' + r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a rejected request ' +
+            'notification via SMS.',
+    }).send();
+    await new Webpush({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: false,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a rejected request ' +
+            'webpush notification.',
+    }).send();
+    console.log('[DEBUG] Sent rejected request notification to ' + u.name +
+        ' <' + u.email + '> <' + u.phone + '>.');
 };
 
 // modifiedAppointments - sms, webpush, email to other attendee when appt is
 // modified
 const modifiedAppt = async (snap, context) => {
-    console.warn('[WARNING] This notification function has not been ' +
-        'implemented yet.');
+    const db = getDB(context);
+    const modifiedBy = snap.data().modifiedBy;
+    const a = snap.data().for;
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
+    const other = a.attendees[0].uid !== u.uid ? a.attendees[0] : a.attendees[1];
+    const summary = modifiedBy.name + ' modified your appointment' +
+        (modifiedBy.uid !== other.uid ? ' with ' + other.name : '') +
+        ' for ' + a.for.subject + ' on ' + a.time.day + 's at ' + a.time.from +
+        '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a modified appointment' +
+            ' notification via SMS.',
+    }).send();
+    await new Webpush({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: false,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a modified appointment' +
+            ' webpush notification.',
+    }).send();
+    console.log('[DEBUG] Sent modified appt notification to ' + u.name + ' <' +
+        u.email + '> <' + u.phone + '>.');
 };
 
 // canceledAppointments - sms, webpush, email to other attendee when appt is
 // canceled
 const canceledAppt = async (snap, context) => {
-    console.warn('[WARNING] This notification function has not been ' +
-        'implemented yet.');
+    const db = getDB(context);
+    const canceledBy = snap.data().canceledBy;
+    const a = snap.data().for;
+    const u = (await db.collection('users').doc(context.params.user).get())
+        .data();
+    const other = a.attendees[0].uid !== u.uid ? a.attendees[0] : a.attendees[1];
+    const summary = canceledBy.name + ' canceled your appointment' +
+        (canceledBy.uid !== other.uid ? ' with ' + other.name : '') +
+        ' for ' + a.for.subject + ' on ' + a.time.day + 's at ' + a.time.from +
+        '.';
+    await new SMS({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: true,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a canceled appointment' +
+            ' notification via SMS.',
+    }).send();
+    await new Webpush({
+        recipient: u,
+        body: summary,
+        isTest: getTest(context),
+        botOnSuccess: false,
+        botMessage: 'Sent ' + u.name.split(' ')[0] + ' a canceled appointment' +
+            ' webpush notification.',
+    }).send();
+    console.log('[DEBUG] Sent canceled appt notification to ' + u.name + ' <' +
+        u.email + '> <' + u.phone + '>.');
 };
 
 
@@ -435,7 +619,6 @@ module.exports = {
     user: userNotification,
     announcement: announcementNotification,
     message: messageNotification,
-    chat: chatNotification,
     feedback: feedbackNotification,
     clockIn: clockIn,
     clockOut: clockOut,

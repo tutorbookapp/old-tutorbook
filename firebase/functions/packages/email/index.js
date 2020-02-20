@@ -21,9 +21,9 @@ const defaultEmail = fs.readFileSync('./html/default.html').toString();
 // Class that manages email templates
 class Email {
 
-    constructor(type, user, data, location) {
+    constructor(type, user, data) {
         this.user = user;
-        if (this.valid(user, location)) {
+        if (this.valid) {
             switch (type) {
                 case 'welcome':
                     this.renderWelcome();
@@ -41,16 +41,15 @@ class Email {
                     this.renderDefault(data);
                     break;
             };
-            this.send();
         }
     }
 
-    valid(user, location) {
-        if ((location || user.location) === 'Paly Peer Tutoring Center')
-            return console.error('[ERROR] Cannot send emails to ' + (location ||
-                user.location) + ' users.');
-        if (!user || !user.email) return console.error('[ERROR] Cannot send ' +
-            'to undefined email addresses.');
+    get valid() {
+        if (this.user.location === 'Paly Peer Tutoring Center') return console
+            .error('[ERROR] Cannot send emails to ' + this.user.location +
+                ' users.');
+        if (!this.user || !this.user.email) return console.error('[ERROR] ' +
+            'Cannot send email without a valid email address.');
         return true;
     }
 
@@ -66,6 +65,7 @@ class Email {
     }
 
     async send() {
+        if (!this.valid) return console.log('[DEBUG] Skipped invalid email.');
         if (!this.user || !this.user.email) return console.error('[ERROR] ' +
             'Cannot send to undefined email addresses.');
         const transporter = nodemailer.createTransport({

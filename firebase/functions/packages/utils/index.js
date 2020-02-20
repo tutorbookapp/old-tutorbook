@@ -9,6 +9,18 @@ class Utils {
 
     constructor() {}
 
+    static combineMaps(mapA, mapB) {
+        // NOTE: This function gives priority to mapB over mapA
+        const result = {};
+        for (var i in mapA) {
+            result[i] = mapA[i];
+        }
+        for (var i in mapB) {
+            result[i] = mapB[i];
+        }
+        return result;
+    }
+
     static filterRequestUserData(user) {
         return { // Needed info to properly render various user headers
             name: user.name,
@@ -20,6 +32,7 @@ class Utils {
             grade: user.grade,
             gender: user.gender, // Used to render gender pronouns correctly
             hourlyCharge: user.payments ? user.payments.hourlyCharge : 0,
+            location: user.location,
             payments: user.payments,
             proxy: user.proxy,
         };
@@ -280,7 +293,7 @@ class Utils {
             .get()).data();
     }
 
-    static async getUserFromPhone(phone) {
+    static async getUserFromPhone(phone, isTest = false) {
         const db = isTest ? partitions.test : partitions.default;
         var user;
         (await db

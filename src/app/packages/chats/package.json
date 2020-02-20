@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tutorbook/chat": "^1.0.0",
     "@tutorbook/data": "^0.4.6",
     "@tutorbook/filters": "^0.4.6",
     "@tutorbook/utils": "^0.4.6"

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 295);
+/******/ 	return __webpack_require__(__webpack_require__.s = 296);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1913,7 +1913,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(464)("./" + name);
+                __webpack_require__(465)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4939,11 +4939,11 @@ var _index2 = __webpack_require__(9);
 
 var _index3 = __webpack_require__(37);
 
-var _index4 = __webpack_require__(15);
+var _index4 = __webpack_require__(16);
 
-var _index5 = __webpack_require__(385);
+var _index5 = __webpack_require__(386);
 
-var _index6 = __webpack_require__(388);
+var _index6 = __webpack_require__(389);
 
 var _jquery = __webpack_require__(3);
 
@@ -18282,11 +18282,11 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(324);
+var _index = __webpack_require__(325);
 
 var _index2 = __webpack_require__(9);
 
-var _index3 = __webpack_require__(15);
+var _index3 = __webpack_require__(16);
 
 var _jquery = __webpack_require__(3);
 
@@ -18296,8 +18296,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var phone = __webpack_require__(353);
-var axios = __webpack_require__(354);
+var phone = __webpack_require__(354);
+var axios = __webpack_require__(355);
 var Data = __webpack_require__(7);
 
 // Tutorbook utils class that contains basic utils used across the program
@@ -19899,6 +19899,7 @@ var Utils = function () {
                 grade: user.grade,
                 gender: user.gender, // We need this to render gender pronouns correctly
                 hourlyCharge: !!user.payments ? user.payments.hourlyCharge : 0,
+                location: user.location || window.app.location.name,
                 payments: user.payments,
                 proxy: user.proxy
             };
@@ -19933,7 +19934,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var axios = __webpack_require__(306);
+var axios = __webpack_require__(307);
 
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
@@ -20818,7 +20819,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(345);
+var _component = __webpack_require__(346);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -20894,7 +20895,7 @@ exports.util = util; /**
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var bind = __webpack_require__(61);
-var isBuffer = __webpack_require__(308);
+var isBuffer = __webpack_require__(309);
 
 /*global toString:true*/
 
@@ -21231,7 +21232,7 @@ module.exports = {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var bind = __webpack_require__(89);
-var isBuffer = __webpack_require__(356);
+var isBuffer = __webpack_require__(357);
 
 /*global toString:true*/
 
@@ -21581,7 +21582,7 @@ module.exports = Array.isArray || function (arr) {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var bind = __webpack_require__(138);
-var isBuffer = __webpack_require__(423);
+var isBuffer = __webpack_require__(424);
 
 /*global toString:true*/
 
@@ -21917,7 +21918,7 @@ module.exports = {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var bind = __webpack_require__(147);
+var bind = __webpack_require__(148);
 
 /*global toString:true*/
 
@@ -22261,77 +22262,6 @@ module.exports = {
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(349);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(49);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-var _foundation2 = __webpack_require__(87);
-
-Object.keys(_foundation2).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation2[key];
-    }
-  });
-});
-
-var _foundation3 = __webpack_require__(88);
-
-Object.keys(_foundation3).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation3[key];
-    }
-  });
-});
-
-var _foundation4 = __webpack_require__(48);
-
-Object.keys(_foundation4).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation4[key];
-    }
-  });
-});
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -22344,7 +22274,7 @@ var _index2 = __webpack_require__(126);
 
 var _index3 = __webpack_require__(9);
 
-var _index4 = __webpack_require__(15);
+var _index4 = __webpack_require__(16);
 
 var _index5 = __webpack_require__(25);
 
@@ -23294,6 +23224,77 @@ module.exports = {
 };
 
 /***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(350);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(49);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+var _foundation2 = __webpack_require__(87);
+
+Object.keys(_foundation2).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation2[key];
+    }
+  });
+});
+
+var _foundation3 = __webpack_require__(88);
+
+Object.keys(_foundation3).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation3[key];
+    }
+  });
+});
+
+var _foundation4 = __webpack_require__(48);
+
+Object.keys(_foundation4).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation4[key];
+    }
+  });
+});
+
+/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24054,7 +24055,7 @@ var ViewCanceledApptDialog = __webpack_require__(2).viewCanceledAppt;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 
 // Users
-var EditProfile = __webpack_require__(16).edit;
+var EditProfile = __webpack_require__(15).edit;
 var User = __webpack_require__(24);
 
 // Dependencies
@@ -25035,7 +25036,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(15);
+var _index2 = __webpack_require__(16);
 
 var _jquery = __webpack_require__(3);
 
@@ -25050,7 +25051,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
-var EditProfile = __webpack_require__(16).edit;
+var EditProfile = __webpack_require__(15).edit;
 var User = __webpack_require__(24);
 var FilterDialog = __webpack_require__(136).default;
 var Utils = __webpack_require__(6);
@@ -26037,7 +26038,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(371);
+var _component = __webpack_require__(372);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -26108,7 +26109,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(15);
+var _index2 = __webpack_require__(16);
 
 var _jquery = __webpack_require__(3);
 
@@ -26294,7 +26295,7 @@ Object.defineProperty(exports, 'Corner', {
   }
 });
 
-var _component = __webpack_require__(331);
+var _component = __webpack_require__(332);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -26325,8 +26326,8 @@ Object.keys(_foundation).forEach(function (key) {
 "use strict";
 
 
-var AlgoliaSearch = __webpack_require__(393);
-var createAlgoliasearch = __webpack_require__(404);
+var AlgoliaSearch = __webpack_require__(394);
+var createAlgoliasearch = __webpack_require__(405);
 
 module.exports = createAlgoliasearch(AlgoliaSearch, 'Browser');
 
@@ -26736,7 +26737,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(401);
+exports = module.exports = __webpack_require__(402);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -26941,7 +26942,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(298);
+var _component = __webpack_require__(299);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -27536,7 +27537,7 @@ var _index2 = __webpack_require__(126);
 
 var _index3 = __webpack_require__(23);
 
-var _index4 = __webpack_require__(15);
+var _index4 = __webpack_require__(16);
 
 var _awaitToJs = __webpack_require__(8);
 
@@ -27560,8 +27561,8 @@ var Search = __webpack_require__(21).default;
 var Card = __webpack_require__(19);
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
-var NewProfile = __webpack_require__(16).new;
-var EditProfile = __webpack_require__(16).edit;
+var NewProfile = __webpack_require__(15).new;
+var EditProfile = __webpack_require__(15).edit;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 var EditRequestDialog = __webpack_require__(2).editRequest;
 var ViewRequestDialog = __webpack_require__(2).viewRequest;
@@ -28293,8 +28294,15 @@ var ConfirmMatchDialog = function (_ConfirmationDialog) {
                     await Data.updateUser(pupil);
                 }
                 return Data.newRequest(request);
-            };
-            if (window.app.location.name !== time.location) new ConfirmationDialog('Confirm Location', 'The request ' + 'location (the ' + time.location + ') did not match your ' + 'app partition\'s location (the ' + window.app.location.name + '). Are you sure you want to ' + 'send this request?', send, true).view();
+            }; // TODO: Fix this bug and await the ConfirmationDialog response.
+            /*
+             *if (window.app.location.name !== time.location)
+             *    return new ConfirmationDialog('Confirm Location', 'The ' +
+             *        'request location (the ' + time.location + ') did not ' +
+             *        'match your app partition\'s location (the ' +
+             *        window.app.location.name + '). Are you sure you want to ' +
+             *        'send this request?', send, true).view();
+             */
             return send();
         };
 
@@ -28345,7 +28353,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(15);
+var _index2 = __webpack_require__(16);
 
 var _jquery = __webpack_require__(3);
 
@@ -28927,7 +28935,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(328);
+var _constants = __webpack_require__(329);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30148,7 +30156,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(374);
+var _constants = __webpack_require__(375);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30564,7 +30572,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(42);
 
-var _constants = __webpack_require__(290);
+var _constants = __webpack_require__(291);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -31002,7 +31010,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(302);
+var _constants = __webpack_require__(303);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -31298,7 +31306,7 @@ exports.createFocusTrapInstance = createFocusTrapInstance;
 exports.isScrollable = isScrollable;
 exports.areTopsMisaligned = areTopsMisaligned;
 
-var _focusTrap = __webpack_require__(303);
+var _focusTrap = __webpack_require__(304);
 
 var _focusTrap2 = _interopRequireDefault(_focusTrap);
 
@@ -31453,7 +31461,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(10);
-var normalizeHeaderName = __webpack_require__(313);
+var normalizeHeaderName = __webpack_require__(314);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -31552,10 +31560,10 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(10);
-var settle = __webpack_require__(314);
+var settle = __webpack_require__(315);
 var buildURL = __webpack_require__(62);
-var parseHeaders = __webpack_require__(316);
-var isURLSameOrigin = __webpack_require__(317);
+var parseHeaders = __webpack_require__(317);
+var isURLSameOrigin = __webpack_require__(318);
 var createError = __webpack_require__(66);
 
 module.exports = function xhrAdapter(config) {
@@ -31647,7 +31655,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(318);
+      var cookies = __webpack_require__(319);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
@@ -31728,7 +31736,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(315);
+var enhanceError = __webpack_require__(316);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -31833,7 +31841,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(329);
+var _component = __webpack_require__(330);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -31875,7 +31883,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(330);
+var _constants = __webpack_require__(331);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -32465,7 +32473,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(340);
+var _constants = __webpack_require__(341);
 
 var _util = __webpack_require__(46);
 
@@ -33379,7 +33387,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(341);
+var _component = __webpack_require__(342);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -33421,7 +33429,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(342);
+var _constants = __webpack_require__(343);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -33569,7 +33577,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(343);
+var _component = __webpack_require__(344);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -33611,7 +33619,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(344);
+var _constants = __webpack_require__(345);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -34837,7 +34845,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(11);
-var normalizeHeaderName = __webpack_require__(361);
+var normalizeHeaderName = __webpack_require__(362);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -34936,10 +34944,10 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(11);
-var settle = __webpack_require__(362);
+var settle = __webpack_require__(363);
 var buildURL = __webpack_require__(90);
-var parseHeaders = __webpack_require__(364);
-var isURLSameOrigin = __webpack_require__(365);
+var parseHeaders = __webpack_require__(365);
+var isURLSameOrigin = __webpack_require__(366);
 var createError = __webpack_require__(94);
 
 module.exports = function xhrAdapter(config) {
@@ -35031,7 +35039,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(366);
+      var cookies = __webpack_require__(367);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
@@ -35112,7 +35120,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(363);
+var enhanceError = __webpack_require__(364);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -35394,7 +35402,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(378);
+var _constants = __webpack_require__(379);
 
 var _util = __webpack_require__(100);
 
@@ -36046,7 +36054,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(379);
+var _component = __webpack_require__(380);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -36088,7 +36096,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(380);
+var _constants = __webpack_require__(381);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -36774,7 +36782,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(381);
+var _component = __webpack_require__(382);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -36816,7 +36824,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(382);
+var _constants = __webpack_require__(383);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -36964,7 +36972,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(383);
+var _component = __webpack_require__(384);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -37006,7 +37014,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(384);
+var _constants = __webpack_require__(385);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37630,7 +37638,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(51);
 
-var _constants = __webpack_require__(392);
+var _constants = __webpack_require__(393);
 
 var _util = __webpack_require__(116);
 
@@ -39049,7 +39057,7 @@ module.exports = function merge(destination /* , sources */) {
 
 
 module.exports = function omit(obj, test) {
-  var keys = __webpack_require__(395);
+  var keys = __webpack_require__(396);
   var foreach = __webpack_require__(28);
 
   var filtered = {};
@@ -39200,7 +39208,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(413);
+var _component = __webpack_require__(414);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -39254,7 +39262,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(415);
+var _constants = __webpack_require__(416);
 
 var _util = __webpack_require__(128);
 
@@ -40102,7 +40110,7 @@ var Data = __webpack_require__(7);
 var Card = __webpack_require__(19);
 var Utils = __webpack_require__(6);
 var User = __webpack_require__(24);
-var EditProfile = __webpack_require__(16).edit;
+var EditProfile = __webpack_require__(15).edit;
 var MatchingDialog = __webpack_require__(39).dialog;
 var ScheduleCard = __webpack_require__(132);
 var SearchHeader = __webpack_require__(21).header;
@@ -40111,7 +40119,7 @@ var HorzScroller = __webpack_require__(137);
 // Shortcut cards for SupervisorDashboard
 var matchingShortcut = __webpack_require__(39).default.renderShortcutCard;
 var scheduleShortcut = __webpack_require__(40).supervisor.renderShortcutCard;
-var trackingShortcut = __webpack_require__(420).renderShortcutCard;
+var trackingShortcut = __webpack_require__(421).renderShortcutCard;
 
 // Class that manages the dashboard view (provides an API for other classes to
 // use to display cards) and a custom welcome message that chnages each time a 
@@ -40687,7 +40695,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(416);
+var _index2 = __webpack_require__(417);
 
 var _index3 = __webpack_require__(25);
 
@@ -41075,7 +41083,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _util = __webpack_require__(419);
+var _util = __webpack_require__(420);
 
 var _foundation = __webpack_require__(133);
 
@@ -41842,7 +41850,7 @@ module.exports = function isCancel(value) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(13);
-var normalizeHeaderName = __webpack_require__(428);
+var normalizeHeaderName = __webpack_require__(429);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -41941,10 +41949,10 @@ module.exports = defaults;
 
 
 var utils = __webpack_require__(13);
-var settle = __webpack_require__(429);
+var settle = __webpack_require__(430);
 var buildURL = __webpack_require__(139);
-var parseHeaders = __webpack_require__(431);
-var isURLSameOrigin = __webpack_require__(432);
+var parseHeaders = __webpack_require__(432);
+var isURLSameOrigin = __webpack_require__(433);
 var createError = __webpack_require__(143);
 
 module.exports = function xhrAdapter(config) {
@@ -42036,7 +42044,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(433);
+      var cookies = __webpack_require__(434);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
@@ -42117,7 +42125,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(430);
+var enhanceError = __webpack_require__(431);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -42243,6 +42251,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
+var Chat = __webpack_require__(147).default;
+var AnnouncementChat = __webpack_require__(147).announcement;
 var Utils = __webpack_require__(6);
 var NewGroupDialog = __webpack_require__(136).group;
 
@@ -42545,7 +42555,10 @@ var SupervisorChats = function (_Chats) {
                 chat = _ref4[1];
 
             if (err) {
-                var _ref5 = await (0, _awaitToJs2.default)(this.getAnnouncement(id)),
+                var attempt = this.getAnnouncement(id);
+                if (!attempt) return this.view();
+
+                var _ref5 = await (0, _awaitToJs2.default)(attempt),
                     _ref6 = _slicedToArray(_ref5, 2),
                     e = _ref6[0],
                     announcement = _ref6[1];
@@ -42563,6 +42576,7 @@ var SupervisorChats = function (_Chats) {
     }, {
         key: 'getAnnouncement',
         value: function getAnnouncement(id) {
+            if (!window.app.location.id) return console.error('Couldn\'t get ' + 'announcement group chat (' + id + ') without location id.');
             return window.app.db.collection('locations').doc(window.app.location.id).collection('announcements').doc(id).get();
         }
     }, {
@@ -42723,9 +42737,45 @@ var SupervisorChats = function (_Chats) {
 
 ;
 
+module.exports = {
+    default: Chats,
+    supervisor: SupervisorChats
+};
+
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _index = __webpack_require__(9);
+
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _awaitToJs = __webpack_require__(8);
+
+var _awaitToJs2 = _interopRequireDefault(_awaitToJs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Utils = __webpack_require__(6);
+
 var Chat = function () {
     function Chat(id, chat) {
-        var _this7 = this;
+        var _this = this;
 
         _classCallCheck(this, Chat);
 
@@ -42734,15 +42784,15 @@ var Chat = function () {
         this.render = window.app.render;
         this.recycler = {
             remove: function remove(doc) {
-                return (0, _jquery2.default)(_this7.main).find('#messages [id="doc-' + doc.id + '"]').remove();
+                return (0, _jquery2.default)(_this.main).find('#messages [id="doc-' + doc.id + '"]').remove();
             },
             display: function display(doc) {
-                (0, _jquery2.default)(_this7.main).find('.centered-text').remove();
-                _this7.viewMessage(_this7.renderMessage(doc));
+                (0, _jquery2.default)(_this.main).find('.centered-text').remove();
+                _this.viewMessage(_this.renderMessage(doc));
             },
             empty: function empty() {
-                (0, _jquery2.default)(_this7.main).find('#messages').empty();
-                if (!(0, _jquery2.default)(_this7.main).find('.centered-text').length) (0, _jquery2.default)('.main .chat').prepend(_this7.renderEmptyMessages());
+                (0, _jquery2.default)(_this.main).find('#messages').empty();
+                if (!(0, _jquery2.default)(_this.main).find('.centered-text').length) (0, _jquery2.default)('.main .chat').prepend(_this.renderEmptyMessages());
             }
         };
         this.renderSelf();
@@ -42769,7 +42819,7 @@ var Chat = function () {
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this8 = this;
+            var _this2 = this;
 
             var name = this.chat.name || Utils.getOtherUser(this.chat.chatters[0], this.chat.chatters[1]).name;
             var that = this;
@@ -42778,14 +42828,14 @@ var Chat = function () {
             });
             this.main = this.render.template('chat', {
                 send: async function send() {
-                    var input = (0, _jquery2.default)(_this8.main).find('.write input');
-                    var btn = (0, _jquery2.default)(_this8.main).find('.write button');
+                    var input = (0, _jquery2.default)(_this2.main).find('.write input');
+                    var btn = (0, _jquery2.default)(_this2.main).find('.write button');
                     input.attr('disabled', 'disabled');
                     btn.attr('disabled', 'disabled');
                     var message = input.val();
                     input.val('');
                     input.removeAttr('disabled');
-                    message !== '' ? await that.sendMessage(message) : null;
+                    message !== '' ? await _this2.sendMessage(message) : null;
                 },
                 placeholder: 'Message ' + name + '...',
                 id: this.id
@@ -42820,8 +42870,9 @@ var Chat = function () {
     }, {
         key: 'viewMessages',
         value: function viewMessages() {
-            var _this9 = this;
+            var _this3 = this;
 
+            window.$ = _jquery2.default;
             (0, _jquery2.default)(this.main).find('#messages').empty();
             window.app.listeners.push(this.getMessages().onSnapshot({
                 error: function error(err) {
@@ -42830,14 +42881,14 @@ var Chat = function () {
                 },
                 next: function next(snapshot) {
                     if (!snapshot.size) {
-                        return _this9.recycler.empty();
+                        return _this3.recycler.empty();
                     }
 
                     snapshot.docChanges().forEach(function (change) {
                         if (change.type === 'removed') {
-                            _this9.recycler.remove(change.doc);
+                            _this3.recycler.remove(change.doc);
                         } else {
-                            _this9.recycler.display(change.doc);
+                            _this3.recycler.display(change.doc);
                         }
                     });
                 }
@@ -42849,31 +42900,36 @@ var Chat = function () {
     }, {
         key: 'viewMessage',
         value: function viewMessage(message) {
-            var messages = (0, _jquery2.default)('.main .chat #messages')[0];
+            var messages = (0, _jquery2.default)(this.main).find('#messages');
             var id = message.getAttribute('id');
-            var timestamp = message.getAttribute('timestamp');
+            var timestamp = (0, _jquery2.default)(message).attr('timestamp');
+            var existing = messages.find('[id="' + id + '"]');
 
-            var existingMessage = messages.querySelector('[id="' + id + '"]');
-            if (!!existingMessage) {
-                // modify
-                messages.insertBefore(message, existingMessage);
-                messages.removeChild(existingMessage);
-            } else {
-                // Add by timestamp
-                for (var i = 0; i < messages.children.length; i++) {
-                    var child = messages.children[i];
-                    var time = child.getAttribute('timestamp');
-                    // If there is a request that was sent later (more recently)
-                    // Then this request will appear after that request
-                    if (time && time > timestamp) {
-                        (0, _jquery2.default)(message).insertBefore(child);
-                        return (0, _jquery2.default)(this.main).find('#messages .bubble:last-child')[0].scrollIntoView();
-                    }
+            var scroll = function scroll() {
+                return messages.find('.message:last-child')[0].scrollIntoView();
+            };
+            var style = function style() {
+                var sender = (0, _jquery2.default)(message).attr('sender');
+                var nextSender = (0, _jquery2.default)(message).next().attr('sender');
+                var prevSender = (0, _jquery2.default)(message).prev().attr('sender');
+                if (sender === prevSender) (0, _jquery2.default)(message).css('margin-top', '5px').prev().find('img').css('visibility', 'hidden');
+                if (sender === nextSender) (0, _jquery2.default)(message).find('img').css('visibility', 'hidden').end().next().css('margin-top', '5px');
+            };
+
+            if (existing.length) return existing.replaceWith(message);
+            for (var i = 0; i < messages[0].children.length; i++) {
+                var child = messages[0].children[i];
+                var time = (0, _jquery2.default)(child).attr('timestamp');
+                if (time && time > timestamp) {
+                    (0, _jquery2.default)(message).insertBefore(child);
+                    style();
+                    return scroll();
                 }
-                // Append it normally
-                (0, _jquery2.default)(messages).append(message);
-                (0, _jquery2.default)(this.main).find('#messages .bubble:last-child')[0].scrollIntoView();
             }
+
+            messages.append(message);
+            style();
+            scroll();
         }
 
         // Render function that returns a message div with the given message as text
@@ -42883,11 +42939,11 @@ var Chat = function () {
         value: function renderMessage(doc) {
             var el = this.render.template('message', Utils.combineMaps(doc.data(), {
                 id: 'doc-' + doc.id,
-                timestamp: doc.data().timestamp.toDate().getTime()
+                timestamp: doc.data().timestamp.toDate().getTime(),
+                img: doc.data().sentBy.uid !== window.app.user.uid,
+                sender: doc.data().sentBy.uid
             }));
-            if (doc.data().sentBy.email === window.app.user.email) {
-                el.setAttribute('class', 'bubble me');
-            }
+            if (doc.data().sentBy.uid === window.app.user.uid) (0, _jquery2.default)(el).removeClass('you').addClass('me');
             return el;
         }
 
@@ -42918,13 +42974,14 @@ var Chat = function () {
             var msg = {
                 sentBy: window.app.conciseUser,
                 timestamp: new Date(),
-                message: txt
+                message: txt,
+                sms: window.app.conciseUser.name.split(' ')[0] + ' says: ' + txt
             };
 
-            var _ref9 = await (0, _awaitToJs2.default)(ref.set(msg)),
-                _ref10 = _slicedToArray(_ref9, 2),
-                err = _ref10[0],
-                res = _ref10[1];
+            var _ref = await (0, _awaitToJs2.default)(ref.set(msg)),
+                _ref2 = _slicedToArray(_ref, 2),
+                err = _ref2[0],
+                res = _ref2[1];
 
             if (err) return window.app.snackbar.view('Could not send message.');
             var chat = db.collection('chats').doc(this.id);
@@ -42945,11 +43002,11 @@ var AnnouncementChat = function (_Chat) {
     function AnnouncementChat(doc) {
         _classCallCheck(this, AnnouncementChat);
 
-        var _this10 = _possibleConstructorReturn(this, (AnnouncementChat.__proto__ || Object.getPrototypeOf(AnnouncementChat)).call(this, doc.id, doc.data()));
+        var _this4 = _possibleConstructorReturn(this, (AnnouncementChat.__proto__ || Object.getPrototypeOf(AnnouncementChat)).call(this, doc.id, doc.data()));
 
-        _this10.doc = doc;
-        _this10.ref = doc.ref;
-        return _this10;
+        _this4.doc = doc;
+        _this4.ref = doc.ref;
+        return _this4;
     }
 
     _createClass(AnnouncementChat, [{
@@ -42968,10 +43025,10 @@ var AnnouncementChat = function (_Chat) {
                 message: txt
             };
 
-            var _ref11 = await (0, _awaitToJs2.default)(ref.set(msg)),
-                _ref12 = _slicedToArray(_ref11, 2),
-                e = _ref12[0],
-                res = _ref12[1];
+            var _ref3 = await (0, _awaitToJs2.default)(ref.set(msg)),
+                _ref4 = _slicedToArray(_ref3, 2),
+                e = _ref4[0],
+                res = _ref4[1];
 
             if (e) return window.app.snackbar.view('Could not send announcement.');
             return this.ref.update({
@@ -42986,13 +43043,12 @@ var AnnouncementChat = function (_Chat) {
 ;
 
 module.exports = {
-    default: Chats,
-    supervisor: SupervisorChats,
-    chat: Chat
+    default: Chat,
+    announcement: AnnouncementChat
 };
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43009,7 +43065,7 @@ module.exports = function bind(fn, thisArg) {
 };
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43079,7 +43135,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 };
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43090,14 +43146,14 @@ module.exports = function isCancel(value) {
 };
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(14);
-var normalizeHeaderName = __webpack_require__(445);
+var normalizeHeaderName = __webpack_require__(446);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -43113,10 +43169,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(151);
+    adapter = __webpack_require__(152);
   } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(151);
+    adapter = __webpack_require__(152);
   }
   return adapter;
 }
@@ -43188,19 +43244,19 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(14);
-var settle = __webpack_require__(446);
-var buildURL = __webpack_require__(148);
-var buildFullPath = __webpack_require__(448);
-var parseHeaders = __webpack_require__(451);
-var isURLSameOrigin = __webpack_require__(452);
-var createError = __webpack_require__(152);
+var settle = __webpack_require__(447);
+var buildURL = __webpack_require__(149);
+var buildFullPath = __webpack_require__(449);
+var parseHeaders = __webpack_require__(452);
+var isURLSameOrigin = __webpack_require__(453);
+var createError = __webpack_require__(153);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -43296,7 +43352,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(453);
+      var cookies = __webpack_require__(454);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
@@ -43371,13 +43427,13 @@ module.exports = function xhrAdapter(config) {
 };
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(447);
+var enhanceError = __webpack_require__(448);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -43395,7 +43451,7 @@ module.exports = function createError(message, config, code, request, response) 
 };
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43464,7 +43520,7 @@ module.exports = function mergeConfig(config1, config2) {
 };
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43490,7 +43546,7 @@ Cancel.prototype.__CANCEL__ = true;
 module.exports = Cancel;
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43580,7 +43636,7 @@ exports.default = MDCFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43595,7 +43651,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(155);
+var _foundation = __webpack_require__(156);
 
 var _constants = __webpack_require__(41);
 
@@ -43816,7 +43872,7 @@ exports.default = MDCSnackbarFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43913,7 +43969,7 @@ exports.announce = announce;
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43921,7 +43977,7 @@ exports.announce = announce;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(15);
+var _index = __webpack_require__(16);
 
 var _index2 = __webpack_require__(23);
 
@@ -43935,9 +43991,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Chart = __webpack_require__(463);
+var Chart = __webpack_require__(464);
 var User = __webpack_require__(24);
-var Templates = __webpack_require__(465);
+var Templates = __webpack_require__(466);
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
@@ -44386,7 +44442,7 @@ var Render = function () {
 module.exports = Render;
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44468,7 +44524,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44603,7 +44659,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44670,7 +44726,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44737,7 +44793,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44858,7 +44914,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44925,7 +44981,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45038,7 +45094,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45105,7 +45161,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45220,7 +45276,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45359,7 +45415,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45457,7 +45513,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45523,7 +45579,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45648,7 +45704,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45773,7 +45829,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45889,7 +45945,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46048,7 +46104,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46141,7 +46197,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46333,7 +46389,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46404,7 +46460,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46491,7 +46547,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46559,7 +46615,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46643,7 +46699,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46727,7 +46783,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46811,7 +46867,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46898,7 +46954,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47007,7 +47063,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47079,7 +47135,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47151,7 +47207,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47219,7 +47275,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47291,7 +47347,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47363,7 +47419,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47430,7 +47486,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47502,7 +47558,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47581,7 +47637,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47681,7 +47737,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47781,7 +47837,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47881,7 +47937,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47969,7 +48025,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48043,7 +48099,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48159,7 +48215,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48273,7 +48329,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48341,7 +48397,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48432,7 +48488,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48514,7 +48570,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48600,7 +48656,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48683,7 +48739,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48765,7 +48821,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48847,7 +48903,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48932,7 +48988,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49063,7 +49119,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49195,7 +49251,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49301,7 +49357,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49433,7 +49489,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49595,7 +49651,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49713,7 +49769,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 214 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49817,7 +49873,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 215 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49907,7 +49963,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 216 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50047,7 +50103,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 217 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50124,7 +50180,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 218 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50201,7 +50257,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 219 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50301,7 +50357,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 220 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50391,7 +50447,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 221 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50487,7 +50543,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50582,7 +50638,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 223 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50697,7 +50753,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50831,7 +50887,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50920,7 +50976,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 226 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51035,7 +51091,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51130,7 +51186,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51275,7 +51331,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51353,7 +51409,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51479,7 +51535,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51584,7 +51640,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51696,7 +51752,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51768,7 +51824,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51866,7 +51922,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51953,7 +52009,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 236 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52065,7 +52121,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52255,7 +52311,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52345,7 +52401,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 239 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52435,7 +52491,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 240 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52503,7 +52559,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52605,7 +52661,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52675,7 +52731,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 243 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52806,7 +52862,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 244 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52901,7 +52957,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52996,7 +53052,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 246 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53064,7 +53120,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 247 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53196,7 +53252,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53330,7 +53386,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53402,7 +53458,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53470,7 +53526,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53553,7 +53609,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53743,7 +53799,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53828,7 +53884,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53896,7 +53952,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53976,7 +54032,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54152,7 +54208,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54333,7 +54389,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54409,7 +54465,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54520,7 +54576,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 260 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54631,7 +54687,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54727,7 +54783,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 262 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54801,7 +54857,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54868,7 +54924,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55006,7 +55062,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55103,7 +55159,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55175,7 +55231,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55299,7 +55355,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55374,7 +55430,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55444,7 +55500,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55562,7 +55618,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55665,7 +55721,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55765,7 +55821,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55831,7 +55887,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55897,7 +55953,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56014,7 +56070,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56171,7 +56227,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56256,7 +56312,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56322,7 +56378,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56388,7 +56444,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56476,7 +56532,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56549,7 +56605,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56617,7 +56673,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56734,7 +56790,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56845,7 +56901,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56956,7 +57012,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57013,7 +57069,7 @@ function matches(element, selector) {
 //# sourceMappingURL=ponyfill.js.map
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57077,7 +57133,7 @@ exports.numbers = numbers;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57094,7 +57150,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(42);
 
-var _constants = __webpack_require__(287);
+var _constants = __webpack_require__(288);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -57580,14 +57636,14 @@ exports.default = MDCListFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var tabbable = __webpack_require__(473);
-var xtend = __webpack_require__(474);
+var tabbable = __webpack_require__(474);
+var xtend = __webpack_require__(475);
 
 var activeFocusDelay;
 
@@ -57901,7 +57957,7 @@ function delay(fn) {
 module.exports = focusTrap;
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57952,7 +58008,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58026,7 +58082,7 @@ exports.default = MDCModalDrawerFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58037,7 +58093,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createFocusTrapInstance = createFocusTrapInstance;
 
-var _focusTrap = __webpack_require__(289);
+var _focusTrap = __webpack_require__(290);
 
 var _focusTrap2 = _interopRequireDefault(_focusTrap);
 
@@ -58079,7 +58135,7 @@ function createFocusTrapInstance(surfaceEl, focusTrapFactory) {
  */
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58096,7 +58152,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(42);
 
-var _constants = __webpack_require__(294);
+var _constants = __webpack_require__(295);
 
 var _util = __webpack_require__(57);
 
@@ -58621,7 +58677,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58680,14 +58736,14 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(296);
+module.exports = __webpack_require__(297);
 
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58711,40 +58767,40 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // App packages
-var Ads = __webpack_require__(297);
-var Stats = __webpack_require__(323);
+var Ads = __webpack_require__(298);
+var Stats = __webpack_require__(324);
 var Dashboard = __webpack_require__(131).default;
 var SupervisorDashboard = __webpack_require__(131).supervisor;
 var Search = __webpack_require__(21).default;
-var Profile = __webpack_require__(16).default;
-var PaidProfile = __webpack_require__(16).paid;
-var TutorProfile = __webpack_require__(16).tutor;
+var Profile = __webpack_require__(15).default;
+var PaidProfile = __webpack_require__(15).paid;
+var TutorProfile = __webpack_require__(15).tutor;
 var Schedule = __webpack_require__(40).default;
 var Chats = __webpack_require__(146).default;
 var SupervisorChats = __webpack_require__(146).supervisor;
 var SupervisorSchedule = __webpack_require__(40).supervisor;
-var Payments = __webpack_require__(438);
-var Feedback = __webpack_require__(456);
-var Notify = __webpack_require__(457);
-var Snackbar = __webpack_require__(458);
-var Navigation = __webpack_require__(469);
-var Help = __webpack_require__(480);
-var Listener = __webpack_require__(481);
-var Login = __webpack_require__(482);
+var Payments = __webpack_require__(439);
+var Feedback = __webpack_require__(457);
+var Notify = __webpack_require__(458);
+var Snackbar = __webpack_require__(459);
+var Navigation = __webpack_require__(470);
+var Help = __webpack_require__(481);
+var Listener = __webpack_require__(482);
+var Login = __webpack_require__(483);
 var Matching = __webpack_require__(39).default;
 var MatchingDialog = __webpack_require__(39).dialog;
-var Config = __webpack_require__(483);
+var Config = __webpack_require__(484);
 
 // Dependency cycle workarounds
 var SearchHeader = __webpack_require__(21).header;
-var EditProfile = __webpack_require__(16).edit;
+var EditProfile = __webpack_require__(15).edit;
 var NotificationDialog = __webpack_require__(2).notify;
 var renderHit = __webpack_require__(21).header.renderHit;
 var renderCard = __webpack_require__(19).renderCard;
 
 // Helper packages
 var Utils = __webpack_require__(6);
-var Render = __webpack_require__(158);
+var Render = __webpack_require__(159);
 var Data = __webpack_require__(7);
 
 var Tutorbook = function () {
@@ -58974,7 +59030,7 @@ window.onload = function () {
 module.exports = Tutorbook;
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59134,7 +59190,7 @@ var Ads = function () {
 module.exports = Ads;
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59153,7 +59209,7 @@ var _component = __webpack_require__(5);
 
 var _ponyfill = __webpack_require__(30);
 
-var _component2 = __webpack_require__(299);
+var _component2 = __webpack_require__(300);
 
 var _foundation = __webpack_require__(59);
 
@@ -59378,7 +59434,7 @@ exports.MDCDialog = MDCDialog;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59397,7 +59453,7 @@ var _component = __webpack_require__(5);
 
 var _index = __webpack_require__(31);
 
-var _foundation = __webpack_require__(300);
+var _foundation = __webpack_require__(301);
 
 var _util = __webpack_require__(58);
 
@@ -59538,7 +59594,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59555,7 +59611,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(301);
+var _constants = __webpack_require__(302);
 
 var _util = __webpack_require__(58);
 
@@ -60080,7 +60136,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60139,7 +60195,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60201,14 +60257,14 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var tabbable = __webpack_require__(304);
-var xtend = __webpack_require__(305);
+var tabbable = __webpack_require__(305);
+var xtend = __webpack_require__(306);
 
 var activeFocusTraps = function () {
   var trapQueue = [];
@@ -60497,7 +60553,7 @@ function delay(fn) {
 module.exports = focusTrap;
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60684,7 +60740,7 @@ UntouchabilityChecker.prototype.isUntouchable = function isUntouchable(node) {
 module.exports = tabbable;
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60711,16 +60767,16 @@ function extend() {
 }
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(307);
+module.exports = __webpack_require__(308);
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60728,7 +60784,7 @@ module.exports = __webpack_require__(307);
 
 var utils = __webpack_require__(10);
 var bind = __webpack_require__(61);
-var Axios = __webpack_require__(309);
+var Axios = __webpack_require__(310);
 var mergeConfig = __webpack_require__(67);
 var defaults = __webpack_require__(64);
 
@@ -60764,14 +60820,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(68);
-axios.CancelToken = __webpack_require__(321);
+axios.CancelToken = __webpack_require__(322);
 axios.isCancel = __webpack_require__(63);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(322);
+axios.spread = __webpack_require__(323);
 
 module.exports = axios;
 
@@ -60779,7 +60835,7 @@ module.exports = axios;
 module.exports.default = axios;
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60797,7 +60853,7 @@ module.exports = function isBuffer(obj) {
 };
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60805,8 +60861,8 @@ module.exports = function isBuffer(obj) {
 
 var utils = __webpack_require__(10);
 var buildURL = __webpack_require__(62);
-var InterceptorManager = __webpack_require__(310);
-var dispatchRequest = __webpack_require__(311);
+var InterceptorManager = __webpack_require__(311);
+var dispatchRequest = __webpack_require__(312);
 var mergeConfig = __webpack_require__(67);
 
 /**
@@ -60889,7 +60945,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = Axios;
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60947,18 +61003,18 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 module.exports = InterceptorManager;
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(10);
-var transformData = __webpack_require__(312);
+var transformData = __webpack_require__(313);
 var isCancel = __webpack_require__(63);
 var defaults = __webpack_require__(64);
-var isAbsoluteURL = __webpack_require__(319);
-var combineURLs = __webpack_require__(320);
+var isAbsoluteURL = __webpack_require__(320);
+var combineURLs = __webpack_require__(321);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -61020,7 +61076,7 @@ module.exports = function dispatchRequest(config) {
 };
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61046,7 +61102,7 @@ module.exports = function transformData(data, headers, fns) {
 };
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61064,7 +61120,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 };
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61089,7 +61145,7 @@ module.exports = function settle(resolve, reject, response) {
 };
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61138,7 +61194,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 };
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61194,7 +61250,7 @@ module.exports = function parseHeaders(headers) {
 };
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61263,7 +61319,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61322,7 +61378,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61344,7 +61400,7 @@ module.exports = function isAbsoluteURL(url) {
 };
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61363,7 +61419,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 };
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61426,7 +61482,7 @@ CancelToken.source = function source() {
 module.exports = CancelToken;
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61460,7 +61516,7 @@ module.exports = function spread(callback) {
 };
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61561,7 +61617,7 @@ var Stats = function () {
 module.exports = Stats;
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61571,7 +61627,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(325);
+var _component = __webpack_require__(326);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -61620,7 +61676,7 @@ Object.keys(_index2).forEach(function (key) {
 });
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61637,7 +61693,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(326);
+var _index = __webpack_require__(327);
 
 var _index2 = __webpack_require__(69);
 
@@ -61651,9 +61707,9 @@ var menuConstants = _interopRequireWildcard(_constants2);
 
 var _index3 = __webpack_require__(25);
 
-var _index4 = __webpack_require__(336);
+var _index4 = __webpack_require__(337);
 
-var _index5 = __webpack_require__(338);
+var _index5 = __webpack_require__(339);
 
 var _constants3 = __webpack_require__(77);
 
@@ -62264,7 +62320,7 @@ exports.MDCSelect = MDCSelect;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62274,7 +62330,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(327);
+var _component = __webpack_require__(328);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -62299,7 +62355,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 327 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62397,7 +62453,7 @@ exports.MDCFloatingLabel = MDCFloatingLabel;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 328 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62436,7 +62492,7 @@ var cssClasses = exports.cssClasses = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 329 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62539,7 +62595,7 @@ exports.MDCLineRipple = MDCLineRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 330 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62578,7 +62634,7 @@ exports.cssClasses = cssClasses;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 331 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62595,11 +62651,11 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(332);
+var _index = __webpack_require__(333);
 
 var _foundation = __webpack_require__(38);
 
-var _index2 = __webpack_require__(334);
+var _index2 = __webpack_require__(335);
 
 var _constants = __webpack_require__(44);
 
@@ -62822,7 +62878,7 @@ exports.MDCMenu = MDCMenu;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62832,7 +62888,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(333);
+var _component = __webpack_require__(334);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -62857,7 +62913,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63132,7 +63188,7 @@ exports.MDCList = MDCList;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63158,7 +63214,7 @@ Object.defineProperty(exports, 'CornerBit', {
   }
 });
 
-var _component = __webpack_require__(335);
+var _component = __webpack_require__(336);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -63192,7 +63248,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 exports.util = util;
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63433,7 +63489,7 @@ exports.MDCMenuSurface = MDCMenuSurface;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63443,7 +63499,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(337);
+var _component = __webpack_require__(338);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -63468,7 +63524,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63576,7 +63632,7 @@ exports.MDCNotchedOutline = MDCNotchedOutline;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 338 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63587,7 +63643,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(339);
+var _component = __webpack_require__(340);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -63642,7 +63698,7 @@ exports.util = util; /**
                       */
 
 /***/ }),
-/* 339 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63802,7 +63858,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 340 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63861,7 +63917,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 341 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63952,7 +64008,7 @@ exports.MDCSelectHelperText = MDCSelectHelperText;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 342 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63996,7 +64052,7 @@ exports.cssClasses = cssClasses;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 343 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64090,7 +64146,7 @@ exports.MDCSelectIcon = MDCSelectIcon;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 344 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64129,7 +64185,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 345 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64144,11 +64200,11 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _component = __webpack_require__(346);
+var _component = __webpack_require__(347);
 
-var _events = __webpack_require__(347);
+var _events = __webpack_require__(348);
 
-var _ponyfill = __webpack_require__(348);
+var _ponyfill = __webpack_require__(349);
 
 var _foundation = __webpack_require__(84);
 
@@ -64292,7 +64348,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 346 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64414,7 +64470,7 @@ exports.default = MDCComponent;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 347 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64481,7 +64537,7 @@ function applyPassive(globalObj, forceRefresh) {
 //# sourceMappingURL=events.js.map
 
 /***/ }),
-/* 348 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64538,7 +64594,7 @@ function matches(element, selector) {
 //# sourceMappingURL=ponyfill.js.map
 
 /***/ }),
-/* 349 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64555,7 +64611,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _component2 = __webpack_require__(350);
+var _component2 = __webpack_require__(351);
 
 var _constants = __webpack_require__(33);
 
@@ -64700,7 +64756,7 @@ exports.MDCTopAppBar = MDCTopAppBar;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 350 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64719,7 +64775,7 @@ var _component = __webpack_require__(5);
 
 var _index = __webpack_require__(31);
 
-var _foundation = __webpack_require__(351);
+var _foundation = __webpack_require__(352);
 
 var _util = __webpack_require__(86);
 
@@ -64860,7 +64916,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 351 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64877,7 +64933,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(352);
+var _constants = __webpack_require__(353);
 
 var _util = __webpack_require__(86);
 
@@ -65402,7 +65458,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 352 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65461,7 +65517,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 353 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65587,16 +65643,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
 
 /***/ }),
-/* 354 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(355);
+module.exports = __webpack_require__(356);
 
 /***/ }),
-/* 355 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65604,7 +65660,7 @@ module.exports = __webpack_require__(355);
 
 var utils = __webpack_require__(11);
 var bind = __webpack_require__(89);
-var Axios = __webpack_require__(357);
+var Axios = __webpack_require__(358);
 var mergeConfig = __webpack_require__(95);
 var defaults = __webpack_require__(92);
 
@@ -65640,14 +65696,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(96);
-axios.CancelToken = __webpack_require__(369);
+axios.CancelToken = __webpack_require__(370);
 axios.isCancel = __webpack_require__(91);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(370);
+axios.spread = __webpack_require__(371);
 
 module.exports = axios;
 
@@ -65655,7 +65711,7 @@ module.exports = axios;
 module.exports.default = axios;
 
 /***/ }),
-/* 356 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65673,7 +65729,7 @@ module.exports = function isBuffer(obj) {
 };
 
 /***/ }),
-/* 357 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65681,8 +65737,8 @@ module.exports = function isBuffer(obj) {
 
 var utils = __webpack_require__(11);
 var buildURL = __webpack_require__(90);
-var InterceptorManager = __webpack_require__(358);
-var dispatchRequest = __webpack_require__(359);
+var InterceptorManager = __webpack_require__(359);
+var dispatchRequest = __webpack_require__(360);
 var mergeConfig = __webpack_require__(95);
 
 /**
@@ -65765,7 +65821,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = Axios;
 
 /***/ }),
-/* 358 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65823,18 +65879,18 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 module.exports = InterceptorManager;
 
 /***/ }),
-/* 359 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(11);
-var transformData = __webpack_require__(360);
+var transformData = __webpack_require__(361);
 var isCancel = __webpack_require__(91);
 var defaults = __webpack_require__(92);
-var isAbsoluteURL = __webpack_require__(367);
-var combineURLs = __webpack_require__(368);
+var isAbsoluteURL = __webpack_require__(368);
+var combineURLs = __webpack_require__(369);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -65896,7 +65952,7 @@ module.exports = function dispatchRequest(config) {
 };
 
 /***/ }),
-/* 360 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65922,7 +65978,7 @@ module.exports = function transformData(data, headers, fns) {
 };
 
 /***/ }),
-/* 361 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65940,7 +65996,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 };
 
 /***/ }),
-/* 362 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65965,7 +66021,7 @@ module.exports = function settle(resolve, reject, response) {
 };
 
 /***/ }),
-/* 363 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66014,7 +66070,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 };
 
 /***/ }),
-/* 364 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66070,7 +66126,7 @@ module.exports = function parseHeaders(headers) {
 };
 
 /***/ }),
-/* 365 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66139,7 +66195,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 366 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66198,7 +66254,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66220,7 +66276,7 @@ module.exports = function isAbsoluteURL(url) {
 };
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66239,7 +66295,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 };
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66302,7 +66358,7 @@ CancelToken.source = function source() {
 module.exports = CancelToken;
 
 /***/ }),
-/* 370 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66336,7 +66392,7 @@ module.exports = function spread(callback) {
 };
 
 /***/ }),
-/* 371 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66357,13 +66413,13 @@ var _ponyfill = __webpack_require__(30);
 
 var ponyfill = _interopRequireWildcard(_ponyfill);
 
-var _index = __webpack_require__(372);
+var _index = __webpack_require__(373);
 
 var _index2 = __webpack_require__(69);
 
-var _index3 = __webpack_require__(375);
+var _index3 = __webpack_require__(376);
 
-var _component2 = __webpack_require__(377);
+var _component2 = __webpack_require__(378);
 
 var _foundation = __webpack_require__(99);
 
@@ -66881,7 +66937,7 @@ exports.MDCTextField = MDCTextField;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 372 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66891,7 +66947,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(373);
+var _component = __webpack_require__(374);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -66916,7 +66972,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 373 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67014,7 +67070,7 @@ exports.MDCFloatingLabel = MDCFloatingLabel;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67053,7 +67109,7 @@ var cssClasses = exports.cssClasses = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 375 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67063,7 +67119,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(376);
+var _component = __webpack_require__(377);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -67088,7 +67144,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 376 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67196,7 +67252,7 @@ exports.MDCNotchedOutline = MDCNotchedOutline;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 377 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67356,7 +67412,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 378 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67415,7 +67471,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 379 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67489,7 +67545,7 @@ exports.MDCTextFieldCharacterCounter = MDCTextFieldCharacterCounter;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 380 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67531,7 +67587,7 @@ exports.cssClasses = cssClasses;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 381 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67622,7 +67678,7 @@ exports.MDCTextFieldHelperText = MDCTextFieldHelperText;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 382 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67668,7 +67724,7 @@ exports.cssClasses = cssClasses;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 383 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67762,7 +67818,7 @@ exports.MDCTextFieldIcon = MDCTextFieldIcon;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 384 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67801,7 +67857,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 385 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67811,7 +67867,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(386);
+var _component = __webpack_require__(387);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -67848,7 +67904,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 386 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67863,7 +67919,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _component = __webpack_require__(387);
+var _component = __webpack_require__(388);
 
 var _foundation = __webpack_require__(110);
 
@@ -67950,7 +68006,7 @@ exports.MDCFormField = MDCFormField;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 387 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68072,7 +68128,7 @@ exports.default = MDCComponent;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 388 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68082,7 +68138,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(389);
+var _component = __webpack_require__(390);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -68119,7 +68175,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 389 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68134,7 +68190,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _util = __webpack_require__(390);
+var _util = __webpack_require__(391);
 
 var _component = __webpack_require__(112);
 
@@ -68142,7 +68198,7 @@ var _events = __webpack_require__(113);
 
 var _ponyfill = __webpack_require__(114);
 
-var _component2 = __webpack_require__(391);
+var _component2 = __webpack_require__(392);
 
 var _foundation = __webpack_require__(115);
 
@@ -68360,7 +68416,7 @@ function validDescriptor(inputPropDesc) {
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 390 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68458,7 +68514,7 @@ function getCorrectEventName(windowObj, eventType) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 391 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68621,7 +68677,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 392 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68680,7 +68736,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 393 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68690,10 +68746,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 module.exports = AlgoliaSearch;
 
-var Index = __webpack_require__(394);
+var Index = __webpack_require__(395);
 var deprecate = __webpack_require__(52);
 var deprecatedMessage = __webpack_require__(53);
-var AlgoliaSearchCore = __webpack_require__(399);
+var AlgoliaSearchCore = __webpack_require__(400);
 var inherits = __webpack_require__(34);
 var errors = __webpack_require__(27);
 
@@ -68861,7 +68917,7 @@ AlgoliaSearch.prototype.initAnalytics = function (opts) {
   // - move initAnalytics to a property on the main module (algoliasearch.initAnalytics),
   // same as places.
   // The current API was made mostly to mimic the one made in PHP
-  var createAnalyticsClient = __webpack_require__(403);
+  var createAnalyticsClient = __webpack_require__(404);
   return createAnalyticsClient(this.applicationID, this.apiKey, opts);
 };
 
@@ -69456,7 +69512,7 @@ function notImplemented() {
 }
 
 /***/ }),
-/* 394 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69885,7 +69941,7 @@ Index.prototype.browseAll = function (query, queryParameters) {
 
   var merge = __webpack_require__(121);
 
-  var IndexBrowser = __webpack_require__(397);
+  var IndexBrowser = __webpack_require__(398);
 
   var browser = new IndexBrowser();
   var client = this.as;
@@ -70765,7 +70821,7 @@ Index.prototype.updateApiKey = deprecate(function (key, acls, params, callback) 
 }, deprecatedMessage('index.updateApiKey()', 'client.updateApiKey()'));
 
 /***/ }),
-/* 395 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70777,7 +70833,7 @@ var isArgs = __webpack_require__(123);
 var origKeys = Object.keys;
 var keysShim = origKeys ? function keys(o) {
 	return origKeys(o);
-} : __webpack_require__(396);
+} : __webpack_require__(397);
 
 var originalKeys = Object.keys;
 
@@ -70806,7 +70862,7 @@ keysShim.shim = function shimObjectKeys() {
 module.exports = keysShim;
 
 /***/ }),
-/* 396 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70930,7 +70986,7 @@ if (!Object.keys) {
 module.exports = keysShim;
 
 /***/ }),
-/* 397 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70941,7 +70997,7 @@ module.exports = keysShim;
 module.exports = IndexBrowser;
 
 var inherits = __webpack_require__(34);
-var EventEmitter = __webpack_require__(398).EventEmitter;
+var EventEmitter = __webpack_require__(399).EventEmitter;
 
 function IndexBrowser() {}
 
@@ -70974,7 +71030,7 @@ IndexBrowser.prototype._clean = function () {
 };
 
 /***/ }),
-/* 398 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71396,7 +71452,7 @@ function unwrapListeners(arr) {
 }
 
 /***/ }),
-/* 399 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71407,7 +71463,7 @@ module.exports = AlgoliaSearchCore;
 var errors = __webpack_require__(27);
 var exitPromise = __webpack_require__(124);
 var IndexCore = __webpack_require__(119);
-var store = __webpack_require__(400);
+var store = __webpack_require__(401);
 
 // We will always put the API KEY in the JSON body in case of too long API KEY,
 // to avoid query string being too long and failing in various conditions (our server limit, browser limit,
@@ -72325,7 +72381,7 @@ function removeCredentials(headers) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 400 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72419,7 +72475,7 @@ function cleanup() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
 
 /***/ }),
-/* 401 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72437,7 +72493,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(402);
+exports.humanize = __webpack_require__(403);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -72629,7 +72685,7 @@ function coerce(val) {
 }
 
 /***/ }),
-/* 402 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72782,7 +72838,7 @@ function plural(ms, n, name) {
 }
 
 /***/ }),
-/* 403 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72870,14 +72926,14 @@ function createAnalyticsClient(appId, apiKey, opts) {
 }
 
 /***/ }),
-/* 404 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var global = __webpack_require__(405);
-var Promise = global.Promise || __webpack_require__(406).Promise;
+var global = __webpack_require__(406);
+var Promise = global.Promise || __webpack_require__(407).Promise;
 
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
@@ -72885,9 +72941,9 @@ var Promise = global.Promise || __webpack_require__(406).Promise;
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   var inherits = __webpack_require__(34);
   var errors = __webpack_require__(27);
-  var inlineHeaders = __webpack_require__(407);
-  var jsonpRequest = __webpack_require__(408);
-  var places = __webpack_require__(409);
+  var inlineHeaders = __webpack_require__(408);
+  var jsonpRequest = __webpack_require__(409);
+  var places = __webpack_require__(410);
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
@@ -72904,7 +72960,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
-  algoliasearch.version = __webpack_require__(412);
+  algoliasearch.version = __webpack_require__(413);
 
   algoliasearch.ua = 'Algolia for JavaScript (' + algoliasearch.version + '); ' + uaSuffix;
 
@@ -73104,7 +73160,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 405 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73126,7 +73182,7 @@ module.exports = win;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
 
 /***/ }),
-/* 406 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74303,7 +74359,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(54)))
 
 /***/ }),
-/* 407 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74324,7 +74380,7 @@ function inlineHeaders(url, headers) {
 }
 
 /***/ }),
-/* 408 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74456,7 +74512,7 @@ function jsonpRequest(url, opts, cb) {
 }
 
 /***/ }),
-/* 409 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74466,7 +74522,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 module.exports = createPlacesClient;
 
-var qs3 = __webpack_require__(410);
+var qs3 = __webpack_require__(411);
 var buildSearchMethod = __webpack_require__(120);
 
 function createPlacesClient(algoliasearch) {
@@ -74510,17 +74566,17 @@ function createPlacesClient(algoliasearch) {
 }
 
 /***/ }),
-/* 410 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(411);
+exports.decode = exports.parse = __webpack_require__(412);
 exports.encode = exports.stringify = __webpack_require__(125);
 
 /***/ }),
-/* 411 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74614,7 +74670,7 @@ var isArray = Array.isArray || function (xs) {
 };
 
 /***/ }),
-/* 412 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74623,7 +74679,7 @@ var isArray = Array.isArray || function (xs) {
 module.exports = '3.35.1';
 
 /***/ }),
-/* 413 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74642,7 +74698,7 @@ var _component = __webpack_require__(5);
 
 var _ponyfill = __webpack_require__(30);
 
-var _component2 = __webpack_require__(414);
+var _component2 = __webpack_require__(415);
 
 var _foundation = __webpack_require__(127);
 
@@ -74789,7 +74845,7 @@ exports.MDCSwitch = MDCSwitch;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 414 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74949,7 +75005,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 415 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75008,7 +75064,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 416 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75018,7 +75074,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(417);
+var _component = __webpack_require__(418);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -75055,7 +75111,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 417 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75070,7 +75126,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _component = __webpack_require__(418);
+var _component = __webpack_require__(419);
 
 var _foundation = __webpack_require__(134);
 
@@ -75171,7 +75227,7 @@ exports.MDCLinearProgress = MDCLinearProgress;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 418 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75293,7 +75349,7 @@ exports.default = MDCComponent;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 419 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75391,7 +75447,7 @@ function getCorrectEventName(windowObj, eventType) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 420 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75416,7 +75472,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Card = __webpack_require__(19);
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
-var axios = __webpack_require__(421);
+var axios = __webpack_require__(422);
 
 // Class that manages the "Service Hour Tracking" card in the supervisor's
 // dashboard view.
@@ -75486,16 +75542,16 @@ var Tracking = function () {
 module.exports = Tracking;
 
 /***/ }),
-/* 421 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = __webpack_require__(422);
+module.exports = __webpack_require__(423);
 
 /***/ }),
-/* 422 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75503,7 +75559,7 @@ module.exports = __webpack_require__(422);
 
 var utils = __webpack_require__(13);
 var bind = __webpack_require__(138);
-var Axios = __webpack_require__(424);
+var Axios = __webpack_require__(425);
 var mergeConfig = __webpack_require__(144);
 var defaults = __webpack_require__(141);
 
@@ -75539,14 +75595,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(145);
-axios.CancelToken = __webpack_require__(436);
+axios.CancelToken = __webpack_require__(437);
 axios.isCancel = __webpack_require__(140);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(437);
+axios.spread = __webpack_require__(438);
 
 module.exports = axios;
 
@@ -75554,7 +75610,7 @@ module.exports = axios;
 module.exports.default = axios;
 
 /***/ }),
-/* 423 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75572,7 +75628,7 @@ module.exports = function isBuffer(obj) {
 };
 
 /***/ }),
-/* 424 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75580,8 +75636,8 @@ module.exports = function isBuffer(obj) {
 
 var utils = __webpack_require__(13);
 var buildURL = __webpack_require__(139);
-var InterceptorManager = __webpack_require__(425);
-var dispatchRequest = __webpack_require__(426);
+var InterceptorManager = __webpack_require__(426);
+var dispatchRequest = __webpack_require__(427);
 var mergeConfig = __webpack_require__(144);
 
 /**
@@ -75664,7 +75720,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = Axios;
 
 /***/ }),
-/* 425 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75722,18 +75778,18 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 module.exports = InterceptorManager;
 
 /***/ }),
-/* 426 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(13);
-var transformData = __webpack_require__(427);
+var transformData = __webpack_require__(428);
 var isCancel = __webpack_require__(140);
 var defaults = __webpack_require__(141);
-var isAbsoluteURL = __webpack_require__(434);
-var combineURLs = __webpack_require__(435);
+var isAbsoluteURL = __webpack_require__(435);
+var combineURLs = __webpack_require__(436);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -75795,7 +75851,7 @@ module.exports = function dispatchRequest(config) {
 };
 
 /***/ }),
-/* 427 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75821,7 +75877,7 @@ module.exports = function transformData(data, headers, fns) {
 };
 
 /***/ }),
-/* 428 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75839,7 +75895,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 };
 
 /***/ }),
-/* 429 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75864,7 +75920,7 @@ module.exports = function settle(resolve, reject, response) {
 };
 
 /***/ }),
-/* 430 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75913,7 +75969,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 };
 
 /***/ }),
-/* 431 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75969,7 +76025,7 @@ module.exports = function parseHeaders(headers) {
 };
 
 /***/ }),
-/* 432 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76038,7 +76094,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 433 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76097,7 +76153,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 434 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76119,7 +76175,7 @@ module.exports = function isAbsoluteURL(url) {
 };
 
 /***/ }),
-/* 435 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76138,7 +76194,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 };
 
 /***/ }),
-/* 436 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76201,7 +76257,7 @@ CancelToken.source = function source() {
 module.exports = CancelToken;
 
 /***/ }),
-/* 437 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76235,7 +76291,7 @@ module.exports = function spread(callback) {
 };
 
 /***/ }),
-/* 438 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76247,7 +76303,7 @@ var _index = __webpack_require__(23);
 
 var _index2 = __webpack_require__(9);
 
-var _index3 = __webpack_require__(15);
+var _index3 = __webpack_require__(16);
 
 var _jquery = __webpack_require__(3);
 
@@ -76261,10 +76317,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var axios = __webpack_require__(439);
-var Profile = __webpack_require__(16).default;
-var PaidProfile = __webpack_require__(16).paid;
-var TutorProfile = __webpack_require__(16).tutor;
+var axios = __webpack_require__(440);
+var Profile = __webpack_require__(15).default;
+var PaidProfile = __webpack_require__(15).paid;
+var TutorProfile = __webpack_require__(15).tutor;
 var NotificationDialog = __webpack_require__(2).notify;
 var Card = __webpack_require__(19);
 var Utils = __webpack_require__(6);
@@ -76736,26 +76792,26 @@ Payments.renderAuthPayment = function (doc) {
 module.exports = Payments;
 
 /***/ }),
-/* 439 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(440);
-
-/***/ }),
 /* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+module.exports = __webpack_require__(441);
+
+/***/ }),
+/* 441 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var utils = __webpack_require__(14);
-var bind = __webpack_require__(147);
-var Axios = __webpack_require__(441);
-var mergeConfig = __webpack_require__(153);
-var defaults = __webpack_require__(150);
+var bind = __webpack_require__(148);
+var Axios = __webpack_require__(442);
+var mergeConfig = __webpack_require__(154);
+var defaults = __webpack_require__(151);
 
 /**
  * Create an instance of Axios
@@ -76788,15 +76844,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(154);
-axios.CancelToken = __webpack_require__(454);
-axios.isCancel = __webpack_require__(149);
+axios.Cancel = __webpack_require__(155);
+axios.CancelToken = __webpack_require__(455);
+axios.isCancel = __webpack_require__(150);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(455);
+axios.spread = __webpack_require__(456);
 
 module.exports = axios;
 
@@ -76804,17 +76860,17 @@ module.exports = axios;
 module.exports.default = axios;
 
 /***/ }),
-/* 441 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(14);
-var buildURL = __webpack_require__(148);
-var InterceptorManager = __webpack_require__(442);
-var dispatchRequest = __webpack_require__(443);
-var mergeConfig = __webpack_require__(153);
+var buildURL = __webpack_require__(149);
+var InterceptorManager = __webpack_require__(443);
+var dispatchRequest = __webpack_require__(444);
+var mergeConfig = __webpack_require__(154);
 
 /**
  * Create a new instance of Axios
@@ -76904,7 +76960,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = Axios;
 
 /***/ }),
-/* 442 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76962,16 +77018,16 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 module.exports = InterceptorManager;
 
 /***/ }),
-/* 443 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(14);
-var transformData = __webpack_require__(444);
-var isCancel = __webpack_require__(149);
-var defaults = __webpack_require__(150);
+var transformData = __webpack_require__(445);
+var isCancel = __webpack_require__(150);
+var defaults = __webpack_require__(151);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -77028,7 +77084,7 @@ module.exports = function dispatchRequest(config) {
 };
 
 /***/ }),
-/* 444 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77054,7 +77110,7 @@ module.exports = function transformData(data, headers, fns) {
 };
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77072,13 +77128,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 };
 
 /***/ }),
-/* 446 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(152);
+var createError = __webpack_require__(153);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -77097,7 +77153,7 @@ module.exports = function settle(resolve, reject, response) {
 };
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77146,14 +77202,14 @@ module.exports = function enhanceError(error, config, code, request, response) {
 };
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var isAbsoluteURL = __webpack_require__(449);
-var combineURLs = __webpack_require__(450);
+var isAbsoluteURL = __webpack_require__(450);
+var combineURLs = __webpack_require__(451);
 
 /**
  * Creates a new URL by combining the baseURL with the requestedURL,
@@ -77172,7 +77228,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 };
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77194,7 +77250,7 @@ module.exports = function isAbsoluteURL(url) {
 };
 
 /***/ }),
-/* 450 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77213,7 +77269,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 };
 
 /***/ }),
-/* 451 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77269,7 +77325,7 @@ module.exports = function parseHeaders(headers) {
 };
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77338,7 +77394,7 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77397,13 +77453,13 @@ function nonStandardBrowserEnv() {
 }();
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(154);
+var Cancel = __webpack_require__(155);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -77460,7 +77516,7 @@ CancelToken.source = function source() {
 module.exports = CancelToken;
 
 /***/ }),
-/* 455 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77494,7 +77550,7 @@ module.exports = function spread(callback) {
 };
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77515,7 +77571,7 @@ var Feedback = function Feedback(app) {
 module.exports = Feedback;
 
 /***/ }),
-/* 457 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77533,7 +77589,7 @@ var Notify = function () {
         _classCallCheck(this, Notify);
 
         try {
-            firebase.messaging().usePublicVapidKey("BIEVpGqO_n9HSS_sGWdfXoOUpv3dWwB5P2-zRkUBUZH" + "OzvAvJ09nUL68hc5XpTjKZxb74_5DJlSs4oRdnJj8R4w");
+            firebase.messaging().usePublicVapidKey('BIEVpGqO_n9HSS_sGWdfXoOUpv3dWwB5P2-zRkUBUZH' + 'OzvAvJ09nUL68hc5XpTjKZxb74_5DJlSs4oRdnJj8R4w');
             var messaging = firebase.messaging();
 
             messaging.getToken().then(function (token) {
@@ -77560,62 +77616,48 @@ var Notify = function () {
             });
 
             messaging.onMessage(function (payload) {
-                if (payload.notification.body === 'Authenticated account.') {
-                    return firebase.auth().currentUser.getIdToken(true);
-                } else if (payload.notification.title.indexOf('Message') >= 0) {
-                    if (window.app.nav.selected !== 'Messages') {
-                        return window.app.snackbar.view(payload.notification.title + ': ' + payload.notification.body, 'view', function () {
-                            window.app.chats.chat(payload.notification.data.id);
-                        }, false);
-                    } else {
-                        return;
-                    }
-                }
+                if (payload.notification.body === 'Authenticated account.') return firebase.auth().currentUser.getIdToken(true);
+                if (payload.notification.title.indexOf('Message from ') === 0) return window.app.snackbar.view(payload.notification.title.replace('Message from ', '') + ' says: ' + payload.notification.body);
                 window.app.snackbar.view(payload.notification.body);
             });
         } catch (e) {
-            console.error('Error while initializing Firebase messaging token to ' + 'manage webpush notifications:', e);
+            console.error('Error while initializing Firebase messaging token ' + 'to manage webpush notifications:', e);
         }
     }
 
     _createClass(Notify, [{
-        key: "welcome",
+        key: 'welcome',
         value: function welcome() {
-            new Notification('Welcome, ' + this.user.name, {
-                body: "This is how we'll notify you of important window.app " + 'activity.',
-                icon: 'https://tutorbook-779d8.firebasewindow.app.com/favic' + 'on/logo.svg',
-                badge: 'https://tutorbook-779d8.firebasewindow.app.com/favic' + 'on/notification-badge.svg'
+            new Notification('Welcome, ' + window.app.user.name, {
+                body: 'This is how we\'ll notify you of important app activity.',
+                icon: 'https://tutorbook.app/favicon/webpush-icon.png',
+                badge: 'https://tutorbook.app/favicon/webpush-badge.png'
             });
         }
     }, {
-        key: "getPermission",
+        key: 'getPermission',
         value: function getPermission() {
+            var _this2 = this;
+
             Notification.requestPermission().then(function (result) {
 
-                if (result === 'denied') {
-                    // Cannot ask again
-                    return;
-                }
-                if (result === 'default') {
-                    // Can ask again, but wasn't window.approved
-                    return;
-                }
+                if (result === 'denied') return;
+                if (result === 'default') return;
 
                 firebase.messaging().getToken().then(function (token) {
                     // Approved
                     window.app.user.cards.setupNotifications = false;
                     window.app.updateUser();
-                    this.updateToken(token);
-                    this.welcome();
+                    _this2.updateToken(token);
+                    _this2.welcome();
                 });
             }).catch(function (err) {
                 console.error('Error while getting webpush notification permission:', err);
             });
         }
     }, {
-        key: "updateToken",
+        key: 'updateToken',
         value: function updateToken(token) {
-            // Right now, tokens are stored in the currentUser's Firestore document
             window.app.user.notificationToken = token;
             window.app.updateUser().catch(function (err) {
                 console.error('Error while sending notificationToken ' + token + ' to Firestore Database:', err);
@@ -77631,7 +77673,7 @@ var Notify = function () {
 module.exports = Notify;
 
 /***/ }),
-/* 458 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77639,7 +77681,7 @@ module.exports = Notify;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(459);
+var _index = __webpack_require__(460);
 
 var _index2 = __webpack_require__(9);
 
@@ -77651,7 +77693,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Render = __webpack_require__(158);
+var Render = __webpack_require__(159);
 
 // Class that manages snackbars
 
@@ -77721,7 +77763,7 @@ var Snackbar = function () {
 module.exports = Snackbar;
 
 /***/ }),
-/* 459 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77732,7 +77774,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(460);
+var _component = __webpack_require__(461);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -77756,7 +77798,7 @@ Object.keys(_constants).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(156);
+var _foundation = __webpack_require__(157);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -77768,7 +77810,7 @@ Object.keys(_foundation).forEach(function (key) {
   });
 });
 
-var _util = __webpack_require__(157);
+var _util = __webpack_require__(158);
 
 var util = _interopRequireWildcard(_util);
 
@@ -77799,7 +77841,7 @@ exports.util = util; /**
                       */
 
 /***/ }),
-/* 460 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77814,15 +77856,15 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _component = __webpack_require__(461);
+var _component = __webpack_require__(462);
 
-var _ponyfill = __webpack_require__(462);
+var _ponyfill = __webpack_require__(463);
 
 var _constants = __webpack_require__(41);
 
-var _foundation = __webpack_require__(156);
+var _foundation = __webpack_require__(157);
 
-var _util = __webpack_require__(157);
+var _util = __webpack_require__(158);
 
 var util = _interopRequireWildcard(_util);
 
@@ -78014,7 +78056,7 @@ exports.MDCSnackbar = MDCSnackbar;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 461 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78029,7 +78071,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(155);
+var _foundation = __webpack_require__(156);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -78136,7 +78178,7 @@ exports.default = MDCComponent;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 462 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78193,7 +78235,7 @@ function matches(element, selector) {
 //# sourceMappingURL=ponyfill.js.map
 
 /***/ }),
-/* 463 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94050,264 +94092,264 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 464 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 159,
-	"./af.js": 159,
-	"./ar": 160,
-	"./ar-dz": 161,
-	"./ar-dz.js": 161,
-	"./ar-kw": 162,
-	"./ar-kw.js": 162,
-	"./ar-ly": 163,
-	"./ar-ly.js": 163,
-	"./ar-ma": 164,
-	"./ar-ma.js": 164,
-	"./ar-sa": 165,
-	"./ar-sa.js": 165,
-	"./ar-tn": 166,
-	"./ar-tn.js": 166,
-	"./ar.js": 160,
-	"./az": 167,
-	"./az.js": 167,
-	"./be": 168,
-	"./be.js": 168,
-	"./bg": 169,
-	"./bg.js": 169,
-	"./bm": 170,
-	"./bm.js": 170,
-	"./bn": 171,
-	"./bn.js": 171,
-	"./bo": 172,
-	"./bo.js": 172,
-	"./br": 173,
-	"./br.js": 173,
-	"./bs": 174,
-	"./bs.js": 174,
-	"./ca": 175,
-	"./ca.js": 175,
-	"./cs": 176,
-	"./cs.js": 176,
-	"./cv": 177,
-	"./cv.js": 177,
-	"./cy": 178,
-	"./cy.js": 178,
-	"./da": 179,
-	"./da.js": 179,
-	"./de": 180,
-	"./de-at": 181,
-	"./de-at.js": 181,
-	"./de-ch": 182,
-	"./de-ch.js": 182,
-	"./de.js": 180,
-	"./dv": 183,
-	"./dv.js": 183,
-	"./el": 184,
-	"./el.js": 184,
-	"./en-SG": 185,
-	"./en-SG.js": 185,
-	"./en-au": 186,
-	"./en-au.js": 186,
-	"./en-ca": 187,
-	"./en-ca.js": 187,
-	"./en-gb": 188,
-	"./en-gb.js": 188,
-	"./en-ie": 189,
-	"./en-ie.js": 189,
-	"./en-il": 190,
-	"./en-il.js": 190,
-	"./en-nz": 191,
-	"./en-nz.js": 191,
-	"./eo": 192,
-	"./eo.js": 192,
-	"./es": 193,
-	"./es-do": 194,
-	"./es-do.js": 194,
-	"./es-us": 195,
-	"./es-us.js": 195,
-	"./es.js": 193,
-	"./et": 196,
-	"./et.js": 196,
-	"./eu": 197,
-	"./eu.js": 197,
-	"./fa": 198,
-	"./fa.js": 198,
-	"./fi": 199,
-	"./fi.js": 199,
-	"./fo": 200,
-	"./fo.js": 200,
-	"./fr": 201,
-	"./fr-ca": 202,
-	"./fr-ca.js": 202,
-	"./fr-ch": 203,
-	"./fr-ch.js": 203,
-	"./fr.js": 201,
-	"./fy": 204,
-	"./fy.js": 204,
-	"./ga": 205,
-	"./ga.js": 205,
-	"./gd": 206,
-	"./gd.js": 206,
-	"./gl": 207,
-	"./gl.js": 207,
-	"./gom-latn": 208,
-	"./gom-latn.js": 208,
-	"./gu": 209,
-	"./gu.js": 209,
-	"./he": 210,
-	"./he.js": 210,
-	"./hi": 211,
-	"./hi.js": 211,
-	"./hr": 212,
-	"./hr.js": 212,
-	"./hu": 213,
-	"./hu.js": 213,
-	"./hy-am": 214,
-	"./hy-am.js": 214,
-	"./id": 215,
-	"./id.js": 215,
-	"./is": 216,
-	"./is.js": 216,
-	"./it": 217,
-	"./it-ch": 218,
-	"./it-ch.js": 218,
-	"./it.js": 217,
-	"./ja": 219,
-	"./ja.js": 219,
-	"./jv": 220,
-	"./jv.js": 220,
-	"./ka": 221,
-	"./ka.js": 221,
-	"./kk": 222,
-	"./kk.js": 222,
-	"./km": 223,
-	"./km.js": 223,
-	"./kn": 224,
-	"./kn.js": 224,
-	"./ko": 225,
-	"./ko.js": 225,
-	"./ku": 226,
-	"./ku.js": 226,
-	"./ky": 227,
-	"./ky.js": 227,
-	"./lb": 228,
-	"./lb.js": 228,
-	"./lo": 229,
-	"./lo.js": 229,
-	"./lt": 230,
-	"./lt.js": 230,
-	"./lv": 231,
-	"./lv.js": 231,
-	"./me": 232,
-	"./me.js": 232,
-	"./mi": 233,
-	"./mi.js": 233,
-	"./mk": 234,
-	"./mk.js": 234,
-	"./ml": 235,
-	"./ml.js": 235,
-	"./mn": 236,
-	"./mn.js": 236,
-	"./mr": 237,
-	"./mr.js": 237,
-	"./ms": 238,
-	"./ms-my": 239,
-	"./ms-my.js": 239,
-	"./ms.js": 238,
-	"./mt": 240,
-	"./mt.js": 240,
-	"./my": 241,
-	"./my.js": 241,
-	"./nb": 242,
-	"./nb.js": 242,
-	"./ne": 243,
-	"./ne.js": 243,
-	"./nl": 244,
-	"./nl-be": 245,
-	"./nl-be.js": 245,
-	"./nl.js": 244,
-	"./nn": 246,
-	"./nn.js": 246,
-	"./pa-in": 247,
-	"./pa-in.js": 247,
-	"./pl": 248,
-	"./pl.js": 248,
-	"./pt": 249,
-	"./pt-br": 250,
-	"./pt-br.js": 250,
-	"./pt.js": 249,
-	"./ro": 251,
-	"./ro.js": 251,
-	"./ru": 252,
-	"./ru.js": 252,
-	"./sd": 253,
-	"./sd.js": 253,
-	"./se": 254,
-	"./se.js": 254,
-	"./si": 255,
-	"./si.js": 255,
-	"./sk": 256,
-	"./sk.js": 256,
-	"./sl": 257,
-	"./sl.js": 257,
-	"./sq": 258,
-	"./sq.js": 258,
-	"./sr": 259,
-	"./sr-cyrl": 260,
-	"./sr-cyrl.js": 260,
-	"./sr.js": 259,
-	"./ss": 261,
-	"./ss.js": 261,
-	"./sv": 262,
-	"./sv.js": 262,
-	"./sw": 263,
-	"./sw.js": 263,
-	"./ta": 264,
-	"./ta.js": 264,
-	"./te": 265,
-	"./te.js": 265,
-	"./tet": 266,
-	"./tet.js": 266,
-	"./tg": 267,
-	"./tg.js": 267,
-	"./th": 268,
-	"./th.js": 268,
-	"./tl-ph": 269,
-	"./tl-ph.js": 269,
-	"./tlh": 270,
-	"./tlh.js": 270,
-	"./tr": 271,
-	"./tr.js": 271,
-	"./tzl": 272,
-	"./tzl.js": 272,
-	"./tzm": 273,
-	"./tzm-latn": 274,
-	"./tzm-latn.js": 274,
-	"./tzm.js": 273,
-	"./ug-cn": 275,
-	"./ug-cn.js": 275,
-	"./uk": 276,
-	"./uk.js": 276,
-	"./ur": 277,
-	"./ur.js": 277,
-	"./uz": 278,
-	"./uz-latn": 279,
-	"./uz-latn.js": 279,
-	"./uz.js": 278,
-	"./vi": 280,
-	"./vi.js": 280,
-	"./x-pseudo": 281,
-	"./x-pseudo.js": 281,
-	"./yo": 282,
-	"./yo.js": 282,
-	"./zh-cn": 283,
-	"./zh-cn.js": 283,
-	"./zh-hk": 284,
-	"./zh-hk.js": 284,
-	"./zh-tw": 285,
-	"./zh-tw.js": 285
+	"./af": 160,
+	"./af.js": 160,
+	"./ar": 161,
+	"./ar-dz": 162,
+	"./ar-dz.js": 162,
+	"./ar-kw": 163,
+	"./ar-kw.js": 163,
+	"./ar-ly": 164,
+	"./ar-ly.js": 164,
+	"./ar-ma": 165,
+	"./ar-ma.js": 165,
+	"./ar-sa": 166,
+	"./ar-sa.js": 166,
+	"./ar-tn": 167,
+	"./ar-tn.js": 167,
+	"./ar.js": 161,
+	"./az": 168,
+	"./az.js": 168,
+	"./be": 169,
+	"./be.js": 169,
+	"./bg": 170,
+	"./bg.js": 170,
+	"./bm": 171,
+	"./bm.js": 171,
+	"./bn": 172,
+	"./bn.js": 172,
+	"./bo": 173,
+	"./bo.js": 173,
+	"./br": 174,
+	"./br.js": 174,
+	"./bs": 175,
+	"./bs.js": 175,
+	"./ca": 176,
+	"./ca.js": 176,
+	"./cs": 177,
+	"./cs.js": 177,
+	"./cv": 178,
+	"./cv.js": 178,
+	"./cy": 179,
+	"./cy.js": 179,
+	"./da": 180,
+	"./da.js": 180,
+	"./de": 181,
+	"./de-at": 182,
+	"./de-at.js": 182,
+	"./de-ch": 183,
+	"./de-ch.js": 183,
+	"./de.js": 181,
+	"./dv": 184,
+	"./dv.js": 184,
+	"./el": 185,
+	"./el.js": 185,
+	"./en-SG": 186,
+	"./en-SG.js": 186,
+	"./en-au": 187,
+	"./en-au.js": 187,
+	"./en-ca": 188,
+	"./en-ca.js": 188,
+	"./en-gb": 189,
+	"./en-gb.js": 189,
+	"./en-ie": 190,
+	"./en-ie.js": 190,
+	"./en-il": 191,
+	"./en-il.js": 191,
+	"./en-nz": 192,
+	"./en-nz.js": 192,
+	"./eo": 193,
+	"./eo.js": 193,
+	"./es": 194,
+	"./es-do": 195,
+	"./es-do.js": 195,
+	"./es-us": 196,
+	"./es-us.js": 196,
+	"./es.js": 194,
+	"./et": 197,
+	"./et.js": 197,
+	"./eu": 198,
+	"./eu.js": 198,
+	"./fa": 199,
+	"./fa.js": 199,
+	"./fi": 200,
+	"./fi.js": 200,
+	"./fo": 201,
+	"./fo.js": 201,
+	"./fr": 202,
+	"./fr-ca": 203,
+	"./fr-ca.js": 203,
+	"./fr-ch": 204,
+	"./fr-ch.js": 204,
+	"./fr.js": 202,
+	"./fy": 205,
+	"./fy.js": 205,
+	"./ga": 206,
+	"./ga.js": 206,
+	"./gd": 207,
+	"./gd.js": 207,
+	"./gl": 208,
+	"./gl.js": 208,
+	"./gom-latn": 209,
+	"./gom-latn.js": 209,
+	"./gu": 210,
+	"./gu.js": 210,
+	"./he": 211,
+	"./he.js": 211,
+	"./hi": 212,
+	"./hi.js": 212,
+	"./hr": 213,
+	"./hr.js": 213,
+	"./hu": 214,
+	"./hu.js": 214,
+	"./hy-am": 215,
+	"./hy-am.js": 215,
+	"./id": 216,
+	"./id.js": 216,
+	"./is": 217,
+	"./is.js": 217,
+	"./it": 218,
+	"./it-ch": 219,
+	"./it-ch.js": 219,
+	"./it.js": 218,
+	"./ja": 220,
+	"./ja.js": 220,
+	"./jv": 221,
+	"./jv.js": 221,
+	"./ka": 222,
+	"./ka.js": 222,
+	"./kk": 223,
+	"./kk.js": 223,
+	"./km": 224,
+	"./km.js": 224,
+	"./kn": 225,
+	"./kn.js": 225,
+	"./ko": 226,
+	"./ko.js": 226,
+	"./ku": 227,
+	"./ku.js": 227,
+	"./ky": 228,
+	"./ky.js": 228,
+	"./lb": 229,
+	"./lb.js": 229,
+	"./lo": 230,
+	"./lo.js": 230,
+	"./lt": 231,
+	"./lt.js": 231,
+	"./lv": 232,
+	"./lv.js": 232,
+	"./me": 233,
+	"./me.js": 233,
+	"./mi": 234,
+	"./mi.js": 234,
+	"./mk": 235,
+	"./mk.js": 235,
+	"./ml": 236,
+	"./ml.js": 236,
+	"./mn": 237,
+	"./mn.js": 237,
+	"./mr": 238,
+	"./mr.js": 238,
+	"./ms": 239,
+	"./ms-my": 240,
+	"./ms-my.js": 240,
+	"./ms.js": 239,
+	"./mt": 241,
+	"./mt.js": 241,
+	"./my": 242,
+	"./my.js": 242,
+	"./nb": 243,
+	"./nb.js": 243,
+	"./ne": 244,
+	"./ne.js": 244,
+	"./nl": 245,
+	"./nl-be": 246,
+	"./nl-be.js": 246,
+	"./nl.js": 245,
+	"./nn": 247,
+	"./nn.js": 247,
+	"./pa-in": 248,
+	"./pa-in.js": 248,
+	"./pl": 249,
+	"./pl.js": 249,
+	"./pt": 250,
+	"./pt-br": 251,
+	"./pt-br.js": 251,
+	"./pt.js": 250,
+	"./ro": 252,
+	"./ro.js": 252,
+	"./ru": 253,
+	"./ru.js": 253,
+	"./sd": 254,
+	"./sd.js": 254,
+	"./se": 255,
+	"./se.js": 255,
+	"./si": 256,
+	"./si.js": 256,
+	"./sk": 257,
+	"./sk.js": 257,
+	"./sl": 258,
+	"./sl.js": 258,
+	"./sq": 259,
+	"./sq.js": 259,
+	"./sr": 260,
+	"./sr-cyrl": 261,
+	"./sr-cyrl.js": 261,
+	"./sr.js": 260,
+	"./ss": 262,
+	"./ss.js": 262,
+	"./sv": 263,
+	"./sv.js": 263,
+	"./sw": 264,
+	"./sw.js": 264,
+	"./ta": 265,
+	"./ta.js": 265,
+	"./te": 266,
+	"./te.js": 266,
+	"./tet": 267,
+	"./tet.js": 267,
+	"./tg": 268,
+	"./tg.js": 268,
+	"./th": 269,
+	"./th.js": 269,
+	"./tl-ph": 270,
+	"./tl-ph.js": 270,
+	"./tlh": 271,
+	"./tlh.js": 271,
+	"./tr": 272,
+	"./tr.js": 272,
+	"./tzl": 273,
+	"./tzl.js": 273,
+	"./tzm": 274,
+	"./tzm-latn": 275,
+	"./tzm-latn.js": 275,
+	"./tzm.js": 274,
+	"./ug-cn": 276,
+	"./ug-cn.js": 276,
+	"./uk": 277,
+	"./uk.js": 277,
+	"./ur": 278,
+	"./ur.js": 278,
+	"./uz": 279,
+	"./uz-latn": 280,
+	"./uz-latn.js": 280,
+	"./uz.js": 279,
+	"./vi": 281,
+	"./vi.js": 281,
+	"./x-pseudo": 282,
+	"./x-pseudo.js": 282,
+	"./yo": 283,
+	"./yo.js": 283,
+	"./zh-cn": 284,
+	"./zh-cn.js": 284,
+	"./zh-hk": 285,
+	"./zh-hk.js": 285,
+	"./zh-tw": 286,
+	"./zh-tw.js": 286
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -94323,10 +94365,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 464;
+webpackContext.id = 465;
 
 /***/ }),
-/* 465 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94342,7 +94384,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var templateString = __webpack_require__(466);
+var templateString = __webpack_require__(467);
 
 // Class that reads in a string of templates and stores the DOM Nodes in an
 // easily accessible array.
@@ -94517,25 +94559,25 @@ var Templates = function () {
 module.exports = Templates;
 
 /***/ }),
-/* 466 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<html>\n<!-- TEMPLATES: these are HTML templates for all of the objects that the \nuser sees as they navigate throughout the app. -->\n\n<!-- Service Hour Tracking Card Template -->\n<div hidden class=\"template\" id=\"card-service-hours\">\n    <div id=\"service-hours-card\" priority=\"3\" class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"dashboard-card__primary-action\" id=\"primary\">\n            <div class=\"left\">\n                <canvas width=\"170px\" height=\"190px\"></canvas>\n            </div>\n            <div class=\"right\">\n                <div class=\"dashboard-card__primary\">\n                    <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                        <span data-fir-content=\"title\">Service Hours</span>\n                        <div class=\"mdc-menu-surface--anchor\">\n                            <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                            <div class=\"mdc-menu mdc-menu-surface\">\n                                <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"paid\">\n                                        <span class=\"mdc-list-item__text\">I'm paid</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"snooze\">\n                                        <span class=\"mdc-list-item__text\">Snooze</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"history\">\n                                        <span class=\"mdc-list-item__text\">Tracking</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"info\">\n                                        <span class=\"mdc-list-item__text\">About</span>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </h2>\n                    <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">Track your progress</h3>\n                </div>\n                <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Checkbox Input -->\n<div hidden class=\"template\" id=\"checkbox-input\">\n    <div class=\"mdc-form-field\" data-fir-id=\"id\">\n        <div class=\"mdc-checkbox\">\n            <input type=\"checkbox\" class=\"mdc-checkbox__native-control\" data-fir-id=\"inputId\" />\n            <div class=\"mdc-checkbox__background\">\n                <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n                    <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\" />\n                </svg>\n                <div class=\"mdc-checkbox__mixedmark\"></div>\n            </div>\n        </div>\n        <label data-fir-attr=\"for:inputId\" data-fir-content=\"label\">Label</label>\n    </div>\n</div>\n\n<!-- Ad Dialog -->\n<div hidden class=\"template\" id=\"ad-dialog\">\n    <aside class=\"ad-dialog mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <div class=\"mdc-dialog__content\">\n                    <h5 class=\"ad-dialog__subtitle\">\n                        Hire a Professional Paid Tutor\n                    </h5>\n                    <h2 class=\"ad-dialog__title\">\n                        Need More Flexiblity?\n                    </h2>\n                    <p class=\"ad-dialog__content\">\n                        Get ready to supercharge your studying with your own\n                        at-home private tutor.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Get help where and when you need it; paid tutors work\n                        flexible hours to fit perfectly within your schedule\n                        and can travel to where ever works best for you.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Work with the best when peers just won't cut it. Most\n                        of our paid tutors are skilled professors, teachers,\n                        and college students excited to share their knowledge.\n                    </p>\n                    <button class=\"mdc-button mdc-button--raised ad-dialog__button\">\n                        Yes, Find a Private Tutor!\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Appt Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-appt\">\n    <aside class=\"mdc-dialog mdc-dialog--scrollable\" id=\"dialog-appt\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Appointment Notifications\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"send\" id=\"send\">Send</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Delete User List Item -->\n<div hidden class=\"template\" id=\"delete-user-input\">\n    <div class=\"delete-user-input\">\n        <button class=\"mdc-button\" data-fir-click=\"delete\">\n            <i class=\"mdc-button__icon material-icons\">delete</i>\n            <span class=\"mdc-button__label\" data-fir-if-not=\"label\">Delete account</span>\n            <span class=\"mdc-button__label\" data-fir-if=\"label\" data-fir-content=\"label\">Delete account</span>\n        </button>\n    </div>\n</div>\n\n<!-- Stripe Elements Card Input -->\n<div hidden class=\"template\" id=\"stripe-card-input\">\n    <li id=\"Method\" class=\"input-list-item mdc-list-item\">\n        <div class=\"helper-wrapper\">\n            <div class=\"mdc-text-field mdc-text-field--textarea\">\n                <div id=\"card-input\">\n                    <!-- Stripe renders PCI compliant iFrame here -->\n                </div>\n                <div class=\"mdc-notched-outline mdc-notched-outline--notched\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label for=\"card-input\" class=\"mdc-floating-label mdc-floating-label--float-above\">Method</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n            <div class=\"mdc-text-field-helper-line\">\n                <div id=\"msg\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--persistent\">You will not be charged until after your lesson.</div>\n                <div id=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid payment method, try again.</div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Empty Snackbar -->\n<div hidden class=\"template\" id=\"snackbar-empty\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Labeled Snackbar -->\n<div hidden class=\"template\" id=\"snackbar\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button type=\"button\" class=\"mdc-button mdc-snackbar_action\" data-fir-content=\"label\" data-fir-click=\"action\">Undo</button>\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Code Signup Dialog -->\n<div hidden class=\"template\" id=\"dialog-code-signup\">\n    <aside class=\"dialog-code-signup mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" id=\"page-code\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Enter Verification Code\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"description\"></div>\n                    <div class=\"mdc-text-field mdc-text-field--outlined\" id=\"code-input\">\n                        <input type=\"text\" class=\"mdc-text-field__input\">\n                        <div class=\"mdc-notched-outline\">\n                            <div class=\"mdc-notched-outline__leading\"></div>\n                            <div class=\"mdc-notched-outline__notch\">\n                                <label class=\"mdc-floating-label\">Verification code</label>\n                            </div>\n                            <div class=\"mdc-notched-outline__trailing\"></div>\n                        </div>\n                    </div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" id=\"confirm-button\">Confirm</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Basic Empty Form Dialog -->\n<div hidden class=\"template\" id=\"dialog-form\">\n    <aside class=\"dialog-form mdc-dialog\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" style=\"min-width:50vw !important\">\n                <div class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Fillout Form\n                </div>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"ok\" id=\"ok-button\">Ok</button>\n                </footer>\n            </div>\n        </div>\n    </aside>\n</div>\n\n<!-- Subject Select Dialog -->\n<div hidden class=\"template\" id=\"dialog-subjects\">\n    <aside class=\"dialog-subjects mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Select Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-notification\">\n    <aside class=\"mdc-dialog dialog-notification\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"message\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"ok\">\n                        <span class=\"mdc-button__label\">Ok</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Filter Dialog -->\n<div hidden class=\"template\" id=\"dialog-filter\">\n    <aside id=\"dialog-filter\" class=\"mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Filter\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"all-filters-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" id=\"reset-button\">Reset</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Apply</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-type\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Type\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"type-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-availability\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Availability\n                </h2>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                    <div id=\"availability-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" id=\"ok-button\" class=\"mdc-button mdc-dialog__button\">Ok</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-price\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Price\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"price-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-grade\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Grade\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"grade-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-subject\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-all\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n                            <span>Any</span>\n                        </li>\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-gender\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Gender\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"gender-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-sort\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Sort By\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\">\n                            Rating\n                        </li>\n                        <li class=\"mdc-list-item\">\n                            Reviews\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Confirmation Dialog -->\n<div hidden class=\"template\" id=\"dialog-confirmation\">\n    <aside class=\"mdc-dialog dialog-confirmation\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"summary\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"no\">\n                        <span class=\"mdc-button__label\">No</span>\n                    </button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"yes\">\n                        <span class=\"mdc-button__label\">Yes</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Empty List Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-list\">\n    <aside class=\"dialog-list mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Title\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Ok</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- User View Template -->\n<div hidden class=\"template\" id=\"user-view\">\n    <div class=\"user-view mdc-list-group \">\n        <div id=\"user-header\">\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line mdc-list--avatar-list\">\n                <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n                    <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n                    <span class=\"mdc-list-item__text\">\n                        <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n                        <span class=\"mdc-list-item__secondary-text\">\n                            <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                            <span data-fir-content=\"type\"></span>\n                            <span>•</span>\n                            <span data-fir-if=\"paid\" class=\"rate\">\n                                <span class=\"charge\" data-fir-content=\"rate\"></span>\n                                <span class=\"hr\">/hr</span>\n                            </span>\n                            <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n                        </span>\n                    </span>\n                    <span class=\"mdc-list-item__meta\">\n                        <div class=\"rating__meta\">\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                        </div>\n                    </span>\n                </li>\n            </ul>\n        </div>\n        <div id=\"about-me\" data-fir-if=\"showAbout\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">About me</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div class=\"description\" data-fir-content=\"bio\">\n            </div>\n        </div>\n        <div id=\"basic-info\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Basic info</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\">\n                    <div class=\"mdc-list-item__text\">\n                        <div data-fir-if=\"paid\">\n                            <strong>Payments: </strong>\n                            <span style=\"white-space:initial!important;\" data-fir-content=\"payments/policy\"></span>\n                        </div>\n                        <strong>Gender: </strong>\n                        <span data-fir-content=\"gender\"></span>\n                        <strong>Type: </strong>\n                        <span data-fir-content=\"type\"></span>\n                        <strong>Grade: </strong>\n                        <span data-fir-content=\"grade\"></span>\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"subjects\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    <span data-fir-if-not=\"type\">User </span>\n                    <span data-fir-content=\"type\"></span> for\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense\">\n                <li class=\"subject-list-item mdc-list-item\" data-fir-foreach=\"subjects\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div data-fir-if=\"showLocation\" id=\"location\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Located at\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div id=\"map\"></div>\n        </div>\n        <div id=\"availability\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Available\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"availableTimes\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"reviews\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Reviews</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--dense\">\n            </ul>\n        </div>\n        <button id=\"request-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">send</span>\n            <span class=\"mdc-fab__label\">Request</span>\n        </button>\n        <button id=\"message-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">chat</span>\n            <span class=\"mdc-fab__label\">Message</span>\n        </button>\n    </div>\n</div>\n\n<!-- Filter Dialog List Template -->\n<div hidden class=\"template\" id=\"dialog-filter-list\">\n    <ul class=\"mdc-list mdc-list--avatar-list\">\n        <li id=\"show-page-subject\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n            <span data-fir-if-not=\"subject\">Any Subject</span>\n            <b data-fir-content=\"subject\"></b>\n        </li>\n        <li id=\"show-page-availability\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">schedule</i>\n            <span data-fir-if-not=\"availability\">Any Availability</span>\n            <b data-fir-content=\"availability\"></b>\n        </li>\n        <li id=\"show-page-type\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">people</i>\n            <span data-fir-if-not=\"type\">Any Type</span>\n            <b data-fir-content=\"type\"></b>\n        </li>\n        <li id=\"show-page-grade\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">school</i>\n            <span data-fir-if-not=\"grade\">Any Grade</span>\n            <b data-fir-content=\"grade\"></b>\n        </li>\n        <li id=\"show-page-gender\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">wc</i>\n            <span data-fir-if-not=\"gender\">Any Gender</span>\n            <b data-fir-content=\"gender\"></b>\n        </li>\n        <li id=\"show-page-price\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">attach_money</i>\n            <span data-fir-if-not=\"price\">Any Price</span>\n            <b data-fir-content=\"price\"></b>\n        </li>\n        <li id=\"show-page-sort\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">sort</i>\n            <b data-fir-content=\"sort\"></b>\n        </li>\n    </ul>\n</div>\n\n<div hidden class=\"template\" id=\"dialog-filter-item-list\">\n    <ul class=\"mdc-list\">\n        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n    </ul>\n</div>\n\n\n<!-- Header Templates -->\n<!-- Welcome Header Template -->\n<div hidden class=\"template\" id=\"header-login\">\n    <div class=\"logo-header\">\n        <img src=\"/favicon/text-logo-bg.png\">\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"search-results-divider\">\n    <li role=\"separator\" class=\"mdc-list-divider\"></li>\n</div>\n\n<div hidden class=\"template\" id=\"header-search\">\n    <header id=\"search-app-bar\" class=\"header-search mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"title\" data-fir-content=\"title\">Tutorbook</span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"wordmark\">\n                    <img class=\"mdc-top-app-bar__wordmark\" src=\"" + __webpack_require__(467) + "\">\n                </span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"logo\">\n                    <img class=\"mdc-top-app-bar__logo\" src=\"" + __webpack_require__(468) + "\">\n                </span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-middle\">\n                <div class=\"search-box\">\n                    <i id=\"search-icon\" class=\"material-icons\">search</i>\n                    <input placeholder=\"Search users\" data-fir-attr=\"placeholder:placeholder\" type=\"text\" name=\"query\">\n                    <button id=\"info-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">info</i>\n                    </button>\n                    <button style=\"display:none;\" id=\"clear-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">clear</i>\n                    </button>\n                </div>\n                <div class=\"search-results\" style=\"display:none;\">\n                    <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n                    </ul>\n                </div>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-main\">\n    <header class=\"header-main mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                            <!--\n\t\t   -<li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"settings\">\n\t\t   -    <span class=\"mdc-list-item__text\">Settings</span>\n\t\t   -</li>\n\t\t   -->\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-back\">\n    <header class=\"mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"back\" class=\"button mdc-top-app-bar__navigation-icon\"><i class=\"material-icons\">arrow_back</i></a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Edit\">edit</i>\n                <i data-fir-if=\"showMatch\" data-fir-click=\"match\" id=\"match\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Match\">wc</i>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-action\">\n    <header class=\"header-action mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"cancel\" class=\"mdc-top-app-bar__navigation-icon material-icons\">close</a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">View</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showDelete\" data-fir-click=\"delete\" id=\"delete\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Delete\">delete</i>\n                <i data-fir-if=\"clockIn\" data-fir-click=\"clockIn\" id=\"clockIn\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Clock in for this appointment\">timer</i>\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Suggest edit\">create</i>\n                <i data-fir-if=\"print\" data-fir-click=\"print\" id=\"print\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Print request form\">print</i>\n                <i data-fir-if=\"showApprove\" data-fir-click=\"approve\" id=\"approve\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Approve request\">how_to_reg</i>\n                <i data-fir-if=\"ok\" data-fir-click=\"ok\" id=\"ok\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Save changes\">check</i>\n                <i data-fir-if=\"send\" data-fir-click=\"send\" id=\"send\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Send request\">send</i>\n            </section>\n        </div>\n    </header>\n</div>\n\n<!-- Filter Header Template -->\n<div hidden class=\"template\" id=\"header-filter\">\n    <header class=\"header-filter mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\" id=\"menu\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n        <div id=\"filters\">\n            <div class=\"mdc-layout-grid\">\n                <div id=\"show-filters\">\n                    <div id=\"active-filters\">\n                        <div id=\"filter\">\n                            <i class=\"material-icons\" id=\"filter-dialog-button\">filter_list</i>\n                            <span>You're seeing <b data-fir-content=\"filter_description\"></b></span>\n                        </div>\n                        <i class=\"material-icons\" id=\"clear\">close</i>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </header>\n</div>\n\n<!-- Nav Drawer Destinations Template (this has to be a template because it\nneeds to be rendered with a ton of click listeners.) -->\n<div hidden class=\"template\" id=\"nav-drawer-list\">\n    <div class=\"nav-drawer-list\">\n        <nav class=\"mdc-list\">\n            <a id=\"home\" class=\"mdc-list-item\" data-fir-click=\"showHome\" aria-selected=\"true\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">home</i>\n                <span class=\"mdc-list-item__text\">Home</span>\n            </a>\n            <a id=\"matching\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showMatching\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">wc</i>\n                <span class=\"mdc-list-item__text\">Matching</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"payments\" data-fir-if=\"payments\" class=\"mdc-list-item\" data-fir-click=\"showPayments\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">payment</i>\n                <span class=\"mdc-list-item__text\">Payments</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"search\" class=\"mdc-list-item\" data-fir-click=\"showSearch\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">search</i>\n                <span class=\"mdc-list-item__text\">Search</span>\n            </a>\n            <a id=\"tutors\" class=\"mdc-list-item\" data-fir-click=\"showTutors\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person</i>\n                <span class=\"mdc-list-item__text\">Tutors</span>\n            </a>\n            <a id=\"pupils\" class=\"mdc-list-item\" data-fir-click=\"showPupils\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person_outline</i>\n                <span class=\"mdc-list-item__text\">Pupils</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"profile\" class=\"mdc-list-item\" data-fir-click=\"showProfile\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">account_circle</i>\n                <span class=\"mdc-list-item__text\">Profile</span>\n            </a>\n            <a id=\"schedule\" class=\"mdc-list-item\" data-fir-click=\"showSchedule\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">calendar_today</i>\n                <span class=\"mdc-list-item__text\">Schedule</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if-not=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"config\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showConfig\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">settings</i>\n                <span class=\"mdc-list-item__text\">Configuration</span>\n            </a>\n        </nav>\n    </div>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab-labeled\">\n    <button data-fir-id=\"id\" class=\"mdc-fab mdc-fab--extended\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n        <span class=\"mdc-fab__label\" data-fir-content=\"label\" data-fir-if=\"label\"></span>\n    </button>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab\">\n    <button data-fir-id=\"id\" class=\"mdc-fab\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n    </button>\n</div>\n\n<!-- Welcome Screen Template -->\n<div hidden class=\"template\" id=\"login\">\n    <div class=\"login\">\n        <div class=\"logo-header\">\n            <img src=\"/favicon/text-logo-bg.png\">\n        </div>\n        <div id=\"page-login\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"signup-button\" data-fir-click=\"signup\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Signup\n                </button>\n                <button id=\"login-button\" data-fir-click=\"login\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Login\n                </button>\n            </div>\n        </div>\n        <div id=\"page-signup\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"pupil-button\" data-fir-click=\"pupil\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Pupil\n                </button>\n                <button id=\"tutor-button\" data-fir-click=\"tutor\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Peer Tutor\n                </button>\n                <button id=\"paid-tutor-button\" data-fir-click=\"paidTutor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Paid Tutor\n                </button>\n                <button id=\"expand-button\" data-fir-click=\"expand\" type=\"button\" class=\"mdc-icon-button\">\n                    <i class=\"material-icons mdc-icon-button__icon\">expand_more</i>\n                </button>\n                <div style=\"display:none\" id=\"expand\">\n                    <button id=\"supervisor-button\" data-fir-click=\"supervisor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                        Supervisor\n                    </button>\n                    <button id=\"collapse-button\" data-fir-click=\"collapse\" type=\"button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons mdc-icon-button__icon\">expand_less</i>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Setup Header Template -->\n<div hidden class=\"template\" id=\"header-welcome\">\n    <div data-fir-if=\"welcome\" class=\"header-welcome\">\n        <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n            Welcome back\n        </h1>\n        <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n            We missed you at Tutorbook\n        </h5>\n    </div>\n</div>\n\n<!-- Supervisor Setup Template -->\n<div hidden class=\"template\" id=\"setup\">\n    <div class=\"setup\">\n        <div data-fir-if=\"welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                Welcome back\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We missed you at Tutorbook\n            </h5>\n        </div>\n    </div>\n    <div class=\"\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"setup-cards\">\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n<!-- Empty Template -->\n<div hidden class=\"template\" id=\"empty\">\n    <!-- TODO: Make this actually look nice. -->\n</div>\n\n<!-- Input List Item Wrapper Template -->\n<div hidden class=\"template\" id=\"input-wrapper\">\n    <div class=\"input-wrapper mdc-list--non-interactive\">\n    </div>\n</div>\n\n<!-- Wrapper Template -->\n<div hidden class=\"template\" id=\"wrapper\">\n    <div>\n    </div>\n</div>\n\n<!-- Input Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-input\">\n    <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Profile Input Dialog Template -->\n<!-- This is exactly the same as the input dialog above, but has different\nstyling due to input el spacing. -->\n<div hidden class=\"template\" id=\"profile\">\n    <ul class=\"profile dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Search Text Field Input List Item Dialog Template -->\n<div hidden class=\"template\" id=\"search-input-list-item\">\n    <li data-fir-id=\"id\" class=\"search-input-list-item input-list-item mdc-list-item\">\n        <div class=\"search-box\">\n            <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n                <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n                <div class=\"mdc-notched-outline\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n        </div>\n        <div class=\"search-results\" style=\"display:none;\">\n            <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n            </ul>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Item Template -->\n<div hidden class=\"template\" id=\"input-list-item\">\n    <li class=\"input-list-item mdc-list-item\">\n    </li>\n</div>\n\n<!-- Payment List Item Template -->\n<div hidden class=\"template\" id=\"transaction-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-attr=\"timestamp:timestamp\" data-fir-click=\"go_to_transaction\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"meta_title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"meta_subtitle\">\n            </span>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"supervisor-appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserA\" data-fir-attr=\"src:photoA\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserB\" data-fir-attr=\"src:photoB\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\" data-fir-click=\"viewUser\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Divider Template w/ Action Buttons -->\n<div hidden class=\"template\" id=\"action-list-divider\">\n    <div data-fir-id=\"text\" class=\"action-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\">\n            <span data-fir-content=\"text\">Label</span>\n        </h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- MDC List Divider Action Button Template -->\n<div hidden class=\"template\" id=\"list-divider-btn\">\n    <button data-fir-click=\"action\" data-fir-content=\"label\" data-fir-id=\"label\" class=\"mdc-button mdc-button--unelevated\"></button>\n</div>\n\n<!-- MDC List Divider Template -->\n<div hidden class=\"template\" id=\"input-list-divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Dashboard Divider Template -->\n<div hidden class=\"template\" id=\"divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Divider Template -->\n<div hidden class=\"template\" id=\"date-list-divider\">\n    <div data-fir-attr=\"timestamp:timestamp\" class=\"date-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <div class=\"date-label\" data-fir-content=\"date\">Mon, 7/26</div>\n    </div>\n</div>\n\n<!-- User Profile Header Template -->\n<div hidden class=\"template\" id=\"profile-header\">\n    <li class=\"mdc-list-item profile-header\">\n        <img class=\"mdc-list-item__graphic pic\" data-fir-attr=\"src:pic\">\n        <img class=\"mdc-list-item__graphic modify-pic\" style=\"display:none;\" src=\"/app/img/change_pic.png\">\n        <input id=\"media-capture\" type=\"file\" accept=\"image/*\" capture=\"camera\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"email\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- Matching User Header Template -->\n<div hidden class=\"template\" id=\"matching-user-header\">\n    <li class=\"mdc-list-item matching-user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- User Header Template -->\n<div hidden class=\"template\" id=\"user-header\">\n    <li class=\"mdc-list-item user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Empty (i.e. no need for val) MDC Select Template -->\n<div hidden class=\"template\" id=\"input-empty-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC Select Template -->\n<div hidden class=\"template\" id=\"input-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\" data-fir-content=\"val\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Input Stub Template -->\n<div hidden class=\"template\" id=\"input-stub\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"id\">\n        <input type=\"text\" class=\"mdc-text-field__input\" value=\"Stub\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" for=\"stub\">Stub</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"err-text-field\">\n    <div class=\"err-text-field\">\n        <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n            <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n            <div class=\"mdc-notched-outline\">\n                <div class=\"mdc-notched-outline__leading\"></div>\n                <div class=\"mdc-notched-outline__notch\">\n                    <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                </div>\n                <div class=\"mdc-notched-outline__trailing\"></div>\n            </div>\n        </div>\n        <div class=\"mdc-text-field-helper-line\">\n            <div id=\"err\" data-fir-content=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid response, try again.</div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"input-text-field\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n        <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextArea Template -->\n<div hidden class=\"template\" id=\"input-text-area\">\n    <div class=\"mdc-text-field mdc-text-field--textarea\" data-fir-id=\"label\">\n        <textarea class=\"mdc-text-field__input\" data-fir-content=\"text\" rows=\"8\" cols=\"40\"></textarea>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\"></label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Messages List Template -->\n<div hidden class=\"template\" id=\"chat\">\n    <div class=\"chat\" data-fir-id=\"id\">\n        <div id=\"messages\">\n        </div>\n        <div class=\"write\">\n            <input type=\"text\" data-fir-attr=\"placeholder:placeholder\" />\n            <button disabled=\"disabled\" data-fir-click=\"send\" class=\"mdc-icon-button material-icons\">send</button>\n        </div>\n    </div>\n</div>\n\n<!-- Message Template -->\n<div hidden class=\"template\" id=\"message\">\n    <div data-fir-content=\"message\" data-fir-attr=\"timestamp:timestamp\" data-fir-id=\"id\" class=\"bubble you\">\n        Hello,\n    </div>\n</div>\n\n<!-- Messages Time -->\n<div hidden class=\"template\" id=\"message-time\">\n    <div class=\"conversation-start\">\n        <span data-fir-content=\"time\">Today, 6:48 AM</span>\n    </div>\n</div>\n\n<!-- Person Template (part of codepen) -->\n<div hidden class=\"template\" id=\"chat-person-item\">\n    <li class=\"person\">\n        <img data-fir-attr=\"src:photo\" alt=\"\" />\n        <span class=\"name\" data-fir-content=\"name\">Thomas Bangalter</span>\n        <span class=\"time\" data-fir-content=\"time\">2:09 PM</span>\n        <span class=\"preview\" data-fir-content=\"preview\">I was wondering...</span>\n    </li>\n</div>\n\n<!-- Chats Interface from CodePen -->\n<!-- See: https://codepen.io/Momciloo/pen/bEdbxY -->\n<div hidden class=\"template\" id=\"codepen-chat\">\n    <div class=\"codepen-chat\">\n        <div class=\"wrapper\">\n            <div class=\"container\">\n                <div class=\"left\">\n                    <div class=\"top\">\n                        <input type=\"text\" placeholder=\"Search\" />\n                        <a href=\"javascript:;\" class=\"search\"></a>\n                    </div>\n                    <ul class=\"people\">\n                        <li class=\"person\" data-chat=\"person1\">\n                            <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg\" alt=\"\" />\n                            <span class=\"name\">Thomas Bangalter</span>\n                            <span class=\"time\">2:09 PM</span>\n                            <span class=\"preview\">I was wondering...</span>\n                        </li>\n                    </ul>\n                </div>\n                <div class=\"right\">\n                    <div class=\"top\"><span>To: <span class=\"name\">Dog Woofson</span></span></div>\n                    <div class=\"chat\" data-chat=\"person1\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:48 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello,\n                        </div>\n                        <div class=\"bubble you\">\n                            it's me.\n                        </div>\n                        <div class=\"bubble you\">\n                            I was wondering...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person2\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 5:38 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello, can you hear me?\n                        </div>\n                        <div class=\"bubble you\">\n                            I'm in California dreaming\n                        </div>\n                        <div class=\"bubble me\">\n                            ... about who we used to be.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            When we were younger and free...\n                        </div>\n                        <div class=\"bubble you\">\n                            I've forgotten how it felt before\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person3\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 3:38 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble you\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble me\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble you\">\n                            It’s not that bad...\n                        </div>\n                        <div class=\"bubble you\">\n                            But we’re probably gonna need a new carpet.\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person4\">\n                        <div class=\"conversation-start\">\n                            <span>Yesterday, 4:20 PM</span>\n                        </div>\n                        <div class=\"bubble me\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble me\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble you\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble you\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble me\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble me\">\n                            It’s not that bad...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person5\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:28 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup for the third time like is <br />you blind bitch\n                        </div>\n\n                    </div>\n                    <div class=\"chat\" data-chat=\"person6\">\n                        <div class=\"conversation-start\">\n                            <span>Monday, 1:27 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            So, how's your new phone?\n                        </div>\n                        <div class=\"bubble you\">\n                            You finally have a smartphone :D\n                        </div>\n                        <div class=\"bubble me\">\n                            Drake?\n                        </div>\n                        <div class=\"bubble me\">\n                            Why aren't you answering?\n                        </div>\n                        <div class=\"bubble you\">\n                            howdoyoudoaspace\n                        </div>\n                    </div>\n                    <div class=\"write\">\n                        <a href=\"javascript:;\" class=\"write-link attach\"></a>\n                        <input type=\"text\" />\n                        <a href=\"javascript:;\" class=\"write-link smiley\"></a>\n                        <a href=\"javascript:;\" class=\"write-link send\"></a>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Chats List Template -->\n<div hidden class=\"template\" id=\"chats-mobile\">\n    <div class=\"chats\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                </span>\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Supervisor Chat List Template -->\n<div hidden class=\"template\" id=\"supervisor-chats-list\">\n    <div id=\"supervisor-chats\" class=\"mdc-list-group\">\n        <h3 class=\"mdc-list-group__subheader\">Announcements</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"announcements\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-announcement\" class=\"mdc-list-item\" data-fir-click=\"newAnnouncement\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Announcement Group</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new announcement group to bulk message.</span>\n                </span>\n            </li>\n        </ul>\n        <h3 class=\"mdc-list-group__subheader\">Conversations</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                </span>\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Desktop Chat Interface Template -->\n<div hidden class=\"template\" id=\"chats-desktop\">\n    <div class=\"chats\">\n        <div class=\"chats-container\">\n            <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n                <li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                        <a class=\"material-icons\">add</a>\n                    </div>\n                    <span class=\"mdc-list-item__text\">\n                        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                    </span>\n                </li>\n            </ul>\n        </div>\n        <div class=\"messages-container\">\n            <div class=\"centered-text mdc-typography mdc-typography--subtitle1\">\n                Select a chat to message.\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Search List Template -->\n<div hidden class=\"template\" id=\"search\">\n    <div class=\"search \">\n        <ul id=\"results\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <!-- Add empty list item that is hidden under filter view -->\n            <li class=\"mdc-list-item mdc-list-item--disabled\">\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Calendar Schedule View List Template -->\n<div hidden class=\"template\" id=\"schedule\">\n    <div class=\"schedule\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Appointments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"summary\">\n                View past tutoring sessions, clock out of active\n                meetings, and edit upcoming appointments.\n            </h5>\n        </div>\n        <ul class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n        </ul>\n        <div class=\"delete-user-input\">\n            <button id=\"load-more\" class=\"mdc-button\">\n                <i class=\"mdc-button__icon material-icons\">expand_more</i>\n                <span class=\"mdc-button__label\">Load more</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Search List Item Template -->\n<div hidden class=\"template\" id=\"search-empty-list-item\">\n    <li class=\"mdc-list-item mdc-list-item--disabled\">\n    </li>\n</div>\n\n<!-- Rating Templates -->\n<div hidden class=\"template\" id=\"star-border-icon\">\n    <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n</div>\n<div hidden class=\"template\" id=\"star-icon\">\n    <i class=\"material-icons\" id=\"star-icon\">star</i>\n</div>\n\n<!-- Empty Result Template -->\n<div hidden class=\"template\" id=\"centered-text\">\n    <div class=\"centered-text mdc-typography mdc-typography--subtitle1\" data-fir-content=\"text\">\n        <!-- TODO: Center a \"No results.\" message -->\n    </div>\n</div>\n\n<!-- Past Appt List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-past-appt\">\n    <li class=\"search-result-past-appt mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"go_to_appt\">\n        <i class=\"mdc-list-item__graphic material-icons\">calendar_today</i>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"summary\">\n            </span>\n        </span>\n    </li>\n</div>\n\n<!-- Message Item Template -->\n<div hidden class=\"template\" id=\"message-list-item\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"view_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"message\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"name\">\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\" data-fir-content=\"sent\">\n        </span>\n    </li>\n</div>\n\n<!-- Chat Item Template -->\n<div hidden class=\"template\" id=\"chat-list-item\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"open_chat\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"lastMessage/message\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Delete</button>\n        </div>\n    </li>\n</div>\n\n<!-- User List Item Search Hit Template (has expandable menu) -->\n<div hidden class=\"template\" id=\"search-hit-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-if=\"showHrs\" data-fir-click=\"hrs\">\n                <i class=\"material-icons\">insert_drive_file</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"chat\">\n                <i class=\"material-icons\">chat</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"match\">\n                <i class=\"material-icons\">wc</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"edit\">\n                <i class=\"material-icons\">edit</i>\n            </button>\n        </span>\n    </li>\n</div>\n\n<!-- User List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img id=\"photo\" class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <div id=\"checkmark\" class=\"mdc-list-item__graphic\">\n            <a class=\"material-icons\">check</a>\n        </div>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Service Hours Statistics Template -->\n<div hidden class=\"template\" id=\"stats\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                App Statistics\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Track service hours, watch leader boards, and stay on top of app\n                activity.\n            </h5>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Recent activity</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"activity\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Service hours</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"service-hrs\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Matching Template -->\n<div hidden class=\"template\" id=\"matching\">\n    <div class=\"matching\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"pupil-button\" data-fir-click=\"new_pupil\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person_outline</span>\n            <span class=\"mdc-fab__label\">Pupil</span>\n        </button>\n        <button id=\"tutor-button\" data-fir-click=\"new_tutor\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person</span>\n            <span class=\"mdc-fab__label\">Tutor</span>\n        </button>\n        <!--\n           -<button id=\"teacher-button\" data-fir-click=\"new_teacher\" class=\"mdc-fab mdc-fab--extended\">\n           -    <span class=\"mdc-fab__icon material-icons\">school</span>\n           -    <span class=\"mdc-fab__label\">Teacher</span>\n           -</button>\n\t   -->\n    </div>\n</div>\n\n<!-- Accounts Management Template -->\n<div hidden class=\"template\" id=\"account-manager\">\n    <div class=\"account-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Accounts\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can create and edit accounts for the tutors and\n                pupils who submit paper application forms.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Location Management Template -->\n<div hidden class=\"template\" id=\"location-manager\">\n    <div class=\" location-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Locations\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can edit your existing locations and apply for the\n                creation of new supervised locations.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Feedback Input Dialog Template -->\n<div hidden class=\"template\" id=\"feedback\">\n    <div class=\"feedback\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Help & Feedback\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Ask us any question, and we'll try to get back to you as\n                soon as we can.\n            </h5>\n        </div>\n        <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n        </ul>\n    </div>\n</div>\n\n<!-- Configuration Screen Template -->\n<div hidden class=\"template\" id=\"config\">\n    <div class=\"config\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Configuration\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage locations, available subjects and grades, and your\n                school's bell schedule.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Grid Template -->\n<div hidden class=\"template\" id=\"dashboard\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Welcome, <span data-fir-content=\"name\"></span>\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We're glad you're here. Below are some friendly suggestions for\n                what to do next.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Horz Scroller Card Grid Template -->\n<div hidden class=\"template\" id=\"horz-cards\">\n    <div class=\"horz-layout-grid\" data-fir-id=\"id\">\n        <button id=\"left\" style=\"display:none;\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_left\n        </button>\n        <button id=\"right\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_right\n        </button>\n        <div class=\"horz-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Card Grid Template -->\n<div hidden class=\"template\" id=\"cards\">\n    <div class=\"mdc-layout-grid\">\n        <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Payments Template (includes tutor business inputs and selects section, \npayment method MDC Cards section, and an MDC List payment history \nsection) -->\n<div hidden class=\"template\" id=\"payments\">\n    <div class=\"payments\">\n        <div data-fir-if=\"showWelcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"welcomeTitle\">\n                Payments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"welcomeSubtitle\">\n                Manage your payment methods, preferences, and history.\n            </h5>\n        </div>\n        <div id=\"settings\" data-fir-if=\"showSettings\">\n        </div>\n        <!--\n-<div id=\"methods\" data-fir-if=\"showMethods\" class=\"mdc-layout-grid\">\n-    <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n-    </div>\n-</div>\n-->\n        <div id=\"history\" data-fir-if=\"showHistory\">\n            <ul class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            </ul>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Dialog Button -->\n<div hidden class=\"template\" id=\"dialog-button\">\n    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-fir-click=\"action\" data-fir-content=\"label\">Label</button>\n</div>\n\n<!-- MDC Card Actions Template (for appending to the card-empty template below) -->\n<div hidden class=\"template\" id=\"card-button\">\n    <button data-fir-click=\"action\" data-fir-id=\"label\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n        <span class=\"mdc-button__label\" data-fir-content=\"label\">Label</span>\n    </button>\n</div>\n\n<!-- MDC Card Menu -->\n<div hidden class=\"template\" id=\"card-action\">\n    <li class=\"mdc-list-item\" data-fir-id=\"label\" role=\"menuitem\" data-fir-click=\"action\">\n        <span data-fir-content=\"label\" class=\"mdc-list-item__text\">Action</span>\n    </li>\n</div>\n\n<!-- Empty Dismissable Card Template -->\n<div hidden class=\"template\" id=\"card-empty\">\n    <div class=\"card-empty mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" id=\"primary\" data-fir-click=\"actions/primary\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                    <span data-fir-content=\"title\">Titling Title</span>\n                    <div data-fir-if=\"actions/options\" class=\"mdc-menu-surface--anchor\">\n                        <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                        <div class=\"mdc-menu mdc-menu-surface\">\n                            <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            </ul>\n                        </div>\n                    </div>\n                </h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">This is a subtitle</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n        </div>\n    </div>\n</div>\n\n<!-- Four-Day Schedule Card Template -->\n<div class=\"template\" id=\"card-schedule\">\n    <div class=\"card-schedule mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\">\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Monday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Tuesday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Wednesday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Thursday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Friday</div>\n                <div id=\"monday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"tuesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"wednesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"thursday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"friday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n            </div>\n            <div id=\"loader\">\n                <div class=\"loader\">\n                    <svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\">\n                        <circle id=\"spinner\" cx=\"16\" cy=\"16\" r=\"14\" fill=\"none\"></circle>\n                    </svg>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Event Progress Bar -->\n<div hidden class=\"template\" id=\"event-progress\">\n    <div role=\"progressbar\" class=\"mdc-linear-progress\">\n        <div class=\"mdc-linear-progress__buffering-dots\"></div>\n        <div class=\"mdc-linear-progress__buffer\"></div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__primary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__secondary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n    </div>\n</div>\n\n<!-- Event Card Template -->\n<div hidden class=\"template\" id=\"card-event\">\n    <div data-fir-id=\"id\" data-fir-attr=\"type:type\" class=\"card-event mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"container\">\n            <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                <span data-fir-content=\"title\">Titling Title</span>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                        </ul>\n                    </div>\n                </div>\n            </h2>\n            <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\">\n                <span data-fir-content=\"subtitle\">This is a subtitle</span>\n            </h3>\n        </div>\n    </div>\n</div>\n\n<!-- Location Card Template -->\n<div hidden class=\"template\" id=\"card-location\">\n    <div class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-6-desktop location-card\">\n        <div class=\"location-card__primary\">\n            <h2 class=\"location-card__title mdc-typography mdc-typography--headline6\" data-fir-content=\"name\">Gunn Academic Center</h2>\n            <h3 class=\"location-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"city\">Palo Alto, CA</h3>\n        </div>\n        <div class=\"mdc-card__primary-action location-card__primary-action\" data-fir-click=\"go_to_location\" tabindex=\"0\">\n            <div class=\"mdc-card__media mdc-card__media--16-9 location-card__media\" data-fir-attr=\"style:image-url\"></div>\n        </div>\n        <div class=\"location-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"description\">\n            The Academic Center is an inclusive support center where all\n            Gunn students can receive tutoring, do homework, study, and work\n            collaboratively on projects. In the AC, students requesting\n            support in their academics can receive free tutoring.\n        </div>\n        <hr class=\"mdc-list-divider\">\n        <div class=\"location-card__hours\">\n            <h2 class=\"mdc-typography mdc-typography--subtitle1\">Hours</h2>\n            <div class=\"mdc-chip-set mdc-chip-set--choice\">\n                <div class=\"mdc-chip\" data-fir-foreach=\"todays-hours\" data-fir-id=\"~\">\n                    <div class=\"mdc-chip__text\" data-fir-content=\"~\">10:00 AM</div>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"edit\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Edit</span>\n            </button>\n            <button data-fir-click=\"delete\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Delete</span>\n            </button>\n            <!--\n   -<button data-fir-click=\"schedule\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Schedule</span>\n   -</button>\n   -->\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Card Templates -->\n<div hidden class=\"template\" id=\"card-appointment\">\n    <div class=\"card-appointments mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action location-card dashboard-card__primary-action\" data-fir-click=\"go_to_appt\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Upcoming Appointment</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">With Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You have a tutoring session with Nicholas Chiang at 2:00 PM today.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"go_to_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestOut\">\n    <div class=\"card-requestsOut mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" data-mdc-auto-outit=\"MDCRipple\" taboutdex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Pending Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">To Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You requested Nicholas Chiang as a tutor for AP Comp Sci A.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"go_to_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <!--\n   -<button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"edit_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Edit</span>\n   -</button>\n   -->\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestIn\">\n    <div class=\"card-requestsIn mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">New Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">From Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                Nicholas Chiang requested you as a tutor for AP Comp Sci P.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <div class=\"mdc-card__action-buttons\">\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"go_to_request\">\n                    <span class=\"mdc-button__label\">View</span>\n                </button>\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"reject_request\">\n                    <span class=\"mdc-button__label\">Reject</span>\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Settings Switch Template -->\n<div hidden class=\"template\" id=\"input-switch\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <div class=\"mdc-switch\">\n                <div class=\"mdc-switch__track\"></div>\n                <div class=\"mdc-switch__thumb-underlay\">\n                    <div class=\"mdc-switch__thumb\">\n                        <input type=\"checkbox\" class=\"mdc-switch__native-control\" role=\"switch\">\n                    </div>\n                </div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Settings Button Template -->\n<div hidden class=\"template\" id=\"input-setting\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-click=\"action\">\n                <i class=\"material-icons\">settings</i>\n            </button>\n        </div>\n    </li>\n</div>\n\n<!-- Settings List Divider -->\n<div hidden class=\"template\" id=\"settings-list-divider\">\n    <div data-fir-id=\"label\" class=\"settings-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"label\">Label</h4>\n    </div>\n</div>\n\n<!-- Settings View Template -->\n<div hidden class=\"template\" id=\"settings-view\">\n    <div class=\"settings-view\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                App Preferences\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage your notification preferences, calendar sync, and profile\n                visibility.\n            </h5>\n        </div>\n        <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line \">\n        </ul>\n    </div>\n</div>\n\n</html>";
-
-/***/ }),
-/* 467 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8'?%3E %3Csvg width='572.97' height='100' version='1.1' viewBox='0 0 151.61 26.458' xmlns='http://www.w3.org/2000/svg' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23'%3E %3Cmetadata%3E %3Crdf:RDF%3E %3Ccc:Work rdf:about=''%3E %3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E %3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/%3E %3Cdc:title/%3E %3C/cc:Work%3E %3C/rdf:RDF%3E %3C/metadata%3E %3Cg transform='matrix(1.1941 0 0 1.1941 5.2315 -333.65)'%3E %3Cg transform='matrix(.20004 0 0 .20004 -4.9647 280.31)'%3E %3Cg transform='translate(-37.687,-41.651)'%3E %3Cg transform='matrix(4.3627,0,0,4.3627,43.43,37.147)'%3E %3Cpath d='m0 0h24v24h-24z' clip-rule='evenodd' fill='none'/%3E %3C/g%3E %3C/g%3E %3Cg transform='matrix(6.443,0,0,6.443,-16.411,-25.818)' clip-rule='evenodd' fill='%23181818' fill-rule='evenodd'%3E %3Cpath d='m9 17 3-2.94c-0.39-0.04-0.68-0.06-1-0.06-2.67 0-8 1.34-8 4v2h9zm2-5c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4'/%3E %3Cpath d='m15.47 20.5-3.47-3.5 1.4-1.41 2.07 2.08 5.13-5.17 1.4 1.41z'/%3E %3C/g%3E %3C/g%3E %3Cg transform='matrix(1.6881,0,0,1.6881,-3.0593,-199.9)' fill='%23181818' aria-label='Tutorbook'%3E %3Cpath transform='matrix(.26458 0 0 .26458 -4.3811 281.29)' d='m196.29 19.828v29.6h7.8809v-3.5586c0.56 1.2 1.4119 2.1465 2.5586 2.8398 1.1467 0.66666 2.5068 1 4.0801 1 1.7867 0 3.4018-0.45272 4.8418-1.3594 1.44-0.93334 2.5718-2.2667 3.3984-4 0.82667-1.76 1.2402-3.8135 1.2402-6.1602s-0.41357-4.3878-1.2402-6.1211c-0.82666-1.7333-1.9584-3.0523-3.3984-3.959-1.44-0.93332-3.0551-1.4004-4.8418-1.4004-1.5733 0-2.9334 0.34575-4.0801 1.0391-1.1467 0.66668-1.9986 1.6008-2.5586 2.8008v-10.721zm78.125 0v29.6h7.8809v-9.2793l6.1191 9.2793h9.4394l-8.959-11.199 8.7207-11.24h-9.1602l-6.1602 8.7207v-15.881zm-191.64 1.2812v6.2793h7.5586v22.039h7.8398v-22.039h7.6406v-6.2793zm54.408 0.43945v5.4395h-2.8808v6.5605h2.8808v7.0801c0 3.1467 0.7717 5.3998 2.3184 6.7598s3.6947 2.0391 6.4414 2.0391h3.2402v-6.7188h-2.1211c-0.72 0-1.2406-0.14611-1.5606-0.43945-0.29333-0.29332-0.43945-0.78713-0.43945-1.4805v-7.2402h4.041v-6.5605h-4.041v-5.4395zm26.191 5.1602c-2.24 0-4.2524 0.46707-6.0391 1.4004-1.7867 0.90668-3.1859 2.2257-4.1992 3.959s-1.5215 3.7744-1.5215 6.1211 0.50815 4.3858 1.5215 6.1191c1.0133 1.7333 2.4126 3.0667 4.1992 4 1.7867 0.93332 3.7991 1.4004 6.0391 1.4004s4.24-0.46707 6-1.4004c1.7867-0.93334 3.1878-2.2667 4.2012-4 1.0133-1.7333 1.5195-3.7725 1.5195-6.1191 0-2.32-0.5062-4.3468-1.5195-6.0801-1.0133-1.76-2.4145-3.0933-4.2012-4-1.76-0.93332-3.76-1.4004-6-1.4004zm70.703 0c-2.24 0-4.2524 0.46707-6.0391 1.4004-1.7867 0.90668-3.1859 2.2257-4.1992 3.959s-1.5215 3.7744-1.5215 6.1211 0.50815 4.3858 1.5215 6.1191c1.0133 1.7333 2.4126 3.0667 4.1992 4 1.7867 0.93332 3.7991 1.4004 6.0391 1.4004s4.24-0.46707 6-1.4004c1.7867-0.93334 3.1878-2.2667 4.2012-4 1.0133-1.7333 1.5195-3.7725 1.5195-6.1191 0-2.32-0.5062-4.3468-1.5195-6.0801-1.0133-1.76-2.4145-3.0933-4.2012-4-1.76-0.93332-3.76-1.4004-6-1.4004zm25.469 0c-2.24 0-4.2524 0.46707-6.0391 1.4004-1.7867 0.90668-3.1859 2.2257-4.1992 3.959s-1.5215 3.7744-1.5215 6.1211 0.50815 4.3858 1.5215 6.1191c1.0133 1.7333 2.4126 3.0667 4.1992 4 1.7867 0.93332 3.7991 1.4004 6.0391 1.4004s4.24-0.46707 6-1.4004c1.7867-0.93334 3.1878-2.2667 4.2012-4 1.0133-1.7333 1.5195-3.7725 1.5195-6.1191 0-2.32-0.5062-4.3468-1.5195-6.0801-1.0133-1.76-2.4145-3.0933-4.2012-4-1.76-0.93332-3.76-1.4004-6-1.4004zm-65.863 0.08008c-1.4933 1e-6 -2.9049 0.39922-4.2383 1.1992-1.3333 0.8-2.4403 1.8678-3.3203 3.2012v-4.2012h-7.8809v22.439h7.8809v-9.6797c0-1.68 0.44031-2.8529 1.3203-3.5195 0.88-0.69334 2.199-1.0391 3.959-1.0391h2.2793zm-85.523 0.19922v13c0 2.9867 0.7345 5.3468 2.2012 7.0801 1.4933 1.7067 3.5325 2.5605 6.1191 2.5605 1.6533 0 3.0936-0.36008 4.3203-1.0801 1.2267-0.72 2.1608-1.6809 2.8008-2.8809v3.7598h7.8398v-22.439h-7.8398v11.881c0 1.36-0.34768 2.4135-1.041 3.1602-0.69334 0.74668-1.6255 1.1191-2.7988 1.1191-1.1467 0-2.0684-0.36008-2.7617-1.0801-0.66667-0.74668-1-1.7591-1-3.0391v-12.041zm55.215 6.5195c1.0667 0 1.9616 0.40117 2.6816 1.2012s1.0801 1.9605 1.0801 3.4805-0.36008 2.6928-1.0801 3.5195c-0.72 0.8-1.615 1.1992-2.6816 1.1992-1.0933 0-1.9988-0.39922-2.7188-1.1992s-1.0801-1.9728-1.0801-3.5195c0-1.52 0.36008-2.6805 1.0801-3.4805s1.6254-1.2012 2.7188-1.2012zm70.703 0c1.0667 0 1.9616 0.40117 2.6816 1.2012s1.0801 1.9605 1.0801 3.4805-0.36007 2.6928-1.0801 3.5195c-0.72 0.8-1.615 1.1992-2.6816 1.1992-1.0933 0-1.9988-0.39922-2.7188-1.1992s-1.0801-1.9728-1.0801-3.5195c0-1.52 0.36008-2.6805 1.0801-3.4805s1.6254-1.2012 2.7188-1.2012zm25.469 0c1.0667 0 1.9616 0.40117 2.6816 1.2012s1.0801 1.9605 1.0801 3.4805-0.36007 2.6928-1.0801 3.5195c-0.72 0.8-1.615 1.1992-2.6816 1.1992-1.0933 0-1.9988-0.39922-2.7188-1.1992s-1.0801-1.9728-1.0801-3.5195c0-1.52 0.36008-2.6805 1.0801-3.4805s1.6254-1.2012 2.7188-1.2012zm-51.336 0.08008c1.2267 0 2.2143 0.41358 2.9609 1.2402 0.77333 0.8 1.1602 1.9213 1.1602 3.3613 0 1.4667-0.38682 2.6128-1.1602 3.4395-0.74667 0.8-1.7343 1.1992-2.9609 1.1992-1.1733 0-2.1466-0.41358-2.9199-1.2402-0.77334-0.82668-1.1602-1.9584-1.1602-3.3984 0-1.4133 0.38682-2.5346 1.1602-3.3613 0.77333-0.82666 1.7466-1.2402 2.9199-1.2402z' fill='%23181818'/%3E %3C/g%3E %3Ctext x='36.54911' y='287.97964' fill='%23000000' font-family='fontawesome-webfont' font-size='10.583px' letter-spacing='0px' stroke-width='.26458' word-spacing='0px' style='line-height:1.25' xml:space='preserve'%3E%3Ctspan x='36.54911' y='297.34341' stroke-width='.26458'/%3E%3C/text%3E %3Ctext x='22.383821' y='273.21301' fill='%23000000' font-family='fontawesome-webfont' font-size='10.583px' letter-spacing='0px' stroke-width='.26458' word-spacing='0px' style='line-height:1.25' xml:space='preserve'%3E%3Ctspan x='22.383821' y='282.57678' stroke-width='.26458'/%3E%3C/text%3E %3C/g%3E %3C/svg%3E"
+module.exports = "<html>\n<!-- TEMPLATES: these are HTML templates for all of the objects that the \nuser sees as they navigate throughout the app. -->\n\n<!-- Service Hour Tracking Card Template -->\n<div hidden class=\"template\" id=\"card-service-hours\">\n    <div id=\"service-hours-card\" priority=\"3\" class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"dashboard-card__primary-action\" id=\"primary\">\n            <div class=\"left\">\n                <canvas width=\"170px\" height=\"190px\"></canvas>\n            </div>\n            <div class=\"right\">\n                <div class=\"dashboard-card__primary\">\n                    <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                        <span data-fir-content=\"title\">Service Hours</span>\n                        <div class=\"mdc-menu-surface--anchor\">\n                            <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                            <div class=\"mdc-menu mdc-menu-surface\">\n                                <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"paid\">\n                                        <span class=\"mdc-list-item__text\">I'm paid</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"snooze\">\n                                        <span class=\"mdc-list-item__text\">Snooze</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"history\">\n                                        <span class=\"mdc-list-item__text\">Tracking</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"info\">\n                                        <span class=\"mdc-list-item__text\">About</span>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </h2>\n                    <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">Track your progress</h3>\n                </div>\n                <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Checkbox Input -->\n<div hidden class=\"template\" id=\"checkbox-input\">\n    <div class=\"mdc-form-field\" data-fir-id=\"id\">\n        <div class=\"mdc-checkbox\">\n            <input type=\"checkbox\" class=\"mdc-checkbox__native-control\" data-fir-id=\"inputId\" />\n            <div class=\"mdc-checkbox__background\">\n                <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n                    <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\" />\n                </svg>\n                <div class=\"mdc-checkbox__mixedmark\"></div>\n            </div>\n        </div>\n        <label data-fir-attr=\"for:inputId\" data-fir-content=\"label\">Label</label>\n    </div>\n</div>\n\n<!-- Ad Dialog -->\n<div hidden class=\"template\" id=\"ad-dialog\">\n    <aside class=\"ad-dialog mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <div class=\"mdc-dialog__content\">\n                    <h5 class=\"ad-dialog__subtitle\">\n                        Hire a Professional Paid Tutor\n                    </h5>\n                    <h2 class=\"ad-dialog__title\">\n                        Need More Flexiblity?\n                    </h2>\n                    <p class=\"ad-dialog__content\">\n                        Get ready to supercharge your studying with your own\n                        at-home private tutor.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Get help where and when you need it; paid tutors work\n                        flexible hours to fit perfectly within your schedule\n                        and can travel to where ever works best for you.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Work with the best when peers just won't cut it. Most\n                        of our paid tutors are skilled professors, teachers,\n                        and college students excited to share their knowledge.\n                    </p>\n                    <button class=\"mdc-button mdc-button--raised ad-dialog__button\">\n                        Yes, Find a Private Tutor!\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Appt Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-appt\">\n    <aside class=\"mdc-dialog mdc-dialog--scrollable\" id=\"dialog-appt\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Appointment Notifications\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"send\" id=\"send\">Send</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Delete User List Item -->\n<div hidden class=\"template\" id=\"delete-user-input\">\n    <div class=\"delete-user-input\">\n        <button class=\"mdc-button\" data-fir-click=\"delete\">\n            <i class=\"mdc-button__icon material-icons\">delete</i>\n            <span class=\"mdc-button__label\" data-fir-if-not=\"label\">Delete account</span>\n            <span class=\"mdc-button__label\" data-fir-if=\"label\" data-fir-content=\"label\">Delete account</span>\n        </button>\n    </div>\n</div>\n\n<!-- Stripe Elements Card Input -->\n<div hidden class=\"template\" id=\"stripe-card-input\">\n    <li id=\"Method\" class=\"input-list-item mdc-list-item\">\n        <div class=\"helper-wrapper\">\n            <div class=\"mdc-text-field mdc-text-field--textarea\">\n                <div id=\"card-input\">\n                    <!-- Stripe renders PCI compliant iFrame here -->\n                </div>\n                <div class=\"mdc-notched-outline mdc-notched-outline--notched\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label for=\"card-input\" class=\"mdc-floating-label mdc-floating-label--float-above\">Method</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n            <div class=\"mdc-text-field-helper-line\">\n                <div id=\"msg\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--persistent\">You will not be charged until after your lesson.</div>\n                <div id=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid payment method, try again.</div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Empty Snackbar -->\n<div hidden class=\"template\" id=\"snackbar-empty\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Labeled Snackbar -->\n<div hidden class=\"template\" id=\"snackbar\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button type=\"button\" class=\"mdc-button mdc-snackbar_action\" data-fir-content=\"label\" data-fir-click=\"action\">Undo</button>\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Code Signup Dialog -->\n<div hidden class=\"template\" id=\"dialog-code-signup\">\n    <aside class=\"dialog-code-signup mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" id=\"page-code\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Enter Verification Code\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"description\"></div>\n                    <div class=\"mdc-text-field mdc-text-field--outlined\" id=\"code-input\">\n                        <input type=\"text\" class=\"mdc-text-field__input\">\n                        <div class=\"mdc-notched-outline\">\n                            <div class=\"mdc-notched-outline__leading\"></div>\n                            <div class=\"mdc-notched-outline__notch\">\n                                <label class=\"mdc-floating-label\">Verification code</label>\n                            </div>\n                            <div class=\"mdc-notched-outline__trailing\"></div>\n                        </div>\n                    </div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" id=\"confirm-button\">Confirm</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Basic Empty Form Dialog -->\n<div hidden class=\"template\" id=\"dialog-form\">\n    <aside class=\"dialog-form mdc-dialog\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" style=\"min-width:50vw !important\">\n                <div class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Fillout Form\n                </div>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"ok\" id=\"ok-button\">Ok</button>\n                </footer>\n            </div>\n        </div>\n    </aside>\n</div>\n\n<!-- Subject Select Dialog -->\n<div hidden class=\"template\" id=\"dialog-subjects\">\n    <aside class=\"dialog-subjects mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Select Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-notification\">\n    <aside class=\"mdc-dialog dialog-notification\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"message\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"ok\">\n                        <span class=\"mdc-button__label\">Ok</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Filter Dialog -->\n<div hidden class=\"template\" id=\"dialog-filter\">\n    <aside id=\"dialog-filter\" class=\"mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Filter\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"all-filters-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" id=\"reset-button\">Reset</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Apply</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-type\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Type\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"type-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-availability\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Availability\n                </h2>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                    <div id=\"availability-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" id=\"ok-button\" class=\"mdc-button mdc-dialog__button\">Ok</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-price\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Price\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"price-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-grade\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Grade\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"grade-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-subject\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-all\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n                            <span>Any</span>\n                        </li>\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-gender\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Gender\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"gender-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-sort\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Sort By\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\">\n                            Rating\n                        </li>\n                        <li class=\"mdc-list-item\">\n                            Reviews\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Confirmation Dialog -->\n<div hidden class=\"template\" id=\"dialog-confirmation\">\n    <aside class=\"mdc-dialog dialog-confirmation\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"summary\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"no\">\n                        <span class=\"mdc-button__label\">No</span>\n                    </button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"yes\">\n                        <span class=\"mdc-button__label\">Yes</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Empty List Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-list\">\n    <aside class=\"dialog-list mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Title\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Ok</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- User View Template -->\n<div hidden class=\"template\" id=\"user-view\">\n    <div class=\"user-view mdc-list-group \">\n        <div id=\"user-header\">\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line mdc-list--avatar-list\">\n                <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n                    <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n                    <span class=\"mdc-list-item__text\">\n                        <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n                        <span class=\"mdc-list-item__secondary-text\">\n                            <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                            <span data-fir-content=\"type\"></span>\n                            <span>•</span>\n                            <span data-fir-if=\"paid\" class=\"rate\">\n                                <span class=\"charge\" data-fir-content=\"rate\"></span>\n                                <span class=\"hr\">/hr</span>\n                            </span>\n                            <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n                        </span>\n                    </span>\n                    <span class=\"mdc-list-item__meta\">\n                        <div class=\"rating__meta\">\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                        </div>\n                    </span>\n                </li>\n            </ul>\n        </div>\n        <div id=\"about-me\" data-fir-if=\"showAbout\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">About me</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div class=\"description\" data-fir-content=\"bio\">\n            </div>\n        </div>\n        <div id=\"basic-info\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Basic info</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\">\n                    <div class=\"mdc-list-item__text\">\n                        <div data-fir-if=\"paid\">\n                            <strong>Payments: </strong>\n                            <span style=\"white-space:initial!important;\" data-fir-content=\"payments/policy\"></span>\n                        </div>\n                        <strong>Gender: </strong>\n                        <span data-fir-content=\"gender\"></span>\n                        <strong>Type: </strong>\n                        <span data-fir-content=\"type\"></span>\n                        <strong>Grade: </strong>\n                        <span data-fir-content=\"grade\"></span>\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"subjects\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    <span data-fir-if-not=\"type\">User </span>\n                    <span data-fir-content=\"type\"></span> for\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense\">\n                <li class=\"subject-list-item mdc-list-item\" data-fir-foreach=\"subjects\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div data-fir-if=\"showLocation\" id=\"location\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Located at\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div id=\"map\"></div>\n        </div>\n        <div id=\"availability\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Available\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"availableTimes\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"reviews\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Reviews</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--dense\">\n            </ul>\n        </div>\n        <button id=\"request-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">send</span>\n            <span class=\"mdc-fab__label\">Request</span>\n        </button>\n        <button id=\"message-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">chat</span>\n            <span class=\"mdc-fab__label\">Message</span>\n        </button>\n    </div>\n</div>\n\n<!-- Filter Dialog List Template -->\n<div hidden class=\"template\" id=\"dialog-filter-list\">\n    <ul class=\"mdc-list mdc-list--avatar-list\">\n        <li id=\"show-page-subject\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n            <span data-fir-if-not=\"subject\">Any Subject</span>\n            <b data-fir-content=\"subject\"></b>\n        </li>\n        <li id=\"show-page-availability\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">schedule</i>\n            <span data-fir-if-not=\"availability\">Any Availability</span>\n            <b data-fir-content=\"availability\"></b>\n        </li>\n        <li id=\"show-page-type\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">people</i>\n            <span data-fir-if-not=\"type\">Any Type</span>\n            <b data-fir-content=\"type\"></b>\n        </li>\n        <li id=\"show-page-grade\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">school</i>\n            <span data-fir-if-not=\"grade\">Any Grade</span>\n            <b data-fir-content=\"grade\"></b>\n        </li>\n        <li id=\"show-page-gender\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">wc</i>\n            <span data-fir-if-not=\"gender\">Any Gender</span>\n            <b data-fir-content=\"gender\"></b>\n        </li>\n        <li id=\"show-page-price\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">attach_money</i>\n            <span data-fir-if-not=\"price\">Any Price</span>\n            <b data-fir-content=\"price\"></b>\n        </li>\n        <li id=\"show-page-sort\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">sort</i>\n            <b data-fir-content=\"sort\"></b>\n        </li>\n    </ul>\n</div>\n\n<div hidden class=\"template\" id=\"dialog-filter-item-list\">\n    <ul class=\"mdc-list\">\n        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n    </ul>\n</div>\n\n\n<!-- Header Templates -->\n<!-- Welcome Header Template -->\n<div hidden class=\"template\" id=\"header-login\">\n    <div class=\"logo-header\">\n        <img src=\"/favicon/text-logo-bg.png\">\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"search-results-divider\">\n    <li role=\"separator\" class=\"mdc-list-divider\"></li>\n</div>\n\n<div hidden class=\"template\" id=\"header-search\">\n    <header id=\"search-app-bar\" class=\"header-search mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"title\" data-fir-content=\"title\">Tutorbook</span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"wordmark\">\n                    <img class=\"mdc-top-app-bar__wordmark\" src=\"" + __webpack_require__(468) + "\">\n                </span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"logo\">\n                    <img class=\"mdc-top-app-bar__logo\" src=\"" + __webpack_require__(469) + "\">\n                </span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-middle\">\n                <div class=\"search-box\">\n                    <i id=\"search-icon\" class=\"material-icons\">search</i>\n                    <input placeholder=\"Search users\" data-fir-attr=\"placeholder:placeholder\" type=\"text\" name=\"query\">\n                    <button id=\"info-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">info</i>\n                    </button>\n                    <button style=\"display:none;\" id=\"clear-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">clear</i>\n                    </button>\n                </div>\n                <div class=\"search-results\" style=\"display:none;\">\n                    <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n                    </ul>\n                </div>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-main\">\n    <header class=\"header-main mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                            <!--\n\t\t   -<li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"settings\">\n\t\t   -    <span class=\"mdc-list-item__text\">Settings</span>\n\t\t   -</li>\n\t\t   -->\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-back\">\n    <header class=\"mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"back\" class=\"button mdc-top-app-bar__navigation-icon\"><i class=\"material-icons\">arrow_back</i></a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Edit\">edit</i>\n                <i data-fir-if=\"showMatch\" data-fir-click=\"match\" id=\"match\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Match\">wc</i>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-action\">\n    <header class=\"header-action mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"cancel\" class=\"mdc-top-app-bar__navigation-icon material-icons\">close</a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">View</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showDelete\" data-fir-click=\"delete\" id=\"delete\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Delete\">delete</i>\n                <i data-fir-if=\"clockIn\" data-fir-click=\"clockIn\" id=\"clockIn\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Clock in for this appointment\">timer</i>\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Suggest edit\">create</i>\n                <i data-fir-if=\"print\" data-fir-click=\"print\" id=\"print\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Print request form\">print</i>\n                <i data-fir-if=\"showApprove\" data-fir-click=\"approve\" id=\"approve\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Approve request\">how_to_reg</i>\n                <i data-fir-if=\"ok\" data-fir-click=\"ok\" id=\"ok\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Save changes\">check</i>\n                <i data-fir-if=\"send\" data-fir-click=\"send\" id=\"send\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Send request\">send</i>\n            </section>\n        </div>\n    </header>\n</div>\n\n<!-- Filter Header Template -->\n<div hidden class=\"template\" id=\"header-filter\">\n    <header class=\"header-filter mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\" id=\"menu\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n        <div id=\"filters\">\n            <div class=\"mdc-layout-grid\">\n                <div id=\"show-filters\">\n                    <div id=\"active-filters\">\n                        <div id=\"filter\">\n                            <i class=\"material-icons\" id=\"filter-dialog-button\">filter_list</i>\n                            <span>You're seeing <b data-fir-content=\"filter_description\"></b></span>\n                        </div>\n                        <i class=\"material-icons\" id=\"clear\">close</i>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </header>\n</div>\n\n<!-- Nav Drawer Destinations Template (this has to be a template because it\nneeds to be rendered with a ton of click listeners.) -->\n<div hidden class=\"template\" id=\"nav-drawer-list\">\n    <div class=\"nav-drawer-list\">\n        <nav class=\"mdc-list\">\n            <a id=\"home\" class=\"mdc-list-item\" data-fir-click=\"showHome\" aria-selected=\"true\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">home</i>\n                <span class=\"mdc-list-item__text\">Home</span>\n            </a>\n            <a id=\"matching\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showMatching\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">wc</i>\n                <span class=\"mdc-list-item__text\">Matching</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"payments\" data-fir-if=\"payments\" class=\"mdc-list-item\" data-fir-click=\"showPayments\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">payment</i>\n                <span class=\"mdc-list-item__text\">Payments</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"search\" class=\"mdc-list-item\" data-fir-click=\"showSearch\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">search</i>\n                <span class=\"mdc-list-item__text\">Search</span>\n            </a>\n            <a id=\"tutors\" class=\"mdc-list-item\" data-fir-click=\"showTutors\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person</i>\n                <span class=\"mdc-list-item__text\">Tutors</span>\n            </a>\n            <a id=\"pupils\" class=\"mdc-list-item\" data-fir-click=\"showPupils\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person_outline</i>\n                <span class=\"mdc-list-item__text\">Pupils</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"profile\" class=\"mdc-list-item\" data-fir-click=\"showProfile\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">account_circle</i>\n                <span class=\"mdc-list-item__text\">Profile</span>\n            </a>\n            <a id=\"schedule\" class=\"mdc-list-item\" data-fir-click=\"showSchedule\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">calendar_today</i>\n                <span class=\"mdc-list-item__text\">Schedule</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if-not=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"config\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showConfig\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">settings</i>\n                <span class=\"mdc-list-item__text\">Configuration</span>\n            </a>\n        </nav>\n    </div>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab-labeled\">\n    <button data-fir-id=\"id\" class=\"mdc-fab mdc-fab--extended\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n        <span class=\"mdc-fab__label\" data-fir-content=\"label\" data-fir-if=\"label\"></span>\n    </button>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab\">\n    <button data-fir-id=\"id\" class=\"mdc-fab\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n    </button>\n</div>\n\n<!-- Welcome Screen Template -->\n<div hidden class=\"template\" id=\"login\">\n    <div class=\"login\">\n        <div class=\"logo-header\">\n            <img src=\"/favicon/text-logo-bg.png\">\n        </div>\n        <div id=\"page-login\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"signup-button\" data-fir-click=\"signup\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Signup\n                </button>\n                <button id=\"login-button\" data-fir-click=\"login\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Login\n                </button>\n            </div>\n        </div>\n        <div id=\"page-signup\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"pupil-button\" data-fir-click=\"pupil\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Pupil\n                </button>\n                <button id=\"tutor-button\" data-fir-click=\"tutor\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Peer Tutor\n                </button>\n                <button id=\"paid-tutor-button\" data-fir-click=\"paidTutor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Paid Tutor\n                </button>\n                <button id=\"expand-button\" data-fir-click=\"expand\" type=\"button\" class=\"mdc-icon-button\">\n                    <i class=\"material-icons mdc-icon-button__icon\">expand_more</i>\n                </button>\n                <div style=\"display:none\" id=\"expand\">\n                    <button id=\"supervisor-button\" data-fir-click=\"supervisor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                        Supervisor\n                    </button>\n                    <button id=\"collapse-button\" data-fir-click=\"collapse\" type=\"button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons mdc-icon-button__icon\">expand_less</i>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Setup Header Template -->\n<div hidden class=\"template\" id=\"header-welcome\">\n    <div data-fir-if=\"welcome\" class=\"header-welcome\">\n        <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n            Welcome back\n        </h1>\n        <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n            We missed you at Tutorbook\n        </h5>\n    </div>\n</div>\n\n<!-- Supervisor Setup Template -->\n<div hidden class=\"template\" id=\"setup\">\n    <div class=\"setup\">\n        <div data-fir-if=\"welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                Welcome back\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We missed you at Tutorbook\n            </h5>\n        </div>\n    </div>\n    <div class=\"\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"setup-cards\">\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n<!-- Empty Template -->\n<div hidden class=\"template\" id=\"empty\">\n    <!-- TODO: Make this actually look nice. -->\n</div>\n\n<!-- Input List Item Wrapper Template -->\n<div hidden class=\"template\" id=\"input-wrapper\">\n    <div class=\"input-wrapper mdc-list--non-interactive\">\n    </div>\n</div>\n\n<!-- Wrapper Template -->\n<div hidden class=\"template\" id=\"wrapper\">\n    <div>\n    </div>\n</div>\n\n<!-- Input Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-input\">\n    <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Profile Input Dialog Template -->\n<!-- This is exactly the same as the input dialog above, but has different\nstyling due to input el spacing. -->\n<div hidden class=\"template\" id=\"profile\">\n    <ul class=\"profile dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Search Text Field Input List Item Dialog Template -->\n<div hidden class=\"template\" id=\"search-input-list-item\">\n    <li data-fir-id=\"id\" class=\"search-input-list-item input-list-item mdc-list-item\">\n        <div class=\"search-box\">\n            <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n                <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n                <div class=\"mdc-notched-outline\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n        </div>\n        <div class=\"search-results\" style=\"display:none;\">\n            <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n            </ul>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Item Template -->\n<div hidden class=\"template\" id=\"input-list-item\">\n    <li class=\"input-list-item mdc-list-item\">\n    </li>\n</div>\n\n<!-- Payment List Item Template -->\n<div hidden class=\"template\" id=\"transaction-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-attr=\"timestamp:timestamp\" data-fir-click=\"go_to_transaction\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"meta_title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"meta_subtitle\">\n            </span>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"supervisor-appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserA\" data-fir-attr=\"src:photoA\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserB\" data-fir-attr=\"src:photoB\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\" data-fir-click=\"viewUser\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Divider Template w/ Action Buttons -->\n<div hidden class=\"template\" id=\"action-list-divider\">\n    <div data-fir-id=\"text\" class=\"action-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\">\n            <span data-fir-content=\"text\">Label</span>\n        </h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- MDC List Divider Action Button Template -->\n<div hidden class=\"template\" id=\"list-divider-btn\">\n    <button data-fir-click=\"action\" data-fir-content=\"label\" data-fir-id=\"label\" class=\"mdc-button mdc-button--unelevated\"></button>\n</div>\n\n<!-- MDC List Divider Template -->\n<div hidden class=\"template\" id=\"input-list-divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Dashboard Divider Template -->\n<div hidden class=\"template\" id=\"divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Divider Template -->\n<div hidden class=\"template\" id=\"date-list-divider\">\n    <div data-fir-attr=\"timestamp:timestamp\" class=\"date-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <div class=\"date-label\" data-fir-content=\"date\">Mon, 7/26</div>\n    </div>\n</div>\n\n<!-- User Profile Header Template -->\n<div hidden class=\"template\" id=\"profile-header\">\n    <li class=\"mdc-list-item profile-header\">\n        <img class=\"mdc-list-item__graphic pic\" data-fir-attr=\"src:pic\">\n        <img class=\"mdc-list-item__graphic modify-pic\" style=\"display:none;\" src=\"/app/img/change_pic.png\">\n        <input id=\"media-capture\" type=\"file\" accept=\"image/*\" capture=\"camera\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"email\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- Matching User Header Template -->\n<div hidden class=\"template\" id=\"matching-user-header\">\n    <li class=\"mdc-list-item matching-user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- User Header Template -->\n<div hidden class=\"template\" id=\"user-header\">\n    <li class=\"mdc-list-item user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Empty (i.e. no need for val) MDC Select Template -->\n<div hidden class=\"template\" id=\"input-empty-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC Select Template -->\n<div hidden class=\"template\" id=\"input-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\" data-fir-content=\"val\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Input Stub Template -->\n<div hidden class=\"template\" id=\"input-stub\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"id\">\n        <input type=\"text\" class=\"mdc-text-field__input\" value=\"Stub\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" for=\"stub\">Stub</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"err-text-field\">\n    <div class=\"err-text-field\">\n        <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n            <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n            <div class=\"mdc-notched-outline\">\n                <div class=\"mdc-notched-outline__leading\"></div>\n                <div class=\"mdc-notched-outline__notch\">\n                    <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                </div>\n                <div class=\"mdc-notched-outline__trailing\"></div>\n            </div>\n        </div>\n        <div class=\"mdc-text-field-helper-line\">\n            <div id=\"err\" data-fir-content=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid response, try again.</div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"input-text-field\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n        <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextArea Template -->\n<div hidden class=\"template\" id=\"input-text-area\">\n    <div class=\"mdc-text-field mdc-text-field--textarea\" data-fir-id=\"label\">\n        <textarea class=\"mdc-text-field__input\" data-fir-content=\"text\" rows=\"8\" cols=\"40\"></textarea>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\"></label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Messages List Template -->\n<div hidden class=\"template\" id=\"chat\">\n    <div class=\"chat\" data-fir-id=\"id\">\n        <div id=\"messages\">\n        </div>\n        <div class=\"write\">\n            <input type=\"text\" data-fir-attr=\"placeholder:placeholder\" />\n            <button disabled=\"disabled\" data-fir-click=\"send\" class=\"mdc-icon-button material-icons\">send</button>\n        </div>\n    </div>\n</div>\n\n<!-- Message Template -->\n<div hidden class=\"template\" id=\"message\">\n    <div class=\"message you\" data-fir-attr=\"sender:sender,timestamp:timestamp\" data-fir-id=\"id\">\n        <img data-fir-if=\"img\" data-fir-attr=\"src:sentBy/photo\" class=\"message__img\">\n        <div data-fir-content=\"message\" class=\"message__bubble\">\n        </div>\n    </div>\n</div>\n\n<!-- Messages Time -->\n<div hidden class=\"template\" id=\"message-time\">\n    <div class=\"conversation-start\">\n        <span data-fir-content=\"time\">Today, 6:48 AM</span>\n    </div>\n</div>\n\n<!-- Person Template (part of codepen) -->\n<div hidden class=\"template\" id=\"chat-person-item\">\n    <li class=\"person\">\n        <img data-fir-attr=\"src:photo\" alt=\"\" />\n        <span class=\"name\" data-fir-content=\"name\">Thomas Bangalter</span>\n        <span class=\"time\" data-fir-content=\"time\">2:09 PM</span>\n        <span class=\"preview\" data-fir-content=\"preview\">I was wondering...</span>\n    </li>\n</div>\n\n<!-- Chats Interface from CodePen -->\n<!-- See: https://codepen.io/Momciloo/pen/bEdbxY -->\n<div hidden class=\"template\" id=\"codepen-chat\">\n    <div class=\"codepen-chat\">\n        <div class=\"wrapper\">\n            <div class=\"container\">\n                <div class=\"left\">\n                    <div class=\"top\">\n                        <input type=\"text\" placeholder=\"Search\" />\n                        <a href=\"javascript:;\" class=\"search\"></a>\n                    </div>\n                    <ul class=\"people\">\n                        <li class=\"person\" data-chat=\"person1\">\n                            <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg\" alt=\"\" />\n                            <span class=\"name\">Thomas Bangalter</span>\n                            <span class=\"time\">2:09 PM</span>\n                            <span class=\"preview\">I was wondering...</span>\n                        </li>\n                    </ul>\n                </div>\n                <div class=\"right\">\n                    <div class=\"top\"><span>To: <span class=\"name\">Dog Woofson</span></span></div>\n                    <div class=\"chat\" data-chat=\"person1\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:48 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello,\n                        </div>\n                        <div class=\"bubble you\">\n                            it's me.\n                        </div>\n                        <div class=\"bubble you\">\n                            I was wondering...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person2\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 5:38 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello, can you hear me?\n                        </div>\n                        <div class=\"bubble you\">\n                            I'm in California dreaming\n                        </div>\n                        <div class=\"bubble me\">\n                            ... about who we used to be.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            When we were younger and free...\n                        </div>\n                        <div class=\"bubble you\">\n                            I've forgotten how it felt before\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person3\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 3:38 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble you\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble me\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble you\">\n                            It’s not that bad...\n                        </div>\n                        <div class=\"bubble you\">\n                            But we’re probably gonna need a new carpet.\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person4\">\n                        <div class=\"conversation-start\">\n                            <span>Yesterday, 4:20 PM</span>\n                        </div>\n                        <div class=\"bubble me\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble me\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble you\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble you\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble me\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble me\">\n                            It’s not that bad...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person5\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:28 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup for the third time like is <br />you blind bitch\n                        </div>\n\n                    </div>\n                    <div class=\"chat\" data-chat=\"person6\">\n                        <div class=\"conversation-start\">\n                            <span>Monday, 1:27 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            So, how's your new phone?\n                        </div>\n                        <div class=\"bubble you\">\n                            You finally have a smartphone :D\n                        </div>\n                        <div class=\"bubble me\">\n                            Drake?\n                        </div>\n                        <div class=\"bubble me\">\n                            Why aren't you answering?\n                        </div>\n                        <div class=\"bubble you\">\n                            howdoyoudoaspace\n                        </div>\n                    </div>\n                    <div class=\"write\">\n                        <a href=\"javascript:;\" class=\"write-link attach\"></a>\n                        <input type=\"text\" />\n                        <a href=\"javascript:;\" class=\"write-link smiley\"></a>\n                        <a href=\"javascript:;\" class=\"write-link send\"></a>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Chats List Template -->\n<div hidden class=\"template\" id=\"chats-mobile\">\n    <div class=\"chats\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                </span>\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Supervisor Chat List Template -->\n<div hidden class=\"template\" id=\"supervisor-chats-list\">\n    <div id=\"supervisor-chats\" class=\"mdc-list-group\">\n        <h3 class=\"mdc-list-group__subheader\">Announcements</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"announcements\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-announcement\" class=\"mdc-list-item\" data-fir-click=\"newAnnouncement\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Announcement Group</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new announcement group to bulk message.</span>\n                </span>\n            </li>\n        </ul>\n        <h3 class=\"mdc-list-group__subheader\">Conversations</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                </span>\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Desktop Chat Interface Template -->\n<div hidden class=\"template\" id=\"chats-desktop\">\n    <div class=\"chats\">\n        <div class=\"chats-container\">\n            <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n                <li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                        <a class=\"material-icons\">add</a>\n                    </div>\n                    <span class=\"mdc-list-item__text\">\n                        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                    </span>\n                </li>\n            </ul>\n        </div>\n        <div class=\"messages-container\">\n            <div class=\"centered-text mdc-typography mdc-typography--subtitle1\">\n                Select a chat to message.\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Search List Template -->\n<div hidden class=\"template\" id=\"search\">\n    <div class=\"search \">\n        <ul id=\"results\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <!-- Add empty list item that is hidden under filter view -->\n            <li class=\"mdc-list-item mdc-list-item--disabled\">\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Calendar Schedule View List Template -->\n<div hidden class=\"template\" id=\"schedule\">\n    <div class=\"schedule\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Appointments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"summary\">\n                View past tutoring sessions, clock out of active\n                meetings, and edit upcoming appointments.\n            </h5>\n        </div>\n        <ul class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n        </ul>\n        <div class=\"delete-user-input\">\n            <button id=\"load-more\" class=\"mdc-button\">\n                <i class=\"mdc-button__icon material-icons\">expand_more</i>\n                <span class=\"mdc-button__label\">Load more</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Search List Item Template -->\n<div hidden class=\"template\" id=\"search-empty-list-item\">\n    <li class=\"mdc-list-item mdc-list-item--disabled\">\n    </li>\n</div>\n\n<!-- Rating Templates -->\n<div hidden class=\"template\" id=\"star-border-icon\">\n    <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n</div>\n<div hidden class=\"template\" id=\"star-icon\">\n    <i class=\"material-icons\" id=\"star-icon\">star</i>\n</div>\n\n<!-- Empty Result Template -->\n<div hidden class=\"template\" id=\"centered-text\">\n    <div class=\"centered-text mdc-typography mdc-typography--subtitle1\" data-fir-content=\"text\">\n        <!-- TODO: Center a \"No results.\" message -->\n    </div>\n</div>\n\n<!-- Past Appt List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-past-appt\">\n    <li class=\"search-result-past-appt mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"go_to_appt\">\n        <i class=\"mdc-list-item__graphic material-icons\">calendar_today</i>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"summary\">\n            </span>\n        </span>\n    </li>\n</div>\n\n<!-- Message Item Template -->\n<div hidden class=\"template\" id=\"message-list-item\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"view_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"message\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"name\">\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\" data-fir-content=\"sent\">\n        </span>\n    </li>\n</div>\n\n<!-- Chat Item Template -->\n<div hidden class=\"template\" id=\"chat-list-item\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"open_chat\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"lastMessage/message\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Delete</button>\n        </div>\n    </li>\n</div>\n\n<!-- User List Item Search Hit Template (has expandable menu) -->\n<div hidden class=\"template\" id=\"search-hit-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-if=\"showHrs\" data-fir-click=\"hrs\">\n                <i class=\"material-icons\">insert_drive_file</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"chat\">\n                <i class=\"material-icons\">chat</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"match\">\n                <i class=\"material-icons\">wc</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"edit\">\n                <i class=\"material-icons\">edit</i>\n            </button>\n        </span>\n    </li>\n</div>\n\n<!-- User List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img id=\"photo\" class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <div id=\"checkmark\" class=\"mdc-list-item__graphic\">\n            <a class=\"material-icons\">check</a>\n        </div>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Service Hours Statistics Template -->\n<div hidden class=\"template\" id=\"stats\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                App Statistics\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Track service hours, watch leader boards, and stay on top of app\n                activity.\n            </h5>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Recent activity</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"activity\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Service hours</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"service-hrs\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Matching Template -->\n<div hidden class=\"template\" id=\"matching\">\n    <div class=\"matching\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"pupil-button\" data-fir-click=\"new_pupil\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person_outline</span>\n            <span class=\"mdc-fab__label\">Pupil</span>\n        </button>\n        <button id=\"tutor-button\" data-fir-click=\"new_tutor\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person</span>\n            <span class=\"mdc-fab__label\">Tutor</span>\n        </button>\n        <!--\n           -<button id=\"teacher-button\" data-fir-click=\"new_teacher\" class=\"mdc-fab mdc-fab--extended\">\n           -    <span class=\"mdc-fab__icon material-icons\">school</span>\n           -    <span class=\"mdc-fab__label\">Teacher</span>\n           -</button>\n\t   -->\n    </div>\n</div>\n\n<!-- Accounts Management Template -->\n<div hidden class=\"template\" id=\"account-manager\">\n    <div class=\"account-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Accounts\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can create and edit accounts for the tutors and\n                pupils who submit paper application forms.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Location Management Template -->\n<div hidden class=\"template\" id=\"location-manager\">\n    <div class=\" location-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Locations\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can edit your existing locations and apply for the\n                creation of new supervised locations.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Feedback Input Dialog Template -->\n<div hidden class=\"template\" id=\"feedback\">\n    <div class=\"feedback\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Help & Feedback\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Ask us any question, and we'll try to get back to you as\n                soon as we can.\n            </h5>\n        </div>\n        <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n        </ul>\n    </div>\n</div>\n\n<!-- Configuration Screen Template -->\n<div hidden class=\"template\" id=\"config\">\n    <div class=\"config\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Configuration\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage locations, available subjects and grades, and your\n                school's bell schedule.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Grid Template -->\n<div hidden class=\"template\" id=\"dashboard\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Welcome, <span data-fir-content=\"name\"></span>\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We're glad you're here. Below are some friendly suggestions for\n                what to do next.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Horz Scroller Card Grid Template -->\n<div hidden class=\"template\" id=\"horz-cards\">\n    <div class=\"horz-layout-grid\" data-fir-id=\"id\">\n        <button id=\"left\" style=\"display:none;\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_left\n        </button>\n        <button id=\"right\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_right\n        </button>\n        <div class=\"horz-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Card Grid Template -->\n<div hidden class=\"template\" id=\"cards\">\n    <div class=\"mdc-layout-grid\">\n        <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Payments Template (includes tutor business inputs and selects section, \npayment method MDC Cards section, and an MDC List payment history \nsection) -->\n<div hidden class=\"template\" id=\"payments\">\n    <div class=\"payments\">\n        <div data-fir-if=\"showWelcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"welcomeTitle\">\n                Payments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"welcomeSubtitle\">\n                Manage your payment methods, preferences, and history.\n            </h5>\n        </div>\n        <div id=\"settings\" data-fir-if=\"showSettings\">\n        </div>\n        <!--\n-<div id=\"methods\" data-fir-if=\"showMethods\" class=\"mdc-layout-grid\">\n-    <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n-    </div>\n-</div>\n-->\n        <div id=\"history\" data-fir-if=\"showHistory\">\n            <ul class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            </ul>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Dialog Button -->\n<div hidden class=\"template\" id=\"dialog-button\">\n    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-fir-click=\"action\" data-fir-content=\"label\">Label</button>\n</div>\n\n<!-- MDC Card Actions Template (for appending to the card-empty template below) -->\n<div hidden class=\"template\" id=\"card-button\">\n    <button data-fir-click=\"action\" data-fir-id=\"label\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n        <span class=\"mdc-button__label\" data-fir-content=\"label\">Label</span>\n    </button>\n</div>\n\n<!-- MDC Card Menu -->\n<div hidden class=\"template\" id=\"card-action\">\n    <li class=\"mdc-list-item\" data-fir-id=\"label\" role=\"menuitem\" data-fir-click=\"action\">\n        <span data-fir-content=\"label\" class=\"mdc-list-item__text\">Action</span>\n    </li>\n</div>\n\n<!-- Empty Dismissable Card Template -->\n<div hidden class=\"template\" id=\"card-empty\">\n    <div class=\"card-empty mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" id=\"primary\" data-fir-click=\"actions/primary\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                    <span data-fir-content=\"title\">Titling Title</span>\n                    <div data-fir-if=\"actions/options\" class=\"mdc-menu-surface--anchor\">\n                        <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                        <div class=\"mdc-menu mdc-menu-surface\">\n                            <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            </ul>\n                        </div>\n                    </div>\n                </h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">This is a subtitle</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n        </div>\n    </div>\n</div>\n\n<!-- Four-Day Schedule Card Template -->\n<div class=\"template\" id=\"card-schedule\">\n    <div class=\"card-schedule mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\">\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Monday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Tuesday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Wednesday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Thursday</div>\n                <div class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Friday</div>\n                <div id=\"monday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"tuesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"wednesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"thursday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"friday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n            </div>\n            <div id=\"loader\">\n                <div class=\"loader\">\n                    <svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\">\n                        <circle id=\"spinner\" cx=\"16\" cy=\"16\" r=\"14\" fill=\"none\"></circle>\n                    </svg>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Event Progress Bar -->\n<div hidden class=\"template\" id=\"event-progress\">\n    <div role=\"progressbar\" class=\"mdc-linear-progress\">\n        <div class=\"mdc-linear-progress__buffering-dots\"></div>\n        <div class=\"mdc-linear-progress__buffer\"></div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__primary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__secondary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n    </div>\n</div>\n\n<!-- Event Card Template -->\n<div hidden class=\"template\" id=\"card-event\">\n    <div data-fir-id=\"id\" data-fir-attr=\"type:type\" class=\"card-event mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"container\">\n            <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                <span data-fir-content=\"title\">Titling Title</span>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                        </ul>\n                    </div>\n                </div>\n            </h2>\n            <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\">\n                <span data-fir-content=\"subtitle\">This is a subtitle</span>\n            </h3>\n        </div>\n    </div>\n</div>\n\n<!-- Location Card Template -->\n<div hidden class=\"template\" id=\"card-location\">\n    <div class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-6-desktop location-card\">\n        <div class=\"location-card__primary\">\n            <h2 class=\"location-card__title mdc-typography mdc-typography--headline6\" data-fir-content=\"name\">Gunn Academic Center</h2>\n            <h3 class=\"location-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"city\">Palo Alto, CA</h3>\n        </div>\n        <div class=\"mdc-card__primary-action location-card__primary-action\" data-fir-click=\"go_to_location\" tabindex=\"0\">\n            <div class=\"mdc-card__media mdc-card__media--16-9 location-card__media\" data-fir-attr=\"style:image-url\"></div>\n        </div>\n        <div class=\"location-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"description\">\n            The Academic Center is an inclusive support center where all\n            Gunn students can receive tutoring, do homework, study, and work\n            collaboratively on projects. In the AC, students requesting\n            support in their academics can receive free tutoring.\n        </div>\n        <hr class=\"mdc-list-divider\">\n        <div class=\"location-card__hours\">\n            <h2 class=\"mdc-typography mdc-typography--subtitle1\">Hours</h2>\n            <div class=\"mdc-chip-set mdc-chip-set--choice\">\n                <div class=\"mdc-chip\" data-fir-foreach=\"todays-hours\" data-fir-id=\"~\">\n                    <div class=\"mdc-chip__text\" data-fir-content=\"~\">10:00 AM</div>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"edit\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Edit</span>\n            </button>\n            <button data-fir-click=\"delete\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Delete</span>\n            </button>\n            <!--\n   -<button data-fir-click=\"schedule\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Schedule</span>\n   -</button>\n   -->\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Card Templates -->\n<div hidden class=\"template\" id=\"card-appointment\">\n    <div class=\"card-appointments mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action location-card dashboard-card__primary-action\" data-fir-click=\"go_to_appt\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Upcoming Appointment</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">With Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You have a tutoring session with Nicholas Chiang at 2:00 PM today.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"go_to_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestOut\">\n    <div class=\"card-requestsOut mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" data-mdc-auto-outit=\"MDCRipple\" taboutdex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Pending Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">To Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You requested Nicholas Chiang as a tutor for AP Comp Sci A.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"go_to_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <!--\n   -<button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"edit_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Edit</span>\n   -</button>\n   -->\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestIn\">\n    <div class=\"card-requestsIn mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">New Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">From Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                Nicholas Chiang requested you as a tutor for AP Comp Sci P.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <div class=\"mdc-card__action-buttons\">\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"go_to_request\">\n                    <span class=\"mdc-button__label\">View</span>\n                </button>\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"reject_request\">\n                    <span class=\"mdc-button__label\">Reject</span>\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Settings Switch Template -->\n<div hidden class=\"template\" id=\"input-switch\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <div class=\"mdc-switch\">\n                <div class=\"mdc-switch__track\"></div>\n                <div class=\"mdc-switch__thumb-underlay\">\n                    <div class=\"mdc-switch__thumb\">\n                        <input type=\"checkbox\" class=\"mdc-switch__native-control\" role=\"switch\">\n                    </div>\n                </div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Settings Button Template -->\n<div hidden class=\"template\" id=\"input-setting\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-click=\"action\">\n                <i class=\"material-icons\">settings</i>\n            </button>\n        </div>\n    </li>\n</div>\n\n<!-- Settings List Divider -->\n<div hidden class=\"template\" id=\"settings-list-divider\">\n    <div data-fir-id=\"label\" class=\"settings-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"label\">Label</h4>\n    </div>\n</div>\n\n<!-- Settings View Template -->\n<div hidden class=\"template\" id=\"settings-view\">\n    <div class=\"settings-view\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                App Preferences\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage your notification preferences, calendar sync, and profile\n                visibility.\n            </h5>\n        </div>\n        <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line \">\n        </ul>\n    </div>\n</div>\n\n</html>";
 
 /***/ }),
 /* 468 */
 /***/ (function(module, exports) {
 
-module.exports = "data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8'?%3E %3Csvg width='30.467mm' height='26.458mm' version='1.1' viewBox='0 0 30.467 26.458' xmlns='http://www.w3.org/2000/svg' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23'%3E %3Cmetadata%3E %3Crdf:RDF%3E %3Ccc:Work rdf:about=''%3E %3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E %3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/%3E %3Cdc:title/%3E %3C/cc:Work%3E %3C/rdf:RDF%3E %3C/metadata%3E %3Cg transform='matrix(1.6035 0 0 1.6035 -4.8106 -6.4141)' clip-rule='evenodd' fill='%23181818' fill-rule='evenodd'%3E %3Cpath d='m9 17 3-2.94c-0.39-0.04-0.68-0.06-1-0.06-2.67 0-8 1.34-8 4v2h9zm2-5c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4'/%3E %3Cpath d='m15.47 20.5-3.47-3.5 1.4-1.41 2.07 2.08 5.13-5.17 1.4 1.41z'/%3E %3C/g%3E %3C/svg%3E"
+module.exports = "data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8'?%3E %3Csvg width='572.97' height='100' version='1.1' viewBox='0 0 151.61 26.458' xmlns='http://www.w3.org/2000/svg' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23'%3E %3Cmetadata%3E %3Crdf:RDF%3E %3Ccc:Work rdf:about=''%3E %3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E %3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/%3E %3Cdc:title/%3E %3C/cc:Work%3E %3C/rdf:RDF%3E %3C/metadata%3E %3Cg transform='matrix(1.1941 0 0 1.1941 5.2315 -333.65)'%3E %3Cg transform='matrix(.20004 0 0 .20004 -4.9647 280.31)'%3E %3Cg transform='translate(-37.687,-41.651)'%3E %3Cg transform='matrix(4.3627,0,0,4.3627,43.43,37.147)'%3E %3Cpath d='m0 0h24v24h-24z' clip-rule='evenodd' fill='none'/%3E %3C/g%3E %3C/g%3E %3Cg transform='matrix(6.443,0,0,6.443,-16.411,-25.818)' clip-rule='evenodd' fill='%23181818' fill-rule='evenodd'%3E %3Cpath d='m9 17 3-2.94c-0.39-0.04-0.68-0.06-1-0.06-2.67 0-8 1.34-8 4v2h9zm2-5c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4'/%3E %3Cpath d='m15.47 20.5-3.47-3.5 1.4-1.41 2.07 2.08 5.13-5.17 1.4 1.41z'/%3E %3C/g%3E %3C/g%3E %3Cg transform='matrix(1.6881,0,0,1.6881,-3.0593,-199.9)' fill='%23181818' aria-label='Tutorbook'%3E %3Cpath transform='matrix(.26458 0 0 .26458 -4.3811 281.29)' d='m196.29 19.828v29.6h7.8809v-3.5586c0.56 1.2 1.4119 2.1465 2.5586 2.8398 1.1467 0.66666 2.5068 1 4.0801 1 1.7867 0 3.4018-0.45272 4.8418-1.3594 1.44-0.93334 2.5718-2.2667 3.3984-4 0.82667-1.76 1.2402-3.8135 1.2402-6.1602s-0.41357-4.3878-1.2402-6.1211c-0.82666-1.7333-1.9584-3.0523-3.3984-3.959-1.44-0.93332-3.0551-1.4004-4.8418-1.4004-1.5733 0-2.9334 0.34575-4.0801 1.0391-1.1467 0.66668-1.9986 1.6008-2.5586 2.8008v-10.721zm78.125 0v29.6h7.8809v-9.2793l6.1191 9.2793h9.4394l-8.959-11.199 8.7207-11.24h-9.1602l-6.1602 8.7207v-15.881zm-191.64 1.2812v6.2793h7.5586v22.039h7.8398v-22.039h7.6406v-6.2793zm54.408 0.43945v5.4395h-2.8808v6.5605h2.8808v7.0801c0 3.1467 0.7717 5.3998 2.3184 6.7598s3.6947 2.0391 6.4414 2.0391h3.2402v-6.7188h-2.1211c-0.72 0-1.2406-0.14611-1.5606-0.43945-0.29333-0.29332-0.43945-0.78713-0.43945-1.4805v-7.2402h4.041v-6.5605h-4.041v-5.4395zm26.191 5.1602c-2.24 0-4.2524 0.46707-6.0391 1.4004-1.7867 0.90668-3.1859 2.2257-4.1992 3.959s-1.5215 3.7744-1.5215 6.1211 0.50815 4.3858 1.5215 6.1191c1.0133 1.7333 2.4126 3.0667 4.1992 4 1.7867 0.93332 3.7991 1.4004 6.0391 1.4004s4.24-0.46707 6-1.4004c1.7867-0.93334 3.1878-2.2667 4.2012-4 1.0133-1.7333 1.5195-3.7725 1.5195-6.1191 0-2.32-0.5062-4.3468-1.5195-6.0801-1.0133-1.76-2.4145-3.0933-4.2012-4-1.76-0.93332-3.76-1.4004-6-1.4004zm70.703 0c-2.24 0-4.2524 0.46707-6.0391 1.4004-1.7867 0.90668-3.1859 2.2257-4.1992 3.959s-1.5215 3.7744-1.5215 6.1211 0.50815 4.3858 1.5215 6.1191c1.0133 1.7333 2.4126 3.0667 4.1992 4 1.7867 0.93332 3.7991 1.4004 6.0391 1.4004s4.24-0.46707 6-1.4004c1.7867-0.93334 3.1878-2.2667 4.2012-4 1.0133-1.7333 1.5195-3.7725 1.5195-6.1191 0-2.32-0.5062-4.3468-1.5195-6.0801-1.0133-1.76-2.4145-3.0933-4.2012-4-1.76-0.93332-3.76-1.4004-6-1.4004zm25.469 0c-2.24 0-4.2524 0.46707-6.0391 1.4004-1.7867 0.90668-3.1859 2.2257-4.1992 3.959s-1.5215 3.7744-1.5215 6.1211 0.50815 4.3858 1.5215 6.1191c1.0133 1.7333 2.4126 3.0667 4.1992 4 1.7867 0.93332 3.7991 1.4004 6.0391 1.4004s4.24-0.46707 6-1.4004c1.7867-0.93334 3.1878-2.2667 4.2012-4 1.0133-1.7333 1.5195-3.7725 1.5195-6.1191 0-2.32-0.5062-4.3468-1.5195-6.0801-1.0133-1.76-2.4145-3.0933-4.2012-4-1.76-0.93332-3.76-1.4004-6-1.4004zm-65.863 0.08008c-1.4933 1e-6 -2.9049 0.39922-4.2383 1.1992-1.3333 0.8-2.4403 1.8678-3.3203 3.2012v-4.2012h-7.8809v22.439h7.8809v-9.6797c0-1.68 0.44031-2.8529 1.3203-3.5195 0.88-0.69334 2.199-1.0391 3.959-1.0391h2.2793zm-85.523 0.19922v13c0 2.9867 0.7345 5.3468 2.2012 7.0801 1.4933 1.7067 3.5325 2.5605 6.1191 2.5605 1.6533 0 3.0936-0.36008 4.3203-1.0801 1.2267-0.72 2.1608-1.6809 2.8008-2.8809v3.7598h7.8398v-22.439h-7.8398v11.881c0 1.36-0.34768 2.4135-1.041 3.1602-0.69334 0.74668-1.6255 1.1191-2.7988 1.1191-1.1467 0-2.0684-0.36008-2.7617-1.0801-0.66667-0.74668-1-1.7591-1-3.0391v-12.041zm55.215 6.5195c1.0667 0 1.9616 0.40117 2.6816 1.2012s1.0801 1.9605 1.0801 3.4805-0.36008 2.6928-1.0801 3.5195c-0.72 0.8-1.615 1.1992-2.6816 1.1992-1.0933 0-1.9988-0.39922-2.7188-1.1992s-1.0801-1.9728-1.0801-3.5195c0-1.52 0.36008-2.6805 1.0801-3.4805s1.6254-1.2012 2.7188-1.2012zm70.703 0c1.0667 0 1.9616 0.40117 2.6816 1.2012s1.0801 1.9605 1.0801 3.4805-0.36007 2.6928-1.0801 3.5195c-0.72 0.8-1.615 1.1992-2.6816 1.1992-1.0933 0-1.9988-0.39922-2.7188-1.1992s-1.0801-1.9728-1.0801-3.5195c0-1.52 0.36008-2.6805 1.0801-3.4805s1.6254-1.2012 2.7188-1.2012zm25.469 0c1.0667 0 1.9616 0.40117 2.6816 1.2012s1.0801 1.9605 1.0801 3.4805-0.36007 2.6928-1.0801 3.5195c-0.72 0.8-1.615 1.1992-2.6816 1.1992-1.0933 0-1.9988-0.39922-2.7188-1.1992s-1.0801-1.9728-1.0801-3.5195c0-1.52 0.36008-2.6805 1.0801-3.4805s1.6254-1.2012 2.7188-1.2012zm-51.336 0.08008c1.2267 0 2.2143 0.41358 2.9609 1.2402 0.77333 0.8 1.1602 1.9213 1.1602 3.3613 0 1.4667-0.38682 2.6128-1.1602 3.4395-0.74667 0.8-1.7343 1.1992-2.9609 1.1992-1.1733 0-2.1466-0.41358-2.9199-1.2402-0.77334-0.82668-1.1602-1.9584-1.1602-3.3984 0-1.4133 0.38682-2.5346 1.1602-3.3613 0.77333-0.82666 1.7466-1.2402 2.9199-1.2402z' fill='%23181818'/%3E %3C/g%3E %3Ctext x='36.54911' y='287.97964' fill='%23000000' font-family='fontawesome-webfont' font-size='10.583px' letter-spacing='0px' stroke-width='.26458' word-spacing='0px' style='line-height:1.25' xml:space='preserve'%3E%3Ctspan x='36.54911' y='297.34341' stroke-width='.26458'/%3E%3C/text%3E %3Ctext x='22.383821' y='273.21301' fill='%23000000' font-family='fontawesome-webfont' font-size='10.583px' letter-spacing='0px' stroke-width='.26458' word-spacing='0px' style='line-height:1.25' xml:space='preserve'%3E%3Ctspan x='22.383821' y='282.57678' stroke-width='.26458'/%3E%3C/text%3E %3C/g%3E %3C/svg%3E"
 
 /***/ }),
 /* 469 */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8'?%3E %3Csvg width='30.467mm' height='26.458mm' version='1.1' viewBox='0 0 30.467 26.458' xmlns='http://www.w3.org/2000/svg' xmlns:cc='http://creativecommons.org/ns%23' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns%23'%3E %3Cmetadata%3E %3Crdf:RDF%3E %3Ccc:Work rdf:about=''%3E %3Cdc:format%3Eimage/svg+xml%3C/dc:format%3E %3Cdc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/%3E %3Cdc:title/%3E %3C/cc:Work%3E %3C/rdf:RDF%3E %3C/metadata%3E %3Cg transform='matrix(1.6035 0 0 1.6035 -4.8106 -6.4141)' clip-rule='evenodd' fill='%23181818' fill-rule='evenodd'%3E %3Cpath d='m9 17 3-2.94c-0.39-0.04-0.68-0.06-1-0.06-2.67 0-8 1.34-8 4v2h9zm2-5c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4'/%3E %3Cpath d='m15.47 20.5-3.47-3.5 1.4-1.41 2.07 2.08 5.13-5.17 1.4 1.41z'/%3E %3C/g%3E %3C/svg%3E"
+
+/***/ }),
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94543,13 +94585,13 @@ module.exports = "data:image/svg+xml,%3C?xml version='1.0' encoding='UTF-8'?%3E 
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(470);
+var _index = __webpack_require__(471);
 
 var _index2 = __webpack_require__(25);
 
-var _index3 = __webpack_require__(475);
+var _index3 = __webpack_require__(476);
 
-var _jquery = __webpack_require__(478);
+var _jquery = __webpack_require__(479);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -94560,7 +94602,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Data = __webpack_require__(7);
 var User = __webpack_require__(24);
 var Utils = __webpack_require__(6);
-var Navigo = __webpack_require__(479);
+var Navigo = __webpack_require__(480);
 
 // Class that manages app URLs, the navigation drawer, and back navigation
 
@@ -94903,7 +94945,7 @@ var Navigation = function () {
 module.exports = Navigation;
 
 /***/ }),
-/* 470 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94914,7 +94956,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(471);
+var _component = __webpack_require__(472);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -94926,7 +94968,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _constants = __webpack_require__(290);
+var _constants = __webpack_require__(291);
 
 Object.keys(_constants).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -94950,7 +94992,7 @@ Object.keys(_foundation).forEach(function (key) {
   });
 });
 
-var _foundation2 = __webpack_require__(291);
+var _foundation2 = __webpack_require__(292);
 
 Object.keys(_foundation2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -94962,7 +95004,7 @@ Object.keys(_foundation2).forEach(function (key) {
   });
 });
 
-var _util = __webpack_require__(292);
+var _util = __webpack_require__(293);
 
 var util = _interopRequireWildcard(_util);
 
@@ -94993,7 +95035,7 @@ exports.util = util; /**
                       */
 
 /***/ }),
-/* 471 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95010,19 +95052,19 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(55);
 
-var _component2 = __webpack_require__(472);
+var _component2 = __webpack_require__(473);
 
-var _foundation = __webpack_require__(288);
+var _foundation = __webpack_require__(289);
 
-var _focusTrap = __webpack_require__(289);
+var _focusTrap = __webpack_require__(290);
 
 var _focusTrap2 = _interopRequireDefault(_focusTrap);
 
 var _foundation2 = __webpack_require__(56);
 
-var _foundation3 = __webpack_require__(291);
+var _foundation3 = __webpack_require__(292);
 
-var _util = __webpack_require__(292);
+var _util = __webpack_require__(293);
 
 var util = _interopRequireWildcard(_util);
 
@@ -95207,7 +95249,7 @@ exports.MDCDrawer = MDCDrawer;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 472 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95224,11 +95266,11 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(55);
 
-var _ponyfill = __webpack_require__(286);
+var _ponyfill = __webpack_require__(287);
 
-var _constants = __webpack_require__(287);
+var _constants = __webpack_require__(288);
 
-var _foundation = __webpack_require__(288);
+var _foundation = __webpack_require__(289);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -95491,7 +95533,7 @@ exports.MDCList = MDCList;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 473 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95631,7 +95673,7 @@ function isHidden(node) {
 module.exports = tabbable;
 
 /***/ }),
-/* 474 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95658,7 +95700,7 @@ function extend() {
 }
 
 /***/ }),
-/* 475 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95669,7 +95711,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(476);
+var _component = __webpack_require__(477);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -95681,7 +95723,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _constants = __webpack_require__(294);
+var _constants = __webpack_require__(295);
 
 Object.keys(_constants).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -95693,7 +95735,7 @@ Object.keys(_constants).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(293);
+var _foundation = __webpack_require__(294);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -95736,7 +95778,7 @@ exports.util = util; /**
                       */
 
 /***/ }),
-/* 476 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95753,11 +95795,11 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(55);
 
-var _events = __webpack_require__(477);
+var _events = __webpack_require__(478);
 
-var _ponyfill = __webpack_require__(286);
+var _ponyfill = __webpack_require__(287);
 
-var _foundation = __webpack_require__(293);
+var _foundation = __webpack_require__(294);
 
 var _util = __webpack_require__(57);
 
@@ -95899,7 +95941,7 @@ exports.MDCRipple = MDCRipple;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 477 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95966,7 +96008,7 @@ function applyPassive(globalObj, forceRefresh) {
 //# sourceMappingURL=events.js.map
 
 /***/ }),
-/* 478 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106112,7 +106154,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
 
 /***/ }),
-/* 479 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106277,7 +106319,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //# sourceMappingURL=navigo.min.js.map
 
 /***/ }),
-/* 480 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106365,7 +106407,7 @@ var Help = function () {
 module.exports = Help;
 
 /***/ }),
-/* 481 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106548,7 +106590,7 @@ var Listener = function () {
 module.exports = Listener;
 
 /***/ }),
-/* 482 */
+/* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106771,7 +106813,7 @@ var Login = function () {
 module.exports = Login;
 
 /***/ }),
-/* 483 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -106781,7 +106823,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(15);
+var _index = __webpack_require__(16);
 
 var _jquery = __webpack_require__(3);
 
@@ -106803,7 +106845,7 @@ var EditLocationDialog = __webpack_require__(2).editLocation;
 var NewLocationDialog = __webpack_require__(2).newLocation;
 var Card = __webpack_require__(19);
 var HorzScroller = __webpack_require__(137);
-var HrsConfig = __webpack_require__(484);
+var HrsConfig = __webpack_require__(485);
 
 // Creates a configuration screen to manage all data unique to each school or
 // location. Enables supervisors to:
@@ -106988,7 +107030,7 @@ var Config = function () {
 module.exports = Config;
 
 /***/ }),
-/* 484 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

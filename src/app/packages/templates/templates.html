@@ -1481,8 +1481,10 @@ styling due to input el spacing. -->
 
 <!-- Message Template -->
 <div hidden class="template" id="message">
-    <div data-fir-content="message" data-fir-attr="timestamp:timestamp" data-fir-id="id" class="bubble you">
-        Hello,
+    <div class="message you" data-fir-attr="sender:sender,timestamp:timestamp" data-fir-id="id">
+        <img data-fir-if="img" data-fir-attr="src:sentBy/photo" class="message__img">
+        <div data-fir-content="message" class="message__bubble">
+        </div>
     </div>
 </div>
 

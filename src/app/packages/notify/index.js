@@ -4,8 +4,8 @@ class Notify {
     constructor() {
         try {
             firebase.messaging().usePublicVapidKey(
-                "BIEVpGqO_n9HSS_sGWdfXoOUpv3dWwB5P2-zRkUBUZH" +
-                "OzvAvJ09nUL68hc5XpTjKZxb74_5DJlSs4oRdnJj8R4w"
+                'BIEVpGqO_n9HSS_sGWdfXoOUpv3dWwB5P2-zRkUBUZH' +
+                'OzvAvJ09nUL68hc5XpTjKZxb74_5DJlSs4oRdnJj8R4w'
             );
             const messaging = firebase.messaging();
 
@@ -33,50 +33,35 @@ class Notify {
             });
 
             messaging.onMessage((payload) => {
-                if (payload.notification.body === 'Authenticated account.') {
+                if (payload.notification.body === 'Authenticated account.')
                     return firebase.auth().currentUser.getIdToken(true);
-                } else if (payload.notification.title.indexOf('Message') >= 0) {
-                    if (window.app.nav.selected !== 'Messages') {
-                        return window.app.snackbar.view(
-                            payload.notification.title + ': ' +
-                            payload.notification.body, 'view', () => {
-                                window.app.chats.chat(
-                                    payload.notification.data.id);
-                            }, false);
-                    } else {
-                        return;
-                    }
-                }
+                if (payload.notification.title.indexOf('Message from ') === 0)
+                    return window.app.snackbar.view(payload.notification.title
+                        .replace('Message from ', '') + ' says: ' + payload
+                        .notification.body);
                 window.app.snackbar.view(payload.notification.body);
             });
         } catch (e) {
-            console.error('Error while initializing Firebase messaging token to ' +
-                'manage webpush notifications:', e);
+            console.error('Error while initializing Firebase messaging token ' +
+                'to manage webpush notifications:', e);
         }
     }
 
     welcome() {
-        new Notification('Welcome, ' + this.user.name, {
-            body: "This is how we'll notify you of important window.app " +
-                'activity.',
-            icon: 'https://tutorbook-779d8.firebasewindow.app.com/favic' +
-                'on/logo.svg',
-            badge: 'https://tutorbook-779d8.firebasewindow.app.com/favic' +
-                'on/notification-badge.svg',
+        new Notification('Welcome, ' + window.app.user.name, {
+            body: 'This is how we\'ll notify you of important app activity.',
+            icon: 'https://tutorbook.app/favicon/webpush-icon.png',
+            badge: 'https://tutorbook.app/favicon/webpush-badge.png',
         });
     }
 
     getPermission() {
-        Notification.requestPermission().then((result) => {
+        Notification.requestPermission().then(result => {
 
-            if (result === 'denied') { // Cannot ask again
-                return;
-            }
-            if (result === 'default') { // Can ask again, but wasn't window.approved
-                return;
-            }
+            if (result === 'denied') return;
+            if (result === 'default') return;
 
-            firebase.messaging().getToken().then(function(token) { // Approved
+            firebase.messaging().getToken().then((token) => { // Approved
                 window.app.user.cards.setupNotifications = false;
                 window.app.updateUser();
                 this.updateToken(token);
@@ -90,7 +75,6 @@ class Notify {
     }
 
     updateToken(token) {
-        // Right now, tokens are stored in the currentUser's Firestore document
         window.app.user.notificationToken = token;
         window.app.updateUser().catch((err) => {
             console.error('Error while sending notificationToken ' +

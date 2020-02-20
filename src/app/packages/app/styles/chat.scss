@@ -2,57 +2,58 @@
   box-sizing: border-box;
 }
 
-.chat .bubble:last-child {
+.chat .message:first-child {
+  margin-top: 15px !important;
+}
+
+.chat .message:last-child {
   margin-bottom: 100px;
 }
 
-.chat .bubble:first-child {
-  margin-top: 20px;
+.chat .message {
+  max-width: 60%;
+  margin-top: 15px;
+  display: block;
+  clear: both;
+  font-size: 0; // Remove whitespace in btwn inline-block elements
 }
 
-.chat .bubble {
-  font-size: 16px;
-  position: relative;
+.chat .you {
+  float: left;
+  margin-left: 10px;
+}
+
+.chat .me {
+  float: right;
+  margin-right: 10px;
+}
+
+.chat .you .message__bubble {
+  background-color: #018782;
+  color: #FFF;
+  max-width: calc(100% - 42px);
+}
+
+.chat .me .message__bubble {
+  background-color: #eceff1;
+  color: #1a1a1a;
+}
+
+.chat .message__img {
+  width: 32px;
   display: inline-block;
-  clear: both;
+  border-radius: 100%;
+  vertical-align: bottom;
+  margin-right: 10px;
+  margin-bottom: 6px;
+}
+
+.chat .message__bubble {
+  font-size: 16px;
+  display: inline-block;
   padding: 13px 14px;
-  margin-bottom: 10px;
+  border-radius: 6px;
   vertical-align: top;
-  border-radius: 10px;
-  max-width: 60%;
-  &:before {
-    position: absolute;
-    top: 19px;
-    display: block;
-    width: 8px;
-    height: 6px;
-    content: '\00a0';
-    transform: rotate(29deg) skew(-35deg);
-  }
-  &.you {
-    float: left;
-    color: #FFF;
-    background-color: #018782;
-    align-self: flex-start;
-    animation-name: slideFromLeft;
-    &:before {
-      left: -3px;
-      background-color: #018782;
-    }
-    margin-left: 20px;
-  }
-  &.me {
-    float: right;
-    color: #1a1a1a;
-    background-color: #eceff1;
-    align-self: flex-end;
-    animation-name: slideFromRight;
-    &:before {
-      right: -3px;
-      background-color: #eceff1;
-    }
-    margin-right: 20px;
-  }
 }
 
 .chat .conversation-start {

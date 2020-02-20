@@ -112,13 +112,6 @@ beforeEach(async () => {
     });
 });
 
-async function resetDB() {
-    // Clear the database simulator between tests
-    await firebase.clearFirestoreData({
-        projectId
-    });
-};
-
 before(async () => {
     await firebase.loadFirestoreRules({
         projectId,
@@ -349,6 +342,43 @@ describe("Tutorbook's REST API", () => {
             }));
         }));
     };
+
+    it("lets users send messages", async () => {
+        await createUsers();
+        const db = authedApp({
+            uid: PUPIL.uid,
+            email: PUPIL.email,
+        });
+        const chat = db.collection('chats').doc();
+        await firebase.assertSucceeds(chat.set({
+            lastMessage: {
+                message: 'This is a test.',
+                sentBy: PUPIL,
+                timestamp: new Date(),
+            },
+            chatters: [
+                PUPIL,
+                SUPERVISOR,
+            ],
+            chatterUIDs: [
+                PUPIL.uid,
+                SUPERVISOR.uid,
+            ],
+            chatterEmails: [
+                PUPIL.email,
+                SUPERVISOR.email,
+            ],
+            location: LOCATION,
+            createdBy: PUPIL,
+            name: '', // We just use the chatter name as the chat name
+            photo: '', // We just use the chatter photo as the chat photo
+        }));
+        await firebase.assertSucceeds(chat.collection('messages').doc().set({
+            sentBy: PUPIL,
+            message: 'This is a test.',
+            timestamp: new Date(),
+        }));
+    });
 
     // =========================================================================
     // REQUESTs

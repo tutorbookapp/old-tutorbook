@@ -751,13 +751,15 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                     await Data.updateUser(pupil);
                 }
                 return Data.newRequest(request);
-            };
-            if (window.app.location.name !== time.location)
-                new ConfirmationDialog('Confirm Location', 'The request ' +
-                    'location (the ' + time.location + ') did not match your ' +
-                    'app partition\'s location (the ' +
-                    window.app.location.name + '). Are you sure you want to ' +
-                    'send this request?', send, true).view();
+            }; // TODO: Fix this bug and await the ConfirmationDialog response.
+            /*
+             *if (window.app.location.name !== time.location)
+             *    return new ConfirmationDialog('Confirm Location', 'The ' +
+             *        'request location (the ' + time.location + ') did not ' +
+             *        'match your app partition\'s location (the ' +
+             *        window.app.location.name + '). Are you sure you want to ' +
+             *        'send this request?', send, true).view();
+             */
             return send();
         };
 

@@ -177,49 +177,45 @@ exports.messageNotification = functions.firestore
     .document('/partitions/{partition}/chats/{chat}/messages/{message}')
     .onCreate(Notify.message);
 
-exports.newChatNotification = functions.firestore
-    .document('/partitions/{partition}/chats/{chat}')
-    .onCreate(Notify.chat);
-
 exports.feedbackNotification = functions.firestore
     .document('/partitions/{partition}/feedback/{id}')
     .onCreate(Notify.feedback);
 
 // REQUESTs
-exports.newRequest = functions.firestore
+exports.newRequestNotification = functions.firestore
     .document('/partitions/{partition}/users/{user}/requestsIn/{request}')
     .onCreate(Notify.requestIn);
 
-exports.canceledRequest = functions.firestore
+exports.canceledRequestNotification = functions.firestore
     .document('/partitions/{partition}/users/{user}/canceledRequestsIn' +
         '/{request}')
     .onCreate(Notify.canceledIn);
 
-exports.modifiedRequestIn = functions.firestore
+exports.modifiedRequestInNotification = functions.firestore
     .document('/partitions/{partition}/users/{user}/modifiedRequestsIn' +
         '/{request}')
     .onCreate(Notify.modifiedIn);
 
-exports.approvedRequest = functions.firestore
+exports.approvedRequestNotification = functions.firestore
     .document('/partitions/{partition}/users/{user}/approvedRequestsOut' +
         '/{request}')
     .onCreate(Notify.approvedOut);
 
-exports.rejectedRequest = functions.firestore
+exports.rejectedRequestNotification = functions.firestore
     .document('/partitions/{partition}/users/{user}/rejectedRequestsOut' +
         '/{request}')
     .onCreate(Notify.rejectedOut);
 
-exports.modifiedRequestOut = functions.firestore
+exports.modifiedRequestOutNotification = functions.firestore
     .document('/partitions/{partition}/users/{user}/modifiedRequestsOut' +
         '/{request}')
     .onCreate(Notify.modifiedOut);
 
 // CLOCK-IN/OUTs
-exports.clockIn = functions.firestore
+exports.clockInNotification = functions.firestore
     .document('/partitions/{partition}/users/{supervisor}/clockIns/{clockIn}')
     .onCreate(Notify.clockIn);
 
-exports.clockOut = functions.firestore
+exports.clockOutNotification = functions.firestore
     .document('/partitions/{partition}/users/{supervisor}/clockOuts/{clockOut}')
     .onCreate(Notify.clockOut);
