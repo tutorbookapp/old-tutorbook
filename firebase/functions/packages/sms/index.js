@@ -58,6 +58,8 @@ class SMS {
             ' SMS messages to undefined phone numbers.');
         if (!this.message) return err('Cannot send empty SMS messages.');
         if (this.isTest) return err('Cannot send test SMS messages.');
+        if (functions.config().SKIP_SMS) return console.warn('[WARNING] ' +
+            'Skipping SMS b/c the SKIP_SMS configuration variable is set.');
         return true;
     }
 

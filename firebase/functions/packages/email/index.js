@@ -50,6 +50,8 @@ class Email {
                 ' users.');
         if (!this.user || !this.user.email) return console.error('[ERROR] ' +
             'Cannot send email without a valid email address.');
+        if (functions.config().SKIP_EMAIL) return console.warn('[WARNING] ' +
+            'Skipping email b/c the SKIP_EMAIL configuration variable is set.');
         return true;
     }
 

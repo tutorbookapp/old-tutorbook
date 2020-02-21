@@ -1803,6 +1803,10 @@ module.exports = {
             );
             return data.act().then((result) => {
                 res.json(result);
+                console.log('[INFO] Resolved ' +
+                    (req.query.test === 'true' ? 'test ' : 'live ') +
+                    req.query.action + ' action from ' + user.name + ' (' +
+                    req.query.user + ')...');
                 if (!Stats.dataAction[req.query.action]) return console.warn(
                     '[WARNING] Data action (' + req.query.action + ') not yet' +
                     ' tracked.');

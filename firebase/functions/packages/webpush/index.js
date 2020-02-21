@@ -1,4 +1,5 @@
 const admin = require('firebase-admin'); // Initialized in ../index.js
+const functions = require('firebase-functions');
 const firestore = admin.firestore();
 const partitions = {
     test: firestore.collection('partitions').doc('test'),
@@ -29,6 +30,9 @@ class Webpush {
             return console.error('[ERROR] Webpush must have a valid title.');
         if (!this.body || typeof this.body !== 'string')
             return console.error('[ERROR] Webpush must have a valid body.');
+        if (functions.config().SKIP_WEBPUSH) return console.warn('[WARNING] ' +
+            'Skipping webpush notification b/c the SKIP_WEBPUSH configuration' +
+            ' variable is set.');
         return true;
     }
 

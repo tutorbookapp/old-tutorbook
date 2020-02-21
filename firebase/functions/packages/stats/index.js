@@ -7,9 +7,12 @@ const partitions = {
 
 // Helper function that sends me an SMS notification for important events.
 const notifyMe = (message, isTest = false) => {
+    return console.warn('[WARNING] Stat notifications are disabled for now.');
     return new SMS({
-        phone: '+16508612723',
-        name: 'Nicholas Chiang',
+        recipient: {
+            phone: '+16508612723',
+            name: 'Nicholas Chiang',
+        },
     }, message, isTest);
 };
 

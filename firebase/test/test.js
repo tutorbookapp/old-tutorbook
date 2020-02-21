@@ -13,7 +13,7 @@ const TUTOR = {
     name: 'Tutor Tutorbook',
     email: 'tutor@tutorbook.app',
     id: 'tutor@tutorbook.app',
-    uid: 'l9oxeZesaQXsBh4guDGJzHdNJlw2',
+    uid: 'nuCqWin1KAcnAvOhlWYq5qWOj123',
     type: 'Tutor',
     gender: 'Male',
     config: {
@@ -352,8 +352,8 @@ describe("Tutorbook's REST API", () => {
         const chat = db.collection('chats').doc();
         await firebase.assertSucceeds(chat.set({
             lastMessage: {
-                message: 'This is a test.',
                 sentBy: PUPIL,
+                message: 'This is a test.',
                 timestamp: new Date(),
             },
             chatters: [
