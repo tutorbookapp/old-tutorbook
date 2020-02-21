@@ -710,9 +710,6 @@ class ConfirmMatchDialog extends ConfirmationDialog {
 
         async function match(tutor) {
             const time = Utils.parseAvailabilityString(timeString);
-            console.log('[DEBUG] Creating match on ' + timeString + '...');
-            console.log('[DEBUG] Got ' + time.location + ' id:', window.app.data
-                .locationsByName[time.location]);
             if (!window.app.data.locationsByName[time.location]) {
                 window.app.snackbar.view('Request location was not found.');
                 throw new Error('Request location was not found.');

@@ -37,7 +37,6 @@ class SearchHeader {
     }
 
     async search(that) {
-        console.log('[DEBUG] Searching users with default function...');
         const query = $(that.el).find('.search-box input').val();
         query.length > 0 ? that.showClearButton() : that.showInfoButton();
         const [err, res] = await to(that.index.search({
@@ -52,7 +51,6 @@ class SearchHeader {
         }));
         if (err) return console.error('Could not search users b/c of', err);
         $(that.el).find('#results').empty();
-        console.log('[DEBUG] Viewing ' + res.hits.length + ' search hits...');
         res.hits.forEach((hit) => {
             try {
                 $(that.el).find('#results').append(that.renderHit(hit));

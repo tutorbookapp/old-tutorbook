@@ -24996,7 +24996,6 @@ var SearchHeader = function () {
     }, {
         key: 'search',
         value: async function search(that) {
-            console.log('[DEBUG] Searching users with default function...');
             var query = (0, _jquery2.default)(that.el).find('.search-box input').val();
             query.length > 0 ? that.showClearButton() : that.showInfoButton();
 
@@ -25010,7 +25009,6 @@ var SearchHeader = function () {
 
             if (err) return console.error('Could not search users b/c of', err);
             (0, _jquery2.default)(that.el).find('#results').empty();
-            console.log('[DEBUG] Viewing ' + res.hits.length + ' search hits...');
             res.hits.forEach(function (hit) {
                 try {
                     (0, _jquery2.default)(that.el).find('#results').append(that.renderHit(hit));
@@ -28171,8 +28169,6 @@ var ConfirmMatchDialog = function (_ConfirmationDialog) {
 
         async function match(tutor) {
             var time = Utils.parseAvailabilityString(timeString);
-            console.log('[DEBUG] Creating match on ' + timeString + '...');
-            console.log('[DEBUG] Got ' + time.location + ' id:', window.app.data.locationsByName[time.location]);
             if (!window.app.data.locationsByName[time.location]) {
                 window.app.snackbar.view('Request location was not found.');
                 throw new Error('Request location was not found.');
