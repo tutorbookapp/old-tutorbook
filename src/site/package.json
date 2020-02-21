@@ -5,7 +5,7 @@
   "description": "Landing page for Tutorbook mentor matching app.",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --env.development --mode development",
+    "pack": "webpack --env.development --mode development",
     "prod": "webpack --env.production --mode production"
   },
   "repository": {
