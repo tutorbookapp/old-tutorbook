@@ -6,17 +6,12 @@ const client = require('algoliasearch')(
 
 class Algolia {
     static update(change, context, indexID, settings) {
-        const index = client.initIndex(indexID);
+        const index = client.initIndex(context.params.partition + '-' + indexID);
         if (!change.after.exists) return index.deleteObject(context.params.id);
         const object = change.after.data();
-        object.objectID = context.params.id;
+        object.objectID = context.params.id; // TODO: Do we want to the path?
         object.ref = change.after.ref.path;
-        object.partition = context.params.partition;
-        if (!settings) settings = {};
-        if (!settings.attributesForFaceting)
-            settings.attributesForFaceting = [];
-        settings.attributesForFaceting.push('filterOnly(partition)');
-        index.setSettings(settings);
+        if (settings) index.setSettings(settings);
         return index.saveObject(object);
     }
 
