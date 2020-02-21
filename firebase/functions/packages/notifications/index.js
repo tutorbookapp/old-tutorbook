@@ -179,6 +179,9 @@ const apptNotification = (req, res) => {
 // user - sms, email for new users (custom by user type)
 const userNotification = async (snap, context) => {
     const profile = snap.data();
+    if (getTest(context)) return console.log('[DEBUG] Skipping welcome ' +
+        'notifications to ' + profile.name + ' (' + profile.uid + ') from ' +
+        'test partition.');
     if (!profile || !profile.name) return console.warn('[WARNING] Cannot send' +
         ' welcome notifications to users without names.');
     console.log('[DEBUG] Sending ' + profile.name + ' <' + profile.email +
@@ -356,6 +359,10 @@ const rulesNotification = async (snap, context) => {
     const supervisorId = (await db.collection('locations')
         .doc(context.params.location).get()).data().supervisors[0];
     const supervisor = (await users.doc(supervisorId).get()).data();
+    if (getTest(context)) return console.log('[DEBUG] Skipping rules email ' +
+        'notifications to tutor (' + tutor.name + ' <' + tutor.uid + '>), ' +
+        'pupil (' + pupil.name + ' <' + pupil.uid + '>), and supervisor (' +
+        supervisor.name + ' <' + supervisor.uid + '>) from test partition.');
     return Promise.all([tutor, pupil, supervisor].map(user => {
         return new Email('rules', user, {
             appt: appt,
@@ -376,6 +383,9 @@ const requestNotification = async (snap, context) => {
         request.toUser.type.toLowerCase() + ' for ' + request.subject + '. ' +
         'Login to Tutorbook (https://tutorbook.app) to approve or modify this' +
         ' request.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping request ' +
+        'notification (' + summary + ') to ' + u.name + ' (' + u.uid + ') ' +
+        'from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -402,6 +412,9 @@ const approvedRequestNotification = async (snap, context) => {
         request.toUser.name.split(' ')[0] + ' on ' + request.time.day + 's at' +
         ' the ' + request.location.name + ' from ' + request.time.from +
         ' until ' + request.time.to + '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping approved ' +
+        'request notification (' + summary + ') to ' + u.name + ' (' + u.uid +
+        ') from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -439,6 +452,9 @@ const modifiedRequestIn = async (snap, context) => {
             .fromUser.uid ? getPronoun(modifiedBy.gender) : r.fromUser.name
             .split(' ')[0] + '\'s') + ' lesson request to you for ' +
         r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping modified ' +
+        'request in notification (' + summary + ') to ' + u.name + ' (' +
+        u.uid + ') from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -468,6 +484,9 @@ const modifiedRequestOut = async (snap, context) => {
         .data();
     const summary = modifiedBy.name + ' modified your lesson request for ' +
         r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping modified ' +
+        'request out notification (' + summary + ') to ' + u.name + ' (' +
+        u.uid + ') from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -499,6 +518,9 @@ const canceledRequestIn = async (snap, context) => {
             .fromUser.uid ? getPronoun(canceledBy.gender) : r.fromUser.name
             .split(' ')[0] + '\'s') + ' lesson request to you for ' +
         r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping canceled ' +
+        'request in notification (' + summary + ') to ' + u.name + ' (' +
+        u.uid + ') from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -529,6 +551,9 @@ const rejectedRequestOut = async (snap, context) => {
     const summary = rejectedBy.name + ' rejected your lesson request ' +
         (rejectedBy.uid !== r.toUser.uid ? 'to ' + r.toUser.name + ' ' : '') +
         'for ' + r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping rejected ' +
+        'request out notification (' + summary + ') to ' + u.name + ' (' +
+        u.uid + ') from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -562,6 +587,9 @@ const modifiedAppt = async (snap, context) => {
         (modifiedBy.uid !== other.uid ? ' with ' + other.name : '') +
         ' for ' + a.for.subject + ' on ' + a.time.day + 's at ' + a.time.from +
         '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping modified appt ' +
+        'notification (' + summary + ') to ' + u.name + ' (' + u.uid + ') ' +
+        'from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
@@ -595,6 +623,9 @@ const canceledAppt = async (snap, context) => {
         (canceledBy.uid !== other.uid ? ' with ' + other.name : '') +
         ' for ' + a.for.subject + ' on ' + a.time.day + 's at ' + a.time.from +
         '.';
+    if (getTest(context)) return console.log('[DEBUG] Skipping canceled appt ' +
+        'notification (' + summary + ') to ' + u.name + ' (' + u.uid + ') ' +
+        'from test partition.');
     await new SMS({
         recipient: u,
         body: summary,
