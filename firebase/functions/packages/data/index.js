@@ -1160,18 +1160,30 @@ class Data {
 
     static trimObject(ob) {
         const result = {};
+        const ISODate = new RegExp('^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9' +
+            ']|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7]' +
+            ')?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([' +
+            '01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17' +
+            '[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d' +
+            ')?)?)?)?$/'); // See https://bit.ly/2Tb4ghY
+        const UTCDate = new RegExp('^(\\w{3}), (\\d{2}) (\\w{3}) (\\d{4}) ((' +
+            '\\d{2}):(\\d{2}):(\\d{2})) GMT$'); // See https://bit.ly/39VjTAO
         Object.entries(ob).forEach(([key, val]) => {
             switch (typeof val) {
                 case 'string':
                     result[key] = val.trim();
-                    const date = new Date(val.trim());
-                    if (date.toString() !== 'Invalid Date')
-                        result[key] = date;
+                    if (ISODate.test(val.trim()) || UTCDate.test(val.trim())) {
+                        console.log('[DEBUG] Value (' + val + ') for ' + key +
+                            ' was a valid UTC or ISO date string.');
+                        result[key] = new Date(val.trim());
+                    }
                     break;
                 case 'object':
                     if (val instanceof Array) { // Array
                         result[key] = val;
                     } else if (val._seconds && val._nanoseconds) { // Timestamp
+                        console.log('[DEBUG] Value (' + val + ') for ' + key +
+                            ' was a valid Timestamp object map.');
                         result[key] = new admin.firestore.Timestamp(
                             val._seconds,
                             val._nanoseconds,
@@ -1191,7 +1203,9 @@ class Data {
 
     static async newRequest(request, payment) {
         const db = global.db;
+        console.log('[DEBUG] Subject before trimming:', request.subject);
         request = Data.trimObject(request);
+        console.log('[DEBUG] Subject after trimming:', request.subject);
         const requestIn = db.collection('users').doc(request.toUser.uid)
             .collection('requestsIn')
             .doc();
