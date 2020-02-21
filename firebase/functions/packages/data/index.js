@@ -1028,17 +1028,14 @@ class Data {
             });
         }
 
-        canceledAppts.forEach(async (appt) => {
-            await appt.set({
-                canceledBy: app.conciseUser,
-                canceledTimestamp: new Date(),
-                for: apptData,
-            });
-        });
+        await Promise.all(canceledAppts.map((appt) => appt.set({
+            canceledBy: app.conciseUser,
+            canceledTimestamp: new Date(),
+            for: apptData,
+        })));
+        await Promise.all(appts.map((appt) => appt.delete()));
 
-        appts.forEach(async (appt) => {
-            await appt.delete();
-        });
+        apptData.attendees.forEach(a => Data.updateUserAvailability(a.uid));
     }
 
     static async rejectRequest(request, id) {
