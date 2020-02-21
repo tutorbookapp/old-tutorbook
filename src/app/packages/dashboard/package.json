@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/dashboard",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,18 +10,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.4.8",
-    "@tutorbook/data": "^0.4.8",
-    "@tutorbook/dialogs": "^0.4.8",
+    "@tutorbook/card": "^0.4.9",
+    "@tutorbook/data": "^0.4.9",
+    "@tutorbook/dialogs": "^0.4.9",
     "@tutorbook/horz-scroller": "^0.4.8",
-    "@tutorbook/matching": "^0.4.8",
-    "@tutorbook/profile": "^0.4.8",
-    "@tutorbook/schedule": "^0.4.8",
-    "@tutorbook/schedule-card": "^0.4.8",
-    "@tutorbook/search": "^0.4.8",
-    "@tutorbook/tracking": "^0.4.8",
-    "@tutorbook/user": "^0.4.8",
-    "@tutorbook/utils": "^0.4.8"
+    "@tutorbook/matching": "^0.4.9",
+    "@tutorbook/profile": "^0.4.9",
+    "@tutorbook/schedule": "^0.4.9",
+    "@tutorbook/schedule-card": "^0.4.9",
+    "@tutorbook/search": "^0.4.9",
+    "@tutorbook/tracking": "^0.4.9",
+    "@tutorbook/user": "^0.4.9",
+    "@tutorbook/utils": "^0.4.9"
   },
   "repository": {
     "type": "git",
