@@ -4961,7 +4961,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
@@ -7253,7 +7252,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 });
                 return el;
             };
-            var index = algolia.initIndex('users');
+            var index = Data.algoliaIndex('users');
             var searchPupils = async function searchPupils(textFieldItem) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
@@ -19862,6 +19861,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var axios = __webpack_require__(307);
+var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
@@ -19980,6 +19980,11 @@ var Data = function () {
             }
         }
     }], [{
+        key: 'algoliaIndex',
+        value: function algoliaIndex(id) {
+            return algolia.initIndex((window.app.test ? 'test' : 'default') + '-' + id);
+        }
+    }, {
         key: 'addToWorkspace',
         value: function addToWorkspace(uid) {
             var proxy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -22203,7 +22208,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 var EditAvailabilityDialog = __webpack_require__(2).editAvailability;
 var EditSubjectDialog = __webpack_require__(2).editSubject;
 var NotificationDialog = __webpack_require__(2).notify;
@@ -22709,7 +22713,7 @@ var NewProfile = function (_Profile) {
                 });
                 return el;
             };
-            var index = algolia.initIndex('users');
+            var index = Data.algoliaIndex('users');
             var search = async function search(textFieldItem) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
@@ -24963,7 +24967,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 var EditProfile = __webpack_require__(15).edit;
 var User = __webpack_require__(24);
 var FilterDialog = __webpack_require__(136).default;
@@ -24978,7 +24981,7 @@ var SearchHeader = function () {
         _classCallCheck(this, SearchHeader);
 
         this.render = window.app.render;
-        this.index = options.index ? options.index : algolia.initIndex('users');
+        this.index = options.index ? options.index : Data.algoliaIndex('users');
         if (options.search) this.search = options.search;
         this.renderSelf(options);
     }
@@ -28280,7 +28283,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 var SearchHeader = __webpack_require__(21).header;
 var Card = __webpack_require__(19);
 var Data = __webpack_require__(7);
@@ -28558,7 +28560,7 @@ var SupervisorSchedule = function (_Schedule) {
             this.search = new SearchHeader({
                 title: 'Schedule',
                 placeholder: window.app.onMobile ? 'Search appointments' : 'Searc' + 'h appointments by subject, location, time, and more',
-                index: algolia.initIndex('appts'),
+                index: Data.algoliaIndex('appts'),
                 search: async function search(that) {
                     var qry = (0, _jquery2.default)(that.el).find('.search-box input').val();
                     qry.length > 0 ? that.showClearButton() : that.showInfoButton();
@@ -42190,7 +42192,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 var Chat = __webpack_require__(147).default;
 var AnnouncementChat = __webpack_require__(147).announcement;
 var Utils = __webpack_require__(6);
@@ -42547,7 +42548,7 @@ var SupervisorChats = function (_Chats) {
             this.search = new window.app.SearchHeader({
                 title: 'Messages',
                 placeholder: 'Search your messages',
-                index: algolia.initIndex('chats'),
+                index: Data.algoliaIndex('chats'),
                 search: async function search(that) {
                     var qry = (0, _jquery2.default)(that.el).find('.search-box input').val();
                     qry.length > 0 ? that.showClearButton() : that.showInfoButton();

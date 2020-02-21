@@ -8,8 +8,6 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const algolia = require('algoliasearch')
-    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const EditProfile = require('@tutorbook/profile').edit;
 const User = require('@tutorbook/user');
 const FilterDialog = require('@tutorbook/filters').default;
@@ -21,7 +19,7 @@ class SearchHeader {
 
     constructor(options = {}) {
         this.render = window.app.render;
-        this.index = options.index ? options.index : algolia.initIndex('users');
+        this.index = options.index ? options.index : Data.algoliaIndex('users');
         if (options.search) this.search = options.search;
         this.renderSelf(options);
     }

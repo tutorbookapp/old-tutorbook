@@ -20,8 +20,6 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const algolia = require('algoliasearch')
-    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
@@ -1967,7 +1965,7 @@ class NewPastApptDialog extends EditApptDialog {
             });
             return el;
         };
-        const index = algolia.initIndex('users');
+        const index = Data.algoliaIndex('users');
         const searchPupils = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({

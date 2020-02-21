@@ -17,8 +17,6 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const algolia = require('algoliasearch')
-    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
 const EditSubjectDialog = require('@tutorbook/dialogs').editSubject;
 const NotificationDialog = require('@tutorbook/dialogs').notify;
@@ -475,7 +473,7 @@ class NewProfile extends Profile {
             });
             return el;
         };
-        const index = algolia.initIndex('users');
+        const index = Data.algoliaIndex('users');
         const search = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({

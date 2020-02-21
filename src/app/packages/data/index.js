@@ -1,5 +1,7 @@
 import to from 'await-to-js';
 const axios = require('axios');
+const algolia = require('algoliasearch')
+    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
@@ -11,6 +13,11 @@ class Data {
         this.initTimes();
         this.initHourlyCharges();
         this.initLocations();
+    }
+
+    static algoliaIndex(id) {
+        return algolia.initIndex((window.app.test ? 'test' : 'default') + '-' +
+            id);
     }
 
     static addToWorkspace(uid, proxy = []) {

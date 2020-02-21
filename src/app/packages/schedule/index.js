@@ -8,8 +8,6 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const algolia = require('algoliasearch')
-    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const SearchHeader = require('@tutorbook/search').header;
 const Card = require('@tutorbook/card');
 const Data = require('@tutorbook/data');
@@ -283,7 +281,7 @@ class SupervisorSchedule extends Schedule {
             title: 'Schedule',
             placeholder: window.app.onMobile ? 'Search appointments' : 'Searc' +
                 'h appointments by subject, location, time, and more',
-            index: algolia.initIndex('appts'),
+            index: Data.algoliaIndex('appts'),
             search: async (that) => {
                 const qry = $(that.el).find('.search-box input').val();
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();

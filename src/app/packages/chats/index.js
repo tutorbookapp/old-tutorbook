@@ -8,8 +8,6 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
-const algolia = require('algoliasearch')
-    ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 const Chat = require('@tutorbook/chat').default;
 const AnnouncementChat = require('@tutorbook/chat').announcement;
 const Utils = require('@tutorbook/utils');
@@ -317,7 +315,7 @@ class SupervisorChats extends Chats {
         this.search = new window.app.SearchHeader({
             title: 'Messages',
             placeholder: 'Search your messages',
-            index: algolia.initIndex('chats'),
+            index: Data.algoliaIndex('chats'),
             search: async (that) => {
                 const qry = $(that.el).find('.search-box input').val();
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();
