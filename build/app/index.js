@@ -6999,7 +6999,9 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                     reset();
                     return window.app.snackbar.view('Could not send clock-' + 'in request.');
                 }
-                window.app.snackbar.view('Sent clock-in request to ' + res.supervisor.name + '.');
+                window.app.snackbar.view('Sent clock-in request to ' + res.recipient.name + '.');
+                // TODO: Add approval/rejection listener based on response 
+                // recipient Firestore reference path.
             }
         }
     }, {
@@ -7040,7 +7042,9 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                     reset();
                     return window.app.snackbar.view('Could not send clock-' + 'out request.');
                 }
-                window.app.snackbar.view('Sent clock-out request to ' + res.supervisor.name + '.');
+                window.app.snackbar.view('Sent clock-out request to ' + res.recipient.name + '.');
+                // TODO: Add approval/rejection listener based on response 
+                // recipient Firestore reference path.
             }
         }
     }, {
@@ -23551,7 +23555,9 @@ var ActiveAppt = function (_Event7) {
                     res = _ref6[1];
 
                 if (err) return window.app.snackbar.view('Could not send ' + 'clock-out request.');
-                window.app.snackbar.view('Sent clock-out request to ' + res.supervisor.name + '.');
+                window.app.snackbar.view('Sent clock-out request to ' + res.recipient.name + '.');
+                // TODO: Add approval/rejection listener based on response 
+                // recipient Firestore reference path.
             }
         };
         _this9.renderSelf();
@@ -24711,7 +24717,9 @@ Card.renderActiveApptCard = function (doc) {
                 res = _ref12[1];
 
             if (err) return window.app.snackbar.view('Could not send clock-' + 'out request.');
-            window.app.snackbar.view('Sent clock-out request to ' + res.supervisor.name + '.');
+            window.app.snackbar.view('Sent clock-out request to ' + res.recipient.name + '.');
+            // TODO: Add approval/rejection listener based on response 
+            // recipient Firestore reference path.
         };
     }
 

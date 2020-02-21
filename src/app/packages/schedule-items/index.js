@@ -276,7 +276,9 @@ class ActiveAppt extends Event {
                 if (err) return window.app.snackbar.view('Could not send ' +
                     'clock-out request.');
                 window.app.snackbar.view('Sent clock-out request to ' +
-                    res.supervisor.name + '.');
+                    res.recipient.name + '.');
+                // TODO: Add approval/rejection listener based on response 
+                // recipient Firestore reference path.
             },
         };
         this.renderSelf();
