@@ -11,6 +11,7 @@ import to from 'await-to-js';
 const Chat = require('@tutorbook/chat').default;
 const AnnouncementChat = require('@tutorbook/chat').announcement;
 const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
 const NewGroupDialog = require('@tutorbook/filters').group;
 const EditGroupDialog = require('@tutorbook/filters').editGroup;
 
@@ -322,11 +323,9 @@ class SupervisorChats extends Chats {
                 const [err, res] = await to(that.index.search({
                     query: qry,
                     facetFilters: window.app.location.name === 'Any' ? [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
                         'chatterUIDs:' + window.app.user.uid,
-                    ] : [
+                    ] : [ // TODO: Do we really want to filter by location here?
                         'location.id:' + window.app.location.id,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
                         'chatterUIDs:' + window.app.user.uid,
                     ],
                 }));

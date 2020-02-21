@@ -39,12 +39,9 @@ class SearchHeader {
         query.length > 0 ? that.showClearButton() : that.showInfoButton();
         const [err, res] = await to(that.index.search({
             query: query,
-            facetFilters: window.app.location.name === 'Any' ? [
-                'partition:' + (window.app.test ? 'test' : 'default'),
-            ] : [
+            facetFilters: window.app.location.name === 'Any' ? [] : [
                 'payments.type:Free',
                 'location:' + window.app.location.name,
-                'partition:' + (window.app.test ? 'test' : 'default'),
             ],
         }));
         if (err) return console.error('Could not search users b/c of', err);

@@ -7257,8 +7257,8 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
                     query: query,
-                    facetFilters: window.app.location.name !== 'Any' ? [// TODO: Add type facetFilter here.
-                    'payments.type:Free', 'location:' + window.app.location.name, 'partition:' + (window.app.test ? 'test' : 'default')] : ['partition:' + (window.app.test ? 'test' : 'default')]
+                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', // TODO: Add type facetFilter here.
+                    'location:' + window.app.location.name] : []
                 });
                 (0, _jquery2.default)(textFieldItem).find('#results').empty();
                 res.hits.forEach(function (hit) {
@@ -22718,7 +22718,7 @@ var NewProfile = function (_Profile) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
                     query: query,
-                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', 'location:' + window.app.location.name, 'partition:' + (window.app.test ? 'test' : 'default')] : ['partition:' + (window.app.test ? 'test' : 'default')]
+                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', 'location:' + window.app.location.name] : []
                 });
                 (0, _jquery2.default)(textFieldItem).find('#results').empty();
                 res.hits.forEach(function (hit) {
@@ -25004,7 +25004,7 @@ var SearchHeader = function () {
 
             var _ref = await (0, _awaitToJs2.default)(that.index.search({
                 query: query,
-                facetFilters: window.app.location.name === 'Any' ? ['partition:' + (window.app.test ? 'test' : 'default')] : ['payments.type:Free', 'location:' + window.app.location.name, 'partition:' + (window.app.test ? 'test' : 'default')]
+                facetFilters: window.app.location.name === 'Any' ? [] : ['payments.type:Free', 'location:' + window.app.location.name]
             })),
                 _ref2 = _slicedToArray(_ref, 2),
                 err = _ref2[0],
@@ -28566,7 +28566,7 @@ var SupervisorSchedule = function (_Schedule) {
                     qry.length > 0 ? that.showClearButton() : that.showInfoButton();
                     var res = await that.index.search({
                         query: qry,
-                        facetFilters: window.app.location.name === 'Any' ? ['partition:' + (window.app.test ? 'test' : 'default')] : ['location.id:' + window.app.location.id, 'partition:' + (window.app.test ? 'test' : 'default')]
+                        facetFilters: window.app.location.name === 'Any' ? [] : ['location.id:' + window.app.location.id]
                     });
                     (0, _jquery2.default)(that.el).find('#results').empty();
                     res.hits.forEach(function (hit) {
@@ -42195,6 +42195,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Chat = __webpack_require__(147).default;
 var AnnouncementChat = __webpack_require__(147).announcement;
 var Utils = __webpack_require__(6);
+var Data = __webpack_require__(7);
 var NewGroupDialog = __webpack_require__(136).group;
 var EditGroupDialog = __webpack_require__(136).editGroup;
 
@@ -42555,7 +42556,8 @@ var SupervisorChats = function (_Chats) {
 
                     var _ref7 = await (0, _awaitToJs2.default)(that.index.search({
                         query: qry,
-                        facetFilters: window.app.location.name === 'Any' ? ['partition:' + (window.app.test ? 'test' : 'default'), 'chatterUIDs:' + window.app.user.uid] : ['location.id:' + window.app.location.id, 'partition:' + (window.app.test ? 'test' : 'default'), 'chatterUIDs:' + window.app.user.uid]
+                        facetFilters: window.app.location.name === 'Any' ? ['chatterUIDs:' + window.app.user.uid] : [// TODO: Do we really want to filter by location here?
+                        'location.id:' + window.app.location.id, 'chatterUIDs:' + window.app.user.uid]
                     })),
                         _ref8 = _slicedToArray(_ref7, 2),
                         err = _ref8[0],

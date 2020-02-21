@@ -287,11 +287,8 @@ class SupervisorSchedule extends Schedule {
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();
                 const res = await that.index.search({
                     query: qry,
-                    facetFilters: window.app.location.name === 'Any' ? [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
+                    facetFilters: window.app.location.name === 'Any' ? [] : [
                         'location.id:' + window.app.location.id,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
                     ],
                 });
                 $(that.el).find('#results').empty();

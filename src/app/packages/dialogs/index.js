@@ -1970,14 +1970,10 @@ class NewPastApptDialog extends EditApptDialog {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({
                 query: query,
-                facetFilters: window.app.location.name !==
-                    'Any' ? [ // TODO: Add type facetFilter here.
-                        'payments.type:Free',
-                        'location:' + window.app.location.name,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ],
+                facetFilters: window.app.location.name !== 'Any' ? [
+                    'payments.type:Free', // TODO: Add type facetFilter here.
+                    'location:' + window.app.location.name,
+                ] : [],
             });
             $(textFieldItem).find('#results').empty();
             res.hits.forEach((hit) => {

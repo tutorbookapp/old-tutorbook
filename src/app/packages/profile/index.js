@@ -478,14 +478,10 @@ class NewProfile extends Profile {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({
                 query: query,
-                facetFilters: window.app.location.name !==
-                    'Any' ? [
-                        'payments.type:Free',
-                        'location:' + window.app.location.name,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ],
+                facetFilters: window.app.location.name !== 'Any' ? [
+                    'payments.type:Free',
+                    'location:' + window.app.location.name,
+                ] : [],
             });
             $(textFieldItem).find('#results').empty();
             res.hits.forEach((hit) => {
