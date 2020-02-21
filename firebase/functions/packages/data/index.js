@@ -55,11 +55,12 @@ class DataProxy {
         const data = this.data;
         const token = this.token;
         const user = this.user;
-        const exists = async (collection, id) => {
-            const doc = await global.db.collection('users').doc(user.uid)
-                .collection(collection).doc(id).get();
-            console.log('[DEBUG] Does ' + user.id + ' have a(n) ' + collection +
-                ' doc (' + id + ')?', (doc.exists) ? 'Yes.' : 'No, erroring.');
+        const exists = async (collec, id, c = 'users', i = user.uid) => {
+            const doc = await global.db.collection(c).doc(i).collection(collec)
+                .doc(id).get();
+            console.log('[DEBUG] Does ' + c + ' doc (' + i + ') have a(n) ' +
+                collec + ' doc (' + id + ')?', (doc.exists) ? 'Yes.' : 'No, ' +
+                'erroring.');
             assert(doc.exists);
         };
         switch (action) {
@@ -114,19 +115,23 @@ class DataProxy {
                 return Data.instantClockOut(data.appt, data.id);
             case 'rejectClockIn':
                 assert(token.supervisor);
-                await exists('clockIns', data.id);
+                await exists('clockIns', data.id, 'locations', data.clockIn.for
+                    .location.id);
                 return Data.rejectClockIn(data.clockIn, data.id);
             case 'approveClockIn':
                 assert(token.supervisor);
-                await exists('clockIns', data.id);
+                await exists('clockIns', data.id, 'locations', data.clockIn.for
+                    .location.id);
                 return Data.approveClockIn(data.clockIn, data.id);
             case 'rejectClockOut':
                 assert(token.supervisor);
-                await exists('clockOuts', data.id);
+                await exists('clockOuts', data.id, 'locations', data.clockOut
+                    .for.location.id);
                 return Data.rejectClockOut(data.clockOut, data.id);
             case 'approveClockOut':
                 assert(token.supervisor);
-                await exists('clockOuts', data.id);
+                await exists('clockOuts', data.id, 'locations', data.clockOut
+                    .for.location.id);
                 return Data.approveClockOut(data.clockOut, data.id);
             case 'clockIn':
                 assert(user.type === 'Tutor' || token.supervisor);
@@ -376,7 +381,6 @@ class Data {
             sentTimestamp: new Date(),
             sentBy: global.app.conciseUser,
         };
-        const supervisor = await Data.getLocationSupervisor(appt.location.id);
         const activeAppts = [
             db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
@@ -392,7 +396,6 @@ class Data {
         // Tedious work arounds for infinite reference loops
         appt = (await db.collection('users').doc(appt.attendees[0].uid)
             .collection('appointments').doc(id).get()).data();
-        appt.supervisor = supervisor;
         clockIn.for = Data.cloneMap(appt);
         appt.clockIn = Data.combineMaps(clockIn, {
             approvedTimestamp: new Date(),
@@ -410,12 +413,12 @@ class Data {
 
     static async rejectClockIn(clockIn, id) {
         const db = global.db;
-        const ref = db.collection('users').doc(global.app.user.uid)
+        const ref = db.collection('locations').doc(clockIn.for.location.id)
             .collection('clockIns').doc(id);
         clockIn = (await ref.get()).data(); // Don't trust the client (and this
         // will use the actual Timestamp() object for clockIn.sentTimestamp).
-        const rejectedClockIn = db.collection('users').doc(global.app.user.uid)
-            .collection('rejectedClockIns').doc();
+        const rejectedClockIn = db.collection('locations').doc(clockIn.for
+            .location.id).collection('rejectedClockIns').doc();
         const rejectedClockInData = Data.combineMaps(clockIn, {
             rejectedTimestamp: new Date(),
             rejectedBy: global.app.conciseUser,
@@ -430,12 +433,12 @@ class Data {
 
     static async approveClockIn(clockIn, id) {
         const db = global.db;
-        const ref = db.collection('users').doc(global.app.user.uid)
+        const ref = db.collection('locations').doc(clockIn.for.location.id)
             .collection('clockIns').doc(id);
         clockIn = (await ref.get()).data(); // Don't trust the client (and this
         // will use the actual Timestamp() object for clockIn.sentTimestamp).
-        const approvedClockIn = db.collection('users').doc(global.app.user.uid)
-            .collection('approvedClockIns').doc();
+        const approvedClockIn = db.collection('locations').doc(clockIn.for
+            .location.id).collection('approvedClockIns').doc();
         const activeAppts = [
             db.collection('users').doc(clockIn.for.attendees[0].uid)
             .collection('activeAppointments')
@@ -537,16 +540,16 @@ class Data {
     static async rejectClockOut(clockOutData, id) {
         // Tedious work around of the infinite loop
         const db = global.db;
-        const clockOut = db.collection('users').doc(global.app.user.uid)
-            .collection('clockOuts').doc(id);
+        const clockOut = db.collection('locations').doc(clockOutData.for
+            .location.id).collection('clockOuts').doc(id);
         clockOutData = (await clockOut.get()).data(); // Don't trust client
         const rejectedClockOutData = Data.combineMaps(clockOutData, {
             rejectedTimestamp: new Date(),
             rejectedBy: global.app.conciseUser,
         });
         const appt = Data.cloneMap(rejectedClockOutData.for);
-        const rejectedClockOut = db.collection('users').doc(global.app.user.uid)
-            .collection('rejectedClockOuts').doc();
+        const rejectedClockOut = db.collection('locations').doc(clockOutData.for
+            .location.id).collection('rejectedClockOuts').doc();
         const activeAppts = [
             db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
@@ -573,8 +576,8 @@ class Data {
     static async approveClockOut(clockOutData, id) {
         // Tedious work around of the infinite loop
         const db = global.db;
-        const clockOut = db.collection('users').doc(global.app.user.uid)
-            .collection('clockOuts').doc(id);
+        const clockOut = db.collection('locations').doc(clockOutData.for
+            .location.id).collection('clockOuts').doc(id);
         clockOutData = (await clockOut.get()).data(); // Don't trust client
         const approvedClockOutData = Data.combineMaps(clockOutData, {
             approvedTimestamp: new Date(),
@@ -583,8 +586,8 @@ class Data {
         const appt = Data.cloneMap(approvedClockOutData.for);
         appt.clockOut = Data.cloneMap(approvedClockOutData);
 
-        const approvedClockOut = db.collection('users').doc(global.app.user.uid)
-            .collection('approvedClockOuts').doc();
+        const approvedClockOut = db.collection('locations').doc(appt.location
+            .id).collection('approvedClockOuts').doc();
         const activeAppts = [
             db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
@@ -671,16 +674,12 @@ class Data {
         };
 
         const db = global.db;
-        const supervisor = await Data.getLocationSupervisor(appt.location.id);
-        const supervisorData = (await db.collection('users').doc(supervisor)
-            .get()).data();
+        const ref = db.collection('locations').doc(appt.location.id)
+            .collection('clockIns').doc(id);
         const apptRef = db.collection('users').doc(appt.attendees[0].uid)
             .collection('appointments').doc(id);
-        const ref = db.collection('users').doc(supervisor)
-            .collection('clockIns').doc(id);
 
         appt = (await apptRef.get()).data(); // Don't trust the client
-        appt.supervisor = supervisor; // Avoid infinite reference loop
         appt.clockIn = Data.cloneMap(clockIn);
         clockIn.for = Data.cloneMap(appt);
 
@@ -689,10 +688,6 @@ class Data {
             clockedIn: true
         });
         return {
-            supervisor: {
-                name: supervisorData.name,
-                uid: supervisorData.uid,
-            },
             clockIn: clockIn,
             appt: appt,
             id: id,
@@ -706,15 +701,13 @@ class Data {
         };
 
         const db = global.db;
+        const ref = db.collection('locations').doc(appt.location.id)
+            .collection('clockOuts').doc(id);
         const apptRef = db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments').doc(id);
-        const ref = db.collection('users').doc(appt.supervisor)
-            .collection('clockOuts').doc(id);
-        const supervisorData = (await db.collection('users')
-            .doc(appt.supervisor).get()).data();
 
         appt = (await apptRef.get()).data(); // Don't trust the client
-        appt.clockOut = Data.cloneMap(clockOut); // Avoid infinite ref loop
+        appt.clockOut = Data.cloneMap(clockOut);
         clockOut.for = Data.cloneMap(appt);
 
         await ref.set(clockOut);
@@ -722,10 +715,6 @@ class Data {
             clockedOut: true
         });
         return {
-            supervisor: {
-                name: supervisorData.name,
-                uid: supervisorData.uid,
-            },
             clockOut: clockOut,
             appt: appt,
             id: id,

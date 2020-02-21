@@ -106348,7 +106348,8 @@ var Listener = function () {
 
     _createClass(Listener, [{
         key: 'supervisor',
-        value: function supervisor() {
+        value: async function supervisor() {
+            var locationDocs = await window.app.db.collection('locations').where('supervisors', 'array-contains', window.app.user.uid).get();
             var clockIns = {
                 remove: function remove(doc) {},
                 display: function display(doc) {
@@ -106378,22 +106379,24 @@ var Listener = function () {
                     }).view();
                 }
             };
-            var db = window.app.db.collection('users').doc(window.app.user.uid);
-            window.app.listeners.push(db.collection('clockIns').onSnapshot({
-                error: function error(err) {
-                    window.app.snackbar.view('Could not listen to clock-in ' + 'requests. Reload to try again.');
-                    console.error('Could not listen to clock-ins b/c of ', err);
-                },
-                next: function next(snapshot) {
-                    snapshot.docChanges().forEach(function (change) {
-                        if (change.type === 'removed') {
-                            clockIns.remove(change.doc);
-                        } else {
-                            clockIns.display(change.doc);
-                        }
-                    });
-                }
-            }));
+            locationDocs.forEach(function (locationDoc) {
+                var db = locationDoc.ref;
+                window.app.listeners.push(db.collection('clockIns').onSnapshot({
+                    error: function error(err) {
+                        window.app.snackbar.view('Could not listen to clock-in ' + 'requests. Reload to try again.');
+                        console.error('Couldn\'t get clock-ins b/c of ', err);
+                    },
+                    next: function next(snapshot) {
+                        snapshot.docChanges().forEach(function (change) {
+                            if (change.type === 'removed') {
+                                clockIns.remove(change.doc);
+                            } else {
+                                clockIns.display(change.doc);
+                            }
+                        });
+                    }
+                }));
+            });
             var clockOuts = {
                 remove: function remove(doc) {},
                 display: function display(doc) {
@@ -106423,21 +106426,24 @@ var Listener = function () {
                     }).view();
                 }
             };
-            window.app.listeners.push(db.collection('clockOuts').onSnapshot({
-                error: function error(err) {
-                    window.app.snackbar.view('Could not listen to clock-out ' + 'requests. Reload to try again.');
-                    console.error('Could not listen to clock-outs b/c of ', err);
-                },
-                next: function next(snapshot) {
-                    snapshot.docChanges().forEach(function (change) {
-                        if (change.type === 'removed') {
-                            clockOuts.remove(change.doc);
-                        } else {
-                            clockOuts.display(change.doc);
-                        }
-                    });
-                }
-            }));
+            locationDocs.forEach(function (locationDoc) {
+                var db = locationDoc.ref;
+                window.app.listeners.push(db.collection('clockOuts').onSnapshot({
+                    error: function error(err) {
+                        window.app.snackbar.view('Could not listen to clock-out ' + 'requests. Reload to try again.');
+                        console.error('Couldn\'t get clock-outs b/c of ', err);
+                    },
+                    next: function next(snapshot) {
+                        snapshot.docChanges().forEach(function (change) {
+                            if (change.type === 'removed') {
+                                clockOuts.remove(change.doc);
+                            } else {
+                                clockOuts.display(change.doc);
+                            }
+                        });
+                    }
+                }));
+            });
         }
     }, {
         key: 'tutor',

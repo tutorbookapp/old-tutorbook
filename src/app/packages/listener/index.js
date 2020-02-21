@@ -19,7 +19,9 @@ class Listener {
         };
     }
 
-    supervisor() {
+    async supervisor() {
+        const locationDocs = await window.app.db.collection('locations')
+            .where('supervisors', 'array-contains', window.app.user.uid).get();
         const clockIns = {
             remove: (doc) => {},
             display: (doc) => {
@@ -47,23 +49,25 @@ class Listener {
                 }).view();
             },
         };
-        const db = window.app.db.collection('users').doc(window.app.user.uid);
-        window.app.listeners.push(db.collection('clockIns').onSnapshot({
-            error: (err) => {
-                window.app.snackbar.view('Could not listen to clock-in ' +
-                    'requests. Reload to try again.');
-                console.error('Could not listen to clock-ins b/c of ', err);
-            },
-            next: (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'removed') {
-                        clockIns.remove(change.doc);
-                    } else {
-                        clockIns.display(change.doc);
-                    }
-                });
-            },
-        }));
+        locationDocs.forEach(locationDoc => {
+            const db = locationDoc.ref;
+            window.app.listeners.push(db.collection('clockIns').onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not listen to clock-in ' +
+                        'requests. Reload to try again.');
+                    console.error('Couldn\'t get clock-ins b/c of ', err);
+                },
+                next: (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            clockIns.remove(change.doc);
+                        } else {
+                            clockIns.display(change.doc);
+                        }
+                    });
+                },
+            }));
+        });
         const clockOuts = {
             remove: (doc) => {},
             display: (doc) => {
@@ -91,22 +95,25 @@ class Listener {
                 }).view();
             },
         };
-        window.app.listeners.push(db.collection('clockOuts').onSnapshot({
-            error: (err) => {
-                window.app.snackbar.view('Could not listen to clock-out ' +
-                    'requests. Reload to try again.');
-                console.error('Could not listen to clock-outs b/c of ', err);
-            },
-            next: (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'removed') {
-                        clockOuts.remove(change.doc);
-                    } else {
-                        clockOuts.display(change.doc);
-                    }
-                });
-            },
-        }));
+        locationDocs.forEach(locationDoc => {
+            const db = locationDoc.ref;
+            window.app.listeners.push(db.collection('clockOuts').onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not listen to clock-out ' +
+                        'requests. Reload to try again.');
+                    console.error('Couldn\'t get clock-outs b/c of ', err);
+                },
+                next: (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            clockOuts.remove(change.doc);
+                        } else {
+                            clockOuts.display(change.doc);
+                        }
+                    });
+                },
+            }));
+        });
     }
 
     tutor() {}
