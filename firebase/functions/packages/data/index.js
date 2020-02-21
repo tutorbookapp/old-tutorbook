@@ -688,6 +688,10 @@ class Data {
             clockedIn: true
         });
         return {
+            recipient: {
+                name: 'the ' + appt.location.name + '\'s supervisors',
+                path: ref.path,
+            },
             clockIn: clockIn,
             appt: appt,
             id: id,
@@ -715,6 +719,10 @@ class Data {
             clockedOut: true
         });
         return {
+            recipient: {
+                name: 'the ' + appt.location.name + '\'s supervisors',
+                path: ref.path,
+            },
             clockOut: clockOut,
             appt: appt,
             id: id,
