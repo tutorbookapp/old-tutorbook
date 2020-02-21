@@ -3,6 +3,7 @@
 const id = 'TODO: ADD-ALGOLIA-APP-ID-HERE';
 const key = 'TODO: ADD-ALGOLIA-KEY-HERE';
 const client = require('algoliasearch')(id, key);
+const to = require('await-to-js').default;
 const serviceAccount = require('../admin-cred.json');
 const admin = require('firebase-admin');
 admin.initializeApp({
@@ -12,58 +13,47 @@ admin.initializeApp({
 const partition = 'default';
 const db = admin.firestore().collection('partitions').doc(partition);
 
-function algolia(doc, indexID, settings) {
+async function algolia(doc, indexID, settings) {
+    const index = client.initIndex(partition + '-' + indexID);
     const object = doc.data();
-    object.partition = partition;
-    object.objectID = doc.id;
+    object.objectID = doc.id; // TODO: Do we want to the path?
     object.ref = doc.ref.path;
-    const index = client.initIndex(indexID)
     if (settings) index.setSettings(settings);
-    return index.saveObject(object);
+    const [err, res] = await to(index.saveObject(object));
+    if (err) {
+        console.error('[ERROR] Could not save doc (' + doc.id + ') b/c of ' +
+            err.message);
+        debugger;
+    }
 }
 
 async function main() {
-    /*
-     *client.initIndex('users').setSettings({
-     *    attributesForFaceting: [
-     *        'filterOnly(payments.type)',
-     *        'filterOnly(location)',
-     *    ],
-     *});
-     *(await db.collection('users').get()) // USERS
-     *.forEach((doc) => algolia(doc, 'users'));
-     */
-    /*
-     *(await db.collection('locations').get()).forEach(async (doc) => { // APPTS
-     *    (await doc.ref.collection('appointments').get()) // UPCOMING
-     *    .forEach((doc) => algolia(doc, 'appts', {
-     *        attributesForFaceting: [
-     *            'filterOnly(location.id)',
-     *            'filterOnly(partition)',
-     *        ],
-     *    }));
-     *});
-     */
-    //(await doc.ref.collection('activeAppointments').get()) // ACTIVE
-    //.forEach((doc) => algolia(doc, 'activeAppts'));
-    //(await doc.ref.collection('pastAppointments').get()) // PAST
-    //.forEach((doc) => algolia(doc, 'pastAppts'));
-    //});
-    /*
-     *await Promise.all((await db.collection('chats').get()).docs.map((d) => {
-     *    return d.ref.update({
-     *        location: {
-     *            name: 'Gunn Academic Center',
-     *            id: 'NJp0Y6wyMh2fDdxSuRSx',
-     *        },
-     *    });
-     *}));
-     */
-    (await db.collection('chats').get()) // CHATS
-    .forEach((doc) => algolia(doc, 'chats', {
+    // Users
+    (await db.collection('users').get()).forEach(doc => algolia(doc, 'users', {
+        attributesForFaceting: [
+            'filterOnly(payments.type)',
+            'filterOnly(location)',
+        ],
+    }));
+    (await db.collection('locations').get()).forEach(async doc => {
+        // Upcoming appointments
+        (await doc.ref.collection('appointments').get())
+        .forEach(doc => algolia(doc, 'appts', {
+            attributesForFaceting: [
+                'filterOnly(location.id)',
+            ],
+        }));
+        // Active appointments
+        (await doc.ref.collection('activeAppointments').get())
+        .forEach(doc => algolia(doc, 'activeAppts'));
+        // Past appointments
+        (await doc.ref.collection('pastAppointments').get())
+        .forEach(doc => algolia(doc, 'pastAppts'));
+    });
+    // Chats
+    (await db.collection('chats').get()).forEach(doc => algolia(doc, 'chats', {
         attributesForFaceting: [
             'filterOnly(location.id)',
-            'filterOnly(partition)',
             'filterOnly(chatterUIDs)',
         ],
     }));

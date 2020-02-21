@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "algoliasearch": "^3.35.1",
+    "await-to-js": "^2.1.1",
     "firebase-admin": "^8.8.0"
   }
 }
