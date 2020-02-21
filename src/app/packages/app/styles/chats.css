@@ -30,12 +30,16 @@
   min-width: calc(100vw - 540px);
 }
 
-.chats-container .mdc-list-item {
+.chat-list-item {
   margin: 8px 8px;
   padding: 0 8px;
   border-radius: 8px;
 }
 
-.chats-container .mdc-list-item--selected span {
+.chat-list-item.mdc-list-item--selected span {
   color: var(--mdc-theme-primary, #6200ee);
+}
+
+.chat-list-item .mdc-list-item__meta button {
+  color: #5F6368 !important;
 }
