@@ -253,10 +253,10 @@ service cloud.firestore {
     }
 
     // [CLOCKINS AND CLOCKOUTS]
-    match /users/{supervisor}/clockIns/{clockIn} {
-      allow read: if request.auth.uid == supervisor;
+    match /locations/{location}/clockIns/{clockIn} {
+      allow read: if location in request.auth.token.locations;
     }
-    match /users/{supervisor}/approvedClockIns/{clockIn} {
+    match /locations/{location}/approvedClockIns/{clockIn} {
       allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
     match /users/{user}/activeAppointments/{appt} {
@@ -270,13 +270,13 @@ service cloud.firestore {
 	|| request.auth.uid == resource.data.attendees[0].uid
 	|| request.auth.uid == resource.data.attendees[1].uid;
     }
-    match /users/{supervisor}/rejectedClockIns/{clockIn} {
+    match /locations/{location}/rejectedClockIns/{clockIn} {
       allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
-    match /users/{supervisor}/clockOuts/{clockOut} {
-      allow read: if request.auth.uid == supervisor;
+    match /locations/{location}/clockOuts/{clockOut} {
+      allow read: if location in request.auth.token.locations;
     }
-    match /users/{supervisor}/approvedClockOuts/{clockOut} {
+    match /locations/{location}/approvedClockOuts/{clockOut} {
       allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
     match /users/{user}/pastAppointments/{appt} {
@@ -289,7 +289,7 @@ service cloud.firestore {
       allow read: if request.auth.token.supervisor == true
 	&& location in request.auth.token.locations;
     }
-    match /users/{supervisor}/rejectedClockOuts/{clockOut} {
+    match /locations/{location}/rejectedClockOuts/{clockOut} {
       allow read: if request.auth.uid == resource.data.sentBy.uid;
     }
 
