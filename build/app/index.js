@@ -4965,82 +4965,6 @@ var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
-var ApptNotificationDialog = function () {
-    function ApptNotificationDialog() {
-        _classCallCheck(this, ApptNotificationDialog);
-
-        this.render = window.app.render;
-        this.renderSelf();
-    }
-
-    _createClass(ApptNotificationDialog, [{
-        key: 'view',
-        value: function view() {
-            (0, _jquery2.default)('body').prepend(this.main);
-            if (!this.managed) this.manage();
-            this.dialog.open();
-        }
-    }, {
-        key: 'renderSelf',
-        value: function renderSelf() {
-            var _this = this;
-
-            this.main = this.render.template('dialog-appt');
-            var add = function add(el) {
-                (0, _jquery2.default)(_this.main).find('.mdc-dialog__content').append(el);
-            };
-            var addD = function addD(label) {
-                add('<h4 class="mdc-list-group__subheader">' + label + '</h4>');
-            };
-            var addC = function addC(label, id) {
-                add(_this.render.checkBox(label, id));
-            };
-            addD('Send reminder messages to');
-            addC('Tutors (those who received the original request)', 'tutors');
-            addC('Pupils (those who sent the original request)', 'pupils');
-            addD('Who have appointments on');
-            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach(function (day) {
-                addC(day, day.toLowerCase());
-            });
-        }
-    }, {
-        key: 'manage',
-        value: function manage() {
-            this.dialog = new _index3.MDCDialog(this.main);
-            var checkboxes = {};
-            (0, _jquery2.default)(this.main).find('.mdc-checkbox').each(function () {
-                // TODO: Fix MDCRipple effects
-                checkboxes[(0, _jquery2.default)(this).parent().attr('id')] = new _index6.MDCCheckbox(this);
-                _index5.MDCFormField.attachTo((0, _jquery2.default)(this).parent()[0]).input = checkboxes[(0, _jquery2.default)(this).attr('id')];
-            });
-            (0, _jquery2.default)(this.main).find('button').each(function () {
-                _index2.MDCRipple.attachTo(this);
-            });
-            this.dialog.listen('MDCDialog:closing', async function (event) {
-                if (event.detail.action !== 'send') return;
-                var tutor = checkboxes['tutors'].checked;
-                var pupil = checkboxes['pupils'].checked;
-                if (!tutor && !pupil) return console.warn('Did not send any ' + 'notifications.');
-                window.app.snackbar.view('Sending reminder messages...');
-                try {
-                    await Promise.all(Object.entries(checkboxes).map(function (entry) {
-                        if (['monday', 'tuesday', 'wednesday', 'thursday', 'friday'].indexOf(entry[0]) >= 0 && entry[1].checked) return Data.notifyAppt(entry[0], tutor, pupil);
-                    }));
-                    window.app.snackbar.view('Sent reminder messages.');
-                } catch (e) {
-                    console.error('Error while sending notification messages:', e);
-                    window.app.snackbar.view('Could not send reminder messages.');
-                }
-            });
-            this.managed = true;
-        }
-    }]);
-
-    return ApptNotificationDialog;
-}();
-
-;
-
 var SubjectSelectDialog = function () {
     function SubjectSelectDialog() {
         _classCallCheck(this, SubjectSelectDialog);
@@ -5060,14 +4984,14 @@ var SubjectSelectDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this2 = this;
+            var _this = this;
 
             this.dialog = _index3.MDCDialog.attachTo(this.main);
 
             this.main.querySelectorAll('#page-all .mdc-list-item').forEach(function (el) {
                 (0, _jquery2.default)(el).click(function () {
                     var id = el.id.split('-').slice(1).join('-');
-                    _this2.section(id);
+                    _this.section(id);
                 });
             });
 
@@ -5079,9 +5003,9 @@ var SubjectSelectDialog = function () {
 
                 sel.querySelectorAll('.mdc-list-item').forEach(function (el) {
                     el.addEventListener('click', function () {
-                        _this2.updateSelected(el.innerText.trim());
-                        _this2.dialog.close();
-                        (0, _jquery2.default)(_this2.main).remove();
+                        _this.updateSelected(el.innerText.trim());
+                        _this.dialog.close();
+                        (0, _jquery2.default)(_this.main).remove();
                     });
                 });
             });
@@ -5096,7 +5020,7 @@ var SubjectSelectDialog = function () {
     }, {
         key: 'section',
         value: function section(id) {
-            var _this3 = this;
+            var _this2 = this;
 
             this.pages.forEach(function (sel) {
                 if (sel.id === id) {
@@ -5104,17 +5028,17 @@ var SubjectSelectDialog = function () {
                 } else {
                     sel.style.display = 'none';
                 }
-                _this3.dialog.layout();
+                _this2.dialog.layout();
             });
         }
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this4 = this;
+            var _this3 = this;
 
             this.main = this.render.template('dialog-subjects', {
                 back: function back() {
-                    return _this4.section('page-all');
+                    return _this3.section('page-all');
                 }
             });
             this.pages = this.main.querySelectorAll('.page');
@@ -5149,12 +5073,12 @@ var EditSubjectDialog = function (_SubjectSelectDialog) {
     function EditSubjectDialog(textFieldEl, profile) {
         _classCallCheck(this, EditSubjectDialog);
 
-        var _this5 = _possibleConstructorReturn(this, (EditSubjectDialog.__proto__ || Object.getPrototypeOf(EditSubjectDialog)).call(this));
+        var _this4 = _possibleConstructorReturn(this, (EditSubjectDialog.__proto__ || Object.getPrototypeOf(EditSubjectDialog)).call(this));
 
-        _this5.selected = (0, _jquery2.default)(textFieldEl).find('input').val();
-        _this5.input = textFieldEl;
-        _this5.profile = profile;
-        return _this5;
+        _this4.selected = (0, _jquery2.default)(textFieldEl).find('input').val();
+        _this4.input = textFieldEl;
+        _this4.profile = profile;
+        return _this4;
     }
 
     _createClass(EditSubjectDialog, [{
@@ -5214,7 +5138,7 @@ var EditAvailabilityDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this6 = this;
+            var _this5 = this;
 
             this.managed = true;
             var that = this;
@@ -5242,40 +5166,40 @@ var EditAvailabilityDialog = function () {
             });
             this.locationSelect = a('#Location', function (s) {
                 if (s.value === 'Custom') {
-                    (0, _jquery2.default)(_this6.main).find('#Location').replaceWith(_this6.render.locationInput(function (val) {
-                        _this6.val.location = val.formatted_address;
+                    (0, _jquery2.default)(_this5.main).find('#Location').replaceWith(_this5.render.locationInput(function (val) {
+                        _this5.val.location = val.formatted_address;
                     }));
                 } else {
-                    _this6.val.location = s.value;
-                    _this6.refreshDaysAndTimes();
+                    _this5.val.location = s.value;
+                    _this5.refreshDaysAndTimes();
                 }
             });
             this.daySelect = a('#Day', function (s) {
-                _this6.val.day = s.value;
-                _this6.refreshTimes();
+                _this5.val.day = s.value;
+                _this5.refreshTimes();
             });
             this.timeslotSelect = a('#Time', function (s) {
                 if (s.value.split(' to ').length > 1) {
-                    _this6.val.fromTime = s.value.split(' to ')[0];
-                    _this6.val.toTime = s.value.split(' to ')[1];
+                    _this5.val.fromTime = s.value.split(' to ')[0];
+                    _this5.val.toTime = s.value.split(' to ')[1];
                 } else {
-                    _this6.val.fromTime = s.value;
-                    _this6.val.toTime = s.value;
+                    _this5.val.fromTime = s.value;
+                    _this5.val.toTime = s.value;
                 }
-                _this6.val.time = s.value;
+                _this5.val.time = s.value;
             });
 
             if (this.val.location) this.refreshDaysAndTimes();
             if (!(0, _jquery2.default)(this.main).find('#ok-button').length) return;
 
             (0, _jquery2.default)(this.main).find('#ok-button')[0].addEventListener('click', function () {
-                if (_this6.valid) _this6.dialog.close('ok');
+                if (_this5.valid) _this5.dialog.close('ok');
             });
             this.dialog.listen('MDCDialog:closing', function (event) {
                 if (event.detail.action === 'ok') {
-                    (0, _jquery2.default)(_this6.input).find('input').val(Utils.getAvailabilityString(_this6.val)).focus();
-                    EditAvailabilityDialog.updateAvailability(_this6.profile);
-                    (0, _jquery2.default)(_this6.main).remove();
+                    (0, _jquery2.default)(_this5.input).find('input').val(Utils.getAvailabilityString(_this5.val)).focus();
+                    EditAvailabilityDialog.updateAvailability(_this5.profile);
+                    (0, _jquery2.default)(_this5.main).remove();
                 }
             });
         }
@@ -5532,14 +5456,14 @@ var NotificationDialog = function () {
     }, {
         key: 'view',
         value: function view() {
-            var _this7 = this;
+            var _this6 = this;
 
             (0, _jquery2.default)('body').prepend(this.el);
             this.dialog = _index3.MDCDialog.attachTo(this.el);
             this.dialog.autoStackButtons = false;
             this.dialog.listen('MDCDialog:closed', function (event) {
-                (0, _jquery2.default)(_this7.el).remove();
-                _this7.action();
+                (0, _jquery2.default)(_this6.el).remove();
+                _this6.action();
             });
             this.dialog.open();
         }
@@ -5576,7 +5500,7 @@ var ConfirmationDialog = function () {
     }, {
         key: 'view',
         value: function view() {
-            var _this8 = this;
+            var _this7 = this;
 
             (0, _jquery2.default)('body').prepend(this.el);
             this.dialog = _index3.MDCDialog.attachTo(this.el);
@@ -5586,8 +5510,8 @@ var ConfirmationDialog = function () {
                 this.dialog.escapeKeyAction = '';
             }
             this.dialog.listen('MDCDialog:closed', function (event) {
-                (0, _jquery2.default)(_this8.el).remove();
-                event.detail.action === 'yes' ? _this8.action() : _this8.noAction();
+                (0, _jquery2.default)(_this7.el).remove();
+                event.detail.action === 'yes' ? _this7.action() : _this7.noAction();
             });
             this.dialog.open();
         }
@@ -5613,7 +5537,7 @@ var ViewRequestDialog = function () {
     _createClass(ViewRequestDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this9 = this;
+            var _this8 = this;
 
             var that = this;
             var request = this.request;
@@ -5659,7 +5583,7 @@ var ViewRequestDialog = function () {
             var header = this.render.header('header-action', {
                 title: 'View Request',
                 edit: function edit() {
-                    return new EditRequestDialog(_this9.request, _this9.id).view();
+                    return new EditRequestDialog(_this8.request, _this8.id).view();
                 },
                 showEdit: true,
                 showApprove: window.app.user.email === this.request.toUser.email,
@@ -5667,7 +5591,7 @@ var ViewRequestDialog = function () {
                     window.app.nav.back();
                     window.app.snackbar.view('Approving request...');
 
-                    var _ref = await (0, _awaitToJs2.default)(Data.approveRequest(_this9.request, _this9.id)),
+                    var _ref = await (0, _awaitToJs2.default)(Data.approveRequest(_this8.request, _this8.id)),
                         _ref2 = _slicedToArray(_ref, 2),
                         err = _ref2[0],
                         res = _ref2[1];
@@ -5694,7 +5618,7 @@ var ViewRequestDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this10 = this;
+            var _this9 = this;
 
             _index4.MDCTopAppBar.attachTo(this.header);
             var dialog = this.main;
@@ -5702,7 +5626,7 @@ var ViewRequestDialog = function () {
             // do not render correctly.
             this.textFields = {};
             dialog.querySelectorAll('.mdc-text-field').forEach(function (el) {
-                _this10.textFields[el.id] = new _index.MDCTextField(el);
+                _this9.textFields[el.id] = new _index.MDCTextField(el);
             });
 
             // Disable all inputs
@@ -5725,10 +5649,10 @@ var ViewModifiedRequestDialog = function (_ViewRequestDialog) {
     function ViewModifiedRequestDialog(request) {
         _classCallCheck(this, ViewModifiedRequestDialog);
 
-        var _this11 = _possibleConstructorReturn(this, (ViewModifiedRequestDialog.__proto__ || Object.getPrototypeOf(ViewModifiedRequestDialog)).call(this, request.for));
+        var _this10 = _possibleConstructorReturn(this, (ViewModifiedRequestDialog.__proto__ || Object.getPrototypeOf(ViewModifiedRequestDialog)).call(this, request.for));
 
-        _this11.modifiedRequest = request;
-        return _this11;
+        _this10.modifiedRequest = request;
+        return _this10;
     }
 
     _createClass(ViewModifiedRequestDialog, [{
@@ -5750,10 +5674,10 @@ var ViewCanceledRequestDialog = function (_ViewRequestDialog2) {
     function ViewCanceledRequestDialog(request) {
         _classCallCheck(this, ViewCanceledRequestDialog);
 
-        var _this12 = _possibleConstructorReturn(this, (ViewCanceledRequestDialog.__proto__ || Object.getPrototypeOf(ViewCanceledRequestDialog)).call(this, request.for));
+        var _this11 = _possibleConstructorReturn(this, (ViewCanceledRequestDialog.__proto__ || Object.getPrototypeOf(ViewCanceledRequestDialog)).call(this, request.for));
 
-        _this12.canceledRequest = request;
-        return _this12;
+        _this11.canceledRequest = request;
+        return _this11;
     }
 
     _createClass(ViewCanceledRequestDialog, [{
@@ -5777,10 +5701,10 @@ var ViewRejectedRequestDialog = function (_ViewRequestDialog3) {
     function ViewRejectedRequestDialog(request) {
         _classCallCheck(this, ViewRejectedRequestDialog);
 
-        var _this13 = _possibleConstructorReturn(this, (ViewRejectedRequestDialog.__proto__ || Object.getPrototypeOf(ViewRejectedRequestDialog)).call(this, request.for));
+        var _this12 = _possibleConstructorReturn(this, (ViewRejectedRequestDialog.__proto__ || Object.getPrototypeOf(ViewRejectedRequestDialog)).call(this, request.for));
 
-        _this13.rejectedRequest = request;
-        return _this13;
+        _this12.rejectedRequest = request;
+        return _this12;
     }
 
     _createClass(ViewRejectedRequestDialog, [{
@@ -5812,7 +5736,7 @@ var EditHourDialog = function () {
     _createClass(EditHourDialog, [{
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this14 = this;
+            var _this13 = this;
 
             this.main = this.render.template('dialog-form', {
                 title: 'Edit Hours'
@@ -5824,12 +5748,12 @@ var EditHourDialog = function () {
                 return (0, _jquery2.default)(content).append(el);
             };
             var addS = function addS(l, v, d) {
-                return add(_this14.render.selectItem(l, v, d));
+                return add(_this13.render.selectItem(l, v, d));
             };
             var addT = function addT(l, p) {
                 var v = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
-                add(_this14.render.textFieldWithErrItem(l, v));
+                add(_this13.render.textFieldWithErrItem(l, v));
                 (0, _jquery2.default)(content).find('#' + l + ' input').attr('placeholder', p);
             };
 
@@ -5851,12 +5775,12 @@ var EditHourDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this15 = this;
+            var _this14 = this;
 
             var t = function t(q, a) {
-                var t = new _index.MDCTextField((0, _jquery2.default)(_this15.main).find(q)[0]);
+                var t = new _index.MDCTextField((0, _jquery2.default)(_this14.main).find(q)[0]);
                 t.useNativeValidation = false;
-                (0, _jquery2.default)(_this15.main).find(q + ' input')[0].addEventListener('focusout', function () {
+                (0, _jquery2.default)(_this14.main).find(q + ' input')[0].addEventListener('focusout', function () {
                     return a(t);
                 });
                 return t;
@@ -5864,7 +5788,7 @@ var EditHourDialog = function () {
             var s = function s(q) {
                 var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
 
-                var s = Utils.attachSelect((0, _jquery2.default)(_this15.main).find(q)[0]);
+                var s = Utils.attachSelect((0, _jquery2.default)(_this14.main).find(q)[0]);
                 s.listen('MDCSelect:change', function () {
                     return a(s);
                 });
@@ -5873,21 +5797,21 @@ var EditHourDialog = function () {
 
             this.managed = true;
             this.daySelect = s('#Day', function (s) {
-                return _this15.updateDay(s);
+                return _this14.updateDay(s);
             });
             this.openTextField = t('#Open', function (t) {
-                return _this15.updateOpenTime(t);
+                return _this14.updateOpenTime(t);
             });
             this.closeTextField = t('#Close', function (t) {
-                return _this15.updateCloseTime(t);
+                return _this14.updateCloseTime(t);
             });
 
             (0, _jquery2.default)(this.main).find('#ok-button')[0].addEventListener('click', function () {
-                if (_this15.valid) _this15.dialog.close('ok');
+                if (_this14.valid) _this14.dialog.close('ok');
             });
             this.dialog.listen('MDCDialog:closing', function (event) {
-                if (event.detail.action === 'ok') _this15.textField.value = Utils.getHourString(_this15.val);
-                (0, _jquery2.default)(_this15.main).remove();
+                if (event.detail.action === 'ok') _this14.textField.value = Utils.getHourString(_this14.val);
+                (0, _jquery2.default)(_this14.main).remove();
             });
         }
     }, {
@@ -5985,17 +5909,17 @@ var EditLocationDialog = function () {
     _createClass(EditLocationDialog, [{
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this16 = this;
+            var _this15 = this;
 
             this.header = this.render.header('header-action', {
                 ok: function ok() {
-                    return _this16.save();
+                    return _this15.save();
                 },
                 cancel: function cancel() {
-                    if (_this16.changed) return new ConfirmationDialog('Discard ' + 'Changes?', 'Are you sure that you want to discard your ' + 'changes to the ' + _this16.name + '? Save your changes by ' + 'clicking \'No\' or anywhere outside of this dialog.', function () {
-                        return _this16.reset();
+                    if (_this15.changed) return new ConfirmationDialog('Discard ' + 'Changes?', 'Are you sure that you want to discard your ' + 'changes to the ' + _this15.name + '? Save your changes by ' + 'clicking \'No\' or anywhere outside of this dialog.', function () {
+                        return _this15.reset();
                     }, false, function () {
-                        return _this16.save();
+                        return _this15.save();
                     }).view();
                     window.app.nav.back();
                 },
@@ -6004,22 +5928,22 @@ var EditLocationDialog = function () {
             this.main = this.render.template('dialog-input');
 
             var add = function add(e) {
-                return _this16.main.appendChild(e);
+                return _this15.main.appendChild(e);
             };
             var addD = function addD(label) {
-                return add(_this16.render.listDivider(label));
+                return add(_this15.render.listDivider(label));
             };
             var addActionD = function addActionD(l, a) {
-                return add(_this16.render.actionDivider(l, a));
+                return add(_this15.render.actionDivider(l, a));
             };
             var addS = function addS(l) {
                 var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var d = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-                return add(_this16.render.selectItem(l, v, Utils.concatArr(d, [v])));
+                return add(_this15.render.selectItem(l, v, Utils.concatArr(d, [v])));
             };
             var addT = function addT(l) {
                 var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-                return add(_this16.render.textFieldItem(l, v));
+                return add(_this15.render.textFieldItem(l, v));
             };
 
             addD('Basic info');
@@ -6031,10 +5955,10 @@ var EditLocationDialog = function () {
             addS('Round times to the nearest', this.config.hrs.timeThreshold, Data.timeThresholds);
             addActionD('Open hours', {
                 add: function add() {
-                    return _this16.addHourInput();
+                    return _this15.addHourInput();
                 },
                 remove: function remove() {
-                    return _this16.removeHourInput();
+                    return _this15.removeHourInput();
                 }
             });
             this.addHourInputs();
@@ -6048,11 +5972,11 @@ var EditLocationDialog = function () {
             add(this.render.template('delete-user-input', {
                 label: 'Delete Location',
                 delete: function _delete() {
-                    return new ConfirmationDialog('Delete Location?', 'You are' + ' about to permanently delete all ' + _this16.name + ' data. ' + 'This action cannot be undone. Please ensure to check with ' + 'your fellow supervisors before continuing.', async function () {
+                    return new ConfirmationDialog('Delete Location?', 'You are' + ' about to permanently delete all ' + _this15.name + ' data. ' + 'This action cannot be undone. Please ensure to check with ' + 'your fellow supervisors before continuing.', async function () {
                         window.app.nav.back();
                         window.app.snackbar.view('Deleting location...');
 
-                        var _ref3 = await (0, _awaitToJs2.default)(Data.deleteLocation(_this16.id)),
+                        var _ref3 = await (0, _awaitToJs2.default)(Data.deleteLocation(_this15.id)),
                             _ref4 = _slicedToArray(_ref3, 2),
                             err = _ref4[0],
                             res = _ref4[1];
@@ -6073,7 +5997,7 @@ var EditLocationDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this17 = this;
+            var _this16 = this;
 
             this.managed = true;
             _index4.MDCTopAppBar.attachTo(this.header);
@@ -6085,12 +6009,12 @@ var EditLocationDialog = function () {
             });
             var hourInputs = this.hourInputs = [];
             var t = function t(q) {
-                return new _index.MDCTextField((0, _jquery2.default)(_this17.main).find(q)[0]);
+                return new _index.MDCTextField((0, _jquery2.default)(_this16.main).find(q)[0]);
             };
             var s = function s(q) {
                 var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
 
-                var s = Utils.attachSelect((0, _jquery2.default)(_this17.main).find(q)[0]);
+                var s = Utils.attachSelect((0, _jquery2.default)(_this16.main).find(q)[0]);
                 s.listen('MDCSelect:change', function () {
                     return a(s);
                 });
@@ -6098,7 +6022,7 @@ var EditLocationDialog = function () {
             };
             var ts = function ts(q) {
                 var res = [];
-                (0, _jquery2.default)(_this17.main).find(q).each(function () {
+                (0, _jquery2.default)(_this16.main).find(q).each(function () {
                     res.push(new _index.MDCTextField(this));
                 });
                 return res;
@@ -6108,15 +6032,15 @@ var EditLocationDialog = function () {
             this.descriptionTextArea = t('#Description');
             this.roundingSelect = s('[id="Round service hours"]', function (s) {
                 if (Data.roundings.indexOf(s.value) < 0) return s.valid = false;
-                _this17.config.hrs.rounding = s.value;
+                _this16.config.hrs.rounding = s.value;
             });
             this.thresholdSelect = s('[id="To the nearest"]', function (s) {
                 if (Data.thresholds.indexOf(s.value) < 0) return s.valid = false;
-                _this17.config.hrs.threshold = s.value;
+                _this16.config.hrs.threshold = s.value;
             });
             this.timeThresholdSelect = s('[id="Round times to the nearest"]', function (s) {
                 if (Data.timeThresholds.indexOf(s.value) < 0) return s.valid = false;
-                _this17.config.hrs.timeThreshold = s.value;
+                _this16.config.hrs.timeThreshold = s.value;
             });
             this.supervisorTextFields = ts('[id="Supervisor"]');
             (0, _jquery2.default)(this.main).find('[id="Open"]').each(function () {
@@ -6174,11 +6098,11 @@ var EditLocationDialog = function () {
     }, {
         key: 'addHourInputs',
         value: function addHourInputs() {
-            var _this18 = this;
+            var _this17 = this;
 
             var add = function add() {
                 var t = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                return (0, _jquery2.default)(_this18.main).append(_this18.render.textFieldItem('Open', t));
+                return (0, _jquery2.default)(_this17.main).append(_this17.render.textFieldItem('Open', t));
             };
             Utils.getHourStrings(this.hours).forEach(function (timeslot) {
                 add(timeslot);
@@ -6205,14 +6129,14 @@ var EditLocationDialog = function () {
     }, {
         key: 'addSupervisorInputs',
         value: function addSupervisorInputs() {
-            var _this19 = this;
+            var _this18 = this;
 
             var add = function add(e, el) {
-                return (0, _jquery2.default)(_this19.main).append(_this19.render.splitListItem(e, el));
+                return (0, _jquery2.default)(_this18.main).append(_this18.render.splitListItem(e, el));
             };
             var t = function t() {
                 var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                return _this19.render.textField('Supervisor', v);
+                return _this18.render.textField('Supervisor', v);
             };
             for (var i = 0; i < this.supervisors.length; i += 2) {
                 var supA = this.supervisors[i];
@@ -6430,7 +6354,7 @@ var EditRequestDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this21 = this;
+            var _this20 = this;
 
             this.managed = true;
             var availability = this.user.availability;
@@ -6487,7 +6411,7 @@ var EditRequestDialog = function () {
             var messageTextField = _index.MDCTextField.attachTo(messageEl);
 
             [locationSelect, daySelect, timeslotSelect, subjectSelect].forEach(function (input) {
-                return _this21.req.push({
+                return _this20.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -6510,7 +6434,7 @@ var EditRequestDialog = function () {
     }, {
         key: 'refreshDayAndTimeSelects',
         value: function refreshDayAndTimeSelects(request, a) {
-            var _this22 = this;
+            var _this21 = this;
 
             if (!a[request.location.name]) return; // Custom location
             var that = this;
@@ -6564,7 +6488,7 @@ var EditRequestDialog = function () {
                 return ['Day', 'Time'].indexOf(r.id) < 0;
             });
             [daySelect, timeslotSelect].forEach(function (input) {
-                _this22.req.push({
+                _this21.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -6693,12 +6617,12 @@ var NewRequestDialog = function (_EditRequestDialog) {
         }
 
         // No options for the user to select
-        if (locations.length < 1 && days.length < 1 && timeslots.length < 1) return _ret = window.app.snackbar.view(user.name + ' does not have any ' + 'availability.'), _possibleConstructorReturn(_this23, _ret);
+        if (locations.length < 1 && days.length < 1 && timeslots.length < 1) return _ret = window.app.snackbar.view(user.name + ' does not have any ' + 'availability.'), _possibleConstructorReturn(_this22, _ret);
 
-        var _this23 = _possibleConstructorReturn(this, (NewRequestDialog.__proto__ || Object.getPrototypeOf(NewRequestDialog)).call(this, request, Utils.genID()));
+        var _this22 = _possibleConstructorReturn(this, (NewRequestDialog.__proto__ || Object.getPrototypeOf(NewRequestDialog)).call(this, request, Utils.genID()));
 
-        _this23.user = user; // Cannot reference `this` until after super();
-        return _this23;
+        _this22.user = user; // Cannot reference `this` until after super();
+        return _this22;
     }
 
     _createClass(NewRequestDialog, [{
@@ -6713,7 +6637,7 @@ var NewRequestDialog = function (_EditRequestDialog) {
     }, {
         key: 'sendRequest',
         value: async function sendRequest() {
-            var _this24 = this;
+            var _this23 = this;
 
             // Override modify to create a new request
             window.app.nav.back();
@@ -6728,13 +6652,13 @@ var NewRequestDialog = function (_EditRequestDialog) {
             window.app.snackbar.view('Request sent to ' + this.request.toUser.email + '.', 'Undo', async function () {
                 window.app.snackbar.view('Canceling request...');
 
-                var _ref11 = await (0, _awaitToJs2.default)(Data.cancelRequest(_this24.request, res.id)),
+                var _ref11 = await (0, _awaitToJs2.default)(Data.cancelRequest(_this23.request, res.id)),
                     _ref12 = _slicedToArray(_ref11, 2),
                     err = _ref12[0],
                     response = _ref12[1];
 
                 if (err) return window.app.snackbar.view('Could not cancel ' + 'request. Go to your dashboard to try again.');
-                window.app.snackbar.view('Canceled request to ' + _this24.request.toUser.email + '.');
+                window.app.snackbar.view('Canceled request to ' + _this23.request.toUser.email + '.');
             });
         }
     }]);
@@ -6750,22 +6674,22 @@ var PaidRequestDialog = function (_NewRequestDialog) {
     function PaidRequestDialog(subject, user) {
         _classCallCheck(this, PaidRequestDialog);
 
-        var _this25 = _possibleConstructorReturn(this, (PaidRequestDialog.__proto__ || Object.getPrototypeOf(PaidRequestDialog)).call(this, subject, user));
+        var _this24 = _possibleConstructorReturn(this, (PaidRequestDialog.__proto__ || Object.getPrototypeOf(PaidRequestDialog)).call(this, subject, user));
 
         if (user.payments.type !== 'Paid') {
             console.warn('PaidRequestDialog was passed a user that isn\'t ' + 'supposed to be paid.');
         }
-        _this25.request.payment.type = 'Paid';
-        _this25.payment = {
-            to: _this25.request.toUser,
-            from: _this25.request.fromUser,
-            amount: _this25.getAmount(),
+        _this24.request.payment.type = 'Paid';
+        _this24.payment = {
+            to: _this24.request.toUser,
+            from: _this24.request.fromUser,
+            amount: _this24.getAmount(),
             timestamp: new Date(),
-            for: _this25.request,
-            id: _this25.id || '',
+            for: _this24.request,
+            id: _this24.id || '',
             method: 'PayPal'
         };
-        return _this25;
+        return _this24;
     }
 
     _createClass(PaidRequestDialog, [{
@@ -6870,19 +6794,19 @@ var StripeRequestDialog = function (_PaidRequestDialog) {
     function StripeRequestDialog(subject, user) {
         _classCallCheck(this, StripeRequestDialog);
 
-        var _this26 = _possibleConstructorReturn(this, (StripeRequestDialog.__proto__ || Object.getPrototypeOf(StripeRequestDialog)).call(this, subject, user));
+        var _this25 = _possibleConstructorReturn(this, (StripeRequestDialog.__proto__ || Object.getPrototypeOf(StripeRequestDialog)).call(this, subject, user));
 
-        _this26.request.payment.method = 'Stripe';
-        _this26.payment = {
-            to: _this26.request.toUser,
-            from: _this26.request.fromUser,
-            amount: _this26.getAmount(),
-            for: _this26.request,
+        _this25.request.payment.method = 'Stripe';
+        _this25.payment = {
+            to: _this25.request.toUser,
+            from: _this25.request.fromUser,
+            amount: _this25.getAmount(),
+            for: _this25.request,
             timestamp: new Date(),
             method: 'Stripe'
         };
-        _this26.stripe = Stripe(window.app.test ? 'pk_test_EhDaWOgtLwDUCGauIkrELrOu00J8OIBNuf' : 'pk_live_rospM71ihUDYWBArO9JKmanT00L5dZ36vA');
-        return _this26;
+        _this25.stripe = Stripe(window.app.test ? 'pk_test_EhDaWOgtLwDUCGauIkrELrOu00J8OIBNuf' : 'pk_live_rospM71ihUDYWBArO9JKmanT00L5dZ36vA');
+        return _this25;
     }
 
     _createClass(StripeRequestDialog, [{
@@ -6969,16 +6893,16 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     function ViewApptDialog(appt, id) {
         _classCallCheck(this, ViewApptDialog);
 
-        var _this27 = _possibleConstructorReturn(this, (ViewApptDialog.__proto__ || Object.getPrototypeOf(ViewApptDialog)).call(this, appt.for, id));
+        var _this26 = _possibleConstructorReturn(this, (ViewApptDialog.__proto__ || Object.getPrototypeOf(ViewApptDialog)).call(this, appt.for, id));
 
-        _this27.appt = appt;
-        return _this27;
+        _this26.appt = appt;
+        return _this26;
     }
 
     _createClass(ViewApptDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this28 = this;
+            var _this27 = this;
 
             await _get(ViewApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewApptDialog.prototype), 'renderSelf', this).call(this);
             if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
@@ -6997,7 +6921,7 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
             this.header = this.render.header('header-action', {
                 showEdit: true,
                 edit: function edit() {
-                    return new EditApptDialog(_this28.appt, _this28.id).view();
+                    return new EditApptDialog(_this27.appt, _this27.id).view();
                 },
                 title: 'Upcoming Appointment'
             });
@@ -7005,7 +6929,7 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this29 = this;
+            var _this28 = this;
 
             _get(ViewApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewApptDialog.prototype), 'manage', this).call(this);
             (0, _jquery2.default)(this.main).find('.mdc-fab').each(function () {
@@ -7016,22 +6940,22 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                     (0, _jquery2.default)(this.main).find('.mdc-fab').click(async function () {
                         window.app.snackbar.view('Sending payment request...');
 
-                        var _ref13 = await (0, _awaitToJs2.default)(Data.requestPaymentFor(_this29.appt, _this29.id)),
+                        var _ref13 = await (0, _awaitToJs2.default)(Data.requestPaymentFor(_this28.appt, _this28.id)),
                             _ref14 = _slicedToArray(_ref13, 2),
                             err = _ref14[0],
                             res = _ref14[1];
 
                         if (err) return window.app.snackbar.view('Could not send ' + 'payment request. Please ensure this isn\'t a ' + 'duplicate request.');
-                        window.app.snackbar.view('Sent payment request to ' + Utils.getOther(_this29.appt.attendees).email + '.');
+                        window.app.snackbar.view('Sent payment request to ' + Utils.getOther(_this28.appt.attendees).email + '.');
                     });
                 } else {
                     (0, _jquery2.default)(this.main).find('.mdc-fab').click(function () {
-                        if (!_this29.timer) {
-                            _this29.clockIn();
-                            (0, _jquery2.default)(_this29.main).find('.mdc-fab__label').text('ClockOut');
+                        if (!_this28.timer) {
+                            _this28.clockIn();
+                            (0, _jquery2.default)(_this28.main).find('.mdc-fab__label').text('ClockOut');
                         } else {
-                            _this29.clockOut();
-                            (0, _jquery2.default)(_this29.main).find('.mdc-fab__label').text('ClockIn');
+                            _this28.clockOut();
+                            (0, _jquery2.default)(_this28.main).find('.mdc-fab__label').text('ClockIn');
                         }
                     });
                 }
@@ -7040,15 +6964,15 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     }, {
         key: 'clockIn',
         value: async function clockIn() {
-            var _this30 = this;
+            var _this29 = this;
 
             var reset = function reset() {
-                clearInterval(_this30.timer);
-                _this30.timer = null;
-                (0, _jquery2.default)(_this30.main).find('.mdc-fab__label').text('ClockIn');
+                clearInterval(_this29.timer);
+                _this29.timer = null;
+                (0, _jquery2.default)(_this29.main).find('.mdc-fab__label').text('ClockIn');
             };
             this.timer = setInterval(function () {
-                _this30.update();
+                _this29.update();
             }, 10);
             if (window.app.user.type === 'Supervisor') {
                 window.app.snackbar.view('Clocking in for ' + this.appt.for.toUser.name.split(' ')[0] + '...');
@@ -7081,13 +7005,13 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     }, {
         key: 'clockOut',
         value: async function clockOut() {
-            var _this31 = this;
+            var _this30 = this;
 
             var reset = function reset() {
-                _this31.timer = setInterval(function () {
-                    _this31.update();
+                _this30.timer = setInterval(function () {
+                    _this30.update();
                 }, 10);
-                (0, _jquery2.default)(_this31.main).find('.mdc-fab__label').text('ClockOut');
+                (0, _jquery2.default)(_this30.main).find('.mdc-fab__label').text('ClockOut');
             };
             clearInterval(this.timer);
             this.timer = null;
@@ -7190,10 +7114,10 @@ var EditApptDialog = function (_EditRequestDialog2) {
     function EditApptDialog(appt, id) {
         _classCallCheck(this, EditApptDialog);
 
-        var _this32 = _possibleConstructorReturn(this, (EditApptDialog.__proto__ || Object.getPrototypeOf(EditApptDialog)).call(this, appt.for, id));
+        var _this31 = _possibleConstructorReturn(this, (EditApptDialog.__proto__ || Object.getPrototypeOf(EditApptDialog)).call(this, appt.for, id));
 
-        _this32.appt = appt;
-        return _this32;
+        _this31.appt = appt;
+        return _this31;
     }
 
     _createClass(EditApptDialog, [{
@@ -7277,27 +7201,27 @@ var NewPastApptDialog = function (_EditApptDialog) {
             timestamp: new Date()
         };
 
-        var _this33 = _possibleConstructorReturn(this, (NewPastApptDialog.__proto__ || Object.getPrototypeOf(NewPastApptDialog)).call(this, appt, Utils.genID()));
+        var _this32 = _possibleConstructorReturn(this, (NewPastApptDialog.__proto__ || Object.getPrototypeOf(NewPastApptDialog)).call(this, appt, Utils.genID()));
 
-        window.newPastApptDialog = _this33;
-        return _this33;
+        window.newPastApptDialog = _this32;
+        return _this32;
     }
 
     _createClass(NewPastApptDialog, [{
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this34 = this;
+            var _this33 = this;
 
             this.header = this.render.header('header-action', {
                 title: 'New Record',
                 ok: async function ok() {
-                    if (!_this34.valid) return;
-                    _this34.appt.time = Utils.cloneMap(_this34.request.time);
-                    _this34.appt.location = Utils.cloneMap(_this34.request.location);
+                    if (!_this33.valid) return;
+                    _this33.appt.time = Utils.cloneMap(_this33.request.time);
+                    _this33.appt.location = Utils.cloneMap(_this33.request.location);
                     window.app.nav.back();
                     window.app.snackbar.view('Creating past appointment...');
 
-                    var _ref25 = await (0, _awaitToJs2.default)(Data.newPastAppt(_this34.appt)),
+                    var _ref25 = await (0, _awaitToJs2.default)(Data.newPastAppt(_this33.appt)),
                         _ref26 = _slicedToArray(_ref25, 2),
                         err = _ref26[0],
                         res = _ref26[1];
@@ -7310,17 +7234,17 @@ var NewPastApptDialog = function (_EditApptDialog) {
 
             var renderHit = function renderHit(hit, type) {
                 var user = Utils.filterProfile(hit);
-                var el = window.app.renderHit(hit, _this34.render).cloneNode(true);
+                var el = window.app.renderHit(hit, _this33.render).cloneNode(true);
                 (0, _jquery2.default)(el).find('button').remove();
                 el.addEventListener('click', function () {
-                    _this34.request[type === 'Tutor' ? 'toUser' : 'fromUser'] = user;
-                    _this34.appt.attendees = [Utils.cloneMap(_this34.request.toUser), Utils.cloneMap(_this34.request.fromUser)];
-                    (0, _jquery2.default)(_this34.main).find('#' + type).find('input').val(user.name);
-                    _this34.refreshData();
+                    _this33.request[type === 'Tutor' ? 'toUser' : 'fromUser'] = user;
+                    _this33.appt.attendees = [Utils.cloneMap(_this33.request.toUser), Utils.cloneMap(_this33.request.fromUser)];
+                    (0, _jquery2.default)(_this33.main).find('#' + type).find('input').val(user.name);
+                    _this33.refreshData();
                     window.setTimeout(function () {
                         var opp = type === 'Tutor' ? 'Pupil' : 'Location';
-                        (0, _jquery2.default)(_this34.main).find('#' + opp + ' input').click();
-                        if (opp !== 'Location') _this34[opp.toLowerCase() + 'TextField'].focus();
+                        (0, _jquery2.default)(_this33.main).find('#' + opp + ' input').click();
+                        if (opp !== 'Location') _this33[opp.toLowerCase() + 'TextField'].focus();
                     }, 50);
                 });
                 return el;
@@ -7359,24 +7283,24 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 });
             };
             var add = function add(e) {
-                _this34.main.appendChild(e);
+                _this33.main.appendChild(e);
             };
             var addD = function addD(label) {
-                add(_this34.render.listDivider(label));
+                add(_this33.render.listDivider(label));
             };
             var addST = function addST(label, val, search) {
-                add(_this34.render.searchTextFieldItem(label, val, search));
+                add(_this33.render.searchTextFieldItem(label, val, search));
             };
             var addS = function addS(l) {
                 var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var d = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
-                add(_this34.render.selectItem(l, v, Utils.concatArr([v], d)));
+                add(_this33.render.selectItem(l, v, Utils.concatArr([v], d)));
             };
             var t = function t(label) {
                 var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Date().toLocaleTimeString();
 
-                return _this34.render.textField(label, val);
+                return _this33.render.textField(label, val);
             };
 
             addD('Attendees');
@@ -7399,7 +7323,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
     }, {
         key: 'updateClockingTimes',
         value: function updateClockingTimes() {
-            var _this35 = this;
+            var _this34 = this;
 
             var timestring = function timestring(str) {
                 var split = str.split(' ');
@@ -7435,13 +7359,13 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 date.setSeconds(parsed.secs);
             };
             var editTime = async function editTime(t) {
-                var request = t.root_.id === 'Clock-in' ? _this35.appt.clockIn : _this35.appt.clockOut;
+                var request = t.root_.id === 'Clock-in' ? _this34.appt.clockIn : _this34.appt.clockOut;
                 if (!valid(t.value)) return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
                 update(t.value, request.sentTimestamp);
                 update(t.value, request.approvedTimestamp);
-                (0, _jquery2.default)(_this35.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this35.appt.clockIn.sentTimestamp, _this35.appt.clockOut.sentTimestamp));
+                (0, _jquery2.default)(_this34.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this34.appt.clockIn.sentTimestamp, _this34.appt.clockOut.sentTimestamp));
             };
 
             this.clockInTextField.value = timestring(this.request.time.from);
@@ -7452,11 +7376,11 @@ var NewPastApptDialog = function (_EditApptDialog) {
     }, {
         key: 'refreshData',
         value: function refreshData() {
-            var _this36 = this;
+            var _this35 = this;
 
             var s = function s(q) {
                 // Attach select based on query
-                return Utils.attachSelect((0, _jquery2.default)(_this36.main).find(q)[0]);
+                return Utils.attachSelect((0, _jquery2.default)(_this35.main).find(q)[0]);
             };
             var listen = function listen(s, action) {
                 // Add change listener
@@ -7474,7 +7398,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 (0, _jquery2.default)(el).find('.mdc-list-item').each(function () {
                     _index2.MDCRipple.attachTo(this);
                 });
-                (0, _jquery2.default)(_this36.main).find(q).replaceWith(el);
+                (0, _jquery2.default)(_this35.main).find(q).replaceWith(el);
                 return a(q, action);
             };
 
@@ -7487,18 +7411,18 @@ var NewPastApptDialog = function (_EditApptDialog) {
             this.locationSelect = r('#Location', this.render.select('Location', this.request.location.name, names), function (s) {
                 var locationIDs = window.app.data.locationsByName;
                 if (!locationIDs[s.value]) return s.valid = false;
-                _this36.request.location = {
+                _this35.request.location = {
                     name: s.value,
                     id: locationIDs[s.value]
                 };
-                _this36.refreshDayAndTimeSelects(_this36.request, _this36.availability);
+                _this35.refreshDayAndTimeSelects(_this35.request, _this35.availability);
             });
             if (names.length === 1 && !window.app.data.locationsByName[names[0]]) this.locationSelect.valid = false;
 
             this.subjects = Utils.concatArr(this.request.fromUser.subjects, this.request.toUser.subjects);
             if (this.subjects.length === 1) this.request.subject = this.subjects[0];
             this.subjectSelect = r('#Subject', this.render.select('Subject', this.request.subject, this.subjects), function (s) {
-                return _this36.request.subject = s.value;
+                return _this35.request.subject = s.value;
             });
 
             this.req = this.req.filter(function (r) {
@@ -7508,14 +7432,14 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 input: this.subjectSelect,
                 id: 'Subject',
                 valid: function valid() {
-                    return _this36.subjectSelect.value !== '';
+                    return _this35.subjectSelect.value !== '';
                 }
             });
             this.req.push({
                 input: this.locationSelect,
                 id: 'Location',
                 valid: function valid() {
-                    return window.app.data.locationsByName[_this36.locationSelect.value];
+                    return window.app.data.locationsByName[_this35.locationSelect.value];
                 }
             });
             this.refreshDayAndTimeSelects(this.request, this.availability);
@@ -7523,20 +7447,20 @@ var NewPastApptDialog = function (_EditApptDialog) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this37 = this;
+            var _this36 = this;
 
             var t = function t(q, action) {
                 var i = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'input';
 
-                var t = new _index.MDCTextField((0, _jquery2.default)(_this37.main).find(q).first()[0]);
-                (0, _jquery2.default)(_this37.main).find(q + ' ' + i).first().focusout(function () {
+                var t = new _index.MDCTextField((0, _jquery2.default)(_this36.main).find(q).first()[0]);
+                (0, _jquery2.default)(_this36.main).find(q + ' ' + i).first().focusout(function () {
                     return action(t);
                 });
                 return t;
             };
             var s = function s(q) {
                 // Attach select based on query
-                return Utils.attachSelect((0, _jquery2.default)(_this37.main).find(q)[0]);
+                return Utils.attachSelect((0, _jquery2.default)(_this36.main).find(q)[0]);
             };
             var listen = function listen(s, action) {
                 // Add change listener
@@ -7578,20 +7502,20 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 date.setSeconds(parsed.secs);
             };
             var editTime = async function editTime(t) {
-                var request = t.root_.id === 'Clock-in' ? _this37.appt.clockIn : _this37.appt.clockOut;
+                var request = t.root_.id === 'Clock-in' ? _this36.appt.clockIn : _this36.appt.clockOut;
                 if (!_valid(t.value)) return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
                 update(t.value, request.sentTimestamp);
                 update(t.value, request.approvedTimestamp);
-                (0, _jquery2.default)(_this37.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this37.appt.clockIn.sentTimestamp, _this37.appt.clockOut.sentTimestamp));
+                (0, _jquery2.default)(_this36.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this36.appt.clockIn.sentTimestamp, _this36.appt.clockOut.sentTimestamp));
             };
             var editDate = function editDate(t) {
                 var newDate = new Date(t.value);
                 if (newDate.toString() === 'Invalid Date') return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
-                [_this37.appt.clockIn, _this37.appt.clockOut].forEach(function (oldDate) {
+                [_this36.appt.clockIn, _this36.appt.clockOut].forEach(function (oldDate) {
                     ['sentTimestamp', 'approvedTimestamp'].forEach(function (key) {
                         oldDate[key].setDate(newDate.getDate());
                         oldDate[key].setFullYear(newDate.getFullYear());
@@ -7614,14 +7538,14 @@ var NewPastApptDialog = function (_EditApptDialog) {
             // marked as invalid (as the result clicker hasn't updated our data).
             this.tutorTextField = t('#Tutor', function (t) {
                 return setTimeout(function () {
-                    if (!Object.keys(_this37.request.toUser).length) setTimeout(function () {
+                    if (!Object.keys(_this36.request.toUser).length) setTimeout(function () {
                         return t.valid = false;
                     }, 50);
                 }, 500);
             });
             this.pupilTextField = t('#Pupil', function (t) {
                 return setTimeout(function () {
-                    if (!Object.keys(_this37.request.fromUser).length) setTimeout(function () {
+                    if (!Object.keys(_this36.request.fromUser).length) setTimeout(function () {
                         return t.valid = false;
                     }, 50);
                 }, 500);
@@ -7629,31 +7553,31 @@ var NewPastApptDialog = function (_EditApptDialog) {
             this.locationSelect = a('#Location', function (s) {
                 var locationIDs = window.app.data.locationsByName;
                 if (!locationIDs[s.value]) return s.valid = false;
-                _this37.request.location = {
+                _this36.request.location = {
                     name: s.value,
                     id: locationIDs[s.value]
                 };
-                _this37.refreshDayAndTimeSelects(_this37.request, _this37.availability);
+                _this36.refreshDayAndTimeSelects(_this36.request, _this36.availability);
             });
             this.daySelect = a('#Day', function (s) {
-                _this37.val.day = s.value;
-                _this37.refreshTimeSelects(_this37.request, _this37.availability);
+                _this36.val.day = s.value;
+                _this36.refreshTimeSelects(_this36.request, _this36.availability);
             });
             this.timeslotSelect = a('#Time', function (s) {
                 if (s.value.split(' to ').length > 1) {
-                    _this37.request.time.from = s.value.split(' to ')[0];
-                    _this37.request.time.to = s.value.split(' to ')[1];
+                    _this36.request.time.from = s.value.split(' to ')[0];
+                    _this36.request.time.to = s.value.split(' to ')[1];
                 } else {
-                    _this37.request.time.from = s.value;
-                    _this37.request.time.to = s.value;
+                    _this36.request.time.from = s.value;
+                    _this36.request.time.to = s.value;
                 }
-                _this37.updateClockingTimes();
+                _this36.updateClockingTimes();
             });
             this.subjectSelect = a('#Subject', function (s) {
-                return _this37.request.subject = s.value;
+                return _this36.request.subject = s.value;
             });
             this.messageTextField = t('#Message', function (t) {
-                return _this37.request.message = t.value;
+                return _this36.request.message = t.value;
             }, 'textarea');
             this.dateTextField = t('#Date', function (t) {
                 return editDate(t);
@@ -7668,7 +7592,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
             (0, _jquery2.default)(this.main).find('[id="Time clocked"] input').attr('disabled', true);
 
             [this.tutorTextField, this.pupilTextField, this.subjectSelect, this.daySelect, this.timeslotSelect].forEach(function (input) {
-                _this37.req.push({
+                _this36.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -7680,32 +7604,32 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 input: this.locationSelect,
                 id: 'Location',
                 valid: function valid() {
-                    return window.app.data.locationsByName[_this37.locationSelect.value];
+                    return window.app.data.locationsByName[_this36.locationSelect.value];
                 }
             });
             this.req.push({
                 input: this.dateTextField,
                 id: 'Date',
                 valid: function valid() {
-                    return new Date(_this37.dateTextField.value).toString() !== 'Invalid Date';
+                    return new Date(_this36.dateTextField.value).toString() !== 'Invalid Date';
                 }
             });
             this.req.push({
                 input: this.tutorTextField,
                 id: 'Tutor',
                 valid: function valid() {
-                    return Object.keys(_this37.request.toUser).length;
+                    return Object.keys(_this36.request.toUser).length;
                 }
             });
             this.req.push({
                 input: this.pupilTextField,
                 id: 'Pupil',
                 valid: function valid() {
-                    return Object.keys(_this37.request.fromUser).length;
+                    return Object.keys(_this36.request.fromUser).length;
                 }
             });
             [this.clockInTextField, this.clockOutTextField].forEach(function (input) {
-                _this37.req.push({
+                _this36.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -7733,17 +7657,17 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
     _createClass(ViewPastApptDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this39 = this;
+            var _this38 = this;
 
             await _get(ViewPastApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewPastApptDialog.prototype), 'renderSelf', this).call(this);
             this.header = this.render.header('header-action', {
                 title: 'Past Appointment',
                 showDelete: true,
                 delete: function _delete() {
-                    return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment between ' + _this39.appt.attendees[0].name + ' and ' + _this39.appt.attendees[1].name + '? This action ' + 'cannot be undone.', async function () {
+                    return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment between ' + _this38.appt.attendees[0].name + ' and ' + _this38.appt.attendees[1].name + '? This action ' + 'cannot be undone.', async function () {
                         window.app.snackbar.view('Deleting past ' + 'appointment...');
                         window.app.nav.back();
-                        await Data.deletePastAppt(_this39.appt, _this39.id);
+                        await Data.deletePastAppt(_this38.appt, _this38.id);
                         window.app.snackbar.view('Deleted past appointment.');
                     }).view();
                 }
@@ -7754,7 +7678,7 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this40 = this;
+            var _this39 = this;
 
             _get(ViewPastApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewPastApptDialog.prototype), 'manage', this).call(this);
             var parse = function parse(val) {
@@ -7788,19 +7712,19 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
             // TODO: Right now we only change the sentTimestamp. We want to change
             // the sentTimestamp and the approvedTimestamp relative to each other.
             var editClockingTime = async function editClockingTime(id) {
-                if (_this40.appt.clockIn.sentTimestamp.toDate) _this40.appt.clockIn.sentTimestamp = _this40.appt.clockIn.sentTimestamp.toDate();
-                if (_this40.appt.clockOut.sentTimestamp.toDate) _this40.appt.clockOut.sentTimestamp = _this40.appt.clockOut.sentTimestamp.toDate();
-                var date = id === 'Clock-in' ? _this40.appt.clockIn.sentTimestamp : _this40.appt.clockOut.sentTimestamp;
-                var t = _this40.textFields[id];
+                if (_this39.appt.clockIn.sentTimestamp.toDate) _this39.appt.clockIn.sentTimestamp = _this39.appt.clockIn.sentTimestamp.toDate();
+                if (_this39.appt.clockOut.sentTimestamp.toDate) _this39.appt.clockOut.sentTimestamp = _this39.appt.clockOut.sentTimestamp.toDate();
+                var date = id === 'Clock-in' ? _this39.appt.clockIn.sentTimestamp : _this39.appt.clockOut.sentTimestamp;
+                var t = _this39.textFields[id];
                 var v = t.value;
                 if (!valid(v)) return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
                 update(v, date);
                 window.app.snackbar.view('Updating past appointment...');
-                (0, _jquery2.default)(_this40.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this40.appt.clockIn.sentTimestamp, _this40.appt.clockOut.sentTimestamp));
+                (0, _jquery2.default)(_this39.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this39.appt.clockIn.sentTimestamp, _this39.appt.clockOut.sentTimestamp));
 
-                var _ref27 = await (0, _awaitToJs2.default)(Data.modifyPastAppt(_this40.appt, _this40.id)),
+                var _ref27 = await (0, _awaitToJs2.default)(Data.modifyPastAppt(_this39.appt, _this39.id)),
                     _ref28 = _slicedToArray(_ref27, 2),
                     err = _ref28[0],
                     res = _ref28[1];
@@ -7809,9 +7733,9 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
                 window.app.snackbar.view('Updated past appointment.');
             };
             (0, _jquery2.default)(this.main).find('[id="Clock-in"] input').removeAttr('disabled').focusout(async function () {
-                editClockingTime('Clock-in', _this40.appt.clockIn.sentTimestamp);
+                editClockingTime('Clock-in', _this39.appt.clockIn.sentTimestamp);
             }).end().find('[id="Clock-out"] input').removeAttr('disabled').focusout(async function () {
-                editClockingTime('Clock-out', _this40.appt.clockOut.sentTimestamp);
+                editClockingTime('Clock-out', _this39.appt.clockOut.sentTimestamp);
             }).end().find('[id="Time clocked"] input') // TODO: Add duration editing.
             .focusout(async function () {
                 console.log('[TODO] Add duration editing data handling.');
@@ -7836,7 +7760,7 @@ var ViewActiveApptDialog = function (_ViewApptDialog2) {
     _createClass(ViewActiveApptDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this42 = this;
+            var _this41 = this;
 
             await _get(ViewActiveApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewActiveApptDialog.prototype), 'renderSelf', this).call(this);
             this.header = this.render.header('header-action', {
@@ -7846,7 +7770,7 @@ var ViewActiveApptDialog = function (_ViewApptDialog2) {
             (0, _jquery2.default)(this.main).find('#Total input').val(Utils.getDurationStringFromDates(this.appt.clockIn.sentTimestamp.toDate(), new Date()));
             (0, _jquery2.default)(this.main).find('#Current input').val(Utils.getDurationStringFromDates(this.appt.clockIn.sentTimestamp.toDate(), new Date()));
             this.timer = setInterval(function () {
-                _this42.update();
+                _this41.update();
             }, 10);
         }
     }]);
@@ -7862,10 +7786,10 @@ var ViewCanceledApptDialog = function (_ViewApptDialog3) {
     function ViewCanceledApptDialog(appt) {
         _classCallCheck(this, ViewCanceledApptDialog);
 
-        var _this43 = _possibleConstructorReturn(this, (ViewCanceledApptDialog.__proto__ || Object.getPrototypeOf(ViewCanceledApptDialog)).call(this, appt.for));
+        var _this42 = _possibleConstructorReturn(this, (ViewCanceledApptDialog.__proto__ || Object.getPrototypeOf(ViewCanceledApptDialog)).call(this, appt.for));
 
-        _this43.canceledAppt = appt;
-        return _this43;
+        _this42.canceledAppt = appt;
+        return _this42;
     }
 
     _createClass(ViewCanceledApptDialog, [{
@@ -20287,24 +20211,6 @@ var Data = function () {
             }
             return attendees[0];
         }
-    }, {
-        key: 'notifyAppt',
-        value: async function notifyAppt(day, tutor, pupil) {
-            return axios({
-                method: 'get',
-                url: window.app.functionsURL + 'apptNotification',
-                params: {
-                    token: await firebase.auth().currentUser.getIdToken(true),
-                    location: window.app.location.id,
-                    day: day,
-                    tutor: tutor || false,
-                    pupil: pupil || false
-                }
-            }).then(function (res) {
-                if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0) throw new Error(res.data.replace('[ERROR]', ''));
-                return res.data;
-            });
-        }
 
         // This post function calls a REST API that will:
         // 1) perform the given action using information given
@@ -28378,7 +28284,6 @@ var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
 var NewPastApptDialog = __webpack_require__(2).newPastAppt;
-var ApptNotificationDialog = __webpack_require__(2).notifyAppt;
 
 var Appt = __webpack_require__(17).appt;
 var ActiveAppt = __webpack_require__(17).active;
@@ -28722,7 +28627,6 @@ var SupervisorSchedule = function (_Schedule) {
     }], [{
         key: 'renderShortcutCard',
         value: function renderShortcutCard() {
-            var dialog = new ApptNotificationDialog();
             var title = 'Upcoming Appointments';
             var subtitle = 'Manage upcoming, active, and past appointments';
             var summary = 'From your schedule, you\'re able to view, edit, and ' + 'cancel all active, past, and upcoming tutoring appointments at ' + 'your location(s).';
@@ -28730,9 +28634,6 @@ var SupervisorSchedule = function (_Schedule) {
             var actions = {
                 snooze: function snooze() {
                     (0, _jquery2.default)(card).remove();
-                },
-                notify: function notify() {
-                    dialog.view();
                 },
                 view: function view() {
                     window.app.schedule.view();

@@ -264,24 +264,6 @@ class Data {
         return attendees[0];
     }
 
-    static async notifyAppt(day, tutor, pupil) {
-        return axios({
-            method: 'get',
-            url: window.app.functionsURL + 'apptNotification',
-            params: {
-                token: (await firebase.auth().currentUser.getIdToken(true)),
-                location: window.app.location.id,
-                day: day,
-                tutor: tutor || false,
-                pupil: pupil || false,
-            },
-        }).then((res) => {
-            if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
-                throw new Error(res.data.replace('[ERROR]', ''));
-            return res.data;
-        });
-    }
-
     // This post function calls a REST API that will:
     // 1) perform the given action using information given
     // 2a) axios will throw a "Network Error" for uncaught errors server-side

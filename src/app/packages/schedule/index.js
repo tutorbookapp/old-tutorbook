@@ -16,7 +16,6 @@ const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
 const NewPastApptDialog = require('@tutorbook/dialogs').newPastAppt;
-const ApptNotificationDialog = require('@tutorbook/dialogs').notifyAppt;
 
 const Appt = require('@tutorbook/schedule-items').appt;
 const ActiveAppt = require('@tutorbook/schedule-items').active;
@@ -362,7 +361,6 @@ class SupervisorSchedule extends Schedule {
     }
 
     static renderShortcutCard() {
-        const dialog = new ApptNotificationDialog();
         const title = 'Upcoming Appointments';
         const subtitle = 'Manage upcoming, active, and past appointments';
         const summary = 'From your schedule, you\'re able to view, edit, and ' +
@@ -372,9 +370,6 @@ class SupervisorSchedule extends Schedule {
         const actions = {
             snooze: () => {
                 $(card).remove();
-            },
-            notify: () => {
-                dialog.view();
             },
             view: () => {
                 window.app.schedule.view();
