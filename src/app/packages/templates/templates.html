@@ -2,6 +2,16 @@
 <!-- TEMPLATES: these are HTML templates for all of the objects that the 
 user sees as they navigate throughout the app. -->
 
+<div hidden class="template" id="menu">
+    <div data-fir-id="id" class="mdc-menu mdc-menu-surface">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+            <li data-fir-foreach="options" class="mdc-list-item" role="menuitem" data-fir-click="~/action">
+                <span class="mdc-list-item__text" data-fir-content="~/label"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <!-- Service Hour Tracking Card Template -->
 <div hidden class="template" id="card-service-hours">
     <div id="service-hours-card" priority="3" class="mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card">
@@ -1686,7 +1696,7 @@ styling due to input el spacing. -->
         <h3 class="mdc-list-group__subheader">Announcements</h3>
         <hr class="mdc-list-divider">
         <ul id="announcements" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
-            <li id="new-announcement" class="mdc-list-item" data-fir-click="newAnnouncement">
+            <li id="new-announcement" class="chat-list-item mdc-list-item" data-fir-click="newAnnouncement">
                 <div id="checkmark" style="display:inherit;" class="mdc-list-item__graphic">
                     <a class="material-icons">add</a>
                 </div>
@@ -1825,15 +1835,15 @@ styling due to input el spacing. -->
 
 <!-- Chat Item Template -->
 <div hidden class="template" id="chat-list-item">
-    <li class="mdc-list-item" data-fir-id="id" data-fir-click="open_chat">
+    <li class="mdc-list-item chat-list-item" data-fir-id="id" data-fir-click="open_chat">
         <img class="mdc-list-item__graphic" data-fir-attr="src:photo">
         <span class="mdc-list-item__text">
             <span class="mdc-list-item__primary-text" data-fir-content="name"></span>
             <span class="mdc-list-item__secondary-text" data-fir-content="lastMessage/message">
             </span>
         </span>
-        <div data-fir-if="showAction" class="mdc-list-item__meta">
-            <button data-fir-click="action" class="mdc-button mdc-button--unelevated" data-fir-content="actionLabel">Delete</button>
+        <div data-fir-if="showMenuBtn" class="mdc-list-item__meta">
+            <button id="menu-btn" class="mdc-icon-button material-icons">more_vert</button>
         </div>
     </li>
 </div>

@@ -33,7 +33,7 @@ class Snackbar {
             snackbar.labelText = message;
             snackbar.timeoutMs = message.endsWith('...') ? -1 : 4000;
             snackbar.listen('MDCSnackbar:closed', () => $(el).remove());
-            $('body').prepend(el);
+            $('body #snackbars').prepend(el);
             snackbar.open();
         };
         const c = () => {
@@ -42,7 +42,7 @@ class Snackbar {
                 .addClass('mdc-snackbar--closing');
         };
         const r = () => {
-            $('.mdc-snackbar').remove(); // 2) Remove all closed snackbars
+            $('body #snackbars').empty(); // 2) Remove all closed snackbars
         };
         if ($('.mdc-snackbar--opening').length) {
             setTimeout(c, 100);

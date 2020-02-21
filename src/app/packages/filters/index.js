@@ -17,7 +17,7 @@ const Data = require('@tutorbook/data');
 
 class FilterDialog {
 
-    constructor(filters) {
+    constructor(filters, skipRender = false) {
         this.filters = filters || {
             grade: 'Any',
             subject: 'Any',
@@ -30,7 +30,7 @@ class FilterDialog {
             sort: 'Rating'
         };
         this.render = window.app.render;
-        this.renderSelf();
+        if (!skipRender) this.renderSelf();
     }
 
     view() {
@@ -300,11 +300,35 @@ class FilterDialog {
 class NewGroupDialog extends FilterDialog {
 
     constructor(options = {}) {
-        super();
-        this.defaultName = window.app.location.name + ' Group #' + (options
-            .groupNum || 1);
-        this.name = options.name || this.defaultName;
+        super(undefined, true);
+        this.ref = options.ref || window.app.db.collection('locations')
+            .doc(window.app.location.id).collection('announcements').doc();
+        this.name = options.name || window.app.location.name + ' Group #' +
+            (options.groupNum || 1);
+        this.filters = Utils.combineMaps(this.filters, options.filters || {});
         this.filters.showBooked = true;
+        this.group = Utils.combineMaps({
+            lastMessage: {
+                message: 'No messages so far. Click to send the first one.',
+                sentBy: window.app.conciseUser,
+                timestamp: new Date(),
+            },
+            chatters: [
+                window.app.conciseUser,
+            ],
+            chatterUIDs: [
+                window.app.user.uid,
+            ],
+            chatterEmails: [
+                window.app.user.email,
+            ],
+            location: window.app.location,
+            createdBy: window.app.conciseUser,
+            name: this.name,
+            photo: 'https://tutorbook.app/app/img/male.png',
+            filters: this.filters,
+        }, options.group || {});
+        this.renderSelf();
     }
 
     getAvailabilityString(data) {
@@ -334,29 +358,8 @@ class NewGroupDialog extends FilterDialog {
     }
 
     accept() {
-        const group = {
-            lastMessage: {
-                message: 'No messages so far. Click to send the first one.',
-                sentBy: window.app.conciseUser,
-                timestamp: new Date(),
-            },
-            chatters: [
-                window.app.conciseUser,
-            ],
-            chatterUIDs: [
-                window.app.user.uid,
-            ],
-            chatterEmails: [
-                window.app.user.email,
-            ],
-            location: window.app.location,
-            createdBy: window.app.conciseUser,
-            name: this.nameTextField.value || this.name || this.defaultName,
-            photo: 'https://tutorbook.app/app/img/male.png',
-            filters: this.filters,
-        };
-        return window.app.db.collection('locations').doc(window.app.location.id)
-            .collection('announcements').doc().set(group);
+        this.group.name = this.nameTextField.value || this.name;
+        return this.ref.set(this.group);
     }
 
     manage() {
@@ -366,7 +369,21 @@ class NewGroupDialog extends FilterDialog {
     }
 };
 
+class EditGroupDialog extends NewGroupDialog {
+
+    renderSelf() {
+        super.renderSelf();
+        $(this.el).find('[data-mdc-dialog-action="accept"]').text('Update');
+    }
+
+    accept() {
+        this.group.name = this.nameTextField.value || this.name;
+        return this.ref.update(this.group);
+    }
+};
+
 module.exports = {
     default: FilterDialog,
     group: NewGroupDialog,
+    editGroup: EditGroupDialog,
 };

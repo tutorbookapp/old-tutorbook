@@ -1,6 +1,9 @@
 import {
     MDCRipple
 } from '@material/ripple/index';
+import {
+    MDCMenu
+} from '@material/menu/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -11,6 +14,7 @@ const Chat = require('@tutorbook/chat').default;
 const AnnouncementChat = require('@tutorbook/chat').announcement;
 const Utils = require('@tutorbook/utils');
 const NewGroupDialog = require('@tutorbook/filters').group;
+const EditGroupDialog = require('@tutorbook/filters').editGroup;
 
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.
@@ -266,6 +270,7 @@ class SupervisorChats extends Chats {
     constructor() {
         super();
         this.announcements = {};
+        this.announcementDialogs = {};
     }
 
     async chat(id) {
@@ -415,18 +420,48 @@ class SupervisorChats extends Chats {
 
     renderAnnouncementItem(doc) {
         const chat = new AnnouncementChat(doc);
+        const dialog = new EditGroupDialog({
+            name: doc.data().name,
+            filters: doc.data().filters,
+            group: doc.data(),
+            ref: doc.ref,
+        });
         this.announcements[doc.id] = chat;
+        this.announcementDialogs[doc.id] = dialog;
         const el = this.render.template('chat-list-item',
             Utils.combineMaps(doc.data(), {
                 open_chat: () => {
+                    if ($(event.target).closest('button').length) return;
                     $(el).addClass('mdc-list-item--selected');
                     chat.view();
                 },
+                showMenuBtn: true,
                 id: doc.id,
                 photo: doc.data().photo,
                 name: doc.data().name,
             }));
+        const menuEl = this.render.template('menu', {
+            options: [{
+                label: 'Edit',
+                action: () => dialog.view(),
+            }, {
+                label: 'Delete',
+                action: () => doc.ref.delete(),
+            }],
+            id: Utils.genID(),
+        });
+        const menu = new MDCMenu(menuEl);
         MDCRipple.attachTo(el);
+        MDCRipple.attachTo($(el).find('#menu-btn')[0]).unbounded = true;
+        $(menuEl).find('.mdc-list-item').each(function() {
+            MDCRipple.attachTo(this);
+        });
+        $(el).find('#menu-btn')[0].addEventListener('click', () => {
+            const pos = $(el).find('#menu-btn').offset();
+            menu.setAbsolutePosition(pos.left, pos.top);
+            menu.open = true;
+        });
+        $('body #menus').prepend(menuEl);
         return el;
     }
 };
