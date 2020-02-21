@@ -157,8 +157,6 @@ exports.userUpdateStat = functions.firestore
 // NOTIFICATIONS (EMAIL, SMS, & WEBPUSH)
 // ============================================================================
 
-exports.apptNotification = functions.https.onRequest(Notify.appt);
-
 exports.apptRulesNotification = functions.firestore
     .document('/partitions/{partition}/locations/{location}/appointments' +
         '/{appt}')

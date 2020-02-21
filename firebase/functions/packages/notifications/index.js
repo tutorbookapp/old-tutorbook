@@ -51,8 +51,8 @@ const day = () => {
     ][new Date().getDay()];
 };
 
-// scheduled appt - calls the below apptNotification function every week as
-// configured in each location's Firestore document
+// DEPRECATED scheduled appt - calls the below apptNotification function every 
+// week as configured in each location's Firestore document
 const dailyApptNotifications = async (context) => {
     const db = getDB(context);
     const today = day();
@@ -104,7 +104,7 @@ const weeklyApptNotifications = async (context) => {
     }));
 };
 
-// appt - upcoming appt sms messages manually requested by supervisor
+// DEPRECATED appt - upcoming appt sms messages manually requested by supervisor
 // params - {
 //   tutor: Send a notification to the toUser?
 //   pupil: Send a notification to the fromUser?
@@ -281,6 +281,9 @@ const messageNotification = async (snap, context) => {
         'message (' + msg.message + ') sent by Operator.');
     if (msg.type === 'Announcement') return console.log('[DEBUG] Skipping ' +
         'announcement message.');
+    if (getTest(context)) return console.log('[DEBUG] Skipping message (' +
+        msg.message + ') from ' + msg.sentBy.name + ' (' + msg.sentBy.uid +
+        ') sent while testing.');
     const db = getDB(context);
     const chatRef = db.collection('chats').doc(context.params.chat);
     const chat = (await chatRef.get()).data();
@@ -614,7 +617,6 @@ const canceledAppt = async (snap, context) => {
 
 
 module.exports = {
-    appt: apptNotification,
     rules: rulesNotification,
     user: userNotification,
     announcement: announcementNotification,

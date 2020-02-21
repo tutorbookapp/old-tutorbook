@@ -708,29 +708,6 @@ describe("Tutorbook's REST API", () => {
         });
     });
 
-    it("lets supervisors send reminder messages", async () => {
-        await createUsers();
-        [appt, id] = await approveRequest();
-        return axios({
-            method: 'get',
-            url: FUNCTIONS_URL + 'apptNotification',
-            params: {
-                token: (await getToken(SUPERVISOR.email)),
-                tutor: true,
-                pupil: false,
-                location: appt.location.id,
-                day: appt.time.day.toLowerCase(),
-            },
-        }).then((res) => {
-            if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
-                throw new Error(res.data.replace('[ERROR]', ''));
-            assert(res.data.tutors.length === 1 &&
-                res.data.tutors[0] === TUTOR.uid);
-            assert(res.data.pupils.length === 0);
-            assert(res.data.appts.length === 3); // Tutors, pupils, & locations
-        });
-    });
-
     it("lets supervisors download PDF backups of database", async () => {
         await approveRequest();
         await createLocation();
