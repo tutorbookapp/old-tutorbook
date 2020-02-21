@@ -7821,7 +7821,6 @@ module.exports = {
     stripeRequest: StripeRequestDialog,
     viewAppt: ViewApptDialog,
     editAppt: EditApptDialog,
-    notifyAppt: ApptNotificationDialog,
     viewPastAppt: ViewPastApptDialog,
     newPastAppt: NewPastApptDialog,
     viewActiveAppt: ViewActiveApptDialog,
