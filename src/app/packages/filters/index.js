@@ -373,7 +373,9 @@ class EditGroupDialog extends NewGroupDialog {
 
     renderSelf() {
         super.renderSelf();
-        $(this.el).find('[data-mdc-dialog-action="accept"]').text('Update');
+        $(this.el)
+            .find('#page-all .mdc-dialog__title').text('Edit Group').end()
+            .find('[data-mdc-dialog-action="accept"]').text('Update');
     }
 
     accept() {

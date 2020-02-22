@@ -41534,7 +41534,7 @@ var EditGroupDialog = function (_NewGroupDialog) {
         key: 'renderSelf',
         value: function renderSelf() {
             _get(EditGroupDialog.prototype.__proto__ || Object.getPrototypeOf(EditGroupDialog.prototype), 'renderSelf', this).call(this);
-            (0, _jquery2.default)(this.el).find('[data-mdc-dialog-action="accept"]').text('Update');
+            (0, _jquery2.default)(this.el).find('#page-all .mdc-dialog__title').text('Edit Group').end().find('[data-mdc-dialog-action="accept"]').text('Update');
         }
     }, {
         key: 'accept',
