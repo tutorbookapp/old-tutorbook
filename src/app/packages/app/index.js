@@ -43,7 +43,8 @@ class Tutorbook {
 
     constructor() {
         this.logJobPost();
-        this.version = '0.0.1';
+        this.version = '0.0.1'; // TODO: Each change released to production (via
+        // CI) should have a corresponding GitHub tag & release denoted here.
         this.location = {
             name: 'Any',
         };

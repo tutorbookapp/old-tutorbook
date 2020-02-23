@@ -4570,7 +4570,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return hooks;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
 
 /***/ }),
 /* 1 */
@@ -4933,11 +4933,11 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(24);
+var _index = __webpack_require__(23);
 
 var _index2 = __webpack_require__(9);
 
-var _index3 = __webpack_require__(36);
+var _index3 = __webpack_require__(35);
 
 var _index4 = __webpack_require__(16);
 
@@ -17980,7 +17980,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
 
 /***/ }),
 /* 4 */
@@ -18211,7 +18211,7 @@ var _index = __webpack_require__(345);
 
 var _index2 = __webpack_require__(9);
 
-var _index3 = __webpack_require__(23);
+var _index3 = __webpack_require__(36);
 
 var _index4 = __webpack_require__(16);
 
@@ -22205,7 +22205,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(24);
+var _index = __webpack_require__(23);
 
 var _index2 = __webpack_require__(127);
 
@@ -22235,7 +22235,7 @@ var NotificationDialog = __webpack_require__(2).notify;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 
 // Profile class that provides a profile view and header and manages all data
 // flow concering the user's profile.
@@ -23259,7 +23259,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 
 var ViewApptDialog = __webpack_require__(2).viewAppt;
 var ViewActiveApptDialog = __webpack_require__(2).viewActiveAppt;
@@ -23973,7 +23973,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(23);
+var _index2 = __webpack_require__(36);
 
 var _jquery = __webpack_require__(3);
 
@@ -24001,7 +24001,7 @@ var ConfirmationDialog = __webpack_require__(2).confirm;
 
 // Users
 var EditProfile = __webpack_require__(15).edit;
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 
 // Dependencies
 var Data = __webpack_require__(7);
@@ -24987,7 +24987,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var EditProfile = __webpack_require__(15).edit;
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 var FilterDialog = __webpack_require__(54).default;
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
@@ -25971,50 +25971,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(33);
-
-Object.defineProperty(exports, 'Corner', {
-  enumerable: true,
-  get: function get() {
-    return _constants.Corner;
-  }
-});
-
-var _component = __webpack_require__(352);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(81);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
 var _component = __webpack_require__(392);
 
 Object.keys(_component).forEach(function (key) {
@@ -26076,7 +26032,7 @@ Object.keys(_index3).forEach(function (key) {
 });
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26253,7 +26209,7 @@ var User = function () {
 module.exports = User;
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26263,10 +26219,10 @@ module.exports = User;
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
 
-var inherits = __webpack_require__(31);
+var inherits = __webpack_require__(30);
 
 function AlgoliaSearchError(message, extraProperties) {
-  var forEach = __webpack_require__(27);
+  var forEach = __webpack_require__(26);
 
   var error = this;
 
@@ -26321,7 +26277,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26349,13 +26305,13 @@ module.exports = function forEach(obj, fn, ctx) {
 };
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var foreach = __webpack_require__(27);
+var foreach = __webpack_require__(26);
 
 module.exports = function map(arr, fn) {
   var newArr = [];
@@ -26366,7 +26322,7 @@ module.exports = function map(arr, fn) {
 };
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26423,7 +26379,7 @@ function matches(element, selector) {
 //# sourceMappingURL=ponyfill.js.map
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26434,7 +26390,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ponyfill = undefined;
 
-var _ponyfill = __webpack_require__(29);
+var _ponyfill = __webpack_require__(28);
 
 var ponyfill = _interopRequireWildcard(_ponyfill);
 
@@ -26466,7 +26422,7 @@ exports.ponyfill = ponyfill;
  */
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26497,7 +26453,7 @@ if (typeof Object.create === 'function') {
 }
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26675,7 +26631,7 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26767,7 +26723,7 @@ exports.Corner = Corner;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26822,7 +26778,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26852,7 +26808,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26918,6 +26874,50 @@ exports.util = util; /**
                       */
 
 /***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _constants = __webpack_require__(32);
+
+Object.defineProperty(exports, 'Corner', {
+  enumerable: true,
+  get: function get() {
+    return _constants.Corner;
+  }
+});
+
+var _component = __webpack_require__(352);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(81);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26935,7 +26935,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(32);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -27456,7 +27456,7 @@ var _index = __webpack_require__(9);
 
 var _index2 = __webpack_require__(127);
 
-var _index3 = __webpack_require__(24);
+var _index3 = __webpack_require__(23);
 
 var _index4 = __webpack_require__(16);
 
@@ -29776,7 +29776,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _constants = __webpack_require__(34);
+var _constants = __webpack_require__(33);
 
 var _foundation = __webpack_require__(51);
 
@@ -29968,7 +29968,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(34);
+var _constants = __webpack_require__(33);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30356,11 +30356,11 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(36);
+var _index = __webpack_require__(35);
 
 var _index2 = __webpack_require__(9);
 
-var _index3 = __webpack_require__(24);
+var _index3 = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
@@ -32492,7 +32492,7 @@ IndexCore.prototype.getObject = function (objectID, attrs, callback) {
 */
 IndexCore.prototype.getObjects = function (objectIDs, attributesToRetrieve, callback) {
   var isArray = __webpack_require__(11);
-  var map = __webpack_require__(28);
+  var map = __webpack_require__(27);
 
   var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
 
@@ -32547,7 +32547,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 module.exports = buildSearchMethod;
 
-var errors = __webpack_require__(26);
+var errors = __webpack_require__(25);
 
 /**
  * Creates a search method to be used in clients
@@ -32621,7 +32621,7 @@ function buildSearchMethod(queryParam, url) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var foreach = __webpack_require__(27);
+var foreach = __webpack_require__(26);
 
 module.exports = function merge(destination /* , sources */) {
   var sources = Array.prototype.slice.call(arguments);
@@ -32650,7 +32650,7 @@ module.exports = function merge(destination /* , sources */) {
 
 module.exports = function omit(obj, test) {
   var keys = __webpack_require__(326);
-  var foreach = __webpack_require__(27);
+  var foreach = __webpack_require__(26);
 
   var filtered = {};
 
@@ -35531,7 +35531,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _constants = __webpack_require__(34);
+var _constants = __webpack_require__(33);
 
 var _foundation = __webpack_require__(50);
 
@@ -35613,7 +35613,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _constants = __webpack_require__(34);
+var _constants = __webpack_require__(33);
 
 var _foundation = __webpack_require__(51);
 
@@ -40426,7 +40426,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Data = __webpack_require__(7);
 var Card = __webpack_require__(20);
 var Utils = __webpack_require__(6);
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 var EditProfile = __webpack_require__(15).edit;
 var MatchingDialog = __webpack_require__(38).dialog;
 var ScheduleCard = __webpack_require__(133);
@@ -41010,7 +41010,7 @@ var _index = __webpack_require__(9);
 
 var _index2 = __webpack_require__(417);
 
-var _index3 = __webpack_require__(23);
+var _index3 = __webpack_require__(36);
 
 var _jquery = __webpack_require__(3);
 
@@ -43997,7 +43997,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(16);
 
-var _index2 = __webpack_require__(24);
+var _index2 = __webpack_require__(23);
 
 var _index3 = __webpack_require__(9);
 
@@ -44010,7 +44010,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Chart = __webpack_require__(464);
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 var Templates = __webpack_require__(466);
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
@@ -58828,7 +58828,8 @@ var Tutorbook = function () {
         _classCallCheck(this, Tutorbook);
 
         this.logJobPost();
-        this.version = '0.0.1';
+        this.version = '0.0.1'; // TODO: Each change released to production (via
+        // CI) should have a corresponding GitHub tag & release denoted here.
         this.location = {
             name: 'Any'
         };
@@ -59056,7 +59057,7 @@ module.exports = Tutorbook;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(36);
+var _index = __webpack_require__(35);
 
 var _jquery = __webpack_require__(3);
 
@@ -59225,7 +59226,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(29);
+var _ponyfill = __webpack_require__(28);
 
 var _component2 = __webpack_require__(300);
 
@@ -59469,7 +59470,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(30);
+var _index = __webpack_require__(29);
 
 var _foundation = __webpack_require__(301);
 
@@ -61548,8 +61549,8 @@ var Index = __webpack_require__(325);
 var deprecate = __webpack_require__(42);
 var deprecatedMessage = __webpack_require__(43);
 var AlgoliaSearchCore = __webpack_require__(330);
-var inherits = __webpack_require__(31);
-var errors = __webpack_require__(26);
+var inherits = __webpack_require__(30);
+var errors = __webpack_require__(25);
 
 function AlgoliaSearch() {
   AlgoliaSearchCore.apply(this, arguments);
@@ -62318,12 +62319,12 @@ function notImplemented() {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var inherits = __webpack_require__(31);
+var inherits = __webpack_require__(30);
 var IndexCore = __webpack_require__(70);
 var deprecate = __webpack_require__(42);
 var deprecatedMessage = __webpack_require__(43);
 var exitPromise = __webpack_require__(75);
-var errors = __webpack_require__(26);
+var errors = __webpack_require__(25);
 
 var deprecateForwardToSlaves = deprecate(function () {}, deprecatedMessage('forwardToSlaves', 'forwardToReplicas'));
 
@@ -62567,7 +62568,7 @@ Index.prototype.deleteObject = function (objectID, callback) {
 */
 Index.prototype.deleteObjects = function (objectIDs, callback) {
   var isArray = __webpack_require__(11);
-  var map = __webpack_require__(28);
+  var map = __webpack_require__(27);
 
   var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -62608,7 +62609,7 @@ Index.prototype.deleteObjects = function (objectIDs, callback) {
 */
 Index.prototype.deleteByQuery = deprecate(function (query, params, callback) {
   var clone = __webpack_require__(19);
-  var map = __webpack_require__(28);
+  var map = __webpack_require__(27);
 
   var indexObj = this;
   var client = indexObj.as;
@@ -63794,7 +63795,7 @@ module.exports = keysShim;
 
 module.exports = IndexBrowser;
 
-var inherits = __webpack_require__(31);
+var inherits = __webpack_require__(30);
 var EventEmitter = __webpack_require__(329).EventEmitter;
 
 function IndexBrowser() {}
@@ -64258,7 +64259,7 @@ function unwrapListeners(arr) {
 
 module.exports = AlgoliaSearchCore;
 
-var errors = __webpack_require__(26);
+var errors = __webpack_require__(25);
 var exitPromise = __webpack_require__(75);
 var IndexCore = __webpack_require__(70);
 var store = __webpack_require__(331);
@@ -64294,11 +64295,11 @@ var RESET_APP_DATA_TIMER = process.env.RESET_APP_DATA_TIMER && parseInt(process.
  *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
-  var debug = __webpack_require__(32)('algoliasearch');
+  var debug = __webpack_require__(31)('algoliasearch');
 
   var clone = __webpack_require__(19);
   var isArray = __webpack_require__(11);
-  var map = __webpack_require__(28);
+  var map = __webpack_require__(27);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -64440,7 +64441,7 @@ AlgoliaSearchCore.prototype.addAlgoliaAgent = function (algoliaAgent) {
 AlgoliaSearchCore.prototype._jsonRequest = function (initialOpts) {
   this._checkAppIdData();
 
-  var requestDebug = __webpack_require__(32)('algoliasearch:' + initialOpts.url);
+  var requestDebug = __webpack_require__(31)('algoliasearch:' + initialOpts.url);
 
   var body;
   var cacheID;
@@ -64795,7 +64796,7 @@ AlgoliaSearchCore.prototype._getSearchParams = function (args, params) {
  * @param [Object] options.headers Extra headers to send
  */
 AlgoliaSearchCore.prototype._computeRequestHeaders = function (options) {
-  var forEach = __webpack_require__(27);
+  var forEach = __webpack_require__(26);
 
   var ua = options.additionalUA ? this._ua + '; ' + options.additionalUA : this._ua;
 
@@ -64844,7 +64845,7 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function (options) {
  */
 AlgoliaSearchCore.prototype.search = function (queries, opts, callback) {
   var isArray = __webpack_require__(11);
-  var map = __webpack_require__(28);
+  var map = __webpack_require__(27);
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -64923,7 +64924,7 @@ AlgoliaSearchCore.prototype.search = function (queries, opts, callback) {
 */
 AlgoliaSearchCore.prototype.searchForFacetValues = function (queries) {
   var isArray = __webpack_require__(11);
-  var map = __webpack_require__(28);
+  var map = __webpack_require__(27);
 
   var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
 
@@ -65064,7 +65065,7 @@ AlgoliaSearchCore.prototype._cacheAppIdData = function (data) {
 };
 
 AlgoliaSearchCore.prototype._partialAppIdDataUpdate = function (newData) {
-  var foreach = __webpack_require__(27);
+  var foreach = __webpack_require__(26);
   var currentData = this._getAppIdData();
   foreach(newData, function (value, key) {
     currentData[key] = value;
@@ -65185,7 +65186,7 @@ function removeCredentials(headers) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var debug = __webpack_require__(32)('algoliasearch:src/hostIndexState.js');
+var debug = __webpack_require__(31)('algoliasearch:src/hostIndexState.js');
 var localStorageNamespace = 'algoliasearch-client-js';
 
 var store;
@@ -65737,15 +65738,15 @@ var Promise = global.Promise || __webpack_require__(337).Promise;
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
-  var inherits = __webpack_require__(31);
-  var errors = __webpack_require__(26);
+  var inherits = __webpack_require__(30);
+  var errors = __webpack_require__(25);
   var inlineHeaders = __webpack_require__(338);
   var jsonpRequest = __webpack_require__(339);
   var places = __webpack_require__(340);
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
-    __webpack_require__(32).enable('algoliasearch*');
+    __webpack_require__(31).enable('algoliasearch*');
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
@@ -65767,7 +65768,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   // we expose into window no matter how we are used, this will allow
   // us to easily debug any website running algolia
   global.__algolia = {
-    debug: __webpack_require__(32),
+    debug: __webpack_require__(31),
     algoliasearch: algoliasearch
   };
 
@@ -67186,7 +67187,7 @@ function inlineHeaders(url, headers) {
 
 module.exports = jsonpRequest;
 
-var errors = __webpack_require__(26);
+var errors = __webpack_require__(25);
 
 var JSONPCounter = 0;
 
@@ -67662,7 +67663,7 @@ var _index = __webpack_require__(347);
 
 var _index2 = __webpack_require__(77);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(32);
 
 var menuSurfaceConstants = _interopRequireWildcard(_constants);
 
@@ -67670,7 +67671,7 @@ var _constants2 = __webpack_require__(46);
 
 var menuConstants = _interopRequireWildcard(_constants2);
 
-var _index3 = __webpack_require__(23);
+var _index3 = __webpack_require__(36);
 
 var _index4 = __webpack_require__(357);
 
@@ -68895,7 +68896,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(30);
+var _index = __webpack_require__(29);
 
 var _constants = __webpack_require__(79);
 
@@ -69164,7 +69165,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = exports.CornerBit = exports.Corner = undefined;
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(32);
 
 Object.defineProperty(exports, 'Corner', {
   enumerable: true,
@@ -69230,7 +69231,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(32);
 
 var _foundation = __webpack_require__(37);
 
@@ -69680,7 +69681,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(30);
+var _index = __webpack_require__(29);
 
 var _foundation = __webpack_require__(84);
 
@@ -70578,7 +70579,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = __webpack_require__(371);
 
-var _constants = __webpack_require__(34);
+var _constants = __webpack_require__(33);
 
 var _foundation = __webpack_require__(95);
 
@@ -70738,7 +70739,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(30);
+var _index = __webpack_require__(29);
 
 var _foundation = __webpack_require__(372);
 
@@ -71605,7 +71606,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
   }]);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
 
 /***/ }),
 /* 375 */
@@ -72374,7 +72375,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(29);
+var _ponyfill = __webpack_require__(28);
 
 var ponyfill = _interopRequireWildcard(_ponyfill);
 
@@ -73234,7 +73235,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(30);
+var _index = __webpack_require__(29);
 
 var _foundation = __webpack_require__(107);
 
@@ -74718,7 +74719,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(29);
+var _ponyfill = __webpack_require__(28);
 
 var _component2 = __webpack_require__(415);
 
@@ -74884,7 +74885,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(29);
+var _ponyfill = __webpack_require__(28);
 
 var _foundation = __webpack_require__(128);
 
@@ -76321,7 +76322,7 @@ module.exports = function spread(callback) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(24);
+var _index = __webpack_require__(23);
 
 var _index2 = __webpack_require__(9);
 
@@ -94620,7 +94621,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Data = __webpack_require__(7);
-var User = __webpack_require__(25);
+var User = __webpack_require__(24);
 var Utils = __webpack_require__(6);
 var Navigo = __webpack_require__(480);
 
@@ -106171,7 +106172,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module)))
 
 /***/ }),
 /* 480 */
@@ -106626,9 +106627,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(36);
+var _index2 = __webpack_require__(35);
 
-var _index3 = __webpack_require__(24);
+var _index3 = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
