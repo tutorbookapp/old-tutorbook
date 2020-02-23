@@ -4570,7 +4570,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     return hooks;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 1 */
@@ -4933,17 +4933,17 @@ var _get = function get(object, property, receiver) { if (object === null) objec
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(23);
+var _index = __webpack_require__(24);
 
 var _index2 = __webpack_require__(9);
 
-var _index3 = __webpack_require__(37);
+var _index3 = __webpack_require__(36);
 
 var _index4 = __webpack_require__(16);
 
-var _index5 = __webpack_require__(386);
+var _index5 = __webpack_require__(406);
 
-var _index6 = __webpack_require__(389);
+var _index6 = __webpack_require__(409);
 
 var _jquery = __webpack_require__(3);
 
@@ -17981,7 +17981,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 4 */
@@ -18208,7 +18208,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(325);
+var _index = __webpack_require__(345);
 
 var _index2 = __webpack_require__(9);
 
@@ -18222,8 +18222,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var phone = __webpack_require__(354);
-var axios = __webpack_require__(355);
+var phone = __webpack_require__(374);
+var axios = __webpack_require__(375);
 var Data = __webpack_require__(7);
 
 // Tutorbook utils class that contains basic utils used across the program
@@ -19861,7 +19861,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var axios = __webpack_require__(307);
-var algolia = __webpack_require__(26)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
+var algolia = __webpack_require__(69)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
 // Class that manages Firestore data flow along with any local app data
 // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
@@ -20733,7 +20733,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.util = undefined;
 
-var _component = __webpack_require__(346);
+var _component = __webpack_require__(366);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -20745,7 +20745,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _constants = __webpack_require__(85);
+var _constants = __webpack_require__(93);
 
 Object.keys(_constants).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -20757,7 +20757,7 @@ Object.keys(_constants).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(84);
+var _foundation = __webpack_require__(92);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -20769,7 +20769,7 @@ Object.keys(_foundation).forEach(function (key) {
   });
 });
 
-var _util = __webpack_require__(47);
+var _util = __webpack_require__(49);
 
 var util = _interopRequireWildcard(_util);
 
@@ -21143,10 +21143,23 @@ module.exports = {
 "use strict";
 
 
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var bind = __webpack_require__(89);
-var isBuffer = __webpack_require__(357);
+var bind = __webpack_require__(97);
+var isBuffer = __webpack_require__(377);
 
 /*global toString:true*/
 
@@ -21471,19 +21484,6 @@ module.exports = {
   deepMerge: deepMerge,
   extend: extend,
   trim: trim
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
 };
 
 /***/ }),
@@ -22182,15 +22182,15 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(23);
+var _index = __webpack_require__(24);
 
-var _index2 = __webpack_require__(126);
+var _index2 = __webpack_require__(127);
 
 var _index3 = __webpack_require__(9);
 
 var _index4 = __webpack_require__(16);
 
-var _index5 = __webpack_require__(25);
+var _index5 = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
@@ -22214,7 +22214,7 @@ var NotificationDialog = __webpack_require__(2).notify;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
-var User = __webpack_require__(24);
+var User = __webpack_require__(25);
 
 // Profile class that provides a profile view and header and manages all data
 // flow concering the user's profile.
@@ -23147,7 +23147,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(350);
+var _component = __webpack_require__(370);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -23159,7 +23159,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(49);
+var _foundation = __webpack_require__(51);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -23171,7 +23171,7 @@ Object.keys(_foundation).forEach(function (key) {
   });
 });
 
-var _foundation2 = __webpack_require__(87);
+var _foundation2 = __webpack_require__(95);
 
 Object.keys(_foundation2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -23183,7 +23183,7 @@ Object.keys(_foundation2).forEach(function (key) {
   });
 });
 
-var _foundation3 = __webpack_require__(88);
+var _foundation3 = __webpack_require__(96);
 
 Object.keys(_foundation3).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -23195,7 +23195,7 @@ Object.keys(_foundation3).forEach(function (key) {
   });
 });
 
-var _foundation4 = __webpack_require__(48);
+var _foundation4 = __webpack_require__(50);
 
 Object.keys(_foundation4).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -23220,7 +23220,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(25);
+var _index = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
@@ -23240,7 +23240,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
-var User = __webpack_require__(24);
+var User = __webpack_require__(25);
 
 var ViewApptDialog = __webpack_require__(2).viewAppt;
 var ViewActiveApptDialog = __webpack_require__(2).viewActiveAppt;
@@ -23935,6 +23935,17 @@ process.umask = function () {
 "use strict";
 
 
+module.exports = function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -23943,7 +23954,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(25);
+var _index2 = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
@@ -23971,7 +23982,7 @@ var ConfirmationDialog = __webpack_require__(2).confirm;
 
 // Users
 var EditProfile = __webpack_require__(15).edit;
-var User = __webpack_require__(24);
+var User = __webpack_require__(25);
 
 // Dependencies
 var Data = __webpack_require__(7);
@@ -24930,17 +24941,6 @@ Card.prototype.removeCardDoc = function (type, id) {
 module.exports = Card;
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function clone(obj) {
-  return JSON.parse(JSON.stringify(obj));
-};
-
-/***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24968,8 +24968,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var EditProfile = __webpack_require__(15).edit;
-var User = __webpack_require__(24);
-var FilterDialog = __webpack_require__(136).default;
+var User = __webpack_require__(25);
+var FilterDialog = __webpack_require__(54).default;
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
 var NotificationDialog = __webpack_require__(2).notify;
@@ -25952,7 +25952,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(372);
+var _constants = __webpack_require__(33);
+
+Object.defineProperty(exports, 'Corner', {
+  enumerable: true,
+  get: function get() {
+    return _constants.Corner;
+  }
+});
+
+var _component = __webpack_require__(352);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -25964,7 +25973,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(104);
+var _foundation = __webpack_require__(81);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -25976,7 +25985,42 @@ Object.keys(_foundation).forEach(function (key) {
   });
 });
 
-var _index = __webpack_require__(101);
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(392);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(112);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+var _index = __webpack_require__(109);
 
 Object.keys(_index).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -25988,7 +26032,7 @@ Object.keys(_index).forEach(function (key) {
   });
 });
 
-var _index2 = __webpack_require__(105);
+var _index2 = __webpack_require__(113);
 
 Object.keys(_index2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -26000,7 +26044,7 @@ Object.keys(_index2).forEach(function (key) {
   });
 });
 
-var _index3 = __webpack_require__(107);
+var _index3 = __webpack_require__(115);
 
 Object.keys(_index3).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -26013,7 +26057,7 @@ Object.keys(_index3).forEach(function (key) {
 });
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26190,63 +26234,7 @@ var User = function () {
 module.exports = User;
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _constants = __webpack_require__(32);
-
-Object.defineProperty(exports, 'Corner', {
-  enumerable: true,
-  get: function get() {
-    return _constants.Corner;
-  }
-});
-
-var _component = __webpack_require__(332);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(73);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
 /* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var AlgoliaSearch = __webpack_require__(394);
-var createAlgoliasearch = __webpack_require__(405);
-
-module.exports = createAlgoliasearch(AlgoliaSearch, 'Browser');
-
-/***/ }),
-/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26256,10 +26244,10 @@ module.exports = createAlgoliasearch(AlgoliaSearch, 'Browser');
 // We use custom error "types" so that we can act on them when we need it
 // e.g.: if error instanceof errors.UnparsableJSON then..
 
-var inherits = __webpack_require__(34);
+var inherits = __webpack_require__(31);
 
 function AlgoliaSearchError(message, extraProperties) {
-  var forEach = __webpack_require__(28);
+  var forEach = __webpack_require__(27);
 
   var error = this;
 
@@ -26314,7 +26302,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26342,13 +26330,13 @@ module.exports = function forEach(obj, fn, ctx) {
 };
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var foreach = __webpack_require__(28);
+var foreach = __webpack_require__(27);
 
 module.exports = function map(arr, fn) {
   var newArr = [];
@@ -26359,7 +26347,7 @@ module.exports = function map(arr, fn) {
 };
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26416,7 +26404,7 @@ function matches(element, selector) {
 //# sourceMappingURL=ponyfill.js.map
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26427,7 +26415,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ponyfill = undefined;
 
-var _ponyfill = __webpack_require__(30);
+var _ponyfill = __webpack_require__(29);
 
 var ponyfill = _interopRequireWildcard(_ponyfill);
 
@@ -26459,154 +26447,7 @@ exports.ponyfill = ponyfill;
  */
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = {
-    ANCHOR: 'mdc-menu-surface--anchor',
-    ANIMATING_CLOSED: 'mdc-menu-surface--animating-closed',
-    ANIMATING_OPEN: 'mdc-menu-surface--animating-open',
-    FIXED: 'mdc-menu-surface--fixed',
-    OPEN: 'mdc-menu-surface--open',
-    ROOT: 'mdc-menu-surface'
-};
-// tslint:disable:object-literal-sort-keys
-var strings = {
-    CLOSED_EVENT: 'MDCMenuSurface:closed',
-    OPENED_EVENT: 'MDCMenuSurface:opened',
-    FOCUSABLE_ELEMENTS: ['button:not(:disabled)', '[href]:not([aria-disabled="true"])', 'input:not(:disabled)', 'select:not(:disabled)', 'textarea:not(:disabled)', '[tabindex]:not([tabindex="-1"]):not([aria-disabled="true"])'].join(', ')
-};
-// tslint:enable:object-literal-sort-keys
-var numbers = {
-    /** Total duration of menu-surface open animation. */
-    TRANSITION_OPEN_DURATION: 120,
-    /** Total duration of menu-surface close animation. */
-    TRANSITION_CLOSE_DURATION: 75,
-    /** Margin left to the edge of the viewport when menu-surface is at maximum possible height. */
-    MARGIN_TO_EDGE: 32,
-    /** Ratio of anchor width to menu-surface width for switching from corner positioning to center positioning. */
-    ANCHOR_TO_MENU_SURFACE_WIDTH_RATIO: 0.67
-};
-/**
- * Enum for bits in the {@see Corner) bitmap.
- */
-var CornerBit;
-(function (CornerBit) {
-    CornerBit[CornerBit["BOTTOM"] = 1] = "BOTTOM";
-    CornerBit[CornerBit["CENTER"] = 2] = "CENTER";
-    CornerBit[CornerBit["RIGHT"] = 4] = "RIGHT";
-    CornerBit[CornerBit["FLIP_RTL"] = 8] = "FLIP_RTL";
-})(CornerBit || (exports.CornerBit = CornerBit = {}));
-/**
- * Enum for representing an element corner for positioning the menu-surface.
- *
- * The START constants map to LEFT if element directionality is left
- * to right and RIGHT if the directionality is right to left.
- * Likewise END maps to RIGHT or LEFT depending on the directionality.
- */
-var Corner;
-(function (Corner) {
-    Corner[Corner["TOP_LEFT"] = 0] = "TOP_LEFT";
-    Corner[Corner["TOP_RIGHT"] = 4] = "TOP_RIGHT";
-    Corner[Corner["BOTTOM_LEFT"] = 1] = "BOTTOM_LEFT";
-    Corner[Corner["BOTTOM_RIGHT"] = 5] = "BOTTOM_RIGHT";
-    Corner[Corner["TOP_START"] = 8] = "TOP_START";
-    Corner[Corner["TOP_END"] = 12] = "TOP_END";
-    Corner[Corner["BOTTOM_START"] = 9] = "BOTTOM_START";
-    Corner[Corner["BOTTOM_END"] = 13] = "BOTTOM_END";
-})(Corner || (exports.Corner = Corner = {}));
-exports.cssClasses = cssClasses;
-exports.strings = strings;
-exports.numbers = numbers;
-exports.CornerBit = CornerBit;
-exports.Corner = Corner;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = {
-    FIXED_CLASS: 'mdc-top-app-bar--fixed',
-    FIXED_SCROLLED_CLASS: 'mdc-top-app-bar--fixed-scrolled',
-    SHORT_CLASS: 'mdc-top-app-bar--short',
-    SHORT_COLLAPSED_CLASS: 'mdc-top-app-bar--short-collapsed',
-    SHORT_HAS_ACTION_ITEM_CLASS: 'mdc-top-app-bar--short-has-action-item'
-};
-var numbers = {
-    DEBOUNCE_THROTTLE_RESIZE_TIME_MS: 100,
-    MAX_TOP_APP_BAR_HEIGHT: 128
-};
-var strings = {
-    ACTION_ITEM_SELECTOR: '.mdc-top-app-bar__action-item',
-    NAVIGATION_EVENT: 'MDCTopAppBar:nav',
-    NAVIGATION_ICON_SELECTOR: '.mdc-top-app-bar__navigation-icon',
-    ROOT_SELECTOR: '.mdc-top-app-bar',
-    TITLE_SELECTOR: '.mdc-top-app-bar__title'
-};
-exports.cssClasses = cssClasses;
-exports.numbers = numbers;
-exports.strings = strings;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26637,7 +26478,7 @@ if (typeof Object.create === 'function') {
 }
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26651,7 +26492,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(402);
+exports = module.exports = __webpack_require__(332);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -26815,7 +26656,154 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 36 */
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    ANCHOR: 'mdc-menu-surface--anchor',
+    ANIMATING_CLOSED: 'mdc-menu-surface--animating-closed',
+    ANIMATING_OPEN: 'mdc-menu-surface--animating-open',
+    FIXED: 'mdc-menu-surface--fixed',
+    OPEN: 'mdc-menu-surface--open',
+    ROOT: 'mdc-menu-surface'
+};
+// tslint:disable:object-literal-sort-keys
+var strings = {
+    CLOSED_EVENT: 'MDCMenuSurface:closed',
+    OPENED_EVENT: 'MDCMenuSurface:opened',
+    FOCUSABLE_ELEMENTS: ['button:not(:disabled)', '[href]:not([aria-disabled="true"])', 'input:not(:disabled)', 'select:not(:disabled)', 'textarea:not(:disabled)', '[tabindex]:not([tabindex="-1"]):not([aria-disabled="true"])'].join(', ')
+};
+// tslint:enable:object-literal-sort-keys
+var numbers = {
+    /** Total duration of menu-surface open animation. */
+    TRANSITION_OPEN_DURATION: 120,
+    /** Total duration of menu-surface close animation. */
+    TRANSITION_CLOSE_DURATION: 75,
+    /** Margin left to the edge of the viewport when menu-surface is at maximum possible height. */
+    MARGIN_TO_EDGE: 32,
+    /** Ratio of anchor width to menu-surface width for switching from corner positioning to center positioning. */
+    ANCHOR_TO_MENU_SURFACE_WIDTH_RATIO: 0.67
+};
+/**
+ * Enum for bits in the {@see Corner) bitmap.
+ */
+var CornerBit;
+(function (CornerBit) {
+    CornerBit[CornerBit["BOTTOM"] = 1] = "BOTTOM";
+    CornerBit[CornerBit["CENTER"] = 2] = "CENTER";
+    CornerBit[CornerBit["RIGHT"] = 4] = "RIGHT";
+    CornerBit[CornerBit["FLIP_RTL"] = 8] = "FLIP_RTL";
+})(CornerBit || (exports.CornerBit = CornerBit = {}));
+/**
+ * Enum for representing an element corner for positioning the menu-surface.
+ *
+ * The START constants map to LEFT if element directionality is left
+ * to right and RIGHT if the directionality is right to left.
+ * Likewise END maps to RIGHT or LEFT depending on the directionality.
+ */
+var Corner;
+(function (Corner) {
+    Corner[Corner["TOP_LEFT"] = 0] = "TOP_LEFT";
+    Corner[Corner["TOP_RIGHT"] = 4] = "TOP_RIGHT";
+    Corner[Corner["BOTTOM_LEFT"] = 1] = "BOTTOM_LEFT";
+    Corner[Corner["BOTTOM_RIGHT"] = 5] = "BOTTOM_RIGHT";
+    Corner[Corner["TOP_START"] = 8] = "TOP_START";
+    Corner[Corner["TOP_END"] = 12] = "TOP_END";
+    Corner[Corner["BOTTOM_START"] = 9] = "BOTTOM_START";
+    Corner[Corner["BOTTOM_END"] = 13] = "BOTTOM_END";
+})(Corner || (exports.Corner = Corner = {}));
+exports.cssClasses = cssClasses;
+exports.strings = strings;
+exports.numbers = numbers;
+exports.CornerBit = CornerBit;
+exports.Corner = Corner;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    FIXED_CLASS: 'mdc-top-app-bar--fixed',
+    FIXED_SCROLLED_CLASS: 'mdc-top-app-bar--fixed-scrolled',
+    SHORT_CLASS: 'mdc-top-app-bar--short',
+    SHORT_COLLAPSED_CLASS: 'mdc-top-app-bar--short-collapsed',
+    SHORT_HAS_ACTION_ITEM_CLASS: 'mdc-top-app-bar--short-has-action-item'
+};
+var numbers = {
+    DEBOUNCE_THROTTLE_RESIZE_TIME_MS: 100,
+    MAX_TOP_APP_BAR_HEIGHT: 128
+};
+var strings = {
+    ACTION_ITEM_SELECTOR: '.mdc-top-app-bar__action-item',
+    NAVIGATION_EVENT: 'MDCTopAppBar:nav',
+    NAVIGATION_ICON_SELECTOR: '.mdc-top-app-bar__navigation-icon',
+    ROOT_SELECTOR: '.mdc-top-app-bar',
+    TITLE_SELECTOR: '.mdc-top-app-bar__title'
+};
+exports.cssClasses = cssClasses;
+exports.numbers = numbers;
+exports.strings = strings;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26845,7 +26833,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26911,7 +26899,7 @@ exports.util = util; /**
                       */
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26928,7 +26916,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(32);
+var _constants = __webpack_require__(33);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -27431,7 +27419,7 @@ exports.default = MDCMenuSurfaceFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27447,9 +27435,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(126);
+var _index2 = __webpack_require__(127);
 
-var _index3 = __webpack_require__(23);
+var _index3 = __webpack_require__(24);
 
 var _index4 = __webpack_require__(16);
 
@@ -27469,10 +27457,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ScheduleCard = __webpack_require__(132);
+var ScheduleCard = __webpack_require__(133);
 var SearchHeader = __webpack_require__(21).header;
 var Search = __webpack_require__(21).default;
-var Card = __webpack_require__(19);
+var Card = __webpack_require__(20);
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
 var NewProfile = __webpack_require__(15).new;
@@ -28253,7 +28241,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28284,7 +28272,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var SearchHeader = __webpack_require__(21).header;
-var Card = __webpack_require__(19);
+var Card = __webpack_require__(20);
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
@@ -28664,7 +28652,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28734,7 +28722,7 @@ exports.numbers = numbers;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28824,7 +28812,73 @@ exports.default = MDCFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function deprecate(fn, message) {
+  var warned = false;
+
+  function deprecated() {
+    if (!warned) {
+      /* eslint no-console:0 */
+      console.warn(message);
+      warned = true;
+    }
+
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+/***/ }),
 /* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function deprecatedMessage(previousUsage, newUsage) {
+  var githubAnchorLink = previousUsage.toLowerCase().replace(/[\.\(\)]/g, '');
+
+  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated#' + githubAnchorLink;
+};
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var g;
+
+// This works in non-strict mode
+g = function () {
+	return this;
+}();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+/***/ }),
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28841,7 +28895,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(329);
+var _constants = __webpack_require__(349);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28962,7 +29016,7 @@ exports.default = MDCFloatingLabelFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29009,7 +29063,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29026,7 +29080,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(71);
+var _constants = __webpack_require__(79);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29483,7 +29537,7 @@ exports.default = MDCListFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29600,7 +29654,7 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29688,7 +29742,7 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29703,9 +29757,9 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(34);
 
-var _foundation = __webpack_require__(49);
+var _foundation = __webpack_require__(51);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29878,7 +29932,7 @@ exports.default = MDCTopAppBarFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29895,7 +29949,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(34);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30045,7 +30099,7 @@ exports.default = MDCTopAppBarBaseFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30062,7 +30116,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(375);
+var _constants = __webpack_require__(395);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30183,7 +30237,7 @@ exports.default = MDCFloatingLabelFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30273,70 +30327,396 @@ exports.default = MDCFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function deprecate(fn, message) {
-  var warned = false;
-
-  function deprecated() {
-    if (!warned) {
-      /* eslint no-console:0 */
-      console.warn(message);
-      warned = true;
-    }
-
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-};
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function deprecatedMessage(previousUsage, newUsage) {
-  var githubAnchorLink = previousUsage.toLowerCase().replace(/[\.\(\)]/g, '');
-
-  return 'algoliasearch: `' + previousUsage + '` was replaced by `' + newUsage + '`. Please see https://github.com/algolia/algoliasearch-client-javascript/wiki/Deprecated#' + githubAnchorLink;
-};
-
-/***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var g;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-// This works in non-strict mode
-g = function () {
-	return this;
+var _index = __webpack_require__(36);
+
+var _index2 = __webpack_require__(9);
+
+var _index3 = __webpack_require__(24);
+
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _awaitToJs = __webpack_require__(8);
+
+var _awaitToJs2 = _interopRequireDefault(_awaitToJs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var EditAvailabilityDialog = __webpack_require__(2).editAvailability;
+var Utils = __webpack_require__(6);
+var Data = __webpack_require__(7);
+
+var FilterDialog = function () {
+    function FilterDialog(filters) {
+        var skipRender = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+        _classCallCheck(this, FilterDialog);
+
+        this.filters = filters || {
+            grade: 'Any',
+            subject: 'Any',
+            gender: 'Any',
+            showBooked: false,
+            availability: {},
+            location: window.app.location.name,
+            price: window.app.location.name === 'Any' ? 'Any' : 'Free',
+            type: 'Tutor',
+            sort: 'Rating'
+        };
+        this.render = window.app.render;
+        if (!skipRender) this.renderSelf();
+    }
+
+    _createClass(FilterDialog, [{
+        key: 'view',
+        value: function view() {
+            (0, _jquery2.default)('body').prepend(this.el);
+            if (!this.managed) this.manage();
+            this.dialog.open();
+        }
+    }, {
+        key: 'manage',
+        value: function manage() {
+            var _this = this;
+
+            this.managed = true;
+            this.dialog = _index.MDCDialog.attachTo(this.el);
+            this.dialog.autoStackButtons = false;
+            this.dialog.listen('MDCDialog:closing', function (event) {
+                (0, _jquery2.default)(_this.el).remove();
+                if (event.detail.action === 'accept') _this.accept();
+            });
+            (0, _jquery2.default)(this.el).find('.mdc-list-item').each(function () {
+                _index2.MDCRipple.attachTo(this);
+            });
+        }
+    }, {
+        key: 'accept',
+        value: function accept() {
+            window.app.search.viewResults();
+        }
+    }, {
+        key: 'renderSelf',
+        value: function renderSelf() {
+            var _this2 = this;
+
+            this.el = this.render.template('dialog-filter');
+            var pages = this.el.querySelectorAll('.page');
+
+            this.el.querySelector('#reset-button').addEventListener('click', function () {
+                Object.entries({
+                    grade: 'Any',
+                    subject: 'Any',
+                    gender: 'Any',
+                    availability: {},
+                    location: window.app.location.name,
+                    price: window.app.location.name === 'Any' ? 'Any' : 'Free',
+                    type: 'Any',
+                    sort: 'Rating'
+                }).forEach(function (filter) {
+                    return _this2.filters[filter[0]] = filter[1];
+                });
+                _this2.page('page-all');
+            });
+
+            Utils.replaceElement(this.el.querySelector('#availability-list'), this.renderInputAvailability());
+
+            Utils.replaceElement(this.el.querySelector('#grade-list'), this.render.template('dialog-filter-item-list', {
+                items: ['Any'].concat(Data.grades)
+            }));
+
+            if (window.app.location.name === 'Any') {
+                Utils.replaceElement(this.el.querySelector('#price-list'), this.render.template('dialog-filter-item-list', {
+                    items: ['Any'].concat(Data.prices)
+                }));
+            } else {
+                Utils.replaceElement(this.el.querySelector('#price-list'), 'Due to PAUSD guidelines, we can only show free service-hour' + ' peer tutors on this website. To filter by price and view ' + 'more professional tutors, go to the root partition at https:' + '//tutorbook.app/app.');
+            }
+
+            Utils.replaceElement(this.el.querySelector('#gender-list'), this.render.template('dialog-filter-item-list', {
+                items: ['Any'].concat(Data.genders)
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#type-list'), this.render.template('dialog-filter-item-list', {
+                items: ['Any'].concat(Data.types)
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#math-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.mathSubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#tech-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.techSubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#art-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.artSubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#science-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.scienceSubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#history-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.historySubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#language-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.languageSubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#english-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.englishSubjects
+            }));
+
+            Utils.replaceElement(this.el.querySelector('#life-skills-list'), this.render.template('dialog-filter-item-list', {
+                items: Data.lifeSkills
+            }));
+
+            this.el.querySelectorAll('#page-subject .mdc-list-item').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var id = el.id.split('-').slice(1).join('-');
+                    if (id === 'page-all') {
+                        _this2.filters.subject = 'Any';
+                    }
+                    _this2.page(id);
+                });
+            });
+
+            pages.forEach(function (sel) {
+                var key = sel.id.split('-')[1];
+                if (key === 'all' || key === 'subject') {
+                    return;
+                }
+
+                sel.querySelectorAll('.mdc-list-item').forEach(function (el) {
+                    el.addEventListener('click', function () {
+                        if (['math', 'science', 'history', 'language', 'english', 'lifeSkills', 'tech', 'art'].indexOf(key) >= 0) {
+                            _this2.filters['subject'] = el.innerText.trim();
+                            _this2.page('page-all');
+                        } else if ('availability' === key) {
+                            return;
+                        } else {
+                            _this2.filters[key] = el.innerText.trim();
+                            _this2.page('page-all');
+                        }
+                    });
+                });
+            });
+
+            this.el.querySelectorAll('.back').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    _this2.page('page-all');
+                });
+            });
+            this.el.querySelectorAll('.back-subjects').forEach(function (el) {
+                el.addEventListener('click', function () {
+                    _this2.page('page-subject');
+                });
+            });
+
+            this.page('page-all');
+        }
+    }, {
+        key: 'getAvailabilityString',
+        value: function getAvailabilityString(data) {
+            var str = Utils.getAvailabilityString(data);
+            return Utils.shortenString(str, 20);
+        }
+    }, {
+        key: 'renderAllList',
+        value: function renderAllList() {
+            Utils.replaceElement(this.el.querySelector('#all-filters-list'), this.render.template('dialog-filter-list', this.clearFilters()));
+            var that = this;
+            (0, _jquery2.default)(this.el).find('#page-all .mdc-list-item').each(function () {
+                _index2.MDCRipple.attachTo(this);
+                this.addEventListener('click', function () {
+                    that.page(this.id.split('-').slice(1).join('-'));
+                });
+            });
+        }
+    }, {
+        key: 'clearFilters',
+        value: function clearFilters() {
+            var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.filters;
+
+            // Helper function to get rid of the 'Any' selected option for
+            // better rendering.
+            var result = {};
+            for (var filter in filters) {
+                if (filters[filter] !== 'Any' && Object.keys(filters[filter]).length !== 0) {
+                    result[filter] = filter === 'availability' ? this.getAvailabilityString(filters[filter]) : filters[filter];
+                } else {
+                    result[filter] = '';
+                }
+            }
+            return result;
+        }
+    }, {
+        key: 'page',
+        value: function page(id) {
+            var pages = this.el.querySelectorAll('.page');
+
+            pages.forEach(function (sel) {
+                if (sel.id === id) {
+                    sel.style.display = 'inherit';
+                } else {
+                    sel.style.display = 'none';
+                }
+            });
+
+            if (id === 'page-all') {
+                this.renderAllList();
+            } else if (id === 'page-availability' && !this.availabilityDialog.managed) {
+                this.availabilityDialog.manage();
+            }
+        }
+    }, {
+        key: 'renderInputAvailability',
+        value: function renderInputAvailability() {
+            var _this3 = this;
+
+            var textField = this.render.textField('Stub', '');
+            this.availabilityDialog = new EditAvailabilityDialog(textField, {});
+            this.availabilityDialog.val = Utils.cloneMap(this.filters.availability);
+            this.availabilityDialog.renderSelf();
+            (0, _jquery2.default)(this.el).find('#page-availability #ok-button')[0].addEventListener('click', function () {
+                if (!_this3.availabilityDialog.valid) return;
+                _this3.filters.availability = _this3.availabilityDialog.val;
+                _this3.page('page-all');
+            });
+            return this.availabilityDialog.main = (0, _jquery2.default)(this.availabilityDialog.main).find('.mdc-dialog__content')[0];
+        }
+    }]);
+
+    return FilterDialog;
 }();
 
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
-} catch (e) {
-	// This works if the window reference is available
-	if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-}
+;
 
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
+var NewGroupDialog = function (_FilterDialog) {
+    _inherits(NewGroupDialog, _FilterDialog);
 
-module.exports = g;
+    function NewGroupDialog() {
+        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        _classCallCheck(this, NewGroupDialog);
+
+        var _this4 = _possibleConstructorReturn(this, (NewGroupDialog.__proto__ || Object.getPrototypeOf(NewGroupDialog)).call(this, undefined, true));
+
+        _this4.ref = options.ref || window.app.db.collection('locations').doc(window.app.location.id).collection('announcements').doc();
+        _this4.name = options.name || window.app.location.name + ' Group #' + (options.groupNum || 1);
+        _this4.filters = Utils.combineMaps(_this4.filters, options.filters || {});
+        _this4.filters.showBooked = true;
+        _this4.group = Utils.combineMaps({
+            lastMessage: {
+                message: 'No messages so far. Click to send the first one.',
+                sentBy: window.app.conciseUser,
+                timestamp: new Date()
+            },
+            chatters: [window.app.conciseUser],
+            chatterUIDs: [window.app.user.uid],
+            chatterEmails: [window.app.user.email],
+            location: window.app.location,
+            createdBy: window.app.conciseUser,
+            name: _this4.name,
+            photo: 'https://tutorbook.app/app/img/male.png',
+            filters: _this4.filters
+        }, options.group || {});
+        _this4.renderSelf();
+        return _this4;
+    }
+
+    _createClass(NewGroupDialog, [{
+        key: 'getAvailabilityString',
+        value: function getAvailabilityString(data) {
+            var str = Utils.getAvailabilityString(data);
+            return Utils.shortenString(str, 50);
+        }
+    }, {
+        key: 'renderSelf',
+        value: function renderSelf() {
+            _get(NewGroupDialog.prototype.__proto__ || Object.getPrototypeOf(NewGroupDialog.prototype), 'renderSelf', this).call(this);
+            var description = 'Filter users to create a new announcement group.' + ' Messages sent to this group will then be sent to all users who ' + 'fit within the specified filters.';
+            var nameEl = this.render.textField('Name', this.name);
+            (0, _jquery2.default)(this.el).find('#show-page-availability span').text('Any Appointments').end().find('#page-availability h2').text('Appointments').end().find('#page-all .mdc-dialog__title').text('New Group').end().find('[data-mdc-dialog-action="accept"]').text('Create').end().find('#page-all .mdc-dialog__content').prepend(nameEl).prepend(description).end().attr('id', 'dialog-group');
+        }
+    }, {
+        key: 'renderAllList',
+        value: function renderAllList() {
+            _get(NewGroupDialog.prototype.__proto__ || Object.getPrototypeOf(NewGroupDialog.prototype), 'renderAllList', this).call(this);
+            (0, _jquery2.default)(this.el).find('#show-page-availability span').text('Any Appointments');
+        }
+    }, {
+        key: 'accept',
+        value: function accept() {
+            this.group.name = this.nameTextField.value || this.name;
+            return this.ref.set(this.group);
+        }
+    }, {
+        key: 'manage',
+        value: function manage() {
+            _get(NewGroupDialog.prototype.__proto__ || Object.getPrototypeOf(NewGroupDialog.prototype), 'manage', this).call(this);
+            this.nameTextField = new _index3.MDCTextField((0, _jquery2.default)(this.el).find('#Name')[0]);
+            this.nameTextField.value = this.name;
+        }
+    }]);
+
+    return NewGroupDialog;
+}(FilterDialog);
+
+;
+
+var EditGroupDialog = function (_NewGroupDialog) {
+    _inherits(EditGroupDialog, _NewGroupDialog);
+
+    function EditGroupDialog() {
+        _classCallCheck(this, EditGroupDialog);
+
+        return _possibleConstructorReturn(this, (EditGroupDialog.__proto__ || Object.getPrototypeOf(EditGroupDialog)).apply(this, arguments));
+    }
+
+    _createClass(EditGroupDialog, [{
+        key: 'renderSelf',
+        value: function renderSelf() {
+            _get(EditGroupDialog.prototype.__proto__ || Object.getPrototypeOf(EditGroupDialog.prototype), 'renderSelf', this).call(this);
+            (0, _jquery2.default)(this.el).find('#page-all .mdc-dialog__title').text('Edit Group').end().find('[data-mdc-dialog-action="accept"]').text('Update');
+        }
+    }, {
+        key: 'accept',
+        value: function accept() {
+            this.group.name = this.nameTextField.value || this.name;
+            return this.ref.update(this.group);
+        }
+    }]);
+
+    return EditGroupDialog;
+}(NewGroupDialog);
+
+;
+
+module.exports = {
+    default: FilterDialog,
+    group: NewGroupDialog,
+    editGroup: EditGroupDialog
+};
 
 /***/ }),
 /* 55 */
@@ -30354,7 +30734,7 @@ var _tslib = __webpack_require__(22);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(42);
+var _foundation = __webpack_require__(41);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30476,7 +30856,7 @@ var _tslib = __webpack_require__(22);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(42);
+var _foundation = __webpack_require__(41);
 
 var _constants = __webpack_require__(291);
 
@@ -31743,11 +32123,665 @@ module.exports = Cancel;
 "use strict";
 
 
+var AlgoliaSearch = __webpack_require__(324);
+var createAlgoliasearch = __webpack_require__(335);
+
+module.exports = createAlgoliasearch(AlgoliaSearch, 'Browser');
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var buildSearchMethod = __webpack_require__(71);
+var deprecate = __webpack_require__(42);
+var deprecatedMessage = __webpack_require__(43);
+
+module.exports = IndexCore;
+
+/*
+* Index class constructor.
+* You should not use this method directly but use initIndex() function
+*/
+function IndexCore(algoliasearch, indexName) {
+  this.indexName = indexName;
+  this.as = algoliasearch;
+  this.typeAheadArgs = null;
+  this.typeAheadValueOption = null;
+
+  // make sure every index instance has it's own cache
+  this.cache = {};
+}
+
+/*
+* Clear all queries in cache
+*/
+IndexCore.prototype.clearCache = function () {
+  this.cache = {};
+};
+
+/*
+* Search inside the index using XMLHttpRequest request (Using a POST query to
+* minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
+*
+* @param {string} [query] the full text query
+* @param {object} [args] (optional) if set, contains an object with query parameters:
+* - page: (integer) Pagination parameter used to select the page to retrieve.
+*                   Page is zero-based and defaults to 0. Thus,
+*                   to retrieve the 10th page you need to set page=9
+* - hitsPerPage: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
+* - attributesToRetrieve: a string that contains the list of object attributes
+* you want to retrieve (let you minimize the answer size).
+*   Attributes are separated with a comma (for example "name,address").
+*   You can also use an array (for example ["name","address"]).
+*   By default, all attributes are retrieved. You can also use '*' to retrieve all
+*   values when an attributesToRetrieve setting is specified for your index.
+* - attributesToHighlight: a string that contains the list of attributes you
+*   want to highlight according to the query.
+*   Attributes are separated by a comma. You can also use an array (for example ["name","address"]).
+*   If an attribute has no match for the query, the raw value is returned.
+*   By default all indexed text attributes are highlighted.
+*   You can use `*` if you want to highlight all textual attributes.
+*   Numerical attributes are not highlighted.
+*   A matchLevel is returned for each highlighted attribute and can contain:
+*      - full: if all the query terms were found in the attribute,
+*      - partial: if only some of the query terms were found,
+*      - none: if none of the query terms were found.
+* - attributesToSnippet: a string that contains the list of attributes to snippet alongside
+* the number of words to return (syntax is `attributeName:nbWords`).
+*    Attributes are separated by a comma (Example: attributesToSnippet=name:10,content:10).
+*    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']).
+*    By default no snippet is computed.
+* - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word.
+* Defaults to 3.
+* - minWordSizefor2Typos: the minimum number of characters in a query word
+* to accept two typos in this word. Defaults to 7.
+* - getRankingInfo: if set to 1, the result hits will contain ranking
+* information in _rankingInfo attribute.
+* - aroundLatLng: search for entries around a given
+* latitude/longitude (specified as two floats separated by a comma).
+*   For example aroundLatLng=47.316669,5.016670).
+*   You can specify the maximum distance in meters with the aroundRadius parameter (in meters)
+*   and the precision for ranking with aroundPrecision
+*   (for example if you set aroundPrecision=100, two objects that are distant of
+*   less than 100m will be considered as identical for "geo" ranking parameter).
+*   At indexing, you should specify geoloc of an object with the _geoloc attribute
+*   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+* - insideBoundingBox: search entries inside a given area defined by the two extreme points
+* of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
+*   For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
+*   At indexing, you should specify geoloc of an object with the _geoloc attribute
+*   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
+* - numericFilters: a string that contains the list of numeric filters you want to
+* apply separated by a comma.
+*   The syntax of one filter is `attributeName` followed by `operand` followed by `value`.
+*   Supported operands are `<`, `<=`, `=`, `>` and `>=`.
+*   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000.
+*   You can also use an array (for example numericFilters: ["price>100","price<1000"]).
+* - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas.
+*   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
+*   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]]
+*   means tag1 AND (tag2 OR tag3).
+*   At indexing, tags should be added in the _tags** attribute
+*   of objects (for example {"_tags":["tag1","tag2"]}).
+* - facetFilters: filter the query by a list of facets.
+*   Facets are separated by commas and each facet is encoded as `attributeName:value`.
+*   For example: `facetFilters=category:Book,author:John%20Doe`.
+*   You can also use an array (for example `["category:Book","author:John%20Doe"]`).
+* - facets: List of object attributes that you want to use for faceting.
+*   Comma separated list: `"category,author"` or array `['category','author']`
+*   Only attributes that have been added in **attributesForFaceting** index setting
+*   can be used in this parameter.
+*   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
+* - queryType: select how the query words are interpreted, it can be one of the following value:
+*    - prefixAll: all query words are interpreted as prefixes,
+*    - prefixLast: only the last word is interpreted as a prefix (default behavior),
+*    - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
+* - optionalWords: a string that contains the list of words that should
+* be considered as optional when found in the query.
+*   Comma separated and array are accepted.
+* - distinct: If set to 1, enable the distinct feature (disabled by default)
+* if the attributeForDistinct index setting is set.
+*   This feature is similar to the SQL "distinct" keyword: when enabled
+*   in a query with the distinct=1 parameter,
+*   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
+*   For example, if the chosen attribute is show_name and several hits have
+*   the same value for show_name, then only the best
+*   one is kept and others are removed.
+* - restrictSearchableAttributes: List of attributes you want to use for
+* textual search (must be a subset of the attributesToIndex index setting)
+* either comma separated or as an array
+* @param {function} [callback] the result callback called with two arguments:
+*  error: null or Error('message'). If false, the content contains the error.
+*  content: the server answer that contains the list of results.
+*/
+IndexCore.prototype.search = buildSearchMethod('query');
+
+/*
+* -- BETA --
+* Search a record similar to the query inside the index using XMLHttpRequest request (Using a POST query to
+* minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
+*
+* @param {string} [query] the similar query
+* @param {object} [args] (optional) if set, contains an object with query parameters.
+*   All search parameters are supported (see search function), restrictSearchableAttributes and facetFilters
+*   are the two most useful to restrict the similar results and get more relevant content
+*/
+IndexCore.prototype.similarSearch = deprecate(buildSearchMethod('similarQuery'), deprecatedMessage('index.similarSearch(query[, callback])', 'index.search({ similarQuery: query }[, callback])'));
+
+/*
+* Browse index content. The response content will have a `cursor` property that you can use
+* to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
+*
+* @param {string} query - The full text query
+* @param {Object} [queryParameters] - Any search query parameter
+* @param {Function} [callback] - The result callback called with two arguments
+*   error: null or Error('message')
+*   content: the server answer with the browse result
+* @return {Promise|undefined} Returns a promise if no callback given
+* @example
+* index.browse('cool songs', {
+*   tagFilters: 'public,comments',
+*   hitsPerPage: 500
+* }, callback);
+* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+*/
+IndexCore.prototype.browse = function (query, queryParameters, callback) {
+  var merge = __webpack_require__(72);
+
+  var indexObj = this;
+
+  var page;
+  var hitsPerPage;
+
+  // we check variadic calls that are not the one defined
+  // .browse()/.browse(fn)
+  // => page = 0
+  if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
+    page = 0;
+    callback = arguments[0];
+    query = undefined;
+  } else if (typeof arguments[0] === 'number') {
+    // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
+    page = arguments[0];
+    if (typeof arguments[1] === 'number') {
+      hitsPerPage = arguments[1];
+    } else if (typeof arguments[1] === 'function') {
+      callback = arguments[1];
+      hitsPerPage = undefined;
+    }
+    query = undefined;
+    queryParameters = undefined;
+  } else if (_typeof(arguments[0]) === 'object') {
+    // .browse(queryParameters)/.browse(queryParameters, cb)
+    if (typeof arguments[1] === 'function') {
+      callback = arguments[1];
+    }
+    queryParameters = arguments[0];
+    query = undefined;
+  } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
+    // .browse(query, cb)
+    callback = arguments[1];
+    queryParameters = undefined;
+  }
+
+  // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
+
+  // get search query parameters combining various possible calls
+  // to .browse();
+  queryParameters = merge({}, queryParameters || {}, {
+    page: page,
+    hitsPerPage: hitsPerPage,
+    query: query
+  });
+
+  var params = this.as._getSearchParams(queryParameters, '');
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse',
+    body: { params: params },
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/*
+* Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
+*
+* @param {string} query - The full text query
+* @param {Object} [queryParameters] - Any search query parameter
+* @param {Function} [callback] - The result callback called with two arguments
+*   error: null or Error('message')
+*   content: the server answer with the browse result
+* @return {Promise|undefined} Returns a promise if no callback given
+* @example
+* index.browseFrom('14lkfsakl32', callback);
+* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
+*/
+IndexCore.prototype.browseFrom = function (cursor, callback) {
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse',
+    body: { cursor: cursor },
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/*
+* Search for facet values
+* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
+*
+* @param {string} params.facetName Facet name, name of the attribute to search for values in.
+* Must be declared as a facet
+* @param {string} params.facetQuery Query for the facet search
+* @param {string} [params.*] Any search parameter of Algolia,
+* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
+* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
+* @param callback (optional)
+*/
+IndexCore.prototype.searchForFacetValues = function (params, callback) {
+  var clone = __webpack_require__(19);
+  var omit = __webpack_require__(73);
+  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
+
+  if (params.facetName === undefined || params.facetQuery === undefined) {
+    throw new Error(usage);
+  }
+
+  var facetName = params.facetName;
+  var filteredParams = omit(clone(params), function (keyName) {
+    return keyName === 'facetName';
+  });
+  var searchParameters = this.as._getSearchParams(filteredParams, '');
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/facets/' + encodeURIComponent(facetName) + '/query',
+    hostType: 'read',
+    body: { params: searchParameters },
+    callback: callback
+  });
+};
+
+IndexCore.prototype.searchFacet = deprecate(function (params, callback) {
+  return this.searchForFacetValues(params, callback);
+}, deprecatedMessage('index.searchFacet(params[, callback])', 'index.searchForFacetValues(params[, callback])'));
+
+IndexCore.prototype._search = function (params, url, callback, additionalUA) {
+  return this.as._jsonRequest({
+    cache: this.cache,
+    method: 'POST',
+    url: url || '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
+    body: { params: params },
+    hostType: 'read',
+    fallback: {
+      method: 'GET',
+      url: '/1/indexes/' + encodeURIComponent(this.indexName),
+      body: { params: params }
+    },
+    callback: callback,
+    additionalUA: additionalUA
+  });
+};
+
+/*
+* Get an object from this index
+*
+* @param objectID the unique identifier of the object to retrieve
+* @param attrs (optional) if set, contains the array of attribute names to retrieve
+* @param callback (optional) the result callback called with two arguments
+*  error: null or Error('message')
+*  content: the object to retrieve or the error message if a failure occurred
+*/
+IndexCore.prototype.getObject = function (objectID, attrs, callback) {
+  var indexObj = this;
+
+  if (arguments.length === 1 || typeof attrs === 'function') {
+    callback = attrs;
+    attrs = undefined;
+  }
+
+  var params = '';
+  if (attrs !== undefined) {
+    params = '?attributes=';
+    for (var i = 0; i < attrs.length; ++i) {
+      if (i !== 0) {
+        params += ',';
+      }
+      params += attrs[i];
+    }
+  }
+
+  return this.as._jsonRequest({
+    method: 'GET',
+    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
+    hostType: 'read',
+    callback: callback
+  });
+};
+
+/*
+* Get several objects from this index
+*
+* @param objectIDs the array of unique identifier of objects to retrieve
+*/
+IndexCore.prototype.getObjects = function (objectIDs, attributesToRetrieve, callback) {
+  var isArray = __webpack_require__(11);
+  var map = __webpack_require__(28);
+
+  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
+
+  if (!isArray(objectIDs)) {
+    throw new Error(usage);
+  }
+
+  var indexObj = this;
+
+  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
+    callback = attributesToRetrieve;
+    attributesToRetrieve = undefined;
+  }
+
+  var body = {
+    requests: map(objectIDs, function prepareRequest(objectID) {
+      var request = {
+        indexName: indexObj.indexName,
+        objectID: objectID
+      };
+
+      if (attributesToRetrieve) {
+        request.attributesToRetrieve = attributesToRetrieve.join(',');
+      }
+
+      return request;
+    })
+  };
+
+  return this.as._jsonRequest({
+    method: 'POST',
+    url: '/1/indexes/*/objects',
+    hostType: 'read',
+    body: body,
+    callback: callback
+  });
+};
+
+IndexCore.prototype.as = null;
+IndexCore.prototype.indexName = null;
+IndexCore.prototype.typeAheadArgs = null;
+IndexCore.prototype.typeAheadValueOption = null;
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+module.exports = buildSearchMethod;
+
+var errors = __webpack_require__(26);
+
+/**
+ * Creates a search method to be used in clients
+ * @param {string} queryParam the name of the attribute used for the query
+ * @param {string} url the url
+ * @return {function} the search method
+ */
+function buildSearchMethod(queryParam, url) {
+  /**
+   * The search method. Prepares the data and send the query to Algolia.
+   * @param {string} query the string used for query search
+   * @param {object} args additional parameters to send with the search
+   * @param {function} [callback] the callback to be called with the client gets the answer
+   * @return {undefined|Promise} If the callback is not provided then this methods returns a Promise
+   */
+  return function search(query, args, callback) {
+    // warn V2 users on how to search
+    if (typeof query === 'function' && (typeof args === 'undefined' ? 'undefined' : _typeof(args)) === 'object' || (typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object') {
+      // .search(query, params, cb)
+      // .search(cb, params)
+      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
+    }
+
+    // Normalizing the function signature
+    if (arguments.length === 0 || typeof query === 'function') {
+      // Usage : .search(), .search(cb)
+      callback = query;
+      query = '';
+    } else if (arguments.length === 1 || typeof args === 'function') {
+      // Usage : .search(query/args), .search(query, cb)
+      callback = args;
+      args = undefined;
+    }
+    // At this point we have 3 arguments with values
+
+    // Usage : .search(args) // careful: typeof null === 'object'
+    if ((typeof query === 'undefined' ? 'undefined' : _typeof(query)) === 'object' && query !== null) {
+      args = query;
+      query = undefined;
+    } else if (query === undefined || query === null) {
+      // .search(undefined/null)
+      query = '';
+    }
+
+    var params = '';
+
+    if (query !== undefined) {
+      params += queryParam + '=' + encodeURIComponent(query);
+    }
+
+    var additionalUA;
+    if (args !== undefined) {
+      if (args.additionalUA) {
+        additionalUA = args.additionalUA;
+        delete args.additionalUA;
+      }
+      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
+      params = this.as._getSearchParams(args, params);
+    }
+
+    return this._search(params, url, callback, additionalUA);
+  };
+}
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var foreach = __webpack_require__(27);
+
+module.exports = function merge(destination /* , sources */) {
+  var sources = Array.prototype.slice.call(arguments);
+
+  foreach(sources, function (source) {
+    for (var keyName in source) {
+      if (source.hasOwnProperty(keyName)) {
+        if (_typeof(destination[keyName]) === 'object' && _typeof(source[keyName]) === 'object') {
+          destination[keyName] = merge({}, destination[keyName], source[keyName]);
+        } else if (source[keyName] !== undefined) {
+          destination[keyName] = source[keyName];
+        }
+      }
+    }
+  });
+
+  return destination;
+};
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function omit(obj, test) {
+  var keys = __webpack_require__(326);
+  var foreach = __webpack_require__(27);
+
+  var filtered = {};
+
+  foreach(keys(obj), function doFilter(keyName) {
+    if (test(keyName) !== true) {
+      filtered[keyName] = obj[keyName];
+    }
+  });
+
+  return filtered;
+};
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var toStr = Object.prototype.toString;
+
+module.exports = function isArguments(value) {
+	var str = toStr.call(value);
+	var isArgs = str === '[object Arguments]';
+	if (!isArgs) {
+		isArgs = str !== '[object Array]' && value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && typeof value.length === 'number' && value.length >= 0 && toStr.call(value.callee) === '[object Function]';
+	}
+	return isArgs;
+};
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// Parse cloud does not supports setTimeout
+// We do not store a setTimeout reference in the client everytime
+// We only fallback to a fake setTimeout when not available
+// setTimeout cannot be override globally sadly
+module.exports = function exitPromise(fn, _setTimeout) {
+  _setTimeout(fn, 0);
+};
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var stringifyPrimitive = function stringifyPrimitive(v) {
+  switch (typeof v === 'undefined' ? 'undefined' : _typeof(v)) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function (obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
+    return map(objectKeys(obj), function (k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function (v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq + encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map(xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(330);
+var _component = __webpack_require__(350);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -31759,7 +32793,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(70);
+var _foundation = __webpack_require__(78);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -31772,7 +32806,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 70 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31789,7 +32823,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(331);
+var _constants = __webpack_require__(351);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -31897,7 +32931,7 @@ exports.default = MDCLineRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 71 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31960,7 +32994,7 @@ exports.numbers = numbers;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 72 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32009,7 +33043,7 @@ exports.getTransformPropertyName = getTransformPropertyName;
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 73 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32026,11 +33060,11 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _foundation2 = __webpack_require__(45);
+var _foundation2 = __webpack_require__(47);
 
-var _foundation3 = __webpack_require__(38);
+var _foundation3 = __webpack_require__(37);
 
-var _constants = __webpack_require__(44);
+var _constants = __webpack_require__(46);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -32192,7 +33226,7 @@ exports.default = MDCMenuFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 74 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32241,7 +33275,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 75 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32258,7 +33292,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(74);
+var _constants = __webpack_require__(82);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -32362,7 +33396,7 @@ exports.default = MDCNotchedOutlineFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 76 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32379,9 +33413,9 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(341);
+var _constants = __webpack_require__(361);
 
-var _util = __webpack_require__(46);
+var _util = __webpack_require__(48);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -32904,7 +33938,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 77 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32969,7 +34003,7 @@ exports.numbers = numbers;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 78 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32986,7 +34020,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(77);
+var _constants = __webpack_require__(85);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -33283,7 +34317,7 @@ exports.default = MDCSelectFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 79 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33293,7 +34327,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(342);
+var _component = __webpack_require__(362);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -33305,7 +34339,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(80);
+var _foundation = __webpack_require__(88);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -33318,7 +34352,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 80 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33335,7 +34369,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(343);
+var _constants = __webpack_require__(363);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -33473,7 +34507,7 @@ exports.default = MDCSelectHelperTextFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 81 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33483,7 +34517,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(344);
+var _component = __webpack_require__(364);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -33495,7 +34529,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(82);
+var _foundation = __webpack_require__(90);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -33508,7 +34542,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 82 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33525,7 +34559,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(345);
+var _constants = __webpack_require__(365);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -33649,7 +34683,7 @@ exports.default = MDCSelectIconFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 83 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33739,7 +34773,7 @@ exports.default = MDCFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 84 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33754,11 +34788,11 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(83);
+var _foundation = __webpack_require__(91);
 
-var _constants = __webpack_require__(85);
+var _constants = __webpack_require__(93);
 
-var _util = __webpack_require__(47);
+var _util = __webpack_require__(49);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -34287,7 +35321,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 85 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34346,7 +35380,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 86 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34463,7 +35497,7 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 87 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34478,9 +35512,9 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(34);
 
-var _foundation = __webpack_require__(48);
+var _foundation = __webpack_require__(50);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -34545,7 +35579,7 @@ exports.default = MDCFixedTopAppBarFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 88 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34560,9 +35594,9 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _constants = __webpack_require__(33);
+var _constants = __webpack_require__(34);
 
-var _foundation = __webpack_require__(49);
+var _foundation = __webpack_require__(51);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -34646,7 +35680,7 @@ exports.default = MDCShortTopAppBarFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 89 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34663,13 +35697,13 @@ module.exports = function bind(fn, thisArg) {
 };
 
 /***/ }),
-/* 90 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(12);
 
 function encode(val) {
   return encodeURIComponent(val).replace(/%40/gi, '@').replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
@@ -34733,7 +35767,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 };
 
 /***/ }),
-/* 91 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34744,14 +35778,14 @@ module.exports = function isCancel(value) {
 };
 
 /***/ }),
-/* 92 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(11);
-var normalizeHeaderName = __webpack_require__(362);
+var utils = __webpack_require__(12);
+var normalizeHeaderName = __webpack_require__(382);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -34768,10 +35802,10 @@ function getDefaultAdapter() {
   // Only Node.JS has a process variable that is of [[Class]] process
   if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(93);
+    adapter = __webpack_require__(101);
   } else if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(93);
+    adapter = __webpack_require__(101);
   }
   return adapter;
 }
@@ -34843,18 +35877,18 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 93 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(11);
-var settle = __webpack_require__(363);
-var buildURL = __webpack_require__(90);
-var parseHeaders = __webpack_require__(365);
-var isURLSameOrigin = __webpack_require__(366);
-var createError = __webpack_require__(94);
+var utils = __webpack_require__(12);
+var settle = __webpack_require__(383);
+var buildURL = __webpack_require__(98);
+var parseHeaders = __webpack_require__(385);
+var isURLSameOrigin = __webpack_require__(386);
+var createError = __webpack_require__(102);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -34945,7 +35979,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(367);
+      var cookies = __webpack_require__(387);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ? cookies.read(config.xsrfCookieName) : undefined;
@@ -35020,13 +36054,13 @@ module.exports = function xhrAdapter(config) {
 };
 
 /***/ }),
-/* 94 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(364);
+var enhanceError = __webpack_require__(384);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -35044,13 +36078,13 @@ module.exports = function createError(message, config, code, request, response) 
 };
 
 /***/ }),
-/* 95 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(11);
+var utils = __webpack_require__(12);
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -35095,7 +36129,7 @@ module.exports = function mergeConfig(config1, config2) {
 };
 
 /***/ }),
-/* 96 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35121,7 +36155,7 @@ Cancel.prototype.__CANCEL__ = true;
 module.exports = Cancel;
 
 /***/ }),
-/* 97 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35170,7 +36204,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 98 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35187,7 +36221,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(97);
+var _constants = __webpack_require__(105);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -35291,7 +36325,7 @@ exports.default = MDCNotchedOutlineFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 99 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35308,9 +36342,9 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(379);
+var _constants = __webpack_require__(399);
 
-var _util = __webpack_require__(100);
+var _util = __webpack_require__(108);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -35833,7 +36867,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 100 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35950,7 +36984,7 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 101 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35960,7 +36994,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(380);
+var _component = __webpack_require__(400);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -35972,7 +37006,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(102);
+var _foundation = __webpack_require__(110);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -35985,7 +37019,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 102 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36002,7 +37036,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(381);
+var _constants = __webpack_require__(401);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -36073,7 +37107,7 @@ exports.default = MDCTextFieldCharacterCounterFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 103 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36144,7 +37178,7 @@ exports.ALWAYS_FLOAT_TYPES = ALWAYS_FLOAT_TYPES;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 104 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36161,7 +37195,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(103);
+var _constants = __webpack_require__(111);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -36678,7 +37712,7 @@ exports.default = MDCTextFieldFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 105 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36688,7 +37722,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(382);
+var _component = __webpack_require__(402);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -36700,7 +37734,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(106);
+var _foundation = __webpack_require__(114);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -36713,7 +37747,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 106 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36730,7 +37764,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(383);
+var _constants = __webpack_require__(403);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -36868,7 +37902,7 @@ exports.default = MDCTextFieldHelperTextFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 107 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36878,7 +37912,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _component = __webpack_require__(384);
+var _component = __webpack_require__(404);
 
 Object.keys(_component).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -36890,7 +37924,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(108);
+var _foundation = __webpack_require__(116);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -36903,7 +37937,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 108 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36920,7 +37954,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(385);
+var _constants = __webpack_require__(405);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37044,7 +38078,7 @@ exports.default = MDCTextFieldIconFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 109 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37134,7 +38168,7 @@ exports.default = MDCFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 110 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37149,9 +38183,9 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(109);
+var _foundation = __webpack_require__(117);
 
-var _constants = __webpack_require__(111);
+var _constants = __webpack_require__(119);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37241,7 +38275,7 @@ exports.default = MDCFormFieldFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 111 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37281,7 +38315,7 @@ var strings = exports.strings = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 112 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37296,7 +38330,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(51);
+var _foundation = __webpack_require__(53);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37403,7 +38437,7 @@ exports.default = MDCComponent;
 //# sourceMappingURL=component.js.map
 
 /***/ }),
-/* 113 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37470,7 +38504,7 @@ function applyPassive(globalObj, forceRefresh) {
 //# sourceMappingURL=events.js.map
 
 /***/ }),
-/* 114 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37527,7 +38561,7 @@ function matches(element, selector) {
 //# sourceMappingURL=ponyfill.js.map
 
 /***/ }),
-/* 115 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37542,11 +38576,11 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(51);
+var _foundation = __webpack_require__(53);
 
-var _constants = __webpack_require__(393);
+var _constants = __webpack_require__(413);
 
-var _util = __webpack_require__(116);
+var _util = __webpack_require__(124);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38075,7 +39109,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 116 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38163,7 +39197,7 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 117 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38178,9 +39212,9 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(51);
+var _foundation = __webpack_require__(53);
 
-var _constants = __webpack_require__(118);
+var _constants = __webpack_require__(126);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38397,7 +39431,7 @@ exports.default = MDCCheckboxFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 118 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38462,649 +39496,7 @@ var numbers = exports.numbers = {
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var buildSearchMethod = __webpack_require__(120);
-var deprecate = __webpack_require__(52);
-var deprecatedMessage = __webpack_require__(53);
-
-module.exports = IndexCore;
-
-/*
-* Index class constructor.
-* You should not use this method directly but use initIndex() function
-*/
-function IndexCore(algoliasearch, indexName) {
-  this.indexName = indexName;
-  this.as = algoliasearch;
-  this.typeAheadArgs = null;
-  this.typeAheadValueOption = null;
-
-  // make sure every index instance has it's own cache
-  this.cache = {};
-}
-
-/*
-* Clear all queries in cache
-*/
-IndexCore.prototype.clearCache = function () {
-  this.cache = {};
-};
-
-/*
-* Search inside the index using XMLHttpRequest request (Using a POST query to
-* minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
-*
-* @param {string} [query] the full text query
-* @param {object} [args] (optional) if set, contains an object with query parameters:
-* - page: (integer) Pagination parameter used to select the page to retrieve.
-*                   Page is zero-based and defaults to 0. Thus,
-*                   to retrieve the 10th page you need to set page=9
-* - hitsPerPage: (integer) Pagination parameter used to select the number of hits per page. Defaults to 20.
-* - attributesToRetrieve: a string that contains the list of object attributes
-* you want to retrieve (let you minimize the answer size).
-*   Attributes are separated with a comma (for example "name,address").
-*   You can also use an array (for example ["name","address"]).
-*   By default, all attributes are retrieved. You can also use '*' to retrieve all
-*   values when an attributesToRetrieve setting is specified for your index.
-* - attributesToHighlight: a string that contains the list of attributes you
-*   want to highlight according to the query.
-*   Attributes are separated by a comma. You can also use an array (for example ["name","address"]).
-*   If an attribute has no match for the query, the raw value is returned.
-*   By default all indexed text attributes are highlighted.
-*   You can use `*` if you want to highlight all textual attributes.
-*   Numerical attributes are not highlighted.
-*   A matchLevel is returned for each highlighted attribute and can contain:
-*      - full: if all the query terms were found in the attribute,
-*      - partial: if only some of the query terms were found,
-*      - none: if none of the query terms were found.
-* - attributesToSnippet: a string that contains the list of attributes to snippet alongside
-* the number of words to return (syntax is `attributeName:nbWords`).
-*    Attributes are separated by a comma (Example: attributesToSnippet=name:10,content:10).
-*    You can also use an array (Example: attributesToSnippet: ['name:10','content:10']).
-*    By default no snippet is computed.
-* - minWordSizefor1Typo: the minimum number of characters in a query word to accept one typo in this word.
-* Defaults to 3.
-* - minWordSizefor2Typos: the minimum number of characters in a query word
-* to accept two typos in this word. Defaults to 7.
-* - getRankingInfo: if set to 1, the result hits will contain ranking
-* information in _rankingInfo attribute.
-* - aroundLatLng: search for entries around a given
-* latitude/longitude (specified as two floats separated by a comma).
-*   For example aroundLatLng=47.316669,5.016670).
-*   You can specify the maximum distance in meters with the aroundRadius parameter (in meters)
-*   and the precision for ranking with aroundPrecision
-*   (for example if you set aroundPrecision=100, two objects that are distant of
-*   less than 100m will be considered as identical for "geo" ranking parameter).
-*   At indexing, you should specify geoloc of an object with the _geoloc attribute
-*   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-* - insideBoundingBox: search entries inside a given area defined by the two extreme points
-* of a rectangle (defined by 4 floats: p1Lat,p1Lng,p2Lat,p2Lng).
-*   For example insideBoundingBox=47.3165,4.9665,47.3424,5.0201).
-*   At indexing, you should specify geoloc of an object with the _geoloc attribute
-*   (in the form {"_geoloc":{"lat":48.853409, "lng":2.348800}})
-* - numericFilters: a string that contains the list of numeric filters you want to
-* apply separated by a comma.
-*   The syntax of one filter is `attributeName` followed by `operand` followed by `value`.
-*   Supported operands are `<`, `<=`, `=`, `>` and `>=`.
-*   You can have multiple conditions on one attribute like for example numericFilters=price>100,price<1000.
-*   You can also use an array (for example numericFilters: ["price>100","price<1000"]).
-* - tagFilters: filter the query by a set of tags. You can AND tags by separating them by commas.
-*   To OR tags, you must add parentheses. For example, tags=tag1,(tag2,tag3) means tag1 AND (tag2 OR tag3).
-*   You can also use an array, for example tagFilters: ["tag1",["tag2","tag3"]]
-*   means tag1 AND (tag2 OR tag3).
-*   At indexing, tags should be added in the _tags** attribute
-*   of objects (for example {"_tags":["tag1","tag2"]}).
-* - facetFilters: filter the query by a list of facets.
-*   Facets are separated by commas and each facet is encoded as `attributeName:value`.
-*   For example: `facetFilters=category:Book,author:John%20Doe`.
-*   You can also use an array (for example `["category:Book","author:John%20Doe"]`).
-* - facets: List of object attributes that you want to use for faceting.
-*   Comma separated list: `"category,author"` or array `['category','author']`
-*   Only attributes that have been added in **attributesForFaceting** index setting
-*   can be used in this parameter.
-*   You can also use `*` to perform faceting on all attributes specified in **attributesForFaceting**.
-* - queryType: select how the query words are interpreted, it can be one of the following value:
-*    - prefixAll: all query words are interpreted as prefixes,
-*    - prefixLast: only the last word is interpreted as a prefix (default behavior),
-*    - prefixNone: no query word is interpreted as a prefix. This option is not recommended.
-* - optionalWords: a string that contains the list of words that should
-* be considered as optional when found in the query.
-*   Comma separated and array are accepted.
-* - distinct: If set to 1, enable the distinct feature (disabled by default)
-* if the attributeForDistinct index setting is set.
-*   This feature is similar to the SQL "distinct" keyword: when enabled
-*   in a query with the distinct=1 parameter,
-*   all hits containing a duplicate value for the attributeForDistinct attribute are removed from results.
-*   For example, if the chosen attribute is show_name and several hits have
-*   the same value for show_name, then only the best
-*   one is kept and others are removed.
-* - restrictSearchableAttributes: List of attributes you want to use for
-* textual search (must be a subset of the attributesToIndex index setting)
-* either comma separated or as an array
-* @param {function} [callback] the result callback called with two arguments:
-*  error: null or Error('message'). If false, the content contains the error.
-*  content: the server answer that contains the list of results.
-*/
-IndexCore.prototype.search = buildSearchMethod('query');
-
-/*
-* -- BETA --
-* Search a record similar to the query inside the index using XMLHttpRequest request (Using a POST query to
-* minimize number of OPTIONS queries: Cross-Origin Resource Sharing).
-*
-* @param {string} [query] the similar query
-* @param {object} [args] (optional) if set, contains an object with query parameters.
-*   All search parameters are supported (see search function), restrictSearchableAttributes and facetFilters
-*   are the two most useful to restrict the similar results and get more relevant content
-*/
-IndexCore.prototype.similarSearch = deprecate(buildSearchMethod('similarQuery'), deprecatedMessage('index.similarSearch(query[, callback])', 'index.search({ similarQuery: query }[, callback])'));
-
-/*
-* Browse index content. The response content will have a `cursor` property that you can use
-* to browse subsequent pages for this query. Use `index.browseFrom(cursor)` when you want.
-*
-* @param {string} query - The full text query
-* @param {Object} [queryParameters] - Any search query parameter
-* @param {Function} [callback] - The result callback called with two arguments
-*   error: null or Error('message')
-*   content: the server answer with the browse result
-* @return {Promise|undefined} Returns a promise if no callback given
-* @example
-* index.browse('cool songs', {
-*   tagFilters: 'public,comments',
-*   hitsPerPage: 500
-* }, callback);
-* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
-*/
-IndexCore.prototype.browse = function (query, queryParameters, callback) {
-  var merge = __webpack_require__(121);
-
-  var indexObj = this;
-
-  var page;
-  var hitsPerPage;
-
-  // we check variadic calls that are not the one defined
-  // .browse()/.browse(fn)
-  // => page = 0
-  if (arguments.length === 0 || arguments.length === 1 && typeof arguments[0] === 'function') {
-    page = 0;
-    callback = arguments[0];
-    query = undefined;
-  } else if (typeof arguments[0] === 'number') {
-    // .browse(2)/.browse(2, 10)/.browse(2, fn)/.browse(2, 10, fn)
-    page = arguments[0];
-    if (typeof arguments[1] === 'number') {
-      hitsPerPage = arguments[1];
-    } else if (typeof arguments[1] === 'function') {
-      callback = arguments[1];
-      hitsPerPage = undefined;
-    }
-    query = undefined;
-    queryParameters = undefined;
-  } else if (_typeof(arguments[0]) === 'object') {
-    // .browse(queryParameters)/.browse(queryParameters, cb)
-    if (typeof arguments[1] === 'function') {
-      callback = arguments[1];
-    }
-    queryParameters = arguments[0];
-    query = undefined;
-  } else if (typeof arguments[0] === 'string' && typeof arguments[1] === 'function') {
-    // .browse(query, cb)
-    callback = arguments[1];
-    queryParameters = undefined;
-  }
-
-  // otherwise it's a .browse(query)/.browse(query, queryParameters)/.browse(query, queryParameters, cb)
-
-  // get search query parameters combining various possible calls
-  // to .browse();
-  queryParameters = merge({}, queryParameters || {}, {
-    page: page,
-    hitsPerPage: hitsPerPage,
-    query: query
-  });
-
-  var params = this.as._getSearchParams(queryParameters, '');
-
-  return this.as._jsonRequest({
-    method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/browse',
-    body: { params: params },
-    hostType: 'read',
-    callback: callback
-  });
-};
-
-/*
-* Continue browsing from a previous position (cursor), obtained via a call to `.browse()`.
-*
-* @param {string} query - The full text query
-* @param {Object} [queryParameters] - Any search query parameter
-* @param {Function} [callback] - The result callback called with two arguments
-*   error: null or Error('message')
-*   content: the server answer with the browse result
-* @return {Promise|undefined} Returns a promise if no callback given
-* @example
-* index.browseFrom('14lkfsakl32', callback);
-* @see {@link https://www.algolia.com/doc/rest_api#Browse|Algolia REST API Documentation}
-*/
-IndexCore.prototype.browseFrom = function (cursor, callback) {
-  return this.as._jsonRequest({
-    method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/browse',
-    body: { cursor: cursor },
-    hostType: 'read',
-    callback: callback
-  });
-};
-
-/*
-* Search for facet values
-* https://www.algolia.com/doc/rest-api/search#search-for-facet-values
-*
-* @param {string} params.facetName Facet name, name of the attribute to search for values in.
-* Must be declared as a facet
-* @param {string} params.facetQuery Query for the facet search
-* @param {string} [params.*] Any search parameter of Algolia,
-* see https://www.algolia.com/doc/api-client/javascript/search#search-parameters
-* Pagination is not supported. The page and hitsPerPage parameters will be ignored.
-* @param callback (optional)
-*/
-IndexCore.prototype.searchForFacetValues = function (params, callback) {
-  var clone = __webpack_require__(20);
-  var omit = __webpack_require__(122);
-  var usage = 'Usage: index.searchForFacetValues({facetName, facetQuery, ...params}[, callback])';
-
-  if (params.facetName === undefined || params.facetQuery === undefined) {
-    throw new Error(usage);
-  }
-
-  var facetName = params.facetName;
-  var filteredParams = omit(clone(params), function (keyName) {
-    return keyName === 'facetName';
-  });
-  var searchParameters = this.as._getSearchParams(filteredParams, '');
-
-  return this.as._jsonRequest({
-    method: 'POST',
-    url: '/1/indexes/' + encodeURIComponent(this.indexName) + '/facets/' + encodeURIComponent(facetName) + '/query',
-    hostType: 'read',
-    body: { params: searchParameters },
-    callback: callback
-  });
-};
-
-IndexCore.prototype.searchFacet = deprecate(function (params, callback) {
-  return this.searchForFacetValues(params, callback);
-}, deprecatedMessage('index.searchFacet(params[, callback])', 'index.searchForFacetValues(params[, callback])'));
-
-IndexCore.prototype._search = function (params, url, callback, additionalUA) {
-  return this.as._jsonRequest({
-    cache: this.cache,
-    method: 'POST',
-    url: url || '/1/indexes/' + encodeURIComponent(this.indexName) + '/query',
-    body: { params: params },
-    hostType: 'read',
-    fallback: {
-      method: 'GET',
-      url: '/1/indexes/' + encodeURIComponent(this.indexName),
-      body: { params: params }
-    },
-    callback: callback,
-    additionalUA: additionalUA
-  });
-};
-
-/*
-* Get an object from this index
-*
-* @param objectID the unique identifier of the object to retrieve
-* @param attrs (optional) if set, contains the array of attribute names to retrieve
-* @param callback (optional) the result callback called with two arguments
-*  error: null or Error('message')
-*  content: the object to retrieve or the error message if a failure occurred
-*/
-IndexCore.prototype.getObject = function (objectID, attrs, callback) {
-  var indexObj = this;
-
-  if (arguments.length === 1 || typeof attrs === 'function') {
-    callback = attrs;
-    attrs = undefined;
-  }
-
-  var params = '';
-  if (attrs !== undefined) {
-    params = '?attributes=';
-    for (var i = 0; i < attrs.length; ++i) {
-      if (i !== 0) {
-        params += ',';
-      }
-      params += attrs[i];
-    }
-  }
-
-  return this.as._jsonRequest({
-    method: 'GET',
-    url: '/1/indexes/' + encodeURIComponent(indexObj.indexName) + '/' + encodeURIComponent(objectID) + params,
-    hostType: 'read',
-    callback: callback
-  });
-};
-
-/*
-* Get several objects from this index
-*
-* @param objectIDs the array of unique identifier of objects to retrieve
-*/
-IndexCore.prototype.getObjects = function (objectIDs, attributesToRetrieve, callback) {
-  var isArray = __webpack_require__(12);
-  var map = __webpack_require__(29);
-
-  var usage = 'Usage: index.getObjects(arrayOfObjectIDs[, callback])';
-
-  if (!isArray(objectIDs)) {
-    throw new Error(usage);
-  }
-
-  var indexObj = this;
-
-  if (arguments.length === 1 || typeof attributesToRetrieve === 'function') {
-    callback = attributesToRetrieve;
-    attributesToRetrieve = undefined;
-  }
-
-  var body = {
-    requests: map(objectIDs, function prepareRequest(objectID) {
-      var request = {
-        indexName: indexObj.indexName,
-        objectID: objectID
-      };
-
-      if (attributesToRetrieve) {
-        request.attributesToRetrieve = attributesToRetrieve.join(',');
-      }
-
-      return request;
-    })
-  };
-
-  return this.as._jsonRequest({
-    method: 'POST',
-    url: '/1/indexes/*/objects',
-    hostType: 'read',
-    body: body,
-    callback: callback
-  });
-};
-
-IndexCore.prototype.as = null;
-IndexCore.prototype.indexName = null;
-IndexCore.prototype.typeAheadArgs = null;
-IndexCore.prototype.typeAheadValueOption = null;
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-module.exports = buildSearchMethod;
-
-var errors = __webpack_require__(27);
-
-/**
- * Creates a search method to be used in clients
- * @param {string} queryParam the name of the attribute used for the query
- * @param {string} url the url
- * @return {function} the search method
- */
-function buildSearchMethod(queryParam, url) {
-  /**
-   * The search method. Prepares the data and send the query to Algolia.
-   * @param {string} query the string used for query search
-   * @param {object} args additional parameters to send with the search
-   * @param {function} [callback] the callback to be called with the client gets the answer
-   * @return {undefined|Promise} If the callback is not provided then this methods returns a Promise
-   */
-  return function search(query, args, callback) {
-    // warn V2 users on how to search
-    if (typeof query === 'function' && (typeof args === 'undefined' ? 'undefined' : _typeof(args)) === 'object' || (typeof callback === 'undefined' ? 'undefined' : _typeof(callback)) === 'object') {
-      // .search(query, params, cb)
-      // .search(cb, params)
-      throw new errors.AlgoliaSearchError('index.search usage is index.search(query, params, cb)');
-    }
-
-    // Normalizing the function signature
-    if (arguments.length === 0 || typeof query === 'function') {
-      // Usage : .search(), .search(cb)
-      callback = query;
-      query = '';
-    } else if (arguments.length === 1 || typeof args === 'function') {
-      // Usage : .search(query/args), .search(query, cb)
-      callback = args;
-      args = undefined;
-    }
-    // At this point we have 3 arguments with values
-
-    // Usage : .search(args) // careful: typeof null === 'object'
-    if ((typeof query === 'undefined' ? 'undefined' : _typeof(query)) === 'object' && query !== null) {
-      args = query;
-      query = undefined;
-    } else if (query === undefined || query === null) {
-      // .search(undefined/null)
-      query = '';
-    }
-
-    var params = '';
-
-    if (query !== undefined) {
-      params += queryParam + '=' + encodeURIComponent(query);
-    }
-
-    var additionalUA;
-    if (args !== undefined) {
-      if (args.additionalUA) {
-        additionalUA = args.additionalUA;
-        delete args.additionalUA;
-      }
-      // `_getSearchParams` will augment params, do not be fooled by the = versus += from previous if
-      params = this.as._getSearchParams(args, params);
-    }
-
-    return this._search(params, url, callback, additionalUA);
-  };
-}
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var foreach = __webpack_require__(28);
-
-module.exports = function merge(destination /* , sources */) {
-  var sources = Array.prototype.slice.call(arguments);
-
-  foreach(sources, function (source) {
-    for (var keyName in source) {
-      if (source.hasOwnProperty(keyName)) {
-        if (_typeof(destination[keyName]) === 'object' && _typeof(source[keyName]) === 'object') {
-          destination[keyName] = merge({}, destination[keyName], source[keyName]);
-        } else if (source[keyName] !== undefined) {
-          destination[keyName] = source[keyName];
-        }
-      }
-    }
-  });
-
-  return destination;
-};
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function omit(obj, test) {
-  var keys = __webpack_require__(396);
-  var foreach = __webpack_require__(28);
-
-  var filtered = {};
-
-  foreach(keys(obj), function doFilter(keyName) {
-    if (test(keyName) !== true) {
-      filtered[keyName] = obj[keyName];
-    }
-  });
-
-  return filtered;
-};
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var toStr = Object.prototype.toString;
-
-module.exports = function isArguments(value) {
-	var str = toStr.call(value);
-	var isArgs = str === '[object Arguments]';
-	if (!isArgs) {
-		isArgs = str !== '[object Array]' && value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && typeof value.length === 'number' && value.length >= 0 && toStr.call(value.callee) === '[object Function]';
-	}
-	return isArgs;
-};
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// Parse cloud does not supports setTimeout
-// We do not store a setTimeout reference in the client everytime
-// We only fallback to a fake setTimeout when not available
-// setTimeout cannot be override globally sadly
-module.exports = function exitPromise(fn, _setTimeout) {
-  _setTimeout(fn, 0);
-};
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var stringifyPrimitive = function stringifyPrimitive(v) {
-  switch (typeof v === 'undefined' ? 'undefined' : _typeof(v)) {
-    case 'string':
-      return v;
-
-    case 'boolean':
-      return v ? 'true' : 'false';
-
-    case 'number':
-      return isFinite(v) ? v : '';
-
-    default:
-      return '';
-  }
-};
-
-module.exports = function (obj, sep, eq, name) {
-  sep = sep || '&';
-  eq = eq || '=';
-  if (obj === null) {
-    obj = undefined;
-  }
-
-  if ((typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object') {
-    return map(objectKeys(obj), function (k) {
-      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-      if (isArray(obj[k])) {
-        return map(obj[k], function (v) {
-          return ks + encodeURIComponent(stringifyPrimitive(v));
-        }).join(sep);
-      } else {
-        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
-      }
-    }).join(sep);
-  }
-
-  if (!name) return '';
-  return encodeURIComponent(stringifyPrimitive(name)) + eq + encodeURIComponent(stringifyPrimitive(obj));
-};
-
-var isArray = Array.isArray || function (xs) {
-  return Object.prototype.toString.call(xs) === '[object Array]';
-};
-
-function map(xs, f) {
-  if (xs.map) return xs.map(f);
-  var res = [];
-  for (var i = 0; i < xs.length; i++) {
-    res.push(f(xs[i], i));
-  }
-  return res;
-}
-
-var objectKeys = Object.keys || function (obj) {
-  var res = [];
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
-  }
-  return res;
-};
-
-/***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39126,7 +39518,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _constants = __webpack_require__(130);
+var _constants = __webpack_require__(131);
 
 Object.keys(_constants).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -39138,7 +39530,7 @@ Object.keys(_constants).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(129);
+var _foundation = __webpack_require__(130);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -39151,7 +39543,7 @@ Object.keys(_foundation).forEach(function (key) {
 });
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39170,7 +39562,7 @@ var _foundation = __webpack_require__(4);
 
 var _constants = __webpack_require__(416);
 
-var _util = __webpack_require__(128);
+var _util = __webpack_require__(129);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -39693,7 +40085,7 @@ exports.default = MDCRippleFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39812,7 +40204,7 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
 //# sourceMappingURL=util.js.map
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39829,7 +40221,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(4);
 
-var _constants = __webpack_require__(130);
+var _constants = __webpack_require__(131);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -39932,7 +40324,7 @@ exports.default = MDCSwitchFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39982,7 +40374,7 @@ exports.strings = strings;
 //# sourceMappingURL=constants.js.map
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40013,18 +40405,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Data = __webpack_require__(7);
-var Card = __webpack_require__(19);
+var Card = __webpack_require__(20);
 var Utils = __webpack_require__(6);
-var User = __webpack_require__(24);
+var User = __webpack_require__(25);
 var EditProfile = __webpack_require__(15).edit;
-var MatchingDialog = __webpack_require__(39).dialog;
-var ScheduleCard = __webpack_require__(132);
+var MatchingDialog = __webpack_require__(38).dialog;
+var ScheduleCard = __webpack_require__(133);
 var SearchHeader = __webpack_require__(21).header;
 var HorzScroller = __webpack_require__(137);
 
 // Shortcut cards for SupervisorDashboard
-var matchingShortcut = __webpack_require__(39).default.renderShortcutCard;
-var scheduleShortcut = __webpack_require__(40).supervisor.renderShortcutCard;
+var matchingShortcut = __webpack_require__(38).default.renderShortcutCard;
+var scheduleShortcut = __webpack_require__(39).supervisor.renderShortcutCard;
 var trackingShortcut = __webpack_require__(421).renderShortcutCard;
 
 // Class that manages the dashboard view (provides an API for other classes to
@@ -40587,7 +40979,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40603,7 +40995,7 @@ var _index = __webpack_require__(9);
 
 var _index2 = __webpack_require__(417);
 
-var _index3 = __webpack_require__(25);
+var _index3 = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
@@ -40884,7 +41276,7 @@ var ScheduleCard = function () {
 module.exports = ScheduleCard;
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40974,7 +41366,7 @@ exports.default = MDCFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40991,9 +41383,9 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _util = __webpack_require__(420);
 
-var _foundation = __webpack_require__(133);
+var _foundation = __webpack_require__(134);
 
-var _constants = __webpack_require__(135);
+var _constants = __webpack_require__(136);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -41121,7 +41513,7 @@ exports.default = MDCLinearProgressFoundation;
 //# sourceMappingURL=foundation.js.map
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41162,398 +41554,6 @@ var strings = exports.strings = {
     PRIMARY_BAR_SELECTOR: '.mdc-linear-progress__primary-bar'
 };
 //# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 136 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _index = __webpack_require__(37);
-
-var _index2 = __webpack_require__(9);
-
-var _index3 = __webpack_require__(23);
-
-var _jquery = __webpack_require__(3);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _awaitToJs = __webpack_require__(8);
-
-var _awaitToJs2 = _interopRequireDefault(_awaitToJs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var EditAvailabilityDialog = __webpack_require__(2).editAvailability;
-var Utils = __webpack_require__(6);
-var Data = __webpack_require__(7);
-
-var FilterDialog = function () {
-    function FilterDialog(filters) {
-        var skipRender = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-        _classCallCheck(this, FilterDialog);
-
-        this.filters = filters || {
-            grade: 'Any',
-            subject: 'Any',
-            gender: 'Any',
-            showBooked: false,
-            availability: {},
-            location: window.app.location.name,
-            price: window.app.location.name === 'Any' ? 'Any' : 'Free',
-            type: 'Tutor',
-            sort: 'Rating'
-        };
-        this.render = window.app.render;
-        if (!skipRender) this.renderSelf();
-    }
-
-    _createClass(FilterDialog, [{
-        key: 'view',
-        value: function view() {
-            (0, _jquery2.default)('body').prepend(this.el);
-            if (!this.managed) this.manage();
-            this.dialog.open();
-        }
-    }, {
-        key: 'manage',
-        value: function manage() {
-            var _this = this;
-
-            this.managed = true;
-            this.dialog = _index.MDCDialog.attachTo(this.el);
-            this.dialog.autoStackButtons = false;
-            this.dialog.listen('MDCDialog:closing', function (event) {
-                (0, _jquery2.default)(_this.el).remove();
-                if (event.detail.action === 'accept') _this.accept();
-            });
-            (0, _jquery2.default)(this.el).find('.mdc-list-item').each(function () {
-                _index2.MDCRipple.attachTo(this);
-            });
-        }
-    }, {
-        key: 'accept',
-        value: function accept() {
-            window.app.search.viewResults();
-        }
-    }, {
-        key: 'renderSelf',
-        value: function renderSelf() {
-            var _this2 = this;
-
-            this.el = this.render.template('dialog-filter');
-            var pages = this.el.querySelectorAll('.page');
-
-            this.el.querySelector('#reset-button').addEventListener('click', function () {
-                Object.entries({
-                    grade: 'Any',
-                    subject: 'Any',
-                    gender: 'Any',
-                    availability: {},
-                    location: window.app.location.name,
-                    price: window.app.location.name === 'Any' ? 'Any' : 'Free',
-                    type: 'Any',
-                    sort: 'Rating'
-                }).forEach(function (filter) {
-                    return _this2.filters[filter[0]] = filter[1];
-                });
-                _this2.page('page-all');
-            });
-
-            Utils.replaceElement(this.el.querySelector('#availability-list'), this.renderInputAvailability());
-
-            Utils.replaceElement(this.el.querySelector('#grade-list'), this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.grades)
-            }));
-
-            if (window.app.location.name === 'Any') {
-                Utils.replaceElement(this.el.querySelector('#price-list'), this.render.template('dialog-filter-item-list', {
-                    items: ['Any'].concat(Data.prices)
-                }));
-            } else {
-                Utils.replaceElement(this.el.querySelector('#price-list'), 'Due to PAUSD guidelines, we can only show free service-hour' + ' peer tutors on this website. To filter by price and view ' + 'more professional tutors, go to the root partition at https:' + '//tutorbook.app/app.');
-            }
-
-            Utils.replaceElement(this.el.querySelector('#gender-list'), this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.genders)
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#type-list'), this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.types)
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#math-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.mathSubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#tech-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.techSubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#art-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.artSubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#science-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.scienceSubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#history-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.historySubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#language-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.languageSubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#english-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.englishSubjects
-            }));
-
-            Utils.replaceElement(this.el.querySelector('#life-skills-list'), this.render.template('dialog-filter-item-list', {
-                items: Data.lifeSkills
-            }));
-
-            this.el.querySelectorAll('#page-subject .mdc-list-item').forEach(function (el) {
-                el.addEventListener('click', function () {
-                    var id = el.id.split('-').slice(1).join('-');
-                    if (id === 'page-all') {
-                        _this2.filters.subject = 'Any';
-                    }
-                    _this2.page(id);
-                });
-            });
-
-            pages.forEach(function (sel) {
-                var key = sel.id.split('-')[1];
-                if (key === 'all' || key === 'subject') {
-                    return;
-                }
-
-                sel.querySelectorAll('.mdc-list-item').forEach(function (el) {
-                    el.addEventListener('click', function () {
-                        if (['math', 'science', 'history', 'language', 'english', 'lifeSkills', 'tech', 'art'].indexOf(key) >= 0) {
-                            _this2.filters['subject'] = el.innerText.trim();
-                            _this2.page('page-all');
-                        } else if ('availability' === key) {
-                            return;
-                        } else {
-                            _this2.filters[key] = el.innerText.trim();
-                            _this2.page('page-all');
-                        }
-                    });
-                });
-            });
-
-            this.el.querySelectorAll('.back').forEach(function (el) {
-                el.addEventListener('click', function () {
-                    _this2.page('page-all');
-                });
-            });
-            this.el.querySelectorAll('.back-subjects').forEach(function (el) {
-                el.addEventListener('click', function () {
-                    _this2.page('page-subject');
-                });
-            });
-
-            this.page('page-all');
-        }
-    }, {
-        key: 'getAvailabilityString',
-        value: function getAvailabilityString(data) {
-            var str = Utils.getAvailabilityString(data);
-            return Utils.shortenString(str, 20);
-        }
-    }, {
-        key: 'renderAllList',
-        value: function renderAllList() {
-            Utils.replaceElement(this.el.querySelector('#all-filters-list'), this.render.template('dialog-filter-list', this.clearFilters()));
-            var that = this;
-            (0, _jquery2.default)(this.el).find('#page-all .mdc-list-item').each(function () {
-                _index2.MDCRipple.attachTo(this);
-                this.addEventListener('click', function () {
-                    that.page(this.id.split('-').slice(1).join('-'));
-                });
-            });
-        }
-    }, {
-        key: 'clearFilters',
-        value: function clearFilters() {
-            var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.filters;
-
-            // Helper function to get rid of the 'Any' selected option for
-            // better rendering.
-            var result = {};
-            for (var filter in filters) {
-                if (filters[filter] !== 'Any' && Object.keys(filters[filter]).length !== 0) {
-                    result[filter] = filter === 'availability' ? this.getAvailabilityString(filters[filter]) : filters[filter];
-                } else {
-                    result[filter] = '';
-                }
-            }
-            return result;
-        }
-    }, {
-        key: 'page',
-        value: function page(id) {
-            var pages = this.el.querySelectorAll('.page');
-
-            pages.forEach(function (sel) {
-                if (sel.id === id) {
-                    sel.style.display = 'inherit';
-                } else {
-                    sel.style.display = 'none';
-                }
-            });
-
-            if (id === 'page-all') {
-                this.renderAllList();
-            } else if (id === 'page-availability' && !this.availabilityDialog.managed) {
-                this.availabilityDialog.manage();
-            }
-        }
-    }, {
-        key: 'renderInputAvailability',
-        value: function renderInputAvailability() {
-            var _this3 = this;
-
-            var textField = this.render.textField('Stub', '');
-            this.availabilityDialog = new EditAvailabilityDialog(textField, {});
-            this.availabilityDialog.val = Utils.cloneMap(this.filters.availability);
-            this.availabilityDialog.renderSelf();
-            (0, _jquery2.default)(this.el).find('#page-availability #ok-button')[0].addEventListener('click', function () {
-                if (!_this3.availabilityDialog.valid) return;
-                _this3.filters.availability = _this3.availabilityDialog.val;
-                _this3.page('page-all');
-            });
-            return this.availabilityDialog.main = (0, _jquery2.default)(this.availabilityDialog.main).find('.mdc-dialog__content')[0];
-        }
-    }]);
-
-    return FilterDialog;
-}();
-
-;
-
-var NewGroupDialog = function (_FilterDialog) {
-    _inherits(NewGroupDialog, _FilterDialog);
-
-    function NewGroupDialog() {
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, NewGroupDialog);
-
-        var _this4 = _possibleConstructorReturn(this, (NewGroupDialog.__proto__ || Object.getPrototypeOf(NewGroupDialog)).call(this, undefined, true));
-
-        _this4.ref = options.ref || window.app.db.collection('locations').doc(window.app.location.id).collection('announcements').doc();
-        _this4.name = options.name || window.app.location.name + ' Group #' + (options.groupNum || 1);
-        _this4.filters = Utils.combineMaps(_this4.filters, options.filters || {});
-        _this4.filters.showBooked = true;
-        _this4.group = Utils.combineMaps({
-            lastMessage: {
-                message: 'No messages so far. Click to send the first one.',
-                sentBy: window.app.conciseUser,
-                timestamp: new Date()
-            },
-            chatters: [window.app.conciseUser],
-            chatterUIDs: [window.app.user.uid],
-            chatterEmails: [window.app.user.email],
-            location: window.app.location,
-            createdBy: window.app.conciseUser,
-            name: _this4.name,
-            photo: 'https://tutorbook.app/app/img/male.png',
-            filters: _this4.filters
-        }, options.group || {});
-        _this4.renderSelf();
-        return _this4;
-    }
-
-    _createClass(NewGroupDialog, [{
-        key: 'getAvailabilityString',
-        value: function getAvailabilityString(data) {
-            var str = Utils.getAvailabilityString(data);
-            return Utils.shortenString(str, 50);
-        }
-    }, {
-        key: 'renderSelf',
-        value: function renderSelf() {
-            _get(NewGroupDialog.prototype.__proto__ || Object.getPrototypeOf(NewGroupDialog.prototype), 'renderSelf', this).call(this);
-            var description = 'Filter users to create a new announcement group.' + ' Messages sent to this group will then be sent to all users who ' + 'fit within the specified filters.';
-            var nameEl = this.render.textField('Name', this.name);
-            (0, _jquery2.default)(this.el).find('#show-page-availability span').text('Any Appointments').end().find('#page-availability h2').text('Appointments').end().find('#page-all .mdc-dialog__title').text('New Group').end().find('[data-mdc-dialog-action="accept"]').text('Create').end().find('#page-all .mdc-dialog__content').prepend(nameEl).prepend(description).end().attr('id', 'dialog-group');
-        }
-    }, {
-        key: 'renderAllList',
-        value: function renderAllList() {
-            _get(NewGroupDialog.prototype.__proto__ || Object.getPrototypeOf(NewGroupDialog.prototype), 'renderAllList', this).call(this);
-            (0, _jquery2.default)(this.el).find('#show-page-availability span').text('Any Appointments');
-        }
-    }, {
-        key: 'accept',
-        value: function accept() {
-            this.group.name = this.nameTextField.value || this.name;
-            return this.ref.set(this.group);
-        }
-    }, {
-        key: 'manage',
-        value: function manage() {
-            _get(NewGroupDialog.prototype.__proto__ || Object.getPrototypeOf(NewGroupDialog.prototype), 'manage', this).call(this);
-            this.nameTextField = new _index3.MDCTextField((0, _jquery2.default)(this.el).find('#Name')[0]);
-            this.nameTextField.value = this.name;
-        }
-    }]);
-
-    return NewGroupDialog;
-}(FilterDialog);
-
-;
-
-var EditGroupDialog = function (_NewGroupDialog) {
-    _inherits(EditGroupDialog, _NewGroupDialog);
-
-    function EditGroupDialog() {
-        _classCallCheck(this, EditGroupDialog);
-
-        return _possibleConstructorReturn(this, (EditGroupDialog.__proto__ || Object.getPrototypeOf(EditGroupDialog)).apply(this, arguments));
-    }
-
-    _createClass(EditGroupDialog, [{
-        key: 'renderSelf',
-        value: function renderSelf() {
-            _get(EditGroupDialog.prototype.__proto__ || Object.getPrototypeOf(EditGroupDialog.prototype), 'renderSelf', this).call(this);
-            (0, _jquery2.default)(this.el).find('#page-all .mdc-dialog__title').text('Edit Group').end().find('[data-mdc-dialog-action="accept"]').text('Update');
-        }
-    }, {
-        key: 'accept',
-        value: function accept() {
-            this.group.name = this.nameTextField.value || this.name;
-            return this.ref.update(this.group);
-        }
-    }]);
-
-    return EditGroupDialog;
-}(NewGroupDialog);
-
-;
-
-module.exports = {
-    default: FilterDialog,
-    group: NewGroupDialog,
-    editGroup: EditGroupDialog
-};
 
 /***/ }),
 /* 137 */
@@ -42174,7 +42174,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(25);
+var _index2 = __webpack_require__(23);
 
 var _jquery = __webpack_require__(3);
 
@@ -42196,8 +42196,8 @@ var Chat = __webpack_require__(147).default;
 var AnnouncementChat = __webpack_require__(147).announcement;
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
-var NewGroupDialog = __webpack_require__(136).group;
-var EditGroupDialog = __webpack_require__(136).editGroup;
+var NewGroupDialog = __webpack_require__(54).group;
+var EditGroupDialog = __webpack_require__(54).editGroup;
 
 // Class that provides a chat view and header and enables users to message one 
 // another all within the app.
@@ -42519,8 +42519,34 @@ var SupervisorChats = function (_Chats) {
         }
     }, {
         key: 'getAnnouncement',
-        value: function getAnnouncement(id) {
+        value: async function getAnnouncement(id) {
             if (!window.app.location.id) return console.error('Couldn\'t get ' + 'announcement group chat (' + id + ') without location id.');
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = (await Data.getLocations())[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var location = _step.value;
+
+                    var doc = await location.collection('announcements').doc(id).get();
+                    if (doc.exists) return doc;
+                } // TODO: Remove the below fallback.
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
             return window.app.db.collection('locations').doc(window.app.location.id).collection('announcements').doc(id).get();
         }
     }, {
@@ -42556,8 +42582,7 @@ var SupervisorChats = function (_Chats) {
 
                     var _ref7 = await (0, _awaitToJs2.default)(that.index.search({
                         query: qry,
-                        facetFilters: window.app.location.name === 'Any' ? ['chatterUIDs:' + window.app.user.uid] : [// TODO: Do we really want to filter by location here?
-                        'location.id:' + window.app.location.id, 'chatterUIDs:' + window.app.user.uid]
+                        facetFilters: ['chatterUIDs:' + window.app.user.uid]
                     })),
                         _ref8 = _slicedToArray(_ref7, 2),
                         err = _ref8[0],
@@ -43632,7 +43657,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _foundation = __webpack_require__(156);
 
-var _constants = __webpack_require__(41);
+var _constants = __webpack_require__(40);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -43862,7 +43887,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.announce = undefined;
 
-var _constants = __webpack_require__(41);
+var _constants = __webpack_require__(40);
 
 var ARIA_LIVE_DELAY_MS = _constants.numbers.ARIA_LIVE_DELAY_MS; /**
                                                                  * @license
@@ -43958,7 +43983,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(16);
 
-var _index2 = __webpack_require__(23);
+var _index2 = __webpack_require__(24);
 
 var _index3 = __webpack_require__(9);
 
@@ -43971,7 +43996,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Chart = __webpack_require__(464);
-var User = __webpack_require__(24);
+var User = __webpack_require__(25);
 var Templates = __webpack_require__(466);
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
@@ -57127,7 +57152,7 @@ var _tslib = __webpack_require__(22);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(42);
+var _foundation = __webpack_require__(41);
 
 var _constants = __webpack_require__(288);
 
@@ -58129,7 +58154,7 @@ var _tslib = __webpack_require__(22);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(42);
+var _foundation = __webpack_require__(41);
 
 var _constants = __webpack_require__(295);
 
@@ -58747,17 +58772,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // App packages
 var Ads = __webpack_require__(298);
-var Stats = __webpack_require__(324);
-var Dashboard = __webpack_require__(131).default;
-var SupervisorDashboard = __webpack_require__(131).supervisor;
+var Stats = __webpack_require__(344);
+var Dashboard = __webpack_require__(132).default;
+var SupervisorDashboard = __webpack_require__(132).supervisor;
 var Search = __webpack_require__(21).default;
 var Profile = __webpack_require__(15).default;
 var PaidProfile = __webpack_require__(15).paid;
 var TutorProfile = __webpack_require__(15).tutor;
-var Schedule = __webpack_require__(40).default;
+var Schedule = __webpack_require__(39).default;
 var Chats = __webpack_require__(146).default;
 var SupervisorChats = __webpack_require__(146).supervisor;
-var SupervisorSchedule = __webpack_require__(40).supervisor;
+var SupervisorSchedule = __webpack_require__(39).supervisor;
 var Payments = __webpack_require__(439);
 var Feedback = __webpack_require__(457);
 var Notify = __webpack_require__(458);
@@ -58766,8 +58791,8 @@ var Navigation = __webpack_require__(470);
 var Help = __webpack_require__(481);
 var Listener = __webpack_require__(482);
 var Login = __webpack_require__(483);
-var Matching = __webpack_require__(39).default;
-var MatchingDialog = __webpack_require__(39).dialog;
+var Matching = __webpack_require__(38).default;
+var MatchingDialog = __webpack_require__(38).dialog;
 var Config = __webpack_require__(484);
 
 // Dependency cycle workarounds
@@ -58775,7 +58800,7 @@ var SearchHeader = __webpack_require__(21).header;
 var EditProfile = __webpack_require__(15).edit;
 var NotificationDialog = __webpack_require__(2).notify;
 var renderHit = __webpack_require__(21).header.renderHit;
-var renderCard = __webpack_require__(19).renderCard;
+var renderCard = __webpack_require__(20).renderCard;
 
 // Helper packages
 var Utils = __webpack_require__(6);
@@ -59017,7 +59042,7 @@ module.exports = Tutorbook;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(37);
+var _index = __webpack_require__(36);
 
 var _jquery = __webpack_require__(3);
 
@@ -59186,7 +59211,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(30);
+var _ponyfill = __webpack_require__(29);
 
 var _component2 = __webpack_require__(300);
 
@@ -59430,7 +59455,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _index = __webpack_require__(31);
+var _index = __webpack_require__(30);
 
 var _foundation = __webpack_require__(301);
 
@@ -61501,7236 +61526,16 @@ module.exports = function spread(callback) {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(3);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Utils = __webpack_require__(6);
-var Card = __webpack_require__(19);
-
-var Stats = function () {
-    function Stats() {
-        _classCallCheck(this, Stats);
-
-        this.render = window.app.render;
-        this.renderSelf();
-    }
-
-    _createClass(Stats, [{
-        key: 'renderSelf',
-        value: function renderSelf() {
-            this.header = this.render.header('header-main', {
-                title: 'Tutorbook'
-            });
-            this.main = this.render.template('stats', {
-                title: window.app.location.name.split(' ')[0] + ' Statistics',
-                welcome: !window.app.onMobile
-            });
-        }
-    }, {
-        key: 'view',
-        value: function view() {
-            window.app.nav.selected = 'Stats';
-            window.app.intercom.view(true);
-            window.app.view(this.header, this.main, '/app/stats');
-            this.cardsViewed ? null : this.viewCards();
-        }
-    }, {
-        key: 'viewCards',
-        value: function viewCards() {
-            this.cardsViewed = true;
-            this.viewRecentActivityCards();
-            this.viewServiceHourCards();
-        }
-    }, {
-        key: 'viewRecentActivityCards',
-        value: function viewRecentActivityCards() {
-            var _this = this;
-
-            var emptyCard = Card.renderCard('You\'re Done!', 'Hooray you\'re all caught up, for now...', 'No recent activity at the ' + window.app.location.name + ' that ' + 'you haven\'t already addressed. Note that (right now) we only ' + 'show cards for new requests, canceled requests, and updated ' + 'profiles. More updates coming soon!', {
-                great: function great() {
-                    (0, _jquery2.default)(emptyCard).remove();
-                }
-            });
-            (0, _jquery2.default)(emptyCard).attr('id', 'empty-card');
-            var renderCard = function renderCard(doc) {
-                var action = doc.data();
-                var card = Card.renderCard(action.title, action.subtitle, action.summary, {
-                    dismiss: function dismiss() {
-                        (0, _jquery2.default)(card).remove();
-                        return doc.ref.delete();
-                    }
-                });
-                (0, _jquery2.default)(card).attr('id', doc.id).attr('timestamp', action.timestamp);
-                return card;
-            };
-            var recycler = {
-                display: function display(doc) {
-                    (0, _jquery2.default)(_this.main).find('#activity #cards').find('#empty-card').remove().end().append(renderCard(doc));
-                },
-                remove: function remove(doc) {
-                    (0, _jquery2.default)(_this.main).find('#activity #cards').find('#empty-card').remove().end().find('#' + doc.id).remove().end();
-                },
-                empty: function empty() {
-                    (0, _jquery2.default)(_this.main).find('#activity #cards').empty().append(emptyCard);
-                }
-            };
-            Utils.recycle({
-                activity: window.app.db.collection('locations').doc(window.app.location.id).collection('recentActions').orderBy('timestamp').limit(10)
-            }, recycler);
-        }
-    }, {
-        key: 'viewServiceHourCards',
-        value: function viewServiceHourCards() {}
-    }]);
-
-    return Stats;
-}();
-
-module.exports = Stats;
-
-/***/ }),
-/* 325 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(326);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(78);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-var _index = __webpack_require__(79);
-
-Object.keys(_index).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _index[key];
-    }
-  });
-});
-
-var _index2 = __webpack_require__(81);
-
-Object.keys(_index2).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _index2[key];
-    }
-  });
-});
-
-/***/ }),
-/* 326 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCSelect = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _index = __webpack_require__(327);
-
-var _index2 = __webpack_require__(69);
-
-var _constants = __webpack_require__(32);
-
-var menuSurfaceConstants = _interopRequireWildcard(_constants);
-
-var _constants2 = __webpack_require__(44);
-
-var menuConstants = _interopRequireWildcard(_constants2);
-
-var _index3 = __webpack_require__(25);
-
-var _index4 = __webpack_require__(337);
-
-var _index5 = __webpack_require__(339);
-
-var _constants3 = __webpack_require__(77);
-
-var _foundation = __webpack_require__(78);
-
-var _index6 = __webpack_require__(79);
-
-var _index7 = __webpack_require__(81);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var POINTER_EVENTS = ['mousedown', 'touchstart']; /**
-                                                   * @license
-                                                   * Copyright 2016 Google Inc.
-                                                   *
-                                                   * Permission is hereby granted, free of charge, to any person obtaining a copy
-                                                   * of this software and associated documentation files (the "Software"), to deal
-                                                   * in the Software without restriction, including without limitation the rights
-                                                   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                                                   * copies of the Software, and to permit persons to whom the Software is
-                                                   * furnished to do so, subject to the following conditions:
-                                                   *
-                                                   * The above copyright notice and this permission notice shall be included in
-                                                   * all copies or substantial portions of the Software.
-                                                   *
-                                                   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                                                   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                                                   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                                                   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                                                   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                                                   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                                                   * THE SOFTWARE.
-                                                   */
-
-var VALIDATION_ATTR_WHITELIST = ['required', 'aria-required'];
-var MDCSelect = /** @class */function (_super) {
-    tslib_1.__extends(MDCSelect, _super);
-    function MDCSelect() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCSelect.attachTo = function (root) {
-        return new MDCSelect(root);
-    };
-    MDCSelect.prototype.initialize = function (labelFactory, lineRippleFactory, outlineFactory, menuFactory, iconFactory, helperTextFactory) {
-        if (labelFactory === void 0) {
-            labelFactory = function labelFactory(el) {
-                return new _index.MDCFloatingLabel(el);
-            };
-        }
-        if (lineRippleFactory === void 0) {
-            lineRippleFactory = function lineRippleFactory(el) {
-                return new _index2.MDCLineRipple(el);
-            };
-        }
-        if (outlineFactory === void 0) {
-            outlineFactory = function outlineFactory(el) {
-                return new _index4.MDCNotchedOutline(el);
-            };
-        }
-        if (menuFactory === void 0) {
-            menuFactory = function menuFactory(el) {
-                return new _index3.MDCMenu(el);
-            };
-        }
-        if (iconFactory === void 0) {
-            iconFactory = function iconFactory(el) {
-                return new _index7.MDCSelectIcon(el);
-            };
-        }
-        if (helperTextFactory === void 0) {
-            helperTextFactory = function helperTextFactory(el) {
-                return new _index6.MDCSelectHelperText(el);
-            };
-        }
-        this.isMenuOpen_ = false;
-        this.nativeControl_ = this.root_.querySelector(_constants3.strings.NATIVE_CONTROL_SELECTOR);
-        this.selectedText_ = this.root_.querySelector(_constants3.strings.SELECTED_TEXT_SELECTOR);
-        var targetElement = this.nativeControl_ || this.selectedText_;
-        if (!targetElement) {
-            throw new Error('MDCSelect: Missing required element: Exactly one of the following selectors must be present: ' + ("'" + _constants3.strings.NATIVE_CONTROL_SELECTOR + "' or '" + _constants3.strings.SELECTED_TEXT_SELECTOR + "'"));
-        }
-        this.targetElement_ = targetElement;
-        if (this.targetElement_.hasAttribute(_constants3.strings.ARIA_CONTROLS)) {
-            var helperTextElement = document.getElementById(this.targetElement_.getAttribute(_constants3.strings.ARIA_CONTROLS));
-            if (helperTextElement) {
-                this.helperText_ = helperTextFactory(helperTextElement);
-            }
-        }
-        if (this.selectedText_) {
-            this.enhancedSelectSetup_(menuFactory);
-        }
-        var labelElement = this.root_.querySelector(_constants3.strings.LABEL_SELECTOR);
-        this.label_ = labelElement ? labelFactory(labelElement) : null;
-        var lineRippleElement = this.root_.querySelector(_constants3.strings.LINE_RIPPLE_SELECTOR);
-        this.lineRipple_ = lineRippleElement ? lineRippleFactory(lineRippleElement) : null;
-        var outlineElement = this.root_.querySelector(_constants3.strings.OUTLINE_SELECTOR);
-        this.outline_ = outlineElement ? outlineFactory(outlineElement) : null;
-        var leadingIcon = this.root_.querySelector(_constants3.strings.LEADING_ICON_SELECTOR);
-        if (leadingIcon) {
-            this.root_.classList.add(_constants3.cssClasses.WITH_LEADING_ICON);
-            this.leadingIcon_ = iconFactory(leadingIcon);
-            if (this.menuElement_) {
-                this.menuElement_.classList.add(_constants3.cssClasses.WITH_LEADING_ICON);
-            }
-        }
-        if (!this.root_.classList.contains(_constants3.cssClasses.OUTLINED)) {
-            this.ripple = this.createRipple_();
-        }
-        // The required state needs to be sync'd before the mutation observer is added.
-        this.initialSyncRequiredState_();
-        this.addMutationObserverForRequired_();
-    };
-    /**
-     * Initializes the select's event listeners and internal state based
-     * on the environment's state.
-     */
-    MDCSelect.prototype.initialSyncWithDOM = function () {
-        var _this = this;
-        this.handleChange_ = function () {
-            return _this.foundation_.handleChange( /* didChange */true);
-        };
-        this.handleFocus_ = function () {
-            return _this.foundation_.handleFocus();
-        };
-        this.handleBlur_ = function () {
-            return _this.foundation_.handleBlur();
-        };
-        this.handleClick_ = function (evt) {
-            if (_this.selectedText_) {
-                _this.selectedText_.focus();
-            }
-            _this.foundation_.handleClick(_this.getNormalizedXCoordinate_(evt));
-        };
-        this.handleKeydown_ = function (evt) {
-            return _this.foundation_.handleKeydown(evt);
-        };
-        this.handleMenuSelected_ = function (evtData) {
-            return _this.selectedIndex = evtData.detail.index;
-        };
-        this.handleMenuOpened_ = function () {
-            // Menu should open to the last selected element.
-            if (_this.selectedIndex >= 0) {
-                var selectedItemEl = _this.menu_.items[_this.selectedIndex];
-                selectedItemEl.focus();
-            }
-        };
-        this.handleMenuClosed_ = function () {
-            // isMenuOpen_ is used to track the state of the menu opening or closing since the menu.open function
-            // will return false if the menu is still closing and this method listens to the closed event which
-            // occurs after the menu is already closed.
-            _this.isMenuOpen_ = false;
-            _this.selectedText_.removeAttribute('aria-expanded');
-            if (document.activeElement !== _this.selectedText_) {
-                _this.foundation_.handleBlur();
-            }
-        };
-        this.targetElement_.addEventListener('change', this.handleChange_);
-        this.targetElement_.addEventListener('focus', this.handleFocus_);
-        this.targetElement_.addEventListener('blur', this.handleBlur_);
-        POINTER_EVENTS.forEach(function (evtType) {
-            _this.targetElement_.addEventListener(evtType, _this.handleClick_);
-        });
-        if (this.menuElement_) {
-            this.selectedText_.addEventListener('keydown', this.handleKeydown_);
-            this.menu_.listen(menuSurfaceConstants.strings.CLOSED_EVENT, this.handleMenuClosed_);
-            this.menu_.listen(menuSurfaceConstants.strings.OPENED_EVENT, this.handleMenuOpened_);
-            this.menu_.listen(menuConstants.strings.SELECTED_EVENT, this.handleMenuSelected_);
-            if (this.hiddenInput_ && this.hiddenInput_.value) {
-                // If the hidden input already has a value, use it to restore the select's value.
-                // This can happen e.g. if the user goes back or (in some browsers) refreshes the page.
-                var enhancedAdapterMethods = this.getEnhancedSelectAdapterMethods_();
-                enhancedAdapterMethods.setValue(this.hiddenInput_.value);
-            } else if (this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR)) {
-                // If an element is selected, the select should set the initial selected text.
-                var enhancedAdapterMethods = this.getEnhancedSelectAdapterMethods_();
-                enhancedAdapterMethods.setValue(enhancedAdapterMethods.getValue());
-            }
-        }
-        // Initially sync floating label
-        this.foundation_.handleChange( /* didChange */false);
-        if (this.root_.classList.contains(_constants3.cssClasses.DISABLED) || this.nativeControl_ && this.nativeControl_.disabled) {
-            this.disabled = true;
-        }
-    };
-    MDCSelect.prototype.destroy = function () {
-        var _this = this;
-        this.targetElement_.removeEventListener('change', this.handleChange_);
-        this.targetElement_.removeEventListener('focus', this.handleFocus_);
-        this.targetElement_.removeEventListener('blur', this.handleBlur_);
-        this.targetElement_.removeEventListener('keydown', this.handleKeydown_);
-        POINTER_EVENTS.forEach(function (evtType) {
-            _this.targetElement_.removeEventListener(evtType, _this.handleClick_);
-        });
-        if (this.menu_) {
-            this.menu_.unlisten(menuSurfaceConstants.strings.CLOSED_EVENT, this.handleMenuClosed_);
-            this.menu_.unlisten(menuSurfaceConstants.strings.OPENED_EVENT, this.handleMenuOpened_);
-            this.menu_.unlisten(menuConstants.strings.SELECTED_EVENT, this.handleMenuSelected_);
-            this.menu_.destroy();
-        }
-        if (this.ripple) {
-            this.ripple.destroy();
-        }
-        if (this.outline_) {
-            this.outline_.destroy();
-        }
-        if (this.leadingIcon_) {
-            this.leadingIcon_.destroy();
-        }
-        if (this.helperText_) {
-            this.helperText_.destroy();
-        }
-        if (this.validationObserver_) {
-            this.validationObserver_.disconnect();
-        }
-        _super.prototype.destroy.call(this);
-    };
-    Object.defineProperty(MDCSelect.prototype, "value", {
-        get: function get() {
-            return this.foundation_.getValue();
-        },
-        set: function set(value) {
-            this.foundation_.setValue(value);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "selectedIndex", {
-        get: function get() {
-            var selectedIndex = -1;
-            if (this.menuElement_ && this.menu_) {
-                var selectedEl = this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR);
-                selectedIndex = this.menu_.items.indexOf(selectedEl);
-            } else if (this.nativeControl_) {
-                selectedIndex = this.nativeControl_.selectedIndex;
-            }
-            return selectedIndex;
-        },
-        set: function set(selectedIndex) {
-            this.foundation_.setSelectedIndex(selectedIndex);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "disabled", {
-        get: function get() {
-            return this.root_.classList.contains(_constants3.cssClasses.DISABLED) || (this.nativeControl_ ? this.nativeControl_.disabled : false);
-        },
-        set: function set(disabled) {
-            this.foundation_.setDisabled(disabled);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "leadingIconAriaLabel", {
-        set: function set(label) {
-            this.foundation_.setLeadingIconAriaLabel(label);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "leadingIconContent", {
-        /**
-         * Sets the text content of the leading icon.
-         */
-        set: function set(content) {
-            this.foundation_.setLeadingIconContent(content);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "helperTextContent", {
-        /**
-         * Sets the text content of the helper text.
-         */
-        set: function set(content) {
-            this.foundation_.setHelperTextContent(content);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "valid", {
-        /**
-         * Checks if the select is in a valid state.
-         */
-        get: function get() {
-            return this.foundation_.isValid();
-        },
-        /**
-         * Sets the current invalid state of the select.
-         */
-        set: function set(isValid) {
-            this.foundation_.setValid(isValid);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCSelect.prototype, "required", {
-        /**
-         * Returns whether the select is required.
-         */
-        get: function get() {
-            if (this.nativeControl_) {
-                return this.nativeControl_.required;
-            } else {
-                return this.selectedText_.getAttribute('aria-required') === 'true';
-            }
-        },
-        /**
-         * Sets the control to the required state.
-         */
-        set: function set(isRequired) {
-            if (this.nativeControl_) {
-                this.nativeControl_.required = isRequired;
-            } else {
-                if (isRequired) {
-                    this.selectedText_.setAttribute('aria-required', isRequired.toString());
-                } else {
-                    this.selectedText_.removeAttribute('aria-required');
-                }
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * Recomputes the outline SVG path for the outline element.
-     */
-    MDCSelect.prototype.layout = function () {
-        this.foundation_.layout();
-    };
-    MDCSelect.prototype.getDefaultFoundation = function () {
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = tslib_1.__assign({}, this.nativeControl_ ? this.getNativeSelectAdapterMethods_() : this.getEnhancedSelectAdapterMethods_(), this.getCommonAdapterMethods_(), this.getOutlineAdapterMethods_(), this.getLabelAdapterMethods_());
-        return new _foundation.MDCSelectFoundation(adapter, this.getFoundationMap_());
-    };
-    /**
-     * Handles setup for the enhanced menu.
-     */
-    MDCSelect.prototype.enhancedSelectSetup_ = function (menuFactory) {
-        var isDisabled = this.root_.classList.contains(_constants3.cssClasses.DISABLED);
-        this.selectedText_.setAttribute('tabindex', isDisabled ? '-1' : '0');
-        this.hiddenInput_ = this.root_.querySelector(_constants3.strings.HIDDEN_INPUT_SELECTOR);
-        this.menuElement_ = this.root_.querySelector(_constants3.strings.MENU_SELECTOR);
-        this.menu_ = menuFactory(this.menuElement_);
-        this.menu_.hoistMenuToBody();
-        this.menu_.setAnchorElement(this.root_);
-        this.menu_.setAnchorCorner(menuSurfaceConstants.Corner.BOTTOM_START);
-        this.menu_.wrapFocus = false;
-    };
-    MDCSelect.prototype.createRipple_ = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = tslib_1.__assign({}, _index5.MDCRipple.createAdapter(this), { registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.targetElement_.addEventListener(evtType, handler);
-            }, deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.targetElement_.removeEventListener(evtType, handler);
-            } });
-        // tslint:enable:object-literal-sort-keys
-        return new _index5.MDCRipple(this.root_, new _index5.MDCRippleFoundation(adapter));
-    };
-    MDCSelect.prototype.getNativeSelectAdapterMethods_ = function () {
-        var _this = this;
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        return {
-            getValue: function getValue() {
-                return _this.nativeControl_.value;
-            },
-            setValue: function setValue(value) {
-                _this.nativeControl_.value = value;
-            },
-            openMenu: function openMenu() {
-                return undefined;
-            },
-            closeMenu: function closeMenu() {
-                return undefined;
-            },
-            isMenuOpen: function isMenuOpen() {
-                return false;
-            },
-            setSelectedIndex: function setSelectedIndex(index) {
-                _this.nativeControl_.selectedIndex = index;
-            },
-            setDisabled: function setDisabled(isDisabled) {
-                _this.nativeControl_.disabled = isDisabled;
-            },
-            setValid: function setValid(isValid) {
-                if (isValid) {
-                    _this.root_.classList.remove(_constants3.cssClasses.INVALID);
-                } else {
-                    _this.root_.classList.add(_constants3.cssClasses.INVALID);
-                }
-            },
-            checkValidity: function checkValidity() {
-                return _this.nativeControl_.checkValidity();
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-    };
-    MDCSelect.prototype.getEnhancedSelectAdapterMethods_ = function () {
-        var _this = this;
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        return {
-            getValue: function getValue() {
-                var listItem = _this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR);
-                if (listItem && listItem.hasAttribute(_constants3.strings.ENHANCED_VALUE_ATTR)) {
-                    return listItem.getAttribute(_constants3.strings.ENHANCED_VALUE_ATTR) || '';
-                }
-                return '';
-            },
-            setValue: function setValue(value) {
-                var element = _this.menuElement_.querySelector("[" + _constants3.strings.ENHANCED_VALUE_ATTR + "=\"" + value + "\"]");
-                _this.setEnhancedSelectedIndex_(element ? _this.menu_.items.indexOf(element) : -1);
-            },
-            openMenu: function openMenu() {
-                if (_this.menu_ && !_this.menu_.open) {
-                    _this.menu_.open = true;
-                    _this.isMenuOpen_ = true;
-                    _this.selectedText_.setAttribute('aria-expanded', 'true');
-                }
-            },
-            closeMenu: function closeMenu() {
-                if (_this.menu_ && _this.menu_.open) {
-                    _this.menu_.open = false;
-                }
-            },
-            isMenuOpen: function isMenuOpen() {
-                return Boolean(_this.menu_) && _this.isMenuOpen_;
-            },
-            setSelectedIndex: function setSelectedIndex(index) {
-                return _this.setEnhancedSelectedIndex_(index);
-            },
-            setDisabled: function setDisabled(isDisabled) {
-                _this.selectedText_.setAttribute('tabindex', isDisabled ? '-1' : '0');
-                _this.selectedText_.setAttribute('aria-disabled', isDisabled.toString());
-                if (_this.hiddenInput_) {
-                    _this.hiddenInput_.disabled = isDisabled;
-                }
-            },
-            checkValidity: function checkValidity() {
-                var classList = _this.root_.classList;
-                if (classList.contains(_constants3.cssClasses.REQUIRED) && !classList.contains(_constants3.cssClasses.DISABLED)) {
-                    // See notes for required attribute under https://www.w3.org/TR/html52/sec-forms.html#the-select-element
-                    // TL;DR: Invalid if no index is selected, or if the first index is selected and has an empty value.
-                    return _this.selectedIndex !== -1 && (_this.selectedIndex !== 0 || Boolean(_this.value));
-                } else {
-                    return true;
-                }
-            },
-            setValid: function setValid(isValid) {
-                _this.selectedText_.setAttribute('aria-invalid', (!isValid).toString());
-                if (isValid) {
-                    _this.root_.classList.remove(_constants3.cssClasses.INVALID);
-                } else {
-                    _this.root_.classList.add(_constants3.cssClasses.INVALID);
-                }
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-    };
-    MDCSelect.prototype.getCommonAdapterMethods_ = function () {
-        var _this = this;
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        return {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            setRippleCenter: function setRippleCenter(normalizedX) {
-                return _this.lineRipple_ && _this.lineRipple_.setRippleCenter(normalizedX);
-            },
-            activateBottomLine: function activateBottomLine() {
-                return _this.lineRipple_ && _this.lineRipple_.activate();
-            },
-            deactivateBottomLine: function deactivateBottomLine() {
-                return _this.lineRipple_ && _this.lineRipple_.deactivate();
-            },
-            notifyChange: function notifyChange(value) {
-                var index = _this.selectedIndex;
-                _this.emit(_constants3.strings.CHANGE_EVENT, { value: value, index: index }, true /* shouldBubble  */);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-    };
-    MDCSelect.prototype.getOutlineAdapterMethods_ = function () {
-        var _this = this;
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        return {
-            hasOutline: function hasOutline() {
-                return Boolean(_this.outline_);
-            },
-            notchOutline: function notchOutline(labelWidth) {
-                return _this.outline_ && _this.outline_.notch(labelWidth);
-            },
-            closeOutline: function closeOutline() {
-                return _this.outline_ && _this.outline_.closeNotch();
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-    };
-    MDCSelect.prototype.getLabelAdapterMethods_ = function () {
-        var _this = this;
-        return {
-            floatLabel: function floatLabel(shouldFloat) {
-                return _this.label_ && _this.label_.float(shouldFloat);
-            },
-            getLabelWidth: function getLabelWidth() {
-                return _this.label_ ? _this.label_.getWidth() : 0;
-            }
-        };
-    };
-    /**
-     * Calculates where the line ripple should start based on the x coordinate within the component.
-     */
-    MDCSelect.prototype.getNormalizedXCoordinate_ = function (evt) {
-        var targetClientRect = evt.target.getBoundingClientRect();
-        var xCoordinate = this.isTouchEvent_(evt) ? evt.touches[0].clientX : evt.clientX;
-        return xCoordinate - targetClientRect.left;
-    };
-    MDCSelect.prototype.isTouchEvent_ = function (evt) {
-        return Boolean(evt.touches);
-    };
-    /**
-     * Returns a map of all subcomponents to subfoundations.
-     */
-    MDCSelect.prototype.getFoundationMap_ = function () {
-        return {
-            helperText: this.helperText_ ? this.helperText_.foundation : undefined,
-            leadingIcon: this.leadingIcon_ ? this.leadingIcon_.foundation : undefined
-        };
-    };
-    MDCSelect.prototype.setEnhancedSelectedIndex_ = function (index) {
-        var selectedItem = this.menu_.items[index];
-        this.selectedText_.textContent = selectedItem ? selectedItem.textContent.trim() : '';
-        var previouslySelected = this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR);
-        if (previouslySelected) {
-            previouslySelected.classList.remove(_constants3.cssClasses.SELECTED_ITEM_CLASS);
-            previouslySelected.removeAttribute(_constants3.strings.ARIA_SELECTED_ATTR);
-        }
-        if (selectedItem) {
-            selectedItem.classList.add(_constants3.cssClasses.SELECTED_ITEM_CLASS);
-            selectedItem.setAttribute(_constants3.strings.ARIA_SELECTED_ATTR, 'true');
-        }
-        // Synchronize hidden input's value with data-value attribute of selected item.
-        // This code path is also followed when setting value directly, so this covers all cases.
-        if (this.hiddenInput_) {
-            this.hiddenInput_.value = selectedItem ? selectedItem.getAttribute(_constants3.strings.ENHANCED_VALUE_ATTR) || '' : '';
-        }
-        this.layout();
-    };
-    MDCSelect.prototype.initialSyncRequiredState_ = function () {
-        var isRequired = this.targetElement_.required || this.targetElement_.getAttribute('aria-required') === 'true' || this.root_.classList.contains(_constants3.cssClasses.REQUIRED);
-        if (isRequired) {
-            if (this.nativeControl_) {
-                this.nativeControl_.required = true;
-            } else {
-                this.selectedText_.setAttribute('aria-required', 'true');
-            }
-            this.root_.classList.add(_constants3.cssClasses.REQUIRED);
-        }
-    };
-    MDCSelect.prototype.addMutationObserverForRequired_ = function () {
-        var _this = this;
-        var observerHandler = function observerHandler(attributesList) {
-            attributesList.some(function (attributeName) {
-                if (VALIDATION_ATTR_WHITELIST.indexOf(attributeName) === -1) {
-                    return false;
-                }
-                if (_this.selectedText_) {
-                    if (_this.selectedText_.getAttribute('aria-required') === 'true') {
-                        _this.root_.classList.add(_constants3.cssClasses.REQUIRED);
-                    } else {
-                        _this.root_.classList.remove(_constants3.cssClasses.REQUIRED);
-                    }
-                } else {
-                    if (_this.nativeControl_.required) {
-                        _this.root_.classList.add(_constants3.cssClasses.REQUIRED);
-                    } else {
-                        _this.root_.classList.remove(_constants3.cssClasses.REQUIRED);
-                    }
-                }
-                return true;
-            });
-        };
-        var getAttributesList = function getAttributesList(mutationsList) {
-            return mutationsList.map(function (mutation) {
-                return mutation.attributeName;
-            }).filter(function (attributeName) {
-                return attributeName;
-            });
-        };
-        var observer = new MutationObserver(function (mutationsList) {
-            return observerHandler(getAttributesList(mutationsList));
-        });
-        observer.observe(this.targetElement_, { attributes: true });
-        this.validationObserver_ = observer;
-    };
-    return MDCSelect;
-}(_component.MDCComponent);
-exports.MDCSelect = MDCSelect;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 327 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(328);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(43);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 328 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCFloatingLabel = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(43);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCFloatingLabel = /** @class */function (_super) {
-    tslib_1.__extends(MDCFloatingLabel, _super);
-    function MDCFloatingLabel() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCFloatingLabel.attachTo = function (root) {
-        return new MDCFloatingLabel(root);
-    };
-    /**
-     * Styles the label to produce the label shake for errors.
-     * @param shouldShake If true, shakes the label by adding a CSS class; otherwise, stops shaking by removing the class.
-     */
-    MDCFloatingLabel.prototype.shake = function (shouldShake) {
-        this.foundation_.shake(shouldShake);
-    };
-    /**
-     * Styles the label to float/dock.
-     * @param shouldFloat If true, floats the label by adding a CSS class; otherwise, docks it by removing the class.
-     */
-    MDCFloatingLabel.prototype.float = function (shouldFloat) {
-        this.foundation_.float(shouldFloat);
-    };
-    MDCFloatingLabel.prototype.getWidth = function () {
-        return this.foundation_.getWidth();
-    };
-    MDCFloatingLabel.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            getWidth: function getWidth() {
-                return _this.root_.scrollWidth;
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.listen(evtType, handler);
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.unlisten(evtType, handler);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCFloatingLabelFoundation(adapter);
-    };
-    return MDCFloatingLabel;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2016 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCFloatingLabel = MDCFloatingLabel;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 329 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = exports.cssClasses = {
-  LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
-  LABEL_SHAKE: 'mdc-floating-label--shake',
-  ROOT: 'mdc-floating-label'
-};
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 330 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCLineRipple = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(70);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCLineRipple = /** @class */function (_super) {
-    tslib_1.__extends(MDCLineRipple, _super);
-    function MDCLineRipple() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCLineRipple.attachTo = function (root) {
-        return new MDCLineRipple(root);
-    };
-    /**
-     * Activates the line ripple
-     */
-    MDCLineRipple.prototype.activate = function () {
-        this.foundation_.activate();
-    };
-    /**
-     * Deactivates the line ripple
-     */
-    MDCLineRipple.prototype.deactivate = function () {
-        this.foundation_.deactivate();
-    };
-    /**
-     * Sets the transform origin given a user's click location.
-     * The `rippleCenter` is the x-coordinate of the middle of the ripple.
-     */
-    MDCLineRipple.prototype.setRippleCenter = function (xCoordinate) {
-        this.foundation_.setRippleCenter(xCoordinate);
-    };
-    MDCLineRipple.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            setStyle: function setStyle(propertyName, value) {
-                return _this.root_.style.setProperty(propertyName, value);
-            },
-            registerEventHandler: function registerEventHandler(evtType, handler) {
-                return _this.listen(evtType, handler);
-            },
-            deregisterEventHandler: function deregisterEventHandler(evtType, handler) {
-                return _this.unlisten(evtType, handler);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCLineRippleFoundation(adapter);
-    };
-    return MDCLineRipple;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCLineRipple = MDCLineRipple;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 331 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = {
-  LINE_RIPPLE_ACTIVE: 'mdc-line-ripple--active',
-  LINE_RIPPLE_DEACTIVATING: 'mdc-line-ripple--deactivating'
-};
-exports.cssClasses = cssClasses;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 332 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCMenu = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _index = __webpack_require__(333);
-
-var _foundation = __webpack_require__(38);
-
-var _index2 = __webpack_require__(335);
-
-var _constants = __webpack_require__(44);
-
-var _foundation2 = __webpack_require__(73);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCMenu = /** @class */function (_super) {
-    tslib_1.__extends(MDCMenu, _super);
-    function MDCMenu() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCMenu.attachTo = function (root) {
-        return new MDCMenu(root);
-    };
-    MDCMenu.prototype.initialize = function (menuSurfaceFactory, listFactory) {
-        if (menuSurfaceFactory === void 0) {
-            menuSurfaceFactory = function menuSurfaceFactory(el) {
-                return new _index2.MDCMenuSurface(el);
-            };
-        }
-        if (listFactory === void 0) {
-            listFactory = function listFactory(el) {
-                return new _index.MDCList(el);
-            };
-        }
-        this.menuSurfaceFactory_ = menuSurfaceFactory;
-        this.listFactory_ = listFactory;
-    };
-    MDCMenu.prototype.initialSyncWithDOM = function () {
-        var _this = this;
-        this.menuSurface_ = this.menuSurfaceFactory_(this.root_);
-        var list = this.root_.querySelector(_constants.strings.LIST_SELECTOR);
-        if (list) {
-            this.list_ = this.listFactory_(list);
-            this.list_.wrapFocus = true;
-        } else {
-            this.list_ = null;
-        }
-        this.handleKeydown_ = function (evt) {
-            return _this.foundation_.handleKeydown(evt);
-        };
-        this.handleItemAction_ = function (evt) {
-            return _this.foundation_.handleItemAction(_this.items[evt.detail.index]);
-        };
-        this.afterOpenedCallback_ = function () {
-            return _this.handleAfterOpened_();
-        };
-        this.menuSurface_.listen(_foundation.MDCMenuSurfaceFoundation.strings.OPENED_EVENT, this.afterOpenedCallback_);
-        this.listen('keydown', this.handleKeydown_);
-        this.listen(_index.MDCListFoundation.strings.ACTION_EVENT, this.handleItemAction_);
-    };
-    MDCMenu.prototype.destroy = function () {
-        if (this.list_) {
-            this.list_.destroy();
-        }
-        this.menuSurface_.destroy();
-        this.menuSurface_.unlisten(_foundation.MDCMenuSurfaceFoundation.strings.OPENED_EVENT, this.afterOpenedCallback_);
-        this.unlisten('keydown', this.handleKeydown_);
-        this.unlisten(_index.MDCListFoundation.strings.ACTION_EVENT, this.handleItemAction_);
-        _super.prototype.destroy.call(this);
-    };
-    Object.defineProperty(MDCMenu.prototype, "open", {
-        get: function get() {
-            return this.menuSurface_.open;
-        },
-        set: function set(value) {
-            this.menuSurface_.open = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCMenu.prototype, "wrapFocus", {
-        get: function get() {
-            return this.list_ ? this.list_.wrapFocus : false;
-        },
-        set: function set(value) {
-            if (this.list_) {
-                this.list_.wrapFocus = value;
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCMenu.prototype, "items", {
-        /**
-         * Return the items within the menu. Note that this only contains the set of elements within
-         * the items container that are proper list items, and not supplemental / presentational DOM
-         * elements.
-         */
-        get: function get() {
-            return this.list_ ? this.list_.listElements : [];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCMenu.prototype, "quickOpen", {
-        set: function set(quickOpen) {
-            this.menuSurface_.quickOpen = quickOpen;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param corner Default anchor corner alignment of top-left menu corner.
-     */
-    MDCMenu.prototype.setAnchorCorner = function (corner) {
-        this.menuSurface_.setAnchorCorner(corner);
-    };
-    MDCMenu.prototype.setAnchorMargin = function (margin) {
-        this.menuSurface_.setAnchorMargin(margin);
-    };
-    /**
-     * @return The item within the menu at the index specified.
-     */
-    MDCMenu.prototype.getOptionByIndex = function (index) {
-        var items = this.items;
-        if (index < items.length) {
-            return this.items[index];
-        } else {
-            return null;
-        }
-    };
-    MDCMenu.prototype.setFixedPosition = function (isFixed) {
-        this.menuSurface_.setFixedPosition(isFixed);
-    };
-    MDCMenu.prototype.hoistMenuToBody = function () {
-        this.menuSurface_.hoistMenuToBody();
-    };
-    MDCMenu.prototype.setIsHoisted = function (isHoisted) {
-        this.menuSurface_.setIsHoisted(isHoisted);
-    };
-    MDCMenu.prototype.setAbsolutePosition = function (x, y) {
-        this.menuSurface_.setAbsolutePosition(x, y);
-    };
-    /**
-     * Sets the element that the menu-surface is anchored to.
-     */
-    MDCMenu.prototype.setAnchorElement = function (element) {
-        this.menuSurface_.anchorElement = element;
-    };
-    MDCMenu.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClassToElementAtIndex: function addClassToElementAtIndex(index, className) {
-                var list = _this.items;
-                list[index].classList.add(className);
-            },
-            removeClassFromElementAtIndex: function removeClassFromElementAtIndex(index, className) {
-                var list = _this.items;
-                list[index].classList.remove(className);
-            },
-            addAttributeToElementAtIndex: function addAttributeToElementAtIndex(index, attr, value) {
-                var list = _this.items;
-                list[index].setAttribute(attr, value);
-            },
-            removeAttributeFromElementAtIndex: function removeAttributeFromElementAtIndex(index, attr) {
-                var list = _this.items;
-                list[index].removeAttribute(attr);
-            },
-            elementContainsClass: function elementContainsClass(element, className) {
-                return element.classList.contains(className);
-            },
-            closeSurface: function closeSurface() {
-                return _this.open = false;
-            },
-            getElementIndex: function getElementIndex(element) {
-                return _this.items.indexOf(element);
-            },
-            getParentElement: function getParentElement(element) {
-                return element.parentElement;
-            },
-            getSelectedElementIndex: function getSelectedElementIndex(selectionGroup) {
-                var selectedListItem = selectionGroup.querySelector("." + _constants.cssClasses.MENU_SELECTED_LIST_ITEM);
-                return selectedListItem ? _this.items.indexOf(selectedListItem) : -1;
-            },
-            notifySelected: function notifySelected(evtData) {
-                return _this.emit(_constants.strings.SELECTED_EVENT, {
-                    index: evtData.index,
-                    item: _this.items[evtData.index]
-                });
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation2.MDCMenuFoundation(adapter);
-    };
-    MDCMenu.prototype.handleAfterOpened_ = function () {
-        var list = this.items;
-        if (list.length > 0) {
-            list[0].focus();
-        }
-    };
-    return MDCMenu;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCMenu = MDCMenu;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 333 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(334);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(45);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 334 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCList = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _index = __webpack_require__(31);
-
-var _constants = __webpack_require__(71);
-
-var _foundation = __webpack_require__(45);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCList = /** @class */function (_super) {
-    tslib_1.__extends(MDCList, _super);
-    function MDCList() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(MDCList.prototype, "vertical", {
-        set: function set(value) {
-            this.foundation_.setVerticalOrientation(value);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCList.prototype, "listElements", {
-        get: function get() {
-            return [].slice.call(this.root_.querySelectorAll(_constants.strings.ENABLED_ITEMS_SELECTOR));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCList.prototype, "wrapFocus", {
-        set: function set(value) {
-            this.foundation_.setWrapFocus(value);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCList.prototype, "singleSelection", {
-        set: function set(isSingleSelectionList) {
-            this.foundation_.setSingleSelection(isSingleSelectionList);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCList.prototype, "selectedIndex", {
-        get: function get() {
-            return this.foundation_.getSelectedIndex();
-        },
-        set: function set(index) {
-            this.foundation_.setSelectedIndex(index);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCList.attachTo = function (root) {
-        return new MDCList(root);
-    };
-    MDCList.prototype.initialSyncWithDOM = function () {
-        this.handleClick_ = this.handleClickEvent_.bind(this);
-        this.handleKeydown_ = this.handleKeydownEvent_.bind(this);
-        this.focusInEventListener_ = this.handleFocusInEvent_.bind(this);
-        this.focusOutEventListener_ = this.handleFocusOutEvent_.bind(this);
-        this.listen('keydown', this.handleKeydown_);
-        this.listen('click', this.handleClick_);
-        this.listen('focusin', this.focusInEventListener_);
-        this.listen('focusout', this.focusOutEventListener_);
-        this.layout();
-        this.initializeListType();
-    };
-    MDCList.prototype.destroy = function () {
-        this.unlisten('keydown', this.handleKeydown_);
-        this.unlisten('click', this.handleClick_);
-        this.unlisten('focusin', this.focusInEventListener_);
-        this.unlisten('focusout', this.focusOutEventListener_);
-    };
-    MDCList.prototype.layout = function () {
-        var direction = this.root_.getAttribute(_constants.strings.ARIA_ORIENTATION);
-        this.vertical = direction !== _constants.strings.ARIA_ORIENTATION_HORIZONTAL;
-        // List items need to have at least tabindex=-1 to be focusable.
-        [].slice.call(this.root_.querySelectorAll('.mdc-list-item:not([tabindex])')).forEach(function (el) {
-            el.setAttribute('tabindex', '-1');
-        });
-        // Child button/a elements are not tabbable until the list item is focused.
-        [].slice.call(this.root_.querySelectorAll(_constants.strings.FOCUSABLE_CHILD_ELEMENTS)).forEach(function (el) {
-            return el.setAttribute('tabindex', '-1');
-        });
-        this.foundation_.layout();
-    };
-    /**
-     * Initialize selectedIndex value based on pre-selected checkbox list items, single selection or radio.
-     */
-    MDCList.prototype.initializeListType = function () {
-        var _this = this;
-        var checkboxListItems = this.root_.querySelectorAll(_constants.strings.ARIA_ROLE_CHECKBOX_SELECTOR);
-        var singleSelectedListItem = this.root_.querySelector("\n      ." + _constants.cssClasses.LIST_ITEM_ACTIVATED_CLASS + ",\n      ." + _constants.cssClasses.LIST_ITEM_SELECTED_CLASS + "\n    ");
-        var radioSelectedListItem = this.root_.querySelector(_constants.strings.ARIA_CHECKED_RADIO_SELECTOR);
-        if (checkboxListItems.length) {
-            var preselectedItems = this.root_.querySelectorAll(_constants.strings.ARIA_CHECKED_CHECKBOX_SELECTOR);
-            this.selectedIndex = [].map.call(preselectedItems, function (listItem) {
-                return _this.listElements.indexOf(listItem);
-            });
-        } else if (singleSelectedListItem) {
-            if (singleSelectedListItem.classList.contains(_constants.cssClasses.LIST_ITEM_ACTIVATED_CLASS)) {
-                this.foundation_.setUseActivatedClass(true);
-            }
-            this.singleSelection = true;
-            this.selectedIndex = this.listElements.indexOf(singleSelectedListItem);
-        } else if (radioSelectedListItem) {
-            this.selectedIndex = this.listElements.indexOf(radioSelectedListItem);
-        }
-    };
-    MDCList.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = {
-            addClassForElementIndex: function addClassForElementIndex(index, className) {
-                var element = _this.listElements[index];
-                if (element) {
-                    element.classList.add(className);
-                }
-            },
-            focusItemAtIndex: function focusItemAtIndex(index) {
-                var element = _this.listElements[index];
-                if (element) {
-                    element.focus();
-                }
-            },
-            getAttributeForElementIndex: function getAttributeForElementIndex(index, attr) {
-                return _this.listElements[index].getAttribute(attr);
-            },
-            getFocusedElementIndex: function getFocusedElementIndex() {
-                return _this.listElements.indexOf(document.activeElement);
-            },
-            getListItemCount: function getListItemCount() {
-                return _this.listElements.length;
-            },
-            hasCheckboxAtIndex: function hasCheckboxAtIndex(index) {
-                var listItem = _this.listElements[index];
-                return !!listItem.querySelector(_constants.strings.CHECKBOX_SELECTOR);
-            },
-            hasRadioAtIndex: function hasRadioAtIndex(index) {
-                var listItem = _this.listElements[index];
-                return !!listItem.querySelector(_constants.strings.RADIO_SELECTOR);
-            },
-            isCheckboxCheckedAtIndex: function isCheckboxCheckedAtIndex(index) {
-                var listItem = _this.listElements[index];
-                var toggleEl = listItem.querySelector(_constants.strings.CHECKBOX_SELECTOR);
-                return toggleEl.checked;
-            },
-            isFocusInsideList: function isFocusInsideList() {
-                return _this.root_.contains(document.activeElement);
-            },
-            notifyAction: function notifyAction(index) {
-                _this.emit(_constants.strings.ACTION_EVENT, { index: index }, /** shouldBubble */true);
-            },
-            removeClassForElementIndex: function removeClassForElementIndex(index, className) {
-                var element = _this.listElements[index];
-                if (element) {
-                    element.classList.remove(className);
-                }
-            },
-            setAttributeForElementIndex: function setAttributeForElementIndex(index, attr, value) {
-                var element = _this.listElements[index];
-                if (element) {
-                    element.setAttribute(attr, value);
-                }
-            },
-            setCheckedCheckboxOrRadioAtIndex: function setCheckedCheckboxOrRadioAtIndex(index, isChecked) {
-                var listItem = _this.listElements[index];
-                var toggleEl = listItem.querySelector(_constants.strings.CHECKBOX_RADIO_SELECTOR);
-                toggleEl.checked = isChecked;
-                var event = document.createEvent('Event');
-                event.initEvent('change', true, true);
-                toggleEl.dispatchEvent(event);
-            },
-            setTabIndexForListItemChildren: function setTabIndexForListItemChildren(listItemIndex, tabIndexValue) {
-                var element = _this.listElements[listItemIndex];
-                var listItemChildren = [].slice.call(element.querySelectorAll(_constants.strings.CHILD_ELEMENTS_TO_TOGGLE_TABINDEX));
-                listItemChildren.forEach(function (el) {
-                    return el.setAttribute('tabindex', tabIndexValue);
-                });
-            }
-        };
-        return new _foundation.MDCListFoundation(adapter);
-    };
-    /**
-     * Used to figure out which list item this event is targetting. Or returns -1 if
-     * there is no list item
-     */
-    MDCList.prototype.getListItemIndex_ = function (evt) {
-        var eventTarget = evt.target;
-        var nearestParent = _index.ponyfill.closest(eventTarget, "." + _constants.cssClasses.LIST_ITEM_CLASS + ", ." + _constants.cssClasses.ROOT);
-        // Get the index of the element if it is a list item.
-        if (nearestParent && _index.ponyfill.matches(nearestParent, "." + _constants.cssClasses.LIST_ITEM_CLASS)) {
-            return this.listElements.indexOf(nearestParent);
-        }
-        return -1;
-    };
-    /**
-     * Used to figure out which element was clicked before sending the event to the foundation.
-     */
-    MDCList.prototype.handleFocusInEvent_ = function (evt) {
-        var index = this.getListItemIndex_(evt);
-        this.foundation_.handleFocusIn(evt, index);
-    };
-    /**
-     * Used to figure out which element was clicked before sending the event to the foundation.
-     */
-    MDCList.prototype.handleFocusOutEvent_ = function (evt) {
-        var index = this.getListItemIndex_(evt);
-        this.foundation_.handleFocusOut(evt, index);
-    };
-    /**
-     * Used to figure out which element was focused when keydown event occurred before sending the event to the
-     * foundation.
-     */
-    MDCList.prototype.handleKeydownEvent_ = function (evt) {
-        var index = this.getListItemIndex_(evt);
-        var target = evt.target;
-        if (index >= 0) {
-            this.foundation_.handleKeydown(evt, target.classList.contains(_constants.cssClasses.LIST_ITEM_CLASS), index);
-        }
-    };
-    /**
-     * Used to figure out which element was clicked before sending the event to the foundation.
-     */
-    MDCList.prototype.handleClickEvent_ = function (evt) {
-        var index = this.getListItemIndex_(evt);
-        var target = evt.target;
-        // Toggle the checkbox only if it's not the target of the event, or the checkbox will have 2 change events.
-        var toggleCheckbox = !_index.ponyfill.matches(target, _constants.strings.CHECKBOX_RADIO_SELECTOR);
-        this.foundation_.handleClick(index, toggleCheckbox);
-    };
-    return MDCList;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCList = MDCList;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 335 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.util = exports.CornerBit = exports.Corner = undefined;
-
-var _constants = __webpack_require__(32);
-
-Object.defineProperty(exports, 'Corner', {
-  enumerable: true,
-  get: function get() {
-    return _constants.Corner;
-  }
-});
-Object.defineProperty(exports, 'CornerBit', {
-  enumerable: true,
-  get: function get() {
-    return _constants.CornerBit;
-  }
-});
-
-var _component = __webpack_require__(336);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(38);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-var _util = __webpack_require__(72);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-//# sourceMappingURL=index.js.map
-exports.util = util;
-
-/***/ }),
-/* 336 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCMenuSurface = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _constants = __webpack_require__(32);
-
-var _foundation = __webpack_require__(38);
-
-var _util = __webpack_require__(72);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCMenuSurface = /** @class */function (_super) {
-    tslib_1.__extends(MDCMenuSurface, _super);
-    function MDCMenuSurface() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCMenuSurface.attachTo = function (root) {
-        return new MDCMenuSurface(root);
-    };
-    MDCMenuSurface.prototype.initialSyncWithDOM = function () {
-        var _this = this;
-        var parentEl = this.root_.parentElement;
-        this.anchorElement = parentEl && parentEl.classList.contains(_constants.cssClasses.ANCHOR) ? parentEl : null;
-        if (this.root_.classList.contains(_constants.cssClasses.FIXED)) {
-            this.setFixedPosition(true);
-        }
-        this.handleKeydown_ = function (evt) {
-            return _this.foundation_.handleKeydown(evt);
-        };
-        this.handleBodyClick_ = function (evt) {
-            return _this.foundation_.handleBodyClick(evt);
-        };
-        this.registerBodyClickListener_ = function () {
-            return document.body.addEventListener('click', _this.handleBodyClick_);
-        };
-        this.deregisterBodyClickListener_ = function () {
-            return document.body.removeEventListener('click', _this.handleBodyClick_);
-        };
-        this.listen('keydown', this.handleKeydown_);
-        this.listen(_constants.strings.OPENED_EVENT, this.registerBodyClickListener_);
-        this.listen(_constants.strings.CLOSED_EVENT, this.deregisterBodyClickListener_);
-    };
-    MDCMenuSurface.prototype.destroy = function () {
-        this.unlisten('keydown', this.handleKeydown_);
-        this.unlisten(_constants.strings.OPENED_EVENT, this.registerBodyClickListener_);
-        this.unlisten(_constants.strings.CLOSED_EVENT, this.deregisterBodyClickListener_);
-        _super.prototype.destroy.call(this);
-    };
-    Object.defineProperty(MDCMenuSurface.prototype, "open", {
-        get: function get() {
-            return this.foundation_.isOpen();
-        },
-        set: function set(value) {
-            if (value) {
-                var focusableElements = this.root_.querySelectorAll(_constants.strings.FOCUSABLE_ELEMENTS);
-                this.firstFocusableElement_ = focusableElements[0];
-                this.lastFocusableElement_ = focusableElements[focusableElements.length - 1];
-                this.foundation_.open();
-            } else {
-                this.foundation_.close();
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCMenuSurface.prototype, "quickOpen", {
-        set: function set(quickOpen) {
-            this.foundation_.setQuickOpen(quickOpen);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * Removes the menu-surface from it's current location and appends it to the
-     * body to overcome any overflow:hidden issues.
-     */
-    MDCMenuSurface.prototype.hoistMenuToBody = function () {
-        document.body.appendChild(this.root_);
-        this.setIsHoisted(true);
-    };
-    /** Sets the foundation to use page offsets for an positioning when the menu is hoisted to the body. */
-    MDCMenuSurface.prototype.setIsHoisted = function (isHoisted) {
-        this.foundation_.setIsHoisted(isHoisted);
-    };
-    /** Sets the element that the menu-surface is anchored to. */
-    MDCMenuSurface.prototype.setMenuSurfaceAnchorElement = function (element) {
-        this.anchorElement = element;
-    };
-    /** Sets the menu-surface to position: fixed. */
-    MDCMenuSurface.prototype.setFixedPosition = function (isFixed) {
-        if (isFixed) {
-            this.root_.classList.add(_constants.cssClasses.FIXED);
-        } else {
-            this.root_.classList.remove(_constants.cssClasses.FIXED);
-        }
-        this.foundation_.setFixedPosition(isFixed);
-    };
-    /** Sets the absolute x/y position to position based on. Requires the menu to be hoisted. */
-    MDCMenuSurface.prototype.setAbsolutePosition = function (x, y) {
-        this.foundation_.setAbsolutePosition(x, y);
-        this.setIsHoisted(true);
-    };
-    /**
-     * @param corner Default anchor corner alignment of top-left surface corner.
-     */
-    MDCMenuSurface.prototype.setAnchorCorner = function (corner) {
-        this.foundation_.setAnchorCorner(corner);
-    };
-    MDCMenuSurface.prototype.setAnchorMargin = function (margin) {
-        this.foundation_.setAnchorMargin(margin);
-    };
-    MDCMenuSurface.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            hasAnchor: function hasAnchor() {
-                return !!_this.anchorElement;
-            },
-            notifyClose: function notifyClose() {
-                return _this.emit(_foundation.MDCMenuSurfaceFoundation.strings.CLOSED_EVENT, {});
-            },
-            notifyOpen: function notifyOpen() {
-                return _this.emit(_foundation.MDCMenuSurfaceFoundation.strings.OPENED_EVENT, {});
-            },
-            isElementInContainer: function isElementInContainer(el) {
-                return _this.root_.contains(el);
-            },
-            isRtl: function isRtl() {
-                return getComputedStyle(_this.root_).getPropertyValue('direction') === 'rtl';
-            },
-            setTransformOrigin: function setTransformOrigin(origin) {
-                var propertyName = util.getTransformPropertyName(window) + "-origin";
-                _this.root_.style.setProperty(propertyName, origin);
-            },
-            isFocused: function isFocused() {
-                return document.activeElement === _this.root_;
-            },
-            saveFocus: function saveFocus() {
-                _this.previousFocus_ = document.activeElement;
-            },
-            restoreFocus: function restoreFocus() {
-                if (_this.root_.contains(document.activeElement)) {
-                    if (_this.previousFocus_ && _this.previousFocus_.focus) {
-                        _this.previousFocus_.focus();
-                    }
-                }
-            },
-            isFirstElementFocused: function isFirstElementFocused() {
-                return _this.firstFocusableElement_ ? _this.firstFocusableElement_ === document.activeElement : false;
-            },
-            isLastElementFocused: function isLastElementFocused() {
-                return _this.lastFocusableElement_ ? _this.lastFocusableElement_ === document.activeElement : false;
-            },
-            focusFirstElement: function focusFirstElement() {
-                return _this.firstFocusableElement_ && _this.firstFocusableElement_.focus && _this.firstFocusableElement_.focus();
-            },
-            focusLastElement: function focusLastElement() {
-                return _this.lastFocusableElement_ && _this.lastFocusableElement_.focus && _this.lastFocusableElement_.focus();
-            },
-            getInnerDimensions: function getInnerDimensions() {
-                return { width: _this.root_.offsetWidth, height: _this.root_.offsetHeight };
-            },
-            getAnchorDimensions: function getAnchorDimensions() {
-                return _this.anchorElement ? _this.anchorElement.getBoundingClientRect() : null;
-            },
-            getWindowDimensions: function getWindowDimensions() {
-                return { width: window.innerWidth, height: window.innerHeight };
-            },
-            getBodyDimensions: function getBodyDimensions() {
-                return { width: document.body.clientWidth, height: document.body.clientHeight };
-            },
-            getWindowScroll: function getWindowScroll() {
-                return { x: window.pageXOffset, y: window.pageYOffset };
-            },
-            setPosition: function setPosition(position) {
-                _this.root_.style.left = 'left' in position ? position.left + "px" : '';
-                _this.root_.style.right = 'right' in position ? position.right + "px" : '';
-                _this.root_.style.top = 'top' in position ? position.top + "px" : '';
-                _this.root_.style.bottom = 'bottom' in position ? position.bottom + "px" : '';
-            },
-            setMaxHeight: function setMaxHeight(height) {
-                _this.root_.style.maxHeight = height;
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCMenuSurfaceFoundation(adapter);
-    };
-    return MDCMenuSurface;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCMenuSurface = MDCMenuSurface;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 337 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(338);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(75);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 338 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCNotchedOutline = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(43);
-
-var _constants = __webpack_require__(74);
-
-var _foundation2 = __webpack_require__(75);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCNotchedOutline = /** @class */function (_super) {
-    tslib_1.__extends(MDCNotchedOutline, _super);
-    function MDCNotchedOutline() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCNotchedOutline.attachTo = function (root) {
-        return new MDCNotchedOutline(root);
-    };
-    MDCNotchedOutline.prototype.initialSyncWithDOM = function () {
-        this.notchElement_ = this.root_.querySelector(_constants.strings.NOTCH_ELEMENT_SELECTOR);
-        var label = this.root_.querySelector('.' + _foundation.MDCFloatingLabelFoundation.cssClasses.ROOT);
-        if (label) {
-            label.style.transitionDuration = '0s';
-            this.root_.classList.add(_constants.cssClasses.OUTLINE_UPGRADED);
-            requestAnimationFrame(function () {
-                label.style.transitionDuration = '';
-            });
-        } else {
-            this.root_.classList.add(_constants.cssClasses.NO_LABEL);
-        }
-    };
-    /**
-     * Updates classes and styles to open the notch to the specified width.
-     * @param notchWidth The notch width in the outline.
-     */
-    MDCNotchedOutline.prototype.notch = function (notchWidth) {
-        this.foundation_.notch(notchWidth);
-    };
-    /**
-     * Updates classes and styles to close the notch.
-     */
-    MDCNotchedOutline.prototype.closeNotch = function () {
-        this.foundation_.closeNotch();
-    };
-    MDCNotchedOutline.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            setNotchWidthProperty: function setNotchWidthProperty(width) {
-                return _this.notchElement_.style.setProperty('width', width + 'px');
-            },
-            removeNotchWidthProperty: function removeNotchWidthProperty() {
-                return _this.notchElement_.style.removeProperty('width');
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation2.MDCNotchedOutlineFoundation(adapter);
-    };
-    return MDCNotchedOutline;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2017 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCNotchedOutline = MDCNotchedOutline;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 339 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.util = undefined;
-
-var _component = __webpack_require__(340);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(76);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-var _util = __webpack_require__(46);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-//# sourceMappingURL=index.js.map
-exports.util = util; /**
-                      * @license
-                      * Copyright 2019 Google Inc.
-                      *
-                      * Permission is hereby granted, free of charge, to any person obtaining a copy
-                      * of this software and associated documentation files (the "Software"), to deal
-                      * in the Software without restriction, including without limitation the rights
-                      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                      * copies of the Software, and to permit persons to whom the Software is
-                      * furnished to do so, subject to the following conditions:
-                      *
-                      * The above copyright notice and this permission notice shall be included in
-                      * all copies or substantial portions of the Software.
-                      *
-                      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                      * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                      * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                      * THE SOFTWARE.
-                      */
-
-/***/ }),
-/* 340 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCRipple = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _index = __webpack_require__(31);
-
-var _foundation = __webpack_require__(76);
-
-var _util = __webpack_require__(46);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCRipple = /** @class */function (_super) {
-    tslib_1.__extends(MDCRipple, _super);
-    function MDCRipple() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.disabled = false;
-        return _this;
-    }
-    MDCRipple.attachTo = function (root, opts) {
-        if (opts === void 0) {
-            opts = { isUnbounded: undefined };
-        }
-        var ripple = new MDCRipple(root);
-        // Only override unbounded behavior if option is explicitly specified
-        if (opts.isUnbounded !== undefined) {
-            ripple.unbounded = opts.isUnbounded;
-        }
-        return ripple;
-    };
-    MDCRipple.createAdapter = function (instance) {
-        return {
-            addClass: function addClass(className) {
-                return instance.root_.classList.add(className);
-            },
-            browserSupportsCssVars: function browserSupportsCssVars() {
-                return util.supportsCssVariables(window);
-            },
-            computeBoundingRect: function computeBoundingRect() {
-                return instance.root_.getBoundingClientRect();
-            },
-            containsEventTarget: function containsEventTarget(target) {
-                return instance.root_.contains(target);
-            },
-            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.removeEventListener(evtType, handler, util.applyPassive());
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return instance.root_.removeEventListener(evtType, handler, util.applyPassive());
-            },
-            deregisterResizeHandler: function deregisterResizeHandler(handler) {
-                return window.removeEventListener('resize', handler);
-            },
-            getWindowPageOffset: function getWindowPageOffset() {
-                return { x: window.pageXOffset, y: window.pageYOffset };
-            },
-            isSurfaceActive: function isSurfaceActive() {
-                return _index.ponyfill.matches(instance.root_, ':active');
-            },
-            isSurfaceDisabled: function isSurfaceDisabled() {
-                return Boolean(instance.disabled);
-            },
-            isUnbounded: function isUnbounded() {
-                return Boolean(instance.unbounded);
-            },
-            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.addEventListener(evtType, handler, util.applyPassive());
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return instance.root_.addEventListener(evtType, handler, util.applyPassive());
-            },
-            registerResizeHandler: function registerResizeHandler(handler) {
-                return window.addEventListener('resize', handler);
-            },
-            removeClass: function removeClass(className) {
-                return instance.root_.classList.remove(className);
-            },
-            updateCssVariable: function updateCssVariable(varName, value) {
-                return instance.root_.style.setProperty(varName, value);
-            }
-        };
-    };
-    Object.defineProperty(MDCRipple.prototype, "unbounded", {
-        get: function get() {
-            return Boolean(this.unbounded_);
-        },
-        set: function set(unbounded) {
-            this.unbounded_ = Boolean(unbounded);
-            this.setUnbounded_();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRipple.prototype.activate = function () {
-        this.foundation_.activate();
-    };
-    MDCRipple.prototype.deactivate = function () {
-        this.foundation_.deactivate();
-    };
-    MDCRipple.prototype.layout = function () {
-        this.foundation_.layout();
-    };
-    MDCRipple.prototype.getDefaultFoundation = function () {
-        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
-    };
-    MDCRipple.prototype.initialSyncWithDOM = function () {
-        var root = this.root_;
-        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
-    };
-    /**
-     * Closure Compiler throws an access control error when directly accessing a
-     * protected or private property inside a getter/setter, like unbounded above.
-     * By accessing the protected property inside a method, we solve that problem.
-     * That's why this function exists.
-     */
-    MDCRipple.prototype.setUnbounded_ = function () {
-        this.foundation_.setUnbounded(Boolean(this.unbounded_));
-    };
-    return MDCRipple;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2016 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCRipple = MDCRipple;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 341 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = exports.cssClasses = {
-    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
-    // given that it's an 'upgrade' to an existing component. That being said it is the root
-    // CSS class that all other CSS classes derive from.
-    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
-    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
-    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
-    ROOT: 'mdc-ripple-upgraded',
-    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
-};
-var strings = exports.strings = {
-    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
-    VAR_FG_SIZE: '--mdc-ripple-fg-size',
-    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
-    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
-    VAR_LEFT: '--mdc-ripple-left',
-    VAR_TOP: '--mdc-ripple-top'
-};
-var numbers = exports.numbers = {
-    DEACTIVATION_TIMEOUT_MS: 225,
-    FG_DEACTIVATION_MS: 150,
-    INITIAL_ORIGIN_SCALE: 0.6,
-    PADDING: 10,
-    TAP_DELAY_MS: 300
-};
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 342 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCSelectHelperText = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(80);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCSelectHelperText = /** @class */function (_super) {
-    tslib_1.__extends(MDCSelectHelperText, _super);
-    function MDCSelectHelperText() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCSelectHelperText.attachTo = function (root) {
-        return new MDCSelectHelperText(root);
-    };
-    Object.defineProperty(MDCSelectHelperText.prototype, "foundation", {
-        get: function get() {
-            return this.foundation_;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCSelectHelperText.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            setAttr: function setAttr(attr, value) {
-                return _this.root_.setAttribute(attr, value);
-            },
-            removeAttr: function removeAttr(attr) {
-                return _this.root_.removeAttribute(attr);
-            },
-            setContent: function setContent(content) {
-                _this.root_.textContent = content;
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCSelectHelperTextFoundation(adapter);
-    };
-    return MDCSelectHelperText;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCSelectHelperText = MDCSelectHelperText;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 343 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var strings = {
-    ARIA_HIDDEN: 'aria-hidden',
-    ROLE: 'role'
-};
-var cssClasses = {
-    HELPER_TEXT_PERSISTENT: 'mdc-select-helper-text--persistent',
-    HELPER_TEXT_VALIDATION_MSG: 'mdc-select-helper-text--validation-msg'
-};
-exports.strings = strings;
-exports.cssClasses = cssClasses;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 344 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCSelectIcon = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(82);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCSelectIcon = /** @class */function (_super) {
-    tslib_1.__extends(MDCSelectIcon, _super);
-    function MDCSelectIcon() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCSelectIcon.attachTo = function (root) {
-        return new MDCSelectIcon(root);
-    };
-    Object.defineProperty(MDCSelectIcon.prototype, "foundation", {
-        get: function get() {
-            return this.foundation_;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCSelectIcon.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            getAttr: function getAttr(attr) {
-                return _this.root_.getAttribute(attr);
-            },
-            setAttr: function setAttr(attr, value) {
-                return _this.root_.setAttribute(attr, value);
-            },
-            removeAttr: function removeAttr(attr) {
-                return _this.root_.removeAttribute(attr);
-            },
-            setContent: function setContent(content) {
-                _this.root_.textContent = content;
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.listen(evtType, handler);
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.unlisten(evtType, handler);
-            },
-            notifyIconAction: function notifyIconAction() {
-                return _this.emit(_foundation.MDCSelectIconFoundation.strings.ICON_EVENT, {} /* evtData */, true /* shouldBubble */);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCSelectIconFoundation(adapter);
-    };
-    return MDCSelectIcon;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCSelectIcon = MDCSelectIcon;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 345 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var strings = {
-  ICON_EVENT: 'MDCSelect:icon',
-  ICON_ROLE: 'button'
-};
-exports.strings = strings;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 346 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCRipple = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(347);
-
-var _events = __webpack_require__(348);
-
-var _ponyfill = __webpack_require__(349);
-
-var _foundation = __webpack_require__(84);
-
-var _util = __webpack_require__(47);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var MDCRipple = /** @class */function (_super) {
-    tslib_1.__extends(MDCRipple, _super);
-    function MDCRipple() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.disabled = false;
-        return _this;
-    }
-    MDCRipple.attachTo = function (root, opts) {
-        if (opts === void 0) {
-            opts = { isUnbounded: undefined };
-        }
-        var ripple = new MDCRipple(root);
-        // Only override unbounded behavior if option is explicitly specified
-        if (opts.isUnbounded !== undefined) {
-            ripple.unbounded = opts.isUnbounded;
-        }
-        return ripple;
-    };
-    MDCRipple.createAdapter = function (instance) {
-        return {
-            addClass: function addClass(className) {
-                return instance.root_.classList.add(className);
-            },
-            browserSupportsCssVars: function browserSupportsCssVars() {
-                return util.supportsCssVariables(window);
-            },
-            computeBoundingRect: function computeBoundingRect() {
-                return instance.root_.getBoundingClientRect();
-            },
-            containsEventTarget: function containsEventTarget(target) {
-                return instance.root_.contains(target);
-            },
-            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.removeEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return instance.root_.removeEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            deregisterResizeHandler: function deregisterResizeHandler(handler) {
-                return window.removeEventListener('resize', handler);
-            },
-            getWindowPageOffset: function getWindowPageOffset() {
-                return { x: window.pageXOffset, y: window.pageYOffset };
-            },
-            isSurfaceActive: function isSurfaceActive() {
-                return (0, _ponyfill.matches)(instance.root_, ':active');
-            },
-            isSurfaceDisabled: function isSurfaceDisabled() {
-                return Boolean(instance.disabled);
-            },
-            isUnbounded: function isUnbounded() {
-                return Boolean(instance.unbounded);
-            },
-            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.addEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return instance.root_.addEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            registerResizeHandler: function registerResizeHandler(handler) {
-                return window.addEventListener('resize', handler);
-            },
-            removeClass: function removeClass(className) {
-                return instance.root_.classList.remove(className);
-            },
-            updateCssVariable: function updateCssVariable(varName, value) {
-                return instance.root_.style.setProperty(varName, value);
-            }
-        };
-    };
-    Object.defineProperty(MDCRipple.prototype, "unbounded", {
-        get: function get() {
-            return Boolean(this.unbounded_);
-        },
-        set: function set(unbounded) {
-            this.unbounded_ = Boolean(unbounded);
-            this.setUnbounded_();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRipple.prototype.activate = function () {
-        this.foundation_.activate();
-    };
-    MDCRipple.prototype.deactivate = function () {
-        this.foundation_.deactivate();
-    };
-    MDCRipple.prototype.layout = function () {
-        this.foundation_.layout();
-    };
-    MDCRipple.prototype.getDefaultFoundation = function () {
-        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
-    };
-    MDCRipple.prototype.initialSyncWithDOM = function () {
-        var root = this.root_;
-        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
-    };
-    /**
-     * Closure Compiler throws an access control error when directly accessing a
-     * protected or private property inside a getter/setter, like unbounded above.
-     * By accessing the protected property inside a method, we solve that problem.
-     * That's why this function exists.
-     */
-    MDCRipple.prototype.setUnbounded_ = function () {
-        this.foundation_.setUnbounded(Boolean(this.unbounded_));
-    };
-    return MDCRipple;
-}(_component.MDCComponent);
-exports.MDCRipple = MDCRipple;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 347 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCComponent = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _foundation = __webpack_require__(83);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var MDCComponent = /** @class */function () {
-    function MDCComponent(root, foundation) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
-        this.root_ = root;
-        this.initialize.apply(this, tslib_1.__spread(args));
-        // Note that we initialize foundation here and not within the constructor's default param so that
-        // this.root_ is defined and can be used within the foundation class.
-        this.foundation_ = foundation === undefined ? this.getDefaultFoundation() : foundation;
-        this.foundation_.init();
-        this.initialSyncWithDOM();
-    }
-    MDCComponent.attachTo = function (root) {
-        // Subclasses which extend MDCBase should provide an attachTo() method that takes a root element and
-        // returns an instantiated component with its root set to that element. Also note that in the cases of
-        // subclasses, an explicit foundation class will not have to be passed in; it will simply be initialized
-        // from getDefaultFoundation().
-        return new MDCComponent(root, new _foundation.MDCFoundation({}));
-    };
-    /* istanbul ignore next: method param only exists for typing purposes; it does not need to be unit tested */
-    MDCComponent.prototype.initialize = function () {
-        var _args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            _args[_i] = arguments[_i];
-        }
-        // Subclasses can override this to do any additional setup work that would be considered part of a
-        // "constructor". Essentially, it is a hook into the parent constructor before the foundation is
-        // initialized. Any additional arguments besides root and foundation will be passed in here.
-    };
-    MDCComponent.prototype.getDefaultFoundation = function () {
-        // Subclasses must override this method to return a properly configured foundation class for the
-        // component.
-        throw new Error('Subclasses must override getDefaultFoundation to return a properly configured ' + 'foundation class');
-    };
-    MDCComponent.prototype.initialSyncWithDOM = function () {
-        // Subclasses should override this method if they need to perform work to synchronize with a host DOM
-        // object. An example of this would be a form control wrapper that needs to synchronize its internal state
-        // to some property or attribute of the host DOM. Please note: this is *not* the place to perform DOM
-        // reads/writes that would cause layout / paint, as this is called synchronously from within the constructor.
-    };
-    MDCComponent.prototype.destroy = function () {
-        // Subclasses may implement this method to release any resources / deregister any listeners they have
-        // attached. An example of this might be deregistering a resize event from the window object.
-        this.foundation_.destroy();
-    };
-    MDCComponent.prototype.listen = function (evtType, handler, options) {
-        this.root_.addEventListener(evtType, handler, options);
-    };
-    MDCComponent.prototype.unlisten = function (evtType, handler, options) {
-        this.root_.removeEventListener(evtType, handler, options);
-    };
-    /**
-     * Fires a cross-browser-compatible custom event from the component root of the given type, with the given data.
-     */
-    MDCComponent.prototype.emit = function (evtType, evtData, shouldBubble) {
-        if (shouldBubble === void 0) {
-            shouldBubble = false;
-        }
-        var evt;
-        if (typeof CustomEvent === 'function') {
-            evt = new CustomEvent(evtType, {
-                bubbles: shouldBubble,
-                detail: evtData
-            });
-        } else {
-            evt = document.createEvent('CustomEvent');
-            evt.initCustomEvent(evtType, shouldBubble, false, evtData);
-        }
-        this.root_.dispatchEvent(evt);
-    };
-    return MDCComponent;
-}();
-exports.MDCComponent = MDCComponent;
-// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
-
-exports.default = MDCComponent;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 348 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.applyPassive = applyPassive;
-/**
- * @license
- * Copyright 2019 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-/**
- * Stores result from applyPassive to avoid redundant processing to detect
- * passive event listener support.
- */
-var supportsPassive_;
-/**
- * Determine whether the current browser supports passive event listeners, and
- * if so, use them.
- */
-function applyPassive(globalObj, forceRefresh) {
-    if (globalObj === void 0) {
-        globalObj = window;
-    }
-    if (forceRefresh === void 0) {
-        forceRefresh = false;
-    }
-    if (supportsPassive_ === undefined || forceRefresh) {
-        var isSupported_1 = false;
-        try {
-            globalObj.document.addEventListener('test', function () {
-                return undefined;
-            }, {
-                get passive() {
-                    isSupported_1 = true;
-                    return isSupported_1;
-                }
-            });
-        } catch (e) {} // tslint:disable-line:no-empty cannot throw error due to tests. tslint also disables console.log.
-        supportsPassive_ = isSupported_1;
-    }
-    return supportsPassive_ ? { passive: true } : false;
-}
-//# sourceMappingURL=events.js.map
-
-/***/ }),
-/* 349 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.closest = closest;
-exports.matches = matches;
-/**
- * @license
- * Copyright 2018 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-/**
- * @fileoverview A "ponyfill" is a polyfill that doesn't modify the global prototype chain.
- * This makes ponyfills safer than traditional polyfills, especially for libraries like MDC.
- */
-function closest(element, selector) {
-    if (element.closest) {
-        return element.closest(selector);
-    }
-    var el = element;
-    while (el) {
-        if (matches(el, selector)) {
-            return el;
-        }
-        el = el.parentElement;
-    }
-    return null;
-}
-function matches(element, selector) {
-    var nativeMatches = element.matches || element.webkitMatchesSelector || element.msMatchesSelector;
-    return nativeMatches.call(element, selector);
-}
-//# sourceMappingURL=ponyfill.js.map
-
-/***/ }),
-/* 350 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCTopAppBar = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _component2 = __webpack_require__(351);
-
-var _constants = __webpack_require__(33);
-
-var _foundation = __webpack_require__(87);
-
-var _foundation2 = __webpack_require__(88);
-
-var _foundation3 = __webpack_require__(48);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCTopAppBar = /** @class */function (_super) {
-    tslib_1.__extends(MDCTopAppBar, _super);
-    function MDCTopAppBar() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCTopAppBar.attachTo = function (root) {
-        return new MDCTopAppBar(root);
-    };
-    MDCTopAppBar.prototype.initialize = function (rippleFactory) {
-        if (rippleFactory === void 0) {
-            rippleFactory = function rippleFactory(el) {
-                return _component2.MDCRipple.attachTo(el);
-            };
-        }
-        this.navIcon_ = this.root_.querySelector(_constants.strings.NAVIGATION_ICON_SELECTOR);
-        // Get all icons in the toolbar and instantiate the ripples
-        var icons = [].slice.call(this.root_.querySelectorAll(_constants.strings.ACTION_ITEM_SELECTOR));
-        if (this.navIcon_) {
-            icons.push(this.navIcon_);
-        }
-        this.iconRipples_ = icons.map(function (icon) {
-            var ripple = rippleFactory(icon);
-            ripple.unbounded = true;
-            return ripple;
-        });
-        this.scrollTarget_ = window;
-    };
-    MDCTopAppBar.prototype.destroy = function () {
-        this.iconRipples_.forEach(function (iconRipple) {
-            return iconRipple.destroy();
-        });
-        _super.prototype.destroy.call(this);
-    };
-    MDCTopAppBar.prototype.setScrollTarget = function (target) {
-        // Remove scroll handler from the previous scroll target
-        this.foundation_.destroyScrollHandler();
-        this.scrollTarget_ = target;
-        // Initialize scroll handler on the new scroll target
-        this.foundation_.initScrollHandler();
-    };
-    MDCTopAppBar.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            setStyle: function setStyle(property, value) {
-                return _this.root_.style.setProperty(property, value);
-            },
-            getTopAppBarHeight: function getTopAppBarHeight() {
-                return _this.root_.clientHeight;
-            },
-            registerNavigationIconInteractionHandler: function registerNavigationIconInteractionHandler(evtType, handler) {
-                if (_this.navIcon_) {
-                    _this.navIcon_.addEventListener(evtType, handler);
-                }
-            },
-            deregisterNavigationIconInteractionHandler: function deregisterNavigationIconInteractionHandler(evtType, handler) {
-                if (_this.navIcon_) {
-                    _this.navIcon_.removeEventListener(evtType, handler);
-                }
-            },
-            notifyNavigationIconClicked: function notifyNavigationIconClicked() {
-                return _this.emit(_constants.strings.NAVIGATION_EVENT, {});
-            },
-            registerScrollHandler: function registerScrollHandler(handler) {
-                return _this.scrollTarget_.addEventListener('scroll', handler);
-            },
-            deregisterScrollHandler: function deregisterScrollHandler(handler) {
-                return _this.scrollTarget_.removeEventListener('scroll', handler);
-            },
-            registerResizeHandler: function registerResizeHandler(handler) {
-                return window.addEventListener('resize', handler);
-            },
-            deregisterResizeHandler: function deregisterResizeHandler(handler) {
-                return window.removeEventListener('resize', handler);
-            },
-            getViewportScrollY: function getViewportScrollY() {
-                var win = _this.scrollTarget_;
-                var el = _this.scrollTarget_;
-                return win.pageYOffset !== undefined ? win.pageYOffset : el.scrollTop;
-            },
-            getTotalActionItems: function getTotalActionItems() {
-                return _this.root_.querySelectorAll(_constants.strings.ACTION_ITEM_SELECTOR).length;
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        var foundation;
-        if (this.root_.classList.contains(_constants.cssClasses.SHORT_CLASS)) {
-            foundation = new _foundation2.MDCShortTopAppBarFoundation(adapter);
-        } else if (this.root_.classList.contains(_constants.cssClasses.FIXED_CLASS)) {
-            foundation = new _foundation.MDCFixedTopAppBarFoundation(adapter);
-        } else {
-            foundation = new _foundation3.MDCTopAppBarFoundation(adapter);
-        }
-        return foundation;
-    };
-    return MDCTopAppBar;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2018 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCTopAppBar = MDCTopAppBar;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 351 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCRipple = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _index = __webpack_require__(31);
-
-var _foundation = __webpack_require__(352);
-
-var _util = __webpack_require__(86);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCRipple = /** @class */function (_super) {
-    tslib_1.__extends(MDCRipple, _super);
-    function MDCRipple() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.disabled = false;
-        return _this;
-    }
-    MDCRipple.attachTo = function (root, opts) {
-        if (opts === void 0) {
-            opts = { isUnbounded: undefined };
-        }
-        var ripple = new MDCRipple(root);
-        // Only override unbounded behavior if option is explicitly specified
-        if (opts.isUnbounded !== undefined) {
-            ripple.unbounded = opts.isUnbounded;
-        }
-        return ripple;
-    };
-    MDCRipple.createAdapter = function (instance) {
-        return {
-            addClass: function addClass(className) {
-                return instance.root_.classList.add(className);
-            },
-            browserSupportsCssVars: function browserSupportsCssVars() {
-                return util.supportsCssVariables(window);
-            },
-            computeBoundingRect: function computeBoundingRect() {
-                return instance.root_.getBoundingClientRect();
-            },
-            containsEventTarget: function containsEventTarget(target) {
-                return instance.root_.contains(target);
-            },
-            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.removeEventListener(evtType, handler, util.applyPassive());
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return instance.root_.removeEventListener(evtType, handler, util.applyPassive());
-            },
-            deregisterResizeHandler: function deregisterResizeHandler(handler) {
-                return window.removeEventListener('resize', handler);
-            },
-            getWindowPageOffset: function getWindowPageOffset() {
-                return { x: window.pageXOffset, y: window.pageYOffset };
-            },
-            isSurfaceActive: function isSurfaceActive() {
-                return _index.ponyfill.matches(instance.root_, ':active');
-            },
-            isSurfaceDisabled: function isSurfaceDisabled() {
-                return Boolean(instance.disabled);
-            },
-            isUnbounded: function isUnbounded() {
-                return Boolean(instance.unbounded);
-            },
-            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.addEventListener(evtType, handler, util.applyPassive());
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return instance.root_.addEventListener(evtType, handler, util.applyPassive());
-            },
-            registerResizeHandler: function registerResizeHandler(handler) {
-                return window.addEventListener('resize', handler);
-            },
-            removeClass: function removeClass(className) {
-                return instance.root_.classList.remove(className);
-            },
-            updateCssVariable: function updateCssVariable(varName, value) {
-                return instance.root_.style.setProperty(varName, value);
-            }
-        };
-    };
-    Object.defineProperty(MDCRipple.prototype, "unbounded", {
-        get: function get() {
-            return Boolean(this.unbounded_);
-        },
-        set: function set(unbounded) {
-            this.unbounded_ = Boolean(unbounded);
-            this.setUnbounded_();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRipple.prototype.activate = function () {
-        this.foundation_.activate();
-    };
-    MDCRipple.prototype.deactivate = function () {
-        this.foundation_.deactivate();
-    };
-    MDCRipple.prototype.layout = function () {
-        this.foundation_.layout();
-    };
-    MDCRipple.prototype.getDefaultFoundation = function () {
-        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
-    };
-    MDCRipple.prototype.initialSyncWithDOM = function () {
-        var root = this.root_;
-        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
-    };
-    /**
-     * Closure Compiler throws an access control error when directly accessing a
-     * protected or private property inside a getter/setter, like unbounded above.
-     * By accessing the protected property inside a method, we solve that problem.
-     * That's why this function exists.
-     */
-    MDCRipple.prototype.setUnbounded_ = function () {
-        this.foundation_.setUnbounded(Boolean(this.unbounded_));
-    };
-    return MDCRipple;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2016 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCRipple = MDCRipple;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 352 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCRippleFoundation = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _foundation = __webpack_require__(4);
-
-var _constants = __webpack_require__(353);
-
-var _util = __webpack_require__(86);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-// Activation events registered on the root element of each instance for activation
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var ACTIVATION_EVENT_TYPES = ['touchstart', 'pointerdown', 'mousedown', 'keydown'];
-// Deactivation events registered on documentElement when a pointer-related down event occurs
-var POINTER_DEACTIVATION_EVENT_TYPES = ['touchend', 'pointerup', 'mouseup', 'contextmenu'];
-// simultaneous nested activations
-var activatedTargets = [];
-var MDCRippleFoundation = /** @class */function (_super) {
-    tslib_1.__extends(MDCRippleFoundation, _super);
-    function MDCRippleFoundation(adapter) {
-        var _this = _super.call(this, tslib_1.__assign({}, MDCRippleFoundation.defaultAdapter, adapter)) || this;
-        _this.activationAnimationHasEnded_ = false;
-        _this.activationTimer_ = 0;
-        _this.fgDeactivationRemovalTimer_ = 0;
-        _this.fgScale_ = '0';
-        _this.frame_ = { width: 0, height: 0 };
-        _this.initialSize_ = 0;
-        _this.layoutFrame_ = 0;
-        _this.maxRadius_ = 0;
-        _this.unboundedCoords_ = { left: 0, top: 0 };
-        _this.activationState_ = _this.defaultActivationState_();
-        _this.activationTimerCallback_ = function () {
-            _this.activationAnimationHasEnded_ = true;
-            _this.runDeactivationUXLogicIfReady_();
-        };
-        _this.activateHandler_ = function (e) {
-            return _this.activate_(e);
-        };
-        _this.deactivateHandler_ = function () {
-            return _this.deactivate_();
-        };
-        _this.focusHandler_ = function () {
-            return _this.handleFocus();
-        };
-        _this.blurHandler_ = function () {
-            return _this.handleBlur();
-        };
-        _this.resizeHandler_ = function () {
-            return _this.layout();
-        };
-        return _this;
-    }
-    Object.defineProperty(MDCRippleFoundation, "cssClasses", {
-        get: function get() {
-            return _constants.cssClasses;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCRippleFoundation, "strings", {
-        get: function get() {
-            return _constants.strings;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCRippleFoundation, "numbers", {
-        get: function get() {
-            return _constants.numbers;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCRippleFoundation, "defaultAdapter", {
-        get: function get() {
-            return {
-                addClass: function addClass() {
-                    return undefined;
-                },
-                browserSupportsCssVars: function browserSupportsCssVars() {
-                    return true;
-                },
-                computeBoundingRect: function computeBoundingRect() {
-                    return { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
-                },
-                containsEventTarget: function containsEventTarget() {
-                    return true;
-                },
-                deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler() {
-                    return undefined;
-                },
-                deregisterInteractionHandler: function deregisterInteractionHandler() {
-                    return undefined;
-                },
-                deregisterResizeHandler: function deregisterResizeHandler() {
-                    return undefined;
-                },
-                getWindowPageOffset: function getWindowPageOffset() {
-                    return { x: 0, y: 0 };
-                },
-                isSurfaceActive: function isSurfaceActive() {
-                    return true;
-                },
-                isSurfaceDisabled: function isSurfaceDisabled() {
-                    return true;
-                },
-                isUnbounded: function isUnbounded() {
-                    return true;
-                },
-                registerDocumentInteractionHandler: function registerDocumentInteractionHandler() {
-                    return undefined;
-                },
-                registerInteractionHandler: function registerInteractionHandler() {
-                    return undefined;
-                },
-                registerResizeHandler: function registerResizeHandler() {
-                    return undefined;
-                },
-                removeClass: function removeClass() {
-                    return undefined;
-                },
-                updateCssVariable: function updateCssVariable() {
-                    return undefined;
-                }
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRippleFoundation.prototype.init = function () {
-        var _this = this;
-        var supportsPressRipple = this.supportsPressRipple_();
-        this.registerRootHandlers_(supportsPressRipple);
-        if (supportsPressRipple) {
-            var _a = MDCRippleFoundation.cssClasses,
-                ROOT_1 = _a.ROOT,
-                UNBOUNDED_1 = _a.UNBOUNDED;
-            requestAnimationFrame(function () {
-                _this.adapter_.addClass(ROOT_1);
-                if (_this.adapter_.isUnbounded()) {
-                    _this.adapter_.addClass(UNBOUNDED_1);
-                    // Unbounded ripples need layout logic applied immediately to set coordinates for both shade and ripple
-                    _this.layoutInternal_();
-                }
-            });
-        }
-    };
-    MDCRippleFoundation.prototype.destroy = function () {
-        var _this = this;
-        if (this.supportsPressRipple_()) {
-            if (this.activationTimer_) {
-                clearTimeout(this.activationTimer_);
-                this.activationTimer_ = 0;
-                this.adapter_.removeClass(MDCRippleFoundation.cssClasses.FG_ACTIVATION);
-            }
-            if (this.fgDeactivationRemovalTimer_) {
-                clearTimeout(this.fgDeactivationRemovalTimer_);
-                this.fgDeactivationRemovalTimer_ = 0;
-                this.adapter_.removeClass(MDCRippleFoundation.cssClasses.FG_DEACTIVATION);
-            }
-            var _a = MDCRippleFoundation.cssClasses,
-                ROOT_2 = _a.ROOT,
-                UNBOUNDED_2 = _a.UNBOUNDED;
-            requestAnimationFrame(function () {
-                _this.adapter_.removeClass(ROOT_2);
-                _this.adapter_.removeClass(UNBOUNDED_2);
-                _this.removeCssVars_();
-            });
-        }
-        this.deregisterRootHandlers_();
-        this.deregisterDeactivationHandlers_();
-    };
-    /**
-     * @param evt Optional event containing position information.
-     */
-    MDCRippleFoundation.prototype.activate = function (evt) {
-        this.activate_(evt);
-    };
-    MDCRippleFoundation.prototype.deactivate = function () {
-        this.deactivate_();
-    };
-    MDCRippleFoundation.prototype.layout = function () {
-        var _this = this;
-        if (this.layoutFrame_) {
-            cancelAnimationFrame(this.layoutFrame_);
-        }
-        this.layoutFrame_ = requestAnimationFrame(function () {
-            _this.layoutInternal_();
-            _this.layoutFrame_ = 0;
-        });
-    };
-    MDCRippleFoundation.prototype.setUnbounded = function (unbounded) {
-        var UNBOUNDED = MDCRippleFoundation.cssClasses.UNBOUNDED;
-        if (unbounded) {
-            this.adapter_.addClass(UNBOUNDED);
-        } else {
-            this.adapter_.removeClass(UNBOUNDED);
-        }
-    };
-    MDCRippleFoundation.prototype.handleFocus = function () {
-        var _this = this;
-        requestAnimationFrame(function () {
-            return _this.adapter_.addClass(MDCRippleFoundation.cssClasses.BG_FOCUSED);
-        });
-    };
-    MDCRippleFoundation.prototype.handleBlur = function () {
-        var _this = this;
-        requestAnimationFrame(function () {
-            return _this.adapter_.removeClass(MDCRippleFoundation.cssClasses.BG_FOCUSED);
-        });
-    };
-    /**
-     * We compute this property so that we are not querying information about the client
-     * until the point in time where the foundation requests it. This prevents scenarios where
-     * client-side feature-detection may happen too early, such as when components are rendered on the server
-     * and then initialized at mount time on the client.
-     */
-    MDCRippleFoundation.prototype.supportsPressRipple_ = function () {
-        return this.adapter_.browserSupportsCssVars();
-    };
-    MDCRippleFoundation.prototype.defaultActivationState_ = function () {
-        return {
-            activationEvent: undefined,
-            hasDeactivationUXRun: false,
-            isActivated: false,
-            isProgrammatic: false,
-            wasActivatedByPointer: false,
-            wasElementMadeActive: false
-        };
-    };
-    /**
-     * supportsPressRipple Passed from init to save a redundant function call
-     */
-    MDCRippleFoundation.prototype.registerRootHandlers_ = function (supportsPressRipple) {
-        var _this = this;
-        if (supportsPressRipple) {
-            ACTIVATION_EVENT_TYPES.forEach(function (evtType) {
-                _this.adapter_.registerInteractionHandler(evtType, _this.activateHandler_);
-            });
-            if (this.adapter_.isUnbounded()) {
-                this.adapter_.registerResizeHandler(this.resizeHandler_);
-            }
-        }
-        this.adapter_.registerInteractionHandler('focus', this.focusHandler_);
-        this.adapter_.registerInteractionHandler('blur', this.blurHandler_);
-    };
-    MDCRippleFoundation.prototype.registerDeactivationHandlers_ = function (evt) {
-        var _this = this;
-        if (evt.type === 'keydown') {
-            this.adapter_.registerInteractionHandler('keyup', this.deactivateHandler_);
-        } else {
-            POINTER_DEACTIVATION_EVENT_TYPES.forEach(function (evtType) {
-                _this.adapter_.registerDocumentInteractionHandler(evtType, _this.deactivateHandler_);
-            });
-        }
-    };
-    MDCRippleFoundation.prototype.deregisterRootHandlers_ = function () {
-        var _this = this;
-        ACTIVATION_EVENT_TYPES.forEach(function (evtType) {
-            _this.adapter_.deregisterInteractionHandler(evtType, _this.activateHandler_);
-        });
-        this.adapter_.deregisterInteractionHandler('focus', this.focusHandler_);
-        this.adapter_.deregisterInteractionHandler('blur', this.blurHandler_);
-        if (this.adapter_.isUnbounded()) {
-            this.adapter_.deregisterResizeHandler(this.resizeHandler_);
-        }
-    };
-    MDCRippleFoundation.prototype.deregisterDeactivationHandlers_ = function () {
-        var _this = this;
-        this.adapter_.deregisterInteractionHandler('keyup', this.deactivateHandler_);
-        POINTER_DEACTIVATION_EVENT_TYPES.forEach(function (evtType) {
-            _this.adapter_.deregisterDocumentInteractionHandler(evtType, _this.deactivateHandler_);
-        });
-    };
-    MDCRippleFoundation.prototype.removeCssVars_ = function () {
-        var _this = this;
-        var rippleStrings = MDCRippleFoundation.strings;
-        var keys = Object.keys(rippleStrings);
-        keys.forEach(function (key) {
-            if (key.indexOf('VAR_') === 0) {
-                _this.adapter_.updateCssVariable(rippleStrings[key], null);
-            }
-        });
-    };
-    MDCRippleFoundation.prototype.activate_ = function (evt) {
-        var _this = this;
-        if (this.adapter_.isSurfaceDisabled()) {
-            return;
-        }
-        var activationState = this.activationState_;
-        if (activationState.isActivated) {
-            return;
-        }
-        // Avoid reacting to follow-on events fired by touch device after an already-processed user interaction
-        var previousActivationEvent = this.previousActivationEvent_;
-        var isSameInteraction = previousActivationEvent && evt !== undefined && previousActivationEvent.type !== evt.type;
-        if (isSameInteraction) {
-            return;
-        }
-        activationState.isActivated = true;
-        activationState.isProgrammatic = evt === undefined;
-        activationState.activationEvent = evt;
-        activationState.wasActivatedByPointer = activationState.isProgrammatic ? false : evt !== undefined && (evt.type === 'mousedown' || evt.type === 'touchstart' || evt.type === 'pointerdown');
-        var hasActivatedChild = evt !== undefined && activatedTargets.length > 0 && activatedTargets.some(function (target) {
-            return _this.adapter_.containsEventTarget(target);
-        });
-        if (hasActivatedChild) {
-            // Immediately reset activation state, while preserving logic that prevents touch follow-on events
-            this.resetActivationState_();
-            return;
-        }
-        if (evt !== undefined) {
-            activatedTargets.push(evt.target);
-            this.registerDeactivationHandlers_(evt);
-        }
-        activationState.wasElementMadeActive = this.checkElementMadeActive_(evt);
-        if (activationState.wasElementMadeActive) {
-            this.animateActivation_();
-        }
-        requestAnimationFrame(function () {
-            // Reset array on next frame after the current event has had a chance to bubble to prevent ancestor ripples
-            activatedTargets = [];
-            if (!activationState.wasElementMadeActive && evt !== undefined && (evt.key === ' ' || evt.keyCode === 32)) {
-                // If space was pressed, try again within an rAF call to detect :active, because different UAs report
-                // active states inconsistently when they're called within event handling code:
-                // - https://bugs.chromium.org/p/chromium/issues/detail?id=635971
-                // - https://bugzilla.mozilla.org/show_bug.cgi?id=1293741
-                // We try first outside rAF to support Edge, which does not exhibit this problem, but will crash if a CSS
-                // variable is set within a rAF callback for a submit button interaction (#2241).
-                activationState.wasElementMadeActive = _this.checkElementMadeActive_(evt);
-                if (activationState.wasElementMadeActive) {
-                    _this.animateActivation_();
-                }
-            }
-            if (!activationState.wasElementMadeActive) {
-                // Reset activation state immediately if element was not made active.
-                _this.activationState_ = _this.defaultActivationState_();
-            }
-        });
-    };
-    MDCRippleFoundation.prototype.checkElementMadeActive_ = function (evt) {
-        return evt !== undefined && evt.type === 'keydown' ? this.adapter_.isSurfaceActive() : true;
-    };
-    MDCRippleFoundation.prototype.animateActivation_ = function () {
-        var _this = this;
-        var _a = MDCRippleFoundation.strings,
-            VAR_FG_TRANSLATE_START = _a.VAR_FG_TRANSLATE_START,
-            VAR_FG_TRANSLATE_END = _a.VAR_FG_TRANSLATE_END;
-        var _b = MDCRippleFoundation.cssClasses,
-            FG_DEACTIVATION = _b.FG_DEACTIVATION,
-            FG_ACTIVATION = _b.FG_ACTIVATION;
-        var DEACTIVATION_TIMEOUT_MS = MDCRippleFoundation.numbers.DEACTIVATION_TIMEOUT_MS;
-        this.layoutInternal_();
-        var translateStart = '';
-        var translateEnd = '';
-        if (!this.adapter_.isUnbounded()) {
-            var _c = this.getFgTranslationCoordinates_(),
-                startPoint = _c.startPoint,
-                endPoint = _c.endPoint;
-            translateStart = startPoint.x + "px, " + startPoint.y + "px";
-            translateEnd = endPoint.x + "px, " + endPoint.y + "px";
-        }
-        this.adapter_.updateCssVariable(VAR_FG_TRANSLATE_START, translateStart);
-        this.adapter_.updateCssVariable(VAR_FG_TRANSLATE_END, translateEnd);
-        // Cancel any ongoing activation/deactivation animations
-        clearTimeout(this.activationTimer_);
-        clearTimeout(this.fgDeactivationRemovalTimer_);
-        this.rmBoundedActivationClasses_();
-        this.adapter_.removeClass(FG_DEACTIVATION);
-        // Force layout in order to re-trigger the animation.
-        this.adapter_.computeBoundingRect();
-        this.adapter_.addClass(FG_ACTIVATION);
-        this.activationTimer_ = setTimeout(function () {
-            return _this.activationTimerCallback_();
-        }, DEACTIVATION_TIMEOUT_MS);
-    };
-    MDCRippleFoundation.prototype.getFgTranslationCoordinates_ = function () {
-        var _a = this.activationState_,
-            activationEvent = _a.activationEvent,
-            wasActivatedByPointer = _a.wasActivatedByPointer;
-        var startPoint;
-        if (wasActivatedByPointer) {
-            startPoint = (0, _util.getNormalizedEventCoords)(activationEvent, this.adapter_.getWindowPageOffset(), this.adapter_.computeBoundingRect());
-        } else {
-            startPoint = {
-                x: this.frame_.width / 2,
-                y: this.frame_.height / 2
-            };
-        }
-        // Center the element around the start point.
-        startPoint = {
-            x: startPoint.x - this.initialSize_ / 2,
-            y: startPoint.y - this.initialSize_ / 2
-        };
-        var endPoint = {
-            x: this.frame_.width / 2 - this.initialSize_ / 2,
-            y: this.frame_.height / 2 - this.initialSize_ / 2
-        };
-        return { startPoint: startPoint, endPoint: endPoint };
-    };
-    MDCRippleFoundation.prototype.runDeactivationUXLogicIfReady_ = function () {
-        var _this = this;
-        // This method is called both when a pointing device is released, and when the activation animation ends.
-        // The deactivation animation should only run after both of those occur.
-        var FG_DEACTIVATION = MDCRippleFoundation.cssClasses.FG_DEACTIVATION;
-        var _a = this.activationState_,
-            hasDeactivationUXRun = _a.hasDeactivationUXRun,
-            isActivated = _a.isActivated;
-        var activationHasEnded = hasDeactivationUXRun || !isActivated;
-        if (activationHasEnded && this.activationAnimationHasEnded_) {
-            this.rmBoundedActivationClasses_();
-            this.adapter_.addClass(FG_DEACTIVATION);
-            this.fgDeactivationRemovalTimer_ = setTimeout(function () {
-                _this.adapter_.removeClass(FG_DEACTIVATION);
-            }, _constants.numbers.FG_DEACTIVATION_MS);
-        }
-    };
-    MDCRippleFoundation.prototype.rmBoundedActivationClasses_ = function () {
-        var FG_ACTIVATION = MDCRippleFoundation.cssClasses.FG_ACTIVATION;
-        this.adapter_.removeClass(FG_ACTIVATION);
-        this.activationAnimationHasEnded_ = false;
-        this.adapter_.computeBoundingRect();
-    };
-    MDCRippleFoundation.prototype.resetActivationState_ = function () {
-        var _this = this;
-        this.previousActivationEvent_ = this.activationState_.activationEvent;
-        this.activationState_ = this.defaultActivationState_();
-        // Touch devices may fire additional events for the same interaction within a short time.
-        // Store the previous event until it's safe to assume that subsequent events are for new interactions.
-        setTimeout(function () {
-            return _this.previousActivationEvent_ = undefined;
-        }, MDCRippleFoundation.numbers.TAP_DELAY_MS);
-    };
-    MDCRippleFoundation.prototype.deactivate_ = function () {
-        var _this = this;
-        var activationState = this.activationState_;
-        // This can happen in scenarios such as when you have a keyup event that blurs the element.
-        if (!activationState.isActivated) {
-            return;
-        }
-        var state = tslib_1.__assign({}, activationState);
-        if (activationState.isProgrammatic) {
-            requestAnimationFrame(function () {
-                return _this.animateDeactivation_(state);
-            });
-            this.resetActivationState_();
-        } else {
-            this.deregisterDeactivationHandlers_();
-            requestAnimationFrame(function () {
-                _this.activationState_.hasDeactivationUXRun = true;
-                _this.animateDeactivation_(state);
-                _this.resetActivationState_();
-            });
-        }
-    };
-    MDCRippleFoundation.prototype.animateDeactivation_ = function (_a) {
-        var wasActivatedByPointer = _a.wasActivatedByPointer,
-            wasElementMadeActive = _a.wasElementMadeActive;
-        if (wasActivatedByPointer || wasElementMadeActive) {
-            this.runDeactivationUXLogicIfReady_();
-        }
-    };
-    MDCRippleFoundation.prototype.layoutInternal_ = function () {
-        var _this = this;
-        this.frame_ = this.adapter_.computeBoundingRect();
-        var maxDim = Math.max(this.frame_.height, this.frame_.width);
-        // Surface diameter is treated differently for unbounded vs. bounded ripples.
-        // Unbounded ripple diameter is calculated smaller since the surface is expected to already be padded appropriately
-        // to extend the hitbox, and the ripple is expected to meet the edges of the padded hitbox (which is typically
-        // square). Bounded ripples, on the other hand, are fully expected to expand beyond the surface's longest diameter
-        // (calculated based on the diagonal plus a constant padding), and are clipped at the surface's border via
-        // `overflow: hidden`.
-        var getBoundedRadius = function getBoundedRadius() {
-            var hypotenuse = Math.sqrt(Math.pow(_this.frame_.width, 2) + Math.pow(_this.frame_.height, 2));
-            return hypotenuse + MDCRippleFoundation.numbers.PADDING;
-        };
-        this.maxRadius_ = this.adapter_.isUnbounded() ? maxDim : getBoundedRadius();
-        // Ripple is sized as a fraction of the largest dimension of the surface, then scales up using a CSS scale transform
-        this.initialSize_ = Math.floor(maxDim * MDCRippleFoundation.numbers.INITIAL_ORIGIN_SCALE);
-        this.fgScale_ = "" + this.maxRadius_ / this.initialSize_;
-        this.updateLayoutCssVars_();
-    };
-    MDCRippleFoundation.prototype.updateLayoutCssVars_ = function () {
-        var _a = MDCRippleFoundation.strings,
-            VAR_FG_SIZE = _a.VAR_FG_SIZE,
-            VAR_LEFT = _a.VAR_LEFT,
-            VAR_TOP = _a.VAR_TOP,
-            VAR_FG_SCALE = _a.VAR_FG_SCALE;
-        this.adapter_.updateCssVariable(VAR_FG_SIZE, this.initialSize_ + "px");
-        this.adapter_.updateCssVariable(VAR_FG_SCALE, this.fgScale_);
-        if (this.adapter_.isUnbounded()) {
-            this.unboundedCoords_ = {
-                left: Math.round(this.frame_.width / 2 - this.initialSize_ / 2),
-                top: Math.round(this.frame_.height / 2 - this.initialSize_ / 2)
-            };
-            this.adapter_.updateCssVariable(VAR_LEFT, this.unboundedCoords_.left + "px");
-            this.adapter_.updateCssVariable(VAR_TOP, this.unboundedCoords_.top + "px");
-        }
-    };
-    return MDCRippleFoundation;
-}(_foundation.MDCFoundation);
-exports.MDCRippleFoundation = MDCRippleFoundation;
-// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
-
-exports.default = MDCRippleFoundation;
-//# sourceMappingURL=foundation.js.map
-
-/***/ }),
-/* 353 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = exports.cssClasses = {
-    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
-    // given that it's an 'upgrade' to an existing component. That being said it is the root
-    // CSS class that all other CSS classes derive from.
-    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
-    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
-    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
-    ROOT: 'mdc-ripple-upgraded',
-    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
-};
-var strings = exports.strings = {
-    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
-    VAR_FG_SIZE: '--mdc-ripple-fg-size',
-    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
-    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
-    VAR_LEFT: '--mdc-ripple-left',
-    VAR_TOP: '--mdc-ripple-top'
-};
-var numbers = exports.numbers = {
-    DEACTIVATION_TIMEOUT_MS: 225,
-    FG_DEACTIVATION_MS: 150,
-    INITIAL_ORIGIN_SCALE: 0.6,
-    PADDING: 10,
-    TAP_DELAY_MS: 300
-};
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 354 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-!function (e, n) {
-  "object" == ( false ? "undefined" : _typeof(exports)) && "object" == ( false ? "undefined" : _typeof(module)) ? module.exports = n() :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (n),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? exports.phone = n() : e.phone = n();
-}(undefined, function () {
-  return function (e) {
-    function n(_) {
-      if (a[_]) return a[_].exports;var o = a[_] = { i: _, l: !1, exports: {} };return e[_].call(o.exports, o, o.exports, n), o.l = !0, o.exports;
-    }var a = {};return n.m = e, n.c = a, n.d = function (e, a, _) {
-      n.o(e, a) || Object.defineProperty(e, a, { enumerable: !0, get: _ });
-    }, n.r = function (e) {
-      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 });
-    }, n.t = function (e, a) {
-      if (1 & a && (e = n(e)), 8 & a) return e;if (4 & a && "object" == (typeof e === "undefined" ? "undefined" : _typeof(e)) && e && e.__esModule) return e;var _ = Object.create(null);if (n.r(_), Object.defineProperty(_, "default", { enumerable: !0, value: e }), 2 & a && "string" != typeof e) for (var o in e) {
-        n.d(_, o, function (n) {
-          return e[n];
-        }.bind(null, o));
-      }return _;
-    }, n.n = function (e) {
-      var a = e && e.__esModule ? function () {
-        return e.default;
-      } : function () {
-        return e;
-      };return n.d(a, "a", a), a;
-    }, n.o = function (e, n) {
-      return Object.prototype.hasOwnProperty.call(e, n);
-    }, n.p = "", n(n.s = 1);
-  }([function (e) {
-    "use strict";
-    e.exports = [{ alpha2: "US", alpha3: "USA", country_code: "1", country_name: "United States", mobile_begin_with: ["201", "202", "203", "205", "206", "207", "208", "209", "210", "212", "213", "214", "215", "216", "217", "218", "219", "224", "225", "227", "228", "229", "231", "234", "239", "240", "248", "251", "252", "253", "254", "256", "260", "262", "267", "269", "270", "272", "274", "276", "278", "281", "283", "301", "302", "303", "304", "305", "307", "308", "309", "310", "312", "313", "314", "315", "316", "317", "318", "319", "320", "321", "323", "325", "327", "330", "331", "334", "336", "337", "339", "341", "346", "347", "351", "352", "360", "361", "364", "369", "380", "385", "386", "401", "402", "404", "405", "406", "407", "408", "409", "410", "412", "413", "414", "415", "417", "419", "423", "424", "425", "430", "432", "434", "435", "440", "442", "443", "445", "447", "458", "464", "469", "470", "475", "478", "479", "480", "484", "501", "502", "503", "504", "505", "507", "508", "509", "510", "512", "513", "515", "516", "517", "518", "520", "530", "531", "534", "539", "540", "541", "551", "557", "559", "561", "562", "563", "564", "567", "570", "571", "573", "574", "575", "580", "582", "585", "586", "601", "602", "603", "605", "606", "607", "608", "609", "610", "612", "614", "615", "616", "617", "618", "619", "620", "623", "626", "627", "628", "629", "630", "631", "636", "641", "646", "650", "651", "657", "659", "660", "661", "662", "667", "669", "678", "679", "681", "682", "689", "701", "702", "703", "704", "706", "707", "708", "712", "713", "714", "715", "716", "717", "718", "719", "720", "724", "725", "727", "730", "731", "732", "734", "737", "740", "747", "752", "754", "757", "760", "762", "763", "764", "765", "769", "770", "772", "773", "774", "775", "779", "781", "785", "786", "801", "802", "803", "804", "805", "806", "808", "810", "812", "813", "814", "815", "816", "817", "818", "828", "830", "831", "832", "835", "843", "845", "847", "848", "850", "854", "856", "857", "858", "859", "860", "862", "863", "864", "865", "870", "872", "878", "901", "903", "904", "906", "907", "908", "909", "910", "912", "913", "914", "915", "916", "917", "918", "919", "920", "925", "927", "928", "929", "931", "934", "935", "936", "937", "938", "940", "941", "947", "949", "951", "952", "954", "956", "957", "959", "970", "971", "972", "973", "975", "978", "979", "980", "984", "985", "986", "989", "888", "800"], phone_number_lengths: [10] }, { alpha2: "AW", alpha3: "ABW", country_code: "297", country_name: "Aruba", mobile_begin_with: ["5", "6", "7", "9"], phone_number_lengths: [7] }, { alpha2: "AF", alpha3: "AFG", country_code: "93", country_name: "Afghanistan", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "AO", alpha3: "AGO", country_code: "244", country_name: "Angola", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "AI", alpha3: "AIA", country_code: "1", country_name: "Anguilla", mobile_begin_with: ["2645", "2647"], phone_number_lengths: [10] }, { alpha2: "AX", alpha3: "ALA", country_code: "358", country_name: "Åland Islands", mobile_begin_with: ["18"], phone_number_lengths: [6, 7, 8] }, { alpha2: "AL", alpha3: "ALB", country_code: "355", country_name: "Albania", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "AD", alpha3: "AND", country_code: "376", country_name: "Andorra", mobile_begin_with: ["3", "4", "6"], phone_number_lengths: [6] }, { alpha2: "AE", alpha3: "ARE", country_code: "971", country_name: "United Arab Emirates", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "AR", alpha3: "ARG", country_code: "54", country_name: "Argentina", mobile_begin_with: ["1", "2", "3"], phone_number_lengths: [10] }, { alpha2: "AM", alpha3: "ARM", country_code: "374", country_name: "Armenia", mobile_begin_with: ["4", "5", "7", "9"], phone_number_lengths: [8] }, { alpha2: "AS", alpha3: "ASM", country_code: "1", country_name: "American Samoa", mobile_begin_with: ["684733", "684258"], phone_number_lengths: [10] }, { alpha2: "AG", alpha3: "ATG", country_code: "1", country_name: "Antigua and Barbuda", mobile_begin_with: ["2687"], phone_number_lengths: [10] }, { alpha2: "AU", alpha3: "AUS", country_code: "61", country_name: "Australia", mobile_begin_with: ["4"], phone_number_lengths: [9] }, { alpha2: "AT", alpha3: "AUT", country_code: "43", country_name: "Austria", mobile_begin_with: ["6"], phone_number_lengths: [10, 11, 12, 13, 14] }, { alpha2: "AZ", alpha3: "AZE", country_code: "994", country_name: "Azerbaijan", mobile_begin_with: ["4", "5", "6", "7"], phone_number_lengths: [9] }, { alpha2: "BI", alpha3: "BDI", country_code: "257", country_name: "Burundi", mobile_begin_with: ["7", "29"], phone_number_lengths: [8] }, { alpha2: "BE", alpha3: "BEL", country_code: "32", country_name: "Belgium", mobile_begin_with: ["4", "3"], phone_number_lengths: [9, 8] }, { alpha2: "BJ", alpha3: "BEN", country_code: "229", country_name: "Benin", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "BF", alpha3: "BFA", country_code: "226", country_name: "Burkina Faso", mobile_begin_with: ["6", "7"], phone_number_lengths: [8] }, { alpha2: "BD", alpha3: "BGD", country_code: "880", country_name: "Bangladesh", mobile_begin_with: ["1"], phone_number_lengths: [8, 9, 10] }, { alpha2: "BG", alpha3: "BGR", country_code: "359", country_name: "Bulgaria", mobile_begin_with: ["87", "88", "89", "98", "99", "43"], phone_number_lengths: [8, 9] }, { alpha2: "BH", alpha3: "BHR", country_code: "973", country_name: "Bahrain", mobile_begin_with: ["3"], phone_number_lengths: [8] }, { alpha2: "BS", alpha3: "BHS", country_code: "1", country_name: "Bahamas", mobile_begin_with: ["242"], phone_number_lengths: [10] }, { alpha2: "BA", alpha3: "BIH", country_code: "387", country_name: "Bosnia and Herzegovina", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "BY", alpha3: "BLR", country_code: "375", country_name: "Belarus", mobile_begin_with: ["25", "29", "33", "44"], phone_number_lengths: [9] }, { alpha2: "BZ", alpha3: "BLZ", country_code: "501", country_name: "Belize", mobile_begin_with: ["6"], phone_number_lengths: [7] }, { alpha2: "BM", alpha3: "BMU", country_code: "1", country_name: "Bermuda", mobile_begin_with: ["4413", "4415", "4417"], phone_number_lengths: [10] }, { alpha2: "BO", alpha3: "BOL", country_code: "591", country_name: "Bolivia", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "BR", alpha3: "BRA", country_code: "55", country_name: "Brazil", mobile_begin_with: ["119", "129", "139", "149", "159", "169", "179", "189", "199", "219", "229", "249", "279", "289", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "24", "27", "28", "31", "32", "33", "34", "35", "37", "38", "41", "42", "43", "44", "45", "46", "47", "48", "49", "51", "53", "54", "55", "61", "62", "63", "64", "65", "66", "67", "68", "69", "71", "73", "74", "75", "77", "79", "81", "82", "83", "84", "85", "86", "87", "88", "89", "91", "92", "93", "94", "95", "96", "97", "98", "99"], phone_number_lengths: [10, 11] }, { alpha2: "BB", alpha3: "BRB", country_code: "1", country_name: "Barbados", mobile_begin_with: [246], phone_number_lengths: [10] }, { alpha2: "BN", alpha3: "BRN", country_code: "673", country_name: "Brunei Darussalam", mobile_begin_with: ["7", "8"], phone_number_lengths: [7] }, { alpha2: "BT", alpha3: "BTN", country_code: "975", country_name: "Bhutan", mobile_begin_with: ["17"], phone_number_lengths: [8] }, { alpha2: "BW", alpha3: "BWA", country_code: "267", country_name: "Botswana", mobile_begin_with: ["71", "72", "73", "74", "75", "76"], phone_number_lengths: [8] }, { alpha2: "CF", alpha3: "CAF", country_code: "236", country_name: "Central African Republic", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "CA", alpha3: "CAN", country_code: "1", country_name: "Canada", mobile_begin_with: ["204", "226", "236", "249", "250", "289", "306", "343", "365", "367", "403", "416", "418", "431", "437", "438", "450", "506", "514", "519", "548", "579", "581", "587", "600", "604", "613", "639", "647", "705", "709", "778", "780", "807", "819", "867", "873", "902", "905"], phone_number_lengths: [10] }, { alpha2: "CH", alpha3: "CHE", country_code: "41", country_name: "Switzerland", mobile_begin_with: ["74", "75", "76", "77", "78", "79"], phone_number_lengths: [9] }, { alpha2: "CL", alpha3: "CHL", country_code: "56", country_name: "Chile", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "CN", alpha3: "CHN", country_code: "86", country_name: "China", mobile_begin_with: ["13", "14", "15", "17", "18", "19", "16"], phone_number_lengths: [11] }, { alpha2: "CI", alpha3: "CIV", country_code: "225", country_name: "Côte D'Ivoire", mobile_begin_with: ["0", "4", "5", "6", "7", "8"], phone_number_lengths: [8] }, { alpha2: "CM", alpha3: "CMR", country_code: "237", country_name: "Cameroon", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "CD", alpha3: "COD", country_code: "243", country_name: "Congo, The Democratic Republic Of The", mobile_begin_with: ["8", "9"], phone_number_lengths: [9] }, { alpha2: "CG", alpha3: "COG", country_code: "242", country_name: "Congo", mobile_begin_with: ["0"], phone_number_lengths: [9] }, { alpha2: "CK", alpha3: "COK", country_code: "682", country_name: "Cook Islands", mobile_begin_with: ["5", "7"], phone_number_lengths: [5] }, { alpha2: "CO", alpha3: "COL", country_code: "57", country_name: "Colombia", mobile_begin_with: ["3"], phone_number_lengths: [10] }, { alpha2: "KM", alpha3: "COM", country_code: "269", country_name: "Comoros", mobile_begin_with: ["3", "76"], phone_number_lengths: [7] }, { alpha2: "CV", alpha3: "CPV", country_code: "238", country_name: "Cape Verde", mobile_begin_with: ["5", "9"], phone_number_lengths: [7] }, { alpha2: "CR", alpha3: "CRI", country_code: "506", country_name: "Costa Rica", mobile_begin_with: ["5", "6", "7", "8"], phone_number_lengths: [8] }, { alpha2: "CU", alpha3: "CUB", country_code: "53", country_name: "Cuba", mobile_begin_with: ["5"], phone_number_lengths: [8] }, { alpha2: "KY", alpha3: "CYM", country_code: "1", country_name: "Cayman Islands", mobile_begin_with: ["345"], phone_number_lengths: [10] }, { alpha2: "CY", alpha3: "CYP", country_code: "357", country_name: "Cyprus", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "CZ", alpha3: "CZE", country_code: "420", country_name: "Czech Republic", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "DE", alpha3: "DEU", country_code: "49", country_name: "Germany", mobile_begin_with: ["15", "16", "17"], phone_number_lengths: [10, 11] }, { alpha2: "DJ", alpha3: "DJI", country_code: "253", country_name: "Djibouti", mobile_begin_with: ["77"], phone_number_lengths: [8] }, { alpha2: "DM", alpha3: "DMA", country_code: "1", country_name: "Dominica", mobile_begin_with: ["767"], phone_number_lengths: [10] }, { alpha2: "DK", alpha3: "DNK", country_code: "45", country_name: "Denmark", mobile_begin_with: ["2", "30", "31", "40", "41", "42", "50", "51", "52", "53", "60", "61", "71", "81", "91", "92", "93"], phone_number_lengths: [8] }, { alpha2: "DO", alpha3: "DOM", country_code: "1", country_name: "Dominican Republic", mobile_begin_with: ["809", "829", "849"], phone_number_lengths: [10] }, { alpha2: "DZ", alpha3: "DZA", country_code: "213", country_name: "Algeria", mobile_begin_with: ["5", "6", "7"], phone_number_lengths: [9] }, { alpha2: "EC", alpha3: "ECU", country_code: "593", country_name: "Ecuador", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "EG", alpha3: "EGY", country_code: "20", country_name: "Egypt", mobile_begin_with: ["1"], phone_number_lengths: [10, 8] }, { alpha2: "ER", alpha3: "ERI", country_code: "291", country_name: "Eritrea", mobile_begin_with: ["1", "7", "8"], phone_number_lengths: [7] }, { alpha2: "ES", alpha3: "ESP", country_code: "34", country_name: "Spain", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "EE", alpha3: "EST", country_code: "372", country_name: "Estonia", mobile_begin_with: ["5", "81", "82", "83"], phone_number_lengths: [7, 8] }, { alpha2: "ET", alpha3: "ETH", country_code: "251", country_name: "Ethiopia", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "FI", alpha3: "FIN", country_code: "358", country_name: "Finland", mobile_begin_with: ["4", "5"], phone_number_lengths: [9, 10] }, { alpha2: "FJ", alpha3: "FJI", country_code: "679", country_name: "Fiji", mobile_begin_with: ["7", "9"], phone_number_lengths: [7] }, { alpha2: "FK", alpha3: "FLK", country_code: "500", country_name: "Falkland Islands (Malvinas)", mobile_begin_with: ["5", "6"], phone_number_lengths: [5] }, { alpha2: "FR", alpha3: "FRA", country_code: "33", country_name: "France", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "FO", alpha3: "FRO", country_code: "298", country_name: "Faroe Islands", mobile_begin_with: [], phone_number_lengths: [6] }, { alpha2: "FM", alpha3: "FSM", country_code: "691", country_name: "Micronesia, Federated States Of", mobile_begin_with: [], phone_number_lengths: [7] }, { alpha2: "GA", alpha3: "GAB", country_code: "241", country_name: "Gabon", mobile_begin_with: ["05", "06", "07"], phone_number_lengths: [8] }, { alpha2: "GB", alpha3: "GBR", country_code: "44", country_name: "United Kingdom", mobile_begin_with: ["7"], phone_number_lengths: [10] }, { alpha2: "GE", alpha3: "GEO", country_code: "995", country_name: "Georgia", mobile_begin_with: ["5", "7"], phone_number_lengths: [9] }, { alpha2: "GH", alpha3: "GHA", country_code: "233", country_name: "Ghana", mobile_begin_with: ["2", "5"], phone_number_lengths: [9] }, { alpha2: "GI", alpha3: "GIB", country_code: "350", country_name: "Gibraltar", mobile_begin_with: ["5"], phone_number_lengths: [8] }, { alpha2: "GN", alpha3: "GIN", country_code: "224", country_name: "Guinea", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "GP", alpha3: "GLP", country_code: "590", country_name: "Guadeloupe", mobile_begin_with: ["690"], phone_number_lengths: [9] }, { alpha2: "GM", alpha3: "GMB", country_code: "220", country_name: "Gambia", mobile_begin_with: ["7", "9"], phone_number_lengths: [7] }, { alpha2: "GW", alpha3: "GNB", country_code: "245", country_name: "Guinea-Bissau", mobile_begin_with: ["5", "6", "7"], phone_number_lengths: [7] }, { alpha2: "GQ", alpha3: "GNQ", country_code: "240", country_name: "Equatorial Guinea", mobile_begin_with: ["222", "551"], phone_number_lengths: [9] }, { alpha2: "GR", alpha3: "GRC", country_code: "30", country_name: "Greece", mobile_begin_with: ["6"], phone_number_lengths: [10] }, { alpha2: "GD", alpha3: "GRD", country_code: "1", country_name: "Grenada", mobile_begin_with: ["473"], phone_number_lengths: [10] }, { alpha2: "GL", alpha3: "GRL", country_code: "299", country_name: "Greenland", mobile_begin_with: ["2", "4", "5"], phone_number_lengths: [6] }, { alpha2: "GT", alpha3: "GTM", country_code: "502", country_name: "Guatemala", mobile_begin_with: ["3", "4", "5"], phone_number_lengths: [8] }, { alpha2: "GF", alpha3: "GUF", country_code: "594", country_name: "French Guiana", mobile_begin_with: ["694"], phone_number_lengths: [9] }, { alpha2: "GU", alpha3: "GUM", country_code: "1", country_name: "Guam", mobile_begin_with: ["671"], phone_number_lengths: [10] }, { alpha2: "GY", alpha3: "GUY", country_code: "592", country_name: "Guyana", mobile_begin_with: ["6"], phone_number_lengths: [7] }, { alpha2: "HK", alpha3: "HKG", country_code: "852", country_name: "Hong Kong", mobile_begin_with: ["4", "5", "6", "70", "71", "72", "73", "81", "82", "83", "84", "85", "86", "87", "88", "89", "9"], phone_number_lengths: [8] }, { alpha2: "HN", alpha3: "HND", country_code: "504", country_name: "Honduras", mobile_begin_with: ["3", "7", "8", "9"], phone_number_lengths: [8] }, { alpha2: "HR", alpha3: "HRV", country_code: "385", country_name: "Croatia", mobile_begin_with: ["9"], phone_number_lengths: [8, 9] }, { alpha2: "HT", alpha3: "HTI", country_code: "509", country_name: "Haiti", mobile_begin_with: ["3", "4"], phone_number_lengths: [8] }, { alpha2: "HU", alpha3: "HUN", country_code: "36", country_name: "Hungary", mobile_begin_with: ["20", "30", "31", "70"], phone_number_lengths: [9] }, { alpha2: "ID", alpha3: "IDN", country_code: "62", country_name: "Indonesia", mobile_begin_with: ["8"], phone_number_lengths: [9, 10, 11, 12] }, { alpha2: "IN", alpha3: "IND", country_code: "91", country_name: "India", mobile_begin_with: ["6", "7", "8", "9"], phone_number_lengths: [10] }, { alpha2: "IE", alpha3: "IRL", country_code: "353", country_name: "Ireland", mobile_begin_with: ["82", "83", "84", "85", "86", "87", "88", "89"], phone_number_lengths: [9] }, { alpha2: "IR", alpha3: "IRN", country_code: "98", country_name: "Iran, Islamic Republic Of", mobile_begin_with: ["9"], phone_number_lengths: [10] }, { alpha2: "IQ", alpha3: "IRQ", country_code: "964", country_name: "Iraq", mobile_begin_with: ["7"], phone_number_lengths: [10] }, { alpha2: "IS", alpha3: "ISL", country_code: "354", country_name: "Iceland", mobile_begin_with: ["6", "7", "8"], phone_number_lengths: [7] }, { alpha2: "IL", alpha3: "ISR", country_code: "972", country_name: "Israel", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "IT", alpha3: "ITA", country_code: "39", country_name: "Italy", mobile_begin_with: ["3"], phone_number_lengths: [9, 10] }, { alpha2: "JM", alpha3: "JAM", country_code: "1", country_name: "Jamaica", mobile_begin_with: ["876"], phone_number_lengths: [10] }, { alpha2: "JO", alpha3: "JOR", country_code: "962", country_name: "Jordan", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "JP", alpha3: "JPN", country_code: "81", country_name: "Japan", mobile_begin_with: ["70", "80", "90"], phone_number_lengths: [10] }, { alpha2: "KZ", alpha3: "KAZ", country_code: "7", country_name: "Kazakhstan", mobile_begin_with: ["70", "74", "77"], phone_number_lengths: [10] }, { alpha2: "KE", alpha3: "KEN", country_code: "254", country_name: "Kenya", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "KG", alpha3: "KGZ", country_code: "996", country_name: "Kyrgyzstan", mobile_begin_with: ["5", "7"], phone_number_lengths: [9] }, { alpha2: "KH", alpha3: "KHM", country_code: "855", country_name: "Cambodia", mobile_begin_with: ["1", "6", "7", "8", "9"], phone_number_lengths: [8, 9] }, { alpha2: "KI", alpha3: "KIR", country_code: "686", country_name: "Kiribati", mobile_begin_with: ["9", "30"], phone_number_lengths: [5] }, { alpha2: "KN", alpha3: "KNA", country_code: "1", country_name: "Saint Kitts And Nevis", mobile_begin_with: ["869"], phone_number_lengths: [10] }, { alpha2: "KR", alpha3: "KOR", country_code: "82", country_name: "Korea, Republic of", mobile_begin_with: ["1"], phone_number_lengths: [9, 10] }, { alpha2: "KW", alpha3: "KWT", country_code: "965", country_name: "Kuwait", mobile_begin_with: ["5", "6", "9"], phone_number_lengths: [8] }, { alpha2: "LA", alpha3: "LAO", country_code: "856", country_name: "Lao People's Democratic Republic", mobile_begin_with: ["20"], phone_number_lengths: [10] }, { alpha2: "LB", alpha3: "LBN", country_code: "961", country_name: "Lebanon", mobile_begin_with: ["3", "7"], phone_number_lengths: [7, 8] }, { alpha2: "LR", alpha3: "LBR", country_code: "231", country_name: "Liberia", mobile_begin_with: ["4", "5", "6", "7"], phone_number_lengths: [7, 8] }, { alpha2: "LY", alpha3: "LBY", country_code: "218", country_name: "Libyan Arab Jamahiriya", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "LC", alpha3: "LCA", country_code: "1", country_name: "Saint Lucia", mobile_begin_with: ["758"], phone_number_lengths: [10] }, { alpha2: "LI", alpha3: "LIE", country_code: "423", country_name: "Liechtenstein", mobile_begin_with: ["7"], phone_number_lengths: [7] }, { alpha2: "LK", alpha3: "LKA", country_code: "94", country_name: "Sri Lanka", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "LS", alpha3: "LSO", country_code: "266", country_name: "Lesotho", mobile_begin_with: ["5", "6"], phone_number_lengths: [8] }, { alpha2: "LT", alpha3: "LTU", country_code: "370", country_name: "Lithuania", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "LU", alpha3: "LUX", country_code: "352", country_name: "Luxembourg", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "LV", alpha3: "LVA", country_code: "371", country_name: "Latvia", mobile_begin_with: ["2"], phone_number_lengths: [8] }, { alpha2: "MO", alpha3: "MAC", country_code: "853", country_name: "Macao", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "MA", alpha3: "MAR", country_code: "212", country_name: "Morocco", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "MC", alpha3: "MCO", country_code: "377", country_name: "Monaco", mobile_begin_with: ["4", "6"], phone_number_lengths: [8, 9] }, { alpha2: "MD", alpha3: "MDA", country_code: "373", country_name: "Moldova, Republic of", mobile_begin_with: ["6", "7"], phone_number_lengths: [8] }, { alpha2: "MG", alpha3: "MDG", country_code: "261", country_name: "Madagascar", mobile_begin_with: ["3"], phone_number_lengths: [9] }, { alpha2: "MV", alpha3: "MDV", country_code: "960", country_name: "Maldives", mobile_begin_with: ["7", "9"], phone_number_lengths: [7] }, { alpha2: "MX", alpha3: "MEX", country_code: "52", country_name: "Mexico", mobile_begin_with: [""], phone_number_lengths: [10, 11] }, { alpha2: "MH", alpha3: "MHL", country_code: "692", country_name: "Marshall Islands", mobile_begin_with: [], phone_number_lengths: [7] }, { alpha2: "MK", alpha3: "MKD", country_code: "389", country_name: "Macedonia, the Former Yugoslav Republic Of", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "ML", alpha3: "MLI", country_code: "223", country_name: "Mali", mobile_begin_with: ["6", "7"], phone_number_lengths: [8] }, { alpha2: "MT", alpha3: "MLT", country_code: "356", country_name: "Malta", mobile_begin_with: ["7", "9"], phone_number_lengths: [8] }, { alpha2: "MM", alpha3: "MMR", country_code: "95", country_name: "Myanmar", mobile_begin_with: ["9"], phone_number_lengths: [8, 9, 10] }, { alpha2: "ME", alpha3: "MNE", country_code: "382", country_name: "Montenegro", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "MN", alpha3: "MNG", country_code: "976", country_name: "Mongolia", mobile_begin_with: ["5", "8", "9"], phone_number_lengths: [8] }, { alpha2: "MP", alpha3: "MNP", country_code: "1", country_name: "Northern Mariana Islands", mobile_begin_with: ["670"], phone_number_lengths: [10] }, { alpha2: "MZ", alpha3: "MOZ", country_code: "258", country_name: "Mozambique", mobile_begin_with: ["8"], phone_number_lengths: [9] }, { alpha2: "MR", alpha3: "MRT", country_code: "222", country_name: "Mauritania", mobile_begin_with: [], phone_number_lengths: [8] }, { alpha2: "MS", alpha3: "MSR", country_code: "1", country_name: "Montserrat", mobile_begin_with: ["664"], phone_number_lengths: [10] }, { alpha2: "MQ", alpha3: "MTQ", country_code: "596", country_name: "Martinique", mobile_begin_with: ["696"], phone_number_lengths: [9] }, { alpha2: "MU", alpha3: "MUS", country_code: "230", country_name: "Mauritius", mobile_begin_with: [5], phone_number_lengths: [8] }, { alpha2: "MW", alpha3: "MWI", country_code: "265", country_name: "Malawi", mobile_begin_with: ["77", "88", "99"], phone_number_lengths: [9] }, { alpha2: "MY", alpha3: "MYS", country_code: "60", country_name: "Malaysia", mobile_begin_with: ["1", "6"], phone_number_lengths: [9, 10, 8] }, { alpha2: "YT", alpha3: "MYT", country_code: "262", country_name: "Mayotte", mobile_begin_with: ["639"], phone_number_lengths: [9] }, { alpha2: "NA", alpha3: "NAM", country_code: "264", country_name: "Namibia", mobile_begin_with: ["60", "81", "82", "85"], phone_number_lengths: [9] }, { alpha2: "NC", alpha3: "NCL", country_code: "687", country_name: "New Caledonia", mobile_begin_with: ["7", "8", "9"], phone_number_lengths: [6] }, { alpha2: "NE", alpha3: "NER", country_code: "227", country_name: "Niger", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "NF", alpha3: "NFK", country_code: "672", country_name: "Norfolk Island", mobile_begin_with: ["5", "8"], phone_number_lengths: [5] }, { alpha2: "NG", alpha3: "NGA", country_code: "234", country_name: "Nigeria", mobile_begin_with: ["70", "80", "81", "90"], phone_number_lengths: [10] }, { alpha2: "NI", alpha3: "NIC", country_code: "505", country_name: "Nicaragua", mobile_begin_with: ["8"], phone_number_lengths: [8] }, { alpha2: "NU", alpha3: "NIU", country_code: "683", country_name: "Niue", mobile_begin_with: [], phone_number_lengths: [4] }, { alpha2: "NL", alpha3: "NLD", country_code: "31", country_name: "Netherlands", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "NO", alpha3: "NOR", country_code: "47", country_name: "Norway", mobile_begin_with: ["4", "9"], phone_number_lengths: [8] }, { alpha2: "NP", alpha3: "NPL", country_code: "977", country_name: "Nepal", mobile_begin_with: ["97", "98"], phone_number_lengths: [10] }, { alpha2: "NR", alpha3: "NRU", country_code: "674", country_name: "Nauru", mobile_begin_with: ["555"], phone_number_lengths: [7] }, { alpha2: "NZ", alpha3: "NZL", country_code: "64", country_name: "New Zealand", mobile_begin_with: ["2", "3", "6", "9"], phone_number_lengths: [8, 9, 10] }, { alpha2: "OM", alpha3: "OMN", country_code: "968", country_name: "Oman", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "PK", alpha3: "PAK", country_code: "92", country_name: "Pakistan", mobile_begin_with: ["3"], phone_number_lengths: [10] }, { alpha2: "PA", alpha3: "PAN", country_code: "507", country_name: "Panama", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "PE", alpha3: "PER", country_code: "51", country_name: "Peru", mobile_begin_with: ["9", "6"], phone_number_lengths: [9, 8] }, { alpha2: "PH", alpha3: "PHL", country_code: "63", country_name: "Philippines", mobile_begin_with: ["9"], phone_number_lengths: [10] }, { alpha2: "PW", alpha3: "PLW", country_code: "680", country_name: "Palau", mobile_begin_with: [], phone_number_lengths: [7] }, { alpha2: "PG", alpha3: "PNG", country_code: "675", country_name: "Papua New Guinea", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "PL", alpha3: "POL", country_code: "48", country_name: "Poland", mobile_begin_with: ["4", "5", "6", "7", "8"], phone_number_lengths: [9] }, { alpha2: "PR", alpha3: "PRI", country_code: "1", country_name: "Puerto Rico", mobile_begin_with: ["787", "939"], phone_number_lengths: [10] }, { alpha2: "PT", alpha3: "PRT", country_code: "351", country_name: "Portugal", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "PY", alpha3: "PRY", country_code: "595", country_name: "Paraguay", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "PS", alpha3: "PSE", country_code: "970", country_name: "Palestinian Territory, Occupied", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "PF", alpha3: "PYF", country_code: "689", country_name: "French Polynesia", mobile_begin_with: ["8"], phone_number_lengths: [8] }, { alpha2: "QA", alpha3: "QAT", country_code: "974", country_name: "Qatar", mobile_begin_with: ["3", "5", "6", "7"], phone_number_lengths: [8] }, { alpha2: "RE", alpha3: "REU", country_code: "262", country_name: "Réunion", mobile_begin_with: ["692", "693"], phone_number_lengths: [9] }, { alpha2: "RO", alpha3: "ROU", country_code: "40", country_name: "Romania", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "RU", alpha3: "RUS", country_code: "7", country_name: "Russian Federation", mobile_begin_with: ["9", "495"], phone_number_lengths: [10] }, { alpha2: "RW", alpha3: "RWA", country_code: "250", country_name: "Rwanda", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "SA", alpha3: "SAU", country_code: "966", country_name: "Saudi Arabia", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "SD", alpha3: "SDN", country_code: "249", country_name: "Sudan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "SS", alpha3: "SSD", country_code: "211", country_name: "South Sudan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "SN", alpha3: "SEN", country_code: "221", country_name: "Senegal", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "SG", alpha3: "SGP", country_code: "65", country_name: "Singapore", mobile_begin_with: ["8", "9"], phone_number_lengths: [8] }, { alpha2: "SH", alpha3: "SHN", country_code: "290", country_name: "Saint Helena", mobile_begin_with: [], phone_number_lengths: [4] }, { alpha2: "SJ", alpha3: "SJM", country_code: "47", country_name: "Svalbard And Jan Mayen", mobile_begin_with: [], phone_number_lengths: [8] }, { alpha2: "SB", alpha3: "SLB", country_code: "677", country_name: "Solomon Islands", mobile_begin_with: ["7", "8"], phone_number_lengths: [7] }, { alpha2: "SL", alpha3: "SLE", country_code: "232", country_name: "Sierra Leone", mobile_begin_with: ["21", "25", "30", "33", "34", "40", "44", "50", "55", "76", "77", "78", "79", "88"], phone_number_lengths: [8] }, { alpha2: "SV", alpha3: "SLV", country_code: "503", country_name: "El Salvador", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "SM", alpha3: "SMR", country_code: "378", country_name: "San Marino", mobile_begin_with: ["3", "6"], phone_number_lengths: [10] }, { alpha2: "SO", alpha3: "SOM", country_code: "252", country_name: "Somalia", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "SX", alpha3: "SXM", country_code: "1", country_name: "Sint Maarten", mobile_begin_with: ["721"], phone_number_lengths: [10] }, { alpha2: "PM", alpha3: "SPM", country_code: "508", country_name: "Saint Pierre And Miquelon", mobile_begin_with: ["55"], phone_number_lengths: [6] }, { alpha2: "RS", alpha3: "SRB", country_code: "381", country_name: "Serbia", mobile_begin_with: ["6"], phone_number_lengths: [8, 9] }, { alpha2: "ST", alpha3: "STP", country_code: "239", country_name: "Sao Tome and Principe", mobile_begin_with: ["98", "99"], phone_number_lengths: [7] }, { alpha2: "SR", alpha3: "SUR", country_code: "597", country_name: "Suriname", mobile_begin_with: ["6", "7", "8"], phone_number_lengths: [7] }, { alpha2: "SK", alpha3: "SVK", country_code: "421", country_name: "Slovakia", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "SI", alpha3: "SVN", country_code: "386", country_name: "Slovenia", mobile_begin_with: ["3", "4", "5", "6", "7"], phone_number_lengths: [8] }, { alpha2: "SE", alpha3: "SWE", country_code: "46", country_name: "Sweden", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "SC", alpha3: "SYC", country_code: "248", country_name: "Seychelles", mobile_begin_with: ["2"], phone_number_lengths: [7] }, { alpha2: "SY", alpha3: "SYR", country_code: "963", country_name: "Syrian Arab Republic", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "TC", alpha3: "TCA", country_code: "1", country_name: "Turks and Caicos Islands", mobile_begin_with: ["6492", "6493", "6494"], phone_number_lengths: [10] }, { alpha2: "TD", alpha3: "TCD", country_code: "235", country_name: "Chad", mobile_begin_with: ["6", "7", "9"], phone_number_lengths: [8] }, { alpha2: "TG", alpha3: "TGO", country_code: "228", country_name: "Togo", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "TH", alpha3: "THA", country_code: "66", country_name: "Thailand", mobile_begin_with: ["6", "8", "9"], phone_number_lengths: [9] }, { alpha2: "TJ", alpha3: "TJK", country_code: "992", country_name: "Tajikistan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "TK", alpha3: "TKL", country_code: "690", country_name: "Tokelau", mobile_begin_with: [], phone_number_lengths: [4] }, { alpha2: "TM", alpha3: "TKM", country_code: "993", country_name: "Turkmenistan", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "TL", alpha3: "TLS", country_code: "670", country_name: "Timor-Leste", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "TO", alpha3: "TON", country_code: "676", country_name: "Tonga", mobile_begin_with: [], phone_number_lengths: [5] }, { alpha2: "TT", alpha3: "TTO", country_code: "1", country_name: "Trinidad and Tobago", mobile_begin_with: ["868"], phone_number_lengths: [10] }, { alpha2: "TN", alpha3: "TUN", country_code: "216", country_name: "Tunisia", mobile_begin_with: ["2", "4", "5", "9"], phone_number_lengths: [8] }, { alpha2: "TR", alpha3: "TUR", country_code: "90", country_name: "Turkey", mobile_begin_with: ["5"], phone_number_lengths: [10] }, { alpha2: "TV", alpha3: "TUV", country_code: "688", country_name: "Tuvalu", mobile_begin_with: [], phone_number_lengths: [5] }, { alpha2: "TW", alpha3: "TWN", country_code: "886", country_name: "Taiwan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "TZ", alpha3: "TZA", country_code: "255", country_name: "Tanzania, United Republic of", mobile_begin_with: ["7", "6"], phone_number_lengths: [9] }, { alpha2: "UG", alpha3: "UGA", country_code: "256", country_name: "Uganda", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "UA", alpha3: "UKR", country_code: "380", country_name: "Ukraine", mobile_begin_with: ["39", "50", "63", "66", "67", "68", "73", "9"], phone_number_lengths: [9] }, { alpha2: "UY", alpha3: "URY", country_code: "598", country_name: "Uruguay", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "UZ", alpha3: "UZB", country_code: "998", country_name: "Uzbekistan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "VC", alpha3: "VCT", country_code: "1", country_name: "Saint Vincent And The Grenedines", mobile_begin_with: ["784"], phone_number_lengths: [10] }, { alpha2: "VE", alpha3: "VEN", country_code: "58", country_name: "Venezuela, Bolivarian Republic of", mobile_begin_with: ["4"], phone_number_lengths: [10] }, { alpha2: "VG", alpha3: "VGB", country_code: "1", country_name: "Virgin Islands, British", mobile_begin_with: ["284"], phone_number_lengths: [10] }, { alpha2: "VI", alpha3: "VIR", country_code: "1", country_name: "Virgin Islands, U.S.", mobile_begin_with: ["340"], phone_number_lengths: [10] }, { alpha2: "VN", alpha3: "VNM", country_code: "84", country_name: "Viet Nam", mobile_begin_with: ["8", "9", "3", "7", "5"], phone_number_lengths: [8, 9] }, { alpha2: "VU", alpha3: "VUT", country_code: "678", country_name: "Vanuatu", mobile_begin_with: ["5", "7"], phone_number_lengths: [7] }, { alpha2: "WF", alpha3: "WLF", country_code: "681", country_name: "Wallis and Futuna", mobile_begin_with: [], phone_number_lengths: [6] }, { alpha2: "WS", alpha3: "WSM", country_code: "685", country_name: "Samoa", mobile_begin_with: ["7"], phone_number_lengths: [7] }, { alpha2: "YE", alpha3: "YEM", country_code: "967", country_name: "Yemen", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "ZA", alpha3: "ZAF", country_code: "27", country_name: "South Africa", mobile_begin_with: ["1", "2", "3", "4", "5", "6", "7", "8"], phone_number_lengths: [9] }, { alpha2: "ZM", alpha3: "ZMB", country_code: "260", country_name: "Zambia", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "ZW", alpha3: "ZWE", country_code: "263", country_name: "Zimbabwe", mobile_begin_with: ["71", "73", "77"], phone_number_lengths: [9] }];
-  }, function (e, n, a) {
-    "use strict";
-    var _ = function () {
-      return function (e, n) {
-        if (Array.isArray(e)) return e;if (Symbol.iterator in Object(e)) return function (e, n) {
-          var a = [],
-              _ = !0,
-              o = !1,
-              h = void 0;try {
-            for (var t, l = e[Symbol.iterator](); !(_ = (t = l.next()).done) && (a.push(t.value), !n || a.length !== n); _ = !0) {}
-          } catch (e) {
-            o = !0, h = e;
-          } finally {
-            try {
-              !_ && l.return && l.return();
-            } finally {
-              if (o) throw h;
-            }
-          }return a;
-        }(e, n);throw new TypeError("Invalid attempt to destructure non-iterable instance");
-      };
-    }(),
-        o = a(0),
-        h = a(2),
-        t = a(3),
-        l = a(4);e.exports = function (e, n, a) {
-      var o = [],
-          r = "string" == typeof e ? e.trim() : "",
-          i = "string" == typeof n ? n.trim() : "",
-          u = !1;r.match(/^\+/) && (u = !0), r = r.replace(/\D/g, "");var c = h(i);if (0 === Object.keys(c).length) return o;var p = !1;if (i) -1 === ["GAB", "CIV", "COG"].indexOf(c.alpha3) && (r = r.replace(/^0+/, "")), "RUS" === c.alpha3 && 11 === r.length && null !== r.match(/^89/) && (r = r.replace(/^8+/, "")), !u && c.phone_number_lengths.includes(r.length) && (r = c.country_code + r);else if (u) {
-        var m,
-            b = t(r, a),
-            g = _(b, 2);c = g[0], m = g[1], c || (m ? r = (c = m).country_code + r.replace(new RegExp("^" + c.country_code + "\\d"), "") : c = {});
-      } else c.phone_number_lengths.includes(r.length) && (r = "1" + r, p = !0);var y = l(r, c, a);return y ? ["+" + r, c.alpha3] : p && (c = h("CAN"), y = l(r, c, a)) ? ["+" + r, c.alpha3] : o;
-    }, e.exports.iso3166_data = o;
-  }, function (e, n, a) {
-    "use strict";
-    var _ = a(0);e.exports = function (e) {
-      return 0 === e.length ? _[0] : 2 === e.length ? _.find(function (n) {
-        return e.toUpperCase() === n.alpha2;
-      }) || {} : 3 === e.length ? _.find(function (n) {
-        return e.toUpperCase() === n.alpha3;
-      }) || {} : _.find(function (n) {
-        return e.toUpperCase() === n.country_name.toUpperCase();
-      }) || {};
-    };
-  }, function (e, n, a) {
-    "use strict";
-    var _ = a(0);e.exports = function (e, n) {
-      var a = _.filter(function (n) {
-        return e.match(new RegExp("^" + n.country_code));
-      });return [a.filter(function (n) {
-        return n.phone_number_lengths.some(function (a) {
-          return e.length === n.country_code.length + a;
-        });
-      }).find(function (a) {
-        return !a.mobile_begin_with.length || n || a.mobile_begin_with.some(function (n) {
-          return e.match(new RegExp("^" + a.country_code + n));
-        });
-      }), a.filter(function (n) {
-        return n.phone_number_lengths.some(function (a) {
-          return e.length === n.country_code.length + a + 1;
-        });
-      }).find(function (a) {
-        return !a.mobile_begin_with.length || n || a.mobile_begin_with.some(function (n) {
-          return e.match(new RegExp("^" + a.country_code + "\\d?" + n));
-        });
-      })];
-    };
-  }, function (e) {
-    "use strict";
-    e.exports = function (e, n, a) {
-      if (!n.phone_number_lengths) return !1;var _ = e.replace(new RegExp("^" + n.country_code), ""),
-          o = n.phone_number_lengths,
-          h = n.mobile_begin_with,
-          t = o.some(function (e) {
-        return _.length === e;
-      }),
-          l = !h.length || h.some(function (e) {
-        return _.match(new RegExp("^" + e));
-      });return t && (a || l);
-    };
-  }]);
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
-
-/***/ }),
-/* 355 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(356);
-
-/***/ }),
-/* 356 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-var bind = __webpack_require__(89);
-var Axios = __webpack_require__(358);
-var mergeConfig = __webpack_require__(95);
-var defaults = __webpack_require__(92);
-
-/**
- * Create an instance of Axios
- *
- * @param {Object} defaultConfig The default config for the instance
- * @return {Axios} A new instance of Axios
- */
-function createInstance(defaultConfig) {
-  var context = new Axios(defaultConfig);
-  var instance = bind(Axios.prototype.request, context);
-
-  // Copy axios.prototype to instance
-  utils.extend(instance, Axios.prototype, context);
-
-  // Copy context to instance
-  utils.extend(instance, context);
-
-  return instance;
-}
-
-// Create the default instance to be exported
-var axios = createInstance(defaults);
-
-// Expose Axios class to allow class inheritance
-axios.Axios = Axios;
-
-// Factory for creating new instances
-axios.create = function create(instanceConfig) {
-  return createInstance(mergeConfig(axios.defaults, instanceConfig));
-};
-
-// Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(96);
-axios.CancelToken = __webpack_require__(370);
-axios.isCancel = __webpack_require__(91);
-
-// Expose all/spread
-axios.all = function all(promises) {
-  return Promise.all(promises);
-};
-axios.spread = __webpack_require__(371);
-
-module.exports = axios;
-
-// Allow use of default import syntax in TypeScript
-module.exports.default = axios;
-
-/***/ }),
-/* 357 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer(obj) {
-  return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
-};
-
-/***/ }),
-/* 358 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-var buildURL = __webpack_require__(90);
-var InterceptorManager = __webpack_require__(359);
-var dispatchRequest = __webpack_require__(360);
-var mergeConfig = __webpack_require__(95);
-
-/**
- * Create a new instance of Axios
- *
- * @param {Object} instanceConfig The default config for the instance
- */
-function Axios(instanceConfig) {
-  this.defaults = instanceConfig;
-  this.interceptors = {
-    request: new InterceptorManager(),
-    response: new InterceptorManager()
-  };
-}
-
-/**
- * Dispatch a request
- *
- * @param {Object} config The config specific for this request (merged with this.defaults)
- */
-Axios.prototype.request = function request(config) {
-  /*eslint no-param-reassign:0*/
-  // Allow for axios('example/url'[, config]) a la fetch API
-  if (typeof config === 'string') {
-    config = arguments[1] || {};
-    config.url = arguments[0];
-  } else {
-    config = config || {};
-  }
-
-  config = mergeConfig(this.defaults, config);
-  config.method = config.method ? config.method.toLowerCase() : 'get';
-
-  // Hook up interceptors middleware
-  var chain = [dispatchRequest, undefined];
-  var promise = Promise.resolve(config);
-
-  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-    chain.unshift(interceptor.fulfilled, interceptor.rejected);
-  });
-
-  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
-    chain.push(interceptor.fulfilled, interceptor.rejected);
-  });
-
-  while (chain.length) {
-    promise = promise.then(chain.shift(), chain.shift());
-  }
-
-  return promise;
-};
-
-Axios.prototype.getUri = function getUri(config) {
-  config = mergeConfig(this.defaults, config);
-  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
-};
-
-// Provide aliases for supported request methods
-utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
-  /*eslint func-names:0*/
-  Axios.prototype[method] = function (url, config) {
-    return this.request(utils.merge(config || {}, {
-      method: method,
-      url: url
-    }));
-  };
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  /*eslint func-names:0*/
-  Axios.prototype[method] = function (url, data, config) {
-    return this.request(utils.merge(config || {}, {
-      method: method,
-      url: url,
-      data: data
-    }));
-  };
-});
-
-module.exports = Axios;
-
-/***/ }),
-/* 359 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-
-function InterceptorManager() {
-  this.handlers = [];
-}
-
-/**
- * Add a new interceptor to the stack
- *
- * @param {Function} fulfilled The function to handle `then` for a `Promise`
- * @param {Function} rejected The function to handle `reject` for a `Promise`
- *
- * @return {Number} An ID used to remove interceptor later
- */
-InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-  this.handlers.push({
-    fulfilled: fulfilled,
-    rejected: rejected
-  });
-  return this.handlers.length - 1;
-};
-
-/**
- * Remove an interceptor from the stack
- *
- * @param {Number} id The ID that was returned by `use`
- */
-InterceptorManager.prototype.eject = function eject(id) {
-  if (this.handlers[id]) {
-    this.handlers[id] = null;
-  }
-};
-
-/**
- * Iterate over all the registered interceptors
- *
- * This method is particularly useful for skipping over any
- * interceptors that may have become `null` calling `eject`.
- *
- * @param {Function} fn The function to call for each interceptor
- */
-InterceptorManager.prototype.forEach = function forEach(fn) {
-  utils.forEach(this.handlers, function forEachHandler(h) {
-    if (h !== null) {
-      fn(h);
-    }
-  });
-};
-
-module.exports = InterceptorManager;
-
-/***/ }),
-/* 360 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-var transformData = __webpack_require__(361);
-var isCancel = __webpack_require__(91);
-var defaults = __webpack_require__(92);
-var isAbsoluteURL = __webpack_require__(368);
-var combineURLs = __webpack_require__(369);
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-function throwIfCancellationRequested(config) {
-  if (config.cancelToken) {
-    config.cancelToken.throwIfRequested();
-  }
-}
-
-/**
- * Dispatch a request to the server using the configured adapter.
- *
- * @param {object} config The config that is to be used for the request
- * @returns {Promise} The Promise to be fulfilled
- */
-module.exports = function dispatchRequest(config) {
-  throwIfCancellationRequested(config);
-
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
-
-  // Ensure headers exist
-  config.headers = config.headers || {};
-
-  // Transform request data
-  config.data = transformData(config.data, config.headers, config.transformRequest);
-
-  // Flatten headers
-  config.headers = utils.merge(config.headers.common || {}, config.headers[config.method] || {}, config.headers || {});
-
-  utils.forEach(['delete', 'get', 'head', 'post', 'put', 'patch', 'common'], function cleanHeaderConfig(method) {
-    delete config.headers[method];
-  });
-
-  var adapter = config.adapter || defaults.adapter;
-
-  return adapter(config).then(function onAdapterResolution(response) {
-    throwIfCancellationRequested(config);
-
-    // Transform response data
-    response.data = transformData(response.data, response.headers, config.transformResponse);
-
-    return response;
-  }, function onAdapterRejection(reason) {
-    if (!isCancel(reason)) {
-      throwIfCancellationRequested(config);
-
-      // Transform response data
-      if (reason && reason.response) {
-        reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
-      }
-    }
-
-    return Promise.reject(reason);
-  });
-};
-
-/***/ }),
-/* 361 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-
-/**
- * Transform the data for a request or a response
- *
- * @param {Object|String} data The data to be transformed
- * @param {Array} headers The headers for the request or response
- * @param {Array|Function} fns A single function or Array of functions
- * @returns {*} The resulting transformed data
- */
-module.exports = function transformData(data, headers, fns) {
-  /*eslint no-param-reassign:0*/
-  utils.forEach(fns, function transform(fn) {
-    data = fn(data, headers);
-  });
-
-  return data;
-};
-
-/***/ }),
-/* 362 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-
-module.exports = function normalizeHeaderName(headers, normalizedName) {
-  utils.forEach(headers, function processHeader(value, name) {
-    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
-      headers[normalizedName] = value;
-      delete headers[name];
-    }
-  });
-};
-
-/***/ }),
-/* 363 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var createError = __webpack_require__(94);
-
-/**
- * Resolve or reject a Promise based on response status.
- *
- * @param {Function} resolve A function that resolves the promise.
- * @param {Function} reject A function that rejects the promise.
- * @param {object} response The response.
- */
-module.exports = function settle(resolve, reject, response) {
-  var validateStatus = response.config.validateStatus;
-  if (!validateStatus || validateStatus(response.status)) {
-    resolve(response);
-  } else {
-    reject(createError('Request failed with status code ' + response.status, response.config, null, response.request, response));
-  }
-};
-
-/***/ }),
-/* 364 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Update an Error with the specified config, error code, and response.
- *
- * @param {Error} error The error to update.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The error.
- */
-
-module.exports = function enhanceError(error, config, code, request, response) {
-  error.config = config;
-  if (code) {
-    error.code = code;
-  }
-
-  error.request = request;
-  error.response = response;
-  error.isAxiosError = true;
-
-  error.toJSON = function () {
-    return {
-      // Standard
-      message: this.message,
-      name: this.name,
-      // Microsoft
-      description: this.description,
-      number: this.number,
-      // Mozilla
-      fileName: this.fileName,
-      lineNumber: this.lineNumber,
-      columnNumber: this.columnNumber,
-      stack: this.stack,
-      // Axios
-      config: this.config,
-      code: this.code
-    };
-  };
-  return error;
-};
-
-/***/ }),
-/* 365 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-
-// Headers whose duplicates are ignored by node
-// c.f. https://nodejs.org/api/http.html#http_message_headers
-var ignoreDuplicateOf = ['age', 'authorization', 'content-length', 'content-type', 'etag', 'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since', 'last-modified', 'location', 'max-forwards', 'proxy-authorization', 'referer', 'retry-after', 'user-agent'];
-
-/**
- * Parse headers into an object
- *
- * ```
- * Date: Wed, 27 Aug 2014 08:58:49 GMT
- * Content-Type: application/json
- * Connection: keep-alive
- * Transfer-Encoding: chunked
- * ```
- *
- * @param {String} headers Headers needing to be parsed
- * @returns {Object} Headers parsed into an object
- */
-module.exports = function parseHeaders(headers) {
-  var parsed = {};
-  var key;
-  var val;
-  var i;
-
-  if (!headers) {
-    return parsed;
-  }
-
-  utils.forEach(headers.split('\n'), function parser(line) {
-    i = line.indexOf(':');
-    key = utils.trim(line.substr(0, i)).toLowerCase();
-    val = utils.trim(line.substr(i + 1));
-
-    if (key) {
-      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
-        return;
-      }
-      if (key === 'set-cookie') {
-        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
-      } else {
-        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-      }
-    }
-  });
-
-  return parsed;
-};
-
-/***/ }),
-/* 366 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-
-module.exports = utils.isStandardBrowserEnv() ?
-
-// Standard browser envs have full support of the APIs needed to test
-// whether the request URL is of the same origin as current location.
-function standardBrowserEnv() {
-  var msie = /(msie|trident)/i.test(navigator.userAgent);
-  var urlParsingNode = document.createElement('a');
-  var originURL;
-
-  /**
-  * Parse a URL to discover it's components
-  *
-  * @param {String} url The URL to be parsed
-  * @returns {Object}
-  */
-  function resolveURL(url) {
-    var href = url;
-
-    if (msie) {
-      // IE needs attribute set twice to normalize properties
-      urlParsingNode.setAttribute('href', href);
-      href = urlParsingNode.href;
-    }
-
-    urlParsingNode.setAttribute('href', href);
-
-    // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-    return {
-      href: urlParsingNode.href,
-      protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-      host: urlParsingNode.host,
-      search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-      hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-      hostname: urlParsingNode.hostname,
-      port: urlParsingNode.port,
-      pathname: urlParsingNode.pathname.charAt(0) === '/' ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
-    };
-  }
-
-  originURL = resolveURL(window.location.href);
-
-  /**
-  * Determine if a URL shares the same origin as the current location
-  *
-  * @param {String} requestURL The URL to test
-  * @returns {boolean} True if URL shares the same origin, otherwise false
-  */
-  return function isURLSameOrigin(requestURL) {
-    var parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
-    return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
-  };
-}() :
-
-// Non standard browser envs (web workers, react-native) lack needed support.
-function nonStandardBrowserEnv() {
-  return function isURLSameOrigin() {
-    return true;
-  };
-}();
-
-/***/ }),
-/* 367 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(11);
-
-module.exports = utils.isStandardBrowserEnv() ?
-
-// Standard browser envs support document.cookie
-function standardBrowserEnv() {
-  return {
-    write: function write(name, value, expires, path, domain, secure) {
-      var cookie = [];
-      cookie.push(name + '=' + encodeURIComponent(value));
-
-      if (utils.isNumber(expires)) {
-        cookie.push('expires=' + new Date(expires).toGMTString());
-      }
-
-      if (utils.isString(path)) {
-        cookie.push('path=' + path);
-      }
-
-      if (utils.isString(domain)) {
-        cookie.push('domain=' + domain);
-      }
-
-      if (secure === true) {
-        cookie.push('secure');
-      }
-
-      document.cookie = cookie.join('; ');
-    },
-
-    read: function read(name) {
-      var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-      return match ? decodeURIComponent(match[3]) : null;
-    },
-
-    remove: function remove(name) {
-      this.write(name, '', Date.now() - 86400000);
-    }
-  };
-}() :
-
-// Non standard browser env (web workers, react-native) lack needed support.
-function nonStandardBrowserEnv() {
-  return {
-    write: function write() {},
-    read: function read() {
-      return null;
-    },
-    remove: function remove() {}
-  };
-}();
-
-/***/ }),
-/* 368 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Determines whether the specified URL is absolute
- *
- * @param {string} url The URL to test
- * @returns {boolean} True if the specified URL is absolute, otherwise false
- */
-
-module.exports = function isAbsoluteURL(url) {
-  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-  // by any combination of letters, digits, plus, period, or hyphen.
-  return (/^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
-  );
-};
-
-/***/ }),
-/* 369 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
-};
-
-/***/ }),
-/* 370 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cancel = __webpack_require__(96);
-
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */
-function CancelToken(executor) {
-  if (typeof executor !== 'function') {
-    throw new TypeError('executor must be a function.');
-  }
-
-  var resolvePromise;
-  this.promise = new Promise(function promiseExecutor(resolve) {
-    resolvePromise = resolve;
-  });
-
-  var token = this;
-  executor(function cancel(message) {
-    if (token.reason) {
-      // Cancellation has already been requested
-      return;
-    }
-
-    token.reason = new Cancel(message);
-    resolvePromise(token.reason);
-  });
-}
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-  if (this.reason) {
-    throw this.reason;
-  }
-};
-
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */
-CancelToken.source = function source() {
-  var cancel;
-  var token = new CancelToken(function executor(c) {
-    cancel = c;
-  });
-  return {
-    token: token,
-    cancel: cancel
-  };
-};
-
-module.exports = CancelToken;
-
-/***/ }),
-/* 371 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-/***/ }),
-/* 372 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCTextField = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _ponyfill = __webpack_require__(30);
-
-var ponyfill = _interopRequireWildcard(_ponyfill);
-
-var _index = __webpack_require__(373);
-
-var _index2 = __webpack_require__(69);
-
-var _index3 = __webpack_require__(376);
-
-var _component2 = __webpack_require__(378);
-
-var _foundation = __webpack_require__(99);
-
-var _index4 = __webpack_require__(101);
-
-var _constants = __webpack_require__(103);
-
-var _foundation2 = __webpack_require__(104);
-
-var _index5 = __webpack_require__(105);
-
-var _index6 = __webpack_require__(107);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCTextField = /** @class */function (_super) {
-    tslib_1.__extends(MDCTextField, _super);
-    function MDCTextField() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCTextField.attachTo = function (root) {
-        return new MDCTextField(root);
-    };
-    MDCTextField.prototype.initialize = function (rippleFactory, lineRippleFactory, helperTextFactory, characterCounterFactory, iconFactory, labelFactory, outlineFactory) {
-        if (rippleFactory === void 0) {
-            rippleFactory = function rippleFactory(el, foundation) {
-                return new _component2.MDCRipple(el, foundation);
-            };
-        }
-        if (lineRippleFactory === void 0) {
-            lineRippleFactory = function lineRippleFactory(el) {
-                return new _index2.MDCLineRipple(el);
-            };
-        }
-        if (helperTextFactory === void 0) {
-            helperTextFactory = function helperTextFactory(el) {
-                return new _index5.MDCTextFieldHelperText(el);
-            };
-        }
-        if (characterCounterFactory === void 0) {
-            characterCounterFactory = function characterCounterFactory(el) {
-                return new _index4.MDCTextFieldCharacterCounter(el);
-            };
-        }
-        if (iconFactory === void 0) {
-            iconFactory = function iconFactory(el) {
-                return new _index6.MDCTextFieldIcon(el);
-            };
-        }
-        if (labelFactory === void 0) {
-            labelFactory = function labelFactory(el) {
-                return new _index.MDCFloatingLabel(el);
-            };
-        }
-        if (outlineFactory === void 0) {
-            outlineFactory = function outlineFactory(el) {
-                return new _index3.MDCNotchedOutline(el);
-            };
-        }
-        this.input_ = this.root_.querySelector(_constants.strings.INPUT_SELECTOR);
-        var labelElement = this.root_.querySelector(_constants.strings.LABEL_SELECTOR);
-        this.label_ = labelElement ? labelFactory(labelElement) : null;
-        var lineRippleElement = this.root_.querySelector(_constants.strings.LINE_RIPPLE_SELECTOR);
-        this.lineRipple_ = lineRippleElement ? lineRippleFactory(lineRippleElement) : null;
-        var outlineElement = this.root_.querySelector(_constants.strings.OUTLINE_SELECTOR);
-        this.outline_ = outlineElement ? outlineFactory(outlineElement) : null;
-        // Helper text
-        var helperTextStrings = _index5.MDCTextFieldHelperTextFoundation.strings;
-        var nextElementSibling = this.root_.nextElementSibling;
-        var hasHelperLine = nextElementSibling && nextElementSibling.classList.contains(_constants.cssClasses.HELPER_LINE);
-        var helperTextEl = hasHelperLine && nextElementSibling && nextElementSibling.querySelector(helperTextStrings.ROOT_SELECTOR);
-        this.helperText_ = helperTextEl ? helperTextFactory(helperTextEl) : null;
-        // Character counter
-        var characterCounterStrings = _index4.MDCTextFieldCharacterCounterFoundation.strings;
-        var characterCounterEl = this.root_.querySelector(characterCounterStrings.ROOT_SELECTOR);
-        // If character counter is not found in root element search in sibling element.
-        if (!characterCounterEl && hasHelperLine && nextElementSibling) {
-            characterCounterEl = nextElementSibling.querySelector(characterCounterStrings.ROOT_SELECTOR);
-        }
-        this.characterCounter_ = characterCounterEl ? characterCounterFactory(characterCounterEl) : null;
-        this.leadingIcon_ = null;
-        this.trailingIcon_ = null;
-        var iconElements = this.root_.querySelectorAll(_constants.strings.ICON_SELECTOR);
-        if (iconElements.length > 0) {
-            if (iconElements.length > 1) {
-                // Has both icons.
-                this.leadingIcon_ = iconFactory(iconElements[0]);
-                this.trailingIcon_ = iconFactory(iconElements[1]);
-            } else {
-                if (this.root_.classList.contains(_constants.cssClasses.WITH_LEADING_ICON)) {
-                    this.leadingIcon_ = iconFactory(iconElements[0]);
-                } else {
-                    this.trailingIcon_ = iconFactory(iconElements[0]);
-                }
-            }
-        }
-        this.ripple = this.createRipple_(rippleFactory);
-    };
-    MDCTextField.prototype.destroy = function () {
-        if (this.ripple) {
-            this.ripple.destroy();
-        }
-        if (this.lineRipple_) {
-            this.lineRipple_.destroy();
-        }
-        if (this.helperText_) {
-            this.helperText_.destroy();
-        }
-        if (this.characterCounter_) {
-            this.characterCounter_.destroy();
-        }
-        if (this.leadingIcon_) {
-            this.leadingIcon_.destroy();
-        }
-        if (this.trailingIcon_) {
-            this.trailingIcon_.destroy();
-        }
-        if (this.label_) {
-            this.label_.destroy();
-        }
-        if (this.outline_) {
-            this.outline_.destroy();
-        }
-        _super.prototype.destroy.call(this);
-    };
-    /**
-     * Initializes the Text Field's internal state based on the environment's
-     * state.
-     */
-    MDCTextField.prototype.initialSyncWithDOM = function () {
-        this.disabled = this.input_.disabled;
-    };
-    Object.defineProperty(MDCTextField.prototype, "value", {
-        get: function get() {
-            return this.foundation_.getValue();
-        },
-        /**
-         * @param value The value to set on the input.
-         */
-        set: function set(value) {
-            this.foundation_.setValue(value);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "disabled", {
-        get: function get() {
-            return this.foundation_.isDisabled();
-        },
-        /**
-         * @param disabled Sets the Text Field disabled or enabled.
-         */
-        set: function set(disabled) {
-            this.foundation_.setDisabled(disabled);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "valid", {
-        get: function get() {
-            return this.foundation_.isValid();
-        },
-        /**
-         * @param valid Sets the Text Field valid or invalid.
-         */
-        set: function set(valid) {
-            this.foundation_.setValid(valid);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "required", {
-        get: function get() {
-            return this.input_.required;
-        },
-        /**
-         * @param required Sets the Text Field to required.
-         */
-        set: function set(required) {
-            this.input_.required = required;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "pattern", {
-        get: function get() {
-            return this.input_.pattern;
-        },
-        /**
-         * @param pattern Sets the input element's validation pattern.
-         */
-        set: function set(pattern) {
-            this.input_.pattern = pattern;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "minLength", {
-        get: function get() {
-            return this.input_.minLength;
-        },
-        /**
-         * @param minLength Sets the input element's minLength.
-         */
-        set: function set(minLength) {
-            this.input_.minLength = minLength;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "maxLength", {
-        get: function get() {
-            return this.input_.maxLength;
-        },
-        /**
-         * @param maxLength Sets the input element's maxLength.
-         */
-        set: function set(maxLength) {
-            // Chrome throws exception if maxLength is set to a value less than zero
-            if (maxLength < 0) {
-                this.input_.removeAttribute('maxLength');
-            } else {
-                this.input_.maxLength = maxLength;
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "min", {
-        get: function get() {
-            return this.input_.min;
-        },
-        /**
-         * @param min Sets the input element's min.
-         */
-        set: function set(min) {
-            this.input_.min = min;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "max", {
-        get: function get() {
-            return this.input_.max;
-        },
-        /**
-         * @param max Sets the input element's max.
-         */
-        set: function set(max) {
-            this.input_.max = max;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "step", {
-        get: function get() {
-            return this.input_.step;
-        },
-        /**
-         * @param step Sets the input element's step.
-         */
-        set: function set(step) {
-            this.input_.step = step;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "helperTextContent", {
-        /**
-         * Sets the helper text element content.
-         */
-        set: function set(content) {
-            this.foundation_.setHelperTextContent(content);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "leadingIconAriaLabel", {
-        /**
-         * Sets the aria label of the leading icon.
-         */
-        set: function set(label) {
-            this.foundation_.setLeadingIconAriaLabel(label);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "leadingIconContent", {
-        /**
-         * Sets the text content of the leading icon.
-         */
-        set: function set(content) {
-            this.foundation_.setLeadingIconContent(content);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "trailingIconAriaLabel", {
-        /**
-         * Sets the aria label of the trailing icon.
-         */
-        set: function set(label) {
-            this.foundation_.setTrailingIconAriaLabel(label);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "trailingIconContent", {
-        /**
-         * Sets the text content of the trailing icon.
-         */
-        set: function set(content) {
-            this.foundation_.setTrailingIconContent(content);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextField.prototype, "useNativeValidation", {
-        /**
-         * Enables or disables the use of native validation. Use this for custom validation.
-         * @param useNativeValidation Set this to false to ignore native input validation.
-         */
-        set: function set(useNativeValidation) {
-            this.foundation_.setUseNativeValidation(useNativeValidation);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * Focuses the input element.
-     */
-    MDCTextField.prototype.focus = function () {
-        this.input_.focus();
-    };
-    /**
-     * Recomputes the outline SVG path for the outline element.
-     */
-    MDCTextField.prototype.layout = function () {
-        var openNotch = this.foundation_.shouldFloat;
-        this.foundation_.notchOutline(openNotch);
-    };
-    MDCTextField.prototype.getDefaultFoundation = function () {
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = tslib_1.__assign({}, this.getRootAdapterMethods_(), this.getInputAdapterMethods_(), this.getLabelAdapterMethods_(), this.getLineRippleAdapterMethods_(), this.getOutlineAdapterMethods_());
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation2.MDCTextFieldFoundation(adapter, this.getFoundationMap_());
-    };
-    MDCTextField.prototype.getRootAdapterMethods_ = function () {
-        var _this = this;
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        return {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            registerTextFieldInteractionHandler: function registerTextFieldInteractionHandler(evtType, handler) {
-                return _this.listen(evtType, handler);
-            },
-            deregisterTextFieldInteractionHandler: function deregisterTextFieldInteractionHandler(evtType, handler) {
-                return _this.unlisten(evtType, handler);
-            },
-            registerValidationAttributeChangeHandler: function registerValidationAttributeChangeHandler(handler) {
-                var getAttributesList = function getAttributesList(mutationsList) {
-                    return mutationsList.map(function (mutation) {
-                        return mutation.attributeName;
-                    }).filter(function (attributeName) {
-                        return attributeName;
-                    });
-                };
-                var observer = new MutationObserver(function (mutationsList) {
-                    return handler(getAttributesList(mutationsList));
-                });
-                var config = { attributes: true };
-                observer.observe(_this.input_, config);
-                return observer;
-            },
-            deregisterValidationAttributeChangeHandler: function deregisterValidationAttributeChangeHandler(observer) {
-                return observer.disconnect();
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-    };
-    MDCTextField.prototype.getInputAdapterMethods_ = function () {
-        var _this = this;
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        return {
-            getNativeInput: function getNativeInput() {
-                return _this.input_;
-            },
-            isFocused: function isFocused() {
-                return document.activeElement === _this.input_;
-            },
-            registerInputInteractionHandler: function registerInputInteractionHandler(evtType, handler) {
-                return _this.input_.addEventListener(evtType, handler);
-            },
-            deregisterInputInteractionHandler: function deregisterInputInteractionHandler(evtType, handler) {
-                return _this.input_.removeEventListener(evtType, handler);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-    };
-    MDCTextField.prototype.getLabelAdapterMethods_ = function () {
-        var _this = this;
-        return {
-            floatLabel: function floatLabel(shouldFloat) {
-                return _this.label_ && _this.label_.float(shouldFloat);
-            },
-            getLabelWidth: function getLabelWidth() {
-                return _this.label_ ? _this.label_.getWidth() : 0;
-            },
-            hasLabel: function hasLabel() {
-                return Boolean(_this.label_);
-            },
-            shakeLabel: function shakeLabel(shouldShake) {
-                return _this.label_ && _this.label_.shake(shouldShake);
-            }
-        };
-    };
-    MDCTextField.prototype.getLineRippleAdapterMethods_ = function () {
-        var _this = this;
-        return {
-            activateLineRipple: function activateLineRipple() {
-                if (_this.lineRipple_) {
-                    _this.lineRipple_.activate();
-                }
-            },
-            deactivateLineRipple: function deactivateLineRipple() {
-                if (_this.lineRipple_) {
-                    _this.lineRipple_.deactivate();
-                }
-            },
-            setLineRippleTransformOrigin: function setLineRippleTransformOrigin(normalizedX) {
-                if (_this.lineRipple_) {
-                    _this.lineRipple_.setRippleCenter(normalizedX);
-                }
-            }
-        };
-    };
-    MDCTextField.prototype.getOutlineAdapterMethods_ = function () {
-        var _this = this;
-        return {
-            closeOutline: function closeOutline() {
-                return _this.outline_ && _this.outline_.closeNotch();
-            },
-            hasOutline: function hasOutline() {
-                return Boolean(_this.outline_);
-            },
-            notchOutline: function notchOutline(labelWidth) {
-                return _this.outline_ && _this.outline_.notch(labelWidth);
-            }
-        };
-    };
-    /**
-     * @return A map of all subcomponents to subfoundations.
-     */
-    MDCTextField.prototype.getFoundationMap_ = function () {
-        return {
-            characterCounter: this.characterCounter_ ? this.characterCounter_.foundation : undefined,
-            helperText: this.helperText_ ? this.helperText_.foundation : undefined,
-            leadingIcon: this.leadingIcon_ ? this.leadingIcon_.foundation : undefined,
-            trailingIcon: this.trailingIcon_ ? this.trailingIcon_.foundation : undefined
-        };
-    };
-    MDCTextField.prototype.createRipple_ = function (rippleFactory) {
-        var _this = this;
-        var isTextArea = this.root_.classList.contains(_constants.cssClasses.TEXTAREA);
-        var isOutlined = this.root_.classList.contains(_constants.cssClasses.OUTLINED);
-        if (isTextArea || isOutlined) {
-            return null;
-        }
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = tslib_1.__assign({}, _component2.MDCRipple.createAdapter(this), { isSurfaceActive: function isSurfaceActive() {
-                return ponyfill.matches(_this.input_, ':active');
-            }, registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.input_.addEventListener(evtType, handler);
-            }, deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.input_.removeEventListener(evtType, handler);
-            } });
-        // tslint:enable:object-literal-sort-keys
-        return rippleFactory(this.root_, new _foundation.MDCRippleFoundation(adapter));
-    };
-    return MDCTextField;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2016 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCTextField = MDCTextField;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 373 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(374);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(50);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 374 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCFloatingLabel = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(50);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCFloatingLabel = /** @class */function (_super) {
-    tslib_1.__extends(MDCFloatingLabel, _super);
-    function MDCFloatingLabel() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCFloatingLabel.attachTo = function (root) {
-        return new MDCFloatingLabel(root);
-    };
-    /**
-     * Styles the label to produce the label shake for errors.
-     * @param shouldShake If true, shakes the label by adding a CSS class; otherwise, stops shaking by removing the class.
-     */
-    MDCFloatingLabel.prototype.shake = function (shouldShake) {
-        this.foundation_.shake(shouldShake);
-    };
-    /**
-     * Styles the label to float/dock.
-     * @param shouldFloat If true, floats the label by adding a CSS class; otherwise, docks it by removing the class.
-     */
-    MDCFloatingLabel.prototype.float = function (shouldFloat) {
-        this.foundation_.float(shouldFloat);
-    };
-    MDCFloatingLabel.prototype.getWidth = function () {
-        return this.foundation_.getWidth();
-    };
-    MDCFloatingLabel.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            getWidth: function getWidth() {
-                return _this.root_.scrollWidth;
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.listen(evtType, handler);
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.unlisten(evtType, handler);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCFloatingLabelFoundation(adapter);
-    };
-    return MDCFloatingLabel;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2016 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCFloatingLabel = MDCFloatingLabel;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 375 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = exports.cssClasses = {
-  LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
-  LABEL_SHAKE: 'mdc-floating-label--shake',
-  ROOT: 'mdc-floating-label'
-};
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 376 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(377);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(98);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 377 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCNotchedOutline = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(50);
-
-var _constants = __webpack_require__(97);
-
-var _foundation2 = __webpack_require__(98);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCNotchedOutline = /** @class */function (_super) {
-    tslib_1.__extends(MDCNotchedOutline, _super);
-    function MDCNotchedOutline() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCNotchedOutline.attachTo = function (root) {
-        return new MDCNotchedOutline(root);
-    };
-    MDCNotchedOutline.prototype.initialSyncWithDOM = function () {
-        this.notchElement_ = this.root_.querySelector(_constants.strings.NOTCH_ELEMENT_SELECTOR);
-        var label = this.root_.querySelector('.' + _foundation.MDCFloatingLabelFoundation.cssClasses.ROOT);
-        if (label) {
-            label.style.transitionDuration = '0s';
-            this.root_.classList.add(_constants.cssClasses.OUTLINE_UPGRADED);
-            requestAnimationFrame(function () {
-                label.style.transitionDuration = '';
-            });
-        } else {
-            this.root_.classList.add(_constants.cssClasses.NO_LABEL);
-        }
-    };
-    /**
-     * Updates classes and styles to open the notch to the specified width.
-     * @param notchWidth The notch width in the outline.
-     */
-    MDCNotchedOutline.prototype.notch = function (notchWidth) {
-        this.foundation_.notch(notchWidth);
-    };
-    /**
-     * Updates classes and styles to close the notch.
-     */
-    MDCNotchedOutline.prototype.closeNotch = function () {
-        this.foundation_.closeNotch();
-    };
-    MDCNotchedOutline.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            setNotchWidthProperty: function setNotchWidthProperty(width) {
-                return _this.notchElement_.style.setProperty('width', width + 'px');
-            },
-            removeNotchWidthProperty: function removeNotchWidthProperty() {
-                return _this.notchElement_.style.removeProperty('width');
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation2.MDCNotchedOutlineFoundation(adapter);
-    };
-    return MDCNotchedOutline;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2017 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCNotchedOutline = MDCNotchedOutline;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 378 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCRipple = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _index = __webpack_require__(31);
-
-var _foundation = __webpack_require__(99);
-
-var _util = __webpack_require__(100);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCRipple = /** @class */function (_super) {
-    tslib_1.__extends(MDCRipple, _super);
-    function MDCRipple() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.disabled = false;
-        return _this;
-    }
-    MDCRipple.attachTo = function (root, opts) {
-        if (opts === void 0) {
-            opts = { isUnbounded: undefined };
-        }
-        var ripple = new MDCRipple(root);
-        // Only override unbounded behavior if option is explicitly specified
-        if (opts.isUnbounded !== undefined) {
-            ripple.unbounded = opts.isUnbounded;
-        }
-        return ripple;
-    };
-    MDCRipple.createAdapter = function (instance) {
-        return {
-            addClass: function addClass(className) {
-                return instance.root_.classList.add(className);
-            },
-            browserSupportsCssVars: function browserSupportsCssVars() {
-                return util.supportsCssVariables(window);
-            },
-            computeBoundingRect: function computeBoundingRect() {
-                return instance.root_.getBoundingClientRect();
-            },
-            containsEventTarget: function containsEventTarget(target) {
-                return instance.root_.contains(target);
-            },
-            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.removeEventListener(evtType, handler, util.applyPassive());
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return instance.root_.removeEventListener(evtType, handler, util.applyPassive());
-            },
-            deregisterResizeHandler: function deregisterResizeHandler(handler) {
-                return window.removeEventListener('resize', handler);
-            },
-            getWindowPageOffset: function getWindowPageOffset() {
-                return { x: window.pageXOffset, y: window.pageYOffset };
-            },
-            isSurfaceActive: function isSurfaceActive() {
-                return _index.ponyfill.matches(instance.root_, ':active');
-            },
-            isSurfaceDisabled: function isSurfaceDisabled() {
-                return Boolean(instance.disabled);
-            },
-            isUnbounded: function isUnbounded() {
-                return Boolean(instance.unbounded);
-            },
-            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.addEventListener(evtType, handler, util.applyPassive());
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return instance.root_.addEventListener(evtType, handler, util.applyPassive());
-            },
-            registerResizeHandler: function registerResizeHandler(handler) {
-                return window.addEventListener('resize', handler);
-            },
-            removeClass: function removeClass(className) {
-                return instance.root_.classList.remove(className);
-            },
-            updateCssVariable: function updateCssVariable(varName, value) {
-                return instance.root_.style.setProperty(varName, value);
-            }
-        };
-    };
-    Object.defineProperty(MDCRipple.prototype, "unbounded", {
-        get: function get() {
-            return Boolean(this.unbounded_);
-        },
-        set: function set(unbounded) {
-            this.unbounded_ = Boolean(unbounded);
-            this.setUnbounded_();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRipple.prototype.activate = function () {
-        this.foundation_.activate();
-    };
-    MDCRipple.prototype.deactivate = function () {
-        this.foundation_.deactivate();
-    };
-    MDCRipple.prototype.layout = function () {
-        this.foundation_.layout();
-    };
-    MDCRipple.prototype.getDefaultFoundation = function () {
-        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
-    };
-    MDCRipple.prototype.initialSyncWithDOM = function () {
-        var root = this.root_;
-        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
-    };
-    /**
-     * Closure Compiler throws an access control error when directly accessing a
-     * protected or private property inside a getter/setter, like unbounded above.
-     * By accessing the protected property inside a method, we solve that problem.
-     * That's why this function exists.
-     */
-    MDCRipple.prototype.setUnbounded_ = function () {
-        this.foundation_.setUnbounded(Boolean(this.unbounded_));
-    };
-    return MDCRipple;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2016 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCRipple = MDCRipple;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 379 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = exports.cssClasses = {
-    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
-    // given that it's an 'upgrade' to an existing component. That being said it is the root
-    // CSS class that all other CSS classes derive from.
-    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
-    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
-    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
-    ROOT: 'mdc-ripple-upgraded',
-    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
-};
-var strings = exports.strings = {
-    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
-    VAR_FG_SIZE: '--mdc-ripple-fg-size',
-    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
-    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
-    VAR_LEFT: '--mdc-ripple-left',
-    VAR_TOP: '--mdc-ripple-top'
-};
-var numbers = exports.numbers = {
-    DEACTIVATION_TIMEOUT_MS: 225,
-    FG_DEACTIVATION_MS: 150,
-    INITIAL_ORIGIN_SCALE: 0.6,
-    PADDING: 10,
-    TAP_DELAY_MS: 300
-};
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 380 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCTextFieldCharacterCounter = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(102);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCTextFieldCharacterCounter = /** @class */function (_super) {
-    tslib_1.__extends(MDCTextFieldCharacterCounter, _super);
-    function MDCTextFieldCharacterCounter() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCTextFieldCharacterCounter.attachTo = function (root) {
-        return new MDCTextFieldCharacterCounter(root);
-    };
-    Object.defineProperty(MDCTextFieldCharacterCounter.prototype, "foundation", {
-        get: function get() {
-            return this.foundation_;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCTextFieldCharacterCounter.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = {
-            setContent: function setContent(content) {
-                _this.root_.textContent = content;
-            }
-        };
-        return new _foundation.MDCTextFieldCharacterCounterFoundation(adapter);
-    };
-    return MDCTextFieldCharacterCounter;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2019 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCTextFieldCharacterCounter = MDCTextFieldCharacterCounter;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 381 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2019 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = {
-    ROOT: 'mdc-text-field-character-counter'
-};
-var strings = {
-    ROOT_SELECTOR: "." + cssClasses.ROOT
-};
-exports.strings = strings;
-exports.cssClasses = cssClasses;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 382 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCTextFieldHelperText = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(106);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCTextFieldHelperText = /** @class */function (_super) {
-    tslib_1.__extends(MDCTextFieldHelperText, _super);
-    function MDCTextFieldHelperText() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCTextFieldHelperText.attachTo = function (root) {
-        return new MDCTextFieldHelperText(root);
-    };
-    Object.defineProperty(MDCTextFieldHelperText.prototype, "foundation", {
-        get: function get() {
-            return this.foundation_;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCTextFieldHelperText.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            hasClass: function hasClass(className) {
-                return _this.root_.classList.contains(className);
-            },
-            setAttr: function setAttr(attr, value) {
-                return _this.root_.setAttribute(attr, value);
-            },
-            removeAttr: function removeAttr(attr) {
-                return _this.root_.removeAttribute(attr);
-            },
-            setContent: function setContent(content) {
-                _this.root_.textContent = content;
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCTextFieldHelperTextFoundation(adapter);
-    };
-    return MDCTextFieldHelperText;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2017 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCTextFieldHelperText = MDCTextFieldHelperText;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 383 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = {
-    HELPER_TEXT_PERSISTENT: 'mdc-text-field-helper-text--persistent',
-    HELPER_TEXT_VALIDATION_MSG: 'mdc-text-field-helper-text--validation-msg',
-    ROOT: 'mdc-text-field-helper-text'
-};
-var strings = {
-    ARIA_HIDDEN: 'aria-hidden',
-    ROLE: 'role',
-    ROOT_SELECTOR: "." + cssClasses.ROOT
-};
-exports.strings = strings;
-exports.cssClasses = cssClasses;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 384 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCTextFieldIcon = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(5);
-
-var _foundation = __webpack_require__(108);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCTextFieldIcon = /** @class */function (_super) {
-    tslib_1.__extends(MDCTextFieldIcon, _super);
-    function MDCTextFieldIcon() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCTextFieldIcon.attachTo = function (root) {
-        return new MDCTextFieldIcon(root);
-    };
-    Object.defineProperty(MDCTextFieldIcon.prototype, "foundation", {
-        get: function get() {
-            return this.foundation_;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCTextFieldIcon.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
-        var adapter = {
-            getAttr: function getAttr(attr) {
-                return _this.root_.getAttribute(attr);
-            },
-            setAttr: function setAttr(attr, value) {
-                return _this.root_.setAttribute(attr, value);
-            },
-            removeAttr: function removeAttr(attr) {
-                return _this.root_.removeAttribute(attr);
-            },
-            setContent: function setContent(content) {
-                _this.root_.textContent = content;
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.listen(evtType, handler);
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.unlisten(evtType, handler);
-            },
-            notifyIconAction: function notifyIconAction() {
-                return _this.emit(_foundation.MDCTextFieldIconFoundation.strings.ICON_EVENT, {} /* evtData */, true /* shouldBubble */);
-            }
-        };
-        // tslint:enable:object-literal-sort-keys
-        return new _foundation.MDCTextFieldIconFoundation(adapter);
-    };
-    return MDCTextFieldIcon;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2017 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCTextFieldIcon = MDCTextFieldIcon;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 385 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var strings = {
-  ICON_EVENT: 'MDCTextField:icon',
-  ICON_ROLE: 'button'
-};
-exports.strings = strings;
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 386 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(387);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _constants = __webpack_require__(111);
-
-Object.keys(_constants).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _constants[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(110);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 387 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCFormField = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(388);
-
-var _foundation = __webpack_require__(110);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var MDCFormField = /** @class */function (_super) {
-    tslib_1.__extends(MDCFormField, _super);
-    function MDCFormField() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    MDCFormField.attachTo = function (root) {
-        return new MDCFormField(root);
-    };
-    Object.defineProperty(MDCFormField.prototype, "input", {
-        get: function get() {
-            return this.input_;
-        },
-        set: function set(input) {
-            this.input_ = input;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCFormField.prototype, "label_", {
-        get: function get() {
-            var LABEL_SELECTOR = _foundation.MDCFormFieldFoundation.strings.LABEL_SELECTOR;
-            return this.root_.querySelector(LABEL_SELECTOR);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCFormField.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = {
-            activateInputRipple: function activateInputRipple() {
-                if (_this.input_ && _this.input_.ripple) {
-                    _this.input_.ripple.activate();
-                }
-            },
-            deactivateInputRipple: function deactivateInputRipple() {
-                if (_this.input_ && _this.input_.ripple) {
-                    _this.input_.ripple.deactivate();
-                }
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                if (_this.label_) {
-                    _this.label_.removeEventListener(evtType, handler);
-                }
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                if (_this.label_) {
-                    _this.label_.addEventListener(evtType, handler);
-                }
-            }
-        };
-        return new _foundation.MDCFormFieldFoundation(adapter);
-    };
-    return MDCFormField;
-}(_component.MDCComponent); /**
-                             * @license
-                             * Copyright 2017 Google Inc.
-                             *
-                             * Permission is hereby granted, free of charge, to any person obtaining a copy
-                             * of this software and associated documentation files (the "Software"), to deal
-                             * in the Software without restriction, including without limitation the rights
-                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-                             * copies of the Software, and to permit persons to whom the Software is
-                             * furnished to do so, subject to the following conditions:
-                             *
-                             * The above copyright notice and this permission notice shall be included in
-                             * all copies or substantial portions of the Software.
-                             *
-                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-                             * THE SOFTWARE.
-                             */
-exports.MDCFormField = MDCFormField;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 388 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCComponent = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _foundation = __webpack_require__(109);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var MDCComponent = /** @class */function () {
-    function MDCComponent(root, foundation) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
-        this.root_ = root;
-        this.initialize.apply(this, tslib_1.__spread(args));
-        // Note that we initialize foundation here and not within the constructor's default param so that
-        // this.root_ is defined and can be used within the foundation class.
-        this.foundation_ = foundation === undefined ? this.getDefaultFoundation() : foundation;
-        this.foundation_.init();
-        this.initialSyncWithDOM();
-    }
-    MDCComponent.attachTo = function (root) {
-        // Subclasses which extend MDCBase should provide an attachTo() method that takes a root element and
-        // returns an instantiated component with its root set to that element. Also note that in the cases of
-        // subclasses, an explicit foundation class will not have to be passed in; it will simply be initialized
-        // from getDefaultFoundation().
-        return new MDCComponent(root, new _foundation.MDCFoundation({}));
-    };
-    /* istanbul ignore next: method param only exists for typing purposes; it does not need to be unit tested */
-    MDCComponent.prototype.initialize = function () {
-        var _args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            _args[_i] = arguments[_i];
-        }
-        // Subclasses can override this to do any additional setup work that would be considered part of a
-        // "constructor". Essentially, it is a hook into the parent constructor before the foundation is
-        // initialized. Any additional arguments besides root and foundation will be passed in here.
-    };
-    MDCComponent.prototype.getDefaultFoundation = function () {
-        // Subclasses must override this method to return a properly configured foundation class for the
-        // component.
-        throw new Error('Subclasses must override getDefaultFoundation to return a properly configured ' + 'foundation class');
-    };
-    MDCComponent.prototype.initialSyncWithDOM = function () {
-        // Subclasses should override this method if they need to perform work to synchronize with a host DOM
-        // object. An example of this would be a form control wrapper that needs to synchronize its internal state
-        // to some property or attribute of the host DOM. Please note: this is *not* the place to perform DOM
-        // reads/writes that would cause layout / paint, as this is called synchronously from within the constructor.
-    };
-    MDCComponent.prototype.destroy = function () {
-        // Subclasses may implement this method to release any resources / deregister any listeners they have
-        // attached. An example of this might be deregistering a resize event from the window object.
-        this.foundation_.destroy();
-    };
-    MDCComponent.prototype.listen = function (evtType, handler, options) {
-        this.root_.addEventListener(evtType, handler, options);
-    };
-    MDCComponent.prototype.unlisten = function (evtType, handler, options) {
-        this.root_.removeEventListener(evtType, handler, options);
-    };
-    /**
-     * Fires a cross-browser-compatible custom event from the component root of the given type, with the given data.
-     */
-    MDCComponent.prototype.emit = function (evtType, evtData, shouldBubble) {
-        if (shouldBubble === void 0) {
-            shouldBubble = false;
-        }
-        var evt;
-        if (typeof CustomEvent === 'function') {
-            evt = new CustomEvent(evtType, {
-                bubbles: shouldBubble,
-                detail: evtData
-            });
-        } else {
-            evt = document.createEvent('CustomEvent');
-            evt.initCustomEvent(evtType, shouldBubble, false, evtData);
-        }
-        this.root_.dispatchEvent(evt);
-    };
-    return MDCComponent;
-}();
-exports.MDCComponent = MDCComponent;
-// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
-
-exports.default = MDCComponent;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 389 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _component = __webpack_require__(390);
-
-Object.keys(_component).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _component[key];
-    }
-  });
-});
-
-var _constants = __webpack_require__(118);
-
-Object.keys(_constants).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _constants[key];
-    }
-  });
-});
-
-var _foundation = __webpack_require__(117);
-
-Object.keys(_foundation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _foundation[key];
-    }
-  });
-});
-
-/***/ }),
-/* 390 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCCheckbox = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _util = __webpack_require__(391);
-
-var _component = __webpack_require__(112);
-
-var _events = __webpack_require__(113);
-
-var _ponyfill = __webpack_require__(114);
-
-var _component2 = __webpack_require__(392);
-
-var _foundation = __webpack_require__(115);
-
-var _foundation2 = __webpack_require__(117);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var CB_PROTO_PROPS = ['checked', 'indeterminate'];
-var MDCCheckbox = /** @class */function (_super) {
-    tslib_1.__extends(MDCCheckbox, _super);
-    function MDCCheckbox() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.ripple_ = _this.createRipple_();
-        return _this;
-    }
-    MDCCheckbox.attachTo = function (root) {
-        return new MDCCheckbox(root);
-    };
-    Object.defineProperty(MDCCheckbox.prototype, "ripple", {
-        get: function get() {
-            return this.ripple_;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCCheckbox.prototype, "checked", {
-        get: function get() {
-            return this.nativeControl_.checked;
-        },
-        set: function set(checked) {
-            this.nativeControl_.checked = checked;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCCheckbox.prototype, "indeterminate", {
-        get: function get() {
-            return this.nativeControl_.indeterminate;
-        },
-        set: function set(indeterminate) {
-            this.nativeControl_.indeterminate = indeterminate;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCCheckbox.prototype, "disabled", {
-        get: function get() {
-            return this.nativeControl_.disabled;
-        },
-        set: function set(disabled) {
-            this.foundation_.setDisabled(disabled);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCCheckbox.prototype, "value", {
-        get: function get() {
-            return this.nativeControl_.value;
-        },
-        set: function set(value) {
-            this.nativeControl_.value = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCCheckbox.prototype.initialSyncWithDOM = function () {
-        var _this = this;
-        this.handleChange_ = function () {
-            return _this.foundation_.handleChange();
-        };
-        this.handleAnimationEnd_ = function () {
-            return _this.foundation_.handleAnimationEnd();
-        };
-        this.nativeControl_.addEventListener('change', this.handleChange_);
-        this.listen((0, _util.getCorrectEventName)(window, 'animationend'), this.handleAnimationEnd_);
-        this.installPropertyChangeHooks_();
-    };
-    MDCCheckbox.prototype.destroy = function () {
-        this.ripple_.destroy();
-        this.nativeControl_.removeEventListener('change', this.handleChange_);
-        this.unlisten((0, _util.getCorrectEventName)(window, 'animationend'), this.handleAnimationEnd_);
-        this.uninstallPropertyChangeHooks_();
-        _super.prototype.destroy.call(this);
-    };
-    MDCCheckbox.prototype.getDefaultFoundation = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = {
-            addClass: function addClass(className) {
-                return _this.root_.classList.add(className);
-            },
-            forceLayout: function forceLayout() {
-                return _this.root_.offsetWidth;
-            },
-            hasNativeControl: function hasNativeControl() {
-                return !!_this.nativeControl_;
-            },
-            isAttachedToDOM: function isAttachedToDOM() {
-                return Boolean(_this.root_.parentNode);
-            },
-            isChecked: function isChecked() {
-                return _this.checked;
-            },
-            isIndeterminate: function isIndeterminate() {
-                return _this.indeterminate;
-            },
-            removeClass: function removeClass(className) {
-                return _this.root_.classList.remove(className);
-            },
-            removeNativeControlAttr: function removeNativeControlAttr(attr) {
-                return _this.nativeControl_.removeAttribute(attr);
-            },
-            setNativeControlAttr: function setNativeControlAttr(attr, value) {
-                return _this.nativeControl_.setAttribute(attr, value);
-            },
-            setNativeControlDisabled: function setNativeControlDisabled(disabled) {
-                return _this.nativeControl_.disabled = disabled;
-            }
-        };
-        return new _foundation2.MDCCheckboxFoundation(adapter);
-    };
-    MDCCheckbox.prototype.createRipple_ = function () {
-        var _this = this;
-        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
-        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
-        var adapter = tslib_1.__assign({}, _component2.MDCRipple.createAdapter(this), { deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return _this.nativeControl_.removeEventListener(evtType, handler, (0, _events.applyPassive)());
-            }, isSurfaceActive: function isSurfaceActive() {
-                return (0, _ponyfill.matches)(_this.nativeControl_, ':active');
-            }, isUnbounded: function isUnbounded() {
-                return true;
-            }, registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return _this.nativeControl_.addEventListener(evtType, handler, (0, _events.applyPassive)());
-            } });
-        return new _component2.MDCRipple(this.root_, new _foundation.MDCRippleFoundation(adapter));
-    };
-    MDCCheckbox.prototype.installPropertyChangeHooks_ = function () {
-        var _this = this;
-        var nativeCb = this.nativeControl_;
-        var cbProto = Object.getPrototypeOf(nativeCb);
-        CB_PROTO_PROPS.forEach(function (controlState) {
-            var desc = Object.getOwnPropertyDescriptor(cbProto, controlState);
-            // We have to check for this descriptor, since some browsers (Safari) don't support its return.
-            // See: https://bugs.webkit.org/show_bug.cgi?id=49739
-            if (!validDescriptor(desc)) {
-                return;
-            }
-            // Type cast is needed for compatibility with Closure Compiler.
-            var nativeGetter = desc.get;
-            var nativeCbDesc = {
-                configurable: desc.configurable,
-                enumerable: desc.enumerable,
-                get: nativeGetter,
-                set: function set(state) {
-                    desc.set.call(nativeCb, state);
-                    _this.foundation_.handleChange();
-                }
-            };
-            Object.defineProperty(nativeCb, controlState, nativeCbDesc);
-        });
-    };
-    MDCCheckbox.prototype.uninstallPropertyChangeHooks_ = function () {
-        var nativeCb = this.nativeControl_;
-        var cbProto = Object.getPrototypeOf(nativeCb);
-        CB_PROTO_PROPS.forEach(function (controlState) {
-            var desc = Object.getOwnPropertyDescriptor(cbProto, controlState);
-            if (!validDescriptor(desc)) {
-                return;
-            }
-            Object.defineProperty(nativeCb, controlState, desc);
-        });
-    };
-    Object.defineProperty(MDCCheckbox.prototype, "nativeControl_", {
-        get: function get() {
-            var NATIVE_CONTROL_SELECTOR = _foundation2.MDCCheckboxFoundation.strings.NATIVE_CONTROL_SELECTOR;
-            var el = this.root_.querySelector(NATIVE_CONTROL_SELECTOR);
-            if (!el) {
-                throw new Error("Checkbox component requires a " + NATIVE_CONTROL_SELECTOR + " element");
-            }
-            return el;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return MDCCheckbox;
-}(_component.MDCComponent);
-exports.MDCCheckbox = MDCCheckbox;
-
-function validDescriptor(inputPropDesc) {
-    return !!inputPropDesc && typeof inputPropDesc.set === 'function';
-}
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 391 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getCorrectPropertyName = getCorrectPropertyName;
-exports.getCorrectEventName = getCorrectEventName;
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssPropertyNameMap = {
-    animation: {
-        prefixed: '-webkit-animation',
-        standard: 'animation'
-    },
-    transform: {
-        prefixed: '-webkit-transform',
-        standard: 'transform'
-    },
-    transition: {
-        prefixed: '-webkit-transition',
-        standard: 'transition'
-    }
-};
-var jsEventTypeMap = {
-    animationend: {
-        cssProperty: 'animation',
-        prefixed: 'webkitAnimationEnd',
-        standard: 'animationend'
-    },
-    animationiteration: {
-        cssProperty: 'animation',
-        prefixed: 'webkitAnimationIteration',
-        standard: 'animationiteration'
-    },
-    animationstart: {
-        cssProperty: 'animation',
-        prefixed: 'webkitAnimationStart',
-        standard: 'animationstart'
-    },
-    transitionend: {
-        cssProperty: 'transition',
-        prefixed: 'webkitTransitionEnd',
-        standard: 'transitionend'
-    }
-};
-function isWindow(windowObj) {
-    return Boolean(windowObj.document) && typeof windowObj.document.createElement === 'function';
-}
-function getCorrectPropertyName(windowObj, cssProperty) {
-    if (isWindow(windowObj) && cssProperty in cssPropertyNameMap) {
-        var el = windowObj.document.createElement('div');
-        var _a = cssPropertyNameMap[cssProperty],
-            standard = _a.standard,
-            prefixed = _a.prefixed;
-        var isStandard = standard in el.style;
-        return isStandard ? standard : prefixed;
-    }
-    return cssProperty;
-}
-function getCorrectEventName(windowObj, eventType) {
-    if (isWindow(windowObj) && eventType in jsEventTypeMap) {
-        var el = windowObj.document.createElement('div');
-        var _a = jsEventTypeMap[eventType],
-            standard = _a.standard,
-            prefixed = _a.prefixed,
-            cssProperty = _a.cssProperty;
-        var isStandard = cssProperty in el.style;
-        return isStandard ? standard : prefixed;
-    }
-    return eventType;
-}
-//# sourceMappingURL=util.js.map
-
-/***/ }),
-/* 392 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.MDCRipple = undefined;
-
-var _tslib = __webpack_require__(1);
-
-var tslib_1 = _interopRequireWildcard(_tslib);
-
-var _component = __webpack_require__(112);
-
-var _events = __webpack_require__(113);
-
-var _ponyfill = __webpack_require__(114);
-
-var _foundation = __webpack_require__(115);
-
-var _util = __webpack_require__(116);
-
-var util = _interopRequireWildcard(_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var MDCRipple = /** @class */function (_super) {
-    tslib_1.__extends(MDCRipple, _super);
-    function MDCRipple() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.disabled = false;
-        return _this;
-    }
-    MDCRipple.attachTo = function (root, opts) {
-        if (opts === void 0) {
-            opts = { isUnbounded: undefined };
-        }
-        var ripple = new MDCRipple(root);
-        // Only override unbounded behavior if option is explicitly specified
-        if (opts.isUnbounded !== undefined) {
-            ripple.unbounded = opts.isUnbounded;
-        }
-        return ripple;
-    };
-    MDCRipple.createAdapter = function (instance) {
-        return {
-            addClass: function addClass(className) {
-                return instance.root_.classList.add(className);
-            },
-            browserSupportsCssVars: function browserSupportsCssVars() {
-                return util.supportsCssVariables(window);
-            },
-            computeBoundingRect: function computeBoundingRect() {
-                return instance.root_.getBoundingClientRect();
-            },
-            containsEventTarget: function containsEventTarget(target) {
-                return instance.root_.contains(target);
-            },
-            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.removeEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
-                return instance.root_.removeEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            deregisterResizeHandler: function deregisterResizeHandler(handler) {
-                return window.removeEventListener('resize', handler);
-            },
-            getWindowPageOffset: function getWindowPageOffset() {
-                return { x: window.pageXOffset, y: window.pageYOffset };
-            },
-            isSurfaceActive: function isSurfaceActive() {
-                return (0, _ponyfill.matches)(instance.root_, ':active');
-            },
-            isSurfaceDisabled: function isSurfaceDisabled() {
-                return Boolean(instance.disabled);
-            },
-            isUnbounded: function isUnbounded() {
-                return Boolean(instance.unbounded);
-            },
-            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
-                return document.documentElement.addEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
-                return instance.root_.addEventListener(evtType, handler, (0, _events.applyPassive)());
-            },
-            registerResizeHandler: function registerResizeHandler(handler) {
-                return window.addEventListener('resize', handler);
-            },
-            removeClass: function removeClass(className) {
-                return instance.root_.classList.remove(className);
-            },
-            updateCssVariable: function updateCssVariable(varName, value) {
-                return instance.root_.style.setProperty(varName, value);
-            }
-        };
-    };
-    Object.defineProperty(MDCRipple.prototype, "unbounded", {
-        get: function get() {
-            return Boolean(this.unbounded_);
-        },
-        set: function set(unbounded) {
-            this.unbounded_ = Boolean(unbounded);
-            this.setUnbounded_();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRipple.prototype.activate = function () {
-        this.foundation_.activate();
-    };
-    MDCRipple.prototype.deactivate = function () {
-        this.foundation_.deactivate();
-    };
-    MDCRipple.prototype.layout = function () {
-        this.foundation_.layout();
-    };
-    MDCRipple.prototype.getDefaultFoundation = function () {
-        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
-    };
-    MDCRipple.prototype.initialSyncWithDOM = function () {
-        var root = this.root_;
-        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
-    };
-    /**
-     * Closure Compiler throws an access control error when directly accessing a
-     * protected or private property inside a getter/setter, like unbounded above.
-     * By accessing the protected property inside a method, we solve that problem.
-     * That's why this function exists.
-     */
-    MDCRipple.prototype.setUnbounded_ = function () {
-        this.foundation_.setUnbounded(Boolean(this.unbounded_));
-    };
-    return MDCRipple;
-}(_component.MDCComponent);
-exports.MDCRipple = MDCRipple;
-//# sourceMappingURL=component.js.map
-
-/***/ }),
-/* 393 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var cssClasses = exports.cssClasses = {
-    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
-    // given that it's an 'upgrade' to an existing component. That being said it is the root
-    // CSS class that all other CSS classes derive from.
-    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
-    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
-    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
-    ROOT: 'mdc-ripple-upgraded',
-    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
-};
-var strings = exports.strings = {
-    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
-    VAR_FG_SIZE: '--mdc-ripple-fg-size',
-    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
-    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
-    VAR_LEFT: '--mdc-ripple-left',
-    VAR_TOP: '--mdc-ripple-top'
-};
-var numbers = exports.numbers = {
-    DEACTIVATION_TIMEOUT_MS: 225,
-    FG_DEACTIVATION_MS: 150,
-    INITIAL_ORIGIN_SCALE: 0.6,
-    PADDING: 10,
-    TAP_DELAY_MS: 300
-};
-//# sourceMappingURL=constants.js.map
-
-/***/ }),
-/* 394 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 module.exports = AlgoliaSearch;
 
-var Index = __webpack_require__(395);
-var deprecate = __webpack_require__(52);
-var deprecatedMessage = __webpack_require__(53);
-var AlgoliaSearchCore = __webpack_require__(400);
-var inherits = __webpack_require__(34);
-var errors = __webpack_require__(27);
+var Index = __webpack_require__(325);
+var deprecate = __webpack_require__(42);
+var deprecatedMessage = __webpack_require__(43);
+var AlgoliaSearchCore = __webpack_require__(330);
+var inherits = __webpack_require__(31);
+var errors = __webpack_require__(26);
 
 function AlgoliaSearch() {
   AlgoliaSearchCore.apply(this, arguments);
@@ -68822,7 +61627,7 @@ AlgoliaSearch.prototype.copyIndex = function (srcIndexName, dstIndexName, scopeO
  *  content: the server answer that contains the task ID
  */
 AlgoliaSearch.prototype.getLogs = function (offset, length, callback) {
-  var clone = __webpack_require__(20);
+  var clone = __webpack_require__(19);
   var params = {};
   if ((typeof offset === 'undefined' ? 'undefined' : _typeof(offset)) === 'object') {
     // getLogs(params)
@@ -68896,7 +61701,7 @@ AlgoliaSearch.prototype.initAnalytics = function (opts) {
   // - move initAnalytics to a property on the main module (algoliasearch.initAnalytics),
   // same as places.
   // The current API was made mostly to mimic the one made in PHP
-  var createAnalyticsClient = __webpack_require__(404);
+  var createAnalyticsClient = __webpack_require__(334);
   return createAnalyticsClient(this.applicationID, this.apiKey, opts);
 };
 
@@ -69036,7 +61841,7 @@ AlgoliaSearch.prototype.addUserKey = deprecate(function (acls, params, callback)
  * @see {@link https://www.algolia.com/doc/rest_api#AddKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.addApiKey = function (acls, params, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: client.addApiKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -69127,7 +61932,7 @@ AlgoliaSearch.prototype.updateUserKey = deprecate(function (key, acls, params, c
  * @see {@link https://www.algolia.com/doc/rest_api#UpdateIndexKey|Algolia REST API Documentation}
  */
 AlgoliaSearch.prototype.updateApiKey = function (key, acls, params, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: client.updateApiKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -69228,7 +62033,7 @@ AlgoliaSearch.prototype.sendQueriesBatch = deprecate(function sendQueriesBatchDe
  * }], cb)
  */
 AlgoliaSearch.prototype.batch = function (operations, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: client.batch(operations[, callback])';
 
   if (!isArray(operations)) {
@@ -69491,7 +62296,7 @@ function notImplemented() {
 }
 
 /***/ }),
-/* 395 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69499,12 +62304,12 @@ function notImplemented() {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var inherits = __webpack_require__(34);
-var IndexCore = __webpack_require__(119);
-var deprecate = __webpack_require__(52);
-var deprecatedMessage = __webpack_require__(53);
-var exitPromise = __webpack_require__(124);
-var errors = __webpack_require__(27);
+var inherits = __webpack_require__(31);
+var IndexCore = __webpack_require__(70);
+var deprecate = __webpack_require__(42);
+var deprecatedMessage = __webpack_require__(43);
+var exitPromise = __webpack_require__(75);
+var errors = __webpack_require__(26);
 
 var deprecateForwardToSlaves = deprecate(function () {}, deprecatedMessage('forwardToSlaves', 'forwardToReplicas'));
 
@@ -69554,7 +62359,7 @@ Index.prototype.addObject = function (content, objectID, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.addObjects = function (objects, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: index.addObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
@@ -69626,7 +62431,7 @@ Index.prototype.partialUpdateObjects = function (objects, createIfNotExists, cal
     createIfNotExists = true;
   }
 
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: index.partialUpdateObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
@@ -69682,7 +62487,7 @@ Index.prototype.saveObject = function (object, callback) {
 *  content: the server answer that updateAt and taskID
 */
 Index.prototype.saveObjects = function (objects, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: index.saveObjects(arrayOfObjects[, callback])';
 
   if (!isArray(objects)) {
@@ -69747,8 +62552,8 @@ Index.prototype.deleteObject = function (objectID, callback) {
 *  content: the server answer that contains 3 elements: createAt, taskId and objectID
 */
 Index.prototype.deleteObjects = function (objectIDs, callback) {
-  var isArray = __webpack_require__(12);
-  var map = __webpack_require__(29);
+  var isArray = __webpack_require__(11);
+  var map = __webpack_require__(28);
 
   var usage = 'Usage: index.deleteObjects(arrayOfObjectIDs[, callback])';
 
@@ -69788,8 +62593,8 @@ Index.prototype.deleteObjects = function (objectIDs, callback) {
 * @deprecated see index.deleteBy
 */
 Index.prototype.deleteByQuery = deprecate(function (query, params, callback) {
-  var clone = __webpack_require__(20);
-  var map = __webpack_require__(29);
+  var clone = __webpack_require__(19);
+  var map = __webpack_require__(28);
 
   var indexObj = this;
   var client = indexObj.as;
@@ -69918,9 +62723,9 @@ Index.prototype.browseAll = function (query, queryParameters) {
     query = undefined;
   }
 
-  var merge = __webpack_require__(121);
+  var merge = __webpack_require__(72);
 
-  var IndexBrowser = __webpack_require__(398);
+  var IndexBrowser = __webpack_require__(328);
 
   var browser = new IndexBrowser();
   var client = this.as;
@@ -70670,7 +63475,7 @@ Index.prototype.addUserKey = deprecate(function (acls, params, callback) {
 * @deprecated see client.addApiKey()
 */
 Index.prototype.addApiKey = deprecate(function (acls, params, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: index.addApiKey(arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -70761,7 +63566,7 @@ Index.prototype.updateUserKey = deprecate(function (key, acls, params, callback)
 * @deprecated see client.updateApiKey()
 */
 Index.prototype.updateApiKey = deprecate(function (key, acls, params, callback) {
-  var isArray = __webpack_require__(12);
+  var isArray = __webpack_require__(11);
   var usage = 'Usage: index.updateApiKey(key, arrayOfAcls[, params, callback])';
 
   if (!isArray(acls)) {
@@ -70800,19 +63605,19 @@ Index.prototype.updateApiKey = deprecate(function (key, acls, params, callback) 
 }, deprecatedMessage('index.updateApiKey()', 'client.updateApiKey()'));
 
 /***/ }),
-/* 396 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var slice = Array.prototype.slice;
-var isArgs = __webpack_require__(123);
+var isArgs = __webpack_require__(74);
 
 var origKeys = Object.keys;
 var keysShim = origKeys ? function keys(o) {
 	return origKeys(o);
-} : __webpack_require__(397);
+} : __webpack_require__(327);
 
 var originalKeys = Object.keys;
 
@@ -70841,7 +63646,7 @@ keysShim.shim = function shimObjectKeys() {
 module.exports = keysShim;
 
 /***/ }),
-/* 397 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70854,7 +63659,7 @@ if (!Object.keys) {
 	// modified from https://github.com/es-shims/es5-shim
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
-	var isArgs = __webpack_require__(123); // eslint-disable-line global-require
+	var isArgs = __webpack_require__(74); // eslint-disable-line global-require
 	var isEnumerable = Object.prototype.propertyIsEnumerable;
 	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
 	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
@@ -70965,7 +63770,7 @@ if (!Object.keys) {
 module.exports = keysShim;
 
 /***/ }),
-/* 398 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70975,8 +63780,8 @@ module.exports = keysShim;
 
 module.exports = IndexBrowser;
 
-var inherits = __webpack_require__(34);
-var EventEmitter = __webpack_require__(399).EventEmitter;
+var inherits = __webpack_require__(31);
+var EventEmitter = __webpack_require__(329).EventEmitter;
 
 function IndexBrowser() {}
 
@@ -71009,7 +63814,7 @@ IndexBrowser.prototype._clean = function () {
 };
 
 /***/ }),
-/* 399 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71431,7 +64236,7 @@ function unwrapListeners(arr) {
 }
 
 /***/ }),
-/* 400 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71439,10 +64244,10 @@ function unwrapListeners(arr) {
 
 module.exports = AlgoliaSearchCore;
 
-var errors = __webpack_require__(27);
-var exitPromise = __webpack_require__(124);
-var IndexCore = __webpack_require__(119);
-var store = __webpack_require__(401);
+var errors = __webpack_require__(26);
+var exitPromise = __webpack_require__(75);
+var IndexCore = __webpack_require__(70);
+var store = __webpack_require__(331);
 
 // We will always put the API KEY in the JSON body in case of too long API KEY,
 // to avoid query string being too long and failing in various conditions (our server limit, browser limit,
@@ -71475,11 +64280,11 @@ var RESET_APP_DATA_TIMER = process.env.RESET_APP_DATA_TIMER && parseInt(process.
  *           If you provide them, you will less benefit from our HA implementation
  */
 function AlgoliaSearchCore(applicationID, apiKey, opts) {
-  var debug = __webpack_require__(35)('algoliasearch');
+  var debug = __webpack_require__(32)('algoliasearch');
 
-  var clone = __webpack_require__(20);
-  var isArray = __webpack_require__(12);
-  var map = __webpack_require__(29);
+  var clone = __webpack_require__(19);
+  var isArray = __webpack_require__(11);
+  var map = __webpack_require__(28);
 
   var usage = 'Usage: algoliasearch(applicationID, apiKey, opts)';
 
@@ -71621,7 +64426,7 @@ AlgoliaSearchCore.prototype.addAlgoliaAgent = function (algoliaAgent) {
 AlgoliaSearchCore.prototype._jsonRequest = function (initialOpts) {
   this._checkAppIdData();
 
-  var requestDebug = __webpack_require__(35)('algoliasearch:' + initialOpts.url);
+  var requestDebug = __webpack_require__(32)('algoliasearch:' + initialOpts.url);
 
   var body;
   var cacheID;
@@ -71976,7 +64781,7 @@ AlgoliaSearchCore.prototype._getSearchParams = function (args, params) {
  * @param [Object] options.headers Extra headers to send
  */
 AlgoliaSearchCore.prototype._computeRequestHeaders = function (options) {
-  var forEach = __webpack_require__(28);
+  var forEach = __webpack_require__(27);
 
   var ua = options.additionalUA ? this._ua + '; ' + options.additionalUA : this._ua;
 
@@ -72024,8 +64829,8 @@ AlgoliaSearchCore.prototype._computeRequestHeaders = function (options) {
  * @return {Promise|undefined} Returns a promise if no callback given
  */
 AlgoliaSearchCore.prototype.search = function (queries, opts, callback) {
-  var isArray = __webpack_require__(12);
-  var map = __webpack_require__(29);
+  var isArray = __webpack_require__(11);
+  var map = __webpack_require__(28);
 
   var usage = 'Usage: client.search(arrayOfQueries[, callback])';
 
@@ -72103,8 +64908,8 @@ AlgoliaSearchCore.prototype.search = function (queries, opts, callback) {
 * Pagination is not supported. The page and hitsPerPage parameters will be ignored.
 */
 AlgoliaSearchCore.prototype.searchForFacetValues = function (queries) {
-  var isArray = __webpack_require__(12);
-  var map = __webpack_require__(29);
+  var isArray = __webpack_require__(11);
+  var map = __webpack_require__(28);
 
   var usage = 'Usage: client.searchForFacetValues([{indexName, params: {facetName, facetQuery, ...params}}, ...queries])'; // eslint-disable-line max-len
 
@@ -72119,8 +64924,8 @@ AlgoliaSearchCore.prototype.searchForFacetValues = function (queries) {
       throw new Error(usage);
     }
 
-    var clone = __webpack_require__(20);
-    var omit = __webpack_require__(122);
+    var clone = __webpack_require__(19);
+    var omit = __webpack_require__(73);
 
     var indexName = query.indexName;
     var params = query.params;
@@ -72245,7 +65050,7 @@ AlgoliaSearchCore.prototype._cacheAppIdData = function (data) {
 };
 
 AlgoliaSearchCore.prototype._partialAppIdDataUpdate = function (newData) {
-  var foreach = __webpack_require__(28);
+  var foreach = __webpack_require__(27);
   var currentData = this._getAppIdData();
   foreach(newData, function (value, key) {
     currentData[key] = value;
@@ -72267,7 +65072,7 @@ AlgoliaSearchCore.prototype._getHostIndexByType = function (hostType) {
 };
 
 AlgoliaSearchCore.prototype._setHostIndexByType = function (hostIndex, hostType) {
-  var clone = __webpack_require__(20);
+  var clone = __webpack_require__(19);
   var newHostIndexes = clone(this._hostIndexes);
   newHostIndexes[hostType] = hostIndex;
   this._partialAppIdDataUpdate({ hostIndexes: newHostIndexes });
@@ -72360,13 +65165,13 @@ function removeCredentials(headers) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 401 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-var debug = __webpack_require__(35)('algoliasearch:src/hostIndexState.js');
+var debug = __webpack_require__(32)('algoliasearch:src/hostIndexState.js');
 var localStorageNamespace = 'algoliasearch-client-js';
 
 var store;
@@ -72451,10 +65256,10 @@ function cleanup() {
     // nothing to do
   }
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
 
 /***/ }),
-/* 402 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72472,7 +65277,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(403);
+exports.humanize = __webpack_require__(333);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -72664,7 +65469,7 @@ function coerce(val) {
 }
 
 /***/ }),
-/* 403 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72817,7 +65622,7 @@ function plural(ms, n, name) {
 }
 
 /***/ }),
-/* 404 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72825,7 +65630,7 @@ function plural(ms, n, name) {
 
 module.exports = createAnalyticsClient;
 
-var algoliasearch = __webpack_require__(26);
+var algoliasearch = __webpack_require__(69);
 
 function createAnalyticsClient(appId, apiKey, opts) {
   var analytics = {};
@@ -72905,32 +65710,32 @@ function createAnalyticsClient(appId, apiKey, opts) {
 }
 
 /***/ }),
-/* 405 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var global = __webpack_require__(406);
-var Promise = global.Promise || __webpack_require__(407).Promise;
+var global = __webpack_require__(336);
+var Promise = global.Promise || __webpack_require__(337).Promise;
 
 // This is the standalone browser build entry point
 // Browser implementation of the Algolia Search JavaScript client,
 // using XMLHttpRequest, XDomainRequest and JSONP as fallback
 module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
-  var inherits = __webpack_require__(34);
-  var errors = __webpack_require__(27);
-  var inlineHeaders = __webpack_require__(408);
-  var jsonpRequest = __webpack_require__(409);
-  var places = __webpack_require__(410);
+  var inherits = __webpack_require__(31);
+  var errors = __webpack_require__(26);
+  var inlineHeaders = __webpack_require__(338);
+  var jsonpRequest = __webpack_require__(339);
+  var places = __webpack_require__(340);
   uaSuffix = uaSuffix || '';
 
   if (process.env.NODE_ENV === 'debug') {
-    __webpack_require__(35).enable('algoliasearch*');
+    __webpack_require__(32).enable('algoliasearch*');
   }
 
   function algoliasearch(applicationID, apiKey, opts) {
-    var cloneDeep = __webpack_require__(20);
+    var cloneDeep = __webpack_require__(19);
 
     opts = cloneDeep(opts || {});
 
@@ -72939,7 +65744,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
     return new AlgoliaSearchBrowser(applicationID, apiKey, opts);
   }
 
-  algoliasearch.version = __webpack_require__(413);
+  algoliasearch.version = __webpack_require__(343);
 
   algoliasearch.ua = 'Algolia for JavaScript (' + algoliasearch.version + '); ' + uaSuffix;
 
@@ -72948,7 +65753,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
   // we expose into window no matter how we are used, this will allow
   // us to easily debug any website running algolia
   global.__algolia = {
-    debug: __webpack_require__(35),
+    debug: __webpack_require__(32),
     algoliasearch: algoliasearch
   };
 
@@ -73139,7 +65944,7 @@ module.exports = function createAlgoliasearch(AlgoliaSearch, uaSuffix) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
 
 /***/ }),
-/* 406 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73158,10 +65963,10 @@ if (typeof window !== "undefined") {
 }
 
 module.exports = win;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(54)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
 
 /***/ }),
-/* 407 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74335,10 +67140,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 //# sourceMappingURL=es6-promise.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(54)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(44)))
 
 /***/ }),
-/* 408 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74346,7 +67151,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 module.exports = inlineHeaders;
 
-var encode = __webpack_require__(125);
+var encode = __webpack_require__(76);
 
 function inlineHeaders(url, headers) {
   if (/\?/.test(url)) {
@@ -74359,7 +67164,7 @@ function inlineHeaders(url, headers) {
 }
 
 /***/ }),
-/* 409 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74367,7 +67172,7 @@ function inlineHeaders(url, headers) {
 
 module.exports = jsonpRequest;
 
-var errors = __webpack_require__(27);
+var errors = __webpack_require__(26);
 
 var JSONPCounter = 0;
 
@@ -74491,7 +67296,7 @@ function jsonpRequest(url, opts, cb) {
 }
 
 /***/ }),
-/* 410 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74501,12 +67306,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 module.exports = createPlacesClient;
 
-var qs3 = __webpack_require__(411);
-var buildSearchMethod = __webpack_require__(120);
+var qs3 = __webpack_require__(341);
+var buildSearchMethod = __webpack_require__(71);
 
 function createPlacesClient(algoliasearch) {
   return function places(appID, apiKey, opts) {
-    var cloneDeep = __webpack_require__(20);
+    var cloneDeep = __webpack_require__(19);
 
     opts = opts && cloneDeep(opts) || {};
     opts.hosts = opts.hosts || ['places-dsn.algolia.net', 'places-1.algolianet.com', 'places-2.algolianet.com', 'places-3.algolianet.com'];
@@ -74545,17 +67350,17 @@ function createPlacesClient(algoliasearch) {
 }
 
 /***/ }),
-/* 411 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(412);
-exports.encode = exports.stringify = __webpack_require__(125);
+exports.decode = exports.parse = __webpack_require__(342);
+exports.encode = exports.stringify = __webpack_require__(76);
 
 /***/ }),
-/* 412 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74649,13 +67454,7233 @@ var isArray = Array.isArray || function (xs) {
 };
 
 /***/ }),
-/* 413 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 module.exports = '3.35.1';
+
+/***/ }),
+/* 344 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(3);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Utils = __webpack_require__(6);
+var Card = __webpack_require__(20);
+
+var Stats = function () {
+    function Stats() {
+        _classCallCheck(this, Stats);
+
+        this.render = window.app.render;
+        this.renderSelf();
+    }
+
+    _createClass(Stats, [{
+        key: 'renderSelf',
+        value: function renderSelf() {
+            this.header = this.render.header('header-main', {
+                title: 'Tutorbook'
+            });
+            this.main = this.render.template('stats', {
+                title: window.app.location.name.split(' ')[0] + ' Statistics',
+                welcome: !window.app.onMobile
+            });
+        }
+    }, {
+        key: 'view',
+        value: function view() {
+            window.app.nav.selected = 'Stats';
+            window.app.intercom.view(true);
+            window.app.view(this.header, this.main, '/app/stats');
+            this.cardsViewed ? null : this.viewCards();
+        }
+    }, {
+        key: 'viewCards',
+        value: function viewCards() {
+            this.cardsViewed = true;
+            this.viewRecentActivityCards();
+            this.viewServiceHourCards();
+        }
+    }, {
+        key: 'viewRecentActivityCards',
+        value: function viewRecentActivityCards() {
+            var _this = this;
+
+            var emptyCard = Card.renderCard('You\'re Done!', 'Hooray you\'re all caught up, for now...', 'No recent activity at the ' + window.app.location.name + ' that ' + 'you haven\'t already addressed. Note that (right now) we only ' + 'show cards for new requests, canceled requests, and updated ' + 'profiles. More updates coming soon!', {
+                great: function great() {
+                    (0, _jquery2.default)(emptyCard).remove();
+                }
+            });
+            (0, _jquery2.default)(emptyCard).attr('id', 'empty-card');
+            var renderCard = function renderCard(doc) {
+                var action = doc.data();
+                var card = Card.renderCard(action.title, action.subtitle, action.summary, {
+                    dismiss: function dismiss() {
+                        (0, _jquery2.default)(card).remove();
+                        return doc.ref.delete();
+                    }
+                });
+                (0, _jquery2.default)(card).attr('id', doc.id).attr('timestamp', action.timestamp);
+                return card;
+            };
+            var recycler = {
+                display: function display(doc) {
+                    (0, _jquery2.default)(_this.main).find('#activity #cards').find('#empty-card').remove().end().append(renderCard(doc));
+                },
+                remove: function remove(doc) {
+                    (0, _jquery2.default)(_this.main).find('#activity #cards').find('#empty-card').remove().end().find('#' + doc.id).remove().end();
+                },
+                empty: function empty() {
+                    (0, _jquery2.default)(_this.main).find('#activity #cards').empty().append(emptyCard);
+                }
+            };
+            Utils.recycle({
+                activity: window.app.db.collection('locations').doc(window.app.location.id).collection('recentActions').orderBy('timestamp').limit(10)
+            }, recycler);
+        }
+    }, {
+        key: 'viewServiceHourCards',
+        value: function viewServiceHourCards() {}
+    }]);
+
+    return Stats;
+}();
+
+module.exports = Stats;
+
+/***/ }),
+/* 345 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(346);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(86);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+var _index = __webpack_require__(87);
+
+Object.keys(_index).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _index[key];
+    }
+  });
+});
+
+var _index2 = __webpack_require__(89);
+
+Object.keys(_index2).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _index2[key];
+    }
+  });
+});
+
+/***/ }),
+/* 346 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCSelect = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _index = __webpack_require__(347);
+
+var _index2 = __webpack_require__(77);
+
+var _constants = __webpack_require__(33);
+
+var menuSurfaceConstants = _interopRequireWildcard(_constants);
+
+var _constants2 = __webpack_require__(46);
+
+var menuConstants = _interopRequireWildcard(_constants2);
+
+var _index3 = __webpack_require__(23);
+
+var _index4 = __webpack_require__(357);
+
+var _index5 = __webpack_require__(359);
+
+var _constants3 = __webpack_require__(85);
+
+var _foundation = __webpack_require__(86);
+
+var _index6 = __webpack_require__(87);
+
+var _index7 = __webpack_require__(89);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var POINTER_EVENTS = ['mousedown', 'touchstart']; /**
+                                                   * @license
+                                                   * Copyright 2016 Google Inc.
+                                                   *
+                                                   * Permission is hereby granted, free of charge, to any person obtaining a copy
+                                                   * of this software and associated documentation files (the "Software"), to deal
+                                                   * in the Software without restriction, including without limitation the rights
+                                                   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                                                   * copies of the Software, and to permit persons to whom the Software is
+                                                   * furnished to do so, subject to the following conditions:
+                                                   *
+                                                   * The above copyright notice and this permission notice shall be included in
+                                                   * all copies or substantial portions of the Software.
+                                                   *
+                                                   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                                                   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                                                   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                                                   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                                                   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                                                   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                                                   * THE SOFTWARE.
+                                                   */
+
+var VALIDATION_ATTR_WHITELIST = ['required', 'aria-required'];
+var MDCSelect = /** @class */function (_super) {
+    tslib_1.__extends(MDCSelect, _super);
+    function MDCSelect() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCSelect.attachTo = function (root) {
+        return new MDCSelect(root);
+    };
+    MDCSelect.prototype.initialize = function (labelFactory, lineRippleFactory, outlineFactory, menuFactory, iconFactory, helperTextFactory) {
+        if (labelFactory === void 0) {
+            labelFactory = function labelFactory(el) {
+                return new _index.MDCFloatingLabel(el);
+            };
+        }
+        if (lineRippleFactory === void 0) {
+            lineRippleFactory = function lineRippleFactory(el) {
+                return new _index2.MDCLineRipple(el);
+            };
+        }
+        if (outlineFactory === void 0) {
+            outlineFactory = function outlineFactory(el) {
+                return new _index4.MDCNotchedOutline(el);
+            };
+        }
+        if (menuFactory === void 0) {
+            menuFactory = function menuFactory(el) {
+                return new _index3.MDCMenu(el);
+            };
+        }
+        if (iconFactory === void 0) {
+            iconFactory = function iconFactory(el) {
+                return new _index7.MDCSelectIcon(el);
+            };
+        }
+        if (helperTextFactory === void 0) {
+            helperTextFactory = function helperTextFactory(el) {
+                return new _index6.MDCSelectHelperText(el);
+            };
+        }
+        this.isMenuOpen_ = false;
+        this.nativeControl_ = this.root_.querySelector(_constants3.strings.NATIVE_CONTROL_SELECTOR);
+        this.selectedText_ = this.root_.querySelector(_constants3.strings.SELECTED_TEXT_SELECTOR);
+        var targetElement = this.nativeControl_ || this.selectedText_;
+        if (!targetElement) {
+            throw new Error('MDCSelect: Missing required element: Exactly one of the following selectors must be present: ' + ("'" + _constants3.strings.NATIVE_CONTROL_SELECTOR + "' or '" + _constants3.strings.SELECTED_TEXT_SELECTOR + "'"));
+        }
+        this.targetElement_ = targetElement;
+        if (this.targetElement_.hasAttribute(_constants3.strings.ARIA_CONTROLS)) {
+            var helperTextElement = document.getElementById(this.targetElement_.getAttribute(_constants3.strings.ARIA_CONTROLS));
+            if (helperTextElement) {
+                this.helperText_ = helperTextFactory(helperTextElement);
+            }
+        }
+        if (this.selectedText_) {
+            this.enhancedSelectSetup_(menuFactory);
+        }
+        var labelElement = this.root_.querySelector(_constants3.strings.LABEL_SELECTOR);
+        this.label_ = labelElement ? labelFactory(labelElement) : null;
+        var lineRippleElement = this.root_.querySelector(_constants3.strings.LINE_RIPPLE_SELECTOR);
+        this.lineRipple_ = lineRippleElement ? lineRippleFactory(lineRippleElement) : null;
+        var outlineElement = this.root_.querySelector(_constants3.strings.OUTLINE_SELECTOR);
+        this.outline_ = outlineElement ? outlineFactory(outlineElement) : null;
+        var leadingIcon = this.root_.querySelector(_constants3.strings.LEADING_ICON_SELECTOR);
+        if (leadingIcon) {
+            this.root_.classList.add(_constants3.cssClasses.WITH_LEADING_ICON);
+            this.leadingIcon_ = iconFactory(leadingIcon);
+            if (this.menuElement_) {
+                this.menuElement_.classList.add(_constants3.cssClasses.WITH_LEADING_ICON);
+            }
+        }
+        if (!this.root_.classList.contains(_constants3.cssClasses.OUTLINED)) {
+            this.ripple = this.createRipple_();
+        }
+        // The required state needs to be sync'd before the mutation observer is added.
+        this.initialSyncRequiredState_();
+        this.addMutationObserverForRequired_();
+    };
+    /**
+     * Initializes the select's event listeners and internal state based
+     * on the environment's state.
+     */
+    MDCSelect.prototype.initialSyncWithDOM = function () {
+        var _this = this;
+        this.handleChange_ = function () {
+            return _this.foundation_.handleChange( /* didChange */true);
+        };
+        this.handleFocus_ = function () {
+            return _this.foundation_.handleFocus();
+        };
+        this.handleBlur_ = function () {
+            return _this.foundation_.handleBlur();
+        };
+        this.handleClick_ = function (evt) {
+            if (_this.selectedText_) {
+                _this.selectedText_.focus();
+            }
+            _this.foundation_.handleClick(_this.getNormalizedXCoordinate_(evt));
+        };
+        this.handleKeydown_ = function (evt) {
+            return _this.foundation_.handleKeydown(evt);
+        };
+        this.handleMenuSelected_ = function (evtData) {
+            return _this.selectedIndex = evtData.detail.index;
+        };
+        this.handleMenuOpened_ = function () {
+            // Menu should open to the last selected element.
+            if (_this.selectedIndex >= 0) {
+                var selectedItemEl = _this.menu_.items[_this.selectedIndex];
+                selectedItemEl.focus();
+            }
+        };
+        this.handleMenuClosed_ = function () {
+            // isMenuOpen_ is used to track the state of the menu opening or closing since the menu.open function
+            // will return false if the menu is still closing and this method listens to the closed event which
+            // occurs after the menu is already closed.
+            _this.isMenuOpen_ = false;
+            _this.selectedText_.removeAttribute('aria-expanded');
+            if (document.activeElement !== _this.selectedText_) {
+                _this.foundation_.handleBlur();
+            }
+        };
+        this.targetElement_.addEventListener('change', this.handleChange_);
+        this.targetElement_.addEventListener('focus', this.handleFocus_);
+        this.targetElement_.addEventListener('blur', this.handleBlur_);
+        POINTER_EVENTS.forEach(function (evtType) {
+            _this.targetElement_.addEventListener(evtType, _this.handleClick_);
+        });
+        if (this.menuElement_) {
+            this.selectedText_.addEventListener('keydown', this.handleKeydown_);
+            this.menu_.listen(menuSurfaceConstants.strings.CLOSED_EVENT, this.handleMenuClosed_);
+            this.menu_.listen(menuSurfaceConstants.strings.OPENED_EVENT, this.handleMenuOpened_);
+            this.menu_.listen(menuConstants.strings.SELECTED_EVENT, this.handleMenuSelected_);
+            if (this.hiddenInput_ && this.hiddenInput_.value) {
+                // If the hidden input already has a value, use it to restore the select's value.
+                // This can happen e.g. if the user goes back or (in some browsers) refreshes the page.
+                var enhancedAdapterMethods = this.getEnhancedSelectAdapterMethods_();
+                enhancedAdapterMethods.setValue(this.hiddenInput_.value);
+            } else if (this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR)) {
+                // If an element is selected, the select should set the initial selected text.
+                var enhancedAdapterMethods = this.getEnhancedSelectAdapterMethods_();
+                enhancedAdapterMethods.setValue(enhancedAdapterMethods.getValue());
+            }
+        }
+        // Initially sync floating label
+        this.foundation_.handleChange( /* didChange */false);
+        if (this.root_.classList.contains(_constants3.cssClasses.DISABLED) || this.nativeControl_ && this.nativeControl_.disabled) {
+            this.disabled = true;
+        }
+    };
+    MDCSelect.prototype.destroy = function () {
+        var _this = this;
+        this.targetElement_.removeEventListener('change', this.handleChange_);
+        this.targetElement_.removeEventListener('focus', this.handleFocus_);
+        this.targetElement_.removeEventListener('blur', this.handleBlur_);
+        this.targetElement_.removeEventListener('keydown', this.handleKeydown_);
+        POINTER_EVENTS.forEach(function (evtType) {
+            _this.targetElement_.removeEventListener(evtType, _this.handleClick_);
+        });
+        if (this.menu_) {
+            this.menu_.unlisten(menuSurfaceConstants.strings.CLOSED_EVENT, this.handleMenuClosed_);
+            this.menu_.unlisten(menuSurfaceConstants.strings.OPENED_EVENT, this.handleMenuOpened_);
+            this.menu_.unlisten(menuConstants.strings.SELECTED_EVENT, this.handleMenuSelected_);
+            this.menu_.destroy();
+        }
+        if (this.ripple) {
+            this.ripple.destroy();
+        }
+        if (this.outline_) {
+            this.outline_.destroy();
+        }
+        if (this.leadingIcon_) {
+            this.leadingIcon_.destroy();
+        }
+        if (this.helperText_) {
+            this.helperText_.destroy();
+        }
+        if (this.validationObserver_) {
+            this.validationObserver_.disconnect();
+        }
+        _super.prototype.destroy.call(this);
+    };
+    Object.defineProperty(MDCSelect.prototype, "value", {
+        get: function get() {
+            return this.foundation_.getValue();
+        },
+        set: function set(value) {
+            this.foundation_.setValue(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "selectedIndex", {
+        get: function get() {
+            var selectedIndex = -1;
+            if (this.menuElement_ && this.menu_) {
+                var selectedEl = this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR);
+                selectedIndex = this.menu_.items.indexOf(selectedEl);
+            } else if (this.nativeControl_) {
+                selectedIndex = this.nativeControl_.selectedIndex;
+            }
+            return selectedIndex;
+        },
+        set: function set(selectedIndex) {
+            this.foundation_.setSelectedIndex(selectedIndex);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "disabled", {
+        get: function get() {
+            return this.root_.classList.contains(_constants3.cssClasses.DISABLED) || (this.nativeControl_ ? this.nativeControl_.disabled : false);
+        },
+        set: function set(disabled) {
+            this.foundation_.setDisabled(disabled);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "leadingIconAriaLabel", {
+        set: function set(label) {
+            this.foundation_.setLeadingIconAriaLabel(label);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "leadingIconContent", {
+        /**
+         * Sets the text content of the leading icon.
+         */
+        set: function set(content) {
+            this.foundation_.setLeadingIconContent(content);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "helperTextContent", {
+        /**
+         * Sets the text content of the helper text.
+         */
+        set: function set(content) {
+            this.foundation_.setHelperTextContent(content);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "valid", {
+        /**
+         * Checks if the select is in a valid state.
+         */
+        get: function get() {
+            return this.foundation_.isValid();
+        },
+        /**
+         * Sets the current invalid state of the select.
+         */
+        set: function set(isValid) {
+            this.foundation_.setValid(isValid);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCSelect.prototype, "required", {
+        /**
+         * Returns whether the select is required.
+         */
+        get: function get() {
+            if (this.nativeControl_) {
+                return this.nativeControl_.required;
+            } else {
+                return this.selectedText_.getAttribute('aria-required') === 'true';
+            }
+        },
+        /**
+         * Sets the control to the required state.
+         */
+        set: function set(isRequired) {
+            if (this.nativeControl_) {
+                this.nativeControl_.required = isRequired;
+            } else {
+                if (isRequired) {
+                    this.selectedText_.setAttribute('aria-required', isRequired.toString());
+                } else {
+                    this.selectedText_.removeAttribute('aria-required');
+                }
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Recomputes the outline SVG path for the outline element.
+     */
+    MDCSelect.prototype.layout = function () {
+        this.foundation_.layout();
+    };
+    MDCSelect.prototype.getDefaultFoundation = function () {
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        var adapter = tslib_1.__assign({}, this.nativeControl_ ? this.getNativeSelectAdapterMethods_() : this.getEnhancedSelectAdapterMethods_(), this.getCommonAdapterMethods_(), this.getOutlineAdapterMethods_(), this.getLabelAdapterMethods_());
+        return new _foundation.MDCSelectFoundation(adapter, this.getFoundationMap_());
+    };
+    /**
+     * Handles setup for the enhanced menu.
+     */
+    MDCSelect.prototype.enhancedSelectSetup_ = function (menuFactory) {
+        var isDisabled = this.root_.classList.contains(_constants3.cssClasses.DISABLED);
+        this.selectedText_.setAttribute('tabindex', isDisabled ? '-1' : '0');
+        this.hiddenInput_ = this.root_.querySelector(_constants3.strings.HIDDEN_INPUT_SELECTOR);
+        this.menuElement_ = this.root_.querySelector(_constants3.strings.MENU_SELECTOR);
+        this.menu_ = menuFactory(this.menuElement_);
+        this.menu_.hoistMenuToBody();
+        this.menu_.setAnchorElement(this.root_);
+        this.menu_.setAnchorCorner(menuSurfaceConstants.Corner.BOTTOM_START);
+        this.menu_.wrapFocus = false;
+    };
+    MDCSelect.prototype.createRipple_ = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = tslib_1.__assign({}, _index5.MDCRipple.createAdapter(this), { registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.targetElement_.addEventListener(evtType, handler);
+            }, deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.targetElement_.removeEventListener(evtType, handler);
+            } });
+        // tslint:enable:object-literal-sort-keys
+        return new _index5.MDCRipple(this.root_, new _index5.MDCRippleFoundation(adapter));
+    };
+    MDCSelect.prototype.getNativeSelectAdapterMethods_ = function () {
+        var _this = this;
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        return {
+            getValue: function getValue() {
+                return _this.nativeControl_.value;
+            },
+            setValue: function setValue(value) {
+                _this.nativeControl_.value = value;
+            },
+            openMenu: function openMenu() {
+                return undefined;
+            },
+            closeMenu: function closeMenu() {
+                return undefined;
+            },
+            isMenuOpen: function isMenuOpen() {
+                return false;
+            },
+            setSelectedIndex: function setSelectedIndex(index) {
+                _this.nativeControl_.selectedIndex = index;
+            },
+            setDisabled: function setDisabled(isDisabled) {
+                _this.nativeControl_.disabled = isDisabled;
+            },
+            setValid: function setValid(isValid) {
+                if (isValid) {
+                    _this.root_.classList.remove(_constants3.cssClasses.INVALID);
+                } else {
+                    _this.root_.classList.add(_constants3.cssClasses.INVALID);
+                }
+            },
+            checkValidity: function checkValidity() {
+                return _this.nativeControl_.checkValidity();
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+    };
+    MDCSelect.prototype.getEnhancedSelectAdapterMethods_ = function () {
+        var _this = this;
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        return {
+            getValue: function getValue() {
+                var listItem = _this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR);
+                if (listItem && listItem.hasAttribute(_constants3.strings.ENHANCED_VALUE_ATTR)) {
+                    return listItem.getAttribute(_constants3.strings.ENHANCED_VALUE_ATTR) || '';
+                }
+                return '';
+            },
+            setValue: function setValue(value) {
+                var element = _this.menuElement_.querySelector("[" + _constants3.strings.ENHANCED_VALUE_ATTR + "=\"" + value + "\"]");
+                _this.setEnhancedSelectedIndex_(element ? _this.menu_.items.indexOf(element) : -1);
+            },
+            openMenu: function openMenu() {
+                if (_this.menu_ && !_this.menu_.open) {
+                    _this.menu_.open = true;
+                    _this.isMenuOpen_ = true;
+                    _this.selectedText_.setAttribute('aria-expanded', 'true');
+                }
+            },
+            closeMenu: function closeMenu() {
+                if (_this.menu_ && _this.menu_.open) {
+                    _this.menu_.open = false;
+                }
+            },
+            isMenuOpen: function isMenuOpen() {
+                return Boolean(_this.menu_) && _this.isMenuOpen_;
+            },
+            setSelectedIndex: function setSelectedIndex(index) {
+                return _this.setEnhancedSelectedIndex_(index);
+            },
+            setDisabled: function setDisabled(isDisabled) {
+                _this.selectedText_.setAttribute('tabindex', isDisabled ? '-1' : '0');
+                _this.selectedText_.setAttribute('aria-disabled', isDisabled.toString());
+                if (_this.hiddenInput_) {
+                    _this.hiddenInput_.disabled = isDisabled;
+                }
+            },
+            checkValidity: function checkValidity() {
+                var classList = _this.root_.classList;
+                if (classList.contains(_constants3.cssClasses.REQUIRED) && !classList.contains(_constants3.cssClasses.DISABLED)) {
+                    // See notes for required attribute under https://www.w3.org/TR/html52/sec-forms.html#the-select-element
+                    // TL;DR: Invalid if no index is selected, or if the first index is selected and has an empty value.
+                    return _this.selectedIndex !== -1 && (_this.selectedIndex !== 0 || Boolean(_this.value));
+                } else {
+                    return true;
+                }
+            },
+            setValid: function setValid(isValid) {
+                _this.selectedText_.setAttribute('aria-invalid', (!isValid).toString());
+                if (isValid) {
+                    _this.root_.classList.remove(_constants3.cssClasses.INVALID);
+                } else {
+                    _this.root_.classList.add(_constants3.cssClasses.INVALID);
+                }
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+    };
+    MDCSelect.prototype.getCommonAdapterMethods_ = function () {
+        var _this = this;
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        return {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            setRippleCenter: function setRippleCenter(normalizedX) {
+                return _this.lineRipple_ && _this.lineRipple_.setRippleCenter(normalizedX);
+            },
+            activateBottomLine: function activateBottomLine() {
+                return _this.lineRipple_ && _this.lineRipple_.activate();
+            },
+            deactivateBottomLine: function deactivateBottomLine() {
+                return _this.lineRipple_ && _this.lineRipple_.deactivate();
+            },
+            notifyChange: function notifyChange(value) {
+                var index = _this.selectedIndex;
+                _this.emit(_constants3.strings.CHANGE_EVENT, { value: value, index: index }, true /* shouldBubble  */);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+    };
+    MDCSelect.prototype.getOutlineAdapterMethods_ = function () {
+        var _this = this;
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        return {
+            hasOutline: function hasOutline() {
+                return Boolean(_this.outline_);
+            },
+            notchOutline: function notchOutline(labelWidth) {
+                return _this.outline_ && _this.outline_.notch(labelWidth);
+            },
+            closeOutline: function closeOutline() {
+                return _this.outline_ && _this.outline_.closeNotch();
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+    };
+    MDCSelect.prototype.getLabelAdapterMethods_ = function () {
+        var _this = this;
+        return {
+            floatLabel: function floatLabel(shouldFloat) {
+                return _this.label_ && _this.label_.float(shouldFloat);
+            },
+            getLabelWidth: function getLabelWidth() {
+                return _this.label_ ? _this.label_.getWidth() : 0;
+            }
+        };
+    };
+    /**
+     * Calculates where the line ripple should start based on the x coordinate within the component.
+     */
+    MDCSelect.prototype.getNormalizedXCoordinate_ = function (evt) {
+        var targetClientRect = evt.target.getBoundingClientRect();
+        var xCoordinate = this.isTouchEvent_(evt) ? evt.touches[0].clientX : evt.clientX;
+        return xCoordinate - targetClientRect.left;
+    };
+    MDCSelect.prototype.isTouchEvent_ = function (evt) {
+        return Boolean(evt.touches);
+    };
+    /**
+     * Returns a map of all subcomponents to subfoundations.
+     */
+    MDCSelect.prototype.getFoundationMap_ = function () {
+        return {
+            helperText: this.helperText_ ? this.helperText_.foundation : undefined,
+            leadingIcon: this.leadingIcon_ ? this.leadingIcon_.foundation : undefined
+        };
+    };
+    MDCSelect.prototype.setEnhancedSelectedIndex_ = function (index) {
+        var selectedItem = this.menu_.items[index];
+        this.selectedText_.textContent = selectedItem ? selectedItem.textContent.trim() : '';
+        var previouslySelected = this.menuElement_.querySelector(_constants3.strings.SELECTED_ITEM_SELECTOR);
+        if (previouslySelected) {
+            previouslySelected.classList.remove(_constants3.cssClasses.SELECTED_ITEM_CLASS);
+            previouslySelected.removeAttribute(_constants3.strings.ARIA_SELECTED_ATTR);
+        }
+        if (selectedItem) {
+            selectedItem.classList.add(_constants3.cssClasses.SELECTED_ITEM_CLASS);
+            selectedItem.setAttribute(_constants3.strings.ARIA_SELECTED_ATTR, 'true');
+        }
+        // Synchronize hidden input's value with data-value attribute of selected item.
+        // This code path is also followed when setting value directly, so this covers all cases.
+        if (this.hiddenInput_) {
+            this.hiddenInput_.value = selectedItem ? selectedItem.getAttribute(_constants3.strings.ENHANCED_VALUE_ATTR) || '' : '';
+        }
+        this.layout();
+    };
+    MDCSelect.prototype.initialSyncRequiredState_ = function () {
+        var isRequired = this.targetElement_.required || this.targetElement_.getAttribute('aria-required') === 'true' || this.root_.classList.contains(_constants3.cssClasses.REQUIRED);
+        if (isRequired) {
+            if (this.nativeControl_) {
+                this.nativeControl_.required = true;
+            } else {
+                this.selectedText_.setAttribute('aria-required', 'true');
+            }
+            this.root_.classList.add(_constants3.cssClasses.REQUIRED);
+        }
+    };
+    MDCSelect.prototype.addMutationObserverForRequired_ = function () {
+        var _this = this;
+        var observerHandler = function observerHandler(attributesList) {
+            attributesList.some(function (attributeName) {
+                if (VALIDATION_ATTR_WHITELIST.indexOf(attributeName) === -1) {
+                    return false;
+                }
+                if (_this.selectedText_) {
+                    if (_this.selectedText_.getAttribute('aria-required') === 'true') {
+                        _this.root_.classList.add(_constants3.cssClasses.REQUIRED);
+                    } else {
+                        _this.root_.classList.remove(_constants3.cssClasses.REQUIRED);
+                    }
+                } else {
+                    if (_this.nativeControl_.required) {
+                        _this.root_.classList.add(_constants3.cssClasses.REQUIRED);
+                    } else {
+                        _this.root_.classList.remove(_constants3.cssClasses.REQUIRED);
+                    }
+                }
+                return true;
+            });
+        };
+        var getAttributesList = function getAttributesList(mutationsList) {
+            return mutationsList.map(function (mutation) {
+                return mutation.attributeName;
+            }).filter(function (attributeName) {
+                return attributeName;
+            });
+        };
+        var observer = new MutationObserver(function (mutationsList) {
+            return observerHandler(getAttributesList(mutationsList));
+        });
+        observer.observe(this.targetElement_, { attributes: true });
+        this.validationObserver_ = observer;
+    };
+    return MDCSelect;
+}(_component.MDCComponent);
+exports.MDCSelect = MDCSelect;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 347 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(348);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(45);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCFloatingLabel = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(45);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCFloatingLabel = /** @class */function (_super) {
+    tslib_1.__extends(MDCFloatingLabel, _super);
+    function MDCFloatingLabel() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCFloatingLabel.attachTo = function (root) {
+        return new MDCFloatingLabel(root);
+    };
+    /**
+     * Styles the label to produce the label shake for errors.
+     * @param shouldShake If true, shakes the label by adding a CSS class; otherwise, stops shaking by removing the class.
+     */
+    MDCFloatingLabel.prototype.shake = function (shouldShake) {
+        this.foundation_.shake(shouldShake);
+    };
+    /**
+     * Styles the label to float/dock.
+     * @param shouldFloat If true, floats the label by adding a CSS class; otherwise, docks it by removing the class.
+     */
+    MDCFloatingLabel.prototype.float = function (shouldFloat) {
+        this.foundation_.float(shouldFloat);
+    };
+    MDCFloatingLabel.prototype.getWidth = function () {
+        return this.foundation_.getWidth();
+    };
+    MDCFloatingLabel.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            getWidth: function getWidth() {
+                return _this.root_.scrollWidth;
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.listen(evtType, handler);
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.unlisten(evtType, handler);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCFloatingLabelFoundation(adapter);
+    };
+    return MDCFloatingLabel;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2016 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCFloatingLabel = MDCFloatingLabel;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = exports.cssClasses = {
+  LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
+  LABEL_SHAKE: 'mdc-floating-label--shake',
+  ROOT: 'mdc-floating-label'
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 350 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCLineRipple = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(78);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCLineRipple = /** @class */function (_super) {
+    tslib_1.__extends(MDCLineRipple, _super);
+    function MDCLineRipple() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCLineRipple.attachTo = function (root) {
+        return new MDCLineRipple(root);
+    };
+    /**
+     * Activates the line ripple
+     */
+    MDCLineRipple.prototype.activate = function () {
+        this.foundation_.activate();
+    };
+    /**
+     * Deactivates the line ripple
+     */
+    MDCLineRipple.prototype.deactivate = function () {
+        this.foundation_.deactivate();
+    };
+    /**
+     * Sets the transform origin given a user's click location.
+     * The `rippleCenter` is the x-coordinate of the middle of the ripple.
+     */
+    MDCLineRipple.prototype.setRippleCenter = function (xCoordinate) {
+        this.foundation_.setRippleCenter(xCoordinate);
+    };
+    MDCLineRipple.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            setStyle: function setStyle(propertyName, value) {
+                return _this.root_.style.setProperty(propertyName, value);
+            },
+            registerEventHandler: function registerEventHandler(evtType, handler) {
+                return _this.listen(evtType, handler);
+            },
+            deregisterEventHandler: function deregisterEventHandler(evtType, handler) {
+                return _this.unlisten(evtType, handler);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCLineRippleFoundation(adapter);
+    };
+    return MDCLineRipple;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCLineRipple = MDCLineRipple;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 351 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+  LINE_RIPPLE_ACTIVE: 'mdc-line-ripple--active',
+  LINE_RIPPLE_DEACTIVATING: 'mdc-line-ripple--deactivating'
+};
+exports.cssClasses = cssClasses;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 352 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCMenu = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _index = __webpack_require__(353);
+
+var _foundation = __webpack_require__(37);
+
+var _index2 = __webpack_require__(355);
+
+var _constants = __webpack_require__(46);
+
+var _foundation2 = __webpack_require__(81);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCMenu = /** @class */function (_super) {
+    tslib_1.__extends(MDCMenu, _super);
+    function MDCMenu() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCMenu.attachTo = function (root) {
+        return new MDCMenu(root);
+    };
+    MDCMenu.prototype.initialize = function (menuSurfaceFactory, listFactory) {
+        if (menuSurfaceFactory === void 0) {
+            menuSurfaceFactory = function menuSurfaceFactory(el) {
+                return new _index2.MDCMenuSurface(el);
+            };
+        }
+        if (listFactory === void 0) {
+            listFactory = function listFactory(el) {
+                return new _index.MDCList(el);
+            };
+        }
+        this.menuSurfaceFactory_ = menuSurfaceFactory;
+        this.listFactory_ = listFactory;
+    };
+    MDCMenu.prototype.initialSyncWithDOM = function () {
+        var _this = this;
+        this.menuSurface_ = this.menuSurfaceFactory_(this.root_);
+        var list = this.root_.querySelector(_constants.strings.LIST_SELECTOR);
+        if (list) {
+            this.list_ = this.listFactory_(list);
+            this.list_.wrapFocus = true;
+        } else {
+            this.list_ = null;
+        }
+        this.handleKeydown_ = function (evt) {
+            return _this.foundation_.handleKeydown(evt);
+        };
+        this.handleItemAction_ = function (evt) {
+            return _this.foundation_.handleItemAction(_this.items[evt.detail.index]);
+        };
+        this.afterOpenedCallback_ = function () {
+            return _this.handleAfterOpened_();
+        };
+        this.menuSurface_.listen(_foundation.MDCMenuSurfaceFoundation.strings.OPENED_EVENT, this.afterOpenedCallback_);
+        this.listen('keydown', this.handleKeydown_);
+        this.listen(_index.MDCListFoundation.strings.ACTION_EVENT, this.handleItemAction_);
+    };
+    MDCMenu.prototype.destroy = function () {
+        if (this.list_) {
+            this.list_.destroy();
+        }
+        this.menuSurface_.destroy();
+        this.menuSurface_.unlisten(_foundation.MDCMenuSurfaceFoundation.strings.OPENED_EVENT, this.afterOpenedCallback_);
+        this.unlisten('keydown', this.handleKeydown_);
+        this.unlisten(_index.MDCListFoundation.strings.ACTION_EVENT, this.handleItemAction_);
+        _super.prototype.destroy.call(this);
+    };
+    Object.defineProperty(MDCMenu.prototype, "open", {
+        get: function get() {
+            return this.menuSurface_.open;
+        },
+        set: function set(value) {
+            this.menuSurface_.open = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenu.prototype, "wrapFocus", {
+        get: function get() {
+            return this.list_ ? this.list_.wrapFocus : false;
+        },
+        set: function set(value) {
+            if (this.list_) {
+                this.list_.wrapFocus = value;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenu.prototype, "items", {
+        /**
+         * Return the items within the menu. Note that this only contains the set of elements within
+         * the items container that are proper list items, and not supplemental / presentational DOM
+         * elements.
+         */
+        get: function get() {
+            return this.list_ ? this.list_.listElements : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenu.prototype, "quickOpen", {
+        set: function set(quickOpen) {
+            this.menuSurface_.quickOpen = quickOpen;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @param corner Default anchor corner alignment of top-left menu corner.
+     */
+    MDCMenu.prototype.setAnchorCorner = function (corner) {
+        this.menuSurface_.setAnchorCorner(corner);
+    };
+    MDCMenu.prototype.setAnchorMargin = function (margin) {
+        this.menuSurface_.setAnchorMargin(margin);
+    };
+    /**
+     * @return The item within the menu at the index specified.
+     */
+    MDCMenu.prototype.getOptionByIndex = function (index) {
+        var items = this.items;
+        if (index < items.length) {
+            return this.items[index];
+        } else {
+            return null;
+        }
+    };
+    MDCMenu.prototype.setFixedPosition = function (isFixed) {
+        this.menuSurface_.setFixedPosition(isFixed);
+    };
+    MDCMenu.prototype.hoistMenuToBody = function () {
+        this.menuSurface_.hoistMenuToBody();
+    };
+    MDCMenu.prototype.setIsHoisted = function (isHoisted) {
+        this.menuSurface_.setIsHoisted(isHoisted);
+    };
+    MDCMenu.prototype.setAbsolutePosition = function (x, y) {
+        this.menuSurface_.setAbsolutePosition(x, y);
+    };
+    /**
+     * Sets the element that the menu-surface is anchored to.
+     */
+    MDCMenu.prototype.setAnchorElement = function (element) {
+        this.menuSurface_.anchorElement = element;
+    };
+    MDCMenu.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClassToElementAtIndex: function addClassToElementAtIndex(index, className) {
+                var list = _this.items;
+                list[index].classList.add(className);
+            },
+            removeClassFromElementAtIndex: function removeClassFromElementAtIndex(index, className) {
+                var list = _this.items;
+                list[index].classList.remove(className);
+            },
+            addAttributeToElementAtIndex: function addAttributeToElementAtIndex(index, attr, value) {
+                var list = _this.items;
+                list[index].setAttribute(attr, value);
+            },
+            removeAttributeFromElementAtIndex: function removeAttributeFromElementAtIndex(index, attr) {
+                var list = _this.items;
+                list[index].removeAttribute(attr);
+            },
+            elementContainsClass: function elementContainsClass(element, className) {
+                return element.classList.contains(className);
+            },
+            closeSurface: function closeSurface() {
+                return _this.open = false;
+            },
+            getElementIndex: function getElementIndex(element) {
+                return _this.items.indexOf(element);
+            },
+            getParentElement: function getParentElement(element) {
+                return element.parentElement;
+            },
+            getSelectedElementIndex: function getSelectedElementIndex(selectionGroup) {
+                var selectedListItem = selectionGroup.querySelector("." + _constants.cssClasses.MENU_SELECTED_LIST_ITEM);
+                return selectedListItem ? _this.items.indexOf(selectedListItem) : -1;
+            },
+            notifySelected: function notifySelected(evtData) {
+                return _this.emit(_constants.strings.SELECTED_EVENT, {
+                    index: evtData.index,
+                    item: _this.items[evtData.index]
+                });
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation2.MDCMenuFoundation(adapter);
+    };
+    MDCMenu.prototype.handleAfterOpened_ = function () {
+        var list = this.items;
+        if (list.length > 0) {
+            list[0].focus();
+        }
+    };
+    return MDCMenu;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCMenu = MDCMenu;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 353 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(354);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(47);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 354 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCList = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _index = __webpack_require__(30);
+
+var _constants = __webpack_require__(79);
+
+var _foundation = __webpack_require__(47);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCList = /** @class */function (_super) {
+    tslib_1.__extends(MDCList, _super);
+    function MDCList() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(MDCList.prototype, "vertical", {
+        set: function set(value) {
+            this.foundation_.setVerticalOrientation(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCList.prototype, "listElements", {
+        get: function get() {
+            return [].slice.call(this.root_.querySelectorAll(_constants.strings.ENABLED_ITEMS_SELECTOR));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCList.prototype, "wrapFocus", {
+        set: function set(value) {
+            this.foundation_.setWrapFocus(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCList.prototype, "singleSelection", {
+        set: function set(isSingleSelectionList) {
+            this.foundation_.setSingleSelection(isSingleSelectionList);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCList.prototype, "selectedIndex", {
+        get: function get() {
+            return this.foundation_.getSelectedIndex();
+        },
+        set: function set(index) {
+            this.foundation_.setSelectedIndex(index);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCList.attachTo = function (root) {
+        return new MDCList(root);
+    };
+    MDCList.prototype.initialSyncWithDOM = function () {
+        this.handleClick_ = this.handleClickEvent_.bind(this);
+        this.handleKeydown_ = this.handleKeydownEvent_.bind(this);
+        this.focusInEventListener_ = this.handleFocusInEvent_.bind(this);
+        this.focusOutEventListener_ = this.handleFocusOutEvent_.bind(this);
+        this.listen('keydown', this.handleKeydown_);
+        this.listen('click', this.handleClick_);
+        this.listen('focusin', this.focusInEventListener_);
+        this.listen('focusout', this.focusOutEventListener_);
+        this.layout();
+        this.initializeListType();
+    };
+    MDCList.prototype.destroy = function () {
+        this.unlisten('keydown', this.handleKeydown_);
+        this.unlisten('click', this.handleClick_);
+        this.unlisten('focusin', this.focusInEventListener_);
+        this.unlisten('focusout', this.focusOutEventListener_);
+    };
+    MDCList.prototype.layout = function () {
+        var direction = this.root_.getAttribute(_constants.strings.ARIA_ORIENTATION);
+        this.vertical = direction !== _constants.strings.ARIA_ORIENTATION_HORIZONTAL;
+        // List items need to have at least tabindex=-1 to be focusable.
+        [].slice.call(this.root_.querySelectorAll('.mdc-list-item:not([tabindex])')).forEach(function (el) {
+            el.setAttribute('tabindex', '-1');
+        });
+        // Child button/a elements are not tabbable until the list item is focused.
+        [].slice.call(this.root_.querySelectorAll(_constants.strings.FOCUSABLE_CHILD_ELEMENTS)).forEach(function (el) {
+            return el.setAttribute('tabindex', '-1');
+        });
+        this.foundation_.layout();
+    };
+    /**
+     * Initialize selectedIndex value based on pre-selected checkbox list items, single selection or radio.
+     */
+    MDCList.prototype.initializeListType = function () {
+        var _this = this;
+        var checkboxListItems = this.root_.querySelectorAll(_constants.strings.ARIA_ROLE_CHECKBOX_SELECTOR);
+        var singleSelectedListItem = this.root_.querySelector("\n      ." + _constants.cssClasses.LIST_ITEM_ACTIVATED_CLASS + ",\n      ." + _constants.cssClasses.LIST_ITEM_SELECTED_CLASS + "\n    ");
+        var radioSelectedListItem = this.root_.querySelector(_constants.strings.ARIA_CHECKED_RADIO_SELECTOR);
+        if (checkboxListItems.length) {
+            var preselectedItems = this.root_.querySelectorAll(_constants.strings.ARIA_CHECKED_CHECKBOX_SELECTOR);
+            this.selectedIndex = [].map.call(preselectedItems, function (listItem) {
+                return _this.listElements.indexOf(listItem);
+            });
+        } else if (singleSelectedListItem) {
+            if (singleSelectedListItem.classList.contains(_constants.cssClasses.LIST_ITEM_ACTIVATED_CLASS)) {
+                this.foundation_.setUseActivatedClass(true);
+            }
+            this.singleSelection = true;
+            this.selectedIndex = this.listElements.indexOf(singleSelectedListItem);
+        } else if (radioSelectedListItem) {
+            this.selectedIndex = this.listElements.indexOf(radioSelectedListItem);
+        }
+    };
+    MDCList.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        var adapter = {
+            addClassForElementIndex: function addClassForElementIndex(index, className) {
+                var element = _this.listElements[index];
+                if (element) {
+                    element.classList.add(className);
+                }
+            },
+            focusItemAtIndex: function focusItemAtIndex(index) {
+                var element = _this.listElements[index];
+                if (element) {
+                    element.focus();
+                }
+            },
+            getAttributeForElementIndex: function getAttributeForElementIndex(index, attr) {
+                return _this.listElements[index].getAttribute(attr);
+            },
+            getFocusedElementIndex: function getFocusedElementIndex() {
+                return _this.listElements.indexOf(document.activeElement);
+            },
+            getListItemCount: function getListItemCount() {
+                return _this.listElements.length;
+            },
+            hasCheckboxAtIndex: function hasCheckboxAtIndex(index) {
+                var listItem = _this.listElements[index];
+                return !!listItem.querySelector(_constants.strings.CHECKBOX_SELECTOR);
+            },
+            hasRadioAtIndex: function hasRadioAtIndex(index) {
+                var listItem = _this.listElements[index];
+                return !!listItem.querySelector(_constants.strings.RADIO_SELECTOR);
+            },
+            isCheckboxCheckedAtIndex: function isCheckboxCheckedAtIndex(index) {
+                var listItem = _this.listElements[index];
+                var toggleEl = listItem.querySelector(_constants.strings.CHECKBOX_SELECTOR);
+                return toggleEl.checked;
+            },
+            isFocusInsideList: function isFocusInsideList() {
+                return _this.root_.contains(document.activeElement);
+            },
+            notifyAction: function notifyAction(index) {
+                _this.emit(_constants.strings.ACTION_EVENT, { index: index }, /** shouldBubble */true);
+            },
+            removeClassForElementIndex: function removeClassForElementIndex(index, className) {
+                var element = _this.listElements[index];
+                if (element) {
+                    element.classList.remove(className);
+                }
+            },
+            setAttributeForElementIndex: function setAttributeForElementIndex(index, attr, value) {
+                var element = _this.listElements[index];
+                if (element) {
+                    element.setAttribute(attr, value);
+                }
+            },
+            setCheckedCheckboxOrRadioAtIndex: function setCheckedCheckboxOrRadioAtIndex(index, isChecked) {
+                var listItem = _this.listElements[index];
+                var toggleEl = listItem.querySelector(_constants.strings.CHECKBOX_RADIO_SELECTOR);
+                toggleEl.checked = isChecked;
+                var event = document.createEvent('Event');
+                event.initEvent('change', true, true);
+                toggleEl.dispatchEvent(event);
+            },
+            setTabIndexForListItemChildren: function setTabIndexForListItemChildren(listItemIndex, tabIndexValue) {
+                var element = _this.listElements[listItemIndex];
+                var listItemChildren = [].slice.call(element.querySelectorAll(_constants.strings.CHILD_ELEMENTS_TO_TOGGLE_TABINDEX));
+                listItemChildren.forEach(function (el) {
+                    return el.setAttribute('tabindex', tabIndexValue);
+                });
+            }
+        };
+        return new _foundation.MDCListFoundation(adapter);
+    };
+    /**
+     * Used to figure out which list item this event is targetting. Or returns -1 if
+     * there is no list item
+     */
+    MDCList.prototype.getListItemIndex_ = function (evt) {
+        var eventTarget = evt.target;
+        var nearestParent = _index.ponyfill.closest(eventTarget, "." + _constants.cssClasses.LIST_ITEM_CLASS + ", ." + _constants.cssClasses.ROOT);
+        // Get the index of the element if it is a list item.
+        if (nearestParent && _index.ponyfill.matches(nearestParent, "." + _constants.cssClasses.LIST_ITEM_CLASS)) {
+            return this.listElements.indexOf(nearestParent);
+        }
+        return -1;
+    };
+    /**
+     * Used to figure out which element was clicked before sending the event to the foundation.
+     */
+    MDCList.prototype.handleFocusInEvent_ = function (evt) {
+        var index = this.getListItemIndex_(evt);
+        this.foundation_.handleFocusIn(evt, index);
+    };
+    /**
+     * Used to figure out which element was clicked before sending the event to the foundation.
+     */
+    MDCList.prototype.handleFocusOutEvent_ = function (evt) {
+        var index = this.getListItemIndex_(evt);
+        this.foundation_.handleFocusOut(evt, index);
+    };
+    /**
+     * Used to figure out which element was focused when keydown event occurred before sending the event to the
+     * foundation.
+     */
+    MDCList.prototype.handleKeydownEvent_ = function (evt) {
+        var index = this.getListItemIndex_(evt);
+        var target = evt.target;
+        if (index >= 0) {
+            this.foundation_.handleKeydown(evt, target.classList.contains(_constants.cssClasses.LIST_ITEM_CLASS), index);
+        }
+    };
+    /**
+     * Used to figure out which element was clicked before sending the event to the foundation.
+     */
+    MDCList.prototype.handleClickEvent_ = function (evt) {
+        var index = this.getListItemIndex_(evt);
+        var target = evt.target;
+        // Toggle the checkbox only if it's not the target of the event, or the checkbox will have 2 change events.
+        var toggleCheckbox = !_index.ponyfill.matches(target, _constants.strings.CHECKBOX_RADIO_SELECTOR);
+        this.foundation_.handleClick(index, toggleCheckbox);
+    };
+    return MDCList;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCList = MDCList;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 355 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.util = exports.CornerBit = exports.Corner = undefined;
+
+var _constants = __webpack_require__(33);
+
+Object.defineProperty(exports, 'Corner', {
+  enumerable: true,
+  get: function get() {
+    return _constants.Corner;
+  }
+});
+Object.defineProperty(exports, 'CornerBit', {
+  enumerable: true,
+  get: function get() {
+    return _constants.CornerBit;
+  }
+});
+
+var _component = __webpack_require__(356);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(37);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+var _util = __webpack_require__(80);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+//# sourceMappingURL=index.js.map
+exports.util = util;
+
+/***/ }),
+/* 356 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCMenuSurface = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _constants = __webpack_require__(33);
+
+var _foundation = __webpack_require__(37);
+
+var _util = __webpack_require__(80);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCMenuSurface = /** @class */function (_super) {
+    tslib_1.__extends(MDCMenuSurface, _super);
+    function MDCMenuSurface() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCMenuSurface.attachTo = function (root) {
+        return new MDCMenuSurface(root);
+    };
+    MDCMenuSurface.prototype.initialSyncWithDOM = function () {
+        var _this = this;
+        var parentEl = this.root_.parentElement;
+        this.anchorElement = parentEl && parentEl.classList.contains(_constants.cssClasses.ANCHOR) ? parentEl : null;
+        if (this.root_.classList.contains(_constants.cssClasses.FIXED)) {
+            this.setFixedPosition(true);
+        }
+        this.handleKeydown_ = function (evt) {
+            return _this.foundation_.handleKeydown(evt);
+        };
+        this.handleBodyClick_ = function (evt) {
+            return _this.foundation_.handleBodyClick(evt);
+        };
+        this.registerBodyClickListener_ = function () {
+            return document.body.addEventListener('click', _this.handleBodyClick_);
+        };
+        this.deregisterBodyClickListener_ = function () {
+            return document.body.removeEventListener('click', _this.handleBodyClick_);
+        };
+        this.listen('keydown', this.handleKeydown_);
+        this.listen(_constants.strings.OPENED_EVENT, this.registerBodyClickListener_);
+        this.listen(_constants.strings.CLOSED_EVENT, this.deregisterBodyClickListener_);
+    };
+    MDCMenuSurface.prototype.destroy = function () {
+        this.unlisten('keydown', this.handleKeydown_);
+        this.unlisten(_constants.strings.OPENED_EVENT, this.registerBodyClickListener_);
+        this.unlisten(_constants.strings.CLOSED_EVENT, this.deregisterBodyClickListener_);
+        _super.prototype.destroy.call(this);
+    };
+    Object.defineProperty(MDCMenuSurface.prototype, "open", {
+        get: function get() {
+            return this.foundation_.isOpen();
+        },
+        set: function set(value) {
+            if (value) {
+                var focusableElements = this.root_.querySelectorAll(_constants.strings.FOCUSABLE_ELEMENTS);
+                this.firstFocusableElement_ = focusableElements[0];
+                this.lastFocusableElement_ = focusableElements[focusableElements.length - 1];
+                this.foundation_.open();
+            } else {
+                this.foundation_.close();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCMenuSurface.prototype, "quickOpen", {
+        set: function set(quickOpen) {
+            this.foundation_.setQuickOpen(quickOpen);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Removes the menu-surface from it's current location and appends it to the
+     * body to overcome any overflow:hidden issues.
+     */
+    MDCMenuSurface.prototype.hoistMenuToBody = function () {
+        document.body.appendChild(this.root_);
+        this.setIsHoisted(true);
+    };
+    /** Sets the foundation to use page offsets for an positioning when the menu is hoisted to the body. */
+    MDCMenuSurface.prototype.setIsHoisted = function (isHoisted) {
+        this.foundation_.setIsHoisted(isHoisted);
+    };
+    /** Sets the element that the menu-surface is anchored to. */
+    MDCMenuSurface.prototype.setMenuSurfaceAnchorElement = function (element) {
+        this.anchorElement = element;
+    };
+    /** Sets the menu-surface to position: fixed. */
+    MDCMenuSurface.prototype.setFixedPosition = function (isFixed) {
+        if (isFixed) {
+            this.root_.classList.add(_constants.cssClasses.FIXED);
+        } else {
+            this.root_.classList.remove(_constants.cssClasses.FIXED);
+        }
+        this.foundation_.setFixedPosition(isFixed);
+    };
+    /** Sets the absolute x/y position to position based on. Requires the menu to be hoisted. */
+    MDCMenuSurface.prototype.setAbsolutePosition = function (x, y) {
+        this.foundation_.setAbsolutePosition(x, y);
+        this.setIsHoisted(true);
+    };
+    /**
+     * @param corner Default anchor corner alignment of top-left surface corner.
+     */
+    MDCMenuSurface.prototype.setAnchorCorner = function (corner) {
+        this.foundation_.setAnchorCorner(corner);
+    };
+    MDCMenuSurface.prototype.setAnchorMargin = function (margin) {
+        this.foundation_.setAnchorMargin(margin);
+    };
+    MDCMenuSurface.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            hasAnchor: function hasAnchor() {
+                return !!_this.anchorElement;
+            },
+            notifyClose: function notifyClose() {
+                return _this.emit(_foundation.MDCMenuSurfaceFoundation.strings.CLOSED_EVENT, {});
+            },
+            notifyOpen: function notifyOpen() {
+                return _this.emit(_foundation.MDCMenuSurfaceFoundation.strings.OPENED_EVENT, {});
+            },
+            isElementInContainer: function isElementInContainer(el) {
+                return _this.root_.contains(el);
+            },
+            isRtl: function isRtl() {
+                return getComputedStyle(_this.root_).getPropertyValue('direction') === 'rtl';
+            },
+            setTransformOrigin: function setTransformOrigin(origin) {
+                var propertyName = util.getTransformPropertyName(window) + "-origin";
+                _this.root_.style.setProperty(propertyName, origin);
+            },
+            isFocused: function isFocused() {
+                return document.activeElement === _this.root_;
+            },
+            saveFocus: function saveFocus() {
+                _this.previousFocus_ = document.activeElement;
+            },
+            restoreFocus: function restoreFocus() {
+                if (_this.root_.contains(document.activeElement)) {
+                    if (_this.previousFocus_ && _this.previousFocus_.focus) {
+                        _this.previousFocus_.focus();
+                    }
+                }
+            },
+            isFirstElementFocused: function isFirstElementFocused() {
+                return _this.firstFocusableElement_ ? _this.firstFocusableElement_ === document.activeElement : false;
+            },
+            isLastElementFocused: function isLastElementFocused() {
+                return _this.lastFocusableElement_ ? _this.lastFocusableElement_ === document.activeElement : false;
+            },
+            focusFirstElement: function focusFirstElement() {
+                return _this.firstFocusableElement_ && _this.firstFocusableElement_.focus && _this.firstFocusableElement_.focus();
+            },
+            focusLastElement: function focusLastElement() {
+                return _this.lastFocusableElement_ && _this.lastFocusableElement_.focus && _this.lastFocusableElement_.focus();
+            },
+            getInnerDimensions: function getInnerDimensions() {
+                return { width: _this.root_.offsetWidth, height: _this.root_.offsetHeight };
+            },
+            getAnchorDimensions: function getAnchorDimensions() {
+                return _this.anchorElement ? _this.anchorElement.getBoundingClientRect() : null;
+            },
+            getWindowDimensions: function getWindowDimensions() {
+                return { width: window.innerWidth, height: window.innerHeight };
+            },
+            getBodyDimensions: function getBodyDimensions() {
+                return { width: document.body.clientWidth, height: document.body.clientHeight };
+            },
+            getWindowScroll: function getWindowScroll() {
+                return { x: window.pageXOffset, y: window.pageYOffset };
+            },
+            setPosition: function setPosition(position) {
+                _this.root_.style.left = 'left' in position ? position.left + "px" : '';
+                _this.root_.style.right = 'right' in position ? position.right + "px" : '';
+                _this.root_.style.top = 'top' in position ? position.top + "px" : '';
+                _this.root_.style.bottom = 'bottom' in position ? position.bottom + "px" : '';
+            },
+            setMaxHeight: function setMaxHeight(height) {
+                _this.root_.style.maxHeight = height;
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCMenuSurfaceFoundation(adapter);
+    };
+    return MDCMenuSurface;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCMenuSurface = MDCMenuSurface;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 357 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(358);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(83);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCNotchedOutline = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(45);
+
+var _constants = __webpack_require__(82);
+
+var _foundation2 = __webpack_require__(83);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCNotchedOutline = /** @class */function (_super) {
+    tslib_1.__extends(MDCNotchedOutline, _super);
+    function MDCNotchedOutline() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCNotchedOutline.attachTo = function (root) {
+        return new MDCNotchedOutline(root);
+    };
+    MDCNotchedOutline.prototype.initialSyncWithDOM = function () {
+        this.notchElement_ = this.root_.querySelector(_constants.strings.NOTCH_ELEMENT_SELECTOR);
+        var label = this.root_.querySelector('.' + _foundation.MDCFloatingLabelFoundation.cssClasses.ROOT);
+        if (label) {
+            label.style.transitionDuration = '0s';
+            this.root_.classList.add(_constants.cssClasses.OUTLINE_UPGRADED);
+            requestAnimationFrame(function () {
+                label.style.transitionDuration = '';
+            });
+        } else {
+            this.root_.classList.add(_constants.cssClasses.NO_LABEL);
+        }
+    };
+    /**
+     * Updates classes and styles to open the notch to the specified width.
+     * @param notchWidth The notch width in the outline.
+     */
+    MDCNotchedOutline.prototype.notch = function (notchWidth) {
+        this.foundation_.notch(notchWidth);
+    };
+    /**
+     * Updates classes and styles to close the notch.
+     */
+    MDCNotchedOutline.prototype.closeNotch = function () {
+        this.foundation_.closeNotch();
+    };
+    MDCNotchedOutline.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            setNotchWidthProperty: function setNotchWidthProperty(width) {
+                return _this.notchElement_.style.setProperty('width', width + 'px');
+            },
+            removeNotchWidthProperty: function removeNotchWidthProperty() {
+                return _this.notchElement_.style.removeProperty('width');
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation2.MDCNotchedOutlineFoundation(adapter);
+    };
+    return MDCNotchedOutline;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2017 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCNotchedOutline = MDCNotchedOutline;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 359 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.util = undefined;
+
+var _component = __webpack_require__(360);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(84);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+var _util = __webpack_require__(48);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+//# sourceMappingURL=index.js.map
+exports.util = util; /**
+                      * @license
+                      * Copyright 2019 Google Inc.
+                      *
+                      * Permission is hereby granted, free of charge, to any person obtaining a copy
+                      * of this software and associated documentation files (the "Software"), to deal
+                      * in the Software without restriction, including without limitation the rights
+                      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                      * copies of the Software, and to permit persons to whom the Software is
+                      * furnished to do so, subject to the following conditions:
+                      *
+                      * The above copyright notice and this permission notice shall be included in
+                      * all copies or substantial portions of the Software.
+                      *
+                      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                      * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                      * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                      * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                      * THE SOFTWARE.
+                      */
+
+/***/ }),
+/* 360 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCRipple = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _index = __webpack_require__(30);
+
+var _foundation = __webpack_require__(84);
+
+var _util = __webpack_require__(48);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCRipple = /** @class */function (_super) {
+    tslib_1.__extends(MDCRipple, _super);
+    function MDCRipple() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.disabled = false;
+        return _this;
+    }
+    MDCRipple.attachTo = function (root, opts) {
+        if (opts === void 0) {
+            opts = { isUnbounded: undefined };
+        }
+        var ripple = new MDCRipple(root);
+        // Only override unbounded behavior if option is explicitly specified
+        if (opts.isUnbounded !== undefined) {
+            ripple.unbounded = opts.isUnbounded;
+        }
+        return ripple;
+    };
+    MDCRipple.createAdapter = function (instance) {
+        return {
+            addClass: function addClass(className) {
+                return instance.root_.classList.add(className);
+            },
+            browserSupportsCssVars: function browserSupportsCssVars() {
+                return util.supportsCssVariables(window);
+            },
+            computeBoundingRect: function computeBoundingRect() {
+                return instance.root_.getBoundingClientRect();
+            },
+            containsEventTarget: function containsEventTarget(target) {
+                return instance.root_.contains(target);
+            },
+            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.removeEventListener(evtType, handler, util.applyPassive());
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return instance.root_.removeEventListener(evtType, handler, util.applyPassive());
+            },
+            deregisterResizeHandler: function deregisterResizeHandler(handler) {
+                return window.removeEventListener('resize', handler);
+            },
+            getWindowPageOffset: function getWindowPageOffset() {
+                return { x: window.pageXOffset, y: window.pageYOffset };
+            },
+            isSurfaceActive: function isSurfaceActive() {
+                return _index.ponyfill.matches(instance.root_, ':active');
+            },
+            isSurfaceDisabled: function isSurfaceDisabled() {
+                return Boolean(instance.disabled);
+            },
+            isUnbounded: function isUnbounded() {
+                return Boolean(instance.unbounded);
+            },
+            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.addEventListener(evtType, handler, util.applyPassive());
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return instance.root_.addEventListener(evtType, handler, util.applyPassive());
+            },
+            registerResizeHandler: function registerResizeHandler(handler) {
+                return window.addEventListener('resize', handler);
+            },
+            removeClass: function removeClass(className) {
+                return instance.root_.classList.remove(className);
+            },
+            updateCssVariable: function updateCssVariable(varName, value) {
+                return instance.root_.style.setProperty(varName, value);
+            }
+        };
+    };
+    Object.defineProperty(MDCRipple.prototype, "unbounded", {
+        get: function get() {
+            return Boolean(this.unbounded_);
+        },
+        set: function set(unbounded) {
+            this.unbounded_ = Boolean(unbounded);
+            this.setUnbounded_();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRipple.prototype.activate = function () {
+        this.foundation_.activate();
+    };
+    MDCRipple.prototype.deactivate = function () {
+        this.foundation_.deactivate();
+    };
+    MDCRipple.prototype.layout = function () {
+        this.foundation_.layout();
+    };
+    MDCRipple.prototype.getDefaultFoundation = function () {
+        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
+    };
+    MDCRipple.prototype.initialSyncWithDOM = function () {
+        var root = this.root_;
+        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
+    };
+    /**
+     * Closure Compiler throws an access control error when directly accessing a
+     * protected or private property inside a getter/setter, like unbounded above.
+     * By accessing the protected property inside a method, we solve that problem.
+     * That's why this function exists.
+     */
+    MDCRipple.prototype.setUnbounded_ = function () {
+        this.foundation_.setUnbounded(Boolean(this.unbounded_));
+    };
+    return MDCRipple;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2016 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCRipple = MDCRipple;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = exports.cssClasses = {
+    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
+    // given that it's an 'upgrade' to an existing component. That being said it is the root
+    // CSS class that all other CSS classes derive from.
+    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
+    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
+    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
+    ROOT: 'mdc-ripple-upgraded',
+    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
+};
+var strings = exports.strings = {
+    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
+    VAR_FG_SIZE: '--mdc-ripple-fg-size',
+    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
+    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
+    VAR_LEFT: '--mdc-ripple-left',
+    VAR_TOP: '--mdc-ripple-top'
+};
+var numbers = exports.numbers = {
+    DEACTIVATION_TIMEOUT_MS: 225,
+    FG_DEACTIVATION_MS: 150,
+    INITIAL_ORIGIN_SCALE: 0.6,
+    PADDING: 10,
+    TAP_DELAY_MS: 300
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCSelectHelperText = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(88);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCSelectHelperText = /** @class */function (_super) {
+    tslib_1.__extends(MDCSelectHelperText, _super);
+    function MDCSelectHelperText() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCSelectHelperText.attachTo = function (root) {
+        return new MDCSelectHelperText(root);
+    };
+    Object.defineProperty(MDCSelectHelperText.prototype, "foundation", {
+        get: function get() {
+            return this.foundation_;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCSelectHelperText.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            setAttr: function setAttr(attr, value) {
+                return _this.root_.setAttribute(attr, value);
+            },
+            removeAttr: function removeAttr(attr) {
+                return _this.root_.removeAttribute(attr);
+            },
+            setContent: function setContent(content) {
+                _this.root_.textContent = content;
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCSelectHelperTextFoundation(adapter);
+    };
+    return MDCSelectHelperText;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCSelectHelperText = MDCSelectHelperText;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings = {
+    ARIA_HIDDEN: 'aria-hidden',
+    ROLE: 'role'
+};
+var cssClasses = {
+    HELPER_TEXT_PERSISTENT: 'mdc-select-helper-text--persistent',
+    HELPER_TEXT_VALIDATION_MSG: 'mdc-select-helper-text--validation-msg'
+};
+exports.strings = strings;
+exports.cssClasses = cssClasses;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCSelectIcon = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(90);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCSelectIcon = /** @class */function (_super) {
+    tslib_1.__extends(MDCSelectIcon, _super);
+    function MDCSelectIcon() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCSelectIcon.attachTo = function (root) {
+        return new MDCSelectIcon(root);
+    };
+    Object.defineProperty(MDCSelectIcon.prototype, "foundation", {
+        get: function get() {
+            return this.foundation_;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCSelectIcon.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            getAttr: function getAttr(attr) {
+                return _this.root_.getAttribute(attr);
+            },
+            setAttr: function setAttr(attr, value) {
+                return _this.root_.setAttribute(attr, value);
+            },
+            removeAttr: function removeAttr(attr) {
+                return _this.root_.removeAttribute(attr);
+            },
+            setContent: function setContent(content) {
+                _this.root_.textContent = content;
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.listen(evtType, handler);
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.unlisten(evtType, handler);
+            },
+            notifyIconAction: function notifyIconAction() {
+                return _this.emit(_foundation.MDCSelectIconFoundation.strings.ICON_EVENT, {} /* evtData */, true /* shouldBubble */);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCSelectIconFoundation(adapter);
+    };
+    return MDCSelectIcon;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCSelectIcon = MDCSelectIcon;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings = {
+  ICON_EVENT: 'MDCSelect:icon',
+  ICON_ROLE: 'button'
+};
+exports.strings = strings;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCRipple = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(367);
+
+var _events = __webpack_require__(368);
+
+var _ponyfill = __webpack_require__(369);
+
+var _foundation = __webpack_require__(92);
+
+var _util = __webpack_require__(49);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCRipple = /** @class */function (_super) {
+    tslib_1.__extends(MDCRipple, _super);
+    function MDCRipple() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.disabled = false;
+        return _this;
+    }
+    MDCRipple.attachTo = function (root, opts) {
+        if (opts === void 0) {
+            opts = { isUnbounded: undefined };
+        }
+        var ripple = new MDCRipple(root);
+        // Only override unbounded behavior if option is explicitly specified
+        if (opts.isUnbounded !== undefined) {
+            ripple.unbounded = opts.isUnbounded;
+        }
+        return ripple;
+    };
+    MDCRipple.createAdapter = function (instance) {
+        return {
+            addClass: function addClass(className) {
+                return instance.root_.classList.add(className);
+            },
+            browserSupportsCssVars: function browserSupportsCssVars() {
+                return util.supportsCssVariables(window);
+            },
+            computeBoundingRect: function computeBoundingRect() {
+                return instance.root_.getBoundingClientRect();
+            },
+            containsEventTarget: function containsEventTarget(target) {
+                return instance.root_.contains(target);
+            },
+            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.removeEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return instance.root_.removeEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            deregisterResizeHandler: function deregisterResizeHandler(handler) {
+                return window.removeEventListener('resize', handler);
+            },
+            getWindowPageOffset: function getWindowPageOffset() {
+                return { x: window.pageXOffset, y: window.pageYOffset };
+            },
+            isSurfaceActive: function isSurfaceActive() {
+                return (0, _ponyfill.matches)(instance.root_, ':active');
+            },
+            isSurfaceDisabled: function isSurfaceDisabled() {
+                return Boolean(instance.disabled);
+            },
+            isUnbounded: function isUnbounded() {
+                return Boolean(instance.unbounded);
+            },
+            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.addEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return instance.root_.addEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            registerResizeHandler: function registerResizeHandler(handler) {
+                return window.addEventListener('resize', handler);
+            },
+            removeClass: function removeClass(className) {
+                return instance.root_.classList.remove(className);
+            },
+            updateCssVariable: function updateCssVariable(varName, value) {
+                return instance.root_.style.setProperty(varName, value);
+            }
+        };
+    };
+    Object.defineProperty(MDCRipple.prototype, "unbounded", {
+        get: function get() {
+            return Boolean(this.unbounded_);
+        },
+        set: function set(unbounded) {
+            this.unbounded_ = Boolean(unbounded);
+            this.setUnbounded_();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRipple.prototype.activate = function () {
+        this.foundation_.activate();
+    };
+    MDCRipple.prototype.deactivate = function () {
+        this.foundation_.deactivate();
+    };
+    MDCRipple.prototype.layout = function () {
+        this.foundation_.layout();
+    };
+    MDCRipple.prototype.getDefaultFoundation = function () {
+        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
+    };
+    MDCRipple.prototype.initialSyncWithDOM = function () {
+        var root = this.root_;
+        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
+    };
+    /**
+     * Closure Compiler throws an access control error when directly accessing a
+     * protected or private property inside a getter/setter, like unbounded above.
+     * By accessing the protected property inside a method, we solve that problem.
+     * That's why this function exists.
+     */
+    MDCRipple.prototype.setUnbounded_ = function () {
+        this.foundation_.setUnbounded(Boolean(this.unbounded_));
+    };
+    return MDCRipple;
+}(_component.MDCComponent);
+exports.MDCRipple = MDCRipple;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCComponent = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _foundation = __webpack_require__(91);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCComponent = /** @class */function () {
+    function MDCComponent(root, foundation) {
+        var args = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            args[_i - 2] = arguments[_i];
+        }
+        this.root_ = root;
+        this.initialize.apply(this, tslib_1.__spread(args));
+        // Note that we initialize foundation here and not within the constructor's default param so that
+        // this.root_ is defined and can be used within the foundation class.
+        this.foundation_ = foundation === undefined ? this.getDefaultFoundation() : foundation;
+        this.foundation_.init();
+        this.initialSyncWithDOM();
+    }
+    MDCComponent.attachTo = function (root) {
+        // Subclasses which extend MDCBase should provide an attachTo() method that takes a root element and
+        // returns an instantiated component with its root set to that element. Also note that in the cases of
+        // subclasses, an explicit foundation class will not have to be passed in; it will simply be initialized
+        // from getDefaultFoundation().
+        return new MDCComponent(root, new _foundation.MDCFoundation({}));
+    };
+    /* istanbul ignore next: method param only exists for typing purposes; it does not need to be unit tested */
+    MDCComponent.prototype.initialize = function () {
+        var _args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            _args[_i] = arguments[_i];
+        }
+        // Subclasses can override this to do any additional setup work that would be considered part of a
+        // "constructor". Essentially, it is a hook into the parent constructor before the foundation is
+        // initialized. Any additional arguments besides root and foundation will be passed in here.
+    };
+    MDCComponent.prototype.getDefaultFoundation = function () {
+        // Subclasses must override this method to return a properly configured foundation class for the
+        // component.
+        throw new Error('Subclasses must override getDefaultFoundation to return a properly configured ' + 'foundation class');
+    };
+    MDCComponent.prototype.initialSyncWithDOM = function () {
+        // Subclasses should override this method if they need to perform work to synchronize with a host DOM
+        // object. An example of this would be a form control wrapper that needs to synchronize its internal state
+        // to some property or attribute of the host DOM. Please note: this is *not* the place to perform DOM
+        // reads/writes that would cause layout / paint, as this is called synchronously from within the constructor.
+    };
+    MDCComponent.prototype.destroy = function () {
+        // Subclasses may implement this method to release any resources / deregister any listeners they have
+        // attached. An example of this might be deregistering a resize event from the window object.
+        this.foundation_.destroy();
+    };
+    MDCComponent.prototype.listen = function (evtType, handler, options) {
+        this.root_.addEventListener(evtType, handler, options);
+    };
+    MDCComponent.prototype.unlisten = function (evtType, handler, options) {
+        this.root_.removeEventListener(evtType, handler, options);
+    };
+    /**
+     * Fires a cross-browser-compatible custom event from the component root of the given type, with the given data.
+     */
+    MDCComponent.prototype.emit = function (evtType, evtData, shouldBubble) {
+        if (shouldBubble === void 0) {
+            shouldBubble = false;
+        }
+        var evt;
+        if (typeof CustomEvent === 'function') {
+            evt = new CustomEvent(evtType, {
+                bubbles: shouldBubble,
+                detail: evtData
+            });
+        } else {
+            evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(evtType, shouldBubble, false, evtData);
+        }
+        this.root_.dispatchEvent(evt);
+    };
+    return MDCComponent;
+}();
+exports.MDCComponent = MDCComponent;
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+
+exports.default = MDCComponent;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.applyPassive = applyPassive;
+/**
+ * @license
+ * Copyright 2019 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/**
+ * Stores result from applyPassive to avoid redundant processing to detect
+ * passive event listener support.
+ */
+var supportsPassive_;
+/**
+ * Determine whether the current browser supports passive event listeners, and
+ * if so, use them.
+ */
+function applyPassive(globalObj, forceRefresh) {
+    if (globalObj === void 0) {
+        globalObj = window;
+    }
+    if (forceRefresh === void 0) {
+        forceRefresh = false;
+    }
+    if (supportsPassive_ === undefined || forceRefresh) {
+        var isSupported_1 = false;
+        try {
+            globalObj.document.addEventListener('test', function () {
+                return undefined;
+            }, {
+                get passive() {
+                    isSupported_1 = true;
+                    return isSupported_1;
+                }
+            });
+        } catch (e) {} // tslint:disable-line:no-empty cannot throw error due to tests. tslint also disables console.log.
+        supportsPassive_ = isSupported_1;
+    }
+    return supportsPassive_ ? { passive: true } : false;
+}
+//# sourceMappingURL=events.js.map
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.closest = closest;
+exports.matches = matches;
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/**
+ * @fileoverview A "ponyfill" is a polyfill that doesn't modify the global prototype chain.
+ * This makes ponyfills safer than traditional polyfills, especially for libraries like MDC.
+ */
+function closest(element, selector) {
+    if (element.closest) {
+        return element.closest(selector);
+    }
+    var el = element;
+    while (el) {
+        if (matches(el, selector)) {
+            return el;
+        }
+        el = el.parentElement;
+    }
+    return null;
+}
+function matches(element, selector) {
+    var nativeMatches = element.matches || element.webkitMatchesSelector || element.msMatchesSelector;
+    return nativeMatches.call(element, selector);
+}
+//# sourceMappingURL=ponyfill.js.map
+
+/***/ }),
+/* 370 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCTopAppBar = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _component2 = __webpack_require__(371);
+
+var _constants = __webpack_require__(34);
+
+var _foundation = __webpack_require__(95);
+
+var _foundation2 = __webpack_require__(96);
+
+var _foundation3 = __webpack_require__(50);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCTopAppBar = /** @class */function (_super) {
+    tslib_1.__extends(MDCTopAppBar, _super);
+    function MDCTopAppBar() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCTopAppBar.attachTo = function (root) {
+        return new MDCTopAppBar(root);
+    };
+    MDCTopAppBar.prototype.initialize = function (rippleFactory) {
+        if (rippleFactory === void 0) {
+            rippleFactory = function rippleFactory(el) {
+                return _component2.MDCRipple.attachTo(el);
+            };
+        }
+        this.navIcon_ = this.root_.querySelector(_constants.strings.NAVIGATION_ICON_SELECTOR);
+        // Get all icons in the toolbar and instantiate the ripples
+        var icons = [].slice.call(this.root_.querySelectorAll(_constants.strings.ACTION_ITEM_SELECTOR));
+        if (this.navIcon_) {
+            icons.push(this.navIcon_);
+        }
+        this.iconRipples_ = icons.map(function (icon) {
+            var ripple = rippleFactory(icon);
+            ripple.unbounded = true;
+            return ripple;
+        });
+        this.scrollTarget_ = window;
+    };
+    MDCTopAppBar.prototype.destroy = function () {
+        this.iconRipples_.forEach(function (iconRipple) {
+            return iconRipple.destroy();
+        });
+        _super.prototype.destroy.call(this);
+    };
+    MDCTopAppBar.prototype.setScrollTarget = function (target) {
+        // Remove scroll handler from the previous scroll target
+        this.foundation_.destroyScrollHandler();
+        this.scrollTarget_ = target;
+        // Initialize scroll handler on the new scroll target
+        this.foundation_.initScrollHandler();
+    };
+    MDCTopAppBar.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            setStyle: function setStyle(property, value) {
+                return _this.root_.style.setProperty(property, value);
+            },
+            getTopAppBarHeight: function getTopAppBarHeight() {
+                return _this.root_.clientHeight;
+            },
+            registerNavigationIconInteractionHandler: function registerNavigationIconInteractionHandler(evtType, handler) {
+                if (_this.navIcon_) {
+                    _this.navIcon_.addEventListener(evtType, handler);
+                }
+            },
+            deregisterNavigationIconInteractionHandler: function deregisterNavigationIconInteractionHandler(evtType, handler) {
+                if (_this.navIcon_) {
+                    _this.navIcon_.removeEventListener(evtType, handler);
+                }
+            },
+            notifyNavigationIconClicked: function notifyNavigationIconClicked() {
+                return _this.emit(_constants.strings.NAVIGATION_EVENT, {});
+            },
+            registerScrollHandler: function registerScrollHandler(handler) {
+                return _this.scrollTarget_.addEventListener('scroll', handler);
+            },
+            deregisterScrollHandler: function deregisterScrollHandler(handler) {
+                return _this.scrollTarget_.removeEventListener('scroll', handler);
+            },
+            registerResizeHandler: function registerResizeHandler(handler) {
+                return window.addEventListener('resize', handler);
+            },
+            deregisterResizeHandler: function deregisterResizeHandler(handler) {
+                return window.removeEventListener('resize', handler);
+            },
+            getViewportScrollY: function getViewportScrollY() {
+                var win = _this.scrollTarget_;
+                var el = _this.scrollTarget_;
+                return win.pageYOffset !== undefined ? win.pageYOffset : el.scrollTop;
+            },
+            getTotalActionItems: function getTotalActionItems() {
+                return _this.root_.querySelectorAll(_constants.strings.ACTION_ITEM_SELECTOR).length;
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        var foundation;
+        if (this.root_.classList.contains(_constants.cssClasses.SHORT_CLASS)) {
+            foundation = new _foundation2.MDCShortTopAppBarFoundation(adapter);
+        } else if (this.root_.classList.contains(_constants.cssClasses.FIXED_CLASS)) {
+            foundation = new _foundation.MDCFixedTopAppBarFoundation(adapter);
+        } else {
+            foundation = new _foundation3.MDCTopAppBarFoundation(adapter);
+        }
+        return foundation;
+    };
+    return MDCTopAppBar;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2018 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCTopAppBar = MDCTopAppBar;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 371 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCRipple = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _index = __webpack_require__(30);
+
+var _foundation = __webpack_require__(372);
+
+var _util = __webpack_require__(94);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCRipple = /** @class */function (_super) {
+    tslib_1.__extends(MDCRipple, _super);
+    function MDCRipple() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.disabled = false;
+        return _this;
+    }
+    MDCRipple.attachTo = function (root, opts) {
+        if (opts === void 0) {
+            opts = { isUnbounded: undefined };
+        }
+        var ripple = new MDCRipple(root);
+        // Only override unbounded behavior if option is explicitly specified
+        if (opts.isUnbounded !== undefined) {
+            ripple.unbounded = opts.isUnbounded;
+        }
+        return ripple;
+    };
+    MDCRipple.createAdapter = function (instance) {
+        return {
+            addClass: function addClass(className) {
+                return instance.root_.classList.add(className);
+            },
+            browserSupportsCssVars: function browserSupportsCssVars() {
+                return util.supportsCssVariables(window);
+            },
+            computeBoundingRect: function computeBoundingRect() {
+                return instance.root_.getBoundingClientRect();
+            },
+            containsEventTarget: function containsEventTarget(target) {
+                return instance.root_.contains(target);
+            },
+            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.removeEventListener(evtType, handler, util.applyPassive());
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return instance.root_.removeEventListener(evtType, handler, util.applyPassive());
+            },
+            deregisterResizeHandler: function deregisterResizeHandler(handler) {
+                return window.removeEventListener('resize', handler);
+            },
+            getWindowPageOffset: function getWindowPageOffset() {
+                return { x: window.pageXOffset, y: window.pageYOffset };
+            },
+            isSurfaceActive: function isSurfaceActive() {
+                return _index.ponyfill.matches(instance.root_, ':active');
+            },
+            isSurfaceDisabled: function isSurfaceDisabled() {
+                return Boolean(instance.disabled);
+            },
+            isUnbounded: function isUnbounded() {
+                return Boolean(instance.unbounded);
+            },
+            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.addEventListener(evtType, handler, util.applyPassive());
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return instance.root_.addEventListener(evtType, handler, util.applyPassive());
+            },
+            registerResizeHandler: function registerResizeHandler(handler) {
+                return window.addEventListener('resize', handler);
+            },
+            removeClass: function removeClass(className) {
+                return instance.root_.classList.remove(className);
+            },
+            updateCssVariable: function updateCssVariable(varName, value) {
+                return instance.root_.style.setProperty(varName, value);
+            }
+        };
+    };
+    Object.defineProperty(MDCRipple.prototype, "unbounded", {
+        get: function get() {
+            return Boolean(this.unbounded_);
+        },
+        set: function set(unbounded) {
+            this.unbounded_ = Boolean(unbounded);
+            this.setUnbounded_();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRipple.prototype.activate = function () {
+        this.foundation_.activate();
+    };
+    MDCRipple.prototype.deactivate = function () {
+        this.foundation_.deactivate();
+    };
+    MDCRipple.prototype.layout = function () {
+        this.foundation_.layout();
+    };
+    MDCRipple.prototype.getDefaultFoundation = function () {
+        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
+    };
+    MDCRipple.prototype.initialSyncWithDOM = function () {
+        var root = this.root_;
+        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
+    };
+    /**
+     * Closure Compiler throws an access control error when directly accessing a
+     * protected or private property inside a getter/setter, like unbounded above.
+     * By accessing the protected property inside a method, we solve that problem.
+     * That's why this function exists.
+     */
+    MDCRipple.prototype.setUnbounded_ = function () {
+        this.foundation_.setUnbounded(Boolean(this.unbounded_));
+    };
+    return MDCRipple;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2016 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCRipple = MDCRipple;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 372 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCRippleFoundation = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _foundation = __webpack_require__(4);
+
+var _constants = __webpack_require__(373);
+
+var _util = __webpack_require__(94);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Activation events registered on the root element of each instance for activation
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var ACTIVATION_EVENT_TYPES = ['touchstart', 'pointerdown', 'mousedown', 'keydown'];
+// Deactivation events registered on documentElement when a pointer-related down event occurs
+var POINTER_DEACTIVATION_EVENT_TYPES = ['touchend', 'pointerup', 'mouseup', 'contextmenu'];
+// simultaneous nested activations
+var activatedTargets = [];
+var MDCRippleFoundation = /** @class */function (_super) {
+    tslib_1.__extends(MDCRippleFoundation, _super);
+    function MDCRippleFoundation(adapter) {
+        var _this = _super.call(this, tslib_1.__assign({}, MDCRippleFoundation.defaultAdapter, adapter)) || this;
+        _this.activationAnimationHasEnded_ = false;
+        _this.activationTimer_ = 0;
+        _this.fgDeactivationRemovalTimer_ = 0;
+        _this.fgScale_ = '0';
+        _this.frame_ = { width: 0, height: 0 };
+        _this.initialSize_ = 0;
+        _this.layoutFrame_ = 0;
+        _this.maxRadius_ = 0;
+        _this.unboundedCoords_ = { left: 0, top: 0 };
+        _this.activationState_ = _this.defaultActivationState_();
+        _this.activationTimerCallback_ = function () {
+            _this.activationAnimationHasEnded_ = true;
+            _this.runDeactivationUXLogicIfReady_();
+        };
+        _this.activateHandler_ = function (e) {
+            return _this.activate_(e);
+        };
+        _this.deactivateHandler_ = function () {
+            return _this.deactivate_();
+        };
+        _this.focusHandler_ = function () {
+            return _this.handleFocus();
+        };
+        _this.blurHandler_ = function () {
+            return _this.handleBlur();
+        };
+        _this.resizeHandler_ = function () {
+            return _this.layout();
+        };
+        return _this;
+    }
+    Object.defineProperty(MDCRippleFoundation, "cssClasses", {
+        get: function get() {
+            return _constants.cssClasses;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCRippleFoundation, "strings", {
+        get: function get() {
+            return _constants.strings;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCRippleFoundation, "numbers", {
+        get: function get() {
+            return _constants.numbers;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCRippleFoundation, "defaultAdapter", {
+        get: function get() {
+            return {
+                addClass: function addClass() {
+                    return undefined;
+                },
+                browserSupportsCssVars: function browserSupportsCssVars() {
+                    return true;
+                },
+                computeBoundingRect: function computeBoundingRect() {
+                    return { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
+                },
+                containsEventTarget: function containsEventTarget() {
+                    return true;
+                },
+                deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler() {
+                    return undefined;
+                },
+                deregisterInteractionHandler: function deregisterInteractionHandler() {
+                    return undefined;
+                },
+                deregisterResizeHandler: function deregisterResizeHandler() {
+                    return undefined;
+                },
+                getWindowPageOffset: function getWindowPageOffset() {
+                    return { x: 0, y: 0 };
+                },
+                isSurfaceActive: function isSurfaceActive() {
+                    return true;
+                },
+                isSurfaceDisabled: function isSurfaceDisabled() {
+                    return true;
+                },
+                isUnbounded: function isUnbounded() {
+                    return true;
+                },
+                registerDocumentInteractionHandler: function registerDocumentInteractionHandler() {
+                    return undefined;
+                },
+                registerInteractionHandler: function registerInteractionHandler() {
+                    return undefined;
+                },
+                registerResizeHandler: function registerResizeHandler() {
+                    return undefined;
+                },
+                removeClass: function removeClass() {
+                    return undefined;
+                },
+                updateCssVariable: function updateCssVariable() {
+                    return undefined;
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRippleFoundation.prototype.init = function () {
+        var _this = this;
+        var supportsPressRipple = this.supportsPressRipple_();
+        this.registerRootHandlers_(supportsPressRipple);
+        if (supportsPressRipple) {
+            var _a = MDCRippleFoundation.cssClasses,
+                ROOT_1 = _a.ROOT,
+                UNBOUNDED_1 = _a.UNBOUNDED;
+            requestAnimationFrame(function () {
+                _this.adapter_.addClass(ROOT_1);
+                if (_this.adapter_.isUnbounded()) {
+                    _this.adapter_.addClass(UNBOUNDED_1);
+                    // Unbounded ripples need layout logic applied immediately to set coordinates for both shade and ripple
+                    _this.layoutInternal_();
+                }
+            });
+        }
+    };
+    MDCRippleFoundation.prototype.destroy = function () {
+        var _this = this;
+        if (this.supportsPressRipple_()) {
+            if (this.activationTimer_) {
+                clearTimeout(this.activationTimer_);
+                this.activationTimer_ = 0;
+                this.adapter_.removeClass(MDCRippleFoundation.cssClasses.FG_ACTIVATION);
+            }
+            if (this.fgDeactivationRemovalTimer_) {
+                clearTimeout(this.fgDeactivationRemovalTimer_);
+                this.fgDeactivationRemovalTimer_ = 0;
+                this.adapter_.removeClass(MDCRippleFoundation.cssClasses.FG_DEACTIVATION);
+            }
+            var _a = MDCRippleFoundation.cssClasses,
+                ROOT_2 = _a.ROOT,
+                UNBOUNDED_2 = _a.UNBOUNDED;
+            requestAnimationFrame(function () {
+                _this.adapter_.removeClass(ROOT_2);
+                _this.adapter_.removeClass(UNBOUNDED_2);
+                _this.removeCssVars_();
+            });
+        }
+        this.deregisterRootHandlers_();
+        this.deregisterDeactivationHandlers_();
+    };
+    /**
+     * @param evt Optional event containing position information.
+     */
+    MDCRippleFoundation.prototype.activate = function (evt) {
+        this.activate_(evt);
+    };
+    MDCRippleFoundation.prototype.deactivate = function () {
+        this.deactivate_();
+    };
+    MDCRippleFoundation.prototype.layout = function () {
+        var _this = this;
+        if (this.layoutFrame_) {
+            cancelAnimationFrame(this.layoutFrame_);
+        }
+        this.layoutFrame_ = requestAnimationFrame(function () {
+            _this.layoutInternal_();
+            _this.layoutFrame_ = 0;
+        });
+    };
+    MDCRippleFoundation.prototype.setUnbounded = function (unbounded) {
+        var UNBOUNDED = MDCRippleFoundation.cssClasses.UNBOUNDED;
+        if (unbounded) {
+            this.adapter_.addClass(UNBOUNDED);
+        } else {
+            this.adapter_.removeClass(UNBOUNDED);
+        }
+    };
+    MDCRippleFoundation.prototype.handleFocus = function () {
+        var _this = this;
+        requestAnimationFrame(function () {
+            return _this.adapter_.addClass(MDCRippleFoundation.cssClasses.BG_FOCUSED);
+        });
+    };
+    MDCRippleFoundation.prototype.handleBlur = function () {
+        var _this = this;
+        requestAnimationFrame(function () {
+            return _this.adapter_.removeClass(MDCRippleFoundation.cssClasses.BG_FOCUSED);
+        });
+    };
+    /**
+     * We compute this property so that we are not querying information about the client
+     * until the point in time where the foundation requests it. This prevents scenarios where
+     * client-side feature-detection may happen too early, such as when components are rendered on the server
+     * and then initialized at mount time on the client.
+     */
+    MDCRippleFoundation.prototype.supportsPressRipple_ = function () {
+        return this.adapter_.browserSupportsCssVars();
+    };
+    MDCRippleFoundation.prototype.defaultActivationState_ = function () {
+        return {
+            activationEvent: undefined,
+            hasDeactivationUXRun: false,
+            isActivated: false,
+            isProgrammatic: false,
+            wasActivatedByPointer: false,
+            wasElementMadeActive: false
+        };
+    };
+    /**
+     * supportsPressRipple Passed from init to save a redundant function call
+     */
+    MDCRippleFoundation.prototype.registerRootHandlers_ = function (supportsPressRipple) {
+        var _this = this;
+        if (supportsPressRipple) {
+            ACTIVATION_EVENT_TYPES.forEach(function (evtType) {
+                _this.adapter_.registerInteractionHandler(evtType, _this.activateHandler_);
+            });
+            if (this.adapter_.isUnbounded()) {
+                this.adapter_.registerResizeHandler(this.resizeHandler_);
+            }
+        }
+        this.adapter_.registerInteractionHandler('focus', this.focusHandler_);
+        this.adapter_.registerInteractionHandler('blur', this.blurHandler_);
+    };
+    MDCRippleFoundation.prototype.registerDeactivationHandlers_ = function (evt) {
+        var _this = this;
+        if (evt.type === 'keydown') {
+            this.adapter_.registerInteractionHandler('keyup', this.deactivateHandler_);
+        } else {
+            POINTER_DEACTIVATION_EVENT_TYPES.forEach(function (evtType) {
+                _this.adapter_.registerDocumentInteractionHandler(evtType, _this.deactivateHandler_);
+            });
+        }
+    };
+    MDCRippleFoundation.prototype.deregisterRootHandlers_ = function () {
+        var _this = this;
+        ACTIVATION_EVENT_TYPES.forEach(function (evtType) {
+            _this.adapter_.deregisterInteractionHandler(evtType, _this.activateHandler_);
+        });
+        this.adapter_.deregisterInteractionHandler('focus', this.focusHandler_);
+        this.adapter_.deregisterInteractionHandler('blur', this.blurHandler_);
+        if (this.adapter_.isUnbounded()) {
+            this.adapter_.deregisterResizeHandler(this.resizeHandler_);
+        }
+    };
+    MDCRippleFoundation.prototype.deregisterDeactivationHandlers_ = function () {
+        var _this = this;
+        this.adapter_.deregisterInteractionHandler('keyup', this.deactivateHandler_);
+        POINTER_DEACTIVATION_EVENT_TYPES.forEach(function (evtType) {
+            _this.adapter_.deregisterDocumentInteractionHandler(evtType, _this.deactivateHandler_);
+        });
+    };
+    MDCRippleFoundation.prototype.removeCssVars_ = function () {
+        var _this = this;
+        var rippleStrings = MDCRippleFoundation.strings;
+        var keys = Object.keys(rippleStrings);
+        keys.forEach(function (key) {
+            if (key.indexOf('VAR_') === 0) {
+                _this.adapter_.updateCssVariable(rippleStrings[key], null);
+            }
+        });
+    };
+    MDCRippleFoundation.prototype.activate_ = function (evt) {
+        var _this = this;
+        if (this.adapter_.isSurfaceDisabled()) {
+            return;
+        }
+        var activationState = this.activationState_;
+        if (activationState.isActivated) {
+            return;
+        }
+        // Avoid reacting to follow-on events fired by touch device after an already-processed user interaction
+        var previousActivationEvent = this.previousActivationEvent_;
+        var isSameInteraction = previousActivationEvent && evt !== undefined && previousActivationEvent.type !== evt.type;
+        if (isSameInteraction) {
+            return;
+        }
+        activationState.isActivated = true;
+        activationState.isProgrammatic = evt === undefined;
+        activationState.activationEvent = evt;
+        activationState.wasActivatedByPointer = activationState.isProgrammatic ? false : evt !== undefined && (evt.type === 'mousedown' || evt.type === 'touchstart' || evt.type === 'pointerdown');
+        var hasActivatedChild = evt !== undefined && activatedTargets.length > 0 && activatedTargets.some(function (target) {
+            return _this.adapter_.containsEventTarget(target);
+        });
+        if (hasActivatedChild) {
+            // Immediately reset activation state, while preserving logic that prevents touch follow-on events
+            this.resetActivationState_();
+            return;
+        }
+        if (evt !== undefined) {
+            activatedTargets.push(evt.target);
+            this.registerDeactivationHandlers_(evt);
+        }
+        activationState.wasElementMadeActive = this.checkElementMadeActive_(evt);
+        if (activationState.wasElementMadeActive) {
+            this.animateActivation_();
+        }
+        requestAnimationFrame(function () {
+            // Reset array on next frame after the current event has had a chance to bubble to prevent ancestor ripples
+            activatedTargets = [];
+            if (!activationState.wasElementMadeActive && evt !== undefined && (evt.key === ' ' || evt.keyCode === 32)) {
+                // If space was pressed, try again within an rAF call to detect :active, because different UAs report
+                // active states inconsistently when they're called within event handling code:
+                // - https://bugs.chromium.org/p/chromium/issues/detail?id=635971
+                // - https://bugzilla.mozilla.org/show_bug.cgi?id=1293741
+                // We try first outside rAF to support Edge, which does not exhibit this problem, but will crash if a CSS
+                // variable is set within a rAF callback for a submit button interaction (#2241).
+                activationState.wasElementMadeActive = _this.checkElementMadeActive_(evt);
+                if (activationState.wasElementMadeActive) {
+                    _this.animateActivation_();
+                }
+            }
+            if (!activationState.wasElementMadeActive) {
+                // Reset activation state immediately if element was not made active.
+                _this.activationState_ = _this.defaultActivationState_();
+            }
+        });
+    };
+    MDCRippleFoundation.prototype.checkElementMadeActive_ = function (evt) {
+        return evt !== undefined && evt.type === 'keydown' ? this.adapter_.isSurfaceActive() : true;
+    };
+    MDCRippleFoundation.prototype.animateActivation_ = function () {
+        var _this = this;
+        var _a = MDCRippleFoundation.strings,
+            VAR_FG_TRANSLATE_START = _a.VAR_FG_TRANSLATE_START,
+            VAR_FG_TRANSLATE_END = _a.VAR_FG_TRANSLATE_END;
+        var _b = MDCRippleFoundation.cssClasses,
+            FG_DEACTIVATION = _b.FG_DEACTIVATION,
+            FG_ACTIVATION = _b.FG_ACTIVATION;
+        var DEACTIVATION_TIMEOUT_MS = MDCRippleFoundation.numbers.DEACTIVATION_TIMEOUT_MS;
+        this.layoutInternal_();
+        var translateStart = '';
+        var translateEnd = '';
+        if (!this.adapter_.isUnbounded()) {
+            var _c = this.getFgTranslationCoordinates_(),
+                startPoint = _c.startPoint,
+                endPoint = _c.endPoint;
+            translateStart = startPoint.x + "px, " + startPoint.y + "px";
+            translateEnd = endPoint.x + "px, " + endPoint.y + "px";
+        }
+        this.adapter_.updateCssVariable(VAR_FG_TRANSLATE_START, translateStart);
+        this.adapter_.updateCssVariable(VAR_FG_TRANSLATE_END, translateEnd);
+        // Cancel any ongoing activation/deactivation animations
+        clearTimeout(this.activationTimer_);
+        clearTimeout(this.fgDeactivationRemovalTimer_);
+        this.rmBoundedActivationClasses_();
+        this.adapter_.removeClass(FG_DEACTIVATION);
+        // Force layout in order to re-trigger the animation.
+        this.adapter_.computeBoundingRect();
+        this.adapter_.addClass(FG_ACTIVATION);
+        this.activationTimer_ = setTimeout(function () {
+            return _this.activationTimerCallback_();
+        }, DEACTIVATION_TIMEOUT_MS);
+    };
+    MDCRippleFoundation.prototype.getFgTranslationCoordinates_ = function () {
+        var _a = this.activationState_,
+            activationEvent = _a.activationEvent,
+            wasActivatedByPointer = _a.wasActivatedByPointer;
+        var startPoint;
+        if (wasActivatedByPointer) {
+            startPoint = (0, _util.getNormalizedEventCoords)(activationEvent, this.adapter_.getWindowPageOffset(), this.adapter_.computeBoundingRect());
+        } else {
+            startPoint = {
+                x: this.frame_.width / 2,
+                y: this.frame_.height / 2
+            };
+        }
+        // Center the element around the start point.
+        startPoint = {
+            x: startPoint.x - this.initialSize_ / 2,
+            y: startPoint.y - this.initialSize_ / 2
+        };
+        var endPoint = {
+            x: this.frame_.width / 2 - this.initialSize_ / 2,
+            y: this.frame_.height / 2 - this.initialSize_ / 2
+        };
+        return { startPoint: startPoint, endPoint: endPoint };
+    };
+    MDCRippleFoundation.prototype.runDeactivationUXLogicIfReady_ = function () {
+        var _this = this;
+        // This method is called both when a pointing device is released, and when the activation animation ends.
+        // The deactivation animation should only run after both of those occur.
+        var FG_DEACTIVATION = MDCRippleFoundation.cssClasses.FG_DEACTIVATION;
+        var _a = this.activationState_,
+            hasDeactivationUXRun = _a.hasDeactivationUXRun,
+            isActivated = _a.isActivated;
+        var activationHasEnded = hasDeactivationUXRun || !isActivated;
+        if (activationHasEnded && this.activationAnimationHasEnded_) {
+            this.rmBoundedActivationClasses_();
+            this.adapter_.addClass(FG_DEACTIVATION);
+            this.fgDeactivationRemovalTimer_ = setTimeout(function () {
+                _this.adapter_.removeClass(FG_DEACTIVATION);
+            }, _constants.numbers.FG_DEACTIVATION_MS);
+        }
+    };
+    MDCRippleFoundation.prototype.rmBoundedActivationClasses_ = function () {
+        var FG_ACTIVATION = MDCRippleFoundation.cssClasses.FG_ACTIVATION;
+        this.adapter_.removeClass(FG_ACTIVATION);
+        this.activationAnimationHasEnded_ = false;
+        this.adapter_.computeBoundingRect();
+    };
+    MDCRippleFoundation.prototype.resetActivationState_ = function () {
+        var _this = this;
+        this.previousActivationEvent_ = this.activationState_.activationEvent;
+        this.activationState_ = this.defaultActivationState_();
+        // Touch devices may fire additional events for the same interaction within a short time.
+        // Store the previous event until it's safe to assume that subsequent events are for new interactions.
+        setTimeout(function () {
+            return _this.previousActivationEvent_ = undefined;
+        }, MDCRippleFoundation.numbers.TAP_DELAY_MS);
+    };
+    MDCRippleFoundation.prototype.deactivate_ = function () {
+        var _this = this;
+        var activationState = this.activationState_;
+        // This can happen in scenarios such as when you have a keyup event that blurs the element.
+        if (!activationState.isActivated) {
+            return;
+        }
+        var state = tslib_1.__assign({}, activationState);
+        if (activationState.isProgrammatic) {
+            requestAnimationFrame(function () {
+                return _this.animateDeactivation_(state);
+            });
+            this.resetActivationState_();
+        } else {
+            this.deregisterDeactivationHandlers_();
+            requestAnimationFrame(function () {
+                _this.activationState_.hasDeactivationUXRun = true;
+                _this.animateDeactivation_(state);
+                _this.resetActivationState_();
+            });
+        }
+    };
+    MDCRippleFoundation.prototype.animateDeactivation_ = function (_a) {
+        var wasActivatedByPointer = _a.wasActivatedByPointer,
+            wasElementMadeActive = _a.wasElementMadeActive;
+        if (wasActivatedByPointer || wasElementMadeActive) {
+            this.runDeactivationUXLogicIfReady_();
+        }
+    };
+    MDCRippleFoundation.prototype.layoutInternal_ = function () {
+        var _this = this;
+        this.frame_ = this.adapter_.computeBoundingRect();
+        var maxDim = Math.max(this.frame_.height, this.frame_.width);
+        // Surface diameter is treated differently for unbounded vs. bounded ripples.
+        // Unbounded ripple diameter is calculated smaller since the surface is expected to already be padded appropriately
+        // to extend the hitbox, and the ripple is expected to meet the edges of the padded hitbox (which is typically
+        // square). Bounded ripples, on the other hand, are fully expected to expand beyond the surface's longest diameter
+        // (calculated based on the diagonal plus a constant padding), and are clipped at the surface's border via
+        // `overflow: hidden`.
+        var getBoundedRadius = function getBoundedRadius() {
+            var hypotenuse = Math.sqrt(Math.pow(_this.frame_.width, 2) + Math.pow(_this.frame_.height, 2));
+            return hypotenuse + MDCRippleFoundation.numbers.PADDING;
+        };
+        this.maxRadius_ = this.adapter_.isUnbounded() ? maxDim : getBoundedRadius();
+        // Ripple is sized as a fraction of the largest dimension of the surface, then scales up using a CSS scale transform
+        this.initialSize_ = Math.floor(maxDim * MDCRippleFoundation.numbers.INITIAL_ORIGIN_SCALE);
+        this.fgScale_ = "" + this.maxRadius_ / this.initialSize_;
+        this.updateLayoutCssVars_();
+    };
+    MDCRippleFoundation.prototype.updateLayoutCssVars_ = function () {
+        var _a = MDCRippleFoundation.strings,
+            VAR_FG_SIZE = _a.VAR_FG_SIZE,
+            VAR_LEFT = _a.VAR_LEFT,
+            VAR_TOP = _a.VAR_TOP,
+            VAR_FG_SCALE = _a.VAR_FG_SCALE;
+        this.adapter_.updateCssVariable(VAR_FG_SIZE, this.initialSize_ + "px");
+        this.adapter_.updateCssVariable(VAR_FG_SCALE, this.fgScale_);
+        if (this.adapter_.isUnbounded()) {
+            this.unboundedCoords_ = {
+                left: Math.round(this.frame_.width / 2 - this.initialSize_ / 2),
+                top: Math.round(this.frame_.height / 2 - this.initialSize_ / 2)
+            };
+            this.adapter_.updateCssVariable(VAR_LEFT, this.unboundedCoords_.left + "px");
+            this.adapter_.updateCssVariable(VAR_TOP, this.unboundedCoords_.top + "px");
+        }
+    };
+    return MDCRippleFoundation;
+}(_foundation.MDCFoundation);
+exports.MDCRippleFoundation = MDCRippleFoundation;
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+
+exports.default = MDCRippleFoundation;
+//# sourceMappingURL=foundation.js.map
+
+/***/ }),
+/* 373 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = exports.cssClasses = {
+    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
+    // given that it's an 'upgrade' to an existing component. That being said it is the root
+    // CSS class that all other CSS classes derive from.
+    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
+    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
+    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
+    ROOT: 'mdc-ripple-upgraded',
+    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
+};
+var strings = exports.strings = {
+    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
+    VAR_FG_SIZE: '--mdc-ripple-fg-size',
+    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
+    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
+    VAR_LEFT: '--mdc-ripple-left',
+    VAR_TOP: '--mdc-ripple-top'
+};
+var numbers = exports.numbers = {
+    DEACTIVATION_TIMEOUT_MS: 225,
+    FG_DEACTIVATION_MS: 150,
+    INITIAL_ORIGIN_SCALE: 0.6,
+    PADDING: 10,
+    TAP_DELAY_MS: 300
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+!function (e, n) {
+  "object" == ( false ? "undefined" : _typeof(exports)) && "object" == ( false ? "undefined" : _typeof(module)) ? module.exports = n() :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (n),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : "object" == (typeof exports === "undefined" ? "undefined" : _typeof(exports)) ? exports.phone = n() : e.phone = n();
+}(undefined, function () {
+  return function (e) {
+    function n(_) {
+      if (a[_]) return a[_].exports;var o = a[_] = { i: _, l: !1, exports: {} };return e[_].call(o.exports, o, o.exports, n), o.l = !0, o.exports;
+    }var a = {};return n.m = e, n.c = a, n.d = function (e, a, _) {
+      n.o(e, a) || Object.defineProperty(e, a, { enumerable: !0, get: _ });
+    }, n.r = function (e) {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 });
+    }, n.t = function (e, a) {
+      if (1 & a && (e = n(e)), 8 & a) return e;if (4 & a && "object" == (typeof e === "undefined" ? "undefined" : _typeof(e)) && e && e.__esModule) return e;var _ = Object.create(null);if (n.r(_), Object.defineProperty(_, "default", { enumerable: !0, value: e }), 2 & a && "string" != typeof e) for (var o in e) {
+        n.d(_, o, function (n) {
+          return e[n];
+        }.bind(null, o));
+      }return _;
+    }, n.n = function (e) {
+      var a = e && e.__esModule ? function () {
+        return e.default;
+      } : function () {
+        return e;
+      };return n.d(a, "a", a), a;
+    }, n.o = function (e, n) {
+      return Object.prototype.hasOwnProperty.call(e, n);
+    }, n.p = "", n(n.s = 1);
+  }([function (e) {
+    "use strict";
+    e.exports = [{ alpha2: "US", alpha3: "USA", country_code: "1", country_name: "United States", mobile_begin_with: ["201", "202", "203", "205", "206", "207", "208", "209", "210", "212", "213", "214", "215", "216", "217", "218", "219", "224", "225", "227", "228", "229", "231", "234", "239", "240", "248", "251", "252", "253", "254", "256", "260", "262", "267", "269", "270", "272", "274", "276", "278", "281", "283", "301", "302", "303", "304", "305", "307", "308", "309", "310", "312", "313", "314", "315", "316", "317", "318", "319", "320", "321", "323", "325", "327", "330", "331", "334", "336", "337", "339", "341", "346", "347", "351", "352", "360", "361", "364", "369", "380", "385", "386", "401", "402", "404", "405", "406", "407", "408", "409", "410", "412", "413", "414", "415", "417", "419", "423", "424", "425", "430", "432", "434", "435", "440", "442", "443", "445", "447", "458", "464", "469", "470", "475", "478", "479", "480", "484", "501", "502", "503", "504", "505", "507", "508", "509", "510", "512", "513", "515", "516", "517", "518", "520", "530", "531", "534", "539", "540", "541", "551", "557", "559", "561", "562", "563", "564", "567", "570", "571", "573", "574", "575", "580", "582", "585", "586", "601", "602", "603", "605", "606", "607", "608", "609", "610", "612", "614", "615", "616", "617", "618", "619", "620", "623", "626", "627", "628", "629", "630", "631", "636", "641", "646", "650", "651", "657", "659", "660", "661", "662", "667", "669", "678", "679", "681", "682", "689", "701", "702", "703", "704", "706", "707", "708", "712", "713", "714", "715", "716", "717", "718", "719", "720", "724", "725", "727", "730", "731", "732", "734", "737", "740", "747", "752", "754", "757", "760", "762", "763", "764", "765", "769", "770", "772", "773", "774", "775", "779", "781", "785", "786", "801", "802", "803", "804", "805", "806", "808", "810", "812", "813", "814", "815", "816", "817", "818", "828", "830", "831", "832", "835", "843", "845", "847", "848", "850", "854", "856", "857", "858", "859", "860", "862", "863", "864", "865", "870", "872", "878", "901", "903", "904", "906", "907", "908", "909", "910", "912", "913", "914", "915", "916", "917", "918", "919", "920", "925", "927", "928", "929", "931", "934", "935", "936", "937", "938", "940", "941", "947", "949", "951", "952", "954", "956", "957", "959", "970", "971", "972", "973", "975", "978", "979", "980", "984", "985", "986", "989", "888", "800"], phone_number_lengths: [10] }, { alpha2: "AW", alpha3: "ABW", country_code: "297", country_name: "Aruba", mobile_begin_with: ["5", "6", "7", "9"], phone_number_lengths: [7] }, { alpha2: "AF", alpha3: "AFG", country_code: "93", country_name: "Afghanistan", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "AO", alpha3: "AGO", country_code: "244", country_name: "Angola", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "AI", alpha3: "AIA", country_code: "1", country_name: "Anguilla", mobile_begin_with: ["2645", "2647"], phone_number_lengths: [10] }, { alpha2: "AX", alpha3: "ALA", country_code: "358", country_name: "Åland Islands", mobile_begin_with: ["18"], phone_number_lengths: [6, 7, 8] }, { alpha2: "AL", alpha3: "ALB", country_code: "355", country_name: "Albania", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "AD", alpha3: "AND", country_code: "376", country_name: "Andorra", mobile_begin_with: ["3", "4", "6"], phone_number_lengths: [6] }, { alpha2: "AE", alpha3: "ARE", country_code: "971", country_name: "United Arab Emirates", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "AR", alpha3: "ARG", country_code: "54", country_name: "Argentina", mobile_begin_with: ["1", "2", "3"], phone_number_lengths: [10] }, { alpha2: "AM", alpha3: "ARM", country_code: "374", country_name: "Armenia", mobile_begin_with: ["4", "5", "7", "9"], phone_number_lengths: [8] }, { alpha2: "AS", alpha3: "ASM", country_code: "1", country_name: "American Samoa", mobile_begin_with: ["684733", "684258"], phone_number_lengths: [10] }, { alpha2: "AG", alpha3: "ATG", country_code: "1", country_name: "Antigua and Barbuda", mobile_begin_with: ["2687"], phone_number_lengths: [10] }, { alpha2: "AU", alpha3: "AUS", country_code: "61", country_name: "Australia", mobile_begin_with: ["4"], phone_number_lengths: [9] }, { alpha2: "AT", alpha3: "AUT", country_code: "43", country_name: "Austria", mobile_begin_with: ["6"], phone_number_lengths: [10, 11, 12, 13, 14] }, { alpha2: "AZ", alpha3: "AZE", country_code: "994", country_name: "Azerbaijan", mobile_begin_with: ["4", "5", "6", "7"], phone_number_lengths: [9] }, { alpha2: "BI", alpha3: "BDI", country_code: "257", country_name: "Burundi", mobile_begin_with: ["7", "29"], phone_number_lengths: [8] }, { alpha2: "BE", alpha3: "BEL", country_code: "32", country_name: "Belgium", mobile_begin_with: ["4", "3"], phone_number_lengths: [9, 8] }, { alpha2: "BJ", alpha3: "BEN", country_code: "229", country_name: "Benin", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "BF", alpha3: "BFA", country_code: "226", country_name: "Burkina Faso", mobile_begin_with: ["6", "7"], phone_number_lengths: [8] }, { alpha2: "BD", alpha3: "BGD", country_code: "880", country_name: "Bangladesh", mobile_begin_with: ["1"], phone_number_lengths: [8, 9, 10] }, { alpha2: "BG", alpha3: "BGR", country_code: "359", country_name: "Bulgaria", mobile_begin_with: ["87", "88", "89", "98", "99", "43"], phone_number_lengths: [8, 9] }, { alpha2: "BH", alpha3: "BHR", country_code: "973", country_name: "Bahrain", mobile_begin_with: ["3"], phone_number_lengths: [8] }, { alpha2: "BS", alpha3: "BHS", country_code: "1", country_name: "Bahamas", mobile_begin_with: ["242"], phone_number_lengths: [10] }, { alpha2: "BA", alpha3: "BIH", country_code: "387", country_name: "Bosnia and Herzegovina", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "BY", alpha3: "BLR", country_code: "375", country_name: "Belarus", mobile_begin_with: ["25", "29", "33", "44"], phone_number_lengths: [9] }, { alpha2: "BZ", alpha3: "BLZ", country_code: "501", country_name: "Belize", mobile_begin_with: ["6"], phone_number_lengths: [7] }, { alpha2: "BM", alpha3: "BMU", country_code: "1", country_name: "Bermuda", mobile_begin_with: ["4413", "4415", "4417"], phone_number_lengths: [10] }, { alpha2: "BO", alpha3: "BOL", country_code: "591", country_name: "Bolivia", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "BR", alpha3: "BRA", country_code: "55", country_name: "Brazil", mobile_begin_with: ["119", "129", "139", "149", "159", "169", "179", "189", "199", "219", "229", "249", "279", "289", "11", "12", "13", "14", "15", "16", "17", "18", "19", "21", "22", "24", "27", "28", "31", "32", "33", "34", "35", "37", "38", "41", "42", "43", "44", "45", "46", "47", "48", "49", "51", "53", "54", "55", "61", "62", "63", "64", "65", "66", "67", "68", "69", "71", "73", "74", "75", "77", "79", "81", "82", "83", "84", "85", "86", "87", "88", "89", "91", "92", "93", "94", "95", "96", "97", "98", "99"], phone_number_lengths: [10, 11] }, { alpha2: "BB", alpha3: "BRB", country_code: "1", country_name: "Barbados", mobile_begin_with: [246], phone_number_lengths: [10] }, { alpha2: "BN", alpha3: "BRN", country_code: "673", country_name: "Brunei Darussalam", mobile_begin_with: ["7", "8"], phone_number_lengths: [7] }, { alpha2: "BT", alpha3: "BTN", country_code: "975", country_name: "Bhutan", mobile_begin_with: ["17"], phone_number_lengths: [8] }, { alpha2: "BW", alpha3: "BWA", country_code: "267", country_name: "Botswana", mobile_begin_with: ["71", "72", "73", "74", "75", "76"], phone_number_lengths: [8] }, { alpha2: "CF", alpha3: "CAF", country_code: "236", country_name: "Central African Republic", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "CA", alpha3: "CAN", country_code: "1", country_name: "Canada", mobile_begin_with: ["204", "226", "236", "249", "250", "289", "306", "343", "365", "367", "403", "416", "418", "431", "437", "438", "450", "506", "514", "519", "548", "579", "581", "587", "600", "604", "613", "639", "647", "705", "709", "778", "780", "807", "819", "867", "873", "902", "905"], phone_number_lengths: [10] }, { alpha2: "CH", alpha3: "CHE", country_code: "41", country_name: "Switzerland", mobile_begin_with: ["74", "75", "76", "77", "78", "79"], phone_number_lengths: [9] }, { alpha2: "CL", alpha3: "CHL", country_code: "56", country_name: "Chile", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "CN", alpha3: "CHN", country_code: "86", country_name: "China", mobile_begin_with: ["13", "14", "15", "17", "18", "19", "16"], phone_number_lengths: [11] }, { alpha2: "CI", alpha3: "CIV", country_code: "225", country_name: "Côte D'Ivoire", mobile_begin_with: ["0", "4", "5", "6", "7", "8"], phone_number_lengths: [8] }, { alpha2: "CM", alpha3: "CMR", country_code: "237", country_name: "Cameroon", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "CD", alpha3: "COD", country_code: "243", country_name: "Congo, The Democratic Republic Of The", mobile_begin_with: ["8", "9"], phone_number_lengths: [9] }, { alpha2: "CG", alpha3: "COG", country_code: "242", country_name: "Congo", mobile_begin_with: ["0"], phone_number_lengths: [9] }, { alpha2: "CK", alpha3: "COK", country_code: "682", country_name: "Cook Islands", mobile_begin_with: ["5", "7"], phone_number_lengths: [5] }, { alpha2: "CO", alpha3: "COL", country_code: "57", country_name: "Colombia", mobile_begin_with: ["3"], phone_number_lengths: [10] }, { alpha2: "KM", alpha3: "COM", country_code: "269", country_name: "Comoros", mobile_begin_with: ["3", "76"], phone_number_lengths: [7] }, { alpha2: "CV", alpha3: "CPV", country_code: "238", country_name: "Cape Verde", mobile_begin_with: ["5", "9"], phone_number_lengths: [7] }, { alpha2: "CR", alpha3: "CRI", country_code: "506", country_name: "Costa Rica", mobile_begin_with: ["5", "6", "7", "8"], phone_number_lengths: [8] }, { alpha2: "CU", alpha3: "CUB", country_code: "53", country_name: "Cuba", mobile_begin_with: ["5"], phone_number_lengths: [8] }, { alpha2: "KY", alpha3: "CYM", country_code: "1", country_name: "Cayman Islands", mobile_begin_with: ["345"], phone_number_lengths: [10] }, { alpha2: "CY", alpha3: "CYP", country_code: "357", country_name: "Cyprus", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "CZ", alpha3: "CZE", country_code: "420", country_name: "Czech Republic", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "DE", alpha3: "DEU", country_code: "49", country_name: "Germany", mobile_begin_with: ["15", "16", "17"], phone_number_lengths: [10, 11] }, { alpha2: "DJ", alpha3: "DJI", country_code: "253", country_name: "Djibouti", mobile_begin_with: ["77"], phone_number_lengths: [8] }, { alpha2: "DM", alpha3: "DMA", country_code: "1", country_name: "Dominica", mobile_begin_with: ["767"], phone_number_lengths: [10] }, { alpha2: "DK", alpha3: "DNK", country_code: "45", country_name: "Denmark", mobile_begin_with: ["2", "30", "31", "40", "41", "42", "50", "51", "52", "53", "60", "61", "71", "81", "91", "92", "93"], phone_number_lengths: [8] }, { alpha2: "DO", alpha3: "DOM", country_code: "1", country_name: "Dominican Republic", mobile_begin_with: ["809", "829", "849"], phone_number_lengths: [10] }, { alpha2: "DZ", alpha3: "DZA", country_code: "213", country_name: "Algeria", mobile_begin_with: ["5", "6", "7"], phone_number_lengths: [9] }, { alpha2: "EC", alpha3: "ECU", country_code: "593", country_name: "Ecuador", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "EG", alpha3: "EGY", country_code: "20", country_name: "Egypt", mobile_begin_with: ["1"], phone_number_lengths: [10, 8] }, { alpha2: "ER", alpha3: "ERI", country_code: "291", country_name: "Eritrea", mobile_begin_with: ["1", "7", "8"], phone_number_lengths: [7] }, { alpha2: "ES", alpha3: "ESP", country_code: "34", country_name: "Spain", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "EE", alpha3: "EST", country_code: "372", country_name: "Estonia", mobile_begin_with: ["5", "81", "82", "83"], phone_number_lengths: [7, 8] }, { alpha2: "ET", alpha3: "ETH", country_code: "251", country_name: "Ethiopia", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "FI", alpha3: "FIN", country_code: "358", country_name: "Finland", mobile_begin_with: ["4", "5"], phone_number_lengths: [9, 10] }, { alpha2: "FJ", alpha3: "FJI", country_code: "679", country_name: "Fiji", mobile_begin_with: ["7", "9"], phone_number_lengths: [7] }, { alpha2: "FK", alpha3: "FLK", country_code: "500", country_name: "Falkland Islands (Malvinas)", mobile_begin_with: ["5", "6"], phone_number_lengths: [5] }, { alpha2: "FR", alpha3: "FRA", country_code: "33", country_name: "France", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "FO", alpha3: "FRO", country_code: "298", country_name: "Faroe Islands", mobile_begin_with: [], phone_number_lengths: [6] }, { alpha2: "FM", alpha3: "FSM", country_code: "691", country_name: "Micronesia, Federated States Of", mobile_begin_with: [], phone_number_lengths: [7] }, { alpha2: "GA", alpha3: "GAB", country_code: "241", country_name: "Gabon", mobile_begin_with: ["05", "06", "07"], phone_number_lengths: [8] }, { alpha2: "GB", alpha3: "GBR", country_code: "44", country_name: "United Kingdom", mobile_begin_with: ["7"], phone_number_lengths: [10] }, { alpha2: "GE", alpha3: "GEO", country_code: "995", country_name: "Georgia", mobile_begin_with: ["5", "7"], phone_number_lengths: [9] }, { alpha2: "GH", alpha3: "GHA", country_code: "233", country_name: "Ghana", mobile_begin_with: ["2", "5"], phone_number_lengths: [9] }, { alpha2: "GI", alpha3: "GIB", country_code: "350", country_name: "Gibraltar", mobile_begin_with: ["5"], phone_number_lengths: [8] }, { alpha2: "GN", alpha3: "GIN", country_code: "224", country_name: "Guinea", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "GP", alpha3: "GLP", country_code: "590", country_name: "Guadeloupe", mobile_begin_with: ["690"], phone_number_lengths: [9] }, { alpha2: "GM", alpha3: "GMB", country_code: "220", country_name: "Gambia", mobile_begin_with: ["7", "9"], phone_number_lengths: [7] }, { alpha2: "GW", alpha3: "GNB", country_code: "245", country_name: "Guinea-Bissau", mobile_begin_with: ["5", "6", "7"], phone_number_lengths: [7] }, { alpha2: "GQ", alpha3: "GNQ", country_code: "240", country_name: "Equatorial Guinea", mobile_begin_with: ["222", "551"], phone_number_lengths: [9] }, { alpha2: "GR", alpha3: "GRC", country_code: "30", country_name: "Greece", mobile_begin_with: ["6"], phone_number_lengths: [10] }, { alpha2: "GD", alpha3: "GRD", country_code: "1", country_name: "Grenada", mobile_begin_with: ["473"], phone_number_lengths: [10] }, { alpha2: "GL", alpha3: "GRL", country_code: "299", country_name: "Greenland", mobile_begin_with: ["2", "4", "5"], phone_number_lengths: [6] }, { alpha2: "GT", alpha3: "GTM", country_code: "502", country_name: "Guatemala", mobile_begin_with: ["3", "4", "5"], phone_number_lengths: [8] }, { alpha2: "GF", alpha3: "GUF", country_code: "594", country_name: "French Guiana", mobile_begin_with: ["694"], phone_number_lengths: [9] }, { alpha2: "GU", alpha3: "GUM", country_code: "1", country_name: "Guam", mobile_begin_with: ["671"], phone_number_lengths: [10] }, { alpha2: "GY", alpha3: "GUY", country_code: "592", country_name: "Guyana", mobile_begin_with: ["6"], phone_number_lengths: [7] }, { alpha2: "HK", alpha3: "HKG", country_code: "852", country_name: "Hong Kong", mobile_begin_with: ["4", "5", "6", "70", "71", "72", "73", "81", "82", "83", "84", "85", "86", "87", "88", "89", "9"], phone_number_lengths: [8] }, { alpha2: "HN", alpha3: "HND", country_code: "504", country_name: "Honduras", mobile_begin_with: ["3", "7", "8", "9"], phone_number_lengths: [8] }, { alpha2: "HR", alpha3: "HRV", country_code: "385", country_name: "Croatia", mobile_begin_with: ["9"], phone_number_lengths: [8, 9] }, { alpha2: "HT", alpha3: "HTI", country_code: "509", country_name: "Haiti", mobile_begin_with: ["3", "4"], phone_number_lengths: [8] }, { alpha2: "HU", alpha3: "HUN", country_code: "36", country_name: "Hungary", mobile_begin_with: ["20", "30", "31", "70"], phone_number_lengths: [9] }, { alpha2: "ID", alpha3: "IDN", country_code: "62", country_name: "Indonesia", mobile_begin_with: ["8"], phone_number_lengths: [9, 10, 11, 12] }, { alpha2: "IN", alpha3: "IND", country_code: "91", country_name: "India", mobile_begin_with: ["6", "7", "8", "9"], phone_number_lengths: [10] }, { alpha2: "IE", alpha3: "IRL", country_code: "353", country_name: "Ireland", mobile_begin_with: ["82", "83", "84", "85", "86", "87", "88", "89"], phone_number_lengths: [9] }, { alpha2: "IR", alpha3: "IRN", country_code: "98", country_name: "Iran, Islamic Republic Of", mobile_begin_with: ["9"], phone_number_lengths: [10] }, { alpha2: "IQ", alpha3: "IRQ", country_code: "964", country_name: "Iraq", mobile_begin_with: ["7"], phone_number_lengths: [10] }, { alpha2: "IS", alpha3: "ISL", country_code: "354", country_name: "Iceland", mobile_begin_with: ["6", "7", "8"], phone_number_lengths: [7] }, { alpha2: "IL", alpha3: "ISR", country_code: "972", country_name: "Israel", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "IT", alpha3: "ITA", country_code: "39", country_name: "Italy", mobile_begin_with: ["3"], phone_number_lengths: [9, 10] }, { alpha2: "JM", alpha3: "JAM", country_code: "1", country_name: "Jamaica", mobile_begin_with: ["876"], phone_number_lengths: [10] }, { alpha2: "JO", alpha3: "JOR", country_code: "962", country_name: "Jordan", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "JP", alpha3: "JPN", country_code: "81", country_name: "Japan", mobile_begin_with: ["70", "80", "90"], phone_number_lengths: [10] }, { alpha2: "KZ", alpha3: "KAZ", country_code: "7", country_name: "Kazakhstan", mobile_begin_with: ["70", "74", "77"], phone_number_lengths: [10] }, { alpha2: "KE", alpha3: "KEN", country_code: "254", country_name: "Kenya", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "KG", alpha3: "KGZ", country_code: "996", country_name: "Kyrgyzstan", mobile_begin_with: ["5", "7"], phone_number_lengths: [9] }, { alpha2: "KH", alpha3: "KHM", country_code: "855", country_name: "Cambodia", mobile_begin_with: ["1", "6", "7", "8", "9"], phone_number_lengths: [8, 9] }, { alpha2: "KI", alpha3: "KIR", country_code: "686", country_name: "Kiribati", mobile_begin_with: ["9", "30"], phone_number_lengths: [5] }, { alpha2: "KN", alpha3: "KNA", country_code: "1", country_name: "Saint Kitts And Nevis", mobile_begin_with: ["869"], phone_number_lengths: [10] }, { alpha2: "KR", alpha3: "KOR", country_code: "82", country_name: "Korea, Republic of", mobile_begin_with: ["1"], phone_number_lengths: [9, 10] }, { alpha2: "KW", alpha3: "KWT", country_code: "965", country_name: "Kuwait", mobile_begin_with: ["5", "6", "9"], phone_number_lengths: [8] }, { alpha2: "LA", alpha3: "LAO", country_code: "856", country_name: "Lao People's Democratic Republic", mobile_begin_with: ["20"], phone_number_lengths: [10] }, { alpha2: "LB", alpha3: "LBN", country_code: "961", country_name: "Lebanon", mobile_begin_with: ["3", "7"], phone_number_lengths: [7, 8] }, { alpha2: "LR", alpha3: "LBR", country_code: "231", country_name: "Liberia", mobile_begin_with: ["4", "5", "6", "7"], phone_number_lengths: [7, 8] }, { alpha2: "LY", alpha3: "LBY", country_code: "218", country_name: "Libyan Arab Jamahiriya", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "LC", alpha3: "LCA", country_code: "1", country_name: "Saint Lucia", mobile_begin_with: ["758"], phone_number_lengths: [10] }, { alpha2: "LI", alpha3: "LIE", country_code: "423", country_name: "Liechtenstein", mobile_begin_with: ["7"], phone_number_lengths: [7] }, { alpha2: "LK", alpha3: "LKA", country_code: "94", country_name: "Sri Lanka", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "LS", alpha3: "LSO", country_code: "266", country_name: "Lesotho", mobile_begin_with: ["5", "6"], phone_number_lengths: [8] }, { alpha2: "LT", alpha3: "LTU", country_code: "370", country_name: "Lithuania", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "LU", alpha3: "LUX", country_code: "352", country_name: "Luxembourg", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "LV", alpha3: "LVA", country_code: "371", country_name: "Latvia", mobile_begin_with: ["2"], phone_number_lengths: [8] }, { alpha2: "MO", alpha3: "MAC", country_code: "853", country_name: "Macao", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "MA", alpha3: "MAR", country_code: "212", country_name: "Morocco", mobile_begin_with: ["6", "7"], phone_number_lengths: [9] }, { alpha2: "MC", alpha3: "MCO", country_code: "377", country_name: "Monaco", mobile_begin_with: ["4", "6"], phone_number_lengths: [8, 9] }, { alpha2: "MD", alpha3: "MDA", country_code: "373", country_name: "Moldova, Republic of", mobile_begin_with: ["6", "7"], phone_number_lengths: [8] }, { alpha2: "MG", alpha3: "MDG", country_code: "261", country_name: "Madagascar", mobile_begin_with: ["3"], phone_number_lengths: [9] }, { alpha2: "MV", alpha3: "MDV", country_code: "960", country_name: "Maldives", mobile_begin_with: ["7", "9"], phone_number_lengths: [7] }, { alpha2: "MX", alpha3: "MEX", country_code: "52", country_name: "Mexico", mobile_begin_with: [""], phone_number_lengths: [10, 11] }, { alpha2: "MH", alpha3: "MHL", country_code: "692", country_name: "Marshall Islands", mobile_begin_with: [], phone_number_lengths: [7] }, { alpha2: "MK", alpha3: "MKD", country_code: "389", country_name: "Macedonia, the Former Yugoslav Republic Of", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "ML", alpha3: "MLI", country_code: "223", country_name: "Mali", mobile_begin_with: ["6", "7"], phone_number_lengths: [8] }, { alpha2: "MT", alpha3: "MLT", country_code: "356", country_name: "Malta", mobile_begin_with: ["7", "9"], phone_number_lengths: [8] }, { alpha2: "MM", alpha3: "MMR", country_code: "95", country_name: "Myanmar", mobile_begin_with: ["9"], phone_number_lengths: [8, 9, 10] }, { alpha2: "ME", alpha3: "MNE", country_code: "382", country_name: "Montenegro", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "MN", alpha3: "MNG", country_code: "976", country_name: "Mongolia", mobile_begin_with: ["5", "8", "9"], phone_number_lengths: [8] }, { alpha2: "MP", alpha3: "MNP", country_code: "1", country_name: "Northern Mariana Islands", mobile_begin_with: ["670"], phone_number_lengths: [10] }, { alpha2: "MZ", alpha3: "MOZ", country_code: "258", country_name: "Mozambique", mobile_begin_with: ["8"], phone_number_lengths: [9] }, { alpha2: "MR", alpha3: "MRT", country_code: "222", country_name: "Mauritania", mobile_begin_with: [], phone_number_lengths: [8] }, { alpha2: "MS", alpha3: "MSR", country_code: "1", country_name: "Montserrat", mobile_begin_with: ["664"], phone_number_lengths: [10] }, { alpha2: "MQ", alpha3: "MTQ", country_code: "596", country_name: "Martinique", mobile_begin_with: ["696"], phone_number_lengths: [9] }, { alpha2: "MU", alpha3: "MUS", country_code: "230", country_name: "Mauritius", mobile_begin_with: [5], phone_number_lengths: [8] }, { alpha2: "MW", alpha3: "MWI", country_code: "265", country_name: "Malawi", mobile_begin_with: ["77", "88", "99"], phone_number_lengths: [9] }, { alpha2: "MY", alpha3: "MYS", country_code: "60", country_name: "Malaysia", mobile_begin_with: ["1", "6"], phone_number_lengths: [9, 10, 8] }, { alpha2: "YT", alpha3: "MYT", country_code: "262", country_name: "Mayotte", mobile_begin_with: ["639"], phone_number_lengths: [9] }, { alpha2: "NA", alpha3: "NAM", country_code: "264", country_name: "Namibia", mobile_begin_with: ["60", "81", "82", "85"], phone_number_lengths: [9] }, { alpha2: "NC", alpha3: "NCL", country_code: "687", country_name: "New Caledonia", mobile_begin_with: ["7", "8", "9"], phone_number_lengths: [6] }, { alpha2: "NE", alpha3: "NER", country_code: "227", country_name: "Niger", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "NF", alpha3: "NFK", country_code: "672", country_name: "Norfolk Island", mobile_begin_with: ["5", "8"], phone_number_lengths: [5] }, { alpha2: "NG", alpha3: "NGA", country_code: "234", country_name: "Nigeria", mobile_begin_with: ["70", "80", "81", "90"], phone_number_lengths: [10] }, { alpha2: "NI", alpha3: "NIC", country_code: "505", country_name: "Nicaragua", mobile_begin_with: ["8"], phone_number_lengths: [8] }, { alpha2: "NU", alpha3: "NIU", country_code: "683", country_name: "Niue", mobile_begin_with: [], phone_number_lengths: [4] }, { alpha2: "NL", alpha3: "NLD", country_code: "31", country_name: "Netherlands", mobile_begin_with: ["6"], phone_number_lengths: [9] }, { alpha2: "NO", alpha3: "NOR", country_code: "47", country_name: "Norway", mobile_begin_with: ["4", "9"], phone_number_lengths: [8] }, { alpha2: "NP", alpha3: "NPL", country_code: "977", country_name: "Nepal", mobile_begin_with: ["97", "98"], phone_number_lengths: [10] }, { alpha2: "NR", alpha3: "NRU", country_code: "674", country_name: "Nauru", mobile_begin_with: ["555"], phone_number_lengths: [7] }, { alpha2: "NZ", alpha3: "NZL", country_code: "64", country_name: "New Zealand", mobile_begin_with: ["2", "3", "6", "9"], phone_number_lengths: [8, 9, 10] }, { alpha2: "OM", alpha3: "OMN", country_code: "968", country_name: "Oman", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "PK", alpha3: "PAK", country_code: "92", country_name: "Pakistan", mobile_begin_with: ["3"], phone_number_lengths: [10] }, { alpha2: "PA", alpha3: "PAN", country_code: "507", country_name: "Panama", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "PE", alpha3: "PER", country_code: "51", country_name: "Peru", mobile_begin_with: ["9", "6"], phone_number_lengths: [9, 8] }, { alpha2: "PH", alpha3: "PHL", country_code: "63", country_name: "Philippines", mobile_begin_with: ["9"], phone_number_lengths: [10] }, { alpha2: "PW", alpha3: "PLW", country_code: "680", country_name: "Palau", mobile_begin_with: [], phone_number_lengths: [7] }, { alpha2: "PG", alpha3: "PNG", country_code: "675", country_name: "Papua New Guinea", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "PL", alpha3: "POL", country_code: "48", country_name: "Poland", mobile_begin_with: ["4", "5", "6", "7", "8"], phone_number_lengths: [9] }, { alpha2: "PR", alpha3: "PRI", country_code: "1", country_name: "Puerto Rico", mobile_begin_with: ["787", "939"], phone_number_lengths: [10] }, { alpha2: "PT", alpha3: "PRT", country_code: "351", country_name: "Portugal", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "PY", alpha3: "PRY", country_code: "595", country_name: "Paraguay", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "PS", alpha3: "PSE", country_code: "970", country_name: "Palestinian Territory, Occupied", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "PF", alpha3: "PYF", country_code: "689", country_name: "French Polynesia", mobile_begin_with: ["8"], phone_number_lengths: [8] }, { alpha2: "QA", alpha3: "QAT", country_code: "974", country_name: "Qatar", mobile_begin_with: ["3", "5", "6", "7"], phone_number_lengths: [8] }, { alpha2: "RE", alpha3: "REU", country_code: "262", country_name: "Réunion", mobile_begin_with: ["692", "693"], phone_number_lengths: [9] }, { alpha2: "RO", alpha3: "ROU", country_code: "40", country_name: "Romania", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "RU", alpha3: "RUS", country_code: "7", country_name: "Russian Federation", mobile_begin_with: ["9", "495"], phone_number_lengths: [10] }, { alpha2: "RW", alpha3: "RWA", country_code: "250", country_name: "Rwanda", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "SA", alpha3: "SAU", country_code: "966", country_name: "Saudi Arabia", mobile_begin_with: ["5"], phone_number_lengths: [9] }, { alpha2: "SD", alpha3: "SDN", country_code: "249", country_name: "Sudan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "SS", alpha3: "SSD", country_code: "211", country_name: "South Sudan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "SN", alpha3: "SEN", country_code: "221", country_name: "Senegal", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "SG", alpha3: "SGP", country_code: "65", country_name: "Singapore", mobile_begin_with: ["8", "9"], phone_number_lengths: [8] }, { alpha2: "SH", alpha3: "SHN", country_code: "290", country_name: "Saint Helena", mobile_begin_with: [], phone_number_lengths: [4] }, { alpha2: "SJ", alpha3: "SJM", country_code: "47", country_name: "Svalbard And Jan Mayen", mobile_begin_with: [], phone_number_lengths: [8] }, { alpha2: "SB", alpha3: "SLB", country_code: "677", country_name: "Solomon Islands", mobile_begin_with: ["7", "8"], phone_number_lengths: [7] }, { alpha2: "SL", alpha3: "SLE", country_code: "232", country_name: "Sierra Leone", mobile_begin_with: ["21", "25", "30", "33", "34", "40", "44", "50", "55", "76", "77", "78", "79", "88"], phone_number_lengths: [8] }, { alpha2: "SV", alpha3: "SLV", country_code: "503", country_name: "El Salvador", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "SM", alpha3: "SMR", country_code: "378", country_name: "San Marino", mobile_begin_with: ["3", "6"], phone_number_lengths: [10] }, { alpha2: "SO", alpha3: "SOM", country_code: "252", country_name: "Somalia", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "SX", alpha3: "SXM", country_code: "1", country_name: "Sint Maarten", mobile_begin_with: ["721"], phone_number_lengths: [10] }, { alpha2: "PM", alpha3: "SPM", country_code: "508", country_name: "Saint Pierre And Miquelon", mobile_begin_with: ["55"], phone_number_lengths: [6] }, { alpha2: "RS", alpha3: "SRB", country_code: "381", country_name: "Serbia", mobile_begin_with: ["6"], phone_number_lengths: [8, 9] }, { alpha2: "ST", alpha3: "STP", country_code: "239", country_name: "Sao Tome and Principe", mobile_begin_with: ["98", "99"], phone_number_lengths: [7] }, { alpha2: "SR", alpha3: "SUR", country_code: "597", country_name: "Suriname", mobile_begin_with: ["6", "7", "8"], phone_number_lengths: [7] }, { alpha2: "SK", alpha3: "SVK", country_code: "421", country_name: "Slovakia", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "SI", alpha3: "SVN", country_code: "386", country_name: "Slovenia", mobile_begin_with: ["3", "4", "5", "6", "7"], phone_number_lengths: [8] }, { alpha2: "SE", alpha3: "SWE", country_code: "46", country_name: "Sweden", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "SC", alpha3: "SYC", country_code: "248", country_name: "Seychelles", mobile_begin_with: ["2"], phone_number_lengths: [7] }, { alpha2: "SY", alpha3: "SYR", country_code: "963", country_name: "Syrian Arab Republic", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "TC", alpha3: "TCA", country_code: "1", country_name: "Turks and Caicos Islands", mobile_begin_with: ["6492", "6493", "6494"], phone_number_lengths: [10] }, { alpha2: "TD", alpha3: "TCD", country_code: "235", country_name: "Chad", mobile_begin_with: ["6", "7", "9"], phone_number_lengths: [8] }, { alpha2: "TG", alpha3: "TGO", country_code: "228", country_name: "Togo", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "TH", alpha3: "THA", country_code: "66", country_name: "Thailand", mobile_begin_with: ["6", "8", "9"], phone_number_lengths: [9] }, { alpha2: "TJ", alpha3: "TJK", country_code: "992", country_name: "Tajikistan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "TK", alpha3: "TKL", country_code: "690", country_name: "Tokelau", mobile_begin_with: [], phone_number_lengths: [4] }, { alpha2: "TM", alpha3: "TKM", country_code: "993", country_name: "Turkmenistan", mobile_begin_with: ["6"], phone_number_lengths: [8] }, { alpha2: "TL", alpha3: "TLS", country_code: "670", country_name: "Timor-Leste", mobile_begin_with: ["7"], phone_number_lengths: [8] }, { alpha2: "TO", alpha3: "TON", country_code: "676", country_name: "Tonga", mobile_begin_with: [], phone_number_lengths: [5] }, { alpha2: "TT", alpha3: "TTO", country_code: "1", country_name: "Trinidad and Tobago", mobile_begin_with: ["868"], phone_number_lengths: [10] }, { alpha2: "TN", alpha3: "TUN", country_code: "216", country_name: "Tunisia", mobile_begin_with: ["2", "4", "5", "9"], phone_number_lengths: [8] }, { alpha2: "TR", alpha3: "TUR", country_code: "90", country_name: "Turkey", mobile_begin_with: ["5"], phone_number_lengths: [10] }, { alpha2: "TV", alpha3: "TUV", country_code: "688", country_name: "Tuvalu", mobile_begin_with: [], phone_number_lengths: [5] }, { alpha2: "TW", alpha3: "TWN", country_code: "886", country_name: "Taiwan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "TZ", alpha3: "TZA", country_code: "255", country_name: "Tanzania, United Republic of", mobile_begin_with: ["7", "6"], phone_number_lengths: [9] }, { alpha2: "UG", alpha3: "UGA", country_code: "256", country_name: "Uganda", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "UA", alpha3: "UKR", country_code: "380", country_name: "Ukraine", mobile_begin_with: ["39", "50", "63", "66", "67", "68", "73", "9"], phone_number_lengths: [9] }, { alpha2: "UY", alpha3: "URY", country_code: "598", country_name: "Uruguay", mobile_begin_with: ["9"], phone_number_lengths: [8] }, { alpha2: "UZ", alpha3: "UZB", country_code: "998", country_name: "Uzbekistan", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "VC", alpha3: "VCT", country_code: "1", country_name: "Saint Vincent And The Grenedines", mobile_begin_with: ["784"], phone_number_lengths: [10] }, { alpha2: "VE", alpha3: "VEN", country_code: "58", country_name: "Venezuela, Bolivarian Republic of", mobile_begin_with: ["4"], phone_number_lengths: [10] }, { alpha2: "VG", alpha3: "VGB", country_code: "1", country_name: "Virgin Islands, British", mobile_begin_with: ["284"], phone_number_lengths: [10] }, { alpha2: "VI", alpha3: "VIR", country_code: "1", country_name: "Virgin Islands, U.S.", mobile_begin_with: ["340"], phone_number_lengths: [10] }, { alpha2: "VN", alpha3: "VNM", country_code: "84", country_name: "Viet Nam", mobile_begin_with: ["8", "9", "3", "7", "5"], phone_number_lengths: [8, 9] }, { alpha2: "VU", alpha3: "VUT", country_code: "678", country_name: "Vanuatu", mobile_begin_with: ["5", "7"], phone_number_lengths: [7] }, { alpha2: "WF", alpha3: "WLF", country_code: "681", country_name: "Wallis and Futuna", mobile_begin_with: [], phone_number_lengths: [6] }, { alpha2: "WS", alpha3: "WSM", country_code: "685", country_name: "Samoa", mobile_begin_with: ["7"], phone_number_lengths: [7] }, { alpha2: "YE", alpha3: "YEM", country_code: "967", country_name: "Yemen", mobile_begin_with: ["7"], phone_number_lengths: [9] }, { alpha2: "ZA", alpha3: "ZAF", country_code: "27", country_name: "South Africa", mobile_begin_with: ["1", "2", "3", "4", "5", "6", "7", "8"], phone_number_lengths: [9] }, { alpha2: "ZM", alpha3: "ZMB", country_code: "260", country_name: "Zambia", mobile_begin_with: ["9"], phone_number_lengths: [9] }, { alpha2: "ZW", alpha3: "ZWE", country_code: "263", country_name: "Zimbabwe", mobile_begin_with: ["71", "73", "77"], phone_number_lengths: [9] }];
+  }, function (e, n, a) {
+    "use strict";
+    var _ = function () {
+      return function (e, n) {
+        if (Array.isArray(e)) return e;if (Symbol.iterator in Object(e)) return function (e, n) {
+          var a = [],
+              _ = !0,
+              o = !1,
+              h = void 0;try {
+            for (var t, l = e[Symbol.iterator](); !(_ = (t = l.next()).done) && (a.push(t.value), !n || a.length !== n); _ = !0) {}
+          } catch (e) {
+            o = !0, h = e;
+          } finally {
+            try {
+              !_ && l.return && l.return();
+            } finally {
+              if (o) throw h;
+            }
+          }return a;
+        }(e, n);throw new TypeError("Invalid attempt to destructure non-iterable instance");
+      };
+    }(),
+        o = a(0),
+        h = a(2),
+        t = a(3),
+        l = a(4);e.exports = function (e, n, a) {
+      var o = [],
+          r = "string" == typeof e ? e.trim() : "",
+          i = "string" == typeof n ? n.trim() : "",
+          u = !1;r.match(/^\+/) && (u = !0), r = r.replace(/\D/g, "");var c = h(i);if (0 === Object.keys(c).length) return o;var p = !1;if (i) -1 === ["GAB", "CIV", "COG"].indexOf(c.alpha3) && (r = r.replace(/^0+/, "")), "RUS" === c.alpha3 && 11 === r.length && null !== r.match(/^89/) && (r = r.replace(/^8+/, "")), !u && c.phone_number_lengths.includes(r.length) && (r = c.country_code + r);else if (u) {
+        var m,
+            b = t(r, a),
+            g = _(b, 2);c = g[0], m = g[1], c || (m ? r = (c = m).country_code + r.replace(new RegExp("^" + c.country_code + "\\d"), "") : c = {});
+      } else c.phone_number_lengths.includes(r.length) && (r = "1" + r, p = !0);var y = l(r, c, a);return y ? ["+" + r, c.alpha3] : p && (c = h("CAN"), y = l(r, c, a)) ? ["+" + r, c.alpha3] : o;
+    }, e.exports.iso3166_data = o;
+  }, function (e, n, a) {
+    "use strict";
+    var _ = a(0);e.exports = function (e) {
+      return 0 === e.length ? _[0] : 2 === e.length ? _.find(function (n) {
+        return e.toUpperCase() === n.alpha2;
+      }) || {} : 3 === e.length ? _.find(function (n) {
+        return e.toUpperCase() === n.alpha3;
+      }) || {} : _.find(function (n) {
+        return e.toUpperCase() === n.country_name.toUpperCase();
+      }) || {};
+    };
+  }, function (e, n, a) {
+    "use strict";
+    var _ = a(0);e.exports = function (e, n) {
+      var a = _.filter(function (n) {
+        return e.match(new RegExp("^" + n.country_code));
+      });return [a.filter(function (n) {
+        return n.phone_number_lengths.some(function (a) {
+          return e.length === n.country_code.length + a;
+        });
+      }).find(function (a) {
+        return !a.mobile_begin_with.length || n || a.mobile_begin_with.some(function (n) {
+          return e.match(new RegExp("^" + a.country_code + n));
+        });
+      }), a.filter(function (n) {
+        return n.phone_number_lengths.some(function (a) {
+          return e.length === n.country_code.length + a + 1;
+        });
+      }).find(function (a) {
+        return !a.mobile_begin_with.length || n || a.mobile_begin_with.some(function (n) {
+          return e.match(new RegExp("^" + a.country_code + "\\d?" + n));
+        });
+      })];
+    };
+  }, function (e) {
+    "use strict";
+    e.exports = function (e, n, a) {
+      if (!n.phone_number_lengths) return !1;var _ = e.replace(new RegExp("^" + n.country_code), ""),
+          o = n.phone_number_lengths,
+          h = n.mobile_begin_with,
+          t = o.some(function (e) {
+        return _.length === e;
+      }),
+          l = !h.length || h.some(function (e) {
+        return _.match(new RegExp("^" + e));
+      });return t && (a || l);
+    };
+  }]);
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(376);
+
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+var bind = __webpack_require__(97);
+var Axios = __webpack_require__(378);
+var mergeConfig = __webpack_require__(103);
+var defaults = __webpack_require__(100);
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(mergeConfig(axios.defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(104);
+axios.CancelToken = __webpack_require__(390);
+axios.isCancel = __webpack_require__(99);
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(391);
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer(obj) {
+  return obj != null && obj.constructor != null && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj);
+};
+
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+var buildURL = __webpack_require__(98);
+var InterceptorManager = __webpack_require__(379);
+var dispatchRequest = __webpack_require__(380);
+var mergeConfig = __webpack_require__(103);
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = arguments[1] || {};
+    config.url = arguments[0];
+  } else {
+    config = config || {};
+  }
+
+  config = mergeConfig(this.defaults, config);
+  config.method = config.method ? config.method.toLowerCase() : 'get';
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function (url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function (url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+var transformData = __webpack_require__(381);
+var isCancel = __webpack_require__(99);
+var defaults = __webpack_require__(100);
+var isAbsoluteURL = __webpack_require__(388);
+var combineURLs = __webpack_require__(389);
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(config.data, config.headers, config.transformRequest);
+
+  // Flatten headers
+  config.headers = utils.merge(config.headers.common || {}, config.headers[config.method] || {}, config.headers || {});
+
+  utils.forEach(['delete', 'get', 'head', 'post', 'put', 'patch', 'common'], function cleanHeaderConfig(method) {
+    delete config.headers[method];
+  });
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(response.data, response.headers, config.transformResponse);
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(102);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  if (!validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError('Request failed with status code ' + response.status, response.config, null, response.request, response));
+  }
+};
+
+/***/ }),
+/* 384 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+
+  error.request = request;
+  error.response = response;
+  error.isAxiosError = true;
+
+  error.toJSON = function () {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code
+    };
+  };
+  return error;
+};
+
+/***/ }),
+/* 385 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = ['age', 'authorization', 'content-length', 'content-type', 'etag', 'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since', 'last-modified', 'location', 'max-forwards', 'proxy-authorization', 'referer', 'retry-after', 'user-agent'];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) {
+    return parsed;
+  }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+/***/ }),
+/* 386 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+
+module.exports = utils.isStandardBrowserEnv() ?
+
+// Standard browser envs have full support of the APIs needed to test
+// whether the request URL is of the same origin as current location.
+function standardBrowserEnv() {
+  var msie = /(msie|trident)/i.test(navigator.userAgent);
+  var urlParsingNode = document.createElement('a');
+  var originURL;
+
+  /**
+  * Parse a URL to discover it's components
+  *
+  * @param {String} url The URL to be parsed
+  * @returns {Object}
+  */
+  function resolveURL(url) {
+    var href = url;
+
+    if (msie) {
+      // IE needs attribute set twice to normalize properties
+      urlParsingNode.setAttribute('href', href);
+      href = urlParsingNode.href;
+    }
+
+    urlParsingNode.setAttribute('href', href);
+
+    // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+    return {
+      href: urlParsingNode.href,
+      protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+      host: urlParsingNode.host,
+      search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+      hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+      hostname: urlParsingNode.hostname,
+      port: urlParsingNode.port,
+      pathname: urlParsingNode.pathname.charAt(0) === '/' ? urlParsingNode.pathname : '/' + urlParsingNode.pathname
+    };
+  }
+
+  originURL = resolveURL(window.location.href);
+
+  /**
+  * Determine if a URL shares the same origin as the current location
+  *
+  * @param {String} requestURL The URL to test
+  * @returns {boolean} True if URL shares the same origin, otherwise false
+  */
+  return function isURLSameOrigin(requestURL) {
+    var parsed = utils.isString(requestURL) ? resolveURL(requestURL) : requestURL;
+    return parsed.protocol === originURL.protocol && parsed.host === originURL.host;
+  };
+}() :
+
+// Non standard browser envs (web workers, react-native) lack needed support.
+function nonStandardBrowserEnv() {
+  return function isURLSameOrigin() {
+    return true;
+  };
+}();
+
+/***/ }),
+/* 387 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(12);
+
+module.exports = utils.isStandardBrowserEnv() ?
+
+// Standard browser envs support document.cookie
+function standardBrowserEnv() {
+  return {
+    write: function write(name, value, expires, path, domain, secure) {
+      var cookie = [];
+      cookie.push(name + '=' + encodeURIComponent(value));
+
+      if (utils.isNumber(expires)) {
+        cookie.push('expires=' + new Date(expires).toGMTString());
+      }
+
+      if (utils.isString(path)) {
+        cookie.push('path=' + path);
+      }
+
+      if (utils.isString(domain)) {
+        cookie.push('domain=' + domain);
+      }
+
+      if (secure === true) {
+        cookie.push('secure');
+      }
+
+      document.cookie = cookie.join('; ');
+    },
+
+    read: function read(name) {
+      var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+      return match ? decodeURIComponent(match[3]) : null;
+    },
+
+    remove: function remove(name) {
+      this.write(name, '', Date.now() - 86400000);
+    }
+  };
+}() :
+
+// Non standard browser env (web workers, react-native) lack needed support.
+function nonStandardBrowserEnv() {
+  return {
+    write: function write() {},
+    read: function read() {
+      return null;
+    },
+    remove: function remove() {}
+  };
+}();
+
+/***/ }),
+/* 388 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return (/^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+  );
+};
+
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL;
+};
+
+/***/ }),
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(104);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+/***/ }),
+/* 391 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+/***/ }),
+/* 392 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCTextField = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _ponyfill = __webpack_require__(29);
+
+var ponyfill = _interopRequireWildcard(_ponyfill);
+
+var _index = __webpack_require__(393);
+
+var _index2 = __webpack_require__(77);
+
+var _index3 = __webpack_require__(396);
+
+var _component2 = __webpack_require__(398);
+
+var _foundation = __webpack_require__(107);
+
+var _index4 = __webpack_require__(109);
+
+var _constants = __webpack_require__(111);
+
+var _foundation2 = __webpack_require__(112);
+
+var _index5 = __webpack_require__(113);
+
+var _index6 = __webpack_require__(115);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCTextField = /** @class */function (_super) {
+    tslib_1.__extends(MDCTextField, _super);
+    function MDCTextField() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCTextField.attachTo = function (root) {
+        return new MDCTextField(root);
+    };
+    MDCTextField.prototype.initialize = function (rippleFactory, lineRippleFactory, helperTextFactory, characterCounterFactory, iconFactory, labelFactory, outlineFactory) {
+        if (rippleFactory === void 0) {
+            rippleFactory = function rippleFactory(el, foundation) {
+                return new _component2.MDCRipple(el, foundation);
+            };
+        }
+        if (lineRippleFactory === void 0) {
+            lineRippleFactory = function lineRippleFactory(el) {
+                return new _index2.MDCLineRipple(el);
+            };
+        }
+        if (helperTextFactory === void 0) {
+            helperTextFactory = function helperTextFactory(el) {
+                return new _index5.MDCTextFieldHelperText(el);
+            };
+        }
+        if (characterCounterFactory === void 0) {
+            characterCounterFactory = function characterCounterFactory(el) {
+                return new _index4.MDCTextFieldCharacterCounter(el);
+            };
+        }
+        if (iconFactory === void 0) {
+            iconFactory = function iconFactory(el) {
+                return new _index6.MDCTextFieldIcon(el);
+            };
+        }
+        if (labelFactory === void 0) {
+            labelFactory = function labelFactory(el) {
+                return new _index.MDCFloatingLabel(el);
+            };
+        }
+        if (outlineFactory === void 0) {
+            outlineFactory = function outlineFactory(el) {
+                return new _index3.MDCNotchedOutline(el);
+            };
+        }
+        this.input_ = this.root_.querySelector(_constants.strings.INPUT_SELECTOR);
+        var labelElement = this.root_.querySelector(_constants.strings.LABEL_SELECTOR);
+        this.label_ = labelElement ? labelFactory(labelElement) : null;
+        var lineRippleElement = this.root_.querySelector(_constants.strings.LINE_RIPPLE_SELECTOR);
+        this.lineRipple_ = lineRippleElement ? lineRippleFactory(lineRippleElement) : null;
+        var outlineElement = this.root_.querySelector(_constants.strings.OUTLINE_SELECTOR);
+        this.outline_ = outlineElement ? outlineFactory(outlineElement) : null;
+        // Helper text
+        var helperTextStrings = _index5.MDCTextFieldHelperTextFoundation.strings;
+        var nextElementSibling = this.root_.nextElementSibling;
+        var hasHelperLine = nextElementSibling && nextElementSibling.classList.contains(_constants.cssClasses.HELPER_LINE);
+        var helperTextEl = hasHelperLine && nextElementSibling && nextElementSibling.querySelector(helperTextStrings.ROOT_SELECTOR);
+        this.helperText_ = helperTextEl ? helperTextFactory(helperTextEl) : null;
+        // Character counter
+        var characterCounterStrings = _index4.MDCTextFieldCharacterCounterFoundation.strings;
+        var characterCounterEl = this.root_.querySelector(characterCounterStrings.ROOT_SELECTOR);
+        // If character counter is not found in root element search in sibling element.
+        if (!characterCounterEl && hasHelperLine && nextElementSibling) {
+            characterCounterEl = nextElementSibling.querySelector(characterCounterStrings.ROOT_SELECTOR);
+        }
+        this.characterCounter_ = characterCounterEl ? characterCounterFactory(characterCounterEl) : null;
+        this.leadingIcon_ = null;
+        this.trailingIcon_ = null;
+        var iconElements = this.root_.querySelectorAll(_constants.strings.ICON_SELECTOR);
+        if (iconElements.length > 0) {
+            if (iconElements.length > 1) {
+                // Has both icons.
+                this.leadingIcon_ = iconFactory(iconElements[0]);
+                this.trailingIcon_ = iconFactory(iconElements[1]);
+            } else {
+                if (this.root_.classList.contains(_constants.cssClasses.WITH_LEADING_ICON)) {
+                    this.leadingIcon_ = iconFactory(iconElements[0]);
+                } else {
+                    this.trailingIcon_ = iconFactory(iconElements[0]);
+                }
+            }
+        }
+        this.ripple = this.createRipple_(rippleFactory);
+    };
+    MDCTextField.prototype.destroy = function () {
+        if (this.ripple) {
+            this.ripple.destroy();
+        }
+        if (this.lineRipple_) {
+            this.lineRipple_.destroy();
+        }
+        if (this.helperText_) {
+            this.helperText_.destroy();
+        }
+        if (this.characterCounter_) {
+            this.characterCounter_.destroy();
+        }
+        if (this.leadingIcon_) {
+            this.leadingIcon_.destroy();
+        }
+        if (this.trailingIcon_) {
+            this.trailingIcon_.destroy();
+        }
+        if (this.label_) {
+            this.label_.destroy();
+        }
+        if (this.outline_) {
+            this.outline_.destroy();
+        }
+        _super.prototype.destroy.call(this);
+    };
+    /**
+     * Initializes the Text Field's internal state based on the environment's
+     * state.
+     */
+    MDCTextField.prototype.initialSyncWithDOM = function () {
+        this.disabled = this.input_.disabled;
+    };
+    Object.defineProperty(MDCTextField.prototype, "value", {
+        get: function get() {
+            return this.foundation_.getValue();
+        },
+        /**
+         * @param value The value to set on the input.
+         */
+        set: function set(value) {
+            this.foundation_.setValue(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "disabled", {
+        get: function get() {
+            return this.foundation_.isDisabled();
+        },
+        /**
+         * @param disabled Sets the Text Field disabled or enabled.
+         */
+        set: function set(disabled) {
+            this.foundation_.setDisabled(disabled);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "valid", {
+        get: function get() {
+            return this.foundation_.isValid();
+        },
+        /**
+         * @param valid Sets the Text Field valid or invalid.
+         */
+        set: function set(valid) {
+            this.foundation_.setValid(valid);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "required", {
+        get: function get() {
+            return this.input_.required;
+        },
+        /**
+         * @param required Sets the Text Field to required.
+         */
+        set: function set(required) {
+            this.input_.required = required;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "pattern", {
+        get: function get() {
+            return this.input_.pattern;
+        },
+        /**
+         * @param pattern Sets the input element's validation pattern.
+         */
+        set: function set(pattern) {
+            this.input_.pattern = pattern;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "minLength", {
+        get: function get() {
+            return this.input_.minLength;
+        },
+        /**
+         * @param minLength Sets the input element's minLength.
+         */
+        set: function set(minLength) {
+            this.input_.minLength = minLength;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "maxLength", {
+        get: function get() {
+            return this.input_.maxLength;
+        },
+        /**
+         * @param maxLength Sets the input element's maxLength.
+         */
+        set: function set(maxLength) {
+            // Chrome throws exception if maxLength is set to a value less than zero
+            if (maxLength < 0) {
+                this.input_.removeAttribute('maxLength');
+            } else {
+                this.input_.maxLength = maxLength;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "min", {
+        get: function get() {
+            return this.input_.min;
+        },
+        /**
+         * @param min Sets the input element's min.
+         */
+        set: function set(min) {
+            this.input_.min = min;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "max", {
+        get: function get() {
+            return this.input_.max;
+        },
+        /**
+         * @param max Sets the input element's max.
+         */
+        set: function set(max) {
+            this.input_.max = max;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "step", {
+        get: function get() {
+            return this.input_.step;
+        },
+        /**
+         * @param step Sets the input element's step.
+         */
+        set: function set(step) {
+            this.input_.step = step;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "helperTextContent", {
+        /**
+         * Sets the helper text element content.
+         */
+        set: function set(content) {
+            this.foundation_.setHelperTextContent(content);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "leadingIconAriaLabel", {
+        /**
+         * Sets the aria label of the leading icon.
+         */
+        set: function set(label) {
+            this.foundation_.setLeadingIconAriaLabel(label);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "leadingIconContent", {
+        /**
+         * Sets the text content of the leading icon.
+         */
+        set: function set(content) {
+            this.foundation_.setLeadingIconContent(content);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "trailingIconAriaLabel", {
+        /**
+         * Sets the aria label of the trailing icon.
+         */
+        set: function set(label) {
+            this.foundation_.setTrailingIconAriaLabel(label);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "trailingIconContent", {
+        /**
+         * Sets the text content of the trailing icon.
+         */
+        set: function set(content) {
+            this.foundation_.setTrailingIconContent(content);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextField.prototype, "useNativeValidation", {
+        /**
+         * Enables or disables the use of native validation. Use this for custom validation.
+         * @param useNativeValidation Set this to false to ignore native input validation.
+         */
+        set: function set(useNativeValidation) {
+            this.foundation_.setUseNativeValidation(useNativeValidation);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Focuses the input element.
+     */
+    MDCTextField.prototype.focus = function () {
+        this.input_.focus();
+    };
+    /**
+     * Recomputes the outline SVG path for the outline element.
+     */
+    MDCTextField.prototype.layout = function () {
+        var openNotch = this.foundation_.shouldFloat;
+        this.foundation_.notchOutline(openNotch);
+    };
+    MDCTextField.prototype.getDefaultFoundation = function () {
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = tslib_1.__assign({}, this.getRootAdapterMethods_(), this.getInputAdapterMethods_(), this.getLabelAdapterMethods_(), this.getLineRippleAdapterMethods_(), this.getOutlineAdapterMethods_());
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation2.MDCTextFieldFoundation(adapter, this.getFoundationMap_());
+    };
+    MDCTextField.prototype.getRootAdapterMethods_ = function () {
+        var _this = this;
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        return {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            registerTextFieldInteractionHandler: function registerTextFieldInteractionHandler(evtType, handler) {
+                return _this.listen(evtType, handler);
+            },
+            deregisterTextFieldInteractionHandler: function deregisterTextFieldInteractionHandler(evtType, handler) {
+                return _this.unlisten(evtType, handler);
+            },
+            registerValidationAttributeChangeHandler: function registerValidationAttributeChangeHandler(handler) {
+                var getAttributesList = function getAttributesList(mutationsList) {
+                    return mutationsList.map(function (mutation) {
+                        return mutation.attributeName;
+                    }).filter(function (attributeName) {
+                        return attributeName;
+                    });
+                };
+                var observer = new MutationObserver(function (mutationsList) {
+                    return handler(getAttributesList(mutationsList));
+                });
+                var config = { attributes: true };
+                observer.observe(_this.input_, config);
+                return observer;
+            },
+            deregisterValidationAttributeChangeHandler: function deregisterValidationAttributeChangeHandler(observer) {
+                return observer.disconnect();
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+    };
+    MDCTextField.prototype.getInputAdapterMethods_ = function () {
+        var _this = this;
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        return {
+            getNativeInput: function getNativeInput() {
+                return _this.input_;
+            },
+            isFocused: function isFocused() {
+                return document.activeElement === _this.input_;
+            },
+            registerInputInteractionHandler: function registerInputInteractionHandler(evtType, handler) {
+                return _this.input_.addEventListener(evtType, handler);
+            },
+            deregisterInputInteractionHandler: function deregisterInputInteractionHandler(evtType, handler) {
+                return _this.input_.removeEventListener(evtType, handler);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+    };
+    MDCTextField.prototype.getLabelAdapterMethods_ = function () {
+        var _this = this;
+        return {
+            floatLabel: function floatLabel(shouldFloat) {
+                return _this.label_ && _this.label_.float(shouldFloat);
+            },
+            getLabelWidth: function getLabelWidth() {
+                return _this.label_ ? _this.label_.getWidth() : 0;
+            },
+            hasLabel: function hasLabel() {
+                return Boolean(_this.label_);
+            },
+            shakeLabel: function shakeLabel(shouldShake) {
+                return _this.label_ && _this.label_.shake(shouldShake);
+            }
+        };
+    };
+    MDCTextField.prototype.getLineRippleAdapterMethods_ = function () {
+        var _this = this;
+        return {
+            activateLineRipple: function activateLineRipple() {
+                if (_this.lineRipple_) {
+                    _this.lineRipple_.activate();
+                }
+            },
+            deactivateLineRipple: function deactivateLineRipple() {
+                if (_this.lineRipple_) {
+                    _this.lineRipple_.deactivate();
+                }
+            },
+            setLineRippleTransformOrigin: function setLineRippleTransformOrigin(normalizedX) {
+                if (_this.lineRipple_) {
+                    _this.lineRipple_.setRippleCenter(normalizedX);
+                }
+            }
+        };
+    };
+    MDCTextField.prototype.getOutlineAdapterMethods_ = function () {
+        var _this = this;
+        return {
+            closeOutline: function closeOutline() {
+                return _this.outline_ && _this.outline_.closeNotch();
+            },
+            hasOutline: function hasOutline() {
+                return Boolean(_this.outline_);
+            },
+            notchOutline: function notchOutline(labelWidth) {
+                return _this.outline_ && _this.outline_.notch(labelWidth);
+            }
+        };
+    };
+    /**
+     * @return A map of all subcomponents to subfoundations.
+     */
+    MDCTextField.prototype.getFoundationMap_ = function () {
+        return {
+            characterCounter: this.characterCounter_ ? this.characterCounter_.foundation : undefined,
+            helperText: this.helperText_ ? this.helperText_.foundation : undefined,
+            leadingIcon: this.leadingIcon_ ? this.leadingIcon_.foundation : undefined,
+            trailingIcon: this.trailingIcon_ ? this.trailingIcon_.foundation : undefined
+        };
+    };
+    MDCTextField.prototype.createRipple_ = function (rippleFactory) {
+        var _this = this;
+        var isTextArea = this.root_.classList.contains(_constants.cssClasses.TEXTAREA);
+        var isOutlined = this.root_.classList.contains(_constants.cssClasses.OUTLINED);
+        if (isTextArea || isOutlined) {
+            return null;
+        }
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = tslib_1.__assign({}, _component2.MDCRipple.createAdapter(this), { isSurfaceActive: function isSurfaceActive() {
+                return ponyfill.matches(_this.input_, ':active');
+            }, registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.input_.addEventListener(evtType, handler);
+            }, deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.input_.removeEventListener(evtType, handler);
+            } });
+        // tslint:enable:object-literal-sort-keys
+        return rippleFactory(this.root_, new _foundation.MDCRippleFoundation(adapter));
+    };
+    return MDCTextField;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2016 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCTextField = MDCTextField;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(394);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(52);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCFloatingLabel = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(52);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCFloatingLabel = /** @class */function (_super) {
+    tslib_1.__extends(MDCFloatingLabel, _super);
+    function MDCFloatingLabel() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCFloatingLabel.attachTo = function (root) {
+        return new MDCFloatingLabel(root);
+    };
+    /**
+     * Styles the label to produce the label shake for errors.
+     * @param shouldShake If true, shakes the label by adding a CSS class; otherwise, stops shaking by removing the class.
+     */
+    MDCFloatingLabel.prototype.shake = function (shouldShake) {
+        this.foundation_.shake(shouldShake);
+    };
+    /**
+     * Styles the label to float/dock.
+     * @param shouldFloat If true, floats the label by adding a CSS class; otherwise, docks it by removing the class.
+     */
+    MDCFloatingLabel.prototype.float = function (shouldFloat) {
+        this.foundation_.float(shouldFloat);
+    };
+    MDCFloatingLabel.prototype.getWidth = function () {
+        return this.foundation_.getWidth();
+    };
+    MDCFloatingLabel.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            getWidth: function getWidth() {
+                return _this.root_.scrollWidth;
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.listen(evtType, handler);
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.unlisten(evtType, handler);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCFloatingLabelFoundation(adapter);
+    };
+    return MDCFloatingLabel;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2016 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCFloatingLabel = MDCFloatingLabel;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 395 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = exports.cssClasses = {
+  LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
+  LABEL_SHAKE: 'mdc-floating-label--shake',
+  ROOT: 'mdc-floating-label'
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 396 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(397);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(106);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 397 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCNotchedOutline = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(52);
+
+var _constants = __webpack_require__(105);
+
+var _foundation2 = __webpack_require__(106);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCNotchedOutline = /** @class */function (_super) {
+    tslib_1.__extends(MDCNotchedOutline, _super);
+    function MDCNotchedOutline() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCNotchedOutline.attachTo = function (root) {
+        return new MDCNotchedOutline(root);
+    };
+    MDCNotchedOutline.prototype.initialSyncWithDOM = function () {
+        this.notchElement_ = this.root_.querySelector(_constants.strings.NOTCH_ELEMENT_SELECTOR);
+        var label = this.root_.querySelector('.' + _foundation.MDCFloatingLabelFoundation.cssClasses.ROOT);
+        if (label) {
+            label.style.transitionDuration = '0s';
+            this.root_.classList.add(_constants.cssClasses.OUTLINE_UPGRADED);
+            requestAnimationFrame(function () {
+                label.style.transitionDuration = '';
+            });
+        } else {
+            this.root_.classList.add(_constants.cssClasses.NO_LABEL);
+        }
+    };
+    /**
+     * Updates classes and styles to open the notch to the specified width.
+     * @param notchWidth The notch width in the outline.
+     */
+    MDCNotchedOutline.prototype.notch = function (notchWidth) {
+        this.foundation_.notch(notchWidth);
+    };
+    /**
+     * Updates classes and styles to close the notch.
+     */
+    MDCNotchedOutline.prototype.closeNotch = function () {
+        this.foundation_.closeNotch();
+    };
+    MDCNotchedOutline.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            setNotchWidthProperty: function setNotchWidthProperty(width) {
+                return _this.notchElement_.style.setProperty('width', width + 'px');
+            },
+            removeNotchWidthProperty: function removeNotchWidthProperty() {
+                return _this.notchElement_.style.removeProperty('width');
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation2.MDCNotchedOutlineFoundation(adapter);
+    };
+    return MDCNotchedOutline;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2017 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCNotchedOutline = MDCNotchedOutline;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 398 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCRipple = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _index = __webpack_require__(30);
+
+var _foundation = __webpack_require__(107);
+
+var _util = __webpack_require__(108);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCRipple = /** @class */function (_super) {
+    tslib_1.__extends(MDCRipple, _super);
+    function MDCRipple() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.disabled = false;
+        return _this;
+    }
+    MDCRipple.attachTo = function (root, opts) {
+        if (opts === void 0) {
+            opts = { isUnbounded: undefined };
+        }
+        var ripple = new MDCRipple(root);
+        // Only override unbounded behavior if option is explicitly specified
+        if (opts.isUnbounded !== undefined) {
+            ripple.unbounded = opts.isUnbounded;
+        }
+        return ripple;
+    };
+    MDCRipple.createAdapter = function (instance) {
+        return {
+            addClass: function addClass(className) {
+                return instance.root_.classList.add(className);
+            },
+            browserSupportsCssVars: function browserSupportsCssVars() {
+                return util.supportsCssVariables(window);
+            },
+            computeBoundingRect: function computeBoundingRect() {
+                return instance.root_.getBoundingClientRect();
+            },
+            containsEventTarget: function containsEventTarget(target) {
+                return instance.root_.contains(target);
+            },
+            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.removeEventListener(evtType, handler, util.applyPassive());
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return instance.root_.removeEventListener(evtType, handler, util.applyPassive());
+            },
+            deregisterResizeHandler: function deregisterResizeHandler(handler) {
+                return window.removeEventListener('resize', handler);
+            },
+            getWindowPageOffset: function getWindowPageOffset() {
+                return { x: window.pageXOffset, y: window.pageYOffset };
+            },
+            isSurfaceActive: function isSurfaceActive() {
+                return _index.ponyfill.matches(instance.root_, ':active');
+            },
+            isSurfaceDisabled: function isSurfaceDisabled() {
+                return Boolean(instance.disabled);
+            },
+            isUnbounded: function isUnbounded() {
+                return Boolean(instance.unbounded);
+            },
+            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.addEventListener(evtType, handler, util.applyPassive());
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return instance.root_.addEventListener(evtType, handler, util.applyPassive());
+            },
+            registerResizeHandler: function registerResizeHandler(handler) {
+                return window.addEventListener('resize', handler);
+            },
+            removeClass: function removeClass(className) {
+                return instance.root_.classList.remove(className);
+            },
+            updateCssVariable: function updateCssVariable(varName, value) {
+                return instance.root_.style.setProperty(varName, value);
+            }
+        };
+    };
+    Object.defineProperty(MDCRipple.prototype, "unbounded", {
+        get: function get() {
+            return Boolean(this.unbounded_);
+        },
+        set: function set(unbounded) {
+            this.unbounded_ = Boolean(unbounded);
+            this.setUnbounded_();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRipple.prototype.activate = function () {
+        this.foundation_.activate();
+    };
+    MDCRipple.prototype.deactivate = function () {
+        this.foundation_.deactivate();
+    };
+    MDCRipple.prototype.layout = function () {
+        this.foundation_.layout();
+    };
+    MDCRipple.prototype.getDefaultFoundation = function () {
+        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
+    };
+    MDCRipple.prototype.initialSyncWithDOM = function () {
+        var root = this.root_;
+        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
+    };
+    /**
+     * Closure Compiler throws an access control error when directly accessing a
+     * protected or private property inside a getter/setter, like unbounded above.
+     * By accessing the protected property inside a method, we solve that problem.
+     * That's why this function exists.
+     */
+    MDCRipple.prototype.setUnbounded_ = function () {
+        this.foundation_.setUnbounded(Boolean(this.unbounded_));
+    };
+    return MDCRipple;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2016 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCRipple = MDCRipple;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 399 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = exports.cssClasses = {
+    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
+    // given that it's an 'upgrade' to an existing component. That being said it is the root
+    // CSS class that all other CSS classes derive from.
+    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
+    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
+    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
+    ROOT: 'mdc-ripple-upgraded',
+    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
+};
+var strings = exports.strings = {
+    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
+    VAR_FG_SIZE: '--mdc-ripple-fg-size',
+    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
+    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
+    VAR_LEFT: '--mdc-ripple-left',
+    VAR_TOP: '--mdc-ripple-top'
+};
+var numbers = exports.numbers = {
+    DEACTIVATION_TIMEOUT_MS: 225,
+    FG_DEACTIVATION_MS: 150,
+    INITIAL_ORIGIN_SCALE: 0.6,
+    PADDING: 10,
+    TAP_DELAY_MS: 300
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 400 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCTextFieldCharacterCounter = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(110);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCTextFieldCharacterCounter = /** @class */function (_super) {
+    tslib_1.__extends(MDCTextFieldCharacterCounter, _super);
+    function MDCTextFieldCharacterCounter() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCTextFieldCharacterCounter.attachTo = function (root) {
+        return new MDCTextFieldCharacterCounter(root);
+    };
+    Object.defineProperty(MDCTextFieldCharacterCounter.prototype, "foundation", {
+        get: function get() {
+            return this.foundation_;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCTextFieldCharacterCounter.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        var adapter = {
+            setContent: function setContent(content) {
+                _this.root_.textContent = content;
+            }
+        };
+        return new _foundation.MDCTextFieldCharacterCounterFoundation(adapter);
+    };
+    return MDCTextFieldCharacterCounter;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2019 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCTextFieldCharacterCounter = MDCTextFieldCharacterCounter;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 401 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2019 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    ROOT: 'mdc-text-field-character-counter'
+};
+var strings = {
+    ROOT_SELECTOR: "." + cssClasses.ROOT
+};
+exports.strings = strings;
+exports.cssClasses = cssClasses;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 402 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCTextFieldHelperText = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(114);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCTextFieldHelperText = /** @class */function (_super) {
+    tslib_1.__extends(MDCTextFieldHelperText, _super);
+    function MDCTextFieldHelperText() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCTextFieldHelperText.attachTo = function (root) {
+        return new MDCTextFieldHelperText(root);
+    };
+    Object.defineProperty(MDCTextFieldHelperText.prototype, "foundation", {
+        get: function get() {
+            return this.foundation_;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCTextFieldHelperText.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            hasClass: function hasClass(className) {
+                return _this.root_.classList.contains(className);
+            },
+            setAttr: function setAttr(attr, value) {
+                return _this.root_.setAttribute(attr, value);
+            },
+            removeAttr: function removeAttr(attr) {
+                return _this.root_.removeAttribute(attr);
+            },
+            setContent: function setContent(content) {
+                _this.root_.textContent = content;
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCTextFieldHelperTextFoundation(adapter);
+    };
+    return MDCTextFieldHelperText;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2017 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCTextFieldHelperText = MDCTextFieldHelperText;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 403 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    HELPER_TEXT_PERSISTENT: 'mdc-text-field-helper-text--persistent',
+    HELPER_TEXT_VALIDATION_MSG: 'mdc-text-field-helper-text--validation-msg',
+    ROOT: 'mdc-text-field-helper-text'
+};
+var strings = {
+    ARIA_HIDDEN: 'aria-hidden',
+    ROLE: 'role',
+    ROOT_SELECTOR: "." + cssClasses.ROOT
+};
+exports.strings = strings;
+exports.cssClasses = cssClasses;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 404 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCTextFieldIcon = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(5);
+
+var _foundation = __webpack_require__(116);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCTextFieldIcon = /** @class */function (_super) {
+    tslib_1.__extends(MDCTextFieldIcon, _super);
+    function MDCTextFieldIcon() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCTextFieldIcon.attachTo = function (root) {
+        return new MDCTextFieldIcon(root);
+    };
+    Object.defineProperty(MDCTextFieldIcon.prototype, "foundation", {
+        get: function get() {
+            return this.foundation_;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCTextFieldIcon.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+        var adapter = {
+            getAttr: function getAttr(attr) {
+                return _this.root_.getAttribute(attr);
+            },
+            setAttr: function setAttr(attr, value) {
+                return _this.root_.setAttribute(attr, value);
+            },
+            removeAttr: function removeAttr(attr) {
+                return _this.root_.removeAttribute(attr);
+            },
+            setContent: function setContent(content) {
+                _this.root_.textContent = content;
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.listen(evtType, handler);
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.unlisten(evtType, handler);
+            },
+            notifyIconAction: function notifyIconAction() {
+                return _this.emit(_foundation.MDCTextFieldIconFoundation.strings.ICON_EVENT, {} /* evtData */, true /* shouldBubble */);
+            }
+        };
+        // tslint:enable:object-literal-sort-keys
+        return new _foundation.MDCTextFieldIconFoundation(adapter);
+    };
+    return MDCTextFieldIcon;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2017 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCTextFieldIcon = MDCTextFieldIcon;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 405 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings = {
+  ICON_EVENT: 'MDCTextField:icon',
+  ICON_ROLE: 'button'
+};
+exports.strings = strings;
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+/* 406 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(407);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _constants = __webpack_require__(119);
+
+Object.keys(_constants).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _constants[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(118);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 407 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCFormField = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(408);
+
+var _foundation = __webpack_require__(118);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var MDCFormField = /** @class */function (_super) {
+    tslib_1.__extends(MDCFormField, _super);
+    function MDCFormField() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MDCFormField.attachTo = function (root) {
+        return new MDCFormField(root);
+    };
+    Object.defineProperty(MDCFormField.prototype, "input", {
+        get: function get() {
+            return this.input_;
+        },
+        set: function set(input) {
+            this.input_ = input;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCFormField.prototype, "label_", {
+        get: function get() {
+            var LABEL_SELECTOR = _foundation.MDCFormFieldFoundation.strings.LABEL_SELECTOR;
+            return this.root_.querySelector(LABEL_SELECTOR);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCFormField.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        var adapter = {
+            activateInputRipple: function activateInputRipple() {
+                if (_this.input_ && _this.input_.ripple) {
+                    _this.input_.ripple.activate();
+                }
+            },
+            deactivateInputRipple: function deactivateInputRipple() {
+                if (_this.input_ && _this.input_.ripple) {
+                    _this.input_.ripple.deactivate();
+                }
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                if (_this.label_) {
+                    _this.label_.removeEventListener(evtType, handler);
+                }
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                if (_this.label_) {
+                    _this.label_.addEventListener(evtType, handler);
+                }
+            }
+        };
+        return new _foundation.MDCFormFieldFoundation(adapter);
+    };
+    return MDCFormField;
+}(_component.MDCComponent); /**
+                             * @license
+                             * Copyright 2017 Google Inc.
+                             *
+                             * Permission is hereby granted, free of charge, to any person obtaining a copy
+                             * of this software and associated documentation files (the "Software"), to deal
+                             * in the Software without restriction, including without limitation the rights
+                             * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                             * copies of the Software, and to permit persons to whom the Software is
+                             * furnished to do so, subject to the following conditions:
+                             *
+                             * The above copyright notice and this permission notice shall be included in
+                             * all copies or substantial portions of the Software.
+                             *
+                             * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                             * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                             * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                             * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                             * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                             * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                             * THE SOFTWARE.
+                             */
+exports.MDCFormField = MDCFormField;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 408 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCComponent = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _foundation = __webpack_require__(117);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCComponent = /** @class */function () {
+    function MDCComponent(root, foundation) {
+        var args = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            args[_i - 2] = arguments[_i];
+        }
+        this.root_ = root;
+        this.initialize.apply(this, tslib_1.__spread(args));
+        // Note that we initialize foundation here and not within the constructor's default param so that
+        // this.root_ is defined and can be used within the foundation class.
+        this.foundation_ = foundation === undefined ? this.getDefaultFoundation() : foundation;
+        this.foundation_.init();
+        this.initialSyncWithDOM();
+    }
+    MDCComponent.attachTo = function (root) {
+        // Subclasses which extend MDCBase should provide an attachTo() method that takes a root element and
+        // returns an instantiated component with its root set to that element. Also note that in the cases of
+        // subclasses, an explicit foundation class will not have to be passed in; it will simply be initialized
+        // from getDefaultFoundation().
+        return new MDCComponent(root, new _foundation.MDCFoundation({}));
+    };
+    /* istanbul ignore next: method param only exists for typing purposes; it does not need to be unit tested */
+    MDCComponent.prototype.initialize = function () {
+        var _args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            _args[_i] = arguments[_i];
+        }
+        // Subclasses can override this to do any additional setup work that would be considered part of a
+        // "constructor". Essentially, it is a hook into the parent constructor before the foundation is
+        // initialized. Any additional arguments besides root and foundation will be passed in here.
+    };
+    MDCComponent.prototype.getDefaultFoundation = function () {
+        // Subclasses must override this method to return a properly configured foundation class for the
+        // component.
+        throw new Error('Subclasses must override getDefaultFoundation to return a properly configured ' + 'foundation class');
+    };
+    MDCComponent.prototype.initialSyncWithDOM = function () {
+        // Subclasses should override this method if they need to perform work to synchronize with a host DOM
+        // object. An example of this would be a form control wrapper that needs to synchronize its internal state
+        // to some property or attribute of the host DOM. Please note: this is *not* the place to perform DOM
+        // reads/writes that would cause layout / paint, as this is called synchronously from within the constructor.
+    };
+    MDCComponent.prototype.destroy = function () {
+        // Subclasses may implement this method to release any resources / deregister any listeners they have
+        // attached. An example of this might be deregistering a resize event from the window object.
+        this.foundation_.destroy();
+    };
+    MDCComponent.prototype.listen = function (evtType, handler, options) {
+        this.root_.addEventListener(evtType, handler, options);
+    };
+    MDCComponent.prototype.unlisten = function (evtType, handler, options) {
+        this.root_.removeEventListener(evtType, handler, options);
+    };
+    /**
+     * Fires a cross-browser-compatible custom event from the component root of the given type, with the given data.
+     */
+    MDCComponent.prototype.emit = function (evtType, evtData, shouldBubble) {
+        if (shouldBubble === void 0) {
+            shouldBubble = false;
+        }
+        var evt;
+        if (typeof CustomEvent === 'function') {
+            evt = new CustomEvent(evtType, {
+                bubbles: shouldBubble,
+                detail: evtData
+            });
+        } else {
+            evt = document.createEvent('CustomEvent');
+            evt.initCustomEvent(evtType, shouldBubble, false, evtData);
+        }
+        this.root_.dispatchEvent(evt);
+    };
+    return MDCComponent;
+}();
+exports.MDCComponent = MDCComponent;
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+
+exports.default = MDCComponent;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 409 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _component = __webpack_require__(410);
+
+Object.keys(_component).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _component[key];
+    }
+  });
+});
+
+var _constants = __webpack_require__(126);
+
+Object.keys(_constants).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _constants[key];
+    }
+  });
+});
+
+var _foundation = __webpack_require__(125);
+
+Object.keys(_foundation).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _foundation[key];
+    }
+  });
+});
+
+/***/ }),
+/* 410 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCCheckbox = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _util = __webpack_require__(411);
+
+var _component = __webpack_require__(120);
+
+var _events = __webpack_require__(121);
+
+var _ponyfill = __webpack_require__(122);
+
+var _component2 = __webpack_require__(412);
+
+var _foundation = __webpack_require__(123);
+
+var _foundation2 = __webpack_require__(125);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var CB_PROTO_PROPS = ['checked', 'indeterminate'];
+var MDCCheckbox = /** @class */function (_super) {
+    tslib_1.__extends(MDCCheckbox, _super);
+    function MDCCheckbox() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.ripple_ = _this.createRipple_();
+        return _this;
+    }
+    MDCCheckbox.attachTo = function (root) {
+        return new MDCCheckbox(root);
+    };
+    Object.defineProperty(MDCCheckbox.prototype, "ripple", {
+        get: function get() {
+            return this.ripple_;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCCheckbox.prototype, "checked", {
+        get: function get() {
+            return this.nativeControl_.checked;
+        },
+        set: function set(checked) {
+            this.nativeControl_.checked = checked;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCCheckbox.prototype, "indeterminate", {
+        get: function get() {
+            return this.nativeControl_.indeterminate;
+        },
+        set: function set(indeterminate) {
+            this.nativeControl_.indeterminate = indeterminate;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCCheckbox.prototype, "disabled", {
+        get: function get() {
+            return this.nativeControl_.disabled;
+        },
+        set: function set(disabled) {
+            this.foundation_.setDisabled(disabled);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCCheckbox.prototype, "value", {
+        get: function get() {
+            return this.nativeControl_.value;
+        },
+        set: function set(value) {
+            this.nativeControl_.value = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCCheckbox.prototype.initialSyncWithDOM = function () {
+        var _this = this;
+        this.handleChange_ = function () {
+            return _this.foundation_.handleChange();
+        };
+        this.handleAnimationEnd_ = function () {
+            return _this.foundation_.handleAnimationEnd();
+        };
+        this.nativeControl_.addEventListener('change', this.handleChange_);
+        this.listen((0, _util.getCorrectEventName)(window, 'animationend'), this.handleAnimationEnd_);
+        this.installPropertyChangeHooks_();
+    };
+    MDCCheckbox.prototype.destroy = function () {
+        this.ripple_.destroy();
+        this.nativeControl_.removeEventListener('change', this.handleChange_);
+        this.unlisten((0, _util.getCorrectEventName)(window, 'animationend'), this.handleAnimationEnd_);
+        this.uninstallPropertyChangeHooks_();
+        _super.prototype.destroy.call(this);
+    };
+    MDCCheckbox.prototype.getDefaultFoundation = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        var adapter = {
+            addClass: function addClass(className) {
+                return _this.root_.classList.add(className);
+            },
+            forceLayout: function forceLayout() {
+                return _this.root_.offsetWidth;
+            },
+            hasNativeControl: function hasNativeControl() {
+                return !!_this.nativeControl_;
+            },
+            isAttachedToDOM: function isAttachedToDOM() {
+                return Boolean(_this.root_.parentNode);
+            },
+            isChecked: function isChecked() {
+                return _this.checked;
+            },
+            isIndeterminate: function isIndeterminate() {
+                return _this.indeterminate;
+            },
+            removeClass: function removeClass(className) {
+                return _this.root_.classList.remove(className);
+            },
+            removeNativeControlAttr: function removeNativeControlAttr(attr) {
+                return _this.nativeControl_.removeAttribute(attr);
+            },
+            setNativeControlAttr: function setNativeControlAttr(attr, value) {
+                return _this.nativeControl_.setAttribute(attr, value);
+            },
+            setNativeControlDisabled: function setNativeControlDisabled(disabled) {
+                return _this.nativeControl_.disabled = disabled;
+            }
+        };
+        return new _foundation2.MDCCheckboxFoundation(adapter);
+    };
+    MDCCheckbox.prototype.createRipple_ = function () {
+        var _this = this;
+        // DO NOT INLINE this variable. For backward compatibility, foundations take a Partial<MDCFooAdapter>.
+        // To ensure we don't accidentally omit any methods, we need a separate, strongly typed adapter variable.
+        var adapter = tslib_1.__assign({}, _component2.MDCRipple.createAdapter(this), { deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return _this.nativeControl_.removeEventListener(evtType, handler, (0, _events.applyPassive)());
+            }, isSurfaceActive: function isSurfaceActive() {
+                return (0, _ponyfill.matches)(_this.nativeControl_, ':active');
+            }, isUnbounded: function isUnbounded() {
+                return true;
+            }, registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return _this.nativeControl_.addEventListener(evtType, handler, (0, _events.applyPassive)());
+            } });
+        return new _component2.MDCRipple(this.root_, new _foundation.MDCRippleFoundation(adapter));
+    };
+    MDCCheckbox.prototype.installPropertyChangeHooks_ = function () {
+        var _this = this;
+        var nativeCb = this.nativeControl_;
+        var cbProto = Object.getPrototypeOf(nativeCb);
+        CB_PROTO_PROPS.forEach(function (controlState) {
+            var desc = Object.getOwnPropertyDescriptor(cbProto, controlState);
+            // We have to check for this descriptor, since some browsers (Safari) don't support its return.
+            // See: https://bugs.webkit.org/show_bug.cgi?id=49739
+            if (!validDescriptor(desc)) {
+                return;
+            }
+            // Type cast is needed for compatibility with Closure Compiler.
+            var nativeGetter = desc.get;
+            var nativeCbDesc = {
+                configurable: desc.configurable,
+                enumerable: desc.enumerable,
+                get: nativeGetter,
+                set: function set(state) {
+                    desc.set.call(nativeCb, state);
+                    _this.foundation_.handleChange();
+                }
+            };
+            Object.defineProperty(nativeCb, controlState, nativeCbDesc);
+        });
+    };
+    MDCCheckbox.prototype.uninstallPropertyChangeHooks_ = function () {
+        var nativeCb = this.nativeControl_;
+        var cbProto = Object.getPrototypeOf(nativeCb);
+        CB_PROTO_PROPS.forEach(function (controlState) {
+            var desc = Object.getOwnPropertyDescriptor(cbProto, controlState);
+            if (!validDescriptor(desc)) {
+                return;
+            }
+            Object.defineProperty(nativeCb, controlState, desc);
+        });
+    };
+    Object.defineProperty(MDCCheckbox.prototype, "nativeControl_", {
+        get: function get() {
+            var NATIVE_CONTROL_SELECTOR = _foundation2.MDCCheckboxFoundation.strings.NATIVE_CONTROL_SELECTOR;
+            var el = this.root_.querySelector(NATIVE_CONTROL_SELECTOR);
+            if (!el) {
+                throw new Error("Checkbox component requires a " + NATIVE_CONTROL_SELECTOR + " element");
+            }
+            return el;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return MDCCheckbox;
+}(_component.MDCComponent);
+exports.MDCCheckbox = MDCCheckbox;
+
+function validDescriptor(inputPropDesc) {
+    return !!inputPropDesc && typeof inputPropDesc.set === 'function';
+}
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 411 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getCorrectPropertyName = getCorrectPropertyName;
+exports.getCorrectEventName = getCorrectEventName;
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssPropertyNameMap = {
+    animation: {
+        prefixed: '-webkit-animation',
+        standard: 'animation'
+    },
+    transform: {
+        prefixed: '-webkit-transform',
+        standard: 'transform'
+    },
+    transition: {
+        prefixed: '-webkit-transition',
+        standard: 'transition'
+    }
+};
+var jsEventTypeMap = {
+    animationend: {
+        cssProperty: 'animation',
+        prefixed: 'webkitAnimationEnd',
+        standard: 'animationend'
+    },
+    animationiteration: {
+        cssProperty: 'animation',
+        prefixed: 'webkitAnimationIteration',
+        standard: 'animationiteration'
+    },
+    animationstart: {
+        cssProperty: 'animation',
+        prefixed: 'webkitAnimationStart',
+        standard: 'animationstart'
+    },
+    transitionend: {
+        cssProperty: 'transition',
+        prefixed: 'webkitTransitionEnd',
+        standard: 'transitionend'
+    }
+};
+function isWindow(windowObj) {
+    return Boolean(windowObj.document) && typeof windowObj.document.createElement === 'function';
+}
+function getCorrectPropertyName(windowObj, cssProperty) {
+    if (isWindow(windowObj) && cssProperty in cssPropertyNameMap) {
+        var el = windowObj.document.createElement('div');
+        var _a = cssPropertyNameMap[cssProperty],
+            standard = _a.standard,
+            prefixed = _a.prefixed;
+        var isStandard = standard in el.style;
+        return isStandard ? standard : prefixed;
+    }
+    return cssProperty;
+}
+function getCorrectEventName(windowObj, eventType) {
+    if (isWindow(windowObj) && eventType in jsEventTypeMap) {
+        var el = windowObj.document.createElement('div');
+        var _a = jsEventTypeMap[eventType],
+            standard = _a.standard,
+            prefixed = _a.prefixed,
+            cssProperty = _a.cssProperty;
+        var isStandard = cssProperty in el.style;
+        return isStandard ? standard : prefixed;
+    }
+    return eventType;
+}
+//# sourceMappingURL=util.js.map
+
+/***/ }),
+/* 412 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MDCRipple = undefined;
+
+var _tslib = __webpack_require__(1);
+
+var tslib_1 = _interopRequireWildcard(_tslib);
+
+var _component = __webpack_require__(120);
+
+var _events = __webpack_require__(121);
+
+var _ponyfill = __webpack_require__(122);
+
+var _foundation = __webpack_require__(123);
+
+var _util = __webpack_require__(124);
+
+var util = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCRipple = /** @class */function (_super) {
+    tslib_1.__extends(MDCRipple, _super);
+    function MDCRipple() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.disabled = false;
+        return _this;
+    }
+    MDCRipple.attachTo = function (root, opts) {
+        if (opts === void 0) {
+            opts = { isUnbounded: undefined };
+        }
+        var ripple = new MDCRipple(root);
+        // Only override unbounded behavior if option is explicitly specified
+        if (opts.isUnbounded !== undefined) {
+            ripple.unbounded = opts.isUnbounded;
+        }
+        return ripple;
+    };
+    MDCRipple.createAdapter = function (instance) {
+        return {
+            addClass: function addClass(className) {
+                return instance.root_.classList.add(className);
+            },
+            browserSupportsCssVars: function browserSupportsCssVars() {
+                return util.supportsCssVariables(window);
+            },
+            computeBoundingRect: function computeBoundingRect() {
+                return instance.root_.getBoundingClientRect();
+            },
+            containsEventTarget: function containsEventTarget(target) {
+                return instance.root_.contains(target);
+            },
+            deregisterDocumentInteractionHandler: function deregisterDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.removeEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            deregisterInteractionHandler: function deregisterInteractionHandler(evtType, handler) {
+                return instance.root_.removeEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            deregisterResizeHandler: function deregisterResizeHandler(handler) {
+                return window.removeEventListener('resize', handler);
+            },
+            getWindowPageOffset: function getWindowPageOffset() {
+                return { x: window.pageXOffset, y: window.pageYOffset };
+            },
+            isSurfaceActive: function isSurfaceActive() {
+                return (0, _ponyfill.matches)(instance.root_, ':active');
+            },
+            isSurfaceDisabled: function isSurfaceDisabled() {
+                return Boolean(instance.disabled);
+            },
+            isUnbounded: function isUnbounded() {
+                return Boolean(instance.unbounded);
+            },
+            registerDocumentInteractionHandler: function registerDocumentInteractionHandler(evtType, handler) {
+                return document.documentElement.addEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            registerInteractionHandler: function registerInteractionHandler(evtType, handler) {
+                return instance.root_.addEventListener(evtType, handler, (0, _events.applyPassive)());
+            },
+            registerResizeHandler: function registerResizeHandler(handler) {
+                return window.addEventListener('resize', handler);
+            },
+            removeClass: function removeClass(className) {
+                return instance.root_.classList.remove(className);
+            },
+            updateCssVariable: function updateCssVariable(varName, value) {
+                return instance.root_.style.setProperty(varName, value);
+            }
+        };
+    };
+    Object.defineProperty(MDCRipple.prototype, "unbounded", {
+        get: function get() {
+            return Boolean(this.unbounded_);
+        },
+        set: function set(unbounded) {
+            this.unbounded_ = Boolean(unbounded);
+            this.setUnbounded_();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRipple.prototype.activate = function () {
+        this.foundation_.activate();
+    };
+    MDCRipple.prototype.deactivate = function () {
+        this.foundation_.deactivate();
+    };
+    MDCRipple.prototype.layout = function () {
+        this.foundation_.layout();
+    };
+    MDCRipple.prototype.getDefaultFoundation = function () {
+        return new _foundation.MDCRippleFoundation(MDCRipple.createAdapter(this));
+    };
+    MDCRipple.prototype.initialSyncWithDOM = function () {
+        var root = this.root_;
+        this.unbounded = 'mdcRippleIsUnbounded' in root.dataset;
+    };
+    /**
+     * Closure Compiler throws an access control error when directly accessing a
+     * protected or private property inside a getter/setter, like unbounded above.
+     * By accessing the protected property inside a method, we solve that problem.
+     * That's why this function exists.
+     */
+    MDCRipple.prototype.setUnbounded_ = function () {
+        this.foundation_.setUnbounded(Boolean(this.unbounded_));
+    };
+    return MDCRipple;
+}(_component.MDCComponent);
+exports.MDCRipple = MDCRipple;
+//# sourceMappingURL=component.js.map
+
+/***/ }),
+/* 413 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = exports.cssClasses = {
+    // Ripple is a special case where the "root" component is really a "mixin" of sorts,
+    // given that it's an 'upgrade' to an existing component. That being said it is the root
+    // CSS class that all other CSS classes derive from.
+    BG_FOCUSED: 'mdc-ripple-upgraded--background-focused',
+    FG_ACTIVATION: 'mdc-ripple-upgraded--foreground-activation',
+    FG_DEACTIVATION: 'mdc-ripple-upgraded--foreground-deactivation',
+    ROOT: 'mdc-ripple-upgraded',
+    UNBOUNDED: 'mdc-ripple-upgraded--unbounded'
+};
+var strings = exports.strings = {
+    VAR_FG_SCALE: '--mdc-ripple-fg-scale',
+    VAR_FG_SIZE: '--mdc-ripple-fg-size',
+    VAR_FG_TRANSLATE_END: '--mdc-ripple-fg-translate-end',
+    VAR_FG_TRANSLATE_START: '--mdc-ripple-fg-translate-start',
+    VAR_LEFT: '--mdc-ripple-left',
+    VAR_TOP: '--mdc-ripple-top'
+};
+var numbers = exports.numbers = {
+    DEACTIVATION_TIMEOUT_MS: 225,
+    FG_DEACTIVATION_MS: 150,
+    INITIAL_ORIGIN_SCALE: 0.6,
+    PADDING: 10,
+    TAP_DELAY_MS: 300
+};
+//# sourceMappingURL=constants.js.map
 
 /***/ }),
 /* 414 */
@@ -74675,13 +74700,13 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(30);
+var _ponyfill = __webpack_require__(29);
 
 var _component2 = __webpack_require__(415);
 
-var _foundation = __webpack_require__(127);
+var _foundation = __webpack_require__(128);
 
-var _foundation2 = __webpack_require__(129);
+var _foundation2 = __webpack_require__(130);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -74841,11 +74866,11 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(5);
 
-var _ponyfill = __webpack_require__(30);
+var _ponyfill = __webpack_require__(29);
 
-var _foundation = __webpack_require__(127);
+var _foundation = __webpack_require__(128);
 
-var _util = __webpack_require__(128);
+var _util = __webpack_require__(129);
 
 var util = _interopRequireWildcard(_util);
 
@@ -75065,7 +75090,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _constants = __webpack_require__(135);
+var _constants = __webpack_require__(136);
 
 Object.keys(_constants).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -75077,7 +75102,7 @@ Object.keys(_constants).forEach(function (key) {
   });
 });
 
-var _foundation = __webpack_require__(134);
+var _foundation = __webpack_require__(135);
 
 Object.keys(_foundation).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -75107,7 +75132,7 @@ var tslib_1 = _interopRequireWildcard(_tslib);
 
 var _component = __webpack_require__(419);
 
-var _foundation = __webpack_require__(134);
+var _foundation = __webpack_require__(135);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -75221,7 +75246,7 @@ var _tslib = __webpack_require__(1);
 
 var tslib_1 = _interopRequireWildcard(_tslib);
 
-var _foundation = __webpack_require__(133);
+var _foundation = __webpack_require__(134);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -75448,7 +75473,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Card = __webpack_require__(19);
+var Card = __webpack_require__(20);
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
 var axios = __webpack_require__(422);
@@ -76278,7 +76303,7 @@ module.exports = function spread(callback) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(23);
+var _index = __webpack_require__(24);
 
 var _index2 = __webpack_require__(9);
 
@@ -76301,10 +76326,10 @@ var Profile = __webpack_require__(15).default;
 var PaidProfile = __webpack_require__(15).paid;
 var TutorProfile = __webpack_require__(15).tutor;
 var NotificationDialog = __webpack_require__(2).notify;
-var Card = __webpack_require__(19);
+var Card = __webpack_require__(20);
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
-var getDayAndDateString = __webpack_require__(40).default.getDayAndDateString;
+var getDayAndDateString = __webpack_require__(39).default.getDayAndDateString;
 
 // TODO: Class that provides the payments view and header and manages all data flow
 // concerning payment management (overrides the newRequest dialog).
@@ -77765,7 +77790,7 @@ Object.keys(_component).forEach(function (key) {
   });
 });
 
-var _constants = __webpack_require__(41);
+var _constants = __webpack_require__(40);
 
 Object.keys(_constants).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -77839,7 +77864,7 @@ var _component = __webpack_require__(462);
 
 var _ponyfill = __webpack_require__(463);
 
-var _constants = __webpack_require__(41);
+var _constants = __webpack_require__(40);
 
 var _foundation = __webpack_require__(157);
 
@@ -94566,7 +94591,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(471);
 
-var _index2 = __webpack_require__(25);
+var _index2 = __webpack_require__(23);
 
 var _index3 = __webpack_require__(476);
 
@@ -94579,7 +94604,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Data = __webpack_require__(7);
-var User = __webpack_require__(24);
+var User = __webpack_require__(25);
 var Utils = __webpack_require__(6);
 var Navigo = __webpack_require__(480);
 
@@ -106130,7 +106155,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	return jQuery;
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)(module)))
 
 /***/ }),
 /* 480 */
@@ -106585,9 +106610,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _index = __webpack_require__(9);
 
-var _index2 = __webpack_require__(37);
+var _index2 = __webpack_require__(36);
 
-var _index3 = __webpack_require__(23);
+var _index3 = __webpack_require__(24);
 
 var _jquery = __webpack_require__(3);
 
@@ -106828,7 +106853,7 @@ var SearchHeader = __webpack_require__(21).header;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 var EditLocationDialog = __webpack_require__(2).editLocation;
 var NewLocationDialog = __webpack_require__(2).newLocation;
-var Card = __webpack_require__(19);
+var Card = __webpack_require__(20);
 var HorzScroller = __webpack_require__(137);
 var HrsConfig = __webpack_require__(485);
 

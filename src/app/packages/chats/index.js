@@ -291,9 +291,13 @@ class SupervisorChats extends Chats {
         this.chats[id].view();
     }
 
-    getAnnouncement(id) {
+    async getAnnouncement(id) {
         if (!window.app.location.id) return console.error('Couldn\'t get ' +
             'announcement group chat (' + id + ') without location id.');
+        for (var location of (await Data.getLocations())) {
+            var doc = await location.collection('announcements').doc(id).get();
+            if (doc.exists) return doc;
+        } // TODO: Remove the below fallback.
         return window.app.db.collection('locations').doc(window.app.location.id)
             .collection('announcements').doc(id).get();
     }
@@ -322,12 +326,7 @@ class SupervisorChats extends Chats {
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();
                 const [err, res] = await to(that.index.search({
                     query: qry,
-                    facetFilters: window.app.location.name === 'Any' ? [
-                        'chatterUIDs:' + window.app.user.uid,
-                    ] : [ // TODO: Do we really want to filter by location here?
-                        'location.id:' + window.app.location.id,
-                        'chatterUIDs:' + window.app.user.uid,
-                    ],
+                    facetFilters: ['chatterUIDs:' + window.app.user.uid],
                 }));
                 if (err) return console.error('Could not search messages b/c ' +
                     'of', err);
