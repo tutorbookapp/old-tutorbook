@@ -722,9 +722,9 @@ class ConfirmMatchDialog extends ConfirmationDialog {
                     to: time.toTime,
                 },
                 message: 'This request was created by ' + window.app.user.name +
-                    ' via manual matching. ' + pupil.name +
-                    ' most likely turned in a paper tutor request that you ' +
-                    'are now receiving digitally.',
+                    ' via manual matching. ' + pupil.name + ' most likely ' +
+                    'turned in a paper tutor request that you are now ' +
+                    'receiving digitally.',
                 location: {
                     name: time.location || window.app.location.name,
                     id: window.app.data.locationsByName[time.location] || window

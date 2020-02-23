@@ -1,9 +1,6 @@
 import {
     MDCRipple
 } from '@material/ripple/index';
-import {
-    MDCMenu
-} from '@material/menu/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -446,12 +443,9 @@ class SupervisorChats extends Chats {
             }],
             id: Utils.genID(),
         });
-        const menu = new MDCMenu(menuEl);
+        const menu = Utils.attachMenu(menuEl);
         MDCRipple.attachTo(el);
         MDCRipple.attachTo($(el).find('#menu-btn')[0]).unbounded = true;
-        $(menuEl).find('.mdc-list-item').each(function() {
-            MDCRipple.attachTo(this);
-        });
         $(el).find('#menu-btn')[0].addEventListener('click', () => {
             const pos = $(el).find('#menu-btn').offset();
             menu.setAbsolutePosition(pos.left, pos.top);

@@ -252,19 +252,19 @@ class SupervisorDashboard extends Dashboard {
 
     reView() {
         super.reView();
-        this.viewScheduleCards();
         this.search.manage();
     }
 
     viewDefaultCards() {
         super.viewDefaultCards();
-        this.viewScheduleCards();
         this.viewShortcutCards();
+        if (!this.viewedScheduleCards) this.viewScheduleCards();
         if (!this.viewedRecentActivityCards) this.viewRecentActivityCards();
         this.viewEverythingElse();
     }
 
     viewScheduleCards() {
+        this.viewedScheduleCards = true;
         const schedule = new ScheduleCard();
         const existing = $(this.main).find('.card-schedule');
         if (existing.length) {
@@ -285,7 +285,7 @@ class SupervisorDashboard extends Dashboard {
 
     async viewRecentActivityCards() {
         this.viewedRecentActivityCards = true;
-        const renderCard = (doc) => {
+        const renderCard = (doc, index) => {
             const action = doc.data();
             const card = Card.renderCard(
                 action.title,
@@ -298,19 +298,20 @@ class SupervisorDashboard extends Dashboard {
                     },
                 },
             );
-            $(card).attr('id', doc.id).attr('timestamp', action.timestamp);
+            $(card).attr('id', doc.id).attr('index', index)
+                .attr('timestamp', action.timestamp);
             return card;
         };
         const recycler = {
-            display: (doc) => {
+            display: (doc, type, index) => {
                 $(this.main).find('[id="Recent activity"]').show().end()
                     .find('#activity').show()
                     .find('#cards')
                     .find('#empty-card').remove().end()
-                    .prepend(renderCard(doc));
+                    .prepend(renderCard(doc, index));
                 this.horz.update();
             },
-            remove: (doc) => {
+            remove: (doc, type, index) => {
                 $(this.main).find('[id="Recent activity"]').show().end()
                     .find('#activity').show()
                     .find('#cards')
@@ -318,37 +319,21 @@ class SupervisorDashboard extends Dashboard {
                     .find('#' + doc.id).remove().end();
                 this.horz.update();
             },
-            empty: () => {
-                $(this.main).find('#activity #cards').empty().end()
+            empty: (type, index) => {
+                $(this.main).find('#activity #cards [index="' + index + '"]')
+                    .remove().end()
                     .find('[id="Recent activity"]').hide().end()
                     .find('#activity').hide();
                 this.horz.update();
             },
         };
-        if (window.app.location.id) {
-            Utils.recycle({
-                activity: window.app.db
-                    .collection('locations')
-                    .doc(window.app.location.id)
-                    .collection('recentActions')
-                    .orderBy('timestamp')
-                    .limit(10),
-            }, recycler);
-        } else {
-            (await window.app.db
-                .collection('locations')
-                .get()
-            ).forEach((doc) => {
-                Utils.recycle({
-                    activity: window.app.db
-                        .collection('locations')
-                        .doc(doc.id)
-                        .collection('recentActions')
-                        .orderBy('timestamp')
-                        .limit(10),
-                }, recycler);
-            });
-        }
+        const queries = {
+            activity: [],
+        };
+        (await Data.getLocations()).forEach(location => queries.activity
+            .push(window.app.db.collection('locations').doc(location.id)
+                .collection('recentActions').orderBy('timestamp').limit(10)));
+        Utils.recycle(queries, recycler);
     }
 
     viewEverythingElse() {

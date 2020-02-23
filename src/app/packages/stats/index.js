@@ -33,7 +33,7 @@ class Stats {
         this.viewServiceHourCards();
     }
 
-    viewRecentActivityCards() {
+    async viewRecentActivityCards() {
         const emptyCard = Card.renderCard(
             'You\'re Done!',
             'Hooray you\'re all caught up, for now...',
@@ -47,7 +47,7 @@ class Stats {
             },
         );
         $(emptyCard).attr('id', 'empty-card');
-        const renderCard = (doc) => {
+        const renderCard = (doc, index) => {
             const action = doc.data();
             const card = Card.renderCard(
                 action.title,
@@ -59,32 +59,33 @@ class Stats {
                     },
                 },
             );
-            $(card).attr('id', doc.id).attr('timestamp', action.timestamp);
+            $(card).attr('id', doc.id).attr('index', index)
+                .attr('timestamp', action.timestamp);
             return card;
         };
         const recycler = {
-            display: (doc) => {
+            display: (doc, type, index) => {
                 $(this.main).find('#activity #cards')
                     .find('#empty-card').remove().end()
-                    .append(renderCard(doc));
+                    .append(renderCard(doc, index));
             },
-            remove: (doc) => {
+            remove: (doc, type, index) => {
                 $(this.main).find('#activity #cards')
                     .find('#empty-card').remove().end()
                     .find('#' + doc.id).remove().end();
             },
-            empty: () => {
-                $(this.main).find('#activity #cards').empty().append(emptyCard);
+            empty: (type, index) => {
+                $(this.main).find('#activity #cards [index="' + index + '"]')
+                    .remove();
             },
         };
-        Utils.recycle({
-            activity: window.app.db
-                .collection('locations')
-                .doc(window.app.location.id)
-                .collection('recentActions')
-                .orderBy('timestamp')
-                .limit(10),
-        }, recycler);
+        const queries = {
+            activity: [],
+        };
+        (await Data.getLocations()).forEach(location => queries.activity
+            .push(window.app.db.collection('locations').doc(location.id)
+                .collection('recentActions').orderBy('timestamp').limit(10)));
+        Utils.recycle(queries, recycler);
     }
 
     viewServiceHourCards() {

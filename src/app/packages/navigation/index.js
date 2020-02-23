@@ -2,9 +2,6 @@ import {
     MDCDrawer
 } from '@material/drawer/index';
 import {
-    MDCMenu
-} from '@material/menu/index';
-import {
     MDCRipple
 } from '@material/ripple/index';
 
@@ -90,7 +87,7 @@ class Navigation {
         if (!menu.hasAttribute('data-nav-id')) {
             const id = Utils.genID();
             $(menu).attr('data-nav-id', id);
-            this.menus[id] = new MDCMenu(menu);
+            this.menus[id] = Utils.attachMenu(menu);
         }
         this.menus[$(menu).attr('data-nav-id')].open = true;
     }

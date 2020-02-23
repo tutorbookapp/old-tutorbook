@@ -27,6 +27,11 @@ class Data {
         });
     }
 
+    static async getLocations() {
+        return (await window.app.db.collection('locations').where('supervisors',
+            'array-contains', window.app.user.uid).get()).docs;
+    }
+
     static async getServiceHoursLog(params) {
         return axios({
             method: 'get',
@@ -516,7 +521,8 @@ class Data {
         const snap = await this.db.collection('locations').get();
         snap.docs.forEach((doc) => {
             if (window.app.location.name === 'Any' ||
-                window.app.location.id === doc.id) {
+                window.app.location.id === doc.id ||
+                window.app.locations.map(l => l.id).indexOf(doc.id) >= 0) {
                 this.locationsByName[doc.data().name] = doc.id;
                 this.locationDataByName[doc.data().name] = doc.data();
                 this.locationsByID[doc.id] = doc.data().name;

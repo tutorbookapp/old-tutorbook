@@ -538,9 +538,7 @@ class ViewRequestDialog {
         const that = this;
         const request = this.request;
         const el = this.render.template('dialog-input');
-        const otherUser = await Data.getUser(
-            Utils.getOtherUser(request.fromUser, request.toUser).uid
-        );
+        const otherUser = Utils.getOtherUser(request.fromUser, request.toUser);
 
         function add(e) {
             el.appendChild(e);
@@ -557,10 +555,11 @@ class ViewRequestDialog {
         if (window.app.user.type === 'Supervisor') {
             // NOTE: By default we show the fromUser's availability for 
             // supervisors, and thus this "user" object is the toUser's data.
-            const toUser = await Data.getUser(request.toUser.uid);
-            addD('To ' + toUser.type.toLowerCase());
-            add(this.render.userHeader(toUser));
-            addD('From ' + otherUser.type.toLowerCase());
+            addD('To' + (request.toUser.type ? ' ' +
+                request.toUser.type.toLowerCase() : ''));
+            add(this.render.userHeader(request.toUser));
+            addD('From' + (otherUser.type ? ' ' + otherUser.type.toLowerCase() :
+                ''));
         }
         add(this.render.userHeader(otherUser));
         addD('At');
@@ -1677,11 +1676,11 @@ class ViewApptDialog extends ViewRequestDialog {
             }
         }
         if (window.app.user.type === 'Supervisor') {
-            $(this.main).find('[id="From ' +
-                this.request.fromUser.type.toLowerCase() + '"]').remove();
-            $(this.main).find('[id="To ' +
-                this.request.toUser.type.toLowerCase() + '"] h4'
-            ).text('Attendees');
+            $(this.main).find('[id="From' + (this.request.fromUser.type ? ' ' +
+                this.request.fromUser.type.toLowerCase() : '') + '"]').remove();
+            $(this.main).find('[id="To' + (this.request.toUser.type ? ' ' +
+                this.request.toUser.type.toLowerCase() : '') + '"] h4').text(
+                'Attendees');
         }
         this.header = this.render.header('header-action', {
             showEdit: true,

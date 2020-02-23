@@ -10,9 +10,6 @@ import {
 import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
-import {
-    MDCMenu
-} from '@material/menu/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -789,7 +786,7 @@ class TutorProfile extends Profile {
                 canvas: $(card).find('canvas')[0],
             });
         }, 200);
-        const menu = new MDCMenu($(card).find('.mdc-menu')[0]);
+        const menu = Utils.attachMenu($(card).find('.mdc-menu')[0]);
         $(card).find('button')[0].addEventListener('click', () => {
             menu.open = true;
         });

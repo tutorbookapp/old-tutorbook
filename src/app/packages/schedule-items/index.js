@@ -1,7 +1,3 @@
-import {
-    MDCMenu
-} from '@material/menu/index';
-
 import $ from 'jquery';
 import to from 'await-to-js';
 
