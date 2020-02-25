@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/site",
-  "version": "0.4.8",
+  "version": "0.5.0-alpha.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,8 +16,8 @@
     "@tutorbook/feature-announcement": "^0.4.8",
     "@tutorbook/feature-spotlight-vertical": "^0.4.8",
     "@tutorbook/features": "^0.4.8",
-    "@tutorbook/footer": "^0.4.8",
-    "@tutorbook/header": "^0.4.8",
+    "@tutorbook/footer": "^0.5.0-alpha.0",
+    "@tutorbook/header": "^0.5.0-alpha.0",
     "@tutorbook/heading-block": "^0.4.8",
     "@tutorbook/hero-email-capture": "^0.4.8",
     "@tutorbook/large-testimonial": "^0.4.8",

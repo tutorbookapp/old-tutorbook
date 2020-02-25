@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/config",
-  "version": "0.4.10",
+  "version": "0.5.0-alpha.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,13 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.4.10",
-    "@tutorbook/data": "^0.4.10",
-    "@tutorbook/dialogs": "^0.4.10",
+    "@tutorbook/card": "^0.5.0-alpha.0",
+    "@tutorbook/data": "^0.5.0-alpha.0",
+    "@tutorbook/dialogs": "^0.5.0-alpha.0",
     "@tutorbook/horz-scroller": "^0.4.8",
-    "@tutorbook/hrs-config": "^0.4.10",
-    "@tutorbook/search": "^0.4.10",
-    "@tutorbook/utils": "^0.4.10"
+    "@tutorbook/hrs-config": "^0.5.0-alpha.0",
+    "@tutorbook/search": "^0.5.0-alpha.0",
+    "@tutorbook/utils": "^0.5.0-alpha.0"
   },
   "gitHead": "b3940d1eea7797c7a47a3ec9a210656b08d72d59"
 }
