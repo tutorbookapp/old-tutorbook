@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Global - Documentation</title>
+    <title>Stats - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Stats</h1>
     
 
     
@@ -42,7 +42,7 @@
 <header>
     
         <h2>
-        
+        Stats
         </h2>
         
     
@@ -52,8 +52,23 @@
     <div class="container-overview">
     
         
+<div class="section-method">
 
-        
+    
+
+    <h4 class="name" id="Stats"><span class="type-signature"></span>new Stats<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Creates and renders (using the global <code>window.app.render</code> object) a new
+Stats object.</p>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -83,6 +98,11 @@
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="stats_index.js.html">stats/index.js</a>, <a href="stats_index.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
 
     
 
@@ -92,7 +112,28 @@
 </dl>
 
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
     
     </div>
 
@@ -109,24 +150,22 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
+        <h3 class="subsection-title">Methods</h3>
 
         
-                
+            
 <div class="section-method">
 
     
 
-    <h4 class="name" id="errorCallback"><span class="type-signature"></span>errorCallback<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Handles a Firestore Query's errors.</p>
+    <p>Renders the statistics view/page.</p>
 </div>
 
 
@@ -162,7 +201,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_index.js.html">data/index.js</a>, <a href="data_index.js.html#line157">line 157</a>
+        <a href="stats_index.js.html">stats/index.js</a>, <a href="stats_index.js.html#line20">line 20</a>
     </li></ul></dd>
     
 
@@ -181,54 +220,6 @@
 
 
 
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Exception</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>A query's error.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
 
 
 
@@ -244,20 +235,20 @@
 
 
 </div>
+        
             
-                
 <div class="section-method">
 
     
 
-    <h4 class="name" id="snapshotCallback"><span class="type-signature"></span>snapshotCallback<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Handles a Firestore Query's snapshots.</p>
+    <p>Views the statistics page (using the global <code>window.app.view</code> function).</p>
 </div>
 
 
@@ -293,7 +284,97 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="data_index.js.html">data/index.js</a>, <a href="data_index.js.html#line151">line 151</a>
+        <a href="stats_index.js.html">stats/index.js</a>, <a href="stats_index.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Tutorbook.html#view"><code>Tutorbook#view</code></a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="viewCards"><span class="type-signature"></span>viewCards<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Views the recent activity cards and service hour statistics card(s).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="stats_index.js.html">stats/index.js</a>, <a href="stats_index.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -312,55 +393,87 @@
 
 
 
-    <h5>Parameters:</h5>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
     
 
-<table class="params">
-    <thead>
-    <tr>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>QuerySnapshot</code></span>
-|
-
-<span class="param-type"><code>DocumentSnapshot</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>A query's snapshot.</p>
-                
-            </td>
-        </tr>
+    <h4 class="name" id="viewRecentActivityCards"><span class="type-signature">(async) </span>viewRecentActivityCards<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
-    </tbody>
-</table>
+
+
+
+<div class="description">
+    <p>Views the recent activity cards from all of the current user's locations.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="stats_index.js.html">stats/index.js</a>, <a href="stats_index.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
 
 
 
@@ -378,7 +491,99 @@
 
 
 </div>
+        
             
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="viewServiceHourCards"><span class="type-signature"></span>viewServiceHourCards<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Views the service hour statistics cards.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="stats_index.js.html">stats/index.js</a>, <a href="stats_index.js.html#line112">line 112</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Actually make this do something.</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
     
 
     
