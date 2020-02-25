@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Data.html">Data</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.algoliaIndex">algoliaIndex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.listen">listen</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.updateUser">updateUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initGrades">initGrades</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initHourlyCharges">initHourlyCharges</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initLocations">initLocations</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initPeriods">initPeriods</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initTimes">initTimes</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Tutorbook.html">Tutorbook</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initOnMobile">initOnMobile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initRootConfig">initRootConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initUser">initUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initWebsiteConfig">initWebsiteConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#loader">loader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#login">login</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#logJobPost">logJobPost</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#preInit">preInit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#print">print</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#signOut">signOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#syncConfig">syncConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#updateUser">updateUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#view">view</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1><a href="https://tutorbook.app"><img src="https://tutorbook.app/favicon/text-logo.png" alt="Tutorbook Logo"></a></h1>
+<p><a href="https://travis-ci.org/tutorbookapp/tutorbook"><img src="https://travis-ci.org/tutorbookapp/tutorbook.svg?branch=master" alt="Build Status"></a>
+<a href="https://badge.fury.io/js/%40tutorbook%2Fapp"><img src="https://badge.fury.io/js/%40tutorbook%2Fapp.svg" alt="NPM version"></a>
+<a href="https://codeclimate.com/github/nicholaschiang/tutorbook/maintainability"><img src="https://api.codeclimate.com/v1/badges/dd8c901f0077521d8f21/maintainability" alt="Maintainability"></a>
+<a href="https://coveralls.io/github/nicholaschiang/tutorbook?branch=master"><img src="https://coveralls.io/repos/github/nicholaschiang/tutorbook/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://lerna.js.org/"><img src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg" alt="lerna"></a></p>
+<p>A PWA (Progressive Web App) designed to optimize the process required to get a
+student with a qualified tutor.</p>
+<p>After discovering just how un-streamlined the existing process was at the Gunn
+Academic Center, I decided it could be much more efficient through the use of
+technology (previously, one would have to manually fill out and turn in a
+request form to the office and then wait for the AC Staff to match the student
+with the tutor). Now, Gunn and Paly students can request and message peer tutors
+from anywhere at anytime, track service hours using a phone or a school-issued
+laptop, hire professional at-home tutors when necessary, and connect with middle
+school students all from within our web app.</p>
+<p>Read more <a href="https://nicholaschiang.com">about me</a> and view the open source code
+<a href="https://github.com/nicholaschiang/tutorbook">here</a>.</p>
+<h2>Contributing</h2>
+<p><strong>We need help.</strong> To contribute to <a href="https://tutorbook.app">Tutorbook</a>, either go
+through our <a href="https://github.com/nicholaschiang/tutorbook/issues">issues</a> or our
+<a href="https://www.notion.so/tutorbook/145daee9eb41405595f34955b50df281?v=5e0ac0e835cf4bb1929a371e9339d1f6">Notion task page</a>
+to find something that you'd be interested in working on. Then, checkout from
+<code>develop</code> and create a PR for whatever task you've been contributing to.</p>
+<h3>File Structure</h3>
+<h4>Progressive Web App</h4>
+<p>Our progressive web app
+(<a href="https://developers.google.com/web/progressive-web-apps/">PWA</a>) primarily
+consists of 28 (and counting) <a href="https://npmjs.com/org/tutorbook">subpackages</a>
+(included in <code>src/app/packages</code>) managed by <a href="https://lerna.js.org">lerna</a> that
+are <a href="https://webpack.js.org">webpacked</a> into three files for distribution
+(included in <code>build/app</code>):</p>
+<pre class="prettyprint source"><code>.
+├── build
+│   ├── app
+│   │   ├── index.html
+│   │   ├── index.js
+│   │   ├── index.css
+│   │   └── img
+│   │       └── bot.png
+│   └── favicon
+│       └── manifest.json
+└── src
+    ├── lerna.json
+    ├── package.json
+    └── app
+        ├── package.json
+        ├── package-lock.json
+        ├── webpack.config.js
+        └── packages
+            ├── app
+            │   ├── index.js
+            │   ├── package.json
+            │   └── styles
+            │       ├── cards.scss
+            │       ├── chat.scss
+            │       ├── profile.scss
+            │       ├── search.css
+            │       ├── user.css
+            │       └── welcome.scss
+            ├── dialogs
+            │   ├── index.js
+            │   └── package.json
+            ├── render
+            │   ├── index.js
+            │   └── package.json
+            └── templates
+                ├── index.js
+                ├── package.json
+                └── templates.html
+</code></pre>
+<h4>Marketing and Legalities Website</h4>
+<p>Our marketing and legalities website consists of 18 (and counting) subpackages
+that define <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements">Custom HTML Web Components</a> that are used in <code>build/index.html</code>:</p>
+<pre class="prettyprint source"><code>.
+├── build
+│   ├── favicon
+│   │   └── manifest.json
+│   ├── legal
+│   │   └── index.html
+│   ├── index.html
+│   ├── index.js
+│   └── index.css
+└── src
+    ├── lerna.json
+    ├── package.json
+    └── site
+        ├── package.json
+        ├── package-lock.json
+        ├── webpack.config.js
+        └── packages
+            ├── site
+            │   ├── index.js
+            │   ├── index.scss
+            │   └── package.json
+            ├── styles
+            │   ├── search.scss
+            │   ├── reset.scss
+            │   ├── general.scss
+            │   └── package.json
+            ├── legal
+            │   ├── index.js
+            │   ├── index.scss
+            │   ├── index.html
+            │   ├── package.json
+            │   └── assets
+            │       ├── html
+            │       │   └── terms.html
+            │       ├── md
+            │       │   └── terms.md
+            │       └── generate.js
+            └── cta-link
+                ├── index.js
+                ├── index.scss
+                ├── index.html
+                ├── package.json
+                └── templates.html
+</code></pre>
+<h3>Developing</h3>
+<p>To set up a development environment for and to contribute to the Tutorbook web
+app:</p>
+<ol>
+<li>Follow <a href="https://github.com/nvm-sh/nvm#installing-and-updating">these instructions</a>
+to install <code>nvm</code> (our suggested way to use Node.js) on your
+machine. Verify that <code>nvm</code> is installed by running:</li>
+</ol>
+<pre class="prettyprint source"><code>$ command -v nvm
+</code></pre>
+<ol start="2">
+<li>Run the following command to install Node.js v10.10.0 (our current version):</li>
+</ol>
+<pre class="prettyprint source"><code>$ nvm i 10.10
+</code></pre>
+<ol start="3">
+<li>Ensure that you have recent versions of Node.js and it's package manager
+<code>npm</code> by running:</li>
+</ol>
+<pre class="prettyprint source"><code>$ node -v
+10.10.0
+$ npm -v
+6.13.3
+</code></pre>
+<ol start="4">
+<li>Clone and <code>cd</code> into this repository locally by running:</li>
+</ol>
+<pre class="prettyprint source"><code>$ git clone https://github.com/tutorbookapp/tutorbook.git && cd tutorbook/
+</code></pre>
+<ol start="5">
+<li>Then, you'll most likely want to branch off of <code>develop</code> and <code>cd</code> into our
+<a href="https://npmjs.com/org/tutorbook">app packages</a> by running:</li>
+</ol>
+<pre class="prettyprint source"><code>$ git checkout -b $my_branch && cd src/app/packages
+</code></pre>
+<ol start="6">
+<li>Follow the instructions included below to start a webpack development server
+(to see your updates affect the app live).</li>
+<li>From there, <code>cd</code> into your desired package, make your changes, commit them to
+your branch off of <code>develop</code>, and open a PR on GitHub.</li>
+</ol>
+<h4>Start a Development Server</h4>
+<p>To <a href="https://webpack.js.org/">webpack</a> the app packages and see your changes
+live, run the following commands from <code>src/app/</code>:</p>
+<pre class="prettyprint source"><code>$ npm i
+$ npm run pack
+</code></pre>
+<p>To start a development server, first install
+<a href="https://firebase.google.com/docs/cli/">Google's Firebase CLI</a> by running:</p>
+<pre class="prettyprint source"><code>$ npm i -g firebase-tools
+</code></pre>
+<p>Then, run the following command from anywhere in the repository and visit
+<a href="http://localhost:5000/">http://localhost:5000/</a> to see your version of the app:</p>
+<pre class="prettyprint source"><code>$ firebase serve --only hosting
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Mon Feb 24 2020 21:10:58 GMT-0800 (Pacific Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
