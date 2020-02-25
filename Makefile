@@ -1,4 +1,5 @@
 docs:
+	rm -rf build/docs
 	jsdoc -c .jsdoc.json
 
 dev:

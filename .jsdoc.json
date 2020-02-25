@@ -24,6 +24,7 @@
         "encoding": "utf8",
         "private": true,
         "recurse": true,
-        "template": "./src/app/node_modules/minami"
+        "template": "./src/app/node_modules/minami",
+	"tutorials": "./tutorials"
     }
 }
