@@ -1,13 +1,13 @@
 {
   "name": "@tutorbook/app",
   "version": "0.4.10",
-  "description": "",
-  "main": "scripts/Tutorbook.js",
+  "description": "The all-in-one peer tutoring platform.",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Tutorbook", "Peer Tutoring", "PWA"],
+  "author": "Nicholas Chiang",
   "license": "ISC",
   "dependencies": {
     "@tutorbook/ads": "^0.4.10",
