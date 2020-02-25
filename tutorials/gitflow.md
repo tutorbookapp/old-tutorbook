@@ -1,4 +1,4 @@
-# GitFlow: Tutorbook's branching work flow
+## Tutorbook's branching workflow
 
 To ensure - as much as possible - the quality and correctness of our code, and
 to enable many contributors to work on our apps at the same time without getting
