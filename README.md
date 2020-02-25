@@ -1,10 +1,10 @@
 # [![Tutorbook Logo](https://tutorbook.app/favicon/text-logo.png)](https://tutorbook.app)
 
 [![Build Status](https://travis-ci.org/tutorbookapp/tutorbook.svg?branch=master)](https://travis-ci.org/tutorbookapp/tutorbook)
-[![NPM version](https://badge.fury.io/js/%40tutorbook%2Fapp.svg)](https://badge.fury.io/js/%40tutorbook%2Fapp)
+[![NPM Version](https://badge.fury.io/js/%40tutorbook%2Fapp.svg)](https://badge.fury.io/js/%40tutorbook%2Fapp)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dd8c901f0077521d8f21/maintainability)](https://codeclimate.com/github/nicholaschiang/tutorbook/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/nicholaschiang/tutorbook/badge.svg?branch=master)](https://coveralls.io/github/nicholaschiang/tutorbook?branch=master)
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 A PWA (Progressive Web App) designed to optimize the process required to get a
 student with a qualified tutor.
