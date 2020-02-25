@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500i,500,600,600i|Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i|Poppins:300,300i,400,400i,700,700i);
 
 * {
   box-sizing: border-box
@@ -14,7 +14,7 @@ body {
   background-color: white;
   margin: 0 auto;
   padding: 0;
-  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 160%;
 }
@@ -34,7 +34,7 @@ p, ul, ol, blockquote {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -239,6 +239,7 @@ nav li {
 }
 
 .nav-heading {
+  font-family: 'Poppins', sans-serif;
   margin-top: 10px;
   font-weight: bold;
 }
@@ -290,7 +291,7 @@ footer {
   display: block;
   padding: 30px;
   font-style: italic;
-  font-size: 90%;
+  font-size: 85%;
   border-top: 1px solid #eee;
 }
 
