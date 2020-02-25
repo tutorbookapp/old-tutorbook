@@ -29,6 +29,9 @@ service cloud.firestore {
       // them deleting that actual document).
       allow read, create: if request.auth.uid == supervisor;
     }
+    match /websites/{website} {
+      allow read: if true;
+    }
 
     // [SEARCH]
     match /search/{user} {
