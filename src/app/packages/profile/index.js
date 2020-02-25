@@ -289,7 +289,7 @@ class Profile {
             add(t('Bio', profile.bio), t('Type', profile.type));
         }
         add(
-            s('Grade', profile.grade, Data.grades),
+            s('Grade', profile.grade, window.app.data.grades),
             s('Gender', profile.gender, Data.genders)
         );
         addD('Contact info'); // Contact info

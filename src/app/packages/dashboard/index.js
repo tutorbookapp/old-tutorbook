@@ -27,6 +27,10 @@ const trackingShortcut = require('@tutorbook/tracking').renderShortcutCard;
 // user logs in.
 class Dashboard {
 
+    /**
+     * Creates and renders (using the global `window.app.render` object) a new 
+     * Dashboard object.
+     */
     constructor() {
         this.render = window.app.render;
         this.initDismissedCards();
@@ -49,6 +53,10 @@ class Dashboard {
         }
     }
 
+    /**
+     * Views the dashboard page (using the global `window.app.view` function).
+     * @see {@link Tutorbook#view}
+     */
     view() {
         window.app.nav.selected = 'Home';
         window.app.intercom.view(true);
@@ -57,11 +65,20 @@ class Dashboard {
         this.viewDefaultCards(window.app.user.uid);
     }
 
+    /**
+     * Re-views the dashboard page (call this to view the dashboard page when it 
+     * has already been viewed):
+     * 1. Shows the [Intercom Messenger]{@link Help#view}
+     * 2. Views the user's [setup cards]{@link Dashboard#viewSetupCards}
+     */
     reView() {
         window.app.intercom.view(true);
         this.viewSetupCards();
     }
 
+    /**
+     * Renders the dashboard view/page main template and header.
+     */
     renderSelf() {
         this.header = this.render.header('header-main', {
             'title': 'Tutorbook'
@@ -283,6 +300,10 @@ class SupervisorDashboard extends Dashboard {
         this.viewCard(trackingShortcut(), def);
     }
 
+    /**
+     * Views the recent activity cards from all of the current user's locations.
+     * @see {@link Stats#viewRecentActivityCards}
+     */
     async viewRecentActivityCards() {
         this.viewedRecentActivityCards = true;
         const renderCard = (doc, index) => {
@@ -321,8 +342,9 @@ class SupervisorDashboard extends Dashboard {
             },
             empty: (type, index) => {
                 $(this.main).find('#activity #cards [index="' + index + '"]')
-                    .remove().end()
-                    .find('[id="Recent activity"]').hide().end()
+                    .remove();
+                if (!$(this.main).find('#activity #cards .mdc-card').length)
+                    $(this.main).find('[id="Recent activity"]').hide().end()
                     .find('#activity').hide();
                 this.horz.update();
             },

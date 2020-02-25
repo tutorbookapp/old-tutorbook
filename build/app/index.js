@@ -19879,60 +19879,116 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var axios = __webpack_require__(307);
 var algolia = __webpack_require__(69)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
-// Class that manages Firestore data flow along with any local app data
-// See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
-// Classes#Instance_properties
+/**
+ * Class that manages Firestore data flow along with any local app data
+ */
 
 var Data = function () {
-    function Data(db) {
+
+    /**
+     * Creates a new Data object that manages Firestore data flow for the
+     * Tutorbook web app.
+     * @param {CollectionReference} [db=window.app.db] - The Firestore partition
+     * to fetch data from.
+     * @param {bool} [init=true] - Whether or not to initialize locations, 
+     * grades, periods, times, hourlyCharges, etc.
+     */
+    function Data() {
+        var db = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.app.db;
+        var init = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
         _classCallCheck(this, Data);
 
-        this.db = window.app && window.app.db ? window.app.db : db || firebase.firestore().collection('partitions').doc('default');
-        this.initTimes();
-        this.initHourlyCharges();
-        this.initLocations();
+        this.db = db;
+        if (init) this.init();
     }
 
+    /**
+     * Initializes locally stored locations, grades, periods, times, and 
+     * hourlyCharges.
+     * @param {Object} [config=window.app.config] - The website configuration to 
+     * pull grades and subjects from.
+     * @param {Object[]} [locations=window.app.locations] - The array of 
+     * locations to sync this data object with.
+     */
+
+
     _createClass(Data, [{
+        key: 'init',
+        value: function init() {
+            var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.app.config;
+            var locations = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window.app.locations;
+
+            this.initTimes();
+            this.initHourlyCharges();
+            this.initLocations(locations);
+            this.initPeriods(locations);
+            this.initGrades(config.grades || Data.grades);
+        }
+
+        /**
+         * Creates and syncs location data from the web app configuration.
+         * @param {Object[]} [locations=window.app.locations] - The array of 
+         * locations to sync this data object with.
+         */
+
+    }, {
         key: 'initLocations',
-        value: async function initLocations() {
+        value: function initLocations() {
             var _this = this;
 
-            // Different formats of the same location data
+            var locations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.app.locations;
+
             this.locationsByName = {};
             this.locationsByID = {};
             this.locationDataByName = {};
             this.locationDataByID = {};
             this.locationNames = [];
             this.locationIDs = [];
-            var snap = await this.db.collection('locations').get();
-            snap.docs.forEach(function (doc) {
-                if (window.app.location.name === 'Any' || window.app.location.id === doc.id || window.app.locations.map(function (l) {
-                    return l.id;
-                }).indexOf(doc.id) >= 0) {
-                    _this.locationsByName[doc.data().name] = doc.id;
-                    _this.locationDataByName[doc.data().name] = doc.data();
-                    _this.locationsByID[doc.id] = doc.data().name;
-                    _this.locationDataByID[doc.id] = doc.data();
-                    _this.locationNames.push(doc.data().name);
-                    _this.locationIDs.push(doc.id);
-                }
+            locations.forEach(function (location) {
+                _this.locationsByName[location.name] = location.id;
+                _this.locationDataByName[location.name] = location;
+                _this.locationsByID[location.id] = location.name;
+                _this.locationDataByID[location.id] = location;
+                _this.locationNames.push(location.name);
+                _this.locationIDs.push(location.id);
             });
-            this.initPeriods();
         }
+
+        /**
+         * Syncs grades with the web app configuration (or all of the [statically 
+         * defined grades]{@link Data#grades}).
+         * @param {string[]} [grades=window.app.config.grades] - The array of grades
+         * to sync this data object with.
+         */
+
+    }, {
+        key: 'initGrades',
+        value: function initGrades() {
+            var grades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.app.config.grades;
+
+            this.grades = grades || Data.grades;
+        }
+
+        /**
+         * Uses web app location data to add periods to local data.
+         * @param {Object[]} [locations=window.app.locations] - The array of 
+         * locations to get periods from.
+         */
+
     }, {
         key: 'initPeriods',
         value: function initPeriods() {
             var _this2 = this;
 
-            // Use local location data to add periods to local data
-            var locations = Object.values(this.locationDataByID);
+            var locations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.app.locations;
+
             var times = {};
             locations.forEach(function (location) {
-                Object.entries(location.hours).forEach(function (_ref) {
-                    var _ref2 = _slicedToArray(_ref, 2),
-                        d = _ref2[0],
-                        a = _ref2[1];
+                Object.entries(location.hours).forEach(function (_ref2) {
+                    var _ref3 = _slicedToArray(_ref2, 2),
+                        d = _ref3[0],
+                        a = _ref3[1];
 
                     return a.forEach(function (s) {
                         if (!times[d]) times[d] = [];
@@ -19942,10 +19998,10 @@ var Data = function () {
                 });
             });
             this.periods = {};
-            Object.entries(times).forEach(function (_ref3) {
-                var _ref4 = _slicedToArray(_ref3, 2),
-                    day = _ref4[0],
-                    times = _ref4[1];
+            Object.entries(times).forEach(function (_ref4) {
+                var _ref5 = _slicedToArray(_ref4, 2),
+                    day = _ref5[0],
+                    times = _ref5[1];
 
                 if (!_this2.periods[day]) _this2.periods[day] = [];
                 times.forEach(function (time) {
@@ -19953,6 +20009,12 @@ var Data = function () {
                 });
             });
         }
+
+        /**
+         * Creates the `timeStrings` array for this data object (every minute 
+         * formatted like 3:45 PM).
+         */
+
     }, {
         key: 'initTimes',
         value: function initTimes() {
@@ -19988,6 +20050,12 @@ var Data = function () {
                 }
             });
         }
+
+        /**
+         * Creates the `hourlyChargeStrings` array and `hourlyChargesMap` map in 
+         * this data object.
+         */
+
     }, {
         key: 'initHourlyCharges',
         value: function initHourlyCharges() {
@@ -19998,6 +20066,70 @@ var Data = function () {
             }
         }
     }], [{
+        key: 'ref',
+        value: function ref(path) {
+            var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window.app.db;
+
+            for (var i = 0; i < path.length; i++) {
+                _ref = i % 2 === 0 ? _ref.collection(path[i]) : _ref.doc(path[i]);
+            }
+            return _ref;
+        }
+
+        /**
+         * Handles a Firestore Query's snapshots.
+         * @callback snapshotCallback
+         * @param {(QuerySnapshot|DocumentSnapshot)} - A query's snapshot.
+         */
+
+        /**
+         * Handles a Firestore Query's errors.
+         * @callback errorCallback
+         * @param {Exception} - A query's error.
+         */
+
+        /**
+         * Fetch and then listen to a Firestore query.
+         * @param {(Query|string[])} query - The query or Firestore path to listen 
+         * to.
+         * @param {snapshotCallback} next - Handles the query's snapshots.
+         * @param {errorCallback} [error=() => {}] - Handles the query's errors.
+         * @param {Object} 
+         * [options={db:window.app.db,listeners:window.app.listeners}] - Specifies 
+         * the database partition and listeners array to use.
+         */
+
+    }, {
+        key: 'listen',
+        value: async function listen(query, next) {
+            var error = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+            var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {
+                db: window.app.db,
+                listeners: window.app.listeners
+            };
+
+            var ref = query instanceof Array ? Data.ref(query, options.db || window.app.db) : query;
+
+            var _ref6 = await (0, _awaitToJs2.default)(ref.get()),
+                _ref7 = _slicedToArray(_ref6, 2),
+                err = _ref7[0],
+                snap = _ref7[1];
+
+            err ? error(err) : await next(snap);
+            (options.listeners || window.app.listeners).push(ref.onSnapshot({
+                next: next,
+                error: error
+            }));
+        }
+
+        /**
+         * Returns the Algolia index based off of the given ID and current app 
+         * partition.
+         * @param {string} id - The Algolia index ID.
+         * @return {AlgoliaIndex} - The initialized Algolia index.
+         */
+
+    }, {
         key: 'algoliaIndex',
         value: function algoliaIndex(id) {
             return algolia.initIndex((window.app.test ? 'test' : 'default') + '-' + id);
@@ -20149,9 +20281,6 @@ var Data = function () {
             user.availability = bookedAvailability;
             return bookedAvailability;
         }
-
-        // TODO: Make this dynamically configurable in each location's document.
-
     }, {
         key: 'getUser',
         value: async function getUser(id) {
@@ -20181,6 +20310,12 @@ var Data = function () {
                 id: id
             });
         }
+
+        /**
+         * Updates the given user's Firestore document.
+         * @param {Object} user - The user to update.
+         */
+
     }, {
         key: 'updateUser',
         value: async function updateUser(user) {
@@ -20509,25 +20644,6 @@ var Data = function () {
                 payment: payment
             });
         }
-    }, {
-        key: 'grades',
-        get: function get() {
-            var highSchool = ['Senior', 'Junior', 'Sophomore', 'Freshman'];
-            var middleSchool = ['8th Grade', '7th Grade', '6th Grade'];
-            var elementarySchool = ['5th Grade', '4th Grade', '3rd Grade', '2nd Grade', '1st Grade', 'Kindergarten'];
-            switch (window.app.location.name.split(' ')[0]) {
-                case 'Gunn':
-                    return highSchool;
-                case 'Paly':
-                    return highSchool;
-                case 'Woodside':
-                    return highSchool;
-                case 'JLS':
-                    return middleSchool;
-                default:
-                    return ['Adult'].concat(highSchool).concat(middleSchool).concat(elementarySchool);
-            };
-        }
     }]);
 
     return Data;
@@ -20711,6 +20827,11 @@ Data.subjects = [
 Data.genders = ['Male', 'Female', 'Other'];
 
 Data.types = ['Tutor', 'Pupil', 'Teacher', 'Parent', 'Supervisor'];
+
+Data.grades = ['Adult', 'Senior', // High School
+'Junior', 'Sophomore', 'Freshman', '8th Grade', // Middle School
+'7th Grade', '6th Grade', '5th Grade', // Elementary School
+'4th Grade', '3rd Grade', '2nd Grade', '1st Grade', 'Kindergarten'];
 
 module.exports = Data;
 
@@ -22536,7 +22657,7 @@ var Profile = function () {
             } else {
                 add(t('Bio', profile.bio), t('Type', profile.type));
             }
-            add(s('Grade', profile.grade, Data.grades), s('Gender', profile.gender, Data.genders));
+            add(s('Grade', profile.grade, window.app.data.grades), s('Gender', profile.gender, Data.genders));
             addD('Contact info'); // Contact info
             add(t('Phone', profile.phone), t('Email', profile.email));
             addActionD((profile.type || 'User') + ' for', { // Subjects
@@ -25194,7 +25315,7 @@ var Search = function () {
             type: 'Tutor',
             sort: 'Rating'
         };
-        this.validGrades = Data.grades; // Allow for manipulation of validGrades
+        this.validGrades = window.app.data.grades;
         this.initDescription();
         // This has to be defined within a function to have access to `this`
         this.recycler = {
@@ -30458,7 +30579,7 @@ var FilterDialog = function () {
             Utils.replaceElement(this.el.querySelector('#availability-list'), this.renderInputAvailability());
 
             Utils.replaceElement(this.el.querySelector('#grade-list'), this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.grades)
+                items: ['Any'].concat(window.app.data.grades)
             }));
 
             if (window.app.location.name === 'Any') {
@@ -40443,6 +40564,11 @@ var trackingShortcut = __webpack_require__(421).renderShortcutCard;
 // user logs in.
 
 var Dashboard = function () {
+
+    /**
+     * Creates and renders (using the global `window.app.render` object) a new 
+     * Dashboard object.
+     */
     function Dashboard() {
         _classCallCheck(this, Dashboard);
 
@@ -40468,6 +40594,12 @@ var Dashboard = function () {
                 });
             }
         }
+
+        /**
+         * Views the dashboard page (using the global `window.app.view` function).
+         * @see {@link Tutorbook#view}
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -40477,12 +40609,25 @@ var Dashboard = function () {
             Utils.attachHeader(this.header);
             this.viewDefaultCards(window.app.user.uid);
         }
+
+        /**
+         * Re-views the dashboard page (call this to view the dashboard page when it 
+         * has already been viewed):
+         * 1. Shows the [Intercom Messenger]{@link Help#view}
+         * 2. Views the user's [setup cards]{@link Dashboard#viewSetupCards}
+         */
+
     }, {
         key: 'reView',
         value: function reView() {
             window.app.intercom.view(true);
             this.viewSetupCards();
         }
+
+        /**
+         * Renders the dashboard view/page main template and header.
+         */
+
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
@@ -40712,6 +40857,12 @@ var SupervisorDashboard = function (_Dashboard) {
             this.viewCard(matchingShortcut(), def);
             this.viewCard(trackingShortcut(), def);
         }
+
+        /**
+         * Views the recent activity cards from all of the current user's locations.
+         * @see {@link Stats#viewRecentActivityCards}
+         */
+
     }, {
         key: 'viewRecentActivityCards',
         value: async function viewRecentActivityCards() {
@@ -40740,7 +40891,8 @@ var SupervisorDashboard = function (_Dashboard) {
                     _this6.horz.update();
                 },
                 empty: function empty(type, index) {
-                    (0, _jquery2.default)(_this6.main).find('#activity #cards [index="' + index + '"]').remove().end().find('[id="Recent activity"]').hide().end().find('#activity').hide();
+                    (0, _jquery2.default)(_this6.main).find('#activity #cards [index="' + index + '"]').remove();
+                    if (!(0, _jquery2.default)(_this6.main).find('#activity #cards .mdc-card').length) (0, _jquery2.default)(_this6.main).find('[id="Recent activity"]').hide().end().find('#activity').hide();
                     _this6.horz.update();
                 }
             };
@@ -58821,101 +58973,258 @@ var Utils = __webpack_require__(6);
 var Render = __webpack_require__(159);
 var Data = __webpack_require__(7);
 
-var Tutorbook = function () {
-    function Tutorbook() {
-        var _this = this;
+/** Class that represents uppermost level of our web app. */
 
+var Tutorbook = function () {
+
+    /**
+     * Creates a new Tutorbook object:
+     * 1. Initializes the website's configuration data.
+     * 2. Signs in (or uses existing authentication cookies if the user has 
+     *    already signed in) the user with [Firebase Authentication]{@link 
+     *    https://firebase.google.com/docs/auth/web/start}.
+     * 3. Initializes all app views and packages and routes the user to their
+     *    desired destination (based on their URL) within the app.
+     */
+    function Tutorbook() {
         _classCallCheck(this, Tutorbook);
 
         this.logJobPost();
         this.version = '0.0.1'; // TODO: Each change released to production (via
         // CI) should have a corresponding GitHub tag & release denoted here.
-        this.location = {
-            name: 'Any'
-        };
-        this.test = false;
+        this.id = 'JJ5BuGZ1za0eON81vdOh';
+        this.test = true;
         this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' + 'ns.net/';
-        //this.functionsURL = 'http://localhost:5001/tutorbook-779d8/us-
-        //central1/';
         this.db = this.test ? firebase.firestore().collection('partitions').doc('test') : firebase.firestore().collection('partitions').doc('default');
         if (this.test) document.title = '[Demo] ' + document.title;
+        this.preInit();
+    }
 
-        // Helper packages
-        this.render = new Render();
-        this.data = new Data(this.db);
-        this.utils = new Utils();
-        this.snackbar = new Snackbar(this.render);
-        this.initOnMobile();
+    /** 
+     * Initializes Tutorbook's website configuration and location data before
+     * initializing the rest of the helper packages and logging the user in.
+     */
 
-        // Dependency cycle workarounds
-        this.SearchHeader = SearchHeader;
-        this.EditProfile = EditProfile;
-        this.NotificationDialog = NotificationDialog;
-        this.MatchingDialog = MatchingDialog;
-        this.renderHit = renderHit;
-        this.renderCard = renderCard;
 
-        // App packages
-        this.init = async function () {
-            _this.notify = new Notify();
-            _this.intercom = new Help(_this.user);
-            _this.cards = { // Store card actions & dialogs
+    _createClass(Tutorbook, [{
+        key: 'preInit',
+        value: async function preInit() {
+            var _this = this;
+
+            // Website configuration and locations
+            this.data = new Data(this.db, false);
+            await this.initWebsiteConfig();
+            this.data.init(this.config, this.locations);
+
+            // Helper packages
+            this.render = new Render();
+            this.utils = new Utils();
+            this.snackbar = new Snackbar(this.render);
+            this.initOnMobile();
+
+            // Authentication
+            firebase.auth().onAuthStateChanged(async function (user) {
+                if (user) {
+                    await _this.initUser();
+                    Utils.urlData();
+                    if (_this.user.type === 'Supervisor' && _this.user.authenticated && !_this.userClaims.supervisor) {
+                        new NotificationDialog('Invalid Authentication', 'You ' + 'have tried to login as a supervisor but lack the ' + 'required custom authentication claims. Either wait ' + 'a few minutes and try reloading the app or continue ' + '(by clicking OK or anywhere outside this dialog) ' + 'with your current authentication claims (that denote' + ' you as a regular user). For more information, email' + ' help@tutorbook.app or text me directly at (650) 861' + '-2723.', function () {
+                            _this.init();
+                            _this.nav.start();
+                        }).view();
+                    } else if (_this.user.authenticated || _this.user.type === 'Tutor' || _this.user.type === 'Pupil') {
+                        _this.user.authenticated = true;
+                        _this.init();
+                        _this.nav.start();
+                    } else {
+                        Login.codeSignIn();
+                    }
+                } else {
+                    _this.loader(false);
+                    _this.login();
+                }
+            });
+        }
+
+        /**
+         * Creates and initializes the rest of the app views and packages (starts 
+         * the navigation router that routes the user to the desired destination 
+         * with the app based on their URL).
+         */
+
+    }, {
+        key: 'init',
+        value: function init() {
+            // Dependency cycle workarounds
+            this.SearchHeader = SearchHeader;
+            this.EditProfile = EditProfile;
+            this.NotificationDialog = NotificationDialog;
+            this.MatchingDialog = MatchingDialog;
+            this.renderHit = renderHit;
+            this.renderCard = renderCard;
+
+            // App packages
+            this.notify = new Notify();
+            this.intercom = new Help(this.user);
+            this.cards = { // Store card actions & dialogs
                 requestsOut: {},
                 approvedRequestsOut: {},
                 rejectedRequestsOut: {}
             };
-            _this.nav = new Navigation();
-            _this.listener = new Listener();
-            _this.search = new Search(_this);
-            if (_this.user.payments.type === 'Paid') {
-                _this.profile = new PaidProfile(_this.user);
-            } else if (_this.user.type === 'Tutor') {
-                _this.profile = new TutorProfile(_this.user);
+            this.nav = new Navigation();
+            this.listener = new Listener();
+            this.search = new Search(this);
+            if (this.user.payments.type === 'Paid') {
+                this.profile = new PaidProfile(this.user);
+            } else if (this.user.type === 'Tutor') {
+                this.profile = new TutorProfile(this.user);
             } else {
-                _this.profile = new Profile(_this.user);
+                this.profile = new Profile(this.user);
             }
-            if (_this.user.type === 'Supervisor') {
-                _this.schedule = new SupervisorSchedule();
-                _this.dashboard = new SupervisorDashboard();
-                _this.matching = new Matching();
-                _this.stats = new Stats();
-                _this.config = new Config();
-                _this.chats = new SupervisorChats();
+            if (this.user.type === 'Supervisor') {
+                this.schedule = new SupervisorSchedule();
+                this.dashboard = new SupervisorDashboard();
+                this.matching = new Matching();
+                this.stats = new Stats();
+                this.config = new Config();
+                this.chats = new SupervisorChats();
             } else {
-                _this.schedule = new Schedule();
-                _this.dashboard = new Dashboard();
-                _this.chats = new Chats();
+                this.schedule = new Schedule();
+                this.dashboard = new Dashboard();
+                this.chats = new Chats();
             }
-            _this.payments = new Payments();
-            _this.feedback = new Feedback(_this);
-            _this.ads = new Ads();
-        };
+            this.payments = new Payments();
+            this.feedback = new Feedback(this);
+            this.ads = new Ads();
+        }
 
-        firebase.auth().onAuthStateChanged(async function (user) {
-            if (user) {
-                await _this.initUser();
-                Utils.urlData();
-                if (_this.user.type === 'Supervisor' && _this.user.authenticated && !_this.userClaims.supervisor) {
-                    new NotificationDialog('Invalid Authentication', 'You ' + 'have tried to login as a supervisor but lack the ' + 'required custom authentication claims. Either wait ' + 'a few minutes and try reloading the app or continue ' + '(by clicking OK or anywhere outside this dialog) ' + 'with your current authentication claims (that denote' + ' you as a regular user). For more information, email' + ' help@tutorbook.app or text me directly at (650) 861' + '-2723.', function () {
-                        _this.init();
-                        _this.nav.start();
-                    }).view();
-                } else if (_this.user.authenticated || _this.user.type === 'Tutor' || _this.user.type === 'Pupil') {
-                    _this.user.authenticated = true;
-                    _this.init();
-                    _this.nav.start();
-                } else {
-                    Login.codeSignIn();
+        /**
+         * Fetches this website's configuration data and initializes it's location 
+         * data.
+         */
+
+    }, {
+        key: 'initWebsiteConfig',
+        value: function initWebsiteConfig() {
+            var _this2 = this;
+
+            if (!this.id) return this.initRootConfig();
+            return Data.listen(['websites', this.id], function (websiteConfigDoc) {
+                if (!websiteConfigDoc.exists) {
+                    console.warn('[WARNING] Website configuration (' + _this2.id + ') did not exist, acting as if root partition...');
+                    return _this2.initRootConfig();
                 }
-            } else {
-                _this.loader(false);
-                _this.login();
-            }
-        });
-    }
+                return _this2.syncConfig(websiteConfigDoc.data());
+            }, function (error) {
+                console.error('[ERROR] Could not get website configuration (' + _this2.id + '), acting as if root partition...', error);
+                return _this2.initRootConfig();
+            }, {
+                db: this.db,
+                listeners: this.listeners
+            });
+        }
 
-    _createClass(Tutorbook, [{
+        /**
+         * Fetches and syncs local app data with locations specified in given 
+         * website configuration.
+         * @param {Object} config - The website configuration to fetch locations 
+         * for/from.
+         * @todo Store dialogs and other views dependent on this local location or
+         * configuration data in order to recreate them when that location or 
+         * configuration data changes (i.e. so one doesn't have to reload the web
+         * app in order to see changes).
+         */
+
+    }, {
+        key: 'syncConfig',
+        value: function syncConfig(config) {
+            var _this3 = this;
+
+            this.config = config;
+            this.locations = this.data.locations = [];
+            return Promise.all(this.config.locations.map(function (locationId) {
+                return Data.listen(['locations', locationId], function (doc) {
+                    var index = _this3.locations.findIndex(function (l) {
+                        return l.id === doc.id;
+                    });
+                    var locationData = Utils.combineMaps(doc.data(), {
+                        id: doc.id
+                    });
+                    if (index < 0) {
+                        _this3.locations.push(locationData);
+                    } else {
+                        _this3.locations[index] = locationData;
+                    }
+                    _this3.data.locations = _this3.locations;
+                    _this3.location = _this3.data.location = _this3.locations[0];
+                }, function (error) {
+                    console.error('[ERROR] Could not get website configuration (' + _this3.id + ') location (' + locationId + ').');
+                }, {
+                    db: _this3.db,
+                    listeners: _this3.listeners
+                });
+            }));
+        }
+
+        /**
+         * Fetches and syncs local app data with all locations (for users at the 
+         * root partition).
+         * @todo Make this return a Promise that resolves the first time location
+         * data is fetched and synced to local app data.
+         */
+
+    }, {
+        key: 'initRootConfig',
+        value: function initRootConfig() {
+            var _this4 = this;
+
+            Data.recycle({
+                locations: this.db.collection('locations')
+            }, {
+                display: function display(doc) {
+                    var index = _this4.locations.findIndex(function (l) {
+                        return l.id === doc.id;
+                    });
+                    var locationData = Utils.combineMaps(doc.data(), {
+                        id: doc.id
+                    });
+                    if (index < 0) {
+                        _this4.locations.push(locationData);
+                    } else {
+                        _this4.locations[index] = locationData;
+                    }
+                    _this4.data.locations = _this4.locations;
+                    _this4.location = _this4.data.location = _this4.locations[0];
+                },
+                remove: function remove(doc) {
+                    var index = _this4.locations.findIndex(function (l) {
+                        return l.id === doc.id;
+                    });
+                    _this4.locations.splice(index, 1);
+                    _this4.data.locations.splice(index, 1);
+                    _this4.location = _this4.data.location = _this4.locations[0];
+                    console.warn('[WARNING] Location (' + doc.id + ') was deleted.');
+                },
+                empty: function empty() {
+                    _this4.locations = _this4.data.locations = [];
+                    _this4.location = _this4.data.location = {};
+                    console.error('There are no locations for tutoring.');
+                }
+            });
+        }
+
+        /**
+         * Replaces the currently viewed header, main, and URL and notifies the web 
+         * app's navigation and ads.
+         * @param {HTMLElement} header - The header element (typically an mdc-top-
+         * app-bar).
+         * @param {HTMLElement} main - The main element (typically an mdc-list or 
+         * mdc-layout-grid)
+         * @param {string} [url] - The view's URL.
+         */
+
+    }, {
         key: 'view',
         value: function view(header, main, url) {
             if (this.nav) this.nav.update(); // We can view without init();
@@ -58928,6 +59237,12 @@ var Tutorbook = function () {
             Utils.url(url);
             if (this.ads) this.ads.url(url);
         }
+
+        /**
+         * Fetches the current user's (denoted by Firebase Auth) Firestore data or 
+         * creates a new Firestore document if one doesn't already exist.
+         */
+
     }, {
         key: 'initUser',
         value: async function initUser() {
@@ -58948,6 +59263,11 @@ var Tutorbook = function () {
                 this.userClaims = (await user.getIdTokenResult(true)).claims;
             }
         }
+
+        /**
+         * Proxy function to Data's [updateUser]{@link Data#updateUser} method.
+         */
+
     }, {
         key: 'updateUser',
         value: function updateUser() {
@@ -58955,6 +59275,14 @@ var Tutorbook = function () {
 
             return Data.updateUser(user);
         }
+
+        /**
+         * Unsubscribes to Firestore onSnapshot listeners, logs out of Intercom 
+         * Messenger widget, and logs the current user out with Firebase Auth.
+         * @see {@link Help#logout}
+         * @see {@link https://firebase.google.com/docs/firestore/query-data/listen#detach_a_listener}
+         */
+
     }, {
         key: 'signOut',
         value: function signOut() {
@@ -58964,9 +59292,17 @@ var Tutorbook = function () {
             this.intercom.logout();
             return firebase.auth().signOut();
         }
+
+        /**
+         * Shows and hides the default intermediate loading icon.
+         * @param {bool} [show=false] - Whether to show or hide the loading icon.
+         */
+
     }, {
         key: 'loader',
-        value: function loader(show) {
+        value: function loader() {
+            var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
             var loaderEl = (0, _jquery2.default)('#loader');
             if (show) {
                 (0, _jquery2.default)('.main').empty().append(loaderEl);
@@ -58975,6 +59311,14 @@ var Tutorbook = function () {
                 loaderEl.hide();
             }
         }
+
+        /**
+         * Logs a nice welcome message (with contact information for those 
+         * interested in contributing) to curious developers taking a peak at our 
+         * logs or website via their browser's developer tools.
+         * @see {@link http://megacooltext.com/generator/big-letters/}
+         */
+
     }, {
         key: 'logJobPost',
         value: function logJobPost() {
@@ -58990,6 +59334,11 @@ var Tutorbook = function () {
             console.log('===============================================');
             console.log('Taking a look under the hood? We\'d love to have you on ' + 'the team. Check out our open source code at https://github.com/' + 'tutorbookapp/tutorbook or email nicholaschiang@tutorbook.app for' + ' more info.');
         }
+
+        /**
+         * Prints the current view (minus any FAB buttons and the header).
+         */
+
     }, {
         key: 'print',
         value: function (_print) {
@@ -59009,16 +59358,28 @@ var Tutorbook = function () {
             (0, _jquery2.default)('.header').show();
             (0, _jquery2.default)('.mdc-fab').show();
         })
+
+        /**
+         * Logs the user in via our [Login package]{@link Login}.
+         */
+
     }, {
         key: 'login',
         value: function login() {
             this.login = new Login();
             this.login.view();
         }
+
+        /**
+         * Checks if the user is currently viewing the app on a mobile device
+         * (with regex on the user agent and by checking the current window
+         * viewport size).
+         * @see {@link https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser}
+         */
+
     }, {
         key: 'initOnMobile',
         value: function initOnMobile() {
-            // See: https://stackoverflow.com/questions/11381673/detecting-a-mobile-browser
             var userAgentCheck = false;
             (function (a) {
                 if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) userAgentCheck = true;
@@ -67498,12 +67859,22 @@ var Utils = __webpack_require__(6);
 var Card = __webpack_require__(20);
 
 var Stats = function () {
+
+    /**
+     * Creates and renders (using the global `window.app.render` object) a new 
+     * Stats object.
+     */
     function Stats() {
         _classCallCheck(this, Stats);
 
         this.render = window.app.render;
         this.renderSelf();
     }
+
+    /**
+     * Renders the statistics view/page.
+     */
+
 
     _createClass(Stats, [{
         key: 'renderSelf',
@@ -67516,6 +67887,12 @@ var Stats = function () {
                 welcome: !window.app.onMobile
             });
         }
+
+        /**
+         * Views the statistics page (using the global `window.app.view` function).
+         * @see {@link Tutorbook#view}
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -67524,6 +67901,11 @@ var Stats = function () {
             window.app.view(this.header, this.main, '/app/stats');
             this.cardsViewed ? null : this.viewCards();
         }
+
+        /**
+         * Views the recent activity cards and service hour statistics card(s).
+         */
+
     }, {
         key: 'viewCards',
         value: function viewCards() {
@@ -67531,6 +67913,11 @@ var Stats = function () {
             this.viewRecentActivityCards();
             this.viewServiceHourCards();
         }
+
+        /**
+         * Views the recent activity cards from all of the current user's locations.
+         */
+
     }, {
         key: 'viewRecentActivityCards',
         value: async function viewRecentActivityCards() {
@@ -67572,6 +67959,12 @@ var Stats = function () {
             });
             Utils.recycle(queries, recycler);
         }
+
+        /**
+         * Views the service hour statistics cards.
+         * @todo Actually make this do something.
+         */
+
     }, {
         key: 'viewServiceHourCards',
         value: function viewServiceHourCards() {}
@@ -106350,8 +106743,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Class that inits and manages our Intercom integration
+/** Class that inits and manages our Intercom integration. */
 var Help = function () {
+
+    /**
+     * Creates a new Help object by initializing the Intercom Messenger widget 
+     * with our current app user data.
+     * @see {@link https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomboot-intercomsettings}
+     */
     function Help(user) {
         _classCallCheck(this, Help);
 
@@ -106405,6 +106804,13 @@ var Help = function () {
         }();
     }
 
+    /**
+     * Shows or hides the default Intercom Messenger launcher. Note that this 
+     * does not close the messaging window if it is already open.
+     * @param {bool} show - Whether to show the launcher or hide it.
+     */
+
+
     _createClass(Help, [{
         key: 'view',
         value: function view(show) {
@@ -106412,6 +106818,13 @@ var Help = function () {
             window.intercomSettings.hide_default_launcher = !show;
             return window.Intercom('boot');
         }
+
+        /**
+         * Logs the user out of the Intercom Messenger widget and removes Intercom's 
+         * cookies.
+         * @see {@link https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomshutdown}
+         */
+
     }, {
         key: 'logout',
         value: function logout() {

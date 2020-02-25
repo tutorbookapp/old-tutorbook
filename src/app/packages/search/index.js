@@ -195,7 +195,7 @@ class Search {
             type: 'Tutor',
             sort: 'Rating'
         };
-        this.validGrades = Data.grades; // Allow for manipulation of validGrades
+        this.validGrades = window.app.data.grades;
         this.initDescription();
         // This has to be defined within a function to have access to `this`
         this.recycler = {

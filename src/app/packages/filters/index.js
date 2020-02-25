@@ -82,7 +82,7 @@ class FilterDialog {
         Utils.replaceElement(
             this.el.querySelector('#grade-list'),
             this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.grades)
+                items: ['Any'].concat(window.app.data.grades)
             })
         );
 

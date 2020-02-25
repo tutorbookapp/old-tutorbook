@@ -5,11 +5,18 @@ const Card = require('@tutorbook/card');
 
 class Stats {
 
+    /**
+     * Creates and renders (using the global `window.app.render` object) a new 
+     * Stats object.
+     */
     constructor() {
         this.render = window.app.render;
         this.renderSelf();
     }
 
+    /**
+     * Renders the statistics view/page.
+     */
     renderSelf() {
         this.header = this.render.header('header-main', {
             title: 'Tutorbook',
@@ -20,6 +27,10 @@ class Stats {
         });
     }
 
+    /**
+     * Views the statistics page (using the global `window.app.view` function).
+     * @see {@link Tutorbook#view}
+     */
     view() {
         window.app.nav.selected = 'Stats';
         window.app.intercom.view(true);
@@ -27,12 +38,18 @@ class Stats {
         this.cardsViewed ? null : this.viewCards();
     }
 
+    /**
+     * Views the recent activity cards and service hour statistics card(s).
+     */
     viewCards() {
         this.cardsViewed = true;
         this.viewRecentActivityCards();
         this.viewServiceHourCards();
     }
 
+    /**
+     * Views the recent activity cards from all of the current user's locations.
+     */
     async viewRecentActivityCards() {
         const emptyCard = Card.renderCard(
             'You\'re Done!',
@@ -88,9 +105,11 @@ class Stats {
         Utils.recycle(queries, recycler);
     }
 
-    viewServiceHourCards() {
-
-    }
+    /**
+     * Views the service hour statistics cards.
+     * @todo Actually make this do something.
+     */
+    viewServiceHourCards() {}
 }
 
 module.exports = Stats;

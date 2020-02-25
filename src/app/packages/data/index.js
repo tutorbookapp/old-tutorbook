@@ -3,18 +3,193 @@ const axios = require('axios');
 const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
-// Class that manages Firestore data flow along with any local app data
-// See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
-// Classes#Instance_properties
+/**
+ * Class that manages Firestore data flow along with any local app data
+ */
 class Data {
-    constructor(db) {
-        this.db = (window.app && window.app.db) ? window.app.db : db || firebase
-            .firestore().collection('partitions').doc('default');
-        this.initTimes();
-        this.initHourlyCharges();
-        this.initLocations();
+
+    /**
+     * Creates a new Data object that manages Firestore data flow for the
+     * Tutorbook web app.
+     * @param {CollectionReference} [db=window.app.db] - The Firestore partition
+     * to fetch data from.
+     * @param {bool} [init=true] - Whether or not to initialize locations, 
+     * grades, periods, times, hourlyCharges, etc.
+     */
+    constructor(db = window.app.db, init = true) {
+        this.db = db;
+        if (init) this.init();
     }
 
+    /**
+     * Initializes locally stored locations, grades, periods, times, and 
+     * hourlyCharges.
+     * @param {Object} [config=window.app.config] - The website configuration to 
+     * pull grades and subjects from.
+     * @param {Object[]} [locations=window.app.locations] - The array of 
+     * locations to sync this data object with.
+     */
+    init(config = window.app.config, locations = window.app.locations) {
+        this.initTimes();
+        this.initHourlyCharges();
+        this.initLocations(locations);
+        this.initPeriods(locations);
+        this.initGrades(config.grades || Data.grades);
+    }
+
+    /**
+     * Creates and syncs location data from the web app configuration.
+     * @param {Object[]} [locations=window.app.locations] - The array of 
+     * locations to sync this data object with.
+     */
+    initLocations(locations = window.app.locations) {
+        this.locationsByName = {};
+        this.locationsByID = {};
+        this.locationDataByName = {};
+        this.locationDataByID = {};
+        this.locationNames = [];
+        this.locationIDs = [];
+        locations.forEach(location => {
+            this.locationsByName[location.name] = location.id;
+            this.locationDataByName[location.name] = location;
+            this.locationsByID[location.id] = location.name;
+            this.locationDataByID[location.id] = location;
+            this.locationNames.push(location.name);
+            this.locationIDs.push(location.id);
+        });
+    }
+
+    /**
+     * Syncs grades with the web app configuration (or all of the [statically 
+     * defined grades]{@link Data#grades}).
+     * @param {string[]} [grades=window.app.config.grades] - The array of grades
+     * to sync this data object with.
+     */
+    initGrades(grades = window.app.config.grades) {
+        this.grades = grades || Data.grades;
+    }
+
+    /**
+     * Uses web app location data to add periods to local data.
+     * @param {Object[]} [locations=window.app.locations] - The array of 
+     * locations to get periods from.
+     */
+    initPeriods(locations = window.app.locations) {
+        const times = {};
+        locations.forEach(location => {
+            Object.entries(location.hours).forEach(([d, a]) => a.forEach(s => {
+                if (!times[d]) times[d] = [];
+                if (times[d].indexOf(s.open) < 0) times[d].push(s.open);
+                if (times[d].indexOf(s.close) < 0) times[d].push(s.close);
+            }));
+        });
+        this.periods = {};
+        Object.entries(times).forEach(([day, times]) => {
+            if (!this.periods[day]) this.periods[day] = [];
+            times.forEach(time => {
+                if (this.timeStrings.indexOf(time) < 0)
+                    this.periods[day].push(time);
+            });
+        });
+    }
+
+    /**
+     * Creates the `timeStrings` array for this data object (every minute 
+     * formatted like 3:45 PM).
+     */
+    initTimes() {
+        // First, iterate over 'AM' vs 'PM'
+        this.timeStrings = [];
+        ['AM', 'PM'].forEach((suffix) => {
+            // NOTE: 12:00 AM and 12:00 PM are wierd (as they occur after the
+            // opposite suffix) so we have to append them differently
+            for (var min = 0; min < 60; min++) {
+                // Add an extra zero for values less then 10
+                if (min < 10) {
+                    var minString = '0' + min.toString();
+                } else {
+                    var minString = min.toString();
+                }
+                this.timeStrings.push('12:' + minString + ' ' + suffix);
+            }
+
+            // Next, iterate over every hour value in a 12 hour period
+            for (var hour = 1; hour < 12; hour++) {
+                // Finally, iterate over every minute value in an hour
+                for (var min = 0; min < 60; min++) {
+                    // Add an extra zero for values less then 10
+                    if (min < 10) {
+                        var minString = '0' + min.toString();
+                    } else {
+                        var minString = min.toString();
+                    }
+                    this.timeStrings.push(hour + ':' + minString + ' ' + suffix);
+                }
+            }
+        });
+    }
+
+    /**
+     * Creates the `hourlyChargeStrings` array and `hourlyChargesMap` map in 
+     * this data object.
+     */
+    initHourlyCharges() {
+        for (var i = 5; i <= 200; i += 5) {
+            var chargeString = '$' + i + '.00';
+            this.payments.hourlyChargeStrings.push(chargeString);
+            this.payments.hourlyChargesMap[chargeString] = i;
+        }
+    }
+
+    static ref(path, ref = window.app.db) {
+        for (var i = 0; i < path.length; i++) {
+            ref = i % 2 === 0 ? ref.collection(path[i]) : ref.doc(path[i]);
+        }
+        return ref;
+    }
+
+    /**
+     * Handles a Firestore Query's snapshots.
+     * @callback snapshotCallback
+     * @param {(QuerySnapshot|DocumentSnapshot)} - A query's snapshot.
+     */
+
+    /**
+     * Handles a Firestore Query's errors.
+     * @callback errorCallback
+     * @param {Exception} - A query's error.
+     */
+
+    /**
+     * Fetch and then listen to a Firestore query.
+     * @param {(Query|string[])} query - The query or Firestore path to listen 
+     * to.
+     * @param {snapshotCallback} next - Handles the query's snapshots.
+     * @param {errorCallback} [error=() => {}] - Handles the query's errors.
+     * @param {Object} 
+     * [options={db:window.app.db,listeners:window.app.listeners}] - Specifies 
+     * the database partition and listeners array to use.
+     */
+    static async listen(query, next, error = () => {}, options = {
+        db: window.app.db,
+        listeners: window.app.listeners,
+    }) {
+        const ref = query instanceof Array ?
+            Data.ref(query, options.db || window.app.db) : query;
+        const [err, snap] = await to(ref.get());
+        err ? error(err) : await next(snap);
+        (options.listeners || window.app.listeners).push(ref.onSnapshot({
+            next: next,
+            error: error,
+        }));
+    }
+
+    /**
+     * Returns the Algolia index based off of the given ID and current app 
+     * partition.
+     * @param {string} id - The Algolia index ID.
+     * @return {AlgoliaIndex} - The initialized Algolia index.
+     */
     static algoliaIndex(id) {
         return algolia.initIndex((window.app.test ? 'test' : 'default') + '-' +
             id);
@@ -77,7 +252,6 @@ class Data {
             }
         });
         return result;
-
     }
 
     // Sets the user's preferred location based on:
@@ -162,35 +336,6 @@ class Data {
         return bookedAvailability;
     }
 
-    // TODO: Make this dynamically configurable in each location's document.
-    static get grades() {
-        const highSchool = ['Senior', 'Junior', 'Sophomore', 'Freshman'];
-        const middleSchool = ['8th Grade', '7th Grade', '6th Grade'];
-        const elementarySchool = [
-            '5th Grade',
-            '4th Grade',
-            '3rd Grade',
-            '2nd Grade',
-            '1st Grade',
-            'Kindergarten',
-        ];
-        switch (window.app.location.name.split(' ')[0]) {
-            case 'Gunn':
-                return highSchool;
-            case 'Paly':
-                return highSchool;
-            case 'Woodside':
-                return highSchool;
-            case 'JLS':
-                return middleSchool;
-            default:
-                return ['Adult']
-                    .concat(highSchool)
-                    .concat(middleSchool)
-                    .concat(elementarySchool);
-        };
-    }
-
     static async getUser(id) {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
@@ -217,6 +362,10 @@ class Data {
         });
     }
 
+    /**
+     * Updates the given user's Firestore document.
+     * @param {Object} user - The user to update.
+     */
     static async updateUser(user) {
         await Data.updateUserAvailability(user);
         Data.updateUserLocation(user);
@@ -510,90 +659,6 @@ class Data {
             payment: payment,
         });
     }
-
-    async initLocations() { // Different formats of the same location data
-        this.locationsByName = {};
-        this.locationsByID = {};
-        this.locationDataByName = {};
-        this.locationDataByID = {};
-        this.locationNames = [];
-        this.locationIDs = [];
-        const snap = await this.db.collection('locations').get();
-        snap.docs.forEach((doc) => {
-            if (window.app.location.name === 'Any' ||
-                window.app.location.id === doc.id ||
-                window.app.locations.map(l => l.id).indexOf(doc.id) >= 0) {
-                this.locationsByName[doc.data().name] = doc.id;
-                this.locationDataByName[doc.data().name] = doc.data();
-                this.locationsByID[doc.id] = doc.data().name;
-                this.locationDataByID[doc.id] = doc.data();
-                this.locationNames.push(doc.data().name);
-                this.locationIDs.push(doc.id);
-            }
-        });
-        this.initPeriods();
-    }
-
-    initPeriods() { // Use local location data to add periods to local data
-        const locations = Object.values(this.locationDataByID);
-        const times = {};
-        locations.forEach(location => {
-            Object.entries(location.hours).forEach(([d, a]) => a.forEach(s => {
-                if (!times[d]) times[d] = [];
-                if (times[d].indexOf(s.open) < 0) times[d].push(s.open);
-                if (times[d].indexOf(s.close) < 0) times[d].push(s.close);
-            }));
-        });
-        this.periods = {};
-        Object.entries(times).forEach(([day, times]) => {
-            if (!this.periods[day]) this.periods[day] = [];
-            times.forEach(time => {
-                if (this.timeStrings.indexOf(time) < 0)
-                    this.periods[day].push(time);
-            });
-        });
-    }
-
-    initTimes() {
-        // First, iterate over 'AM' vs 'PM'
-        this.timeStrings = [];
-        ['AM', 'PM'].forEach((suffix) => {
-            // NOTE: 12:00 AM and 12:00 PM are wierd (as they occur after the
-            // opposite suffix) so we have to append them differently
-            for (var min = 0; min < 60; min++) {
-                // Add an extra zero for values less then 10
-                if (min < 10) {
-                    var minString = '0' + min.toString();
-                } else {
-                    var minString = min.toString();
-                }
-                this.timeStrings.push('12:' + minString + ' ' + suffix);
-            }
-
-            // Next, iterate over every hour value in a 12 hour period
-            for (var hour = 1; hour < 12; hour++) {
-                // Finally, iterate over every minute value in an hour
-                for (var min = 0; min < 60; min++) {
-                    // Add an extra zero for values less then 10
-                    if (min < 10) {
-                        var minString = '0' + min.toString();
-                    } else {
-                        var minString = min.toString();
-                    }
-                    this.timeStrings.push(hour + ':' + minString + ' ' + suffix);
-                }
-            }
-        });
-    }
-
-    initHourlyCharges() {
-        for (var i = 5; i <= 200; i += 5) {
-            var chargeString = '$' + i + '.00';
-            this.payments.hourlyChargeStrings.push(chargeString);
-            this.payments.hourlyChargesMap[chargeString] = i;
-        }
-    }
-
 };
 
 Data.setupCards = [
@@ -1089,6 +1154,23 @@ Data.types = [
     'Teacher',
     'Parent',
     'Supervisor',
+];
+
+Data.grades = [
+    'Adult',
+    'Senior', // High School
+    'Junior',
+    'Sophomore',
+    'Freshman',
+    '8th Grade', // Middle School
+    '7th Grade',
+    '6th Grade',
+    '5th Grade', // Elementary School
+    '4th Grade',
+    '3rd Grade',
+    '2nd Grade',
+    '1st Grade',
+    'Kindergarten',
 ];
 
 module.exports = Data;
