@@ -48,6 +48,7 @@ class SMS {
         this.botOnFailure = bool(options.botOnFailure, true);
         this.botMessage = options.botMessage || 'Sent ' + this + ':\n' +
             this.message;
+        this.botChat = options.botChat;
     }
 
     get valid() {
@@ -81,6 +82,7 @@ class SMS {
             console.log('[DEBUG] Sent ' + this + '.');
             if (this.botOnSuccess) return new Message({
                 message: this.botMessage,
+                chat: this.botChat,
                 sms: this.message,
                 to: [this.recipient, this.sender],
             }).send();
@@ -88,6 +90,7 @@ class SMS {
             console.error('[ERROR] Could not send ' + this + ' b/c of', err);
             if (this.botOnFailure) return new Message({
                 message: this.botMessage.replace('Sent', 'Could not send'),
+                chat: this.botChat,
                 sms: this.message,
                 to: [this.recipient, this.sender],
             }).send();

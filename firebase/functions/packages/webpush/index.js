@@ -21,6 +21,7 @@ class Webpush {
         this.botOnFailure = bool(options.botOnFailure, true);
         this.botMessage = options.botMessage || 'Sent ' + this + ':\n' +
             this.body;
+        this.botChat = options.botChat;
     }
 
     get valid() {
@@ -30,6 +31,8 @@ class Webpush {
             return console.error('[ERROR] Webpush must have a valid title.');
         if (!this.body || typeof this.body !== 'string')
             return console.error('[ERROR] Webpush must have a valid body.');
+        if (this.isTest) return console.error('[ERROR] Cannot send test ' +
+            'webpush notifications.');
         if (functions.config().SKIP_WEBPUSH) return console.warn('[WARNING] ' +
             'Skipping webpush notification b/c the SKIP_WEBPUSH configuration' +
             ' variable is set.');
@@ -40,7 +43,8 @@ class Webpush {
         if (!this.recipient.notificationToken) {
             console.log('[DEBUG] Fetching recipient (' + this.recipient.uid +
                 ') again b/c original did not have a notification token.');
-            this.recipient = (await (this.isTest ? partitions.test : partitions.default)
+            this.recipient = (await (this.isTest ? partitions.test : partitions
+                    .default)
                 .collection('users')
                 .doc(this.recipient.uid)
                 .get()
@@ -77,6 +81,7 @@ class Webpush {
             console.log('[DEBUG] Sent ' + this + '.');
             if (this.botOnSuccess) return new Message({
                 message: this.botMessage,
+                chat: this.botChat,
                 to: [
                     this.recipient,
                     this.sender || await getSupervisor(this.recipient.location),
@@ -86,6 +91,7 @@ class Webpush {
             console.error('[ERROR] Could not send ' + this + ' b/c of', err);
             if (this.botOnFailure) return new Message({
                 message: this.botMessage.replace('Sent', 'Could not send'),
+                chat: this.botChat,
                 to: [
                     this.recipient,
                     this.sender || await getSupervisor(this.recipient.location),

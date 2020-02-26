@@ -45,6 +45,8 @@ class Message {
         if (!params.message) throw new Error('Message needs valid content.');
         if (!params.sms) params.sms = params.from[0].name.split(' ')[0] +
             ' says: ' + params.message;
+        if (!params.chat) console.log('[DEBUG] No chat document reference was' +
+            ' given, falling back to default...');
         Object.entries(params).forEach((entry) => this[entry[0]] = entry[1]);
     }
 
@@ -59,14 +61,17 @@ class Message {
             message: this.message,
             sms: this.sms,
         };
-        await (await this.chat()).collection('messages').doc().set(this.msg);
+        await this.getChat();
+        await this.chat.collection('messages').doc().set(this.msg);
         console.log('[DEBUG] Sent message (' + this.message + ') from ' +
             this.from.map(u => u.name).join(', ') + ' to ' +
             this.to.map(u => u.name).join(', ') + '.');
     }
 
-    async chat() {
-        var chat;
+    async getChat() {
+        if (this.chat) return this.chat.update({
+            lastMessage: this.msg,
+        });
         (await (this.isTest ? partitions.test : partitions.default)
             .collection('chats')
             .where('chatterUIDs', 'array-contains', this.to[0].uid)
@@ -82,12 +87,12 @@ class Message {
                 if (this.from[i].uid !== 'operator' && d.chatterUIDs.indexOf(
                         this.from[i].uid) < 0) return;
             }
-            chat = doc.ref; // Uses the most recent chat if there are multiple.
+            this.chat = doc.ref; // Uses the most recent chat if multiple exist.
         });
-        if (!chat) {
-            chat = (this.isTest ? partitions.test : partitions.default)
+        if (!this.chat) {
+            this.chat = (this.isTest ? partitions.test : partitions.default)
                 .collection('chats').doc();
-            await chat.set({
+            await this.chat.set({
                 lastMessage: this.msg,
                 chatters: this.to.concat(this.from)
                     .filter(u => u.uid !== 'operator'),
@@ -102,11 +107,10 @@ class Message {
                 photo: '',
             });
         } else {
-            await chat.update({
+            await this.chat.update({
                 lastMessage: this.msg,
             });
         }
-        return chat;
     }
 }
 

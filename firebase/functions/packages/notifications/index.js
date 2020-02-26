@@ -217,7 +217,11 @@ const announcementNotification = async (snap, context) => {
     // 2) Add messages to supervisor's chats with those users
     console.log('[DEBUG] Sending messages to ' + users.length + ' users that ' +
         'matched announcement group filters...');
-    const msg = snap.data();
+    const msg = Utils.combineMaps(snap.data(), {
+        skipSMS: true, // Tell the `messageNotification` function to skip SMS,
+        skipEmail: true, // email, and webpush notifications for this message.
+        skipWebpush: true,
+    });
     const loc = (await locRef.get()).data();
     const supervisorDMs = {};
     (await db
@@ -273,20 +277,62 @@ const announcementNotification = async (snap, context) => {
                 },
             });
         }
-        return supervisorDMs[user.uid].collection('messages').doc().set(msg);
+        await supervisorDMs[user.uid].collection('messages').doc().set(msg);
+        await notifyAboutMessage(msg, user, isTest, snap.ref);
     }));
+};
+
+// helper - sends sms, webpush, and (soon) email notifications about a given 
+// message to a given recipient
+const notifyAboutMessage = async (msg, recipient, isTest, botChat) => {
+    const notifications = [
+        msg.skipSMS ? '' : 'sms',
+        msg.skipWebpush ? '' : 'webpush',
+        msg.skipEmail ? '' : 'email',
+    ];
+    if (!msg.skipSMS) await new SMS({
+        recipient: recipient,
+        sender: msg.sentBy,
+        body: msg.sentBy.name.split(' ')[0] + ' says: ' + msg.message,
+        botOnSuccess: false,
+        botMessage: 'Sent ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
+            'message to ' + recipient.name.split(' ')[0] + ' via SMS.',
+        botChat: botChat,
+        isTest: isTest,
+    }).send();
+    if (!msg.skipWebpush) await new Webpush({
+        recipient: recipient,
+        sender: msg.sentBy,
+        title: 'Message from ' + msg.sentBy.name.split(' ')[0],
+        body: msg.message,
+        botOnSuccess: false,
+        botMessage: 'Sent ' + recipient.name.split(' ')[0] + ' a webpush ' +
+            'notification about ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
+            'message.',
+        botChat: botChat,
+        isTest: isTest,
+    }).send();
+    if (!msg.skipEmail) console.warn('[WARNING] Email notifications for ' +
+        'messages are not yet implemented.');
+    console.log('[DEBUG] Sent ' + notifications.join(', ') + ' message ' +
+        'notifications to ' + recipient.name + ' (' + recipient.uid + ').');
 };
 
 // messages - sms, webpush for new messages
 const messageNotification = async (snap, context) => {
     const msg = snap.data();
+    const msgString = 'message (' + msg.message + ') from ' + msg.sentBy.name +
+        ' (' + msg.sentBy.uid + ')';
     if (msg.sentBy.name === 'Operator') return console.log('[DEBUG] Skipping ' +
         'message (' + msg.message + ') sent by Operator.');
-    if (msg.type === 'Announcement') return console.log('[DEBUG] Skipping ' +
-        'announcement message.');
-    if (getTest(context)) return console.log('[DEBUG] Skipping message (' +
-        msg.message + ') from ' + msg.sentBy.name + ' (' + msg.sentBy.uid +
-        ') sent while testing.');
+    if (getTest(context)) return console.log('[DEBUG] Skipping ' + msgString +
+        ' sent while testing.');
+    if (msg.skipSMS) console.log('[DEBUG] Skipping SMS notifications for ' +
+        msgString + '.');
+    if (msg.skipWebpush) console.log('[DEBUG] Skipping webpush notifications ' +
+        msgString + '.');
+    if (msg.skipEmail) console.log('[DEBUG] Skipping email notifications for ' +
+        msgString + '.');
     const db = getDB(context);
     const chatRef = db.collection('chats').doc(context.params.chat);
     const chat = (await chatRef.get()).data();
@@ -294,41 +340,7 @@ const messageNotification = async (snap, context) => {
         if (uid === msg.sentBy.uid) return console.log('[DEBUG] Skipping ' +
             'notifications for sender.');
         const recipient = (await db.collection('users').doc(uid).get()).data();
-        /*
-         *const sms = new RegExp('^Could not send [\\w\\s]*\'s message to ' +
-         *    recipient.name.split(' ')[0] + ' via SMS\\.$');
-         *const webpush = new RegExp('^Could not send ' +
-         *    recipient.name.split(' ')[0] + ' a webpush notification about ' +
-         *    '[\\w\\s]*\'s message\\.$');
-         *if (sms.test(msg.message)) console.log('[DEBUG] Skipping SMS ' +
-         *    'notifications for original recipient to whom we could not send ' +
-         *    'SMS notifications in the first place.');
-         *if (webpush.test(msg.message)) console.log('[DEBUG] Skipping webpush ' +
-         *    'notifications for original recipient to whom we could not send ' +
-         *    'webpush notifications in the first place.');
-         */
-        await new SMS({
-            recipient: recipient,
-            sender: msg.sentBy,
-            body: msg.sentBy.name.split(' ')[0] + ' says: ' + msg.message,
-            botOnSuccess: false,
-            botMessage: 'Sent ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
-                'message to ' + recipient.name.split(' ')[0] + ' via SMS.',
-            isTest: getTest(context),
-        }).send();
-        await new Webpush({
-            recipient: recipient,
-            sender: msg.sentBy,
-            title: 'Message from ' + msg.sentBy.name.split(' ')[0],
-            body: msg.message,
-            botOnSuccess: false,
-            botMessage: 'Sent ' + recipient.name.split(' ')[0] + ' a webpush ' +
-                'notification about ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
-                'message.',
-            data: {
-                id: context.params.chat
-            },
-        }).send();
+        return notifyAboutMessage(msg, recipient, getTest(context));
     }));
 };
 
