@@ -12,8 +12,10 @@ const Data = require('@tutorbook/data');
 const NewGroupDialog = require('@tutorbook/filters').group;
 const EditGroupDialog = require('@tutorbook/filters').editGroup;
 
-// Class that provides a chat view and header and enables users to message one 
-// another all within the app.
+/**
+ * Class that provides a chat view and header and enables users to message one 
+ * another all within the app.
+ */
 class Chats {
 
     constructor() {
@@ -262,6 +264,13 @@ class Chats {
     }
 };
 
+/**
+ * Class that represents our 
+ * ["Messages"]{@link https://tutorbook.app/app/messages} app view for 
+ * supervisors (much like [Remind]{@link https://remind.com} but synced with 
+ * all of your tutoring data and with automatic messages).
+ * @extends Chats
+ */
 class SupervisorChats extends Chats {
     constructor() {
         super();
@@ -372,46 +381,47 @@ class SupervisorChats extends Chats {
         list.append(listItem);
     }
 
+    /**
+     * Recycles the announcements stored at the web app's locations.
+     * @see {@link Utils#recycle}
+     */
     viewAnnouncements() {
         const recycler = {
-            display: (doc) => this.viewAnnouncement(
-                this.renderAnnouncementItem(doc)),
-            remove: (doc) => $(this.main).find('#announcements #' + doc.id)
-                .remove(),
-            empty: () => $(this.main).find('#announcements').find('.mdc-list-' +
-                'item:not([id="new-announcement"])').remove(),
+            display: (doc, _, index) => this.viewAnnouncement(
+                this.renderAnnouncementItem(doc, index)),
+            remove: (doc, _, index) => $(this.main).find('#announcements #' +
+                doc.id).remove(),
+            empty: (_, index) => $(this.main).find('#announcements').find('.' +
+                'mdc-list-item:not([id="new-announcement"])[index="' + index +
+                '"]').remove(),
         };
         $(this.main).find('#announcements').find('.mdc-list-item:not([id="new' +
             '-announcement"])').remove();
-        window.app.listeners = window.app.listeners.concat(
-            this.getAnnouncements().map(qry => qry.onSnapshot({
-                error: (err) => {
-                    window.app.snackbar.view('Could not get announcements.');
-                    console.error('Could not get announcements b/c of ', err);
-                },
-                next: (snapshot) => {
-                    if (!snapshot.size) {
-                        return recycler.empty();
-                    }
-
-                    snapshot.docChanges().forEach((change) => {
-                        if (change.type === 'removed') {
-                            recycler.remove(change.doc);
-                        } else {
-                            recycler.display(change.doc);
-                        }
-                    });
-                },
-            })));
+        Utils.recycle({
+            announcements: this.getAnnouncements(),
+        }, recycler);
     }
 
+    /**
+     * Gets the announcement queries from the web app's locally stored locations.
+     * @return {Query[]} - An array of Firestore [`Query`]{@link } objects.
+     */
     getAnnouncements() {
         return window.app.data.locationIDs.map(id => window.app.db
             .collection('locations').doc(id).collection('announcements')
             .orderBy('lastMessage.timestamp', 'desc'));
     }
 
-    renderAnnouncementItem(doc) {
+    /**
+     * Renders (and manages) an announcement list item.
+     * @see {@link SupervisorChats#viewAnnouncements}
+     * @param {DocumentSnapshot} doc - The announcement group's Firestore 
+     * document snapshot.
+     * @param {int} index - The index of the query from which this announcement 
+     * document came from. See {@link Utils#recycle} for more information.
+     * @return {HTMLElement} - The rendered (and managed) `mdc-list-item`.
+     */
+    renderAnnouncementItem(doc, index) {
         const chat = new AnnouncementChat(doc);
         const dialog = new EditGroupDialog({
             name: doc.data().name,
@@ -432,6 +442,7 @@ class SupervisorChats extends Chats {
                 id: doc.id,
                 photo: doc.data().photo,
                 name: doc.data().name,
+                index: index,
             }));
         const menuEl = this.render.template('menu', {
             options: [{

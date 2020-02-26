@@ -205,6 +205,69 @@ class Utils {
         $(cards).append(card);
     }
 
+    /**
+     * Callback the displays new or updates existing views based on a given 
+     * snapshot of Firestore data.
+     * @callback displayCallback
+     * @param {DocumentSnapshot} doc - The updated Firestore document to display.
+     * @param {string} type - The key of the query that this Firestore document 
+     * came from (e.g. `appts` or `pastAppts`).
+     * @param {int} [index=0] - The index of the query this Firestore document 
+     * came from (usually just `0` though it can be different if you passed an 
+     * array of queries at the same key when calling 
+     * [`Utils.recycle`]{@link Utils#recycle}).
+     * @see {@link recycler}
+     * @see {@link Utils#recycle}
+     */
+
+    /**
+     * Callback the removes existing views based on a given snapshot of 
+     * Firestore data.
+     * @callback removeCallback
+     * @param {DocumentSnapshot} doc - The deleted Firestore document to remove.
+     * @param {string} type - The key of the query that this Firestore document 
+     * came from (e.g. `appts` or `pastAppts`).
+     * @param {int} [index=0] - The index of the query this Firestore document 
+     * came from (usually just `0` though it can be different if you passed an 
+     * array of queries at the same key when calling 
+     * [`Utils.recycle`]{@link Utils#recycle}).
+     * @see {@link recycler}
+     * @see {@link Utils#recycle}
+     */
+
+    /**
+     * Callback the empties new or updates existing views based on a given 
+     * snapshot of Firestore data.
+     * @callback emptyCallback
+     * @param {string} type - The key of the query that is now empty (e.g. 
+     * `appts` or `pastAppts`).
+     * @param {int} [index=0] - The index of the query that is now empty 
+     * (usually just `0` though it can be different if you passed an array of 
+     * queries at the same key when calling 
+     * [`Utils.recycle`]{@link Utils#recycle}).
+     * @see {@link recycler}
+     * @see {@link Utils#recycle}
+     */
+
+    /**
+     * An recycler object containing `display`, `remove`, and `empty` callbacks 
+     * to recycle/show updated Firestore data as it changes live.
+     * @typedef {Object} recycler
+     * @property {displayCallback} display - Callback to display new or update 
+     * existing data.
+     * @property {removeCallback} remove - Callback to remove data.
+     * @property {emptyCallback} empty - Callback to empty all data.
+     */
+
+    /**
+     * Listens to the given queries and calls the recycler when those queries's 
+     * data changes.
+     * @param {Object} queries - A map of arrays (or just a map of) Firestore 
+     * `Query`s to listen to and subsequently recycle.
+     * @param {recycler} recycler - A recycler containing callbacks to display, 
+     * remove, or empty different query data.
+     * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}
+     */
     static recycle(queries, recycler) {
         Object.entries(queries).forEach(([key, val]) => {
             if (!(val instanceof Array)) queries[key] = [val];
