@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>gitflow - Documentation</title>
+    <title>templates/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,91 +29,188 @@
 
 <div id="main">
     
-    <h1 class="page-title">gitflow</h1>
+    <h1 class="page-title">templates/index.js</h1>
     
 
+    
+
+
+
+    
     <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import $ from 'jquery';
 
-<header>
-    
-</header>
+const templateString = require('./templates.html');
 
-<article>
-    <h2>Tutorbook's branching workflow</h2>
-<p>To ensure - as much as possible - the quality and correctness of our code, and
-to enable many contributors to work on our apps at the same time without getting
-in each other's way we use the GitFlow work flow <a href="http://nvie.com/posts/a-successful-git-branching-model/" title="Original Blog post
-'A successful Git branching model' by Vincent Driessen">by Vincent Driessen</a>.</p>
-<p><img src="https://raw.githubusercontent.com/tutorbookapp/tutorbook/develop/tutorials/gitflow.png" alt="GitFlow Diagram"></p>
-<h2>Branches</h2>
-<p><strong>Unless explicitly stated otherwise (either here or by the branch's owner),
-only a branch's creator may push changes to it.</strong> Other developers may always
-create pull requests to submit changes to the branch.</p>
-<h3><code>develop</code></h3>
-<p><code>develop</code> is our main branch. It corresponds with the current work-in-progress
-state of the app, that we deal with most often as developers.</p>
-<p><code>develop</code> is a protected branch and no commits can be pushed to it directly. The
-only way to add features, fix bugs, and make other changes is through pull
-requests that pass review and automated tests.</p>
-<p><strong><code>develop</code> should always be stable and ready for release</strong>. Any features that
-are merged only partially must be disabled in code or using a pre-compiler
-directive so that they do not affect release builds.</p>
-<h3>Feature branches</h3>
-<p>Feature branches are branches created by developers based on <code>develop</code> which are
-used to create new features, fix bugs, and make other changes to the app.</p>
-<p>When a feature or change is done, it is merged into develop via a reviewed and
-tested pull request.</p>
-<h3><code>master</code></h3>
-<p><code>master</code> is the currently released state of the app. All changes to <code>master</code>
-always result in a new release tag.</p>
-<p><code>master</code> is a protected branch and no commits can be pushed to it directly. The
-only way to add features (merged from release branches), fix bugs (merged from
-hotfix branches), and make other changes is through pull requests that pass
-review and automated tests.</p>
-<h3>Release branches</h3>
-<p>Release branches are branched off of <code>develop</code> for the next release and tagged
-with that corresponding release tag. Release branches should only contain
-bugfixes that continously merged back into <code>develop</code>.</p>
-<p>After a release branch has been thoroughly tested (i.e. no bugs), it is merged
-into <code>master</code> and it's release tag becomes the currently released state of the
-app.</p>
-<h3>Hotfix branches</h3>
-<p>Hotfix branches are branched off of <code>master</code> (the currently released state of
-the app) for severe bug fixes (that are then merged back into <code>develop</code>).</p>
-<p>Hotfix branches are then merged back into <code>master</code>, resulting in a new
-maintenance version number.</p>
-<h2>Versioning</h2>
-<p>Our apps follows the following versioning scheme:</p>
-<pre><code>major.minor[.maintenance]
-</code></pre>
-<ul>
-<li>The <code>major</code> component is changed only upon special considerations.</li>
-<li>The <code>minor</code> component is incremented by one as the first commit of every release branch <strong>(and in no other case)</strong>. The same commit also removes the <code>maintenance</code> component.</li>
-<li>The <code>maintenance</code> is added and incremented by one as the first commit of every hot fix branch <strong>(and in no other case)</strong>.</li>
-</ul>
-<p>In addition, there is also the build number which is not visible to the public and only used to distinguish different builds internally. This number is incremented automatically for most of our apps. If it is not, it should be incremented for each created release tag.</p>
-<p>In essence, the versioning scheme can thus be thought of as:</p>
-<pre><code>major.release[.hot_fix]
-</code></pre>
-<h2>Releases</h2>
-<p>At any one time, there are three live states of the app: <code>gunn</code>, <code>paly</code>, and
-<code>master</code>. <code>master</code> is what is seen at <code>tutorbook.app</code> and <code>www.tutorbook.app</code>. <code>gunn</code> is a customized
-version of <code>master</code> for <a href="https://gunn.pausd.org">Henry M. Gunn Senior High School</a>.
-<code>paly</code> is a customized version of <code>master</code> for the <a href="https://paly.pausd.org">Palo Alto Senior High
-School</a>.</p>
-<p>During a release, changes from a feature branch (based off of <code>develop</code>) are
-merged into <code>master</code> after extensive testing and debugging. Once merged, those
-changes become live at <code>tutorbook.app</code> and <code>www.tutorbook.app</code>.</p>
-<p>We then take <code>master</code> and branch off to form two release branches to merge into
-<code>gunn</code> and <code>paly</code>. After all necessary changes have been made to the code from
-<code>master</code>, those release branches are merged into <code>gunn</code> and <code>paly</code>, resulting in
-new releases at <code>gunn.tutorbook.app</code> and <code>paly.tutorbook.app</code>.</p>
-<p>Thus, release tags are first seen in <code>master</code> after which they are transmuted to
-<code>gunn</code> and <code>paly</code> after necessary changes are made (e.g. payments are removed,
-supervisor code tweaked, etc).</p>
-</article>
+/**
+ * Class that reads in a string of templates, stores the DOM Nodes in an easily
+ * accessible array, and renders requested templates given a dictionary of 
+ * values that map to `data-fir` modifiers in the requested template's HTML.
+ */
+class Templates {
+    /**
+     * Creates a new `Templates` class by reading the `templateString` from 
+     * `templates.html` and adding it to a `div` tag created by the global 
+     * `window.document` object.
+     */
+    constructor() {
+        this.templates = {};
+        const doc = document.createElement('div');
+        doc.innerHTML = templateString;
+        doc.querySelectorAll('.template').forEach((template) => {
+            this.templates[template.getAttribute('id')] = template;
+        });
+    }
 
-</section>
+    log() {
+        Object.entries(this.templates).forEach((template) => {
+            console.log(template[0] + ':', template[1]);
+        });
+    }
+
+    render(id, data) {
+        const template = this.templates[id];
+        const el = template.cloneNode(true);
+        this.addData(el, data);
+        return el.firstElementChild;
+    }
+
+    // Helper function that uses modifiers on a specific el
+    useModifier(el, selector, modifier) {
+        el.querySelectorAll('[' + selector + ']').forEach(modifier);
+    }
+
+    // Helper function that helps return items in a map
+    getDeepItem(obj, path) {
+        path.split('/').forEach(function(chunk) {
+            obj = obj[chunk];
+        });
+        return obj;
+    }
+
+    addData(el, data) {
+        if (!data) {
+            return;
+        }
+
+        var that = this;
+        var modifiers = {
+            'data-fir-copies': function(tel) {
+                var field = tel.getAttribute('data-fir-copies');
+                var value = that.getDeepItem(data, field);
+                // Only perform the copying once
+                tel.removeAttribute('data-fir-copies');
+                for (var i = 1; i &lt; value; i++) { // i cannot equal numCopies because there is already one el there (the original)
+                    // Append as value number of copies of target el
+                    tel.parentNode.append(tel.cloneNode(true));
+                }
+            },
+            'data-fir-foreach': function(tel) {
+                var field = tel.getAttribute('data-fir-foreach');
+                var values = that.getDeepItem(data, field);
+
+                values.forEach(function(value, index) {
+                    var cloneTel = tel.cloneNode(true);
+                    tel.parentNode.append(cloneTel);
+
+                    Object.keys(modifiers).forEach(function(selector) {
+                        var children = Array.prototype.slice.call(
+                            cloneTel.querySelectorAll('[' + selector + ']')
+                        );
+                        children.push(cloneTel);
+                        children.forEach(function(childEl) {
+                            var currentVal = childEl.getAttribute(selector);
+
+                            if (!currentVal) {
+                                return;
+                            }
+                            childEl.setAttribute(
+                                selector,
+                                currentVal.replace('~', field + '/' + index)
+                            );
+                        });
+                    });
+                });
+
+                tel.parentNode.removeChild(tel);
+            },
+            'data-fir-content': function(tel) {
+                var field = tel.getAttribute('data-fir-content');
+                tel.innerText = that.getDeepItem(data, field);
+            },
+            'data-fir-click': function(tel) {
+                // TODO: For some reason, addEventListener('click'); doesn't
+                // work when we use this to render something twice.
+                tel.addEventListener('click', (event) => {
+                    var field = $(tel).attr('data-fir-click');
+                    that.getDeepItem(data, field)(event);
+                });
+            },
+            'data-fir-if': function(tel) {
+                var field = tel.getAttribute('data-fir-if');
+                // Triple not because we want to consider it even if it's undefined
+                if (!!!that.getDeepItem(data, field)) {
+                    tel.style.display = 'none';
+                }
+            },
+            'data-fir-if-not': function(tel) {
+                var field = tel.getAttribute('data-fir-if-not');
+                if (that.getDeepItem(data, field)) {
+                    tel.style.display = 'none';
+                }
+            },
+            'data-fir-id': function(tel) {
+                var field = tel.getAttribute('data-fir-id');
+                tel.setAttribute('id', that.getDeepItem(data, field));
+            },
+            'data-fir-attr': function(tel) {
+                tel.getAttribute('data-fir-attr').split(',').forEach((pair) => {
+                    var chunks = pair.split(':');
+                    var attr = chunks[0];
+                    var field = chunks[1];
+                    tel.setAttribute(attr, that.getDeepItem(data, field));
+                });
+            },
+            'data-fir-style': function(tel) {
+                tel.getAttribute('data-fir-style').split(',').forEach((pair) => {
+                    var chunks = pair.split(':');
+                    var attr = chunks[0];
+                    var field = chunks[1];
+                    var value = that.getDeepItem(data, field);
+
+                    if (attr.toLowerCase() === 'backgroundimage') {
+                        value = 'url(' + value + ')';
+                    }
+                    tel.style[attr] = value;
+                });
+            }
+        };
+
+        var preModifiers = ['data-fir-copies', 'data-fir-foreach'];
+
+        preModifiers.forEach(function(selector) {
+            var modifier = modifiers[selector];
+            that.useModifier(el, selector, modifier);
+        });
+
+        Object.keys(modifiers).forEach(function(selector) {
+            if (preModifiers.indexOf(selector) !== -1) {
+                return;
+            }
+
+            var modifier = modifiers[selector];
+            that.useModifier(el, selector, modifier);
+        });
+    }
+};
+
+module.exports = Templates;</code></pre>
+        </article>
+    </section>
+
+
+
 
 </div>
 
