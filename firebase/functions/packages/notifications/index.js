@@ -278,7 +278,7 @@ const announcementNotification = async (snap, context) => {
             });
         }
         await supervisorDMs[user.uid].collection('messages').doc().set(msg);
-        await notifyAboutMessage(msg, user, isTest, snap.ref);
+        await notifyAboutMessage(snap.data(), user, isTest, snap.ref);
     }));
 };
 
@@ -289,7 +289,7 @@ const notifyAboutMessage = async (msg, recipient, isTest, botChat) => {
         msg.skipSMS ? '' : 'sms',
         msg.skipWebpush ? '' : 'webpush',
         msg.skipEmail ? '' : 'email',
-    ];
+    ].filter(v => v !== '');
     if (!msg.skipSMS) await new SMS({
         recipient: recipient,
         sender: msg.sentBy,
