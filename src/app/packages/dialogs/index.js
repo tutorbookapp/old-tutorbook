@@ -2003,15 +2003,16 @@ class NewPastApptDialog extends EditApptDialog {
          * @memberof NewPastApptDialog
          * @type {searchCallback}
          * @see {@link searchCallback}
+         * @todo Add `Type` facetFilter to Algolia search query.
          */
         const searchPupils = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({
                 query: query,
-                facetFilters: window.app.location.name !== 'Any' ? [
-                    'payments.type:Free', // TODO: Add type facetFilter here.
-                    'location:' + window.app.location.name,
-                ] : [],
+                facetFilters: !window.app.id ? [] : [
+                    'payments.type:Free', // TODO: Add `Type` facetFilter here.
+                    window.app.locations.map(l => 'location:' + l.name),
+                ],
             });
             $(textFieldItem).find('#results').empty();
             res.hits.forEach((hit) => {
@@ -2029,15 +2030,16 @@ class NewPastApptDialog extends EditApptDialog {
          * @memberof NewPastApptDialog
          * @type {searchCallback}
          * @see {@link searchCallback}
+         * @todo Add `Type` facetFilter to Algolia search query.
          */
         const searchTutors = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({
                 query: query,
-                facetFilters: window.app.location.name !== 'Any' ? [
-                    'payments.type:Free', // TODO: Add type facetFilter here.
-                    'location:' + window.app.location.name,
-                ] : [],
+                facetFilters: !window.app.id ? [] : [
+                    'payments.type:Free', // TODO: Add `Type` facetFilter here.
+                    window.app.locations.map(l => 'location:' + l.name),
+                ],
             });
             $(textFieldItem).find('#results').empty();
             res.hits.forEach((hit) => {

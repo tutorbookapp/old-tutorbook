@@ -7292,13 +7292,16 @@ var NewPastApptDialog = function (_EditApptDialog) {
              * @memberof NewPastApptDialog
              * @type {searchCallback}
              * @see {@link searchCallback}
+             * @todo Add `Type` facetFilter to Algolia search query.
              */
             var searchPupils = async function searchPupils(textFieldItem) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
                     query: query,
-                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', // TODO: Add type facetFilter here.
-                    'location:' + window.app.location.name] : []
+                    facetFilters: !window.app.id ? [] : ['payments.type:Free', // TODO: Add `Type` facetFilter here.
+                    window.app.locations.map(function (l) {
+                        return 'location:' + l.name;
+                    })]
                 });
                 (0, _jquery2.default)(textFieldItem).find('#results').empty();
                 res.hits.forEach(function (hit) {
@@ -7314,13 +7317,16 @@ var NewPastApptDialog = function (_EditApptDialog) {
              * @memberof NewPastApptDialog
              * @type {searchCallback}
              * @see {@link searchCallback}
+             * @todo Add `Type` facetFilter to Algolia search query.
              */
             var searchTutors = async function searchTutors(textFieldItem) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
                     query: query,
-                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', // TODO: Add type facetFilter here.
-                    'location:' + window.app.location.name] : []
+                    facetFilters: !window.app.id ? [] : ['payments.type:Free', // TODO: Add `Type` facetFilter here.
+                    window.app.locations.map(function (l) {
+                        return 'location:' + l.name;
+                    })]
                 });
                 (0, _jquery2.default)(textFieldItem).find('#results').empty();
                 res.hits.forEach(function (hit) {
@@ -22997,7 +23003,9 @@ var NewProfile = function (_Profile) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
                     query: query,
-                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', 'location:' + window.app.location.name] : []
+                    facetFilters: !window.app.id ? [] : ['payments.type:Free', window.app.locations.map(function (l) {
+                        return 'location:' + l.name;
+                    })]
                 });
                 (0, _jquery2.default)(textFieldItem).find('#results').empty();
                 res.hits.forEach(function (hit) {
@@ -25251,6 +25259,11 @@ var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
 var NotificationDialog = __webpack_require__(2).notify;
 
+/**
+ * Class that represents the `mdc-top-app-bar` with a Google-like search bar
+ * that opens an elevated search results `mdc-list`.
+ */
+
 var SearchHeader = function () {
     function SearchHeader() {
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -25273,6 +25286,14 @@ var SearchHeader = function () {
                 placeholder: window.app.onMobile ? 'Search users' : 'Search users' + ' by name, subject, availability, and more'
             }, options));
         }
+
+        /**
+         * Searches users via [Algolia]{@link https://algolia.com} (and adds the
+         * necessary `facetFilters` in order to only show data relevant to the
+         * current user).
+         * @see {@link https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/}
+         */
+
     }, {
         key: 'search',
         value: async function search(that) {
@@ -25281,7 +25302,9 @@ var SearchHeader = function () {
 
             var _ref = await (0, _awaitToJs2.default)(that.index.search({
                 query: query,
-                facetFilters: window.app.location.name === 'Any' ? [] : ['payments.type:Free', 'location:' + window.app.location.name]
+                facetFilters: !window.app.id ? [] : ['payments.type:Free', window.app.locations.map(function (l) {
+                    return 'location:' + l.name;
+                })]
             })),
                 _ref2 = _slicedToArray(_ref, 2),
                 err = _ref2[0],
@@ -28831,7 +28854,9 @@ var SupervisorSchedule = function (_Schedule) {
                     qry.length > 0 ? that.showClearButton() : that.showInfoButton();
                     var res = await that.index.search({
                         query: qry,
-                        facetFilters: window.app.location.name === 'Any' ? [] : ['location.id:' + window.app.location.id]
+                        facetFilters: !window.app.id ? [] : [window.app.locations.map(function (l) {
+                            return 'location.id:' + l.id;
+                        })]
                     });
                     (0, _jquery2.default)(that.el).find('#results').empty();
                     res.hits.forEach(function (hit) {

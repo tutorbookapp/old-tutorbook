@@ -15,6 +15,10 @@ const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 const NotificationDialog = require('@tutorbook/dialogs').notify;
 
+/**
+ * Class that represents the `mdc-top-app-bar` with a Google-like search bar
+ * that opens an elevated search results `mdc-list`.
+ */
 class SearchHeader {
 
     constructor(options = {}) {
@@ -34,14 +38,20 @@ class SearchHeader {
         }, options));
     }
 
+    /**
+     * Searches users via [Algolia]{@link https://algolia.com} (and adds the
+     * necessary `facetFilters` in order to only show data relevant to the
+     * current user).
+     * @see {@link https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/}
+     */
     async search(that) {
         const query = $(that.el).find('.search-box input').val();
         query.length > 0 ? that.showClearButton() : that.showInfoButton();
         const [err, res] = await to(that.index.search({
             query: query,
-            facetFilters: window.app.location.name === 'Any' ? [] : [
+            facetFilters: !window.app.id ? [] : [
                 'payments.type:Free',
-                'location:' + window.app.location.name,
+                window.app.locations.map(l => 'location:' + l.name),
             ],
         }));
         if (err) return console.error('Could not search users b/c of', err);
