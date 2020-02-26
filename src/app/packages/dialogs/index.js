@@ -1044,6 +1044,10 @@ class NewLocationDialog extends EditLocationDialog {
     }
 };
 
+/**
+ * Class that represents an "Edit Request" dialog that enables users to edit
+ * their inbound and/or outbound lesson requests.
+ */
 class EditRequestDialog {
 
     // Renders the dialog for the given request
@@ -1849,6 +1853,11 @@ class ViewApptDialog extends ViewRequestDialog {
     }
 };
 
+/**
+ * Class that represents an "Edit Appointment" dialog that enables users to edit
+ * their upcoming appointments.
+ * @extends EditRequestDialog
+ */
 class EditApptDialog extends EditRequestDialog {
     constructor(appt, id) {
         super(appt.for, id);
@@ -1879,7 +1888,15 @@ class EditApptDialog extends EditRequestDialog {
     }
 };
 
+/**
+ * Class that represents a "New Record" or "New Past Appointment" dialog that
+ * enables supervisors and admins to record existing past appointments.
+ * @extends EditApptDialog
+ */
 class NewPastApptDialog extends EditApptDialog {
+    /**
+     * Creates and renders a new `NewPastApptDialog`.
+     */
     constructor() {
         const utils = window.app.utils || new Utils();
         const appt = {
@@ -1923,9 +1940,13 @@ class NewPastApptDialog extends EditApptDialog {
             timestamp: new Date(),
         };
         super(appt, Utils.genID());
-        window.newPastApptDialog = this;
     }
 
+    /**
+     * Renders the `NewPastApptDialog`'s header and main view (that contains
+     * [search text fields]{@link Render#searchTextFieldItem}).
+     * @see {@link Render}
+     */
     renderSelf() {
         this.header = this.render.header('header-action', {
             title: 'New Record',
@@ -1943,6 +1964,18 @@ class NewPastApptDialog extends EditApptDialog {
         });
         this.main = this.render.template('dialog-input');
 
+        /**
+         * Renders the Algolia hit (a map of user data) as an 
+         * [`mdc-list-item`]{@link https://material.io/develop/web/components/lists/}.
+         * @memberof NewPastApptDialog
+         * @param {Object} hit - The Algolia hit (a map of user data) to render.
+         * @param {string} type - The user type to change on this past 
+         * appointment (i.e. if type is `Tutor` we change the `toUser` value of 
+         * the past appointment's request when the result is clicked).
+         * @return {HTMLElement} el - The rendered (and managed) `mdc-list-item` 
+         * search result that modifies this past appointment's attendees when 
+         * clicked.
+         */
         const renderHit = (hit, type) => {
             const user = Utils.filterProfile(hit);
             const el = window.app.renderHit(hit, this.render).cloneNode(true);
@@ -1965,6 +1998,12 @@ class NewPastApptDialog extends EditApptDialog {
             return el;
         };
         const index = Data.algoliaIndex('users');
+        /**
+         * Searches pupils.
+         * @memberof NewPastApptDialog
+         * @type {searchCallback}
+         * @see {@link searchCallback}
+         */
         const searchPupils = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({
@@ -1985,18 +2024,20 @@ class NewPastApptDialog extends EditApptDialog {
                 }
             });
         };
+        /**
+         * Searches tutors.
+         * @memberof NewPastApptDialog
+         * @type {searchCallback}
+         * @see {@link searchCallback}
+         */
         const searchTutors = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
             const res = await index.search({
                 query: query,
-                facetFilters: window.app.location.name !==
-                    'Any' ? [ // TODO: Add type facetFilter here.
-                        'payments.type:Free',
-                        'location:' + window.app.location.name,
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ] : [
-                        'partition:' + (window.app.test ? 'test' : 'default'),
-                    ],
+                facetFilters: window.app.location.name !== 'Any' ? [
+                    'payments.type:Free', // TODO: Add type facetFilter here.
+                    'location:' + window.app.location.name,
+                ] : [],
             });
             $(textFieldItem).find('#results').empty();
             res.hits.forEach((hit) => {
@@ -2043,8 +2084,12 @@ class NewPastApptDialog extends EditApptDialog {
         add(this.render.textAreaItem('Message', ''));
     }
 
-    // TODO: Refactor this code and get rid of repetitive helper function 
-    // definitions (e.g. move them to more detailed names under utils).
+    /**
+     * Updates this past appointment's clocking `Date`s based on the clock-in 
+     * and clock-out text field values.
+     * @todo Refactor this code and get rid of repetitive helper function 
+     * definitions (e.g. move them to more detailed names under utils).
+     */
     updateClockingTimes() {
         const timestring = (str) => {
             const split = str.split(' ');
@@ -2098,6 +2143,10 @@ class NewPastApptDialog extends EditApptDialog {
         editTime(this.clockOutTextField);
     }
 
+    /**
+     * Refreshes what times (days and timeslots), subjects, and locations can
+     * be selected based on this appointment's attendees's data.
+     */
     refreshData() {
         const s = (q) => { // Attach select based on query
             return Utils.attachSelect($(this.main).find(q)[0]);
@@ -2166,6 +2215,18 @@ class NewPastApptDialog extends EditApptDialog {
         this.refreshDayAndTimeSelects(this.request, this.availability);
     }
 
+    /**
+     * Attaches the `MDCRipple`s, 
+     * [`MDCTextField`]{@link https://material.io/develop/web/components/input-controls/text-field/}s, 
+     * [`MDCSelect`]{@link https://material.io/develop/web/components/input-controls/select-menus/}s, and the view's 
+     * [`MDCTopAppBar`]{@link https://material.io/develop/web/components/top-app-bar/}.
+     * @todo Why do we have to set a timeout for all of field invalidation?
+     * @todo Find a better way to workaround the fact that when the user clicks 
+     * on a result the text field unfocuses and causes it to be marked as 
+     * invalid (as the result clicker hasn't updated our data).
+     * @todo Refactor this function into smaller, more scoped/granular 
+     * management functions.
+     */
     manage() {
         const t = (q, action, i = 'input') => {
             const t = new MDCTextField($(this.main).find(q).first()[0]);

@@ -28,8 +28,8 @@ const trackingShortcut = require('@tutorbook/tracking').renderShortcutCard;
 class Dashboard {
 
     /**
-     * Creates and renders (using the global `window.app.render` object) a new 
-     * Dashboard object.
+     * Creates and renders (using the global [window.app.render]{@link Render}
+     * object) a new `Dashboard` object.
      */
     constructor() {
         this.render = window.app.render;

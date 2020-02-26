@@ -162,6 +162,7 @@ class Data {
 
     /**
      * Fetch and then listen to a Firestore query.
+     * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}
      * @param {(Query|string[])} query - The query or Firestore path to listen 
      * to.
      * @param {snapshotCallback} next - Handles the query's snapshots.

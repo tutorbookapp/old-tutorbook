@@ -2,10 +2,17 @@ import $ from 'jquery';
 
 const templateString = require('./templates.html');
 
-// Class that reads in a string of templates and stores the DOM Nodes in an
-// easily accessible array.
+/**
+ * Class that reads in a string of templates, stores the DOM Nodes in an easily
+ * accessible array, and renders requested templates given a dictionary of 
+ * values that map to `data-fir` modifiers in the requested template's HTML.
+ */
 class Templates {
-
+    /**
+     * Creates a new `Templates` class by reading the `templateString` from 
+     * `templates.html` and adding it to a `div` tag created by the global 
+     * `window.document` object.
+     */
     constructor() {
         this.templates = {};
         const doc = document.createElement('div');

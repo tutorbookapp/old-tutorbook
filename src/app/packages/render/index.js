@@ -16,9 +16,12 @@ const Templates = require('@tutorbook/templates');
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
-// Class that contains commonly used rendering functions
+/** Class that contains commonly used rendering functions. */
 class Render {
-
+    /** 
+     * Creates a new Render object and intializes it's 
+     * [Templates]{@link Templates} object.
+     */
     constructor() {
         this.templates = new Templates();
     }
@@ -295,6 +298,28 @@ class Render {
         return el;
     }
 
+    /**
+     * Searches, renders, and shows search results (most likely by querying an
+     * [Algolia index]{@link https://www.algolia.com/doc/api-reference/api-methods/search/}).
+     * @callback searchCallback
+     * @param {HTMLElement} - The search element to get the search query from
+     * and to show/append the rendered results to.
+     */
+
+    /**
+     * Renders a search text field item that is essentially a text field input
+     * proxying to a select (except a lot more functional as it searches an
+     * [Algolia index]{@link https://www.algolia.com/doc/api-reference/api-methods/search/} instead of a set list of select options).
+     * @see {@link https://www.algolia.com/doc/api-reference/api-methods/search/}
+     * @see {@link SearchHeader}
+     * @param {string} label - The label for the text field item.
+     * @param {string} val - The preset value for the text field item.
+     * @param {searchCallback} search - Function called when text field value 
+     * changes (i.e. function that searches, renders, and show results).
+     * @return {HTMLElement} textFieldItem - The rendered (and managed) text
+     * field item that raises elevation and shows a search results list when
+     * focused/clicked and updates those search results as the user types.
+     */
     searchTextFieldItem(label, val, search) {
         const textFieldItem = this.template('search-input-list-item', {
             label: label,

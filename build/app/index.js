@@ -6233,6 +6233,11 @@ var NewLocationDialog = function (_EditLocationDialog) {
 
 ;
 
+/**
+ * Class that represents an "Edit Request" dialog that enables users to edit
+ * their inbound and/or outbound lesson requests.
+ */
+
 var EditRequestDialog = function () {
 
     // Renders the dialog for the given request
@@ -7110,6 +7115,12 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
 
 ;
 
+/**
+ * Class that represents an "Edit Appointment" dialog that enables users to edit
+ * their upcoming appointments.
+ * @extends EditRequestDialog
+ */
+
 var EditApptDialog = function (_EditRequestDialog2) {
     _inherits(EditApptDialog, _EditRequestDialog2);
 
@@ -7155,9 +7166,18 @@ var EditApptDialog = function (_EditRequestDialog2) {
 
 ;
 
+/**
+ * Class that represents a "New Record" or "New Past Appointment" dialog that
+ * enables supervisors and admins to record existing past appointments.
+ * @extends EditApptDialog
+ */
+
 var NewPastApptDialog = function (_EditApptDialog) {
     _inherits(NewPastApptDialog, _EditApptDialog);
 
+    /**
+     * Creates and renders a new `NewPastApptDialog`.
+     */
     function NewPastApptDialog() {
         _classCallCheck(this, NewPastApptDialog);
 
@@ -7202,12 +7222,15 @@ var NewPastApptDialog = function (_EditApptDialog) {
             location: {},
             timestamp: new Date()
         };
-
-        var _this32 = _possibleConstructorReturn(this, (NewPastApptDialog.__proto__ || Object.getPrototypeOf(NewPastApptDialog)).call(this, appt, Utils.genID()));
-
-        window.newPastApptDialog = _this32;
-        return _this32;
+        return _possibleConstructorReturn(this, (NewPastApptDialog.__proto__ || Object.getPrototypeOf(NewPastApptDialog)).call(this, appt, Utils.genID()));
     }
+
+    /**
+     * Renders the `NewPastApptDialog`'s header and main view (that contains
+     * [search text fields]{@link Render#searchTextFieldItem}).
+     * @see {@link Render}
+     */
+
 
     _createClass(NewPastApptDialog, [{
         key: 'renderSelf',
@@ -7234,6 +7257,18 @@ var NewPastApptDialog = function (_EditApptDialog) {
             });
             this.main = this.render.template('dialog-input');
 
+            /**
+             * Renders the Algolia hit (a map of user data) as an 
+             * [`mdc-list-item`]{@link https://material.io/develop/web/components/lists/}.
+             * @memberof NewPastApptDialog
+             * @param {Object} hit - The Algolia hit (a map of user data) to render.
+             * @param {string} type - The user type to change on this past 
+             * appointment (i.e. if type is `Tutor` we change the `toUser` value of 
+             * the past appointment's request when the result is clicked).
+             * @return {HTMLElement} el - The rendered (and managed) `mdc-list-item` 
+             * search result that modifies this past appointment's attendees when 
+             * clicked.
+             */
             var renderHit = function renderHit(hit, type) {
                 var user = Utils.filterProfile(hit);
                 var el = window.app.renderHit(hit, _this33.render).cloneNode(true);
@@ -7252,6 +7287,12 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 return el;
             };
             var index = Data.algoliaIndex('users');
+            /**
+             * Searches pupils.
+             * @memberof NewPastApptDialog
+             * @type {searchCallback}
+             * @see {@link searchCallback}
+             */
             var searchPupils = async function searchPupils(textFieldItem) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
@@ -7268,12 +7309,18 @@ var NewPastApptDialog = function (_EditApptDialog) {
                     }
                 });
             };
+            /**
+             * Searches tutors.
+             * @memberof NewPastApptDialog
+             * @type {searchCallback}
+             * @see {@link searchCallback}
+             */
             var searchTutors = async function searchTutors(textFieldItem) {
                 var query = (0, _jquery2.default)(textFieldItem).find('.search-box input').val();
                 var res = await index.search({
                     query: query,
-                    facetFilters: window.app.location.name !== 'Any' ? [// TODO: Add type facetFilter here.
-                    'payments.type:Free', 'location:' + window.app.location.name, 'partition:' + (window.app.test ? 'test' : 'default')] : ['partition:' + (window.app.test ? 'test' : 'default')]
+                    facetFilters: window.app.location.name !== 'Any' ? ['payments.type:Free', // TODO: Add type facetFilter here.
+                    'location:' + window.app.location.name] : []
                 });
                 (0, _jquery2.default)(textFieldItem).find('#results').empty();
                 res.hits.forEach(function (hit) {
@@ -7319,8 +7366,12 @@ var NewPastApptDialog = function (_EditApptDialog) {
             add(this.render.textAreaItem('Message', ''));
         }
 
-        // TODO: Refactor this code and get rid of repetitive helper function 
-        // definitions (e.g. move them to more detailed names under utils).
+        /**
+         * Updates this past appointment's clocking `Date`s based on the clock-in 
+         * and clock-out text field values.
+         * @todo Refactor this code and get rid of repetitive helper function 
+         * definitions (e.g. move them to more detailed names under utils).
+         */
 
     }, {
         key: 'updateClockingTimes',
@@ -7375,6 +7426,12 @@ var NewPastApptDialog = function (_EditApptDialog) {
             editTime(this.clockInTextField);
             editTime(this.clockOutTextField);
         }
+
+        /**
+         * Refreshes what times (days and timeslots), subjects, and locations can
+         * be selected based on this appointment's attendees's data.
+         */
+
     }, {
         key: 'refreshData',
         value: function refreshData() {
@@ -7446,6 +7503,20 @@ var NewPastApptDialog = function (_EditApptDialog) {
             });
             this.refreshDayAndTimeSelects(this.request, this.availability);
         }
+
+        /**
+         * Attaches the `MDCRipple`s, 
+         * [`MDCTextField`]{@link https://material.io/develop/web/components/input-controls/text-field/}s, 
+         * [`MDCSelect`]{@link https://material.io/develop/web/components/input-controls/select-menus/}s, and the view's 
+         * [`MDCTopAppBar`]{@link https://material.io/develop/web/components/top-app-bar/}.
+         * @todo Why do we have to set a timeout for all of field invalidation?
+         * @todo Find a better way to workaround the fact that when the user clicks 
+         * on a result the text field unfocuses and causes it to be marked as 
+         * invalid (as the result clicker hasn't updated our data).
+         * @todo Refactor this function into smaller, more scoped/granular 
+         * management functions.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -20090,6 +20161,7 @@ var Data = function () {
 
         /**
          * Fetch and then listen to a Firestore query.
+         * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}
          * @param {(Query|string[])} query - The query or Firestore path to listen 
          * to.
          * @param {snapshotCallback} next - Handles the query's snapshots.
@@ -40566,8 +40638,8 @@ var trackingShortcut = __webpack_require__(421).renderShortcutCard;
 var Dashboard = function () {
 
     /**
-     * Creates and renders (using the global `window.app.render` object) a new 
-     * Dashboard object.
+     * Creates and renders (using the global [window.app.render]{@link Render}
+     * object) a new `Dashboard` object.
      */
     function Dashboard() {
         _classCallCheck(this, Dashboard);
@@ -44167,9 +44239,13 @@ var Templates = __webpack_require__(466);
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
-// Class that contains commonly used rendering functions
+/** Class that contains commonly used rendering functions. */
 
 var Render = function () {
+    /** 
+     * Creates a new Render object and intializes it's 
+     * [Templates]{@link Templates} object.
+     */
     function Render() {
         _classCallCheck(this, Render);
 
@@ -44458,6 +44534,30 @@ var Render = function () {
             el.setAttribute('style', 'min-height:290px;');
             return el;
         }
+
+        /**
+         * Searches, renders, and shows search results (most likely by querying an
+         * [Algolia index]{@link https://www.algolia.com/doc/api-reference/api-methods/search/}).
+         * @callback searchCallback
+         * @param {HTMLElement} - The search element to get the search query from
+         * and to show/append the rendered results to.
+         */
+
+        /**
+         * Renders a search text field item that is essentially a text field input
+         * proxying to a select (except a lot more functional as it searches an
+         * [Algolia index]{@link https://www.algolia.com/doc/api-reference/api-methods/search/} instead of a set list of select options).
+         * @see {@link https://www.algolia.com/doc/api-reference/api-methods/search/}
+         * @see {@link SearchHeader}
+         * @param {string} label - The label for the text field item.
+         * @param {string} val - The preset value for the text field item.
+         * @param {searchCallback} search - Function called when text field value 
+         * changes (i.e. function that searches, renders, and show results).
+         * @return {HTMLElement} textFieldItem - The rendered (and managed) text
+         * field item that raises elevation and shows a search results list when
+         * focused/clicked and updates those search results as the user types.
+         */
+
     }, {
         key: 'searchTextFieldItem',
         value: function searchTextFieldItem(label, val, search) {
@@ -94802,10 +94902,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var templateString = __webpack_require__(467);
 
-// Class that reads in a string of templates and stores the DOM Nodes in an
-// easily accessible array.
+/**
+ * Class that reads in a string of templates, stores the DOM Nodes in an easily
+ * accessible array, and renders requested templates given a dictionary of 
+ * values that map to `data-fir` modifiers in the requested template's HTML.
+ */
 
 var Templates = function () {
+    /**
+     * Creates a new `Templates` class by reading the `templateString` from 
+     * `templates.html` and adding it to a `div` tag created by the global 
+     * `window.document` object.
+     */
     function Templates() {
         var _this = this;
 
