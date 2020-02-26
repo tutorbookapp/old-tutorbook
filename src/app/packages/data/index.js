@@ -189,7 +189,7 @@ class Data {
      * Returns the Algolia index based off of the given ID and current app 
      * partition.
      * @param {string} id - The Algolia index ID.
-     * @return {AlgoliaIndex} - The initialized Algolia index.
+     * @return {AlgoliaIndex} The initialized Algolia index.
      */
     static algoliaIndex(id) {
         return algolia.initIndex((window.app.test ? 'test' : 'default') + '-' +

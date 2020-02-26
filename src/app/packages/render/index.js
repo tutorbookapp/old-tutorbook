@@ -316,9 +316,9 @@ class Render {
      * @param {string} val - The preset value for the text field item.
      * @param {searchCallback} search - Function called when text field value 
      * changes (i.e. function that searches, renders, and show results).
-     * @return {HTMLElement} textFieldItem - The rendered (and managed) text
-     * field item that raises elevation and shows a search results list when
-     * focused/clicked and updates those search results as the user types.
+     * @return {HTMLElement} The rendered (and managed) text field item that 
+     * raises elevation and shows a search results list when focused/clicked and 
+     * updates those search results as the user types.
      */
     searchTextFieldItem(label, val, search) {
         const textFieldItem = this.template('search-input-list-item', {

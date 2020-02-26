@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>templates/index.js - Documentation</title>
+    <title>Chats - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,185 +29,140 @@
 
 <div id="main">
     
-    <h1 class="page-title">templates/index.js</h1>
+    <h1 class="page-title">Chats</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import $ from 'jquery';
+        <h2>
+        Chats
+        </h2>
+        
+            <div class="class-description"><p>Class that provides a chat view and header and enables users to message one
+another all within the app.</p></div>
+        
+    
+</header>
 
-const templateString = require('./templates.html');
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-/**
- * Class that reads in a string of templates, stores the DOM Nodes in an easily
- * accessible array, and renders requested templates given a dictionary of 
- * values that map to `data-fir` modifiers in the requested template's HTML.
- */
-class Templates {
-    /**
-     * Creates a new `Templates` class by reading the `templateString` from 
-     * `templates.html` and adding it to a `div` tag created by the global 
-     * `window.document` object.
-     */
-    constructor() {
-        this.templates = {};
-        const doc = document.createElement('div');
-        doc.innerHTML = templateString;
-        doc.querySelectorAll('.template').forEach((template) => {
-            this.templates[template.getAttribute('id')] = template;
-        });
-    }
+    
+    <h2>Constructor</h2>
+    
 
-    log() {
-        Object.entries(this.templates).forEach((template) => {
-            console.log(template[0] + ':', template[1]);
-        });
-    }
+    
+    <h4 class="name" id="Chats"><span class="type-signature"></span>new Chats<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-    render(id, data) {
-        const template = this.templates[id];
-        const el = template.cloneNode(true);
-        this.addData(el, data);
-        return el.firstElementChild;
-    }
+    
 
-    // Helper function that uses modifiers on a specific el
-    useModifier(el, selector, modifier) {
-        el.querySelectorAll('[' + selector + ']').forEach(modifier);
-    }
 
-    // Helper function that helps return items in a map
-    getDeepItem(obj, path) {
-        path.split('/').forEach(function(chunk) {
-            obj = obj[chunk];
-        });
-        return obj;
-    }
 
-    addData(el, data) {
-        if (!data) {
-            return;
-        }
 
-        var that = this;
-        var modifiers = {
-            'data-fir-copies': function(tel) {
-                var field = tel.getAttribute('data-fir-copies');
-                var value = that.getDeepItem(data, field);
-                // Only perform the copying once
-                tel.removeAttribute('data-fir-copies');
-                for (var i = 1; i &lt; value; i++) { // i cannot equal numCopies because there is already one el there (the original)
-                    // Append as value number of copies of target el
-                    tel.parentNode.append(tel.cloneNode(true));
-                }
-            },
-            'data-fir-foreach': function(tel) {
-                var field = tel.getAttribute('data-fir-foreach');
-                var values = that.getDeepItem(data, field);
 
-                values.forEach(function(value, index) {
-                    var cloneTel = tel.cloneNode(true);
-                    tel.parentNode.append(cloneTel);
 
-                    Object.keys(modifiers).forEach(function(selector) {
-                        var children = Array.prototype.slice.call(
-                            cloneTel.querySelectorAll('[' + selector + ']')
-                        );
-                        children.push(cloneTel);
-                        children.forEach(function(childEl) {
-                            var currentVal = childEl.getAttribute(selector);
 
-                            if (!currentVal) {
-                                return;
-                            }
-                            childEl.setAttribute(
-                                selector,
-                                currentVal.replace('~', field + '/' + index)
-                            );
-                        });
-                    });
-                });
+<dl class="details">
 
-                tel.parentNode.removeChild(tel);
-            },
-            'data-fir-content': function(tel) {
-                var field = tel.getAttribute('data-fir-content');
-                tel.innerText = that.getDeepItem(data, field);
-            },
-            'data-fir-click': function(tel) {
-                // TODO: For some reason, addEventListener('click'); doesn't
-                // work when we use this to render something twice.
-                tel.addEventListener('click', (event) => {
-                    var field = $(tel).attr('data-fir-click');
-                    that.getDeepItem(data, field)(event);
-                });
-            },
-            'data-fir-if': function(tel) {
-                var field = tel.getAttribute('data-fir-if');
-                // Triple not because we want to consider it even if it's undefined
-                if (!!!that.getDeepItem(data, field)) {
-                    tel.style.display = 'none';
-                }
-            },
-            'data-fir-if-not': function(tel) {
-                var field = tel.getAttribute('data-fir-if-not');
-                if (that.getDeepItem(data, field)) {
-                    tel.style.display = 'none';
-                }
-            },
-            'data-fir-id': function(tel) {
-                var field = tel.getAttribute('data-fir-id');
-                tel.setAttribute('id', that.getDeepItem(data, field));
-            },
-            'data-fir-attr': function(tel) {
-                tel.getAttribute('data-fir-attr').split(',').forEach((pair) => {
-                    var chunks = pair.split(':');
-                    var attr = chunks[0];
-                    var field = chunks[1];
-                    tel.setAttribute(attr, that.getDeepItem(data, field));
-                });
-            },
-            'data-fir-style': function(tel) {
-                tel.getAttribute('data-fir-style').split(',').forEach((pair) => {
-                    var chunks = pair.split(':');
-                    var attr = chunks[0];
-                    var field = chunks[1];
-                    var value = that.getDeepItem(data, field);
+    
 
-                    if (attr.toLowerCase() === 'backgroundimage') {
-                        value = 'url(' + value + ')';
-                    }
-                    tel.style[attr] = value;
-                });
-            }
-        };
+    
 
-        var preModifiers = ['data-fir-copies', 'data-fir-foreach'];
+    
 
-        preModifiers.forEach(function(selector) {
-            var modifier = modifiers[selector];
-            that.useModifier(el, selector, modifier);
-        });
+    
 
-        Object.keys(modifiers).forEach(function(selector) {
-            if (preModifiers.indexOf(selector) !== -1) {
-                return;
-            }
+    
 
-            var modifier = modifiers[selector];
-            that.useModifier(el, selector, modifier);
-        });
-    }
-};
+    
 
-module.exports = Templates;</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chats_index.js.html">chats/index.js</a>, <a href="chats_index.js.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

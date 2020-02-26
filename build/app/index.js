@@ -7265,7 +7265,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
              * @param {string} type - The user type to change on this past 
              * appointment (i.e. if type is `Tutor` we change the `toUser` value of 
              * the past appointment's request when the result is clicked).
-             * @return {HTMLElement} el - The rendered (and managed) `mdc-list-item` 
+             * @return {HTMLElement} The rendered (and managed) `mdc-list-item` 
              * search result that modifies this past appointment's attendees when 
              * clicked.
              */
@@ -20263,7 +20263,7 @@ var Data = function () {
          * Returns the Algolia index based off of the given ID and current app 
          * partition.
          * @param {string} id - The Algolia index ID.
-         * @return {AlgoliaIndex} - The initialized Algolia index.
+         * @return {AlgoliaIndex} The initialized Algolia index.
          */
 
     }, {
@@ -42983,7 +42983,7 @@ var SupervisorChats = function (_Chats) {
 
         /**
          * Gets the announcement queries from the web app's locally stored locations.
-         * @return {Query[]} - An array of Firestore [`Query`]{@link } objects.
+         * @return {Query[]} An array of Firestore [`Query`]{@link https://firebase.google.com/docs/reference/node/firebase.firestore.Query} objects.
          */
 
     }, {
@@ -43001,7 +43001,7 @@ var SupervisorChats = function (_Chats) {
          * document snapshot.
          * @param {int} index - The index of the query from which this announcement 
          * document came from. See {@link Utils#recycle} for more information.
-         * @return {HTMLElement} - The rendered (and managed) `mdc-list-item`.
+         * @return {HTMLElement} The rendered (and managed) `mdc-list-item`.
          */
 
     }, {
@@ -44634,9 +44634,9 @@ var Render = function () {
          * @param {string} val - The preset value for the text field item.
          * @param {searchCallback} search - Function called when text field value 
          * changes (i.e. function that searches, renders, and show results).
-         * @return {HTMLElement} textFieldItem - The rendered (and managed) text
-         * field item that raises elevation and shows a search results list when
-         * focused/clicked and updates those search results as the user types.
+         * @return {HTMLElement} The rendered (and managed) text field item that 
+         * raises elevation and shows a search results list when focused/clicked and 
+         * updates those search results as the user types.
          */
 
     }, {

@@ -1972,7 +1972,7 @@ class NewPastApptDialog extends EditApptDialog {
          * @param {string} type - The user type to change on this past 
          * appointment (i.e. if type is `Tutor` we change the `toUser` value of 
          * the past appointment's request when the result is clicked).
-         * @return {HTMLElement} el - The rendered (and managed) `mdc-list-item` 
+         * @return {HTMLElement} The rendered (and managed) `mdc-list-item` 
          * search result that modifies this past appointment's attendees when 
          * clicked.
          */
