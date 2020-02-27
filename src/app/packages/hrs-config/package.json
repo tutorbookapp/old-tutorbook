@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/hrs-config",
-  "version": "0.5.0-alpha.0",
+  "version": "0.5.1-alpha.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.5.0-alpha.0",
-    "@tutorbook/utils": "^0.5.0-alpha.0"
+    "@tutorbook/data": "^0.5.1-alpha.0",
+    "@tutorbook/utils": "^0.5.1-alpha.0"
   },
   "gitHead": "b3940d1eea7797c7a47a3ec9a210656b08d72d59"
 }
