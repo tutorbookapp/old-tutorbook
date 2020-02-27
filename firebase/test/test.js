@@ -23,6 +23,7 @@ const TUTOR = {
         currentBalance: 0,
         currentBalanceString: '$0.00',
     },
+    subjects: ['Marine Biology'],
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
@@ -41,6 +42,7 @@ const PUPIL = {
         currentBalance: 0,
         currentBalanceString: '$0.00',
     },
+    subjects: ['Marine Biology'],
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
@@ -706,6 +708,57 @@ describe("Tutorbook's REST API", () => {
         return post(SUPERVISOR.email, 'deleteLocation', {
             id: id,
         });
+    });
+
+    it("lets supervisors send announcements", async () => {
+        await createUsers();
+        [locationData, locationId] = await createLocation();
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            email: SUPERVISOR.email,
+            locations: [LOCATION.id],
+        });
+        const chat = db.collection('locations').doc(locationId)
+            .collection('announcements').doc();
+        await firebase.assertSucceeds(chat.set({
+            lastMessage: {
+                sentBy: SUPERVISOR,
+                message: 'This is a test.',
+                timestamp: new Date(),
+            },
+            chatters: [
+                PUPIL,
+                SUPERVISOR,
+            ],
+            chatterUIDs: [
+                PUPIL.uid,
+                SUPERVISOR.uid,
+            ],
+            chatterEmails: [
+                PUPIL.email,
+                SUPERVISOR.email,
+            ],
+            location: LOCATION,
+            createdBy: SUPERVISOR,
+            name: '', // We just use the chatter name as the chat name
+            photo: '', // We just use the chatter photo as the chat photo
+            filters: {
+                availability: {},
+                gender: 'Any',
+                grade: 'Any',
+                location: 'Gunn Academic Center',
+                price: 'Free',
+                showBooked: true,
+                sort: 'Rating',
+                subject: 'Marine Biology',
+                type: 'Any'
+            },
+        }));
+        await firebase.assertSucceeds(chat.collection('messages').doc().set({
+            sentBy: SUPERVISOR,
+            message: 'This is a test.',
+            timestamp: new Date(),
+        }));
     });
 
     it("lets supervisors download PDF backups of database", async () => {
