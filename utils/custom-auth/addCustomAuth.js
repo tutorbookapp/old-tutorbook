@@ -61,27 +61,43 @@ const createAndAuthMany = async (users, locations) => {
     }
 };
 
-createAndAuthMany([{
-    name: 'Molly Hawkinson',
-    email: 'mhawkinson@pausd.org',
-}, {
-    name: 'Amy Sheward',
-    email: 'asheward@pausd.org',
-}, {
-    name: 'Ander Lucia',
-    email: 'alucia@pausd.org',
-}, {
-    name: 'Sue Duffek',
-    email: 'sduffek@pausd.org',
-}, {
-    name: 'Ashley Lucey',
-    email: 'alucey@pausd.org',
-}, {
-    name: 'Diane Luu',
-    email: 'dluu@pausd.org',
-}, {
-    name: 'Samuel Franco Fewell',
-    email: 'sfrancofewell@pausd.org',
-}], [
+createAndAuth({
+    name: 'Supervisor Tutorbook',
+    email: 'supervisor@tutorbook.app',
+    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+}, [
+    'IVYL0RYSqXcLPxZoNGss',
+    'IchZg5QANcmrVDQemYU2',
+    'NJp0Y6wyMh2fDdxSuRSx',
     'WfAGnrtG87CJsYRnOmwn',
+    'fcKWyRWy124H4M34mS1r',
+    'gh3jFbjry0DE8WcQqAGi',
+    'hnmaaoUbdM2QGtgyCPV8',
 ]);
+
+/*
+ *createAndAuthMany([{
+ *    name: 'Molly Hawkinson',
+ *    email: 'mhawkinson@pausd.org',
+ *}, {
+ *    name: 'Amy Sheward',
+ *    email: 'asheward@pausd.org',
+ *}, {
+ *    name: 'Ander Lucia',
+ *    email: 'alucia@pausd.org',
+ *}, {
+ *    name: 'Sue Duffek',
+ *    email: 'sduffek@pausd.org',
+ *}, {
+ *    name: 'Ashley Lucey',
+ *    email: 'alucey@pausd.org',
+ *}, {
+ *    name: 'Diane Luu',
+ *    email: 'dluu@pausd.org',
+ *}, {
+ *    name: 'Samuel Franco Fewell',
+ *    email: 'sfrancofewell@pausd.org',
+ *}], [
+ *    'WfAGnrtG87CJsYRnOmwn',
+ *]);
+ */
