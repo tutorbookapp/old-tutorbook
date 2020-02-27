@@ -161,7 +161,7 @@ export default class Tutorbook {
          * }
          * @memberof module:@tutorbook/app~Tutorbook#
          */
-        this.id = 'root';
+        this.id = 'acVwmcht7NjykuJSbVC5';
 
         /**
          * Whether or not the app refers to a test partition.
