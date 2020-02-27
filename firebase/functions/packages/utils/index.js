@@ -91,10 +91,10 @@ class Utils {
             //  	fromTime: 'A Period',
             //  	toTime: 'B Period',
             // };
-            var location = filters.availability.location;
-            var day = filters.availability.day;
-            var from = filters.availability.fromTime;
-            var to = filters.availability.toTime;
+            const location = filters.availability.location;
+            const day = filters.availability.day;
+            const from = filters.availability.fromTime;
+            const to = filters.availability.toTime;
             query = query.where(
                 'availability.' + location + '.' + day,
                 'array-contains', {

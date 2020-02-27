@@ -278,13 +278,16 @@ const announcementNotification = async (snap, context) => {
             });
         }
         await supervisorDMs[user.uid].collection('messages').doc().set(msg);
-        await notifyAboutMessage(snap.data(), user, isTest, snap.ref);
+        await notifyAboutMessage(snap.data(), user, isTest, snap.ref.parent
+            .parent);
     }));
 };
 
 // helper - sends sms, webpush, and (soon) email notifications about a given 
 // message to a given recipient
-const notifyAboutMessage = async (msg, recipient, isTest, botChat) => {
+const notifyAboutMessage = async (msg, recipient, isTest, botChat = {}) => {
+    console.log('[DEBUG] Sending message (from chat ' + botChat.path + ') ' +
+        'notifications...');
     const notifications = [
         msg.skipSMS ? '' : 'sms',
         msg.skipWebpush ? '' : 'webpush',
@@ -314,7 +317,8 @@ const notifyAboutMessage = async (msg, recipient, isTest, botChat) => {
     }).send();
     if (!msg.skipEmail) console.warn('[WARNING] Email notifications for ' +
         'messages are not yet implemented.');
-    console.log('[DEBUG] Sent ' + notifications.join(', ') + ' message ' +
+    console.log('[DEBUG] Sent ' +
+        (notifications.length ? notifications.join(', ') : 'no') + ' message ' +
         'notifications to ' + recipient.name + ' (' + recipient.uid + ').');
 };
 

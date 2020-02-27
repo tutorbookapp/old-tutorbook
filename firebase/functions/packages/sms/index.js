@@ -69,6 +69,7 @@ class SMS {
             this.recipient.location, this.isTest);
         if (!this.valid) return this.botOnFailure ? new Message({
             message: this.botMessage.replace('Sent', 'Could not send'),
+            chat: this.botChat,
             sms: this.message,
             to: [this.recipient, this.sender],
         }).send() : null;
