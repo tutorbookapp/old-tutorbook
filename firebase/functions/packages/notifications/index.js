@@ -222,6 +222,8 @@ const announcementNotification = async (snap, context) => {
         skipEmail: true, // email, and webpush notifications for this message.
         skipWebpush: true,
     });
+    if (msg.sentBy.name === 'Operator') console.warn('[WARNING] Skipping ' +
+        'notifications for message (' + msg.message + ') sent by Operator.');
     const loc = (await locRef.get()).data();
     const supervisorDMs = {};
     (await db
@@ -278,8 +280,8 @@ const announcementNotification = async (snap, context) => {
             });
         }
         await supervisorDMs[user.uid].collection('messages').doc().set(msg);
-        await notifyAboutMessage(snap.data(), user, isTest, snap.ref.parent
-            .parent);
+        if (msg.sentBy.name !== 'Operator') return notifyAboutMessage(
+            snap.data(), user, isTest, snap.ref.parent.parent);
     }));
 };
 
