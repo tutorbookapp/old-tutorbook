@@ -45,8 +45,7 @@ class Message {
         if (!params.message) throw new Error('Message needs valid content.');
         if (!params.sms) params.sms = params.from[0].name.split(' ')[0] +
             ' says: ' + params.message;
-        if (!params.chat) console.log('[DEBUG] No chat document reference was' +
-            ' given, falling back to default...');
+        if (!params.chats) params.chats = ['default'];
         Object.entries(params).forEach((entry) => this[entry[0]] = entry[1]);
     }
 
@@ -61,56 +60,60 @@ class Message {
             message: this.message,
             sms: this.sms,
         };
-        await this.getChat();
-        await this.chat.collection('messages').doc().set(this.msg);
+        await this.updateChats();
+        await Promise.all(this.chats.map(chat => chat.collection('messages')
+            .doc().set(this.msg)));
         console.log('[DEBUG] Sent message (' + this.message + ') from ' +
             this.from.map(u => u.name).join(', ') + ' to ' +
             this.to.map(u => u.name).join(', ') + '.');
     }
 
-    async getChat() {
-        if (this.chat) return this.chat.update({
-            lastMessage: this.msg,
-        });
-        (await (this.isTest ? partitions.test : partitions.default)
-            .collection('chats')
-            .where('chatterUIDs', 'array-contains', this.to[0].uid)
-            .orderBy('lastMessage.timestamp', 'asc')
-            .get()
-        ).forEach(doc => {
-            const d = doc.data();
-            for (var i = 0; i < this.to.length; i++) {
-                if (this.to[i].uid !== 'operator' && d.chatterUIDs.indexOf(
-                        this.to[i].uid) < 0) return;
-            }
-            for (var i = 0; i < this.from.length; i++) {
-                if (this.from[i].uid !== 'operator' && d.chatterUIDs.indexOf(
-                        this.from[i].uid) < 0) return;
-            }
-            this.chat = doc.ref; // Uses the most recent chat if multiple exist.
-        });
-        if (!this.chat) {
-            this.chat = (this.isTest ? partitions.test : partitions.default)
-                .collection('chats').doc();
-            await this.chat.set({
-                lastMessage: this.msg,
-                chatters: this.to.concat(this.from)
-                    .filter(u => u.uid !== 'operator'),
-                chatterEmails: this.to.concat(this.from)
-                    .filter(u => u.uid !== 'operator')
-                    .map(u => u.email),
-                chatterUIDs: this.to.concat(this.from)
-                    .filter(u => u.uid !== 'operator')
-                    .map(u => u.uid),
-                createdBy: this.from[0],
-                name: '',
-                photo: '',
-            });
-        } else {
-            await this.chat.update({
+    async updateChats() {
+        await Promise.all(this.chats.map(async chat => {
+            if (chat !== 'default') return chat.update({
                 lastMessage: this.msg,
             });
-        }
+            (await (this.isTest ? partitions.test : partitions.default)
+                .collection('chats')
+                .where('chatterUIDs', 'array-contains', this.to[0].uid)
+                .orderBy('lastMessage.timestamp', 'asc')
+                .get()
+            ).forEach(doc => {
+                const d = doc.data();
+                for (var i = 0; i < this.to.length; i++) {
+                    if (this.to[i].uid !== 'operator' && d.chatterUIDs.indexOf(
+                            this.to[i].uid) < 0) return;
+                }
+                for (var i = 0; i < this.from.length; i++) {
+                    if (this.from[i].uid !== 'operator' && d.chatterUIDs.indexOf(
+                            this.from[i].uid) < 0) return;
+                }
+                chat = doc.ref; // Uses the most recent chat if multiple exist.
+            });
+            if (!chat) {
+                chat = (this.isTest ? partitions.test : partitions.default)
+                    .collection('chats').doc();
+                await chat.set({
+                    lastMessage: this.msg,
+                    chatters: this.to.concat(this.from)
+                        .filter(u => u.uid !== 'operator'),
+                    chatterEmails: this.to.concat(this.from)
+                        .filter(u => u.uid !== 'operator')
+                        .map(u => u.email),
+                    chatterUIDs: this.to.concat(this.from)
+                        .filter(u => u.uid !== 'operator')
+                        .map(u => u.uid),
+                    createdBy: this.from[0],
+                    name: '',
+                    photo: '',
+                });
+            } else {
+                await chat.update({
+                    lastMessage: this.msg,
+                });
+            }
+            this.chats[this.chats.findIndex(c => c === 'default')] = chat;
+        }));
     }
 }
 

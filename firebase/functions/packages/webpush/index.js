@@ -21,7 +21,7 @@ class Webpush {
         this.botOnFailure = bool(options.botOnFailure, true);
         this.botMessage = options.botMessage || 'Sent ' + this + ':\n' +
             this.body;
-        this.botChat = options.botChat;
+        this.botChats = options.botChats;
     }
 
     get valid() {
@@ -81,7 +81,7 @@ class Webpush {
             console.log('[DEBUG] Sent ' + this + '.');
             if (this.botOnSuccess) return new Message({
                 message: this.botMessage,
-                chat: this.botChat,
+                chats: this.botChats,
                 to: [
                     this.recipient,
                     this.sender || await getSupervisor(this.recipient.location),
@@ -91,7 +91,7 @@ class Webpush {
             console.error('[ERROR] Could not send ' + this + ' b/c of', err);
             if (this.botOnFailure) return new Message({
                 message: this.botMessage.replace('Sent', 'Could not send'),
-                chat: this.botChat,
+                chats: this.botChats,
                 to: [
                     this.recipient,
                     this.sender || await getSupervisor(this.recipient.location),

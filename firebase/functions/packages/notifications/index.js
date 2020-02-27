@@ -202,6 +202,14 @@ const userNotification = async (snap, context) => {
 
 // announcements - sms, webpush for new announcement messages
 const announcementNotification = async (snap, context) => {
+    // 0) Validate that the message should be relayed
+    const msg = Utils.combineMaps(snap.data(), {
+        skipSMS: true, // Tell the `messageNotification` function to skip SMS,
+        skipEmail: true, // email, and webpush notifications for this message.
+        skipWebpush: true,
+    });
+    if (msg.sentBy.name === 'Operator') return console.log('[DEBUG] Skipping ' +
+        'message (' + msg.message + ') sent by Operator.');
     const db = getDB(context);
     const isTest = getTest(context);
     // 1) Get all users that match announcement group filters
@@ -217,13 +225,6 @@ const announcementNotification = async (snap, context) => {
     // 2) Add messages to supervisor's chats with those users
     console.log('[DEBUG] Sending messages to ' + users.length + ' users that ' +
         'matched announcement group filters...');
-    const msg = Utils.combineMaps(snap.data(), {
-        skipSMS: true, // Tell the `messageNotification` function to skip SMS,
-        skipEmail: true, // email, and webpush notifications for this message.
-        skipWebpush: true,
-    });
-    if (msg.sentBy.name === 'Operator') console.warn('[WARNING] Skipping ' +
-        'notifications for message (' + msg.message + ') sent by Operator.');
     const loc = (await locRef.get()).data();
     const supervisorDMs = {};
     (await db
@@ -280,16 +281,16 @@ const announcementNotification = async (snap, context) => {
             });
         }
         await supervisorDMs[user.uid].collection('messages').doc().set(msg);
-        if (msg.sentBy.name !== 'Operator') return notifyAboutMessage(
-            snap.data(), user, isTest, snap.ref.parent.parent);
+        await notifyAboutMessage(snap.data(), user, isTest, [
+            snap.ref.parent.parent,
+            'default',
+        ]);
     }));
 };
 
 // helper - sends sms, webpush, and (soon) email notifications about a given 
 // message to a given recipient
-const notifyAboutMessage = async (msg, recipient, isTest, botChat = {}) => {
-    console.log('[DEBUG] Sending message (from chat ' + botChat.path + ') ' +
-        'notifications...');
+const notifyAboutMessage = async (msg, recipient, isTest, botChats) => {
     const notifications = [
         msg.skipSMS ? '' : 'sms',
         msg.skipWebpush ? '' : 'webpush',
@@ -302,7 +303,7 @@ const notifyAboutMessage = async (msg, recipient, isTest, botChat = {}) => {
         botOnSuccess: false,
         botMessage: 'Sent ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
             'message to ' + recipient.name.split(' ')[0] + ' via SMS.',
-        botChat: botChat,
+        botChats: botChats,
         isTest: isTest,
     }).send();
     if (!msg.skipWebpush) await new Webpush({
@@ -314,7 +315,7 @@ const notifyAboutMessage = async (msg, recipient, isTest, botChat = {}) => {
         botMessage: 'Sent ' + recipient.name.split(' ')[0] + ' a webpush ' +
             'notification about ' + msg.sentBy.name.split(' ')[0] + '\'s ' +
             'message.',
-        botChat: botChat,
+        botChats: botChats,
         isTest: isTest,
     }).send();
     if (!msg.skipEmail) console.warn('[WARNING] Email notifications for ' +
