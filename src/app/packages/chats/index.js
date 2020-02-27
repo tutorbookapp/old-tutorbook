@@ -5,6 +5,7 @@ import {
 import $ from 'jquery';
 import to from 'await-to-js';
 
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 const Chat = require('@tutorbook/chat').default;
 const AnnouncementChat = require('@tutorbook/chat').announcement;
 const Utils = require('@tutorbook/utils');
@@ -444,13 +445,28 @@ class SupervisorChats extends Chats {
                 name: doc.data().name,
                 index: index,
             }));
+        const confirmDeletionDialog = new ConfirmationDialog('Delete ' +
+            'Announcement Group?', 'You are about to permanantly delete all ' +
+            'of this announcement group\'s data (including any filters and ' +
+            'all past messages). Please check with your fellow supervisors ' +
+            'before deletion. Note that this will not delete messages ' +
+            'already relayed to your own DMs. Are you sure you want to ' +
+            'continue?', async () => {
+                const [err, res] = await to(doc.ref.delete());
+                if (err) return window.app.snackbar.view('Could not delete ' +
+                    'announcement group.');
+                window.app.snackbar.view('Deleted announcement group.');
+            }, () => {});
         const menuEl = this.render.template('menu', {
             options: [{
                 label: 'Edit',
                 action: () => dialog.view(),
             }, {
                 label: 'Delete',
-                action: () => doc.ref.delete(),
+                action: () => confirmDeletionDialog.view(),
+            }, {
+                label: 'Raw Data',
+                action: () => Utils.viewRaw(doc),
             }],
             id: Utils.genID(),
         });

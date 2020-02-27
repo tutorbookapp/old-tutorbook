@@ -18761,6 +18761,14 @@ var Utils = function () {
             }
             return res + str;
         }
+
+        /**
+         * Opens up a new tab with the raw JSON data of the given Firestore document 
+         * (and ID).
+         * @param {DocumentSnapshot} doc - The Firestore document to show the raw 
+         * data from.
+         */
+
     }, {
         key: 'viewRaw',
         value: function viewRaw(doc) {
@@ -42523,6 +42531,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var ConfirmationDialog = __webpack_require__(2).confirm;
 var Chat = __webpack_require__(147).default;
 var AnnouncementChat = __webpack_require__(147).announcement;
 var Utils = __webpack_require__(6);
@@ -43053,6 +43062,15 @@ var SupervisorChats = function (_Chats) {
                 name: doc.data().name,
                 index: index
             }));
+            var confirmDeletionDialog = new ConfirmationDialog('Delete ' + 'Announcement Group?', 'You are about to permanantly delete all ' + 'of this announcement group\'s data (including any filters and ' + 'all past messages). Please check with your fellow supervisors ' + 'before deletion. Note that this will not delete messages ' + 'already relayed to your own DMs. Are you sure you want to ' + 'continue?', async function () {
+                var _ref9 = await (0, _awaitToJs2.default)(doc.ref.delete()),
+                    _ref10 = _slicedToArray(_ref9, 2),
+                    err = _ref10[0],
+                    res = _ref10[1];
+
+                if (err) return window.app.snackbar.view('Could not delete ' + 'announcement group.');
+                window.app.snackbar.view('Deleted announcement group.');
+            }, function () {});
             var menuEl = this.render.template('menu', {
                 options: [{
                     label: 'Edit',
@@ -43062,7 +43080,12 @@ var SupervisorChats = function (_Chats) {
                 }, {
                     label: 'Delete',
                     action: function action() {
-                        return doc.ref.delete();
+                        return confirmDeletionDialog.view();
+                    }
+                }, {
+                    label: 'Raw Data',
+                    action: function action() {
+                        return Utils.viewRaw(doc);
                     }
                 }],
                 id: Utils.genID()

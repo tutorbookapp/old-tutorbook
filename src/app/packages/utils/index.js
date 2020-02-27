@@ -101,6 +101,12 @@ class Utils {
         return res + str;
     }
 
+    /**
+     * Opens up a new tab with the raw JSON data of the given Firestore document 
+     * (and ID).
+     * @param {DocumentSnapshot} doc - The Firestore document to show the raw 
+     * data from.
+     */
     static viewRaw(doc) {
         const json = JSON.stringify({
             data: doc.data(),

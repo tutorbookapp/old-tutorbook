@@ -18,6 +18,7 @@
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "lerna": "^3.16.4",
+    "minami": "^1.2.3",
     "node-sass": "^4.11.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^6.0.4",
