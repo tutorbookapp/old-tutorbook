@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "tutorbook-779d8",
+    "site": "tutorbook-woodside",
     "public": "build/",
     "ignore": [
       "**/*.log",
