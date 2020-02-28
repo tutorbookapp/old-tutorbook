@@ -47,7 +47,7 @@ class Dashboard {
                         this.dismissedCards.push(doc.id);
                     });
                 }).catch((err) => {
-                    console.error('Error while initializing dismissedCards:',
+                    console.error('[ERROR] While initializing dismissedCards:',
                         err);
                 });
         }
@@ -171,7 +171,8 @@ class Dashboard {
         window.app.listeners.push(query.onSnapshot({
             error: (err) => {
                 window.app.snackbar.view('Could not get dashboard cards.');
-                console.error('Could not get dashboard cards b/c of ', err);
+                console.error('[ERROR] Could not get dashboard cards b/c of ',
+                    err);
             },
             next: (snapshot) => {
                 if (!snapshot.size) {

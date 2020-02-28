@@ -7,7 +7,7 @@ class Help {
      * @see {@link https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomboot-intercomsettings}
      */
     constructor(user) {
-        return console.warn('Intercom inbox subscription has been paused.');
+        return console.warn('[WARNING] Intercom subscription has been paused.');
         window.intercomSettings = {
             app_id: "faz7lcyb",
             name: user.name, // Full name
@@ -63,7 +63,7 @@ class Help {
      * @param {bool} show - Whether to show the launcher or hide it.
      */
     view(show) {
-        return console.warn('Intercom inbox subscription has been paused.');
+        return console.warn('[WARNING] Intercom subscription has been paused.');
         window.intercomSettings.hide_default_launcher = !show;
         return window.Intercom('boot');
     }
@@ -74,7 +74,7 @@ class Help {
      * @see {@link https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomshutdown}
      */
     logout() {
-        return console.warn('Intercom inbox subscription has been paused.');
+        return console.warn('[WARNING] Intercom subscription has been paused.');
         return window.Intercom('shutdown');
     }
 };

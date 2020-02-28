@@ -303,7 +303,8 @@ class Matching {
             .onSnapshot({
                 error: (err) => {
                     window.app.snackbar.view('Could not get proxy users.');
-                    console.error('Could not get proxy users b/c of ', err);
+                    console.error('[ERROR] Could not get proxy users b/c of ',
+                        err);
                 },
                 next: (snapshot) => {
                     if (!snapshot.size) {
@@ -336,8 +337,8 @@ class Matching {
                 .collection(subcollection).onSnapshot({
                     error: (err) => {
                         window.app.snackbar.view('Could not get matches.');
-                        console.error('Could not get (' + id + ') matches b/c' +
-                            ' of ', err);
+                        console.error('[ERROR] Could not get (' + id + ') ' +
+                            'matches b/c of ', err);
                     },
                     next: (snapshot) => {
                         if (!snapshot.size) {

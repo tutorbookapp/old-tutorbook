@@ -176,7 +176,7 @@ class Card {
                 break;
                 // TODO: Add other cases
             default:
-                console.warn('Unsupported card subcollection:', type);
+                console.warn('[WARNING] Unsupported card subcollection:', type);
                 break;
         };
         return card;
@@ -346,13 +346,13 @@ Card.renderSetupStripeCard = function() {
 Card.renderSetupLocationCard = function() {
     const card = window.app.render.template('setup-location-card', {
         open_dialog: () => {
-            console.log('TODO: Implement location setup dialog');
+            console.log('[TODO] Implement location setup dialog');
         },
         search: () => {
-            console.log('TODO: Implement existing locations dialog');
+            console.log('[TODO] Implement existing locations dialog');
         },
         create: () => {
-            console.log('TODO: Implement new location dialog');
+            console.log('[TODO] Implement new location dialog');
         },
         dismiss: () => {
             window.app.user.cards.setupLocation = false;
@@ -676,8 +676,8 @@ Card.renderApprovedRequestOutCard = function(doc) {
                                 if (doc.exists) {
                                     new ViewApptDialog(doc.data(), doc.id).view();
                                 }
-                                console.error('Could not find appt document for ' +
-                                    'approvedRequest:', doc.id);
+                                console.error('[ERROR] Could not find appt ' +
+                                    'document for approvedRequest:', doc.id);
                             });
                     });
             } else {

@@ -96,7 +96,7 @@ class Profile {
         var fileSnapshot;
         [err, fileSnapshot] = await to(firebase.storage().ref(filePath).put(file));
         if (err) {
-            console.log('Error while uploading profile image:', err);
+            console.error('[ERROR] While uploading profile image:', err);
             throw err;
         }
 
@@ -105,7 +105,7 @@ class Profile {
         var url;
         [err, url] = await to(fileSnapshot.ref.getDownloadURL());
         if (err) {
-            console.log('Error while getting profile image url:', err);
+            console.error('[ERROR] While getting profile image url:', err);
             throw err;
         }
 
@@ -666,7 +666,7 @@ class NewProfile extends Profile {
                 this.profile.type.toLowerCase() + ' profile for ' +
                 this.profile.name + '.');
         }).catch((err) => {
-            console.error('Error while creating profile for ' +
+            console.error('[ERROR] While creating profile for ' +
                 this.profile.email + ':', err);
             window.app.snackbar.view('Could not create profile. ' +
                 this.profile.name.split(' ')[0] + ' probably already has one.');
@@ -725,7 +725,7 @@ class EditProfile extends NewProfile {
             window.app.snackbar.view('Updated ' + this.profile.name + '\'s ' +
                 'profile.');
         }).catch((err) => {
-            console.error('Error while updating profile for ' +
+            console.error('[ERROR] While updating profile for ' +
                 this.profile.email + ':', err);
             window.app.snackbar.view('Could not update profile.');
         });

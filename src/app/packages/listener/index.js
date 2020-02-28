@@ -55,7 +55,8 @@ class Listener {
                 error: (err) => {
                     window.app.snackbar.view('Could not listen to clock-in ' +
                         'requests. Reload to try again.');
-                    console.error('Couldn\'t get clock-ins b/c of ', err);
+                    console.error('[ERROR] Couldn\'t get clock-ins b/c of ',
+                        err);
                 },
                 next: (snapshot) => {
                     snapshot.docChanges().forEach((change) => {
@@ -101,7 +102,8 @@ class Listener {
                 error: (err) => {
                     window.app.snackbar.view('Could not listen to clock-out ' +
                         'requests. Reload to try again.');
-                    console.error('Couldn\'t get clock-outs b/c of ', err);
+                    console.error('[ERROR] Couldn\'t get clock-outs b/c of ',
+                        err);
                 },
                 next: (snapshot) => {
                     snapshot.docChanges().forEach((change) => {
@@ -147,8 +149,8 @@ class Listener {
                 error: (err) => {
                     window.app.snackbar.view('Could not listen to requested ' +
                         'payments. Reload to try again.');
-                    console.error('Could not listen to requested payments b/c' +
-                        ' of ', err);
+                    console.error('[ERROR] Could not listen to requested ' +
+                        'payments b/c of ', err);
                 },
                 next: (snapshot) => {
                     snapshot.docChanges().forEach((change) => {

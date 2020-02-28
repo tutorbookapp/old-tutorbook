@@ -97,7 +97,7 @@ class Chat {
         window.app.listeners.push(this.getMessages().onSnapshot({
             error: (err) => {
                 window.app.snackbar.view('Could not get messages.');
-                console.error('Could not get messages b/c of ', err);
+                console.error('[ERROR] Could not get messages b/c of ', err);
             },
             next: (snapshot) => {
                 if (!snapshot.size) {

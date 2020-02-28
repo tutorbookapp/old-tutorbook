@@ -343,8 +343,8 @@ class EditAvailabilityDialog {
 
     refreshTimes() { // Update time selects based on newly selected day
         const location = this.data.locationDataByName[this.val.location];
-        if (!location) return console.warn('Cannot refresh days and times ' +
-            'w/out location data.');
+        if (!location) return console.warn('[WARNING] Cannot refresh days and' +
+            ' times w/out location data.');
         const times = this.utils.getLocationTimeWindowsByDay(
             this.val.day,
             location.hours,
@@ -408,8 +408,8 @@ class EditAvailabilityDialog {
 
     refreshDaysAndTimes() { // Update day and time selects based on location
         const location = this.data.locationDataByName[this.val.location];
-        if (!location) return console.warn('Cannot refresh days and times ' +
-            'w/out location.');
+        if (!location) return console.warn('[WARNING] Cannot refresh days and' +
+            ' times w/out location.');
         var times = this.val.day ? this.utils.getLocationTimeWindowsByDay(
             this.val.day,
             location.hours,
@@ -1714,8 +1714,8 @@ class PaidRequestDialog extends NewRequestDialog {
     constructor(subject, user) {
         super(subject, user);
         if (user.payments.type !== 'Paid') {
-            console.warn('PaidRequestDialog was passed a user that isn\'t ' +
-                'supposed to be paid.');
+            console.warn('[WARNING] PaidRequestDialog was passed a user that ' +
+                'isn\'t supposed to be paid.');
         }
         this.request.payment.type = 'Paid';
         this.payment = {
@@ -1795,7 +1795,7 @@ class PaidRequestDialog extends NewRequestDialog {
                         }
                     }]
                 }).catch((err) => {
-                    console.error('Error while creating PayPal order:', err);
+                    console.error('[ERROR] While creating PayPal order:', err);
                     window.app.snackbar.view('Could not add payment. Please ' +
                         'ensure that you\'ve selected a valid time range.');
                 });

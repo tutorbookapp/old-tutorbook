@@ -287,8 +287,8 @@ class Data {
         //     },
         //   ],
         // },
-        if (!user.uid) return console.warn('Could not update ' + user.name +
-            '\'s availability without a valid uID.');
+        if (!user.uid) return console.warn('[WARNING] Could not update ' +
+            user.name + '\'s availability without a valid uID.');
         const ref = window.app.db.collection('users').doc(user.uid);
         const appts = (await ref.collection('appointments').get()).docs;
         const bookedAvailability = {};
@@ -341,7 +341,8 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             var ref = await window.app.db.collection('usersByEmail').doc(id).get();
         } else {
             var ref = await window.app.db.collection('users').doc(id).get();
@@ -393,7 +394,8 @@ class Data {
         } else if (user.uid) {
             return window.app.db.collection('users').doc(user.uid).update(user);
         } else {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             return window.app.db.collection('usersByEmail').doc(user.id ||
                 user.email).update(user);
         }
@@ -403,7 +405,8 @@ class Data {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             return window.app.db.collection('usersByEmail').doc(id).delete();
         } else {
             return window.app.db.collection('users').doc(id).delete();
@@ -423,7 +426,8 @@ class Data {
                 user: user,
             });
         } else {
-            console.warn('Using an email as a user ID is deprecated.');
+            console.warn('[WARNING] Using an email as a user ID is ' +
+                'deprecated.');
             return window.app.db.collection('usersByEmail').doc(user.id ||
                 user.email).set(user);
         }
@@ -466,7 +470,7 @@ class Data {
                 throw new Error(res.data.replace('[ERROR] ', ''));
             return res.data;
         }).catch((err) => {
-            console.error('Error during ' + action + ' REST API call.', err);
+            console.error('[ERROR] During ' + action + ' REST API call.', err);
             throw err;
         });
     }
@@ -552,8 +556,8 @@ class Data {
             return supervisors[0]; // TODO: How do we check to see if a given
             // supervisor is actually active on the app right now?
         } catch (e) {
-            console.warn('Could not get location (' + id + ') supervisor b/c ' +
-                'of ', e);
+            console.warn('[WARNING] Could not get location (' + id + ') ' +
+                'supervisor b/c of ', e);
             window.app.snackbar.view('Could not find location supervisor.');
             window.app.nav.back();
         }

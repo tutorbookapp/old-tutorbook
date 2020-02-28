@@ -54,7 +54,8 @@ class SearchHeader {
                 window.app.locations.map(l => 'location:' + l.name),
             ],
         }));
-        if (err) return console.error('Could not search users b/c of', err);
+        if (err) return console.error('[ERROR] Could not search users b/c of',
+            err);
         $(that.el).find('#results').empty();
         res.hits.forEach((hit) => {
             try {
@@ -467,7 +468,8 @@ class Search {
                     'filters or contact me with the above error message at ' +
                     'nicholaschiang@tutorbook.app or (650) 861-2723.',
                     () => {}).view();
-                console.error('Could not show search results b/c of ', err);
+                console.error('[ERROR] Could not show search results b/c of ',
+                    err);
             },
             next: (snapshot) => {
                 if (!snapshot.size) {

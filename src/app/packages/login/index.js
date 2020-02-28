@@ -133,14 +133,14 @@ class Login {
             var email = error.email;
             window.app.snackbar.view('Could not open Google login. Reload ' +
                 'this page and try again.');
-            console.error("Error while signing in with Google Popup:", error);
+            console.error('[ERROR] While signing in with Google Popup:', error);
         });
     }
 
     static getSupervisorCodes() {
         return window.app.db.collection('auth').doc('supervisors')
             .get().catch((err) => {
-                console.error('Error while getting supervisor codes:', err);
+                console.error('[ERROR] While getting supervisor codes:', err);
                 window.app.snackbar.view('Could not fetch verification codes.');
             });
     }

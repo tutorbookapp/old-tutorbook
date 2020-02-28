@@ -21,14 +21,15 @@ class Notify {
                     window.app.updateUser();
                 }
             }).catch((err) => {
-                console.error('Error while retrieving token:', err);
+                console.error('[ERROR] While retrieving token:', err);
             });
 
             messaging.onTokenRefresh(() => {
                 messaging.getToken().then((token) => {
                     this.updateToken(token);
                 }).catch((err) => {
-                    console.error('Unable to retrieve refreshed token ', err);
+                    console.error('[ERROR] Unable to retrieve refreshed token' +
+                        ' b/c of ', err);
                 });
             });
 
@@ -42,8 +43,8 @@ class Notify {
                 window.app.snackbar.view(payload.notification.body);
             });
         } catch (e) {
-            console.error('Error while initializing Firebase messaging token ' +
-                'to manage webpush notifications:', e);
+            console.error('[ERROR] While initializing Firebase messaging ' +
+                'token to manage webpush notifications:', e);
         }
     }
 
@@ -69,16 +70,16 @@ class Notify {
             });
 
         }).catch(function(err) {
-            console.error('Error while getting webpush notification permission:',
-                err);
+            console.error('[ERROR] While getting webpush notification ' +
+                'permission:', err);
         });
     }
 
     updateToken(token) {
         window.app.user.notificationToken = token;
         window.app.updateUser().catch((err) => {
-            console.error('Error while sending notificationToken ' +
-                token + ' to Firestore Database:', err);
+            console.error('[ERROR] While sending notificationToken ' + token +
+                ' to Firestore Database:', err);
         });
     }
 };

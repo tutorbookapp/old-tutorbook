@@ -270,7 +270,7 @@ class Tutorbook {
             empty: () => {
                 this.locations = this.data.locations = [];
                 this.location = this.data.location = {};
-                console.error('There are no locations for tutoring.');
+                console.error('[ERROR] There are no locations for tutoring.');
             },
         });
     }

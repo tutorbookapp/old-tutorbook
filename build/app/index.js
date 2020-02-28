@@ -5289,7 +5289,7 @@ var EditAvailabilityDialog = function () {
         value: function refreshTimes() {
             // Update time selects based on newly selected day
             var location = this.data.locationDataByName[this.val.location];
-            if (!location) return console.warn('Cannot refresh days and times ' + 'w/out location data.');
+            if (!location) return console.warn('[WARNING] Cannot refresh days and' + ' times w/out location data.');
             var times = this.utils.getLocationTimeWindowsByDay(this.val.day, location.hours);
             var timeStrings = times.map(function (t) {
                 return t.open !== t.close ? t.open + ' to ' + t.close : t.open;
@@ -5355,7 +5355,7 @@ var EditAvailabilityDialog = function () {
         value: function refreshDaysAndTimes() {
             // Update day and time selects based on location
             var location = this.data.locationDataByName[this.val.location];
-            if (!location) return console.warn('Cannot refresh days and times ' + 'w/out location.');
+            if (!location) return console.warn('[WARNING] Cannot refresh days and' + ' times w/out location.');
             var times = this.val.day ? this.utils.getLocationTimeWindowsByDay(this.val.day, location.hours) : this.utils.getLocationTimeWindows(location.hours);
             var timeStrings = times.map(function (t) {
                 return t.open !== t.close ? t.open + ' to ' + t.close : t.open;
@@ -6999,7 +6999,7 @@ var PaidRequestDialog = function (_NewRequestDialog) {
         var _this24 = _possibleConstructorReturn(this, (PaidRequestDialog.__proto__ || Object.getPrototypeOf(PaidRequestDialog)).call(this, subject, user));
 
         if (user.payments.type !== 'Paid') {
-            console.warn('PaidRequestDialog was passed a user that isn\'t ' + 'supposed to be paid.');
+            console.warn('[WARNING] PaidRequestDialog was passed a user that ' + 'isn\'t supposed to be paid.');
         }
         _this24.request.payment.type = 'Paid';
         _this24.payment = {
@@ -7082,7 +7082,7 @@ var PaidRequestDialog = function (_NewRequestDialog) {
                             }
                         }]
                     }).catch(function (err) {
-                        console.error('Error while creating PayPal order:', err);
+                        console.error('[ERROR] While creating PayPal order:', err);
                         window.app.snackbar.view('Could not add payment. Please ' + 'ensure that you\'ve selected a valid time range.');
                     });
                 },
@@ -18980,7 +18980,7 @@ var Utils = function () {
             } catch (e) {
                 // This is most likely b/c the user's profile's location we deleted
                 // or changed somehow
-                console.warn('Error while getting userAvailableTimesForDay (' + day + 's at the ' + location + '):', e);
+                console.warn('[ERROR] While getting userAvailableTimesForDay (' + day + 's at the ' + location + '):', e);
                 Utils.viewNoAvailabilityDialog(location);
             }
         }
@@ -19339,7 +19339,7 @@ var Utils = function () {
                     var index = queries.indexOf(query);
                     window.app.listeners.push(query.onSnapshot({
                         error: function error(err) {
-                            return console.error('Could not get ' + subcollection + ' (' + index + ') data snapshot b/c ' + 'of ', err);
+                            return console.error('[ERROR] Could not get ' + subcollection + ' (' + index + ') data snapshot b/c ' + 'of ', err);
                         },
                         next: function next(snapshot) {
                             if (!snapshot.size) return recycler.empty(subcollection, index);
@@ -19675,7 +19675,7 @@ var Utils = function () {
                                 window.open(res.data.url); // Opens dashboard
                             });
                         }).catch(function (err) {
-                            console.error('Error while initializing Stripe ' + 'account:', err);
+                            console.error('[ERROR] While initializing Stripe ' + 'account:', err);
                             window.app.snackbar.view('Could not connect payments ' + 'account.', 'Retry', function () {
                                 window.location = window.app.payments.setupURL;
                             });
@@ -19861,7 +19861,7 @@ var Utils = function () {
             } catch (e) {
                 // This is most likely b/c the user's profile's location we deleted
                 // or changed somehow
-                console.warn('Error while getting userAvailableDaysForLocation (' + location + '):', e);
+                console.warn('[ERROR] While getting userAvailableDaysForLocation ' + '(' + location + '):', e);
                 Utils.viewNoAvailabilityDialog(location);
             }
         }
@@ -20837,7 +20837,7 @@ var Data = function () {
             //     },
             //   ],
             // },
-            if (!user.uid) return console.warn('Could not update ' + user.name + '\'s availability without a valid uID.');
+            if (!user.uid) return console.warn('[WARNING] Could not update ' + user.name + '\'s availability without a valid uID.');
             var ref = window.app.db.collection('users').doc(user.uid);
             var appts = (await ref.collection('appointments').get()).docs;
             var bookedAvailability = {};
@@ -20885,7 +20885,7 @@ var Data = function () {
             if (!id) {
                 throw new Error('Could not get user data b/c id was undefined.');
             } else if (id.indexOf('@') >= 0) {
-                console.warn('Using an email as a user ID is deprecated.');
+                console.warn('[WARNING] Using an email as a user ID is ' + 'deprecated.');
                 var ref = await window.app.db.collection('usersByEmail').doc(id).get();
             } else {
                 var ref = await window.app.db.collection('users').doc(id).get();
@@ -20944,7 +20944,7 @@ var Data = function () {
             } else if (user.uid) {
                 return window.app.db.collection('users').doc(user.uid).update(user);
             } else {
-                console.warn('Using an email as a user ID is deprecated.');
+                console.warn('[WARNING] Using an email as a user ID is ' + 'deprecated.');
                 return window.app.db.collection('usersByEmail').doc(user.id || user.email).update(user);
             }
         }
@@ -20954,7 +20954,7 @@ var Data = function () {
             if (!id) {
                 throw new Error('Could not delete user b/c id was undefined.');
             } else if (id.indexOf('@') >= 0) {
-                console.warn('Using an email as a user ID is deprecated.');
+                console.warn('[WARNING] Using an email as a user ID is ' + 'deprecated.');
                 return window.app.db.collection('usersByEmail').doc(id).delete();
             } else {
                 return window.app.db.collection('users').doc(id).delete();
@@ -20974,7 +20974,7 @@ var Data = function () {
                     user: user
                 });
             } else {
-                console.warn('Using an email as a user ID is deprecated.');
+                console.warn('[WARNING] Using an email as a user ID is ' + 'deprecated.');
                 return window.app.db.collection('usersByEmail').doc(user.id || user.email).set(user);
             }
         }
@@ -21020,7 +21020,7 @@ var Data = function () {
                 if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0) throw new Error(res.data.replace('[ERROR] ', ''));
                 return res.data;
             }).catch(function (err) {
-                console.error('Error during ' + action + ' REST API call.', err);
+                console.error('[ERROR] During ' + action + ' REST API call.', err);
                 throw err;
             });
         }
@@ -21118,7 +21118,7 @@ var Data = function () {
                 return supervisors[0]; // TODO: How do we check to see if a given
                 // supervisor is actually active on the app right now?
             } catch (e) {
-                console.warn('Could not get location (' + id + ') supervisor b/c ' + 'of ', e);
+                console.warn('[WARNING] Could not get location (' + id + ') ' + 'supervisor b/c of ', e);
                 window.app.snackbar.view('Could not find location supervisor.');
                 window.app.nav.back();
             }
@@ -23098,7 +23098,7 @@ var Profile = function () {
             fileSnapshot = _ref4[1];
 
             if (err) {
-                console.log('Error while uploading profile image:', err);
+                console.error('[ERROR] While uploading profile image:', err);
                 throw err;
             }
 
@@ -23114,7 +23114,7 @@ var Profile = function () {
             url = _ref6[1];
 
             if (err) {
-                console.log('Error while getting profile image url:', err);
+                console.error('[ERROR] While getting profile image url:', err);
                 throw err;
             }
 
@@ -23687,7 +23687,7 @@ var NewProfile = function (_Profile) {
             Data.createUser(this.profile).then(function () {
                 window.app.snackbar.view('Created ' + _this6.profile.type.toLowerCase() + ' profile for ' + _this6.profile.name + '.');
             }).catch(function (err) {
-                console.error('Error while creating profile for ' + _this6.profile.email + ':', err);
+                console.error('[ERROR] While creating profile for ' + _this6.profile.email + ':', err);
                 window.app.snackbar.view('Could not create profile. ' + _this6.profile.name.split(' ')[0] + ' probably already has one.');
             });
         }
@@ -23769,7 +23769,7 @@ var EditProfile = function (_NewProfile) {
             Data.updateUser(this.profile).then(function () {
                 window.app.snackbar.view('Updated ' + _this9.profile.name + '\'s ' + 'profile.');
             }).catch(function (err) {
-                console.error('Error while updating profile for ' + _this9.profile.email + ':', err);
+                console.error('[ERROR] While updating profile for ' + _this9.profile.email + ':', err);
                 window.app.snackbar.view('Could not update profile.');
             });
         }
@@ -24930,7 +24930,7 @@ var Card = function () {
                     break;
                 // TODO: Add other cases
                 default:
-                    console.warn('Unsupported card subcollection:', type);
+                    console.warn('[WARNING] Unsupported card subcollection:', type);
                     break;
             };
             return card;
@@ -25094,13 +25094,13 @@ Card.renderSetupStripeCard = function () {
 Card.renderSetupLocationCard = function () {
     var card = window.app.render.template('setup-location-card', {
         open_dialog: function open_dialog() {
-            console.log('TODO: Implement location setup dialog');
+            console.log('[TODO] Implement location setup dialog');
         },
         search: function search() {
-            console.log('TODO: Implement existing locations dialog');
+            console.log('[TODO] Implement existing locations dialog');
         },
         create: function create() {
-            console.log('TODO: Implement new location dialog');
+            console.log('[TODO] Implement new location dialog');
         },
         dismiss: function dismiss() {
             window.app.user.cards.setupLocation = false;
@@ -25364,7 +25364,7 @@ Card.renderApprovedRequestOutCard = function (doc) {
                         if (doc.exists) {
                             new ViewApptDialog(doc.data(), doc.id).view();
                         }
-                        console.error('Could not find appt document for ' + 'approvedRequest:', doc.id);
+                        console.error('[ERROR] Could not find appt ' + 'document for approvedRequest:', doc.id);
                     });
                 });
             } else {
@@ -25819,7 +25819,7 @@ var SearchHeader = function () {
                 err = _ref2[0],
                 res = _ref2[1];
 
-            if (err) return console.error('Could not search users b/c of', err);
+            if (err) return console.error('[ERROR] Could not search users b/c of', err);
             (0, _jquery2.default)(that.el).find('#results').empty();
             res.hits.forEach(function (hit) {
                 try {
@@ -26261,7 +26261,7 @@ var Search = function () {
             window.app.listeners.push(this.getUsers().onSnapshot({
                 error: function error(err) {
                     new NotificationDialog('Search Error', 'Sorry, but we can\'t ' + 'seem to search with those filters. Tutorbook seems to ' + 'have encountered this database error:\n\n' + Utils.wrap(err.message, 50) + '\n\n Try changing your ' + 'filters or contact me with the above error message at ' + 'nicholaschiang@tutorbook.app or (650) 861-2723.', function () {}).view();
-                    console.error('Could not show search results b/c of ', err);
+                    console.error('[ERROR] Could not show search results b/c of ', err);
                 },
                 next: function next(snapshot) {
                     if (!snapshot.size) {
@@ -28545,7 +28545,7 @@ var Matching = function () {
             window.app.listeners.push(window.app.db.collection('users').where('proxy', 'array-contains', window.app.user.uid).onSnapshot({
                 error: function error(err) {
                     window.app.snackbar.view('Could not get proxy users.');
-                    console.error('Could not get proxy users b/c of ', err);
+                    console.error('[ERROR] Could not get proxy users b/c of ', err);
                 },
                 next: function next(snapshot) {
                     if (!snapshot.size) {
@@ -28577,7 +28577,7 @@ var Matching = function () {
                 _this6.queries[id].push(window.app.db.collection('users').doc(id).collection(subcollection).onSnapshot({
                     error: function error(err) {
                         window.app.snackbar.view('Could not get matches.');
-                        console.error('Could not get (' + id + ') matches b/c' + ' of ', err);
+                        console.error('[ERROR] Could not get (' + id + ') ' + 'matches b/c of ', err);
                     },
                     next: function next(snapshot) {
                         if (!snapshot.size) {
@@ -41437,7 +41437,7 @@ var Dashboard = function () {
                         _this.dismissedCards.push(doc.id);
                     });
                 }).catch(function (err) {
-                    console.error('Error while initializing dismissedCards:', err);
+                    console.error('[ERROR] While initializing dismissedCards:', err);
                 });
             }
         }
@@ -41558,7 +41558,7 @@ var Dashboard = function () {
             window.app.listeners.push(query.onSnapshot({
                 error: function error(err) {
                     window.app.snackbar.view('Could not get dashboard cards.');
-                    console.error('Could not get dashboard cards b/c of ', err);
+                    console.error('[ERROR] Could not get dashboard cards b/c of ', err);
                 },
                 next: function next(snapshot) {
                     if (!snapshot.size) {
@@ -43290,7 +43290,7 @@ var Chats = function () {
                     chat.manage();
                     if (viewingChat) window.clearInterval(viewingChat);
                 } catch (err) {
-                    console.warn('Trying again to open chat b/c of', err);
+                    console.warn('[WARNING] Trying again to open chat b/c of', err);
                 }
             };
             if (chat && (0, _jquery2.default)(this.main).find('#chats #' + chat.id).length) {
@@ -43369,7 +43369,7 @@ var Chats = function () {
             window.app.listeners.push(this.getChats().onSnapshot({
                 error: function error(err) {
                     window.app.snackbar.view('Could not get chats.');
-                    console.error('Could not get chats b/c of ', err);
+                    console.error('[ERROR] Could not get chats b/c of ', err);
                 },
                 next: function next(snapshot) {
                     if (!snapshot.size) return _this3.recycler.empty();
@@ -43547,7 +43547,7 @@ var SupervisorChats = function (_Chats) {
     }, {
         key: 'getAnnouncement',
         value: async function getAnnouncement(id) {
-            if (!window.app.location.id) return console.error('Couldn\'t get ' + 'announcement group chat (' + id + ') without location id.');
+            if (!window.app.location.id) return console.error('[ERROR] Couldn\'t ' + 'get announcement group chat (' + id + ') without location id.');
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
@@ -43615,7 +43615,7 @@ var SupervisorChats = function (_Chats) {
                         err = _ref8[0],
                         res = _ref8[1];
 
-                    if (err) return console.error('Could not search messages b/c ' + 'of', err);
+                    if (err) return console.error('[ERROR] Could not search ' + 'messages b/c of', err);
                     (0, _jquery2.default)(that.el).find('#results').empty();
                     res.hits.forEach(function (hit) {
                         try {
@@ -43925,7 +43925,7 @@ var Chat = function () {
             window.app.listeners.push(this.getMessages().onSnapshot({
                 error: function error(err) {
                     window.app.snackbar.view('Could not get messages.');
-                    console.error('Could not get messages b/c of ', err);
+                    console.error('[ERROR] Could not get messages b/c of ', err);
                 },
                 next: function next(snapshot) {
                     if (!snapshot.size) {
@@ -60122,7 +60122,7 @@ var Tutorbook = function () {
                 empty: function empty() {
                     _this4.locations = _this4.data.locations = [];
                     _this4.location = _this4.data.location = {};
-                    console.error('There are no locations for tutoring.');
+                    console.error('[ERROR] There are no locations for tutoring.');
                 }
             });
         }
@@ -77779,7 +77779,7 @@ var Payments = function () {
                     }
                     _this2.accountURL = res.data.url;
                 }).catch(function (err) {
-                    console.error('Error while fetching new Stripe Connect Account ' + 'url:', err);
+                    console.error('[ERROR] While fetching new Stripe Connect ' + 'Account url:', err);
                     setTimeout(getAccountURL, 10000);
                 });
             };
@@ -78121,7 +78121,7 @@ Payments.renderInvalidPayment = function (doc) {
         meta_subtitle: meta_subtitle,
         timestamp: time,
         go_to_transaction: function go_to_transaction() {
-            console.log('TODO: Implement viewTransaction dialog');
+            console.log('[TODO] Implement viewTransaction dialog');
         }
     });
     (0, _jquery2.default)(listItem).attr('id', doc.id).attr('type', 'invalidPayments');
@@ -78154,7 +78154,7 @@ Payments.renderAuthPayment = function (doc) {
         meta_subtitle: meta_subtitle,
         timestamp: time,
         go_to_transaction: function go_to_transaction() {
-            console.log('TODO: Implement viewTransaction dialog');
+            console.log('[TODO] Implement viewTransaction dialog');
         }
     });
     (0, _jquery2.default)(listItem).attr('id', doc.id).attr('type', 'authPayments');
@@ -78976,14 +78976,14 @@ var Notify = function () {
                     window.app.updateUser();
                 }
             }).catch(function (err) {
-                console.error('Error while retrieving token:', err);
+                console.error('[ERROR] While retrieving token:', err);
             });
 
             messaging.onTokenRefresh(function () {
                 messaging.getToken().then(function (token) {
                     _this.updateToken(token);
                 }).catch(function (err) {
-                    console.error('Unable to retrieve refreshed token ', err);
+                    console.error('[ERROR] Unable to retrieve refreshed token' + ' b/c of ', err);
                 });
             });
 
@@ -78993,7 +78993,7 @@ var Notify = function () {
                 window.app.snackbar.view(payload.notification.body);
             });
         } catch (e) {
-            console.error('Error while initializing Firebase messaging token ' + 'to manage webpush notifications:', e);
+            console.error('[ERROR] While initializing Firebase messaging ' + 'token to manage webpush notifications:', e);
         }
     }
 
@@ -79024,7 +79024,7 @@ var Notify = function () {
                     _this2.welcome();
                 });
             }).catch(function (err) {
-                console.error('Error while getting webpush notification permission:', err);
+                console.error('[ERROR] While getting webpush notification ' + 'permission:', err);
             });
         }
     }, {
@@ -79032,7 +79032,7 @@ var Notify = function () {
         value: function updateToken(token) {
             window.app.user.notificationToken = token;
             window.app.updateUser().catch(function (err) {
-                console.error('Error while sending notificationToken ' + token + ' to Firestore Database:', err);
+                console.error('[ERROR] While sending notificationToken ' + token + ' to Firestore Database:', err);
             });
         }
     }]);
@@ -95787,7 +95787,7 @@ var Templates = function () {
         key: 'log',
         value: function log() {
             Object.entries(this.templates).forEach(function (template) {
-                console.log(template[0] + ':', template[1]);
+                console.log('[DEBUG] ' + template[0] + ':', template[1]);
             });
         }
     }, {
@@ -107718,7 +107718,7 @@ var Help = function () {
     function Help(user) {
         _classCallCheck(this, Help);
 
-        return console.warn('Intercom inbox subscription has been paused.');
+        return console.warn('[WARNING] Intercom subscription has been paused.');
         window.intercomSettings = {
             app_id: "faz7lcyb",
             name: user.name, // Full name
@@ -107778,7 +107778,7 @@ var Help = function () {
     _createClass(Help, [{
         key: 'view',
         value: function view(show) {
-            return console.warn('Intercom inbox subscription has been paused.');
+            return console.warn('[WARNING] Intercom subscription has been paused.');
             window.intercomSettings.hide_default_launcher = !show;
             return window.Intercom('boot');
         }
@@ -107792,7 +107792,7 @@ var Help = function () {
     }, {
         key: 'logout',
         value: function logout() {
-            return console.warn('Intercom inbox subscription has been paused.');
+            return console.warn('[WARNING] Intercom subscription has been paused.');
             return window.Intercom('shutdown');
         }
     }]);
@@ -107882,7 +107882,7 @@ var Listener = function () {
                 window.app.listeners.push(db.collection('clockIns').onSnapshot({
                     error: function error(err) {
                         window.app.snackbar.view('Could not listen to clock-in ' + 'requests. Reload to try again.');
-                        console.error('Couldn\'t get clock-ins b/c of ', err);
+                        console.error('[ERROR] Couldn\'t get clock-ins b/c of ', err);
                     },
                     next: function next(snapshot) {
                         snapshot.docChanges().forEach(function (change) {
@@ -107929,7 +107929,7 @@ var Listener = function () {
                 window.app.listeners.push(db.collection('clockOuts').onSnapshot({
                     error: function error(err) {
                         window.app.snackbar.view('Could not listen to clock-out ' + 'requests. Reload to try again.');
-                        console.error('Couldn\'t get clock-outs b/c of ', err);
+                        console.error('[ERROR] Couldn\'t get clock-outs b/c of ', err);
                     },
                     next: function next(snapshot) {
                         snapshot.docChanges().forEach(function (change) {
@@ -107971,7 +107971,7 @@ var Listener = function () {
             window.app.listeners.push(window.app.db.collection('users').doc(window.app.user.uid).collection('requestedPayments').onSnapshot({
                 error: function error(err) {
                     window.app.snackbar.view('Could not listen to requested ' + 'payments. Reload to try again.');
-                    console.error('Could not listen to requested payments b/c' + ' of ', err);
+                    console.error('[ERROR] Could not listen to requested ' + 'payments b/c of ', err);
                 },
                 next: function next(snapshot) {
                     snapshot.docChanges().forEach(function (change) {
@@ -108145,14 +108145,14 @@ var Login = function () {
                 var errorMessage = error.message;
                 var email = error.email;
                 window.app.snackbar.view('Could not open Google login. Reload ' + 'this page and try again.');
-                console.error("Error while signing in with Google Popup:", error);
+                console.error('[ERROR] While signing in with Google Popup:', error);
             });
         }
     }, {
         key: 'getSupervisorCodes',
         value: function getSupervisorCodes() {
             return window.app.db.collection('auth').doc('supervisors').get().catch(function (err) {
-                console.error('Error while getting supervisor codes:', err);
+                console.error('[ERROR] While getting supervisor codes:', err);
                 window.app.snackbar.view('Could not fetch verification codes.');
             });
         }

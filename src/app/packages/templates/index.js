@@ -24,7 +24,7 @@ class Templates {
 
     log() {
         Object.entries(this.templates).forEach((template) => {
-            console.log(template[0] + ':', template[1]);
+            console.log('[DEBUG] ' + template[0] + ':', template[1]);
         });
     }
 

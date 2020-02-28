@@ -289,7 +289,7 @@ class Utils {
             queries.forEach(query => {
                 const index = queries.indexOf(query);
                 window.app.listeners.push(query.onSnapshot({
-                    error: (err) => console.error('Could not get ' +
+                    error: (err) => console.error('[ERROR] Could not get ' +
                         subcollection + ' (' + index + ') data snapshot b/c ' +
                         'of ', err),
                     next: (snapshot) => {
@@ -580,7 +580,7 @@ class Utils {
                                 window.open(res.data.url); // Opens dashboard
                             });
                     }).catch((err) => {
-                        console.error('Error while initializing Stripe ' +
+                        console.error('[ERROR] While initializing Stripe ' +
                             'account:', err);
                         window.app.snackbar.view('Could not connect payments ' +
                             'account.', 'Retry', () => {
@@ -902,8 +902,8 @@ class Utils {
         } catch (e) {
             // This is most likely b/c the user's profile's location we deleted
             // or changed somehow
-            console.warn('Error while getting userAvailableDaysForLocation (' +
-                location + '):', e);
+            console.warn('[ERROR] While getting userAvailableDaysForLocation ' +
+                '(' + location + '):', e);
             Utils.viewNoAvailabilityDialog(location);
         }
     }
@@ -961,7 +961,7 @@ class Utils {
         } catch (e) {
             // This is most likely b/c the user's profile's location we deleted
             // or changed somehow
-            console.warn('Error while getting userAvailableTimesForDay (' +
+            console.warn('[ERROR] While getting userAvailableTimesForDay (' +
                 day + 's at the ' + location + '):', e);
             Utils.viewNoAvailabilityDialog(location);
         }

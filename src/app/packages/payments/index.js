@@ -115,8 +115,8 @@ class Payments {
                 }
                 this.accountURL = res.data.url;
             }).catch((err) => {
-                console.error('Error while fetching new Stripe Connect Account ' +
-                    'url:', err);
+                console.error('[ERROR] While fetching new Stripe Connect ' +
+                    'Account url:', err);
                 setTimeout(getAccountURL, 10000);
             });
         };
@@ -528,7 +528,7 @@ Payments.renderInvalidPayment = function(doc) {
         meta_subtitle: meta_subtitle,
         timestamp: time,
         go_to_transaction: () => {
-            console.log('TODO: Implement viewTransaction dialog');
+            console.log('[TODO] Implement viewTransaction dialog');
         },
     });
     $(listItem).attr('id', doc.id).attr('type', 'invalidPayments');
@@ -571,7 +571,7 @@ Payments.renderAuthPayment = function(doc) {
         meta_subtitle: meta_subtitle,
         timestamp: time,
         go_to_transaction: () => {
-            console.log('TODO: Implement viewTransaction dialog');
+            console.log('[TODO] Implement viewTransaction dialog');
         },
     });
     $(listItem).attr('id', doc.id).attr('type', 'authPayments');

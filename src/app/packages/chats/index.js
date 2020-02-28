@@ -78,7 +78,7 @@ class Chats {
                 chat.manage();
                 if (viewingChat) window.clearInterval(viewingChat);
             } catch (err) {
-                console.warn('Trying again to open chat b/c of', err);
+                console.warn('[WARNING] Trying again to open chat b/c of', err);
             }
         };
         if (chat && $(this.main).find('#chats #' + chat.id).length) {
@@ -140,7 +140,7 @@ class Chats {
         window.app.listeners.push(this.getChats().onSnapshot({
             error: (err) => {
                 window.app.snackbar.view('Could not get chats.');
-                console.error('Could not get chats b/c of ', err);
+                console.error('[ERROR] Could not get chats b/c of ', err);
             },
             next: (snapshot) => {
                 if (!snapshot.size) return this.recycler.empty();
@@ -299,8 +299,8 @@ class SupervisorChats extends Chats {
     }
 
     async getAnnouncement(id) {
-        if (!window.app.location.id) return console.error('Couldn\'t get ' +
-            'announcement group chat (' + id + ') without location id.');
+        if (!window.app.location.id) return console.error('[ERROR] Couldn\'t ' +
+            'get announcement group chat (' + id + ') without location id.');
         for (var location of (await Data.getLocations())) {
             var doc = await location.collection('announcements').doc(id).get();
             if (doc.exists) return doc;
@@ -335,8 +335,8 @@ class SupervisorChats extends Chats {
                     query: qry,
                     facetFilters: ['chatterUIDs:' + window.app.user.uid],
                 }));
-                if (err) return console.error('Could not search messages b/c ' +
-                    'of', err);
+                if (err) return console.error('[ERROR] Could not search ' +
+                    'messages b/c of', err);
                 $(that.el).find('#results').empty();
                 res.hits.forEach((hit) => {
                     try {
