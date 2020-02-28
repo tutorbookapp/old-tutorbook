@@ -4,7 +4,7 @@ const algolia = require('algoliasearch')
     ('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
 /**
- * Class that manages Firestore data flow along with any local app data
+ * Class that manages Firestore data flow along with any local app data.
  */
 class Data {
 

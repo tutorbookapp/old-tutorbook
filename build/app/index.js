@@ -20197,7 +20197,7 @@ var axios = __webpack_require__(307);
 var algolia = __webpack_require__(69)('9FGZL7GIJM', '9ebc0ac72bdf6b722d6b7985d3e83550');
 
 /**
- * Class that manages Firestore data flow along with any local app data
+ * Class that manages Firestore data flow along with any local app data.
  */
 
 var Data = function () {

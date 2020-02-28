@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>stats/index.js - Documentation</title>
+    <title>NewLocationDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,133 +29,164 @@
 
 <div id="main">
     
-    <h1 class="page-title">stats/index.js</h1>
+    <h1 class="page-title">NewLocationDialog</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import $ from 'jquery';
+        <h2>
+        NewLocationDialog
+        </h2>
+        
+            <div class="class-description"><p>Class that represents the &quot;New Location&quot; dialog/view that enables tutoring
+supervisors to create new locations that students can tutor at (and be safely
+supervised) at.</p></div>
+        
+    
+</header>
 
-const Utils = require('@tutorbook/utils');
-const Card = require('@tutorbook/card');
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-class Stats {
+    
+    <h2>Constructor</h2>
+    
 
-    /**
-     * Creates and renders (using the global `window.app.render` object) a new 
-     * Stats object.
-     */
-    constructor() {
-        this.render = window.app.render;
-        this.renderSelf();
-    }
+    
+    <h4 class="name" id="NewLocationDialog"><span class="type-signature"></span>new NewLocationDialog<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
-    /**
-     * Renders the statistics view/page.
-     */
-    renderSelf() {
-        this.header = this.render.header('header-main', {
-            title: 'Tutorbook',
-        });
-        this.main = this.render.template('stats', {
-            title: window.app.location.name.split(' ')[0] + ' Statistics',
-            welcome: !window.app.onMobile,
-        });
-    }
+    
 
-    /**
-     * Views the statistics page (using the global `window.app.view` function).
-     * @see {@link Tutorbook#view}
-     */
-    view() {
-        window.app.nav.selected = 'Stats';
-        window.app.intercom.view(true);
-        window.app.view(this.header, this.main, '/app/stats');
-        this.cardsViewed ? null : this.viewCards();
-    }
 
-    /**
-     * Views the recent activity cards and service hour statistics card(s).
-     */
-    viewCards() {
-        this.cardsViewed = true;
-        this.viewRecentActivityCards();
-        this.viewServiceHourCards();
-    }
 
-    /**
-     * Views the recent activity cards from all of the current user's locations.
-     */
-    async viewRecentActivityCards() {
-        const emptyCard = Card.renderCard(
-            'You\'re Done!',
-            'Hooray you\'re all caught up, for now...',
-            'No recent activity at the ' + window.app.location.name + ' that ' +
-            'you haven\'t already addressed. Note that (right now) we only ' +
-            'show cards for new requests, canceled requests, and updated ' +
-            'profiles. More updates coming soon!', {
-                great: () => {
-                    $(emptyCard).remove();
-                },
-            },
-        );
-        $(emptyCard).attr('id', 'empty-card');
-        const renderCard = (doc, index) => {
-            const action = doc.data();
-            const card = Card.renderCard(
-                action.title,
-                action.subtitle,
-                action.summary, {
-                    dismiss: () => {
-                        $(card).remove();
-                        return doc.ref.delete();
-                    },
-                },
-            );
-            $(card).attr('id', doc.id).attr('index', index)
-                .attr('timestamp', action.timestamp);
-            return card;
-        };
-        const recycler = {
-            display: (doc, type, index) => {
-                $(this.main).find('#activity #cards')
-                    .find('#empty-card').remove().end()
-                    .append(renderCard(doc, index));
-            },
-            remove: (doc, type, index) => {
-                $(this.main).find('#activity #cards')
-                    .find('#empty-card').remove().end()
-                    .find('#' + doc.id).remove().end();
-            },
-            empty: (type, index) => {
-                $(this.main).find('#activity #cards [index="' + index + '"]')
-                    .remove();
-            },
-        };
-        const queries = {
-            activity: [],
-        };
-        (await Data.getLocations()).forEach(location => queries.activity
-            .push(window.app.db.collection('locations').doc(location.id)
-                .collection('recentActions').orderBy('timestamp').limit(10)));
-        Utils.recycle(queries, recycler);
-    }
+<div class="description">
+    <p>Creates and renders the &quot;New Location&quot; dialog/view.</p>
+</div>
 
-    /**
-     * Views the service hour statistics cards.
-     * @todo Actually make this do something.
-     */
-    viewServiceHourCards() {}
-}
 
-module.exports = Stats;</code></pre>
-        </article>
-    </section>
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1120">line 1120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Define what an empty location looks like and pass it into the
+<a href="EditLocationDialog.html"><code>parent</code></a>'s constructor.</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="EditLocationDialog.html">EditLocationDialog</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
