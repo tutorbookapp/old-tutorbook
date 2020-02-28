@@ -18489,8 +18489,8 @@ var axios = __webpack_require__(375);
 var Data = __webpack_require__(7);
 
 /**
- * Class that contains basic (and some very **not basic**) utils used across the 
- * program.
+ * Class that contains basic (and some very **not basic**) utilities used across 
+ * Tutorbook's web app.
  */
 
 var Utils = function () {
@@ -19410,6 +19410,21 @@ var Utils = function () {
             });
             return new _index3.MDCMenu(menuEl);
         }
+
+        /**
+         * Attaches an [`MDCTopAppBar`]{@link https://material.io/develop/web/components/top-app-bar/} 
+         * to a given header element, [`MDCRipple`]{@link https://material.io/develop/web/components/ripples/}'s 
+         * to that element's buttons and list items, and returns the managed 
+         * `MDCTopAppBar`.
+         * @example
+         * const header = Utils.attachHeader(this.header); // Pass an element
+         * @example
+         * const header = Utils.attachHeader('#my-header'); // Pass a query
+         * @param {(HTMLElement|string)} [headerEl='header .mdc-top-app-bar'] - The 
+         * header element (or string query for the element) to attach to.
+         * @return {MDCTopAppBar} The attached and managed top app bar instance.
+         */
+
     }, {
         key: 'attachHeader',
         value: function attachHeader() {
@@ -28890,11 +28905,16 @@ var SupervisorActiveAppt = __webpack_require__(17).supervisor.active;
 var SupervisorCanceledAppt = __webpack_require__(17).supervisor.canceled;
 var SupervisorModifiedAppt = __webpack_require__(17).supervisor.modified;
 
-// Class that provides a schedule view and header and manages all the data flow
-// concerning the user's appointments. Also provides an API to insert into the
-// schedule.
+/**
+ * Class that provides a schedule view and header and manages all the data flow
+ * concerning the user's appointments. Also provides an API to insert into the
+ * schedule.
+ */
 
 var Schedule = function () {
+    /**
+     * Creates (and renders) a new schedule view.
+     */
     function Schedule() {
         var _this = this;
 
@@ -28939,6 +28959,12 @@ var Schedule = function () {
         this.renderSelf();
     }
 
+    /**
+     * Looks at the schedule and removes any unnecessary date list dividers 
+     * (i.e. date dividers that don't have any appointments on those dates).
+     */
+
+
     _createClass(Schedule, [{
         key: 'refresh',
         value: function refresh() {
@@ -28955,6 +28981,18 @@ var Schedule = function () {
                 }
             });
         }
+
+        /**
+         * Hides Intercom, shows the schedule view, and updates the app's URL (to 
+         * `'app/schedule'`).
+         * @example
+         * window.app.schedule.view(); // View the already initialized app schedule.
+         * @example
+         * const Schedule = require('@tutorbook/schedule').default;
+         * const scheduleView = new Schedule(); // Create and view a new schedule.
+         * scheduleView.view();
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -28964,26 +29002,60 @@ var Schedule = function () {
             if (!this.managed) this.manage();
             this.viewAppts();
         }
+
+        /**
+         * Attaches the top app bar, ripples, and the "Load More" button click 
+         * listener.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
             var _this2 = this;
 
             this.managed = true;
-            _index2.MDCTopAppBar.attachTo(this.header);
+            Utils.attachHeader(this.header);
             _index.MDCRipple.attachTo((0, _jquery2.default)(this.main).find('#load-more')[0]);
             (0, _jquery2.default)(this.main).find('#load-more')[0].addEventListener('click', function () {
                 _this2.loadMore();
             });
         }
+
+        /**
+         * Reviews appointments and re-attaches listeners.
+         * @example
+         * window.app.schedule.reView(); // Re-view the default app schedule.
+         * @todo Just re-attach listeners.
+         */
+
     }, {
         key: 'reView',
         value: function reView() {
             this.viewAppts(); // TODO: Just re-attach listeners
         }
+
+        /**
+         * Re-attaches click listeners to appointment list items.
+         * @abstract
+         */
+
     }, {
         key: 'reViewAppts',
         value: function reViewAppts() {}
+
+        /**
+         * Views/recycles the user's
+         * - upcoming
+         * - past
+         * - active
+         * - modified
+         * - canceled
+         * appointments.
+         * @see {@link Recycler}
+         * @see {@link Utils#recycle}
+         * @todo Add proxy results too.
+         */
+
     }, {
         key: 'viewAppts',
         value: function viewAppts() {
@@ -28997,6 +29069,12 @@ var Schedule = function () {
             };
             Utils.recycle(queries, this.recycler);
         }
+
+        /**
+         * Loads more past appointments by increasing the query limit.
+         * @todo Add proxy results too.
+         */
+
     }, {
         key: 'loadMore',
         value: function loadMore() {
@@ -29006,6 +29084,14 @@ var Schedule = function () {
                 pastAppointments: db.collection('pastAppointments').orderBy('clockOut.sentTimestamp', 'desc').limit(this.limit)
             }, this.recycler);
         }
+
+        /**
+         * Renders the schedule view and header.
+         * @see {@link Render}
+         * @todo Make it look decent on a mobile device (change the look of date
+         * list dividers and remove the welcome message).
+         */
+
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
@@ -29017,6 +29103,12 @@ var Schedule = function () {
                 summary: window.app.user.type === 'Supervisor' ? 'View all past, ' + 'upcoming, and active tutoring appointments at the locations ' + 'you supervise.' : 'View past tutoring sessions, clock ' + 'out of active meetings and edit upcoming appointments.'
             });
         }
+
+        /**
+         * Adds an appointment list item to our schedule list.
+         * @param {HTMLElement} listItem - The appointment list item to view.
+         */
+
     }, {
         key: 'viewAppt',
         value: function viewAppt(listItem) {
@@ -29052,6 +29144,14 @@ var Schedule = function () {
             var listDivider = Schedule.renderDateDivider(timestamp);
             return (0, _jquery2.default)(listDivider).insertBefore(listItem);
         }
+
+        /**
+         * Renders a date list divider.
+         * @param {Date} date - The date of the appointment to render a list divider
+         * for.
+         * @return {HTMLElement} The rendered date list divider.
+         */
+
     }], [{
         key: 'renderDateDivider',
         value: function renderDateDivider(date) {
@@ -29066,6 +29166,17 @@ var Schedule = function () {
             });
             return divider;
         }
+
+        /**
+         * Gets the day and date string (e.g. `Wed 2/25`) given a date object.
+         * @example
+         * const now = new Date(); // Let's say it's Monday 2/1/2020
+         * const dayAndDateString = Schedule.getDayAndDateString(now);
+         * assert(dayAndDateString === 'Mon, 2/1'); // Should be 'Mon, 2/1'
+         * @param {Date} date - The date object to convert to a readable string.
+         * @return {string} The date in a 'Day, Mon/Date' format (e.g. `Wed 2/25`).
+         */
+
     }, {
         key: 'getDayAndDateString',
         value: function getDayAndDateString(date) {
@@ -29073,6 +29184,21 @@ var Schedule = function () {
             // NOTE: Date().getMonth() returns a 0 based integer (i.e. 0 = Jan)
             return abbr[date.getDay()] + ', ' + (date.getMonth() + 1) + '/' + date.getDate();
         }
+
+        /**
+         * Gets the next date with a given weekday (e.g. the date of next Monday).
+         * @example
+         * const now = new Date(); // Let's say it's Monday 2/1/2020
+         * const nextTues = Schedule.getNextDateWithDay('Tuesday');
+         * console.log(nextTues); // Should be Tuesday 2/9/2020
+         * @example
+         * const now = new Date(); // Let's say it's Monday 2/1/2020
+         * const nextMon = Schedule.getNextDateWithDay('Monday');
+         * console.log(nextMon); // Should be Monday 2/1/2020
+         * @param {string} day - The weekday to get the next date of.
+         * @return {Date} The next date with the given weekday.
+         */
+
     }, {
         key: 'getNextDateWithDay',
         value: function getNextDateWithDay(day) {
@@ -29118,6 +29244,11 @@ Schedule.renderApptListItem = function (doc) {
     return new Appt(doc).el;
 };
 
+/**
+ * Class that shows all of the appointments for the current app location.
+ * @extends Schedule
+ */
+
 var SupervisorSchedule = function (_Schedule) {
     _inherits(SupervisorSchedule, _Schedule);
 
@@ -29129,6 +29260,13 @@ var SupervisorSchedule = function (_Schedule) {
 
     _createClass(SupervisorSchedule, [{
         key: 'renderHit',
+
+        /**
+         * Renders the search result hit for the appointments search header view.
+         * @param {Object} hit - The Algolia search result data.
+         * @return {HTMLElement} The rendered appointment search result list item 
+         * (that is appended to the search results list in the user's header view).
+         */
         value: function renderHit(hit) {
             var doc = {
                 data: function data() {
@@ -29140,6 +29278,14 @@ var SupervisorSchedule = function (_Schedule) {
             _index.MDCRipple.attachTo(el);
             return (0, _jquery2.default)(el).find('button').remove().end()[0];
         }
+
+        /**
+         * Renders the supervisor schedule view by changing the default header to 
+         * that of a search bar and by adding a "New Record" FAB that opens a
+         * [NewPastApptDialog]{@link NewPastApptDialog} when clicked.
+         * @see {@link SearchHeader}
+         */
+
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
@@ -29176,6 +29322,14 @@ var SupervisorSchedule = function (_Schedule) {
                 label: 'Record'
             }));
         }
+
+        /**
+         * Manages the supervisor schedule view by adding a click listener to the
+         * "New Record" FAB (i.e. when it's clicked, open a 
+         * [NewPastApptDialog]{@link NewPastApptDialog}).
+         * @see {@link NewPastApptDialog}
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -29186,18 +29340,38 @@ var SupervisorSchedule = function (_Schedule) {
             });
             _index.MDCRipple.attachTo(btn);
         }
+
+        /**
+         * Views the schedule and manages the search header.
+         * @see {@link SearchHeader}
+         */
+
     }, {
         key: 'view',
         value: function view() {
             _get(SupervisorSchedule.prototype.__proto__ || Object.getPrototypeOf(SupervisorSchedule.prototype), 'view', this).call(this);
             this.search.manage();
         }
+
+        /**
+         * Re-views the schedule and manages the search header.
+         * @see {@link SearchHeader}
+         */
+
     }, {
         key: 'reView',
         value: function reView() {
             _get(SupervisorSchedule.prototype.__proto__ || Object.getPrototypeOf(SupervisorSchedule.prototype), 'reView', this).call(this);
             this.search.manage();
         }
+
+        /**
+         * Views all of the appointments at the current app partition's primary
+         * location.
+         * @todo Show all of the appointments for all of the locations that the 
+         * current user supervises.
+         */
+
     }, {
         key: 'viewAppts',
         value: function viewAppts() {
@@ -29211,6 +29385,11 @@ var SupervisorSchedule = function (_Schedule) {
             };
             Utils.recycle(queries, this.recycler);
         }
+
+        /**
+         * Loads more past appointments by increasing the query limit.
+         */
+
     }, {
         key: 'loadMore',
         value: function loadMore() {
@@ -29220,6 +29399,18 @@ var SupervisorSchedule = function (_Schedule) {
                 pastAppointments: db.collection('pastAppointments').orderBy('clockOut.sentTimestamp', 'desc').limit(this.limit)
             }, this.recycler);
         }
+
+        /**
+         * Renders, manages, and returns an "Upcoming Appointments" shortcut card
+         * that enables supervisors to jump to their schedule (from their dashboard
+         * view) with one click.
+         * @example
+         * const SupervisorSchedule = require('@tutorbook/schedule').supervisor;
+         * const card = SupervisorSchedule.renderShortcutCard();
+         * $('.mdc-layout-grid__inner').append(card); // Add card to MDCLayoutGrid.
+         * @return {HTMLElement} The rendered (and managed) shortcut card.
+         */
+
     }], [{
         key: 'renderShortcutCard',
         value: function renderShortcutCard() {
@@ -59961,11 +60152,20 @@ window.onload = function () {
      * anywhere in your code (e.g. `window.app.render` points to a 
      * [Render]{@link Render} object).
      * @example
-     * window.app.render.header('header-main'); // Points to a `Render` object.
+     * const headerEl = window.app.render.header('header-main'); // Points to an
+     * // already initialized `Render` object used to render app elements.
+     * @example
      * window.app.id; // Points to the hard-coded website configuration ID.
-     * window.app.locations; // Points to an array of valid location data.
-     * window.app.data; // Points to a `Data` object
+     * @example
+     * for (location of window.app.locations) {
+     *   // Do something with each of the locations stored in `window.app`.
+     *   console.log(location.name + ' (' + location.id + ')');
+     * }
+     * @example
+     * const timeSelect = window.app.render.select('Time', '', window.app.data
+     *   .timeStrings); // Has an already initialized `Data` object too.
      * @global 
+     * @see {@link Tutorbook}
      */
     window.app = new Tutorbook();
 };

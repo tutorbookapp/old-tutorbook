@@ -18,8 +18,8 @@ const axios = require('axios');
 const Data = require('@tutorbook/data');
 
 /**
- * Class that contains basic (and some very **not basic**) utils used across the 
- * program.
+ * Class that contains basic (and some very **not basic**) utilities used across 
+ * Tutorbook's web app.
  */
 class Utils {
     /**
@@ -514,6 +514,19 @@ class Utils {
         return new MDCMenu(menuEl);
     }
 
+    /**
+     * Attaches an [`MDCTopAppBar`]{@link https://material.io/develop/web/components/top-app-bar/} 
+     * to a given header element, [`MDCRipple`]{@link https://material.io/develop/web/components/ripples/}'s 
+     * to that element's buttons and list items, and returns the managed 
+     * `MDCTopAppBar`.
+     * @example
+     * const header = Utils.attachHeader(this.header); // Pass an element
+     * @example
+     * const header = Utils.attachHeader('#my-header'); // Pass a query
+     * @param {(HTMLElement|string)} [headerEl='header .mdc-top-app-bar'] - The 
+     * header element (or string query for the element) to attach to.
+     * @return {MDCTopAppBar} The attached and managed top app bar instance.
+     */
     static attachHeader(headerEl = 'header .mdc-top-app-bar') {
         if (typeof headerEl === 'string') headerEl = $(headerEl)[0];
         $(headerEl).find('.mdc-icon-button').each(function() {

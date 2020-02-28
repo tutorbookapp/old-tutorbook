@@ -442,11 +442,20 @@ window.onload = () => {
      * anywhere in your code (e.g. `window.app.render` points to a 
      * [Render]{@link Render} object).
      * @example
-     * window.app.render.header('header-main'); // Points to a `Render` object.
+     * const headerEl = window.app.render.header('header-main'); // Points to an
+     * // already initialized `Render` object used to render app elements.
+     * @example
      * window.app.id; // Points to the hard-coded website configuration ID.
-     * window.app.locations; // Points to an array of valid location data.
-     * window.app.data; // Points to a `Data` object
+     * @example
+     * for (location of window.app.locations) {
+     *   // Do something with each of the locations stored in `window.app`.
+     *   console.log(location.name + ' (' + location.id + ')');
+     * }
+     * @example
+     * const timeSelect = window.app.render.select('Time', '', window.app.data
+     *   .timeStrings); // Has an already initialized `Data` object too.
      * @global 
+     * @see {@link Tutorbook}
      */
     window.app = new Tutorbook();
 };
