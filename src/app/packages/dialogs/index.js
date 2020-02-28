@@ -523,17 +523,30 @@ class ConfirmationDialog {
     }
 };
 
-
+/**
+ * Class that represents the "View Request" view/dialog within our web app.
+ */
 class ViewRequestDialog {
 
-    // Renders the dialog for the given request
+    /**
+     * Creates and renders the dialog for the given request.
+     * @param {Object} request - The request data to view.
+     * @param {string} id - The Firestore document ID for the request.
+     */
     constructor(request, id) {
         this.request = request;
         this.id = id;
         this.render = window.app.render;
-        this.renderSelf();
+        this.rendering = this.renderSelf();
     }
 
+    /**
+     * Renders the "View Request" dialog using the global `window.app.render`
+     * object.
+     * @see {@link Render}
+     * @return {Promise} A `Promise` that resolves once the dialog/view is fully
+     * rendered (i.e. when it is ready to be viewed).
+     */
     async renderSelf() {
         const that = this;
         const request = this.request;
@@ -597,15 +610,21 @@ class ViewRequestDialog {
         this.main = el;
     }
 
-    // Views the dialog and adds manager(s)
+    /**
+     * Views the dialog and adds manager(s)
+     */
     async view() {
-        if (!this.main) await this.renderSelf();
+        await this.rendering;
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         this.manage();
-
     }
 
+    /**
+     * Adds click listeners and attaches various 
+     * [MDC components]{@link https://material.io/develop/web/} in the "View
+     * Request" view/dialog.
+     */
     manage() {
         MDCTopAppBar.attachTo(this.header);
         const dialog = this.main;
@@ -626,24 +645,46 @@ class ViewRequestDialog {
     }
 };
 
+/**
+ * Class that represents the "Modified Request" view/dialog within our web app.
+ * @extends ViewRequestDialog
+ */
 class ViewModifiedRequestDialog extends ViewRequestDialog {
+    /**
+     * Creates and renders a new "Modified Request" view/dialog.
+     */
     constructor(request) {
         super(request.for);
         this.modifiedRequest = request;
     }
 
+    /**
+     * Replaces the "View Request" top app bar title with "Modified Request".
+     */
     async renderSelf() {
         await super.renderSelf();
         $(this.header).find('.mdc-top-app-bar__title').text('Modified Request');
     }
 };
 
+/**
+ * Class that represents the "Canceled Request" view/dialog within our web app.
+ * @extends ViewRequestDialog
+ */
 class ViewCanceledRequestDialog extends ViewRequestDialog {
+    /**
+     * Creates and renders the new "Canceled Request" view/dialog (stores the
+     * entire canceled request data (i.e. who canceled the request and when) in 
+     * `this.canceledRequest` in addition to the default `this.request` field).
+     */
     constructor(request) {
         super(request.for);
         this.canceledRequest = request;
     }
 
+    /**
+     * Replaces the "View Request" top app bar title with "Canceled Request".
+     */
     async renderSelf() {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -652,12 +693,24 @@ class ViewCanceledRequestDialog extends ViewRequestDialog {
     }
 };
 
+/**
+ * Class that represents the "Rejected Request" view/dialog within our web app.
+ * @extends ViewRequestDialog
+ */
 class ViewRejectedRequestDialog extends ViewRequestDialog {
+    /**
+     * Creates and renders the new "Rejected Request" view/dialog (stores the
+     * entire rejected request data (i.e. who rejected it and when) in 
+     * `this.rejectedRequest` in addition to the default `this.request` field).
+     */
     constructor(request) {
         super(request.for);
         this.rejectedRequest = request;
     }
 
+    /**
+     * Replaces the "View Request" top app bar title with "Rejected Request".
+     */
     async renderSelf() {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -666,6 +719,11 @@ class ViewRejectedRequestDialog extends ViewRequestDialog {
     }
 };
 
+/**
+ * Class that represents the dialog that enables supervisors to edit their
+ * location's open hours.
+ * @see {@link EditAvailabilityDialog}
+ */
 class EditHourDialog {
     constructor(textField) {
         this.render = window.app.render;
@@ -804,6 +862,21 @@ class EditHourDialog {
     }
 };
 
+/**
+ * Class that represents the "Edit Location" dialog/view that enables tutoring
+ * supervisors to:
+ * - Edit when their location is open
+ * - Configure service hour rounding for past appointments clocked at their 
+ *   location
+ * - Change their location's description (name cannot be changed... yet)
+ * - Add and remove supervisors for their location
+ * @todo Enable supervisors to change their location's name.
+ * @todo Refresh changes live and distribute them across the app (i.e. remove
+ * the need to reload the app after making changes to locations or website
+ * configurations).
+ * @todo Change the supervisor inputs into 
+ * [user search text fields]{@linkplain Render#searchTextFieldItem}.
+ */
 class EditLocationDialog {
     constructor(location, id) {
         Utils.sync(Data.emptyLocation, this);
@@ -1029,7 +1102,21 @@ class EditLocationDialog {
     }
 };
 
+/**
+ * Class that represents the "New Location" dialog/view that enables tutoring
+ * supervisors to create new locations that students can tutor at (and be safely
+ * supervised) at.
+ * @extends EditLocationDialog
+ * @todo Implement this class, add a "New Location" FAB in the supervisor's 
+ * ["Configuration" view]{@link https://tutorbook.app/app/config}, and roll the 
+ * features out to production.
+ */
 class NewLocationDialog extends EditLocationDialog {
+    /**
+     * Creates and renders the "New Location" dialog/view.
+     * @todo Define what an empty location looks like and pass it into the
+     * [parent]{@link EditLocationDialog}'s constructor.
+     */
     constructor() {
         const location = {};
         super(location, Utils.genID());
@@ -1049,8 +1136,12 @@ class NewLocationDialog extends EditLocationDialog {
  * their inbound and/or outbound lesson requests.
  */
 class EditRequestDialog {
-
-    // Renders the dialog for the given request
+    /**
+     * Creates and renders the "Edit Request" dialog for the given request.
+     * @param {Object} request - The request data to edit in this dialog.
+     * @param {string} id - The Firestore document ID that the request data
+     * came from (i.e. the ID of the Firestore document to edit).
+     */
     constructor(request, id) {
         this.request = request;
         this.id = id;
@@ -1657,12 +1748,29 @@ class StripeRequestDialog extends PaidRequestDialog {
 };
 
 
+/**
+ * Class that represents the "View Appointment" view/dialog in our web app.
+ * @extends ViewRequestDialog
+ */
 class ViewApptDialog extends ViewRequestDialog {
+    /**
+     * Creates and renders a new "View Appointment" dialog (building off of what
+     * has already been initialized and rendered in the "View Request" dialog).
+     * @see {@link ViewRequestDialog}
+     */
     constructor(appt, id) {
         super(appt.for, id);
         this.appt = appt;
     }
 
+    /**
+     * Modifies the already rendered "View Request" dialog to:
+     * 1. Add any necessary FABs (e.g. a "Request Payment" button for paid 
+     *    tutors or a "Clock-In" button for service hour tutors).
+     * 2. Add an "Hours clocked" section for service hours tutors.
+     * 3. Combine the "From pupil" and "To tutor" list divider headers into one 
+     *    "Attendees" header for supervisors
+     */
     async renderSelf() {
         await super.renderSelf();
         if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
@@ -1693,6 +1801,10 @@ class ViewApptDialog extends ViewRequestDialog {
         });
     }
 
+    /**
+     * Adds click listeners (i.e. on the FAB button(s)) and attaches the
+     * necessary MDC components.
+     */
     manage() {
         super.manage();
         $(this.main).find('.mdc-fab').each(function() {
@@ -1725,6 +1837,15 @@ class ViewApptDialog extends ViewRequestDialog {
         }
     }
 
+    /**
+     * Clocks the current user (i.e. the tutor of the appointment) in by
+     * sending a clock-in request to the appointment's location's supervisors.
+     * @return {Promise<undefined>} Promise that resolves once the clock-in
+     * request has been sent or has failed to send.
+     * @todo Add approval/rejection listener based on response to REST API 
+     * request (i.e. a snackbar that tells the tutor if their request was
+     * rejected or approved).
+     */
     async clockIn() {
         const reset = () => {
             clearInterval(this.timer);
@@ -1759,6 +1880,15 @@ class ViewApptDialog extends ViewRequestDialog {
         }
     }
 
+    /**
+     * Clocks the current user (i.e. the tutor of the appointment) out by
+     * sending a clock-out request to the appointment's location's supervisors.
+     * @return {Promise<undefined>} Promise that resolves once the clock-out
+     * request has been sent or has failed to send.
+     * @todo Add approval/rejection listener based on response to REST API 
+     * request (i.e. a snackbar that tells the tutor if their request was
+     * rejected or approved).
+     */
     async clockOut() {
         const reset = () => {
             this.timer = setInterval(() => {
@@ -1793,6 +1923,13 @@ class ViewApptDialog extends ViewRequestDialog {
         }
     }
 
+    /**
+     * Method that is called every millisecond (i.e. with 
+     * `window.setInterval(() => this.update(), 10)`) and updates the dialog's 
+     * timer text fields to show the tutor a running total of time spent at an 
+     * appointment.
+     * @see {@link https://www.w3schools.com/jsref/met_win_setinterval.asp}
+     */
     update() {
         // Formatted as: Hr:Min:Sec.Millisec
         var currentTimeDisplay = $(this.main).find('#Current input')[0];

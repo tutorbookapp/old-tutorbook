@@ -5521,17 +5521,34 @@ var ConfirmationDialog = function () {
 
 ;
 
+/**
+ * Class that represents the "View Request" view/dialog within our web app.
+ */
+
 var ViewRequestDialog = function () {
 
-    // Renders the dialog for the given request
+    /**
+     * Creates and renders the dialog for the given request.
+     * @param {Object} request - The request data to view.
+     * @param {string} id - The Firestore document ID for the request.
+     */
     function ViewRequestDialog(request, id) {
         _classCallCheck(this, ViewRequestDialog);
 
         this.request = request;
         this.id = id;
         this.render = window.app.render;
-        this.renderSelf();
+        this.rendering = this.renderSelf();
     }
+
+    /**
+     * Renders the "View Request" dialog using the global `window.app.render`
+     * object.
+     * @see {@link Render}
+     * @return {Promise} A `Promise` that resolves once the dialog/view is fully
+     * rendered (i.e. when it is ready to be viewed).
+     */
+
 
     _createClass(ViewRequestDialog, [{
         key: 'renderSelf',
@@ -5603,16 +5620,25 @@ var ViewRequestDialog = function () {
             this.main = el;
         }
 
-        // Views the dialog and adds manager(s)
+        /**
+         * Views the dialog and adds manager(s)
+         */
 
     }, {
         key: 'view',
         value: async function view() {
-            if (!this.main) await this.renderSelf();
+            await this.rendering;
             window.app.intercom.view(false);
             window.app.view(this.header, this.main);
             this.manage();
         }
+
+        /**
+         * Adds click listeners and attaches various 
+         * [MDC components]{@link https://material.io/develop/web/} in the "View
+         * Request" view/dialog.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -5641,9 +5667,17 @@ var ViewRequestDialog = function () {
 
 ;
 
+/**
+ * Class that represents the "Modified Request" view/dialog within our web app.
+ * @extends ViewRequestDialog
+ */
+
 var ViewModifiedRequestDialog = function (_ViewRequestDialog) {
     _inherits(ViewModifiedRequestDialog, _ViewRequestDialog);
 
+    /**
+     * Creates and renders a new "Modified Request" view/dialog.
+     */
     function ViewModifiedRequestDialog(request) {
         _classCallCheck(this, ViewModifiedRequestDialog);
 
@@ -5652,6 +5686,11 @@ var ViewModifiedRequestDialog = function (_ViewRequestDialog) {
         _this10.modifiedRequest = request;
         return _this10;
     }
+
+    /**
+     * Replaces the "View Request" top app bar title with "Modified Request".
+     */
+
 
     _createClass(ViewModifiedRequestDialog, [{
         key: 'renderSelf',
@@ -5666,9 +5705,19 @@ var ViewModifiedRequestDialog = function (_ViewRequestDialog) {
 
 ;
 
+/**
+ * Class that represents the "Canceled Request" view/dialog within our web app.
+ * @extends ViewRequestDialog
+ */
+
 var ViewCanceledRequestDialog = function (_ViewRequestDialog2) {
     _inherits(ViewCanceledRequestDialog, _ViewRequestDialog2);
 
+    /**
+     * Creates and renders the new "Canceled Request" view/dialog (stores the
+     * entire canceled request data (i.e. who canceled the request and when) in 
+     * `this.canceledRequest` in addition to the default `this.request` field).
+     */
     function ViewCanceledRequestDialog(request) {
         _classCallCheck(this, ViewCanceledRequestDialog);
 
@@ -5677,6 +5726,11 @@ var ViewCanceledRequestDialog = function (_ViewRequestDialog2) {
         _this11.canceledRequest = request;
         return _this11;
     }
+
+    /**
+     * Replaces the "View Request" top app bar title with "Canceled Request".
+     */
+
 
     _createClass(ViewCanceledRequestDialog, [{
         key: 'renderSelf',
@@ -5693,9 +5747,19 @@ var ViewCanceledRequestDialog = function (_ViewRequestDialog2) {
 
 ;
 
+/**
+ * Class that represents the "Rejected Request" view/dialog within our web app.
+ * @extends ViewRequestDialog
+ */
+
 var ViewRejectedRequestDialog = function (_ViewRequestDialog3) {
     _inherits(ViewRejectedRequestDialog, _ViewRequestDialog3);
 
+    /**
+     * Creates and renders the new "Rejected Request" view/dialog (stores the
+     * entire rejected request data (i.e. who rejected it and when) in 
+     * `this.rejectedRequest` in addition to the default `this.request` field).
+     */
     function ViewRejectedRequestDialog(request) {
         _classCallCheck(this, ViewRejectedRequestDialog);
 
@@ -5704,6 +5768,11 @@ var ViewRejectedRequestDialog = function (_ViewRequestDialog3) {
         _this12.rejectedRequest = request;
         return _this12;
     }
+
+    /**
+     * Replaces the "View Request" top app bar title with "Rejected Request".
+     */
+
 
     _createClass(ViewRejectedRequestDialog, [{
         key: 'renderSelf',
@@ -5719,6 +5788,12 @@ var ViewRejectedRequestDialog = function (_ViewRequestDialog3) {
 }(ViewRequestDialog);
 
 ;
+
+/**
+ * Class that represents the dialog that enables supervisors to edit their
+ * location's open hours.
+ * @see {@link EditAvailabilityDialog}
+ */
 
 var EditHourDialog = function () {
     function EditHourDialog(textField) {
@@ -5891,6 +5966,22 @@ var EditHourDialog = function () {
 }();
 
 ;
+
+/**
+ * Class that represents the "Edit Location" dialog/view that enables tutoring
+ * supervisors to:
+ * - Edit when their location is open
+ * - Configure service hour rounding for past appointments clocked at their 
+ *   location
+ * - Change their location's description (name cannot be changed... yet)
+ * - Add and remove supervisors for their location
+ * @todo Enable supervisors to change their location's name.
+ * @todo Refresh changes live and distribute them across the app (i.e. remove
+ * the need to reload the app after making changes to locations or website
+ * configurations).
+ * @todo Change the supervisor inputs into 
+ * [user search text fields]{@linkplain Render#searchTextFieldItem}.
+ */
 
 var EditLocationDialog = function () {
     function EditLocationDialog(location, id) {
@@ -6205,9 +6296,24 @@ var EditLocationDialog = function () {
 
 ;
 
+/**
+ * Class that represents the "New Location" dialog/view that enables tutoring
+ * supervisors to create new locations that students can tutor at (and be safely
+ * supervised) at.
+ * @extends EditLocationDialog
+ * @todo Implement this class, add a "New Location" FAB in the supervisor's 
+ * ["Configuration" view]{@link https://tutorbook.app/app/config}, and roll the 
+ * features out to production.
+ */
+
 var NewLocationDialog = function (_EditLocationDialog) {
     _inherits(NewLocationDialog, _EditLocationDialog);
 
+    /**
+     * Creates and renders the "New Location" dialog/view.
+     * @todo Define what an empty location looks like and pass it into the
+     * [parent]{@link EditLocationDialog}'s constructor.
+     */
     function NewLocationDialog() {
         _classCallCheck(this, NewLocationDialog);
 
@@ -6239,8 +6345,12 @@ var NewLocationDialog = function (_EditLocationDialog) {
  */
 
 var EditRequestDialog = function () {
-
-    // Renders the dialog for the given request
+    /**
+     * Creates and renders the "Edit Request" dialog for the given request.
+     * @param {Object} request - The request data to edit in this dialog.
+     * @param {string} id - The Firestore document ID that the request data
+     * came from (i.e. the ID of the Firestore document to edit).
+     */
     function EditRequestDialog(request, id) {
         _classCallCheck(this, EditRequestDialog);
 
@@ -6890,9 +7000,19 @@ var StripeRequestDialog = function (_PaidRequestDialog) {
 
 ;
 
+/**
+ * Class that represents the "View Appointment" view/dialog in our web app.
+ * @extends ViewRequestDialog
+ */
+
 var ViewApptDialog = function (_ViewRequestDialog4) {
     _inherits(ViewApptDialog, _ViewRequestDialog4);
 
+    /**
+     * Creates and renders a new "View Appointment" dialog (building off of what
+     * has already been initialized and rendered in the "View Request" dialog).
+     * @see {@link ViewRequestDialog}
+     */
     function ViewApptDialog(appt, id) {
         _classCallCheck(this, ViewApptDialog);
 
@@ -6901,6 +7021,16 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
         _this26.appt = appt;
         return _this26;
     }
+
+    /**
+     * Modifies the already rendered "View Request" dialog to:
+     * 1. Add any necessary FABs (e.g. a "Request Payment" button for paid 
+     *    tutors or a "Clock-In" button for service hour tutors).
+     * 2. Add an "Hours clocked" section for service hours tutors.
+     * 3. Combine the "From pupil" and "To tutor" list divider headers into one 
+     *    "Attendees" header for supervisors
+     */
+
 
     _createClass(ViewApptDialog, [{
         key: 'renderSelf',
@@ -6929,6 +7059,12 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                 title: 'Upcoming Appointment'
             });
         }
+
+        /**
+         * Adds click listeners (i.e. on the FAB button(s)) and attaches the
+         * necessary MDC components.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -6964,6 +7100,17 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                 }
             }
         }
+
+        /**
+         * Clocks the current user (i.e. the tutor of the appointment) in by
+         * sending a clock-in request to the appointment's location's supervisors.
+         * @return {Promise<undefined>} Promise that resolves once the clock-in
+         * request has been sent or has failed to send.
+         * @todo Add approval/rejection listener based on response to REST API 
+         * request (i.e. a snackbar that tells the tutor if their request was
+         * rejected or approved).
+         */
+
     }, {
         key: 'clockIn',
         value: async function clockIn() {
@@ -7007,6 +7154,17 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                 // recipient Firestore reference path.
             }
         }
+
+        /**
+         * Clocks the current user (i.e. the tutor of the appointment) out by
+         * sending a clock-out request to the appointment's location's supervisors.
+         * @return {Promise<undefined>} Promise that resolves once the clock-out
+         * request has been sent or has failed to send.
+         * @todo Add approval/rejection listener based on response to REST API 
+         * request (i.e. a snackbar that tells the tutor if their request was
+         * rejected or approved).
+         */
+
     }, {
         key: 'clockOut',
         value: async function clockOut() {
@@ -7050,6 +7208,15 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                 // recipient Firestore reference path.
             }
         }
+
+        /**
+         * Method that is called every millisecond (i.e. with 
+         * `window.setInterval(() => this.update(), 10)`) and updates the dialog's 
+         * timer text fields to show the tutor a running total of time spent at an 
+         * appointment.
+         * @see {@link https://www.w3schools.com/jsref/met_win_setinterval.asp}
+         */
+
     }, {
         key: 'update',
         value: function update() {
