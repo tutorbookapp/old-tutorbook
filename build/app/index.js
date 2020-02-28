@@ -19743,23 +19743,33 @@ var Utils = function () {
             }
             return data.day + 's at ' + data.location + ' from ' + data.fromTime + ' to ' + data.toTime;
         }
+
+        /**
+         * Parses an array of hour strings and returns an [Hours]{@link Hours}
+         * object.
+         * @example
+         * Utils.parseHourStrings([
+         *   'Fridays from 10:00 AM to 3:00 PM',
+         *   'Fridays from 10:00 AM to 3:00 PM',
+         *   'Tuesdays from 10:00 AM to 3:00 PM',
+         * ]); 
+         * // The code above will return {
+         * //   Friday: [
+         * //     { open: '10:00 AM', close: '3:00 PM' },
+         * //     { open: '10:00 AM', close: '3:00 PM' },
+         * //   ],
+         * //   Tuesday: [
+         * //     { open: '10:00 AM', close: '3:00 PM' },
+         * //   ],
+         * // };
+         * @see {@link Utils#parseHourString}
+         * @param {string[]} strings - The hour strings to parse.
+         * @return {Hours} The hour strings as an [Hours]{@link Hours} object.
+         */
+
     }, {
         key: 'parseHourStrings',
         value: function parseHourStrings(strings) {
-            // @param [
-            //   'Fridays from 10:00 AM to 3:00 PM',
-            //   'Fridays from 10:00 AM to 3:00 PM',
-            //   'Tuesdays from 10:00 AM to 3:00 PM',
-            // ]
-            // @return hours: {
-            //   Friday: [
-            //     { open: '10:00 AM', close: '3:00 PM' },
-            //     { open: '10:00 AM', close: '3:00 PM' },
-            //   ],
-            //   Tuesday: [
-            //     { open: '10:00 AM', close: '3:00 PM' },
-            //   ],
-            // }
             var timeslots = strings.map(function (str) {
                 return Utils.parseHourString(str);
             });
@@ -19775,21 +19785,47 @@ var Utils = function () {
             });
             return hours;
         }
+
+        /**
+         * A window of time (typically used in availability or open hour data
+         * storage/processing).
+         * @typedef {Object} Timeslot
+         * @property {string} open - The opening time or period (e.g. '3:00 PM').
+         * @property {string} close - The closing time or period.
+         * @property {string} day - The day of the week (e.g. 'Friday').
+         */
+
+        /**
+         * Parses a given open hour string into a useful map of data.
+         * @example
+         * Utils.parseHourString('Fridays from 10:00 AM to 3:00 PM');
+         * // The code above returns {
+         * //   day: 'Friday',
+         * //   open: '10:00 AM',
+         * //   close: '3:00 PM',
+         * // }
+         * @param {string} string - The open hour string to parse.
+         * @return {Timeslot} The parsed map of data.
+         */
+
     }, {
         key: 'parseHourString',
         value: function parseHourString(string) {
-            // @param 'Fridays from 10:00 AM to 3:00 PM'
-            // @return {
-            //   day: 'Friday',
-            //   open: '10:00 AM',
-            //   close: '3:00 PM',
-            // }
             try {
-                var split = string.split(' ');
+                var _string$split = string.split(' from '),
+                    _string$split2 = _slicedToArray(_string$split, 2),
+                    day = _string$split2[0],
+                    times = _string$split2[1];
+
+                var _times$split = times.split(' to '),
+                    _times$split2 = _slicedToArray(_times$split, 2),
+                    from = _times$split2[0],
+                    to = _times$split2[1];
+
                 return {
-                    day: split[0].slice(0, -1) || '',
-                    open: split[2] && split[3] ? split[2] + ' ' + split[3] : '',
-                    close: split[5] && split[6] ? split[5] + ' ' + split[6] : ''
+                    day: day.endsWith('s') ? day.slice(0, -1) : day,
+                    open: from,
+                    close: to
                 };
             } catch (e) {
                 console.warn('[WARNING] Could not parse hour string:', string);
@@ -20657,6 +20693,13 @@ var Data = function () {
                 id: id
             });
         }
+
+        /**
+         * Updates the given location's Firestore data.
+         * @param {Location} location - The updated location data.
+         * @param {string} id - The location's Firestore document ID.
+         */
+
     }, {
         key: 'updateLocation',
         value: function updateLocation(location, id) {
@@ -21035,6 +21078,29 @@ Data.roundings = ['Up', 'Down', 'Normally'];
 
 // Round durations to the nearest (e.g. 'Minute' : 23.3 mins --> 23 mins).
 Data.thresholds = ['Minute', '5 Minutes', '15 Minutes', '30 Minutes', 'Hour'];
+
+/**
+ * An open hours object that represents/stores when a location is open for
+ * tutoring.
+ * @typedef {Object} Hours
+ * @todo Add property definitions for the days of the week.
+ * @todo Refactor this data storage object to allow for more flexibility in 
+ * Firestore indexes/queries.
+ */
+
+/**
+ * A location object that stores tutoring location configuration data.
+ * @typedef {Object} Location
+ * @property {string} name - The location's name (e.g. Gunn Academic Center).
+ * @property {string} [description=''] - The location's description.
+ * @property {string} [city='Palo Alto, CA'] - The location's city.
+ * @property {Hours} hours - The location's open hours.
+ * @property {Object} config - Configuration data (e.g. service hour rounding).
+ * @property {string[]} supervisors - An array of supervisor uIDs.
+ * @property {Date} timestamp - When the location was first created.
+ * @property {string} [url='https://tutorbook.app'] - The URL of the location's 
+ * preferred app partition.
+ */
 
 Data.emptyLocation = {
     name: '',
@@ -107792,15 +107858,21 @@ var Card = __webpack_require__(20);
 var HorzScroller = __webpack_require__(137);
 var HrsConfig = __webpack_require__(485);
 
-// Creates a configuration screen to manage all data unique to each school or
-// location. Enables supervisors to:
-// 1) Create and edit locations
-// 2) Edit list of subjects
-// 3) Edit list of grades
-// 4) Edit school schedule
-// 5) Define service hour rounding rules
+/**
+ * Class that represents a configuration screen to manage all data unique to 
+ * each school, location, and website. Enables tutoring supervisors to:
+ * - Create and edit locations
+ * - Edit list of subjects
+ * - Edit list of grades
+ * - Edit school schedule
+ * - Define service hour rounding rules
+ */
 
 var Config = function () {
+    /**
+     * Creates and renders a new configuration main screen and search header.
+     * @see {@link SearchHeader}
+     */
     function Config() {
         _classCallCheck(this, Config);
 
@@ -107814,6 +107886,12 @@ var Config = function () {
         this.renderSelf();
     }
 
+    /**
+     * Renders the main configuration screen template (the header element is
+     * already rendered by it's [SearchHeader]{@link SearchHeader} object).
+     */
+
+
     _createClass(Config, [{
         key: 'renderSelf',
         value: function renderSelf() {
@@ -107823,12 +107901,26 @@ var Config = function () {
             (0, _jquery2.default)(this.main).append(this.render.divider('Locations')).append(this.horz.el);
             this.header = this.search.el;
         }
+
+        /**
+         * Attaches the top app bar.
+         * @see {@link Utils#attachHeader}
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
             this.managed = true;
-            _index.MDCTopAppBar.attachTo(this.header);
+            Utils.attachHeader(this.header);
         }
+
+        /**
+         * Views (and subsequently manages) the main configuration screen and 
+         * header.
+         * @example
+         * window.app.config.view(); // Views the configuration screen and URL.
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -107840,6 +107932,12 @@ var Config = function () {
             this.search.manage();
             this.horz.manage();
         }
+
+        /**
+         * Re-manages the configuration screen's search header and horizontal
+         * scroller.
+         */
+
     }, {
         key: 'reView',
         value: function reView() {
@@ -107847,6 +107945,12 @@ var Config = function () {
             this.search.manage();
             this.horz.manage();
         }
+
+        /**
+         * Views configuration shortcut-like cards and location cards in a 
+         * horizontal scroller (locations that the current user supervises).
+         */
+
     }, {
         key: 'viewCards',
         value: function viewCards() {
@@ -107854,6 +107958,11 @@ var Config = function () {
             this.viewConfigCards(); // Subjects/Grades, Schedule, and Service Hrs
             this.viewLocationCards();
         }
+
+        /**
+         * Views (and manages) the configuration shortcut-like cards.
+         */
+
     }, {
         key: 'viewConfigCards',
         value: function viewConfigCards() {
@@ -107890,6 +107999,12 @@ var Config = function () {
                 return (0, _jquery2.default)(_this.main).find('#cards').append(Card.renderCard(c.title, c.subtitle, c.summary, c.actions));
             });
         }
+
+        /**
+         * Updates the [HrsConfig]{@link HrsConfig} dialog/view whenever our
+         * location data changes.
+         */
+
     }, {
         key: 'updateHrsConfig',
         value: function updateHrsConfig() {
@@ -107906,6 +108021,15 @@ var Config = function () {
                 });
             }));
         }
+
+        /**
+         * Recycles/views the locations cards (for locations the current user
+         * supervises) in a horizontal scrolling view.
+         * @see {@link EditLocationDialog}
+         * @see {@link Utils#recycle}
+         * @see {@link Recycler}
+         */
+
     }, {
         key: 'viewLocationCards',
         value: function viewLocationCards() {
@@ -107917,6 +108041,7 @@ var Config = function () {
             var queries = {
                 locations: window.app.db.collection('locations').where('supervisors', 'array-contains', window.app.user.uid)
             };
+            /** @type {Recycler} */
             var recycler = {
                 display: function display(doc) {
                     (0, _jquery2.default)(_empty).remove();

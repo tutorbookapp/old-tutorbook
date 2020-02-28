@@ -356,6 +356,11 @@ class Data {
         });
     }
 
+    /**
+     * Updates the given location's Firestore data.
+     * @param {Location} location - The updated location data.
+     * @param {string} id - The location's Firestore document ID.
+     */
     static updateLocation(location, id) {
         return Data.post('updateLocation', {
             location: location,
@@ -700,6 +705,29 @@ Data.roundings = ['Up', 'Down', 'Normally'];
 
 // Round durations to the nearest (e.g. 'Minute' : 23.3 mins --> 23 mins).
 Data.thresholds = ['Minute', '5 Minutes', '15 Minutes', '30 Minutes', 'Hour'];
+
+/**
+ * An open hours object that represents/stores when a location is open for
+ * tutoring.
+ * @typedef {Object} Hours
+ * @todo Add property definitions for the days of the week.
+ * @todo Refactor this data storage object to allow for more flexibility in 
+ * Firestore indexes/queries.
+ */
+
+/**
+ * A location object that stores tutoring location configuration data.
+ * @typedef {Object} Location
+ * @property {string} name - The location's name (e.g. Gunn Academic Center).
+ * @property {string} [description=''] - The location's description.
+ * @property {string} [city='Palo Alto, CA'] - The location's city.
+ * @property {Hours} hours - The location's open hours.
+ * @property {Object} config - Configuration data (e.g. service hour rounding).
+ * @property {string[]} supervisors - An array of supervisor uIDs.
+ * @property {Date} timestamp - When the location was first created.
+ * @property {string} [url='https://tutorbook.app'] - The URL of the location's 
+ * preferred app partition.
+ */
 
 Data.emptyLocation = {
     name: '',

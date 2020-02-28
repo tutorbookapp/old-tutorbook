@@ -1071,21 +1071,29 @@ class Utils {
             ' to ' + data.toTime;
     }
 
+    /**
+     * Parses an array of hour strings and returns an [Hours]{@link Hours}
+     * object.
+     * @example
+     * Utils.parseHourStrings([
+     *   'Fridays from 10:00 AM to 3:00 PM',
+     *   'Fridays from 10:00 AM to 3:00 PM',
+     *   'Tuesdays from 10:00 AM to 3:00 PM',
+     * ]); 
+     * // The code above will return {
+     * //   Friday: [
+     * //     { open: '10:00 AM', close: '3:00 PM' },
+     * //     { open: '10:00 AM', close: '3:00 PM' },
+     * //   ],
+     * //   Tuesday: [
+     * //     { open: '10:00 AM', close: '3:00 PM' },
+     * //   ],
+     * // };
+     * @see {@link Utils#parseHourString}
+     * @param {string[]} strings - The hour strings to parse.
+     * @return {Hours} The hour strings as an [Hours]{@link Hours} object.
+     */
     static parseHourStrings(strings) {
-        // @param [
-        //   'Fridays from 10:00 AM to 3:00 PM',
-        //   'Fridays from 10:00 AM to 3:00 PM',
-        //   'Tuesdays from 10:00 AM to 3:00 PM',
-        // ]
-        // @return hours: {
-        //   Friday: [
-        //     { open: '10:00 AM', close: '3:00 PM' },
-        //     { open: '10:00 AM', close: '3:00 PM' },
-        //   ],
-        //   Tuesday: [
-        //     { open: '10:00 AM', close: '3:00 PM' },
-        //   ],
-        // }
         const timeslots = strings.map(str => Utils.parseHourString(str));
         const hours = {};
         timeslots.forEach(timeslot => {
@@ -1099,19 +1107,35 @@ class Utils {
         return hours;
     }
 
+    /**
+     * A window of time (typically used in availability or open hour data
+     * storage/processing).
+     * @typedef {Object} Timeslot
+     * @property {string} open - The opening time or period (e.g. '3:00 PM').
+     * @property {string} close - The closing time or period.
+     * @property {string} day - The day of the week (e.g. 'Friday').
+     */
+
+    /**
+     * Parses a given open hour string into a useful map of data.
+     * @example
+     * Utils.parseHourString('Fridays from 10:00 AM to 3:00 PM');
+     * // The code above returns {
+     * //   day: 'Friday',
+     * //   open: '10:00 AM',
+     * //   close: '3:00 PM',
+     * // }
+     * @param {string} string - The open hour string to parse.
+     * @return {Timeslot} The parsed map of data.
+     */
     static parseHourString(string) {
-        // @param 'Fridays from 10:00 AM to 3:00 PM'
-        // @return {
-        //   day: 'Friday',
-        //   open: '10:00 AM',
-        //   close: '3:00 PM',
-        // }
         try {
-            const split = string.split(' ');
+            const [day, times] = string.split(' from ');
+            const [from, to] = times.split(' to ');
             return {
-                day: split[0].slice(0, -1) || '',
-                open: split[2] && split[3] ? split[2] + ' ' + split[3] : '',
-                close: split[5] && split[6] ? split[5] + ' ' + split[6] : '',
+                day: day.endsWith('s') ? day.slice(0, -1) : day,
+                open: from,
+                close: to,
             };
         } catch (e) {
             console.warn('[WARNING] Could not parse hour string:', string);
