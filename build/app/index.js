@@ -6362,6 +6362,23 @@ var EditRequestDialog = function () {
         this.rendering = this.renderSelf();
     }
 
+    /**
+     * The other user in a request or appointment (i.e. the user that does not
+     * share a uID with our current app user).
+     * @typedef {User} OtherUser
+     * @see {@link Utils#getOtherUser}
+     */
+
+    /**
+     * Renders the "Edit Request" dialog/view.
+     * @param {Object} [profile=OtherUser] - Specify a profile to show the user
+     * header of (typically just the [other user]{@link OtherUser} in the 
+     * request).
+     * @return {Promise<undefined>} Promise that resolves once the dialog
+     * is fully rendered (i.e. when it is ready to be viewed).
+     */
+
+
     _createClass(EditRequestDialog, [{
         key: 'renderSelf',
         value: async function renderSelf(profile) {
@@ -18471,9 +18488,17 @@ var phone = __webpack_require__(374);
 var axios = __webpack_require__(375);
 var Data = __webpack_require__(7);
 
-// Tutorbook utils class that contains basic utils used across the program
+/**
+ * Class that contains basic (and some very **not basic**) utils used across the 
+ * program.
+ */
 
 var Utils = function () {
+    /**
+     * Creates a new utilities class by either using the already initialized 
+     * `window.app.data` [Data]{@link Data} object or by creating a new 
+     * [Data]{@link Data} object.
+     */
     function Utils() {
         _classCallCheck(this, Utils);
 
@@ -19065,7 +19090,7 @@ var Utils = function () {
          * came from (usually just `0` though it can be different if you passed an 
          * array of queries at the same key when calling 
          * [`Utils.recycle`]{@link Utils#recycle}).
-         * @see {@link recycler}
+         * @see {@link Recycler}
          * @see {@link Utils#recycle}
          */
 
@@ -19079,14 +19104,14 @@ var Utils = function () {
          * (usually just `0` though it can be different if you passed an array of 
          * queries at the same key when calling 
          * [`Utils.recycle`]{@link Utils#recycle}).
-         * @see {@link recycler}
+         * @see {@link Recycler}
          * @see {@link Utils#recycle}
          */
 
         /**
          * An recycler object containing `display`, `remove`, and `empty` callbacks 
          * to recycle/show updated Firestore data as it changes live.
-         * @typedef {Object} recycler
+         * @typedef {Object} Recycler
          * @property {displayCallback} display - Callback to display new or update 
          * existing data.
          * @property {removeCallback} remove - Callback to remove data.
@@ -19098,7 +19123,7 @@ var Utils = function () {
          * data changes.
          * @param {Object} queries - A map of arrays (or just a map of) Firestore 
          * `Query`s to listen to and subsequently recycle.
-         * @param {recycler} recycler - A recycler containing callbacks to display, 
+         * @param {Recycler} recycler - A recycler containing callbacks to display, 
          * remove, or empty different query data.
          * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}
          */
@@ -19332,6 +19357,18 @@ var Utils = function () {
             });
             return result;
         }
+
+        /**
+         * Returns the other user in a request or appointment (i.e. the user that
+         * does not share a uID with our current app user). Note that this will
+         * return even if both users are the current user (it will default to the
+         * first user given).
+         * @param {Object} userA - The first user to compare with our current user.
+         * @param {Object} userB - The second user to compare with our current user.
+         * @return {otherUser} The user that did not match our current user (default 
+         * to `userA`).
+         */
+
     }, {
         key: 'getOtherUser',
         value: function getOtherUser(userA, userB) {
@@ -20631,7 +20668,17 @@ var Data = function () {
 
         /**
          * Updates the given user's Firestore document.
+         * @example
+         * await window.app.updateUser({ // Updates a subset of a specified user's
+         * // data.
+         *   uid: 'INSERT-THE-DESIRED-USER\'S-UID-HERE', // Make sure to always
+         *   // include a valid user ID to update.
+         *   grade: 'Junior', // Add data/fields you want to update here.
+         *   gender: 'Male',
+         *   subjects: ['Chemistry H'],
+         * });
          * @param {Object} user - The user to update.
+         * @see {@link Tutorbook#updateUser}
          */
 
     }, {
@@ -21005,6 +21052,19 @@ Data.emptyLocation = {
     timestamp: new Date(),
     url: 'https://tutorbook.app'
 };
+
+/**
+ * A user object that stores essential user data.
+ * @typedef {Object} User
+ * @property {string} name - The user's full name (initially grabbed from 
+ * their Google account and unchangeable by them).
+ * @property {string} [photo='https://tutorbook.app/app/img/male.png'] - The 
+ * user's profile photo (also initially grabbed from their Google account but it 
+ * is changeable from their [profile view]{@link Profile}).
+ * @property {string} uid - Their unique Firebase Authentication user 
+ * identifier.
+ * @todo Finish adding all collected properties to this user object definition.
+ */
 
 Data.emptyProfile = {
     name: '',
@@ -59369,7 +59429,12 @@ var Utils = __webpack_require__(6);
 var Render = __webpack_require__(159);
 var Data = __webpack_require__(7);
 
-/** Class that represents uppermost level of our web app. */
+/** 
+ * Class that represents the uppermost level of our web app and holds all the 
+ * other main app views (i.e. those accessible from the modal navigation 
+ * drawer) as properties (e.g. `window.app.chats` points to the user's messages 
+ * view). 
+ */
 
 var Tutorbook = function () {
 
@@ -59381,6 +59446,8 @@ var Tutorbook = function () {
      *    https://firebase.google.com/docs/auth/web/start}.
      * 3. Initializes all app views and packages and routes the user to their
      *    desired destination (based on their URL) within the app.
+     * @example
+     * window.app = new Tutorbook(); // Creates a new global web app instance.
      */
     function Tutorbook() {
         _classCallCheck(this, Tutorbook);
@@ -59613,6 +59680,9 @@ var Tutorbook = function () {
         /**
          * Replaces the currently viewed header, main, and URL and notifies the web 
          * app's navigation and ads.
+         * @example
+         * window.app.view(this.header, this.main, '/app/messages');
+         * window.app.view(this.header, this.main); // For dialogs w/out app URLs.
          * @param {HTMLElement} header - The header element (typically an mdc-top-
          * app-bar).
          * @param {HTMLElement} main - The main element (typically an mdc-list or 
@@ -59662,6 +59732,17 @@ var Tutorbook = function () {
 
         /**
          * Proxy function to Data's [updateUser]{@link Data#updateUser} method.
+         * @example
+         * await window.app.updateUser(); // Updates the current user's data.
+         * await window.app.updateUser({ // Updates a subset of a specified user's
+         * // data.
+         *   uid: 'INSERT-THE-DESIRED-USER\'S-UID-HERE', // Make sure to always
+         *   // include a valid user ID to update.
+         *   grade: 'Junior', // Add data/fields you want to update here.
+         *   gender: 'Male',
+         *   subjects: ['Chemistry H'],
+         * });
+         * @see {@link Data#updateUser}
          */
 
     }, {
@@ -59675,6 +59756,9 @@ var Tutorbook = function () {
         /**
          * Unsubscribes to Firestore onSnapshot listeners, logs out of Intercom 
          * Messenger widget, and logs the current user out with Firebase Auth.
+         * @example
+         * window.app.signOut(); // Logs the user out and unsubscribes from 
+         * // Firestore `onSnapshot` listeners.
          * @see {@link Help#logout}
          * @see {@link https://firebase.google.com/docs/firestore/query-data/listen#detach_a_listener}
          */
@@ -59691,6 +59775,8 @@ var Tutorbook = function () {
 
         /**
          * Shows and hides the default intermediate loading icon.
+         * @example
+         * window.app.loader(false); // Hides the loading icon.
          * @param {bool} [show=false] - Whether to show or hide the loading icon.
          */
 
@@ -59733,6 +59819,8 @@ var Tutorbook = function () {
 
         /**
          * Prints the current view (minus any FAB buttons and the header).
+         * @example
+         * window.app.print(); // Hides the top app bar temporarily as it prints.
          */
 
     }, {
@@ -59800,6 +59888,19 @@ var Tutorbook = function () {
 ;
 
 window.onload = function () {
+    /** 
+     * The `window`'s [Tutorbook]{@link Tutorbook} web app instance. 
+     *
+     * You can access any variables or objects stored in that web app class from 
+     * anywhere in your code (e.g. `window.app.render` points to a 
+     * [Render]{@link Render} object).
+     * @example
+     * window.app.render.header('header-main'); // Points to a `Render` object.
+     * window.app.id; // Points to the hard-coded website configuration ID.
+     * window.app.locations; // Points to an array of valid location data.
+     * window.app.data; // Points to a `Data` object
+     * @global 
+     */
     window.app = new Tutorbook();
 };
 

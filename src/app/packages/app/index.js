@@ -39,7 +39,12 @@ const Utils = require('@tutorbook/utils');
 const Render = require('@tutorbook/render');
 const Data = require('@tutorbook/data');
 
-/** Class that represents uppermost level of our web app. */
+/** 
+ * Class that represents the uppermost level of our web app and holds all the 
+ * other main app views (i.e. those accessible from the modal navigation 
+ * drawer) as properties (e.g. `window.app.chats` points to the user's messages 
+ * view). 
+ */
 class Tutorbook {
 
     /**
@@ -50,6 +55,8 @@ class Tutorbook {
      *    https://firebase.google.com/docs/auth/web/start}.
      * 3. Initializes all app views and packages and routes the user to their
      *    desired destination (based on their URL) within the app.
+     * @example
+     * window.app = new Tutorbook(); // Creates a new global web app instance.
      */
     constructor() {
         this.logJobPost();
@@ -271,6 +278,9 @@ class Tutorbook {
     /**
      * Replaces the currently viewed header, main, and URL and notifies the web 
      * app's navigation and ads.
+     * @example
+     * window.app.view(this.header, this.main, '/app/messages');
+     * window.app.view(this.header, this.main); // For dialogs w/out app URLs.
      * @param {HTMLElement} header - The header element (typically an mdc-top-
      * app-bar).
      * @param {HTMLElement} main - The main element (typically an mdc-list or 
@@ -309,6 +319,17 @@ class Tutorbook {
 
     /**
      * Proxy function to Data's [updateUser]{@link Data#updateUser} method.
+     * @example
+     * await window.app.updateUser(); // Updates the current user's data.
+     * await window.app.updateUser({ // Updates a subset of a specified user's
+     * // data.
+     *   uid: 'INSERT-THE-DESIRED-USER\'S-UID-HERE', // Make sure to always
+     *   // include a valid user ID to update.
+     *   grade: 'Junior', // Add data/fields you want to update here.
+     *   gender: 'Male',
+     *   subjects: ['Chemistry H'],
+     * });
+     * @see {@link Data#updateUser}
      */
     updateUser(user = this.user) {
         return Data.updateUser(user);
@@ -317,6 +338,9 @@ class Tutorbook {
     /**
      * Unsubscribes to Firestore onSnapshot listeners, logs out of Intercom 
      * Messenger widget, and logs the current user out with Firebase Auth.
+     * @example
+     * window.app.signOut(); // Logs the user out and unsubscribes from 
+     * // Firestore `onSnapshot` listeners.
      * @see {@link Help#logout}
      * @see {@link https://firebase.google.com/docs/firestore/query-data/listen#detach_a_listener}
      */
@@ -328,6 +352,8 @@ class Tutorbook {
 
     /**
      * Shows and hides the default intermediate loading icon.
+     * @example
+     * window.app.loader(false); // Hides the loading icon.
      * @param {bool} [show=false] - Whether to show or hide the loading icon.
      */
     loader(show = false) {
@@ -364,6 +390,8 @@ class Tutorbook {
 
     /**
      * Prints the current view (minus any FAB buttons and the header).
+     * @example
+     * window.app.print(); // Hides the top app bar temporarily as it prints.
      */
     print() {
         $('.header').hide();
@@ -407,6 +435,19 @@ class Tutorbook {
 };
 
 window.onload = () => {
+    /** 
+     * The `window`'s [Tutorbook]{@link Tutorbook} web app instance. 
+     *
+     * You can access any variables or objects stored in that web app class from 
+     * anywhere in your code (e.g. `window.app.render` points to a 
+     * [Render]{@link Render} object).
+     * @example
+     * window.app.render.header('header-main'); // Points to a `Render` object.
+     * window.app.id; // Points to the hard-coded website configuration ID.
+     * window.app.locations; // Points to an array of valid location data.
+     * window.app.data; // Points to a `Data` object
+     * @global 
+     */
     window.app = new Tutorbook();
 };
 

@@ -365,7 +365,17 @@ class Data {
 
     /**
      * Updates the given user's Firestore document.
+     * @example
+     * await window.app.updateUser({ // Updates a subset of a specified user's
+     * // data.
+     *   uid: 'INSERT-THE-DESIRED-USER\'S-UID-HERE', // Make sure to always
+     *   // include a valid user ID to update.
+     *   grade: 'Junior', // Add data/fields you want to update here.
+     *   gender: 'Male',
+     *   subjects: ['Chemistry H'],
+     * });
      * @param {Object} user - The user to update.
+     * @see {@link Tutorbook#updateUser}
      */
     static async updateUser(user) {
         await Data.updateUserAvailability(user);
@@ -707,6 +717,19 @@ Data.emptyLocation = {
     timestamp: new Date(),
     url: 'https://tutorbook.app',
 };
+
+/**
+ * A user object that stores essential user data.
+ * @typedef {Object} User
+ * @property {string} name - The user's full name (initially grabbed from 
+ * their Google account and unchangeable by them).
+ * @property {string} [photo='https://tutorbook.app/app/img/male.png'] - The 
+ * user's profile photo (also initially grabbed from their Google account but it 
+ * is changeable from their [profile view]{@link Profile}).
+ * @property {string} uid - Their unique Firebase Authentication user 
+ * identifier.
+ * @todo Finish adding all collected properties to this user object definition.
+ */
 
 Data.emptyProfile = {
     name: '',

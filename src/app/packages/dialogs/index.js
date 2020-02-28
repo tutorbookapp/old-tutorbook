@@ -1151,6 +1151,21 @@ class EditRequestDialog {
         this.rendering = this.renderSelf();
     }
 
+    /**
+     * The other user in a request or appointment (i.e. the user that does not
+     * share a uID with our current app user).
+     * @typedef {User} OtherUser
+     * @see {@link Utils#getOtherUser}
+     */
+
+    /**
+     * Renders the "Edit Request" dialog/view.
+     * @param {Object} [profile=OtherUser] - Specify a profile to show the user
+     * header of (typically just the [other user]{@link OtherUser} in the 
+     * request).
+     * @return {Promise<undefined>} Promise that resolves once the dialog
+     * is fully rendered (i.e. when it is ready to be viewed).
+     */
     async renderSelf(profile) {
         const request = this.request;
         const utils = this.utils;

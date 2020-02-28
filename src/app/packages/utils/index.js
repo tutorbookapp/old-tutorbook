@@ -17,9 +17,16 @@ const phone = require('phone');
 const axios = require('axios');
 const Data = require('@tutorbook/data');
 
-// Tutorbook utils class that contains basic utils used across the program
+/**
+ * Class that contains basic (and some very **not basic**) utils used across the 
+ * program.
+ */
 class Utils {
-
+    /**
+     * Creates a new utilities class by either using the already initialized 
+     * `window.app.data` [Data]{@link Data} object or by creating a new 
+     * [Data]{@link Data} object.
+     */
     constructor() {
         this.data = window.app ? window.app.data || new Data() : new Data();
     }
@@ -237,7 +244,7 @@ class Utils {
      * came from (usually just `0` though it can be different if you passed an 
      * array of queries at the same key when calling 
      * [`Utils.recycle`]{@link Utils#recycle}).
-     * @see {@link recycler}
+     * @see {@link Recycler}
      * @see {@link Utils#recycle}
      */
 
@@ -251,14 +258,14 @@ class Utils {
      * (usually just `0` though it can be different if you passed an array of 
      * queries at the same key when calling 
      * [`Utils.recycle`]{@link Utils#recycle}).
-     * @see {@link recycler}
+     * @see {@link Recycler}
      * @see {@link Utils#recycle}
      */
 
     /**
      * An recycler object containing `display`, `remove`, and `empty` callbacks 
      * to recycle/show updated Firestore data as it changes live.
-     * @typedef {Object} recycler
+     * @typedef {Object} Recycler
      * @property {displayCallback} display - Callback to display new or update 
      * existing data.
      * @property {removeCallback} remove - Callback to remove data.
@@ -270,7 +277,7 @@ class Utils {
      * data changes.
      * @param {Object} queries - A map of arrays (or just a map of) Firestore 
      * `Query`s to listen to and subsequently recycle.
-     * @param {recycler} recycler - A recycler containing callbacks to display, 
+     * @param {Recycler} recycler - A recycler containing callbacks to display, 
      * remove, or empty different query data.
      * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}
      */
@@ -461,6 +468,16 @@ class Utils {
         return result;
     }
 
+    /**
+     * Returns the other user in a request or appointment (i.e. the user that
+     * does not share a uID with our current app user). Note that this will
+     * return even if both users are the current user (it will default to the
+     * first user given).
+     * @param {Object} userA - The first user to compare with our current user.
+     * @param {Object} userB - The second user to compare with our current user.
+     * @return {otherUser} The user that did not match our current user (default 
+     * to `userA`).
+     */
     static getOtherUser(userA, userB) {
         if (userA.email === window.app.user.email) {
             return userB;
