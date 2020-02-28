@@ -371,7 +371,8 @@ class Data {
     /**
      * Updates the given user's Firestore document.
      * @example
-     * await window.app.updateUser({ // Updates a subset of a specified user's
+     * const Data = require('@tutorbook/data');
+     * await Data.updateUser({ // Updates a subset of a specified user's
      * // data.
      *   uid: 'INSERT-THE-DESIRED-USER\'S-UID-HERE', // Make sure to always
      *   // include a valid user ID to update.

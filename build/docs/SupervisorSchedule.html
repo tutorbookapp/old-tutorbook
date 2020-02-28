@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>SearchHeader - Documentation</title>
+    <title>SupervisorSchedule - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">SearchHeader</h1>
+    <h1 class="page-title">SupervisorSchedule</h1>
     
 
     
@@ -42,11 +42,10 @@
 <header>
     
         <h2>
-        SearchHeader
+        SupervisorSchedule
         </h2>
         
-            <div class="class-description"><p>Class that represents the <code>mdc-top-app-bar</code> with a Google-like search bar
-that opens an elevated search results <code>mdc-list</code>.</p></div>
+            <div class="class-description"><p>Class that shows all of the appointments for the current app location.</p></div>
         
     
 </header>
@@ -62,7 +61,7 @@ that opens an elevated search results <code>mdc-list</code>.</p></div>
     
 
     
-    <h4 class="name" id="SearchHeader"><span class="type-signature"></span>new SearchHeader<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="SupervisorSchedule"><span class="type-signature"></span>new SupervisorSchedule<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -102,7 +101,7 @@ that opens an elevated search results <code>mdc-list</code>.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="search_index.js.html">search/index.js</a>, <a href="search_index.js.html#line24">line 24</a>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line355">line 355</a>
     </li></ul></dd>
     
 
@@ -144,6 +143,17 @@ that opens an elevated search results <code>mdc-list</code>.</p></div>
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Schedule.html">Schedule</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -165,7 +175,7 @@ that opens an elevated search results <code>mdc-list</code>.</p></div>
     
 
     
-    <h4 class="name" id="search"><span class="type-signature">(async) </span>search<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".renderShortcutCard"><span class="type-signature">(static) </span>renderShortcutCard<span class="signature">()</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
     
 
     
@@ -173,9 +183,9 @@ that opens an elevated search results <code>mdc-list</code>.</p></div>
 
 
 <div class="description">
-    <p>Searches users via <a href="https://algolia.com">Algolia</a> (and adds the
-necessary <code>facetFilters</code> in order to only show data relevant to the
-current user).</p>
+    <p>Renders, manages, and returns an &quot;Upcoming Appointments&quot; shortcut card
+that enables supervisors to jump to their schedule (from their dashboard
+view) with one click.</p>
 </div>
 
 
@@ -211,7 +221,231 @@ current user).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="search_index.js.html">search/index.js</a>, <a href="search_index.js.html#line47">line 47</a>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line492">line 492</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>HTMLElement</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>The rendered (and managed) shortcut card.</p>
+</div>
+
+    
+</div>
+
+
+
+
+
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>const SupervisorSchedule = require('@tutorbook/schedule').supervisor;
+const card = SupervisorSchedule.renderShortcutCard();
+$('.mdc-layout-grid__inner').append(card); // Add card to MDCLayoutGrid.</code></pre>
+
+</div>
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="loadMore"><span class="type-signature"></span>loadMore<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Loads more past appointments by increasing the query limit.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Schedule.html#loadMore">Schedule#loadMore</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line472">line 472</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Manages the supervisor schedule view by adding a click listener to the
+&quot;New Record&quot; FAB (i.e. when it's clicked, open a
+<a href="NewPastApptDialog.html"><code>NewPastApptDialog</code></a>).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Schedule.html#manage">Schedule#manage</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line420">line 420</a>
     </li></ul></dd>
     
 
@@ -221,11 +455,921 @@ current user).</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/">https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/</a></li>
+            <li><a href="NewPastApptDialog.html"><code>NewPastApptDialog</code></a></li>
         </ul>
     </dd>
     
 
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="refresh"><span class="type-signature"></span>refresh<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Looks at the schedule and removes any unnecessary date list dividers
+(i.e. date dividers that don't have any appointments on those dates).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Schedule.html#refresh">Schedule#refresh</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderHit"><span class="type-signature"></span>renderHit<span class="signature">(hit)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders the search result hit for the appointments search header view.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line362">line 362</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>hit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The Algolia search result data.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>HTMLElement</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>The rendered appointment search result list item
+(that is appended to the search results list in the user's header view).</p>
+</div>
+
+    
+</div>
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders the supervisor schedule view by changing the default header to
+that of a search bar and by adding a &quot;New Record&quot; FAB that opens a
+<a href="NewPastApptDialog.html"><code>NewPastApptDialog</code></a> when clicked.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Schedule.html#renderSelf">Schedule#renderSelf</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line379">line 379</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="reView"><span class="type-signature"></span>reView<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Re-views the schedule and manages the search header.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Schedule.html#reView">Schedule#reView</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line440">line 440</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="reViewAppts"><span class="type-signature">(abstract) </span>reViewAppts<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Re-attaches click listeners to appointment list items.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Schedule.html#reViewAppts">Schedule#reViewAppts</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line148">line 148</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views the schedule and manages the search header.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Schedule.html#view">Schedule#view</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line431">line 431</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="viewAppt"><span class="type-signature"></span>viewAppt<span class="signature">(listItem)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Adds an appointment list item to our schedule list.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="Schedule.html#viewAppt">Schedule#viewAppt</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line217">line 217</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>listItem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>HTMLElement</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The appointment list item to view.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="viewAppts"><span class="type-signature"></span>viewAppts<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views all of the appointments at the current app partition's primary
+location.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Schedule.html#viewAppts">Schedule#viewAppts</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="schedule_index.js.html">schedule/index.js</a>, <a href="schedule_index.js.html#line451">line 451</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Show all of the appointments for all of the locations that the 
+current user supervises.</li>
+        </ul>
+    </dd>
     
 </dl>
 

@@ -4964,7 +4964,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 
+/**
+ * Class that represents the dialog that enables users to select subjects.
+ */
+
 var SubjectSelectDialog = function () {
+
+    /**
+     * Creates and renders a new subject selection dialog.
+     */
     function SubjectSelectDialog() {
         _classCallCheck(this, SubjectSelectDialog);
 
@@ -4973,6 +4981,15 @@ var SubjectSelectDialog = function () {
         this.renderSelf();
     }
 
+    /**
+     * Adds the dialog element to the DOM, opens it, and manages it.
+     * @example
+     * const SubjectSelectDialog = require('@tutorbook/dialogs').subject;
+     * const dialog = new SubjectSelectDialog();
+     * dialog.view();
+     */
+
+
     _createClass(SubjectSelectDialog, [{
         key: 'view',
         value: function view() {
@@ -4980,6 +4997,11 @@ var SubjectSelectDialog = function () {
             this.manage();
             this.dialog.open();
         }
+
+        /**
+         * Attaches MDC components and click listeners.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -5011,11 +5033,30 @@ var SubjectSelectDialog = function () {
 
             this.section('page-all');
         }
+
+        /**
+         * Updates the selected subject.
+         * @param {string} val - The new selected subject.
+         * @example
+         * this.updateSelected('Chemistry H'); // From within a subject select 
+         * // dialog instance (i.e. `this` is a `SubjectSelectDialog`).
+         */
+
     }, {
         key: 'updateSelected',
         value: function updateSelected(val) {
             this.selected = val;
         }
+
+        /**
+         * Views a given dialog page/section.
+         * @param {string} id - The ID attribute of the page/section to view.
+         * @example
+         * this.section('page-all'); // View the subject categories page.
+         * @example
+         * this.section('page-math'); // View the math subjects page.
+         */
+
     }, {
         key: 'section',
         value: function section(id) {
@@ -5030,6 +5071,14 @@ var SubjectSelectDialog = function () {
                 _this2.dialog.layout();
             });
         }
+
+        /**
+         * Renders the subject selection dialog by replacing the subject lists in 
+         * the `dialog-subjects` template.
+         * @see {@link Templates}
+         * @see {@link Render}
+         */
+
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
@@ -5065,6 +5114,16 @@ var SubjectSelectDialog = function () {
 }();
 
 ;
+
+/**
+ * Class that represents the dialog that enables users to edit the subjects for 
+ * their (or another user's) profile.
+ * @todo Make it easier to select subjects in bulk.
+ * @todo Add intelligent subject selection (e.g. if someone can tutor Calculus,
+ * they can probably tutor Algebra 1 and 2).
+ * @todo Finish documenting this class's unique (overriden) methods.
+ * @extends SubjectSelectDialog
+ */
 
 var EditSubjectDialog = function (_SubjectSelectDialog) {
     _inherits(EditSubjectDialog, _SubjectSelectDialog);
@@ -5109,7 +5168,25 @@ var EditSubjectDialog = function (_SubjectSelectDialog) {
 
 ;
 
+/**
+ * Class representing the "Edit Availability" dialog that enables users to set
+ * when they are available for tutoring appointments.
+ * @todo Make it faster to select larger windows of time across the week. We
+ * want all availability selection to take less than five seconds.
+ * @todo Finish documenting all of this class's methods.
+ */
+
 var EditAvailabilityDialog = function () {
+
+    /**
+     * Creates a new "Edit Availability" dialog that updates the given text
+     * field's value and update the profile (if given).
+     * @param {HTMLElement} textFieldEl - The 
+     * [`MDCTextField`]{@link https://material.io/develop/web/components/input-controls/text-field/} 
+     * element to get the currently selected value from (and to update when
+     * the user finishes selecting their availability on the dialog).
+     * @param {User} profile - The user profile to update.
+     */
     function EditAvailabilityDialog(textFieldEl, profile) {
         _classCallCheck(this, EditAvailabilityDialog);
 
@@ -5796,6 +5873,11 @@ var ViewRejectedRequestDialog = function (_ViewRequestDialog3) {
  */
 
 var EditHourDialog = function () {
+    /**
+     * Creates and renders a new edit hours dialog.
+     * @param {MDCTextField} textField - The hour text field to get the initial 
+     * value from and to populate once the user finishes populating this dialog.
+     */
     function EditHourDialog(textField) {
         _classCallCheck(this, EditHourDialog);
 
@@ -5805,6 +5887,11 @@ var EditHourDialog = function () {
         this.val = Utils.parseHourString(textField.value);
         this.renderSelf();
     }
+
+    /**
+     * Renders the edit hours dialog.
+     */
+
 
     _createClass(EditHourDialog, [{
         key: 'renderSelf',
@@ -5836,6 +5923,11 @@ var EditHourDialog = function () {
 
             (0, _jquery2.default)(this.main).find('.mdc-dialog__content').append(content);
         }
+
+        /**
+         * Appends the dialog element to the `body` element and opens the dialog.
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -5845,6 +5937,11 @@ var EditHourDialog = function () {
             this.dialog.open();
             if (!this.managed) this.manage();
         }
+
+        /**
+         * Attaches the MDC components and click listeners.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -5887,6 +5984,17 @@ var EditHourDialog = function () {
                 (0, _jquery2.default)(_this14.main).remove();
             });
         }
+
+        /**
+         * Styles a given text field as invalid and shows the given error message in 
+         * the text field's helper line.
+         * @param {MDCTextField} t - The text field to change to invalid.
+         * @param {string} msg - The error message to show in the text field's 
+         * helper line.
+         * @todo Show error message styling when called from 
+         * {@link EditHourDialog#valid}.
+         */
+
     }, {
         key: 'err',
         value: function err(t, msg) {
@@ -5984,6 +6092,12 @@ var EditHourDialog = function () {
  */
 
 var EditLocationDialog = function () {
+    /**
+     * Creates and renders a new "Edit Location" dialog.
+     * @param {Location} location - The location data to edit.
+     * @param {string} id - The ID of the location's Firestore document (that we
+     * update when the user hits the checkmark top app bar icon button).
+     */
     function EditLocationDialog(location, id) {
         _classCallCheck(this, EditLocationDialog);
 
@@ -5994,6 +6108,25 @@ var EditLocationDialog = function () {
         this.render = window.app.render;
         this.renderSelf();
     }
+
+    /**
+     * Renders the "Edit Location" dialog by adding:
+     * 1. A "Basic info" list divider
+     * 2. A "Name" text field
+     * 3. A "Description" text area
+     * 4. A "Service hour rules" list divider
+     * 5. A "Round service hours" select
+     * 6. A "To the nearest" select
+     * 7. A "Round times to the nearest" select
+     * 8. An "Open hours" list divider
+     * 9. A bunch of "Hour" inputs (text fields that open up 
+     * [EditHourDialog]{@link EditHourDialog}s).
+     * 10. A "Delete Location" button
+     * to the dialog's `this.main` `HTMLElement`.
+     * @todo Add supervisor search text field input items to designate who is 
+     * able to approve/reject clock-in/out requests.
+     */
+
 
     _createClass(EditLocationDialog, [{
         key: 'renderSelf',
@@ -6076,6 +6209,14 @@ var EditLocationDialog = function () {
                 }
             }));
         }
+
+        /**
+         * Views (and subsequently manages) the "Edit Location" dialog and our
+         * Intercom Messenger.
+         * @see {@link Tutorbook#view}
+         * @see {@link Help#view}
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -6083,6 +6224,11 @@ var EditLocationDialog = function () {
             window.app.view(this.header, this.main);
             if (!this.managed) this.manage();
         }
+
+        /**
+         * Attaches MDC Components and click listeners.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -6141,6 +6287,18 @@ var EditLocationDialog = function () {
                 });
             });
         }
+
+        /**
+         * Updates the location's data if all inputs are valid.
+         * @example
+         * const EditLocationDialog = require('@tutorbook/dialogs').editLocation;
+         * const dialog = new EditLocationDialog(locationData, locationId);
+         * // Change the data in the dialog somehow.
+         * await dialog.save();
+         * @return {Promise<undefined>} Promise that resolves once the location has
+         * been updated (or if we've encountered an error while updating it).
+         */
+
     }, {
         key: 'save',
         value: async function save() {
@@ -6157,6 +6315,12 @@ var EditLocationDialog = function () {
             if (err) return window.app.snackbar.view('Could not update location.');
             window.app.snackbar.view('Updated location.');
         }
+
+        /**
+         * Resets the inputs on the dialog (used when the user doesn't click on the
+         * checkmark but instead just heads back).
+         */
+
     }, {
         key: 'reset',
         value: function reset() {
@@ -6165,8 +6329,20 @@ var EditLocationDialog = function () {
             this.renderSelf();
             this.managed = false;
         }
+
+        /**
+         * Returns `true` if the currently inputted/selected values match our
+         * original `this.location` [Location]{@link Location} object.
+         * @return {bool} If the user has changed any location data.
+         */
+
     }, {
         key: 'addHourInput',
+
+
+        /**
+         * Adds (and manages) an "Hour" input to the dialog.
+         */
         value: function addHourInput() {
             var el = this.render.textFieldItem('Open', '');
             var textField = new _index.MDCTextField(el);
@@ -6178,6 +6354,11 @@ var EditLocationDialog = function () {
             (0, _jquery2.default)(el).insertAfter((0, _jquery2.default)(this.main).find('[id="Open"]').last().parent());
             dialog.view();
         }
+
+        /**
+         * Removes an "Hour" input and it's corresponding open hours timeslot.
+         */
+
     }, {
         key: 'removeHourInput',
         value: function removeHourInput() {
@@ -6267,6 +6448,17 @@ var EditLocationDialog = function () {
 
             return false;
         }
+
+        /**
+         * Checks and validates all currently inputted/selected values while:
+         * - Updating location hours and description from their values within their
+         *   corresponding text fields.
+         * - Updating the service hour rounding rules.
+         * @example
+         * if (this.valid) this.save(); // Save location changes if they're valid.
+         * @return {bool} If the currently inputted/selected values are valid.
+         */
+
     }, {
         key: 'valid',
         get: function get() {
@@ -20727,7 +20919,8 @@ var Data = function () {
         /**
          * Updates the given user's Firestore document.
          * @example
-         * await window.app.updateUser({ // Updates a subset of a specified user's
+         * const Data = require('@tutorbook/data');
+         * await Data.updateUser({ // Updates a subset of a specified user's
          * // data.
          *   uid: 'INSERT-THE-DESIRED-USER\'S-UID-HERE', // Make sure to always
          *   // include a valid user ID to update.
