@@ -208,6 +208,7 @@ class Schedule {
                 'you supervise.' : 'View past tutoring sessions, clock ' +
                 'out of active meetings and edit upcoming appointments.'),
         });
+        if (window.app.onMobile) $(this.main).addClass('schedule--mobile');
     }
 
     /**
@@ -266,7 +267,9 @@ class Schedule {
         // they always divide at the correct location.
         const earliestDateOnDate = new Date(date.getFullYear(), date.getMonth(),
             date.getDate(), 0, 0, 0, 0);
-        const divider = window.app.render.template('date-list-divider', {
+        const templateName = window.app.onMobile ? 'mobile-date-list-divider' :
+            'date-list-divider';
+        const divider = window.app.render.template(templateName, {
             date: dateString,
             timestamp: earliestDateOnDate,
         });

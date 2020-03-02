@@ -1298,7 +1298,15 @@ styling due to input el spacing. -->
     </div>
 </div>
 
-<!-- Divider Template -->
+<!-- Mobile Schedule Divider Template -->
+<div hidden class="template" id="mobile-date-list-divider">
+    <div data-fir-attr="timestamp:timestamp" class="input-list-divider">
+        <h4 class="mdc-list-group__subheader" data-fir-content="date">Mon, 7/26</h4>
+        <hr class="mdc-list-divider">
+    </div>
+</div>
+
+<!-- Schedule Divider Template -->
 <div hidden class="template" id="date-list-divider">
     <div data-fir-attr="timestamp:timestamp" class="date-list-divider">
         <hr class="mdc-list-divider">
@@ -1775,7 +1783,7 @@ styling due to input el spacing. -->
                 meetings, and edit upcoming appointments.
             </h5>
         </div>
-        <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list">
+        <ul data-fir-attr="style:scheduleStyling" class="mdc-list mdc-list--two-line mdc-list--avatar-list">
         </ul>
         <div class="delete-user-input">
             <button id="load-more" class="mdc-button">

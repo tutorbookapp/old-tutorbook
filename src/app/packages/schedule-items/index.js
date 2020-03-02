@@ -11,7 +11,17 @@ const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;
 const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
+/**
+ * Class that represents the basic appt list item included in the user's primary
+ * schedule list view. Overridden by more specific appointment types (e.g. an
+ * active appointment v.s. a past appointment).
+ * @abstract
+ */
 class Event {
+    /**
+     * Creates a new event list item from a given Firestore appt document.
+     * @param {DocumentSnapshot} doc - The appt's Firestore document snapshot.
+     */
     constructor(doc) {
         Object.entries(doc.data()).forEach((entry) => {
             this[entry[0]] = entry[1];
@@ -22,10 +32,23 @@ class Event {
         this.data = {};
     }
 
-    renderSelf(template) {
+    /**
+     * Renders the appointment list item given a template string.
+     * @param {string} [template='appt-list-item'] - The ID of the template to 
+     * render for this appt list item (i.e. supervisor or normal).
+     * @see {@link Templates}
+     */
+    renderSelf(template = 'appt-list-item') {
+        /**
+         * Ensures that actions are not shown when user is on mobile.
+         */
+        const combine = (opts) => {
+            if (window.app.onMobile) opts.showAction = false;
+            return opts;
+        };
         this.el = this.render.template(
-            template || 'appt-list-item',
-            Utils.combineMaps({
+            template,
+            combine(Utils.combineMaps({
                 photo: (typeof this.other === 'object') ?
                     this.other.photo : undefined,
                 viewUser: (typeof this.other === 'object') ? () => {
@@ -39,7 +62,7 @@ class Event {
                     if ($(event.target).closest('button,img').length) return;
                     this.dialog.view();
                 },
-            }, this.data));
+            }, this.data)));
     }
 };
 
