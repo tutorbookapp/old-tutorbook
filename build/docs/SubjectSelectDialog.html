@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>NewLocationDialog - Documentation</title>
+    <title>SubjectSelectDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">NewLocationDialog</h1>
+    <h1 class="page-title">SubjectSelectDialog</h1>
     
 
     
@@ -42,12 +42,10 @@
 <header>
     
         <h2>
-        NewLocationDialog
+        SubjectSelectDialog
         </h2>
         
-            <div class="class-description"><p>Class that represents the &quot;New Location&quot; dialog/view that enables tutoring
-supervisors to create new locations that students can tutor at (and be safely
-supervised) at.</p></div>
+            <div class="class-description"><p>Class that represents the dialog that enables users to select subjects.</p></div>
         
     
 </header>
@@ -63,7 +61,7 @@ supervised) at.</p></div>
     
 
     
-    <h4 class="name" id="NewLocationDialog"><span class="type-signature"></span>new NewLocationDialog<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="SubjectSelectDialog"><span class="type-signature"></span>new SubjectSelectDialog<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -71,7 +69,7 @@ supervised) at.</p></div>
 
 
 <div class="description">
-    <p>Creates and renders the &quot;New Location&quot; dialog/view.</p>
+    <p>Creates and renders a new subject selection dialog.</p>
 </div>
 
 
@@ -107,7 +105,7 @@ supervised) at.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1269">line 1269</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -115,14 +113,6 @@ supervised) at.</p></div>
 
     
 
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Define what an empty location looks like and pass it into the
-<a href="EditLocationDialog.html"><code>parent</code></a>'s constructor.</li>
-        </ul>
-    </dd>
     
 </dl>
 
@@ -157,17 +147,6 @@ supervised) at.</p></div>
     </div>
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="EditLocationDialog.html">EditLocationDialog</a></li>
-    </ul>
-
-
-    
 
     
 
@@ -178,257 +157,10 @@ supervised) at.</p></div>
     
 
     
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id="changed"><span class="type-signature"></span>changed<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Returns <code>true</code> if the currently inputted/selected values match our
-original <code>this.location</code> <a href="global.html#Location"><code>Location</code></a> object.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#changed">EditLocationDialog#changed</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1154">line 1154</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-</div>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id="valid"><span class="type-signature"></span>valid<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Checks and validates all currently inputted/selected values while:</p>
-<ul>
-<li>Updating location hours and description from their values within their
-corresponding text fields.</li>
-<li>Updating the service hour rounding rules.</li>
-</ul>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#valid">EditLocationDialog#valid</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1172">line 1172</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>if (this.valid) this.save(); // Save location changes if they're valid.</code></pre>
-
-
-</div>
-
-        
-    
 
     
         <h3 class="subsection-title">Methods</h3>
 
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="addHourInput"><span class="type-signature"></span>addHourInput<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Adds (and manages) an &quot;Hour&quot; input to the dialog.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#addHourInput">EditLocationDialog#addHourInput</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1198">line 1198</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
         
             
 <div class="section-method">
@@ -444,7 +176,7 @@ corresponding text fields.</li>
 
 
 <div class="description">
-    <p>Attaches MDC Components and click listeners.</p>
+    <p>Attaches MDC components and click listeners.</p>
 </div>
 
 
@@ -459,11 +191,6 @@ corresponding text fields.</li>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#manage">EditLocationDialog#manage</a>
-    </li></ul></dd>
     
 
     
@@ -485,101 +212,7 @@ corresponding text fields.</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1070">line 1070</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="removeHourInput"><span class="type-signature"></span>removeHourInput<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Removes an &quot;Hour&quot; input and it's corresponding open hours timeslot.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#removeHourInput">EditLocationDialog#removeHourInput</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1211">line 1211</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -632,21 +265,8 @@ corresponding text fields.</li>
 
 
 <div class="description">
-    <p>Renders the &quot;Edit Location&quot; dialog by adding:</p>
-<ol>
-<li>A &quot;Basic info&quot; list divider</li>
-<li>A &quot;Name&quot; text field</li>
-<li>A &quot;Description&quot; text area</li>
-<li>A &quot;Service hour rules&quot; list divider</li>
-<li>A &quot;Round service hours&quot; select</li>
-<li>A &quot;To the nearest&quot; select</li>
-<li>A &quot;Round times to the nearest&quot; select</li>
-<li>An &quot;Open hours&quot; list divider</li>
-<li>A bunch of &quot;Hour&quot; inputs (text fields that open up
-<a href="EditHourDialog.html"><code>EditHourDialog</code></a>s).</li>
-<li>A &quot;Delete Location&quot; button
-to the dialog's <code>this.main</code> <code>HTMLElement</code>.</li>
-</ol>
+    <p>Renders the subject selection dialog by replacing the subject lists in
+the <code>dialog-subjects</code> template.</p>
 </div>
 
 
@@ -661,11 +281,6 @@ to the dialog's <code>this.main</code> <code>HTMLElement</code>.</li>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#renderSelf">EditLocationDialog#renderSelf</a>
-    </li></ul></dd>
     
 
     
@@ -687,116 +302,22 @@ to the dialog's <code>this.main</code> <code>HTMLElement</code>.</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line996">line 996</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
     
 
     
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
         <ul>
-            <li>Add supervisor search text field input items to designate who is 
-able to approve/reject clock-in/out requests.</li>
+            <li><a href="Templates.html"><code>Templates</code></a></li>
+        
+            <li><a href="Render.html"><code>Render</code></a></li>
         </ul>
     </dd>
     
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Resets the inputs on the dialog (used when the user doesn't click on the
-checkmark but instead just heads back).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#reset">EditLocationDialog#reset</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1142">line 1142</a>
-    </li></ul></dd>
-    
-
-    
-
-    
 
     
 </dl>
@@ -835,7 +356,7 @@ checkmark but instead just heads back).</p>
     
 
     
-    <h4 class="name" id="save"><span class="type-signature">(async) </span>save<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span></h4>
+    <h4 class="name" id="section"><span class="type-signature"></span>section<span class="signature">(id)</span><span class="type-signature"></span></h4>
     
 
     
@@ -843,7 +364,7 @@ checkmark but instead just heads back).</p>
 
 
 <div class="description">
-    <p>Updates the location's data if all inputs are valid.</p>
+    <p>Views a given dialog page/section.</p>
 </div>
 
 
@@ -858,11 +379,6 @@ checkmark but instead just heads back).</p>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#save">EditLocationDialog#save</a>
-    </li></ul></dd>
     
 
     
@@ -884,7 +400,7 @@ checkmark but instead just heads back).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1127">line 1127</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -903,45 +419,221 @@ checkmark but instead just heads back).</p>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
+        <th>Type</th>
 
         
 
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
         
-<span class="param-type"><code>Promise.&lt;undefined></code></span>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
 
 
-    </dd>
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The ID attribute of the page/section to view.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-examples">
+<h5>Examples</h5>
+
+    <pre class="prettyprint"><code>this.section('page-all'); // View the subject categories page.</code></pre>
+
+    <pre class="prettyprint"><code>this.section('page-math'); // View the math subjects page.</code></pre>
+
+</div>
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="updateSelected"><span class="type-signature"></span>updateSelected<span class="signature">(val)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Updates the selected subject.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line91">line 91</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
 </dl>
 
 
-<div class="param-desc">
-    <p>Promise that resolves once the location has
-been updated (or if we've encountered an error while updating it).</p>
-</div>
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The new selected subject.</p>
+                
+            </td>
+        </tr>
 
     
-</div>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -950,10 +642,8 @@ been updated (or if we've encountered an error while updating it).</p>
 <div class="section-examples">
 <h5>Example</h5>
 
-    <pre class="prettyprint"><code>const EditLocationDialog = require('@tutorbook/dialogs').editLocation;
-const dialog = new EditLocationDialog(locationData, locationId);
-// Change the data in the dialog somehow.
-await dialog.save();</code></pre>
+    <pre class="prettyprint"><code>this.updateSelected('Chemistry H'); // From within a subject select 
+// dialog instance (i.e. `this` is a `SubjectSelectDialog`).</code></pre>
 
 </div>
 
@@ -973,8 +663,7 @@ await dialog.save();</code></pre>
 
 
 <div class="description">
-    <p>Views (and subsequently manages) the &quot;Edit Location&quot; dialog and our
-Intercom Messenger.</p>
+    <p>Adds the dialog element to the DOM, opens it, and manages it.</p>
 </div>
 
 
@@ -989,11 +678,6 @@ Intercom Messenger.</p>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#view">EditLocationDialog#view</a>
-    </li></ul></dd>
     
 
     
@@ -1015,21 +699,12 @@ Intercom Messenger.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1061">line 1061</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="Tutorbook.html#view"><code>Tutorbook#view</code></a></li>
-        
-            <li><a href="Help.html#view"><code>Help#view</code></a></li>
-        </ul>
-    </dd>
     
 
     
@@ -1060,6 +735,15 @@ Intercom Messenger.</p>
 
 
 
+
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>const SubjectSelectDialog = require('@tutorbook/dialogs').subject;
+const dialog = new SubjectSelectDialog();
+dialog.view();</code></pre>
+
+</div>
 
 </div>
         
