@@ -15,6 +15,7 @@ const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
  * Class that represents the basic appt list item included in the user's primary
  * schedule list view. Overridden by more specific appointment types (e.g. an
  * active appointment v.s. a past appointment).
+ * @alias EventListItem
  * @abstract
  */
 class Event {
@@ -66,6 +67,13 @@ class Event {
     }
 };
 
+/**
+ * Class that represents the upcoming appointment list item in the **primary
+ * schedule view** (not to be confused with the [ApptCard]{@link ApptCard} in
+ * the [**dashboard schedule**]{@linkplain ScheduleCard}).
+ * @alias ApptListItem
+ * @extends EventListItem
+ */
 class Appt extends Event {
     constructor(doc) {
         super(doc);

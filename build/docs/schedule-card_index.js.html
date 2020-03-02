@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Utils - Documentation</title>
+    <title>schedule-card/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,1330 +29,333 @@
 
 <div id="main">
     
-    <h1 class="page-title">Utils</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        Utils
-        </h2>
-        
-            <div class="class-description"><p>Class that contains basic (and some very <strong>not basic</strong>) utilities used across
-Tutorbook's web app.</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Utils"><span class="type-signature"></span>new Utils<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Creates a new utilities class by either using the already initialized
-<code>window.app.data</code> <a href="Data.html"><code>Data</code></a> object or by creating a new
-<a href="Data.html"><code>Data</code></a> object.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line30">line 30</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".attachHeader"><span class="type-signature">(static) </span>attachHeader<span class="signature">(headerEl<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {MDCTopAppBar}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Attaches an <a href="https://material.io/develop/web/components/top-app-bar/"><code>MDCTopAppBar</code></a>
-to a given header element, <a href="https://material.io/develop/web/components/ripples/"><code>MDCRipple</code></a>'s
-to that element's buttons and list items, and returns the managed
-<code>MDCTopAppBar</code>.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line530">line 530</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>headerEl</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>HTMLElement</code></span>
-|
-
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'header .mdc-top-app-bar'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The
-header element (or string query for the element) to attach to.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>MDCTopAppBar</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The attached and managed top app bar instance.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Examples</h5>
-
-    <pre class="prettyprint"><code>const header = Utils.attachHeader(this.header); // Pass an element</code></pre>
-
-    <pre class="prettyprint"><code>const header = Utils.attachHeader('#my-header'); // Pass a query</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".filterApptData"><span class="type-signature">(static) </span>filterApptData<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Helper function that takes in a map and returns only those valuse that
-correspond with appt data.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line1383">line 1383</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".getOtherUser"><span class="type-signature">(static) </span>getOtherUser<span class="signature">(userA, userB)</span><span class="type-signature"> &rarr; {otherUser}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Returns the other user in a request or appointment (i.e. the user that
-does not share a uID with our current app user). Note that this will
-return even if both users are the current user (it will default to the
-first user given).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line481">line 481</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>userA</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The first user to compare with our current user.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>userB</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The second user to compare with our current user.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>otherUser</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The user that did not match our current user (default
-to <code>userA</code>).</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".parseHourString"><span class="type-signature">(static) </span>parseHourString<span class="signature">(string)</span><span class="type-signature"> &rarr; {<a href="global.html#Timeslot">Timeslot</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Parses a given open hour string into a useful map of data.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line1144">line 1144</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>string</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The open hour string to parse.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code><a href="global.html#Timeslot">Timeslot</a></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The parsed map of data.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Utils.parseHourString('Fridays from 10:00 AM to 3:00 PM');
-// The code above returns {
-//   day: 'Friday',
-//   open: '10:00 AM',
-//   close: '3:00 PM',
-// }</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".parseHourStrings"><span class="type-signature">(static) </span>parseHourStrings<span class="signature">(strings)</span><span class="type-signature"> &rarr; {<a href="global.html#Hours">Hours</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Parses an array of hour strings and returns an <a href="global.html#Hours"><code>Hours</code></a>
-object.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line1109">line 1109</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><code>Utils#parseHourString</code></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>strings</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;string></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The hour strings to parse.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code><a href="global.html#Hours">Hours</a></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The hour strings as an <a href="global.html#Hours"><code>Hours</code></a> object.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Utils.parseHourStrings([
-  'Fridays from 10:00 AM to 3:00 PM',
-  'Fridays from 10:00 AM to 3:00 PM',
-  'Tuesdays from 10:00 AM to 3:00 PM',
-]); 
-// The code above will return {
-//   Friday: [
-//     { open: '10:00 AM', close: '3:00 PM' },
-//     { open: '10:00 AM', close: '3:00 PM' },
-//   ],
-//   Tuesday: [
-//     { open: '10:00 AM', close: '3:00 PM' },
-//   ],
-// };</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".recycle"><span class="type-signature">(static) </span>recycle<span class="signature">(queries, recycler)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Listens to the given queries and calls the recycler when those queries's
-data changes.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line284">line 284</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://firebase.google.com/docs/firestore/query-data/queries">https://firebase.google.com/docs/firestore/query-data/queries</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>queries</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>A map of arrays (or just a map of) Firestore
-<code>Query</code>s to listen to and subsequently recycle.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>recycler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#Recycler">Recycler</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>A recycler containing callbacks to display,
-remove, or empty different query data.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".viewRaw"><span class="type-signature">(static) </span>viewRaw<span class="signature">(doc)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Opens up a new tab with the raw JSON data of the given Firestore document
-(and ID).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line117">line 117</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>doc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>DocumentSnapshot</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The Firestore document to show the raw
-data from.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">schedule-card/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {
+    MDCRipple
+} from '@material/ripple/index';
+import {
+    MDCLinearProgress
+} from '@material/linear-progress/index';
+import {
+    MDCMenu
+} from '@material/menu/index';
+
+import $ from 'jquery';
+import to from 'await-to-js';
+
+const Data = require('@tutorbook/data');
+const Utils = require('@tutorbook/utils');
+const EditApptDialog = require('@tutorbook/dialogs').editAppt;
+const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
+const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+
+/**
+ * Class that represents the schedule cards within the supervisor's dashboard
+ * schedule (not to be confused with the other `Event` class that represents the
+ * schedule **list items** in the **primary schedule** view).
+ * @alias EventCard
+ * @abstract
+ */
+class Event {
+    /**
+     * Creates and renders a new event card.
+     * @param {Appointment} appt - The appointment to render the event for.
+     * @param {string} id - The appointment's Firestore document ID.
+     * @param {Object} colors - A `Map` storing the available (and already
+     * used) event card colors.
+     * @param {string} type - The type of the appointment (mostly used for
+     * recycling purposes).
+     * @param {int} index - Another parameter mostly used for recycling
+     * purposes. The index of the query from which this event came from.
+     */
+    constructor(appt, id, colors, type, index = 0) {
+        this.render = window.app.render;
+        this.color = Utils.color(appt.time, colors);
+        Utils.sync(appt, this);
+        this.id = id;
+        this.type = type;
+        this.index = index;
+        this.viewDialog = new ViewApptDialog(Utils.filterApptData(this),
+            this.id);
+        this.editDialog = new EditApptDialog(Utils.filterApptData(this),
+            this.id);
+        this.actions = {
+            'View': () => this.viewDialog.view(),
+            'Edit': () => this.editDialog.view(),
+            'Cancel': () => {
+                return new ConfirmationDialog('Cancel Appointment?',
+                    'Cancel tutoring sessions between ' + this.attendees[0].name +
+                    ' and ' + this.attendees[1].name + ' for ' +
+                    this.for.subject + ' at ' + this.time.from + ' at the ' +
+                    this.location.name + '.', async () => {
+                        window.app.snackbar.view('Canceling appointment...');
+                        $(this.el).hide();
+                        const [e, r] = await to(Data.cancelAppt(
+                            Utils.filterApptData(this), this.id));
+                        if (e) {
+                            $(this.el).show();
+                            return window.app.snackbar.view('Could not cancel' +
+                                ' appointment.');
+                        }
+                        $(this.el).remove();
+                        window.app.snackbar.view('Canceled appointment.');
+                    }).view();
+            },
+            'Raw Data': () => Utils.viewRaw({
+                data: () => appt,
+                id: id,
+            }),
+        };
+    }
+
+    /**
+     * Renders the new event card showing:
+     * 1. Who the appointment is with (e.g. 'Bobby and Logic'). Note that the 
+     *    tutor's name always comes first followed by the pupil.
+     * 2. When the appointment is happening
+     * 3. What the appointment is for (e.g. 'Chemistry during G Period').
+     * 
+     * And adds a menu to that card with options to:
+     * - Clock in to or out of the appointment
+     * - Cancel the appointment
+     * - Edit the appointment
+     * - View the appointment
+     * - View the 'Raw Data' of the appointment (essentially the JSON that is 
+     *   stored in our Firestore database)
+     */
+    renderSelf() {
+        const title = this.for.toUser.name.split(' ')[0] + ' and ' +
+            this.for.fromUser.name.split(' ')[0];
+        const subtitle = this.for.subject + ((window.app.data.periods[this.time
+                .day] || []).indexOf(this.time.from) &lt; 0 ? ' at ' :
+            ' during ') + this.time.from;
+        this.el = $(this.render.template('card-event', {
+            title: title,
+            subtitle: subtitle,
+            id: this.id,
+            type: this.type,
+            index: this.index,
+        })).css('background', this.color);
+        MDCRipple.attachTo($(this.el).find('#menu')[0]).unbounded = true;
+        Object.entries(this.actions).forEach(([label, action]) => {
+            $(this.el).find('.mdc-menu .mdc-list').append(
+                this.render.template('card-action', {
+                    label: label,
+                    action: action,
+                })
+            );
+        });
+        this.menu = Utils.attachMenu($(this.el).find('.mdc-menu')[0]);
+        this.manage();
+    }
+
+    /**
+     * Adds the click listener to the event card's menu button.
+     */
+    manage() {
+        $(this.el).find('#menu')[0].addEventListener('click', () => {
+            this.menu.open = true;
+        });
+    }
+};
+
+/**
+ * Class that represents an upcoming appointment event card in a supervisor's
+ * [**dashboard schedule**]{@linkplain ScheduleCard} (not to be confused with an 
+ * upcoming appointment [**list item**]{@linkplain ApptListItem} in the 
+ * [**primary schedule** view]{@linkplain Schedule}).
+ * @alias ApptCard
+ * @extends EventCard
+ */
+class Appt extends Event {
+
+    constructor(appt, id, colors, index) {
+        super(appt, id, colors || {}, 'appts', index);
+        this.actions['Clock-in'] = () => this.clockIn();
+        this.renderSelf();
+    }
+
+    /**
+     * Clocks in for the tutor of this appointment (turns this event yellow as
+     * it's clocking in; until the card is replaced altogether by a deep red 
+     * "active appointment" card).
+     */
+    async clockIn() {
+        $(this.el).css('background', '#FFBB00');
+        window.app.snackbar.view('Clocking in for ' + this.for.toUser.name +
+            '...');
+        const [e, r] = await to(Data.instantClockIn(
+            Utils.filterApptData(this), this.id));
+        $(this.el).css('background', this.color);
+        if (e) return window.app.snackbar.view('Could not clock in.');
+        window.app.snackbar.view('Clocked in for ' + this.for.toUser.name
+            .split(' ')[0] + ' at ' + new Date(r.clockIn.sentTimestamp)
+            .toLocaleTimeString() + '.');
+    }
+}
+
+/**
+ * Class that represents the active appointment event card in a supervisor's
+ * dashboard schedule (not to be confused with the active appointment **list
+ * item** in the **primary schedule** view).
+ * @alias ActiveApptCard
+ * @extends EventCard
+ */
+class ActiveAppt extends Event {
+
+    constructor(appt, id, colors, index) {
+        super(appt, id, colors || {}, 'activeAppts', index);
+        this.actions['Clock-out'] = () => this.clockOut();
+        this.viewDialog = new ViewActiveApptDialog(Utils
+            .filterActiveApptData(this), this.id);
+        this.color = '#B00020';
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        $(this.el).prepend(this.render.template('event-progress'));
+        $(this.el).find('.mdc-linear-progress__bar-inner')
+            .css('background-color', this.color);
+        var time = (new Date().getTime() / 1000) -
+            this.clockIn.sentTimestamp.seconds;
+        var total = (new Date('1/1/2019 ' + this.time.to).getTime() -
+            new Date('1/1/2019 ' + this.time.from).getTime()) / 1000;
+        const bar = new MDCLinearProgress(
+            $(this.el).find('.mdc-linear-progress')[0]);
+        this.timer = window.setInterval(() => {
+            time++;
+            bar.progress = time / total;
+            if (time === total) window.clearInterval(this.timer);
+        }, 1000);
+    }
+
+    /**
+     * Clocks the tutor of this appointment out (turns yellow while clocking
+     * out; before the active appointment is replaced altogether by a regular 
+     * "upcoming appointment" event card).
+     */
+    async clockOut() {
+        window.app.snackbar.view('Clocking out for ' + this.for.toUser.name +
+            '...');
+        const [e, r] = await to(Data.instantClockOut(
+            Utils.filterApptData(this), this.id));
+        if (e) return window.app.snackbar.view('Could not clock out.');
+        window.app.snackbar.view('Clocked out for ' + this.for.toUser.name
+            .split(' ')[0] + ' at ' + new Date(r.clockOut.sentTimestamp)
+            .toLocaleTimeString() + '.');
+    }
+}
+
+/**
+ * Class that represents the **dashboard schedule** (not to be confused with the
+ * [**primary schedule**]{@linkplain Schedule} view) card that shows the
+ * supervisor all of their weekly appointments. Is also used in our 
+ * [MatchingDialog]{@link MatchingDialog} to show a user's existing appointments
+ * (i.e. so supervisors don't match them for the same thing twice or double-book
+ * them).
+ */
+class ScheduleCard {
+    /**
+     * Creates and renders a new dashboard schedule card.
+     * @param {Object} [queries] - The queries to recycle appt data from (to 
+     * show on the dashboard card).
+     */
+    constructor(queries) {
+        this.render = window.app.render;
+        this.colors = {};
+        this.appts = [];
+        this.activeAppts = [];
+        this.queries = queries;
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        this.main = this.render.template('card-schedule');
+    }
+
+    async viewAppts() {
+        const recycler = {
+            display: (doc, type, index) => {
+                if (!this[type][index]) this[type][index] = {};
+                $(this.main).find('#loader').remove();
+                if (type === 'activeAppts') {
+                    this[type][index][doc.id] = new ActiveAppt(
+                        doc.data(),
+                        doc.id,
+                        this.colors,
+                        index,
+                    );
+                    if ($(this.main).find('#' + doc.id).length)
+                        return $(this.main)
+                            .find('#' + doc.id)
+                            .replaceWith(this[type][index][doc.id].el);
+                } else {
+                    this[type][index][doc.id] = new Appt(
+                        doc.data(),
+                        doc.id,
+                        this.colors,
+                        index,
+                    );
+                }
+                $(this.main).find('#' + this[type][index][doc.id].time.day +
+                    ' .schedule-list').append(this[type][index][doc.id].el);
+                if (this.displayHook) this.displayHook(doc, type, index);
+            },
+            remove: (doc, type, index) => {
+                this[type][index][doc.id] = undefined;
+                if (type === 'activeAppts') {
+                    $(this.main).find('#' + doc.id)
+                        .replaceWith(this.appts[index][doc.id].el);
+                } else {
+                    $(this.main).find('#' + doc.id).remove();
+                }
+            },
+            empty: (type, index) => {
+                this[type][index] = {};
+                if (type === 'activeAppts') {
+                    const appts = this.appts[index];
+                    $(this.main).find('[type="' + type + '"][index="' + index +
+                        '"]').each(function() {
+                        $(this).replaceWith(appts[$(this).attr('id')].el);
+                    });
+                } else {
+                    $(this.main).find('[type="' + type + '"][index="' + index +
+                        '"]').remove();
+                }
+                if (this.emptyHook) this.emptyHook(type, index);
+            },
+        };
+        if (this.queries) return Utils.recycle(this.queries, recycler);
+        this.queries = {
+            appts: [],
+            activeAppts: [],
+        };
+        (await Data.getLocations()).forEach(location => {
+            this.queries.appts.push(window.app.db.collection('locations')
+                .doc(location.id).collection('appointments')
+                .orderBy('time.from'));
+            this.queries.activeAppts.push(window.app.db.collection('locations')
+                .doc(location.id).collection('activeAppointments')
+                .orderBy('time.from'));
+        });
+        Utils.recycle(this.queries, recycler);
+    }
+};
+
+module.exports = ScheduleCard;</code></pre>
+        </article>
+    </section>
 
 
 

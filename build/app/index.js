@@ -20284,8 +20284,35 @@ var Utils = function () {
             };
         }
 
-        // Helper function that takes in a map and returns only those valuse that
-        // correspond with appt data.
+        /**
+         * A time object storing when appointments or lesson requests are supposed 
+         * to happen.
+         * @typedef {Object} Time
+         * @property {string} day - The weekday of the appointment or lesson request 
+         * (e.g. 'Monday').
+         * @property {string} from - When the appointment or lesson starts (e.g. 
+         * '3:45 PM').
+         * @property {string} to - When the appointment or lesson ends (e.g. 
+         * '4:45 PM').
+         */
+
+        /**
+         * An appointment object storing relevant appointment data.
+         * @typedef {Object} Appointment
+         * @property {User[]} attendees - An array of the users attending the 
+         * appointment.
+         * @property {Time} time - A `Map` storing the time of the appointment.
+         * @property {Request} for - The appointment's original lesson request.
+         * @property {Location} location - The location at which the appointment is 
+         * going to occur.
+         * @property {Date} timestamp - When the appointment was created.
+         * @property {string} id - The Firestore document ID of the appointment.
+         */
+
+        /**
+         * Helper function that takes in a map and returns only those valuse that
+         * correspond with appt data.
+         */
 
     }, {
         key: 'filterApptData',
@@ -24074,6 +24101,7 @@ var ConfirmationDialog = __webpack_require__(2).confirm;
  * Class that represents the basic appt list item included in the user's primary
  * schedule list view. Overridden by more specific appointment types (e.g. an
  * active appointment v.s. a past appointment).
+ * @alias EventListItem
  * @abstract
  */
 
@@ -24139,6 +24167,14 @@ var Event = function () {
 }();
 
 ;
+
+/**
+ * Class that represents the upcoming appointment list item in the **primary
+ * schedule view** (not to be confused with the [ApptCard]{@link ApptCard} in
+ * the [**dashboard schedule**]{@linkplain ScheduleCard}).
+ * @alias ApptListItem
+ * @extends EventListItem
+ */
 
 var Appt = function (_Event) {
     _inherits(Appt, _Event);
@@ -42092,7 +42128,26 @@ var ViewApptDialog = __webpack_require__(2).viewAppt;
 var ViewActiveApptDialog = __webpack_require__(2).viewActiveAppt;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 
+/**
+ * Class that represents the schedule cards within the supervisor's dashboard
+ * schedule (not to be confused with the other `Event` class that represents the
+ * schedule **list items** in the **primary schedule** view).
+ * @alias EventCard
+ * @abstract
+ */
+
 var Event = function () {
+    /**
+     * Creates and renders a new event card.
+     * @param {Appointment} appt - The appointment to render the event for.
+     * @param {string} id - The appointment's Firestore document ID.
+     * @param {Object} colors - A `Map` storing the available (and already
+     * used) event card colors.
+     * @param {string} type - The type of the appointment (mostly used for
+     * recycling purposes).
+     * @param {int} index - Another parameter mostly used for recycling
+     * purposes. The index of the query from which this event came from.
+     */
     function Event(appt, id, colors, type) {
         var _this = this;
 
@@ -42144,6 +42199,23 @@ var Event = function () {
         };
     }
 
+    /**
+     * Renders the new event card showing:
+     * 1. Who the appointment is with (e.g. 'Bobby and Logic'). Note that the 
+     *    tutor's name always comes first followed by the pupil.
+     * 2. When the appointment is happening
+     * 3. What the appointment is for (e.g. 'Chemistry during G Period').
+     * 
+     * And adds a menu to that card with options to:
+     * - Clock in to or out of the appointment
+     * - Cancel the appointment
+     * - Edit the appointment
+     * - View the appointment
+     * - View the 'Raw Data' of the appointment (essentially the JSON that is 
+     *   stored in our Firestore database)
+     */
+
+
     _createClass(Event, [{
         key: 'renderSelf',
         value: function renderSelf() {
@@ -42172,6 +42244,11 @@ var Event = function () {
             this.menu = Utils.attachMenu((0, _jquery2.default)(this.el).find('.mdc-menu')[0]);
             this.manage();
         }
+
+        /**
+         * Adds the click listener to the event card's menu button.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
@@ -42188,6 +42265,15 @@ var Event = function () {
 
 ;
 
+/**
+ * Class that represents an upcoming appointment event card in a supervisor's
+ * [**dashboard schedule**]{@linkplain ScheduleCard} (not to be confused with an 
+ * upcoming appointment [**list item**]{@linkplain ApptListItem} in the 
+ * [**primary schedule** view]{@linkplain Schedule}).
+ * @alias ApptCard
+ * @extends EventCard
+ */
+
 var Appt = function (_Event) {
     _inherits(Appt, _Event);
 
@@ -42202,6 +42288,13 @@ var Appt = function (_Event) {
         _this4.renderSelf();
         return _this4;
     }
+
+    /**
+     * Clocks in for the tutor of this appointment (turns this event yellow as
+     * it's clocking in; until the card is replaced altogether by a deep red 
+     * "active appointment" card).
+     */
+
 
     _createClass(Appt, [{
         key: 'clockIn',
@@ -42222,6 +42315,15 @@ var Appt = function (_Event) {
 
     return Appt;
 }(Event);
+
+/**
+ * Class that represents the active appointment event card in a supervisor's
+ * dashboard schedule (not to be confused with the active appointment **list
+ * item** in the **primary schedule** view).
+ * @alias ActiveApptCard
+ * @extends EventCard
+ */
+
 
 var ActiveAppt = function (_Event2) {
     _inherits(ActiveAppt, _Event2);
@@ -42257,6 +42359,13 @@ var ActiveAppt = function (_Event2) {
                 if (time === total) window.clearInterval(_this6.timer);
             }, 1000);
         }
+
+        /**
+         * Clocks the tutor of this appointment out (turns yellow while clocking
+         * out; before the active appointment is replaced altogether by a regular 
+         * "upcoming appointment" event card).
+         */
+
     }, {
         key: 'clockOut',
         value: async function clockOut() {
@@ -42275,7 +42384,22 @@ var ActiveAppt = function (_Event2) {
     return ActiveAppt;
 }(Event);
 
+/**
+ * Class that represents the **dashboard schedule** (not to be confused with the
+ * [**primary schedule**]{@linkplain Schedule} view) card that shows the
+ * supervisor all of their weekly appointments. Is also used in our 
+ * [MatchingDialog]{@link MatchingDialog} to show a user's existing appointments
+ * (i.e. so supervisors don't match them for the same thing twice or double-book
+ * them).
+ */
+
+
 var ScheduleCard = function () {
+    /**
+     * Creates and renders a new dashboard schedule card.
+     * @param {Object} [queries] - The queries to recycle appt data from (to 
+     * show on the dashboard card).
+     */
     function ScheduleCard(queries) {
         _classCallCheck(this, ScheduleCard);
 

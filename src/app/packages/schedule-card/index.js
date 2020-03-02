@@ -18,7 +18,25 @@ const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
 const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
+/**
+ * Class that represents the schedule cards within the supervisor's dashboard
+ * schedule (not to be confused with the other `Event` class that represents the
+ * schedule **list items** in the **primary schedule** view).
+ * @alias EventCard
+ * @abstract
+ */
 class Event {
+    /**
+     * Creates and renders a new event card.
+     * @param {Appointment} appt - The appointment to render the event for.
+     * @param {string} id - The appointment's Firestore document ID.
+     * @param {Object} colors - A `Map` storing the available (and already
+     * used) event card colors.
+     * @param {string} type - The type of the appointment (mostly used for
+     * recycling purposes).
+     * @param {int} index - Another parameter mostly used for recycling
+     * purposes. The index of the query from which this event came from.
+     */
     constructor(appt, id, colors, type, index = 0) {
         this.render = window.app.render;
         this.color = Utils.color(appt.time, colors);
@@ -59,6 +77,21 @@ class Event {
         };
     }
 
+    /**
+     * Renders the new event card showing:
+     * 1. Who the appointment is with (e.g. 'Bobby and Logic'). Note that the 
+     *    tutor's name always comes first followed by the pupil.
+     * 2. When the appointment is happening
+     * 3. What the appointment is for (e.g. 'Chemistry during G Period').
+     * 
+     * And adds a menu to that card with options to:
+     * - Clock in to or out of the appointment
+     * - Cancel the appointment
+     * - Edit the appointment
+     * - View the appointment
+     * - View the 'Raw Data' of the appointment (essentially the JSON that is 
+     *   stored in our Firestore database)
+     */
     renderSelf() {
         const title = this.for.toUser.name.split(' ')[0] + ' and ' +
             this.for.fromUser.name.split(' ')[0];
@@ -85,6 +118,9 @@ class Event {
         this.manage();
     }
 
+    /**
+     * Adds the click listener to the event card's menu button.
+     */
     manage() {
         $(this.el).find('#menu')[0].addEventListener('click', () => {
             this.menu.open = true;
@@ -92,7 +128,14 @@ class Event {
     }
 };
 
-
+/**
+ * Class that represents an upcoming appointment event card in a supervisor's
+ * [**dashboard schedule**]{@linkplain ScheduleCard} (not to be confused with an 
+ * upcoming appointment [**list item**]{@linkplain ApptListItem} in the 
+ * [**primary schedule** view]{@linkplain Schedule}).
+ * @alias ApptCard
+ * @extends EventCard
+ */
 class Appt extends Event {
 
     constructor(appt, id, colors, index) {
@@ -101,6 +144,11 @@ class Appt extends Event {
         this.renderSelf();
     }
 
+    /**
+     * Clocks in for the tutor of this appointment (turns this event yellow as
+     * it's clocking in; until the card is replaced altogether by a deep red 
+     * "active appointment" card).
+     */
     async clockIn() {
         $(this.el).css('background', '#FFBB00');
         window.app.snackbar.view('Clocking in for ' + this.for.toUser.name +
@@ -115,7 +163,13 @@ class Appt extends Event {
     }
 }
 
-
+/**
+ * Class that represents the active appointment event card in a supervisor's
+ * dashboard schedule (not to be confused with the active appointment **list
+ * item** in the **primary schedule** view).
+ * @alias ActiveApptCard
+ * @extends EventCard
+ */
 class ActiveAppt extends Event {
 
     constructor(appt, id, colors, index) {
@@ -145,6 +199,11 @@ class ActiveAppt extends Event {
         }, 1000);
     }
 
+    /**
+     * Clocks the tutor of this appointment out (turns yellow while clocking
+     * out; before the active appointment is replaced altogether by a regular 
+     * "upcoming appointment" event card).
+     */
     async clockOut() {
         window.app.snackbar.view('Clocking out for ' + this.for.toUser.name +
             '...');
@@ -157,9 +216,20 @@ class ActiveAppt extends Event {
     }
 }
 
-
+/**
+ * Class that represents the **dashboard schedule** (not to be confused with the
+ * [**primary schedule**]{@linkplain Schedule} view) card that shows the
+ * supervisor all of their weekly appointments. Is also used in our 
+ * [MatchingDialog]{@link MatchingDialog} to show a user's existing appointments
+ * (i.e. so supervisors don't match them for the same thing twice or double-book
+ * them).
+ */
 class ScheduleCard {
-
+    /**
+     * Creates and renders a new dashboard schedule card.
+     * @param {Object} [queries] - The queries to recycle appt data from (to 
+     * show on the dashboard card).
+     */
     constructor(queries) {
         this.render = window.app.render;
         this.colors = {};

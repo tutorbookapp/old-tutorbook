@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Utils - Documentation</title>
+    <title>ActiveAppt - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Utils</h1>
+    <h1 class="page-title">ActiveAppt</h1>
     
 
     
@@ -42,11 +42,12 @@
 <header>
     
         <h2>
-        Utils
+        ActiveAppt
         </h2>
         
-            <div class="class-description"><p>Class that contains basic (and some very <strong>not basic</strong>) utilities used across
-Tutorbook's web app.</p></div>
+            <div class="class-description"><p>Class that represents the active appointment event card in a supervisor's
+dashboard schedule (not to be confused with the active appointment <strong>list
+item</strong> in the <strong>primary schedule</strong> view).</p></div>
         
     
 </header>
@@ -62,18 +63,12 @@ Tutorbook's web app.</p></div>
     
 
     
-    <h4 class="name" id="Utils"><span class="type-signature"></span>new Utils<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ActiveAppt"><span class="type-signature"></span>new ActiveAppt<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
 
-
-<div class="description">
-    <p>Creates a new utilities class by either using the already initialized
-<code>window.app.data</code> <a href="Data.html"><code>Data</code></a> object or by creating a new
-<a href="Data.html"><code>Data</code></a> object.</p>
-</div>
 
 
 
@@ -108,7 +103,7 @@ Tutorbook's web app.</p></div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line30">line 30</a>
+        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line175">line 175</a>
     </li></ul></dd>
     
 
@@ -150,6 +145,17 @@ Tutorbook's web app.</p></div>
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="EventCard.html">EventCard</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -171,7 +177,7 @@ Tutorbook's web app.</p></div>
     
 
     
-    <h4 class="name" id=".attachHeader"><span class="type-signature">(static) </span>attachHeader<span class="signature">(headerEl<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {MDCTopAppBar}</span></h4>
+    <h4 class="name" id="clockOut"><span class="type-signature">(async) </span>clockOut<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -179,10 +185,9 @@ Tutorbook's web app.</p></div>
 
 
 <div class="description">
-    <p>Attaches an <a href="https://material.io/develop/web/components/top-app-bar/"><code>MDCTopAppBar</code></a>
-to a given header element, <a href="https://material.io/develop/web/components/ripples/"><code>MDCRipple</code></a>'s
-to that element's buttons and list items, and returns the managed
-<code>MDCTopAppBar</code>.</p>
+    <p>Clocks the tutor of this appointment out (turns yellow while clocking
+out; before the active appointment is replaced altogether by a regular
+&quot;upcoming appointment&quot; event card).</p>
 </div>
 
 
@@ -218,207 +223,7 @@ to that element's buttons and list items, and returns the managed
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line530">line 530</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>headerEl</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>HTMLElement</code></span>
-|
-
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'header .mdc-top-app-bar'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The
-header element (or string query for the element) to attach to.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>MDCTopAppBar</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The attached and managed top app bar instance.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Examples</h5>
-
-    <pre class="prettyprint"><code>const header = Utils.attachHeader(this.header); // Pass an element</code></pre>
-
-    <pre class="prettyprint"><code>const header = Utils.attachHeader('#my-header'); // Pass a query</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".filterApptData"><span class="type-signature">(static) </span>filterApptData<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Helper function that takes in a map and returns only those valuse that
-correspond with appt data.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line1383">line 1383</a>
+        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line207">line 207</a>
     </li></ul></dd>
     
 
@@ -463,7 +268,7 @@ correspond with appt data.</p>
     
 
     
-    <h4 class="name" id=".getOtherUser"><span class="type-signature">(static) </span>getOtherUser<span class="signature">(userA, userB)</span><span class="type-signature"> &rarr; {otherUser}</span></h4>
+    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -471,10 +276,7 @@ correspond with appt data.</p>
 
 
 <div class="description">
-    <p>Returns the other user in a request or appointment (i.e. the user that
-does not share a uID with our current app user). Note that this will
-return even if both users are the current user (it will default to the
-first user given).</p>
+    <p>Adds the click listener to the event card's menu button.</p>
 </div>
 
 
@@ -489,6 +291,11 @@ first user given).</p>
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="EventCard.html#manage">EventCard#manage</a>
+    </li></ul></dd>
     
 
     
@@ -510,7 +317,7 @@ first user given).</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line481">line 481</a>
+        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -527,659 +334,6 @@ first user given).</p>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>userA</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The first user to compare with our current user.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>userB</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The second user to compare with our current user.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>otherUser</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The user that did not match our current user (default
-to <code>userA</code>).</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".parseHourString"><span class="type-signature">(static) </span>parseHourString<span class="signature">(string)</span><span class="type-signature"> &rarr; {<a href="global.html#Timeslot">Timeslot</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Parses a given open hour string into a useful map of data.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line1144">line 1144</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>string</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The open hour string to parse.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code><a href="global.html#Timeslot">Timeslot</a></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The parsed map of data.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Utils.parseHourString('Fridays from 10:00 AM to 3:00 PM');
-// The code above returns {
-//   day: 'Friday',
-//   open: '10:00 AM',
-//   close: '3:00 PM',
-// }</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".parseHourStrings"><span class="type-signature">(static) </span>parseHourStrings<span class="signature">(strings)</span><span class="type-signature"> &rarr; {<a href="global.html#Hours">Hours</a>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Parses an array of hour strings and returns an <a href="global.html#Hours"><code>Hours</code></a>
-object.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line1109">line 1109</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><code>Utils#parseHourString</code></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>strings</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;string></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The hour strings to parse.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code><a href="global.html#Hours">Hours</a></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The hour strings as an <a href="global.html#Hours"><code>Hours</code></a> object.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Utils.parseHourStrings([
-  'Fridays from 10:00 AM to 3:00 PM',
-  'Fridays from 10:00 AM to 3:00 PM',
-  'Tuesdays from 10:00 AM to 3:00 PM',
-]); 
-// The code above will return {
-//   Friday: [
-//     { open: '10:00 AM', close: '3:00 PM' },
-//     { open: '10:00 AM', close: '3:00 PM' },
-//   ],
-//   Tuesday: [
-//     { open: '10:00 AM', close: '3:00 PM' },
-//   ],
-// };</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id=".recycle"><span class="type-signature">(static) </span>recycle<span class="signature">(queries, recycler)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Listens to the given queries and calls the recycler when those queries's
-data changes.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line284">line 284</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://firebase.google.com/docs/firestore/query-data/queries">https://firebase.google.com/docs/firestore/query-data/queries</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>queries</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>A map of arrays (or just a map of) Firestore
-<code>Query</code>s to listen to and subsequently recycle.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>recycler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#Recycler">Recycler</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>A recycler containing callbacks to display,
-remove, or empty different query data.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -1208,7 +362,7 @@ remove, or empty different query data.</p>
     
 
     
-    <h4 class="name" id=".viewRaw"><span class="type-signature">(static) </span>viewRaw<span class="signature">(doc)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -1216,8 +370,22 @@ remove, or empty different query data.</p>
 
 
 <div class="description">
-    <p>Opens up a new tab with the raw JSON data of the given Firestore document
-(and ID).</p>
+    <p>Renders the new event card showing:</p>
+<ol>
+<li>Who the appointment is with (e.g. 'Bobby and Logic'). Note that the
+tutor's name always comes first followed by the pupil.</li>
+<li>When the appointment is happening</li>
+<li>What the appointment is for (e.g. 'Chemistry during G Period').</li>
+</ol>
+<p>And adds a menu to that card with options to:</p>
+<ul>
+<li>Clock in to or out of the appointment</li>
+<li>Cancel the appointment</li>
+<li>Edit the appointment</li>
+<li>View the appointment</li>
+<li>View the 'Raw Data' of the appointment (essentially the JSON that is
+stored in our Firestore database)</li>
+</ul>
 </div>
 
 
@@ -1232,6 +400,11 @@ remove, or empty different query data.</p>
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="EventCard.html#renderSelf">EventCard#renderSelf</a>
+    </li></ul></dd>
     
 
     
@@ -1253,7 +426,7 @@ remove, or empty different query data.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_index.js.html">utils/index.js</a>, <a href="utils_index.js.html#line117">line 117</a>
+        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -1270,59 +443,6 @@ remove, or empty different query data.</p>
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>doc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>DocumentSnapshot</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The Firestore document to show the raw
-data from.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 

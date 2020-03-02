@@ -1351,8 +1351,35 @@ class Utils {
         };
     }
 
-    // Helper function that takes in a map and returns only those valuse that
-    // correspond with appt data.
+    /**
+     * A time object storing when appointments or lesson requests are supposed 
+     * to happen.
+     * @typedef {Object} Time
+     * @property {string} day - The weekday of the appointment or lesson request 
+     * (e.g. 'Monday').
+     * @property {string} from - When the appointment or lesson starts (e.g. 
+     * '3:45 PM').
+     * @property {string} to - When the appointment or lesson ends (e.g. 
+     * '4:45 PM').
+     */
+
+    /**
+     * An appointment object storing relevant appointment data.
+     * @typedef {Object} Appointment
+     * @property {User[]} attendees - An array of the users attending the 
+     * appointment.
+     * @property {Time} time - A `Map` storing the time of the appointment.
+     * @property {Request} for - The appointment's original lesson request.
+     * @property {Location} location - The location at which the appointment is 
+     * going to occur.
+     * @property {Date} timestamp - When the appointment was created.
+     * @property {string} id - The Firestore document ID of the appointment.
+     */
+
+    /**
+     * Helper function that takes in a map and returns only those valuse that
+     * correspond with appt data.
+     */
     static filterApptData(data) {
         return {
             attendees: data.attendees,
