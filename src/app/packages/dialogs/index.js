@@ -2801,24 +2801,43 @@ class ViewPastApptDialog extends ViewApptDialog {
     }
 };
 
+/**
+ * Class that represents our "Active Appointment" dialog.
+ * @extends ViewApptDialog
+ */
 class ViewActiveApptDialog extends ViewApptDialog {
+    /**
+     * Renders the "Active Appointment" dialog by:
+     * - Replacing the "Appointment" header title with text that reads "Active
+     *   Appointment".
+     * - Changing the text on the clock-in FAB.
+     */
     async renderSelf() {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Active Appointment',
         });
         $(this.main).find('.mdc-fab__label').text('ClockOut');
-        $(this.main).find('#Total input').val(
-            Utils.getDurationStringFromDates(
-                this.appt.clockIn.sentTimestamp.toDate(), new Date()
-            ));
-        $(this.main).find('#Current input').val(
-            Utils.getDurationStringFromDates(
-                this.appt.clockIn.sentTimestamp.toDate(), new Date()
-            ));
-        this.timer = setInterval(() => {
-            this.update();
-        }, 10);
+    }
+
+    /**
+     * Manages the "Active Appointment" dialog by:
+     * - Prefilling the timer text fields based (i.e. the appointment has
+     *   already been going for a while now so don't start at "0:00:00").
+     * - Starting the timer `setTimeout` function that updates the timer text
+     *   fields every 10 milliseconds.
+     */
+    manage() {
+        super.manage();
+        const clockIn = !(this.appt.clockIn.sentTimestamp instanceof Date) ?
+            this.appt.clockIn.sentTimestamp.toDate() :
+            this.appt.clockIn.sentTimestamp;
+        const now = new Date();
+        const timeString = Utils.getDurationStringFromDates(clockIn, now);
+        $(this.main)
+            .find('#Total input').val(timeString).end()
+            .find('#Current input').val(timeString).end();
+        this.timer = setInterval(() => this.update(), 10);
     }
 };
 

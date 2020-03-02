@@ -8203,6 +8203,11 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
 
 ;
 
+/**
+ * Class that represents our "Active Appointment" dialog.
+ * @extends ViewApptDialog
+ */
+
 var ViewActiveApptDialog = function (_ViewApptDialog2) {
     _inherits(ViewActiveApptDialog, _ViewApptDialog2);
 
@@ -8214,18 +8219,41 @@ var ViewActiveApptDialog = function (_ViewApptDialog2) {
 
     _createClass(ViewActiveApptDialog, [{
         key: 'renderSelf',
-        value: async function renderSelf() {
-            var _this41 = this;
 
+        /**
+         * Renders the "Active Appointment" dialog by:
+         * - Replacing the "Appointment" header title with text that reads "Active
+         *   Appointment".
+         * - Changing the text on the clock-in FAB.
+         */
+        value: async function renderSelf() {
             await _get(ViewActiveApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewActiveApptDialog.prototype), 'renderSelf', this).call(this);
             this.header = this.render.header('header-action', {
                 title: 'Active Appointment'
             });
             (0, _jquery2.default)(this.main).find('.mdc-fab__label').text('ClockOut');
-            (0, _jquery2.default)(this.main).find('#Total input').val(Utils.getDurationStringFromDates(this.appt.clockIn.sentTimestamp.toDate(), new Date()));
-            (0, _jquery2.default)(this.main).find('#Current input').val(Utils.getDurationStringFromDates(this.appt.clockIn.sentTimestamp.toDate(), new Date()));
+        }
+
+        /**
+         * Manages the "Active Appointment" dialog by:
+         * - Prefilling the timer text fields based (i.e. the appointment has
+         *   already been going for a while now so don't start at "0:00:00").
+         * - Starting the timer `setTimeout` function that updates the timer text
+         *   fields every 10 milliseconds.
+         */
+
+    }, {
+        key: 'manage',
+        value: function manage() {
+            var _this41 = this;
+
+            _get(ViewActiveApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewActiveApptDialog.prototype), 'manage', this).call(this);
+            var clockIn = !(this.appt.clockIn.sentTimestamp instanceof Date) ? this.appt.clockIn.sentTimestamp.toDate() : this.appt.clockIn.sentTimestamp;
+            var now = new Date();
+            var timeString = Utils.getDurationStringFromDates(clockIn, now);
+            (0, _jquery2.default)(this.main).find('#Total input').val(timeString).end().find('#Current input').val(timeString).end();
             this.timer = setInterval(function () {
-                _this41.update();
+                return _this41.update();
             }, 10);
         }
     }]);
