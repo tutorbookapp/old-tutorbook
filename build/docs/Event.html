@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Render - Documentation</title>
+    <title>Event - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Render</h1>
+    <h1 class="page-title">Event</h1>
     
 
     
@@ -42,10 +42,12 @@
 <header>
     
         <h2>
-        Render
+        Event
         </h2>
         
-            <div class="class-description"><p>Class that contains commonly used rendering functions.</p></div>
+            <div class="class-description"><p>Class that represents the basic appt list item included in the user's primary
+schedule list view. Overridden by more specific appointment types (e.g. an
+active appointment v.s. a past appointment).</p></div>
         
     
 </header>
@@ -61,7 +63,7 @@
     
 
     
-    <h4 class="name" id="Render"><span class="type-signature"></span>new Render<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Event"><span class="type-signature">(abstract) </span>new Event<span class="signature">(doc)</span><span class="type-signature"></span></h4>
     
 
     
@@ -69,8 +71,7 @@
 
 
 <div class="description">
-    <p>Creates a new Render object and intializes it's
-<a href="Templates.html"><code>Templates</code></a> object.</p>
+    <p>Creates a new event list item from a given Firestore appt document.</p>
 </div>
 
 
@@ -106,7 +107,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line25">line 25</a>
+        <a href="schedule-items_index.js.html">schedule-items/index.js</a>, <a href="schedule-items_index.js.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -123,6 +124,58 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>DocumentSnapshot</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The appt's Firestore document snapshot.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -169,7 +222,7 @@
     
 
     
-    <h4 class="name" id="searchTextFieldItem"><span class="type-signature"></span>searchTextFieldItem<span class="signature">(label, val, search)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">(template<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -177,9 +230,7 @@
 
 
 <div class="description">
-    <p>Renders a search text field item that is essentially a text field input
-proxying to a select (except a lot more functional as it searches an
-<a href="https://www.algolia.com/doc/api-reference/api-methods/search/">Algolia index</a> instead of a set list of select options).</p>
+    <p>Renders the appointment list item given a template string.</p>
 </div>
 
 
@@ -215,7 +266,7 @@ proxying to a select (except a lot more functional as it searches an
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line323">line 323</a>
+        <a href="schedule-items_index.js.html">schedule-items/index.js</a>, <a href="schedule-items_index.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -225,9 +276,7 @@ proxying to a select (except a lot more functional as it searches an
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://www.algolia.com/doc/api-reference/api-methods/search/">https://www.algolia.com/doc/api-reference/api-methods/search/</a></li>
-        
-            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
+            <li><a href="Templates.html"><code>Templates</code></a></li>
         </ul>
     </dd>
     
@@ -256,7 +305,11 @@ proxying to a select (except a lot more functional as it searches an
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -268,7 +321,7 @@ proxying to a select (except a lot more functional as it searches an
 
         <tr>
             
-                <td class="name"><code>label</code></td>
+                <td class="name"><code>template</code></td>
             
 
             <td class="type">
@@ -281,64 +334,28 @@ proxying to a select (except a lot more functional as it searches an
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    'appt-list-item'
+                
+                </td>
             
 
             <td class="description last">
-                <p>The label for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>val</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The preset value for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>search</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#searchCallback">searchCallback</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>Function called when text field value
-changes (i.e. function that searches, renders, and show results).</p>
+                <p>The ID of the template to
+render for this appt list item (i.e. supervisor or normal).</p>
                 
             </td>
         </tr>
@@ -361,33 +378,6 @@ changes (i.e. function that searches, renders, and show results).</p>
 
 
 
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>HTMLElement</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The rendered (and managed) text field item that
-raises elevation and shows a search results list when focused/clicked and
-updates those search results as the user types.</p>
-</div>
-
-    
-</div>
 
 
 
