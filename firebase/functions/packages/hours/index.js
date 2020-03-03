@@ -91,8 +91,8 @@ const roundHours = async (appt, context) => { // Rounds appt clockIn/Out times
             timeZone: 'America/Los_Angeles',
         }));
     // 4) Update appt clockIn and clockOut dates
-    a.clockIn.sentTimestamp = roundedClockInDate;
-    a.clockOut.sentTimestamp = roundedClockOutDate;
+    a.clockIn.roundedTimestamp = roundedClockInDate;
+    a.clockOut.roundedTimestamp = roundedClockOutDate;
     await appt.ref.update(a);
     console.log('[DEBUG] Updated past appt (' + appt.ref.path + ').');
     return a;
@@ -107,8 +107,8 @@ const updateHours = async (appt, context) => {
         'hours for appt w/out clockIn data.');
     const a = await roundHours(appt, context);
     const durationInSecs = secsDuration(
-        a.clockIn.sentTimestamp,
-        a.clockOut.sentTimestamp,
+        a.clockIn.roundedTimestamp,
+        a.clockOut.roundedTimestamp,
     );
     const user = (await db.collection('users').doc(context.params.user).get())
         .data();
