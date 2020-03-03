@@ -3,6 +3,11 @@ import $ from 'jquery';
 const Utils = require('@tutorbook/utils');
 const Card = require('@tutorbook/card');
 
+/**
+ * Class that represents the statistics screen from which supervisors can track
+ * users, app usage, service hours, etc.
+ * @deprecated
+ */
 class Stats {
 
     /**

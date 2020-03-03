@@ -238,7 +238,12 @@ Card.renderTutorsCard = function(doc) {
             if (err) return window.app.snackbar.view('Could not generate PDF ' +
                 'backup.');
             window.app.snackbar.view(
-                'Generated PDF backup.', 'view', () => window.open(url), false);
+                'Generated PDF backup.',
+                'view',
+                () => window.open(url),
+                true,
+                -1,
+            );
         },
         primary: () => {
             return window.app.dashboard.tutors.view();
@@ -275,7 +280,12 @@ Card.renderPupilsCard = function(doc) {
             if (err) return window.app.snackbar.view('Could not generate PDF ' +
                 'backup.');
             window.app.snackbar.view(
-                'Generated PDF backup.', 'view', () => window.open(url), false);
+                'Generated PDF backup.',
+                'view',
+                () => window.open(url),
+                true,
+                -1,
+            );
         },
         primary: () => {
             return window.app.dashboard.pupils.view();

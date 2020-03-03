@@ -158,7 +158,7 @@ class SearchHeader {
             if (err) return window.app.snackbar.view('Could not generate ' +
                 'service hour log.');
             window.app.snackbar.view('Generated service hour log.', 'view',
-                () => window.open(res), false);
+                () => window.open(res), true, -1);
         };
         listItemData.grade = profile.grade || 'No Grade';
         listItemData.type = profile.type || 'No Type';

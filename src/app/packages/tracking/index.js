@@ -53,7 +53,7 @@ class Tracking {
                 if (err) return window.app.snackbar.view('Could not generate ' +
                     'service hour logs.');
                 window.app.snackbar.view('Generated service hour logs.', 'view',
-                    () => window.open(res), true);
+                    () => window.open(res), true, -1);
             },
             primary: () => window.open(url),
         };

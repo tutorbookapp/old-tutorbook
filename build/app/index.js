@@ -25244,7 +25244,7 @@ Card.renderTutorsCard = function (doc) {
             if (err) return window.app.snackbar.view('Could not generate PDF ' + 'backup.');
             window.app.snackbar.view('Generated PDF backup.', 'view', function () {
                 return window.open(url);
-            }, false);
+            }, true, -1);
         },
         primary: function primary() {
             return window.app.dashboard.tutors.view();
@@ -25280,7 +25280,7 @@ Card.renderPupilsCard = function (doc) {
             if (err) return window.app.snackbar.view('Could not generate PDF ' + 'backup.');
             window.app.snackbar.view('Generated PDF backup.', 'view', function () {
                 return window.open(url);
-            }, false);
+            }, true, -1);
         },
         primary: function primary() {
             return window.app.dashboard.pupils.view();
@@ -26171,7 +26171,7 @@ var SearchHeader = function () {
                 if (err) return window.app.snackbar.view('Could not generate ' + 'service hour log.');
                 window.app.snackbar.view('Generated service hour log.', 'view', function () {
                     return window.open(res);
-                }, false);
+                }, true, -1);
             };
             listItemData.grade = profile.grade || 'No Grade';
             listItemData.type = profile.type || 'No Type';
@@ -69145,6 +69145,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Utils = __webpack_require__(6);
 var Card = __webpack_require__(20);
 
+/**
+ * Class that represents the statistics screen from which supervisors can track
+ * users, app usage, service hours, etc.
+ * @deprecated
+ */
+
 var Stats = function () {
 
     /**
@@ -77225,7 +77231,7 @@ var Tracking = function () {
                     if (err) return window.app.snackbar.view('Could not generate ' + 'service hour logs.');
                     window.app.snackbar.view('Generated service hour logs.', 'view', function () {
                         return window.open(res);
-                    }, true);
+                    }, true, -1);
                 },
                 primary: function primary() {
                     return window.open(url);
@@ -79398,19 +79404,62 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Render = __webpack_require__(159);
 
-// Class that manages snackbars
+/**
+ * Class that manages all of the app's snackbars.
+ * @see {@link https://material.io/develop/web/components/snackbars/}
+ */
 
 var Snackbar = function () {
+    /**
+     * Creates a new snackbar management class with the given 
+     * [Render]{@link Render} object.
+     * @param {Render} render - The render to use when creating snackbars (this 
+     * is so that we can create snackbars before initializing the entirety of 
+     * the app).
+     */
     function Snackbar(render) {
         _classCallCheck(this, Snackbar);
 
         this.render = render || new Render();
     }
 
+    /**
+     * Create and view a new snackbar by:
+     * 1. Animating all (currently) open snackbars closed.
+     * 2. Removing all (of the now) closed snackbars.
+     * 3. Showing the new snackbar. 
+     * @param {string} message - The snackbar's message (end with `...` if
+     * you want to keep the snackbar visible indefinitely).
+     * @param {string} [label] - The label for the snackbar's action button.
+     * @param {actionCallback} action - What to do when the snackbar's action
+     * button is clicked.
+     * @param {bool} showClose - Whether or not to show the `X` closing
+     * button.
+     * @param {int} [timeout=5000] - The timeout (in milliseconds) for when the
+     * snackbar should close automatically (must be between 4000 and 10000 or -1
+     * to disable the timeout completely).
+     * @example
+     * // This snackbar has an action that cancels the request you just sent.
+     * window.app.snackbar.view(
+     *   'Sent lesson request to Nicholas Chiang.',
+     *   'Cancel',
+     *   () => Data.cancelRequest(this.request, this.id),
+     * );
+     * @example
+     * // This snackbar (because it ends with `...`) stays open forever.
+     * window.app.snackbar.view('Sending clock-in request...');
+     * const [err, res] = await to(Data.clockIn(this.appt, this.id));
+     * // This snackbar times out after the default 5 secs (5000 milliseconds).
+     * if (err) return window.app.snackbar.view('Could not send clock-in.');
+     */
+
+
     _createClass(Snackbar, [{
         key: "view",
         value: function view(message, label, action, showClose) {
             var _this = this;
+
+            var timeout = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5000;
 
             var v = function v() {
                 if (!label || !action) {
@@ -79425,7 +79474,7 @@ var Snackbar = function () {
                 });
                 var snackbar = new _index.MDCSnackbar(el);
                 snackbar.labelText = message;
-                snackbar.timeoutMs = message.endsWith('...') ? -1 : 4000;
+                snackbar.timeoutMs = message.endsWith('...') ? -1 : timeout;
                 snackbar.listen('MDCSnackbar:closed', function () {
                     return (0, _jquery2.default)(el).remove();
                 });
@@ -79450,11 +79499,6 @@ var Snackbar = function () {
             } else {
                 v();
             }
-        }
-    }, {
-        key: "close",
-        value: function close() {
-            this.snackbar.close();
         }
     }]);
 
