@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Dashboard - Documentation</title>
+    <title>ViewPastApptDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Dashboard</h1>
+    <h1 class="page-title">ViewPastApptDialog</h1>
     
 
     
@@ -42,8 +42,10 @@
 <header>
     
         <h2>
-        Dashboard
+        ViewPastApptDialog
         </h2>
+        
+            <div class="class-description"><p>Class that represents the &quot;Past Appointment&quot; dialog in our web app.</p></div>
         
     
 </header>
@@ -55,9 +57,11 @@
 <div class="section-method">
 
     
+    <h2>Constructor</h2>
+    
 
     
-    <h4 class="name" id="Dashboard"><span class="type-signature"></span>new Dashboard<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ViewPastApptDialog"><span class="type-signature"></span>new ViewPastApptDialog<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -65,8 +69,9 @@
 
 
 <div class="description">
-    <p>Creates and renders (using the global <a href="Render.html"><code>window.app.render</code></a>
-object) a new <code>Dashboard</code> object.</p>
+    <p>Creates and renders a new &quot;Past Appointment&quot; dialog by calling
+<a href="ViewPastApptDialog.html#updateRender"><code>this.updateRender</code></a> when we
+finish our initial rendering.</p>
 </div>
 
 
@@ -102,7 +107,7 @@ object) a new <code>Dashboard</code> object.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dashboard_index.js.html">dashboard/index.js</a>, <a href="dashboard_index.js.html#line34">line 34</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2845">line 2845</a>
     </li></ul></dd>
     
 
@@ -144,6 +149,17 @@ object) a new <code>Dashboard</code> object.</p>
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="ViewApptDialog.html">ViewApptDialog</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -165,7 +181,7 @@ object) a new <code>Dashboard</code> object.</p>
     
 
     
-    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="clockIn"><span class="type-signature">(async) </span>clockIn<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span></h4>
     
 
     
@@ -173,7 +189,8 @@ object) a new <code>Dashboard</code> object.</p>
 
 
 <div class="description">
-    <p>Renders the dashboard view/page main template and header.</p>
+    <p>Clocks the current user (i.e. the tutor of the appointment) in by
+sending a clock-in request to the appointment's location's supervisors.</p>
 </div>
 
 
@@ -188,6 +205,11 @@ object) a new <code>Dashboard</code> object.</p>
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="ViewApptDialog.html#clockIn">ViewApptDialog#clockIn</a>
+    </li></ul></dd>
     
 
     
@@ -209,7 +231,374 @@ object) a new <code>Dashboard</code> object.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dashboard_index.js.html">dashboard/index.js</a>, <a href="dashboard_index.js.html#line82">line 82</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2082">line 2082</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Add approval/rejection listener based on response to REST API 
+request (i.e. a snackbar that tells the tutor if their request was
+rejected or approved).</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise.&lt;undefined></code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>Promise that resolves once the clock-in
+request has been sent or has failed to send.</p>
+</div>
+
+    
+</div>
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="clockOut"><span class="type-signature">(async) </span>clockOut<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Clocks the current user (i.e. the tutor of the appointment) out by
+sending a clock-out request to the appointment's location's supervisors.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="ViewApptDialog.html#clockOut">ViewApptDialog#clockOut</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2188">line 2188</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Add approval/rejection listener based on response to REST API 
+request (i.e. a snackbar that tells the tutor if their request was
+rejected or approved).</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise.&lt;undefined></code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>Promise that resolves once the clock-out
+request has been sent or has failed to send.</p>
+</div>
+
+    
+</div>
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Manages the view past appointment dialog by enabling supervisors to edit
+the clock-in and clock-out times (which changes the &quot;Actual duration&quot;
+accordingly).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="ViewApptDialog.html#manage">ViewApptDialog#manage</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2925">line 2925</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Add duration editing (such that a supervisor can just direcly edit
+the duration and the dates are changed accordingly).</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderSelf"><span class="type-signature">(async) </span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders the past appointment dialog by replacing the top app bar text.
+Note that much of the actual changes occur in
+<a href="ViewPastApptDialog.html#updateRender"><code>this.updateRender</code></a> when we know
+that we have a <code>this.appt</code> <a href="global.html#Appointment"><code>Appointment</code></a> object to
+work with.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="ViewApptDialog.html#renderSelf">ViewApptDialog#renderSelf</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2857">line 2857</a>
     </li></ul></dd>
     
 
@@ -254,7 +643,7 @@ object) a new <code>Dashboard</code> object.</p>
     
 
     
-    <h4 class="name" id="reView"><span class="type-signature"></span>reView<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -262,12 +651,10 @@ object) a new <code>Dashboard</code> object.</p>
 
 
 <div class="description">
-    <p>Re-views the dashboard page (call this to view the dashboard page when it
-has already been viewed):</p>
-<ol>
-<li>Shows the <a href="Help.html#view"><code>Intercom Messenger</code></a></li>
-<li>Views the user's <code>setup cards</code></li>
-</ol>
+    <p>Method that is called every millisecond (i.e. with
+<code>window.setInterval(() =&gt; this.update(), 10)</code>) and updates the dialog's
+timer text fields to show the tutor a running total of time spent at an
+appointment.</p>
 </div>
 
 
@@ -283,27 +670,9 @@ has already been viewed):</p>
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dashboard_index.js.html">dashboard/index.js</a>, <a href="dashboard_index.js.html#line74">line 74</a>
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="ViewApptDialog.html#update">ViewApptDialog#update</a>
     </li></ul></dd>
     
 
@@ -312,72 +681,6 @@ has already been viewed):</p>
     
 
     
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Views the dashboard page (using the global <code>window.app.view</code> function).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 
     
 
@@ -392,7 +695,7 @@ has already been viewed):</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dashboard_index.js.html">dashboard/index.js</a>, <a href="dashboard_index.js.html#line60">line 60</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2234">line 2234</a>
     </li></ul></dd>
     
 
@@ -402,9 +705,194 @@ has already been viewed):</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="Tutorbook.html#view"><code>Tutorbook#view</code></a></li>
+            <li><a href="https://www.w3schools.com/jsref/met_win_setinterval.asp">https://www.w3schools.com/jsref/met_win_setinterval.asp</a></li>
         </ul>
     </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="updateRender"><span class="type-signature">(async) </span>updateRender<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Waits until we're sure that we have a <code>this.appt</code> object to work with
+before adding the &quot;Time clocked&quot; dialog section (that shows the times
+clocked and is editable by supervisors) and removing any FABs.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line2886">line 2886</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature">(async) </span>view<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views the dialog and adds manager(s)</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="ViewApptDialog.html#view">ViewApptDialog#view</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line745">line 745</a>
+    </li></ul></dd>
+    
+
+    
+
     
 
     
