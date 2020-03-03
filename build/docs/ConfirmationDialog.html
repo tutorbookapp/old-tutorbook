@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Appt - Documentation</title>
+    <title>ConfirmationDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Appt</h1>
+    <h1 class="page-title">ConfirmationDialog</h1>
     
 
     
@@ -42,13 +42,11 @@
 <header>
     
         <h2>
-        Appt
+        ConfirmationDialog
         </h2>
         
-            <div class="class-description"><p>Class that represents an upcoming appointment event card in a supervisor's
-<a href="ScheduleCard.html"><strong>dashboard schedule</strong></a> (not to be confused with an
-upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> in the
-<a href="Schedule.html"><strong>primary schedule</strong> view</a>).</p></div>
+            <div class="class-description"><p>Class that represents an <strong>essential</strong> item in any web app: the confirmation
+dialog (that asks users to confirm important or irreversible actions).</p></div>
         
     
 </header>
@@ -64,12 +62,16 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
     
 
     
-    <h4 class="name" id="Appt"><span class="type-signature"></span>new Appt<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ConfirmationDialog"><span class="type-signature"></span>new ConfirmationDialog<span class="signature">(title, message, action, forceAction<span class="signature-attributes">opt</span>, noAction<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
 
 
+
+<div class="description">
+    <p>Renders the dialog with the given message and title.</p>
+</div>
 
 
 
@@ -104,7 +106,7 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line141">line 141</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line625">line 625</a>
     </li></ul></dd>
     
 
@@ -123,6 +125,240 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
 
 
 
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The title of the dialog. Typically phrased as a
+question (e.g. 'Cancel Appointment?').</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The main body or content of the dialog.
+Typically a summary of what the user is about to do.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="global.html#actionCallback">actionCallback</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The callback to do when the user clicks
+'Yes' and confirms that they want to do whatever it is the dialog is
+asking them about.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>forceAction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>bool</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>Whether or not to force the user to
+select an action listed in the dialog's action buttons (i.e. if you want
+to disable the <code>Esc</code> button and scrim click cancel).</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>noAction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="global.html#actionCallback">actionCallback</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    function() {}
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The callback to do
+when the user closes the dialog without clicking 'Yes' (e.g. if they
+press 'Esc' or tap 'No').</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -140,21 +376,35 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
 
 
 
+
+
+
+<div class="section-examples">
+<h5>Examples</h5>
+
+    <pre class="prettyprint"><code>const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+const dialog = new ConfirmationDialog('Approve Clock-In?', 'Nicholas ' +
+  'Chiang clocked in at 3:47 PM for his appointment with Bobby Tarantino ' +
+  'at 3:45 PM. Approve this clock-in request?', () => this.approve(), true,
+  () => this.reject());
+dialog.view(); // Ask the supervisor if they want to reject or approve Nick's
+// clock-in request (and force them to make a decision by setting 
+// `forceAction` to `true`).</code></pre>
+
+    <pre class="prettyprint"><code>const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+const title = 'Delete Account?';
+const summary = 'You are about to permanently delete all of your account ' +
+  'data (including any appointments, lesson requests, or clocked hours you' +
+  ' may have). This action cannot be undone. Are you sure you want to ' +
+  'continue?';
+const action = () => Data.deleteUser(window.app.user);
+new ConfirmationDialog(title, summary, action).view();</code></pre>
+
+</div>
 
 </div>
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="EventCard.html">EventCard</a></li>
-    </ul>
-
 
     
 
@@ -168,304 +418,6 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
 
     
 
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="clockIn"><span class="type-signature">(async) </span>clockIn<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Clocks in for the tutor of this appointment (turns this event yellow as
-it's clocking in; until the card is replaced altogether by a deep red
-&quot;active appointment&quot; card).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line152">line 152</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Adds the click listener to the event card's menu button.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EventCard.html#manage">EventCard#manage</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line124">line 124</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Renders the new event card showing:</p>
-<ol>
-<li>Who the appointment is with (e.g. 'Bobby and Logic'). Note that the
-tutor's name always comes first followed by the pupil.</li>
-<li>When the appointment is happening</li>
-<li>What the appointment is for (e.g. 'Chemistry during G Period').</li>
-</ol>
-<p>And adds a menu to that card with options to:</p>
-<ul>
-<li>Clock in to or out of the appointment</li>
-<li>Cancel the appointment</li>
-<li>Edit the appointment</li>
-<li>View the appointment</li>
-<li>View the 'Raw Data' of the appointment (essentially the JSON that is
-stored in our Firestore database)</li>
-</ul>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EventCard.html#renderSelf">EventCard#renderSelf</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line95">line 95</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
     
 
     

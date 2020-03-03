@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Appt - Documentation</title>
+    <title>NotificationDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Appt</h1>
+    <h1 class="page-title">NotificationDialog</h1>
     
 
     
@@ -42,13 +42,14 @@
 <header>
     
         <h2>
-        Appt
+        NotificationDialog
         </h2>
         
-            <div class="class-description"><p>Class that represents an upcoming appointment event card in a supervisor's
-<a href="ScheduleCard.html"><strong>dashboard schedule</strong></a> (not to be confused with an
-upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> in the
-<a href="Schedule.html"><strong>primary schedule</strong> view</a>).</p></div>
+            <div class="class-description"><p>Class that represents a dialog much like the
+<a href="ConfirmationDialog.html"><code>ConfirmationDialog</code></a> but instead of 'Yes' and 'No'
+options, it just has one option for 'Ok'. Typically used to ensure that a
+user knows about something (i.e. is <strong>notified</strong> about it) before they can
+continue using the app.</p></div>
         
     
 </header>
@@ -64,12 +65,16 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
     
 
     
-    <h4 class="name" id="Appt"><span class="type-signature"></span>new Appt<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="NotificationDialog"><span class="type-signature"></span>new NotificationDialog<span class="signature">(title, message, action<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
 
 
+
+<div class="description">
+    <p>Renders the dialog with the given message and title.</p>
+</div>
 
 
 
@@ -104,7 +109,7 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line141">line 141</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line541">line 541</a>
     </li></ul></dd>
     
 
@@ -123,6 +128,153 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
 
 
 
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The title of the dialog.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The message or main content of the dialog.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="global.html#actionCallback">actionCallback</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    window.app.nav.back
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>Callback for when
+the dialog is closed.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -140,21 +292,24 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
 
 
 
+
+
+
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>const NotificationDialog = require('@tutorbook/dialogs').notify;
+const dialog = new NotificationDialog('Rejected Clock-In', 'Your clock-in ' +
+  'request was rejected by Pam Steward. If you think this is a mistake, ' +
+  'try again or contact Pam at psteward@pausd.org.', () => {});
+if (clockIn.rejected) dialog.view(); // Notify user if their clock-in request
+// was rejected.</code></pre>
+
+</div>
 
 </div>
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="EventCard.html">EventCard</a></li>
-    </ul>
-
 
     
 
@@ -178,191 +333,6 @@ upcoming appointment <a href="ApptListItem.html"><strong>list item</strong></a> 
     
 
     
-    <h4 class="name" id="clockIn"><span class="type-signature">(async) </span>clockIn<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Clocks in for the tutor of this appointment (turns this event yellow as
-it's clocking in; until the card is replaced altogether by a deep red
-&quot;active appointment&quot; card).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line152">line 152</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Adds the click listener to the event card's menu button.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EventCard.html#manage">EventCard#manage</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line124">line 124</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
     <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -371,22 +341,8 @@ it's clocking in; until the card is replaced altogether by a deep red
 
 
 <div class="description">
-    <p>Renders the new event card showing:</p>
-<ol>
-<li>Who the appointment is with (e.g. 'Bobby and Logic'). Note that the
-tutor's name always comes first followed by the pupil.</li>
-<li>When the appointment is happening</li>
-<li>What the appointment is for (e.g. 'Chemistry during G Period').</li>
-</ol>
-<p>And adds a menu to that card with options to:</p>
-<ul>
-<li>Clock in to or out of the appointment</li>
-<li>Cancel the appointment</li>
-<li>Edit the appointment</li>
-<li>View the appointment</li>
-<li>View the 'Raw Data' of the appointment (essentially the JSON that is
-stored in our Firestore database)</li>
-</ul>
+    <p>Renders the <code>dialog-notification</code> template with the given title and
+message.</p>
 </div>
 
 
@@ -401,11 +357,6 @@ stored in our Firestore database)</li>
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EventCard.html#renderSelf">EventCard#renderSelf</a>
-    </li></ul></dd>
     
 
     
@@ -427,7 +378,103 @@ stored in our Firestore database)</li>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line95">line 95</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line553">line 553</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views the notification dialog:</p>
+<ol>
+<li>Prepends <code>this.el</code> to the document's <code>body</code>.</li>
+<li>Sets some basic
+<a href="https://material.io/develop/web/components/dialogs/"><code>MDCDialog</code></a>
+settings.</li>
+<li>Opens the dialog.</li>
+</ol>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line568">line 568</a>
     </li></ul></dd>
     
 
