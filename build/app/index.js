@@ -42348,8 +42348,7 @@ var ActiveAppt = function (_Event2) {
             var _this6 = this;
 
             _get(ActiveAppt.prototype.__proto__ || Object.getPrototypeOf(ActiveAppt.prototype), 'renderSelf', this).call(this);
-            (0, _jquery2.default)(this.el).prepend(this.render.template('event-progress'));
-            (0, _jquery2.default)(this.el).find('.mdc-linear-progress__bar-inner').css('background-color', this.color);
+            (0, _jquery2.default)(this.el).prepend(this.render.template('event-progress')).find('.mdc-linear-progress__bar-inner').css('background-color', this.color).end().find('.mdc-menu #Cancel').remove();
             var time = new Date().getTime() / 1000 - this.clockIn.sentTimestamp.seconds;
             var total = (new Date('1/1/2019 ' + this.time.to).getTime() - new Date('1/1/2019 ' + this.time.from).getTime()) / 1000;
             var bar = new _index2.MDCLinearProgress((0, _jquery2.default)(this.el).find('.mdc-linear-progress')[0]);

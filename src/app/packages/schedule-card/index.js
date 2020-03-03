@@ -183,9 +183,11 @@ class ActiveAppt extends Event {
 
     renderSelf() {
         super.renderSelf();
-        $(this.el).prepend(this.render.template('event-progress'));
-        $(this.el).find('.mdc-linear-progress__bar-inner')
-            .css('background-color', this.color);
+        $(this.el)
+            .prepend(this.render.template('event-progress'))
+            .find('.mdc-linear-progress__bar-inner')
+            .css('background-color', this.color).end()
+            .find('.mdc-menu #Cancel').remove();
         var time = (new Date().getTime() / 1000) -
             this.clockIn.sentTimestamp.seconds;
         var total = (new Date('1/1/2019 ' + this.time.to).getTime() -
