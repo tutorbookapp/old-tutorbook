@@ -33,10 +33,29 @@
   grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
 }
 
+.card-schedule #monday-header {
+  color: #263238;
+}
+
+.card-schedule #tuesday-header {
+  color: #e61500;
+}
+
+.card-schedule #wednesday-header {
+  color: #004d40;
+}
+
+.card-schedule #thursday-header {
+  color: #1a237e;
+}
+
+.card-schedule #friday-header {
+  color: #880e4f;
+}
+
 .card-schedule .schedule-header-text {
   padding-left: 4px;
   margin-bottom: -20px;
-  font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   font-weight: 500;
 }

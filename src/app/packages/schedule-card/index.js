@@ -241,10 +241,16 @@ class ScheduleCard {
         this.renderSelf();
     }
 
+    /**
+     * Renders the schedule card template.
+     */
     renderSelf() {
         this.main = this.render.template('card-schedule');
     }
 
+    /**
+     * Views the appointments at the given location.
+     */
     async viewAppts() {
         const recycler = {
             display: (doc, type, index) => {
