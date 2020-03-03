@@ -344,8 +344,8 @@ class SupervisorActiveAppt extends Event {
                 const [e, r] = await to(
                     Data.instantClockOut(doc.data(), doc.id));
                 if (e) return window.app.snackbar.view('Could not clock-out.');
-                window.app.snackbar.view('Clocked out at ' + new Date(r.data
-                    .clockOut.sentTimestamp).toLocaleTimeString() + '.');
+                window.app.snackbar.view('Clocked out at ' + new Date(r.clockOut
+                    .sentTimestamp).toLocaleTimeString() + '.');
                 window.app.schedule.refresh();
             },
         };

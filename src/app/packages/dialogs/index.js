@@ -65,10 +65,7 @@ class SubjectSelectDialog {
 
         this.pages.forEach((sel) => {
             var key = sel.id.split('-')[1];
-            if (key === 'all') {
-                return;
-            }
-
+            if (key === 'all') return;
             sel.querySelectorAll('.mdc-list-item').forEach((el) => {
                 el.addEventListener('click', () => {
                     this.updateSelected(el.innerText.trim());

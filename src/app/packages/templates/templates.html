@@ -834,12 +834,32 @@ user sees as they navigate throughout the app. -->
     </ul>
 </div>
 
+<!-- Selection Dialog Items List (e.g. for the subject select dialog) -->
+<div hidden class="template" id="dialog-filter-item-list">
+    <ul class="mdc-list">
+        <li class="mdc-list-item" data-fir-foreach="items" role="checkbox">
+            <span class="mdc-list-item__graphic">
+                <div class="mdc-checkbox">
+                    <input type="checkbox" data-fir-id="~" class="mdc-checkbox__native-control">
+                    <div class="mdc-checkbox__background">
+                        <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59" />
+                        </svg>
+                        <div class="mdc-checkbox__mixedmark"></div>
+                    </div>
+                </div>
+            </span>
+            <label class="mdc-list-item__text" for="~" data-fir-content="~"></label>
+        </li>
+    </ul>
+</div>
+
+<!-- Filter Dialog Items List -->
 <div hidden class="template" id="dialog-filter-item-list">
     <ul class="mdc-list">
         <li class="mdc-list-item" data-fir-foreach="items" data-fir-content="~"></li>
     </ul>
 </div>
-
 
 <!-- Header Templates -->
 <!-- Welcome Header Template -->
