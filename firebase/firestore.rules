@@ -260,7 +260,7 @@ service cloud.firestore {
       allow read: if location in request.auth.token.locations;
     }
     match /locations/{location}/approvedClockIns/{clockIn} {
-      allow read: if request.auth.uid == resource.data.sentBy.uid;
+      allow read: if request.auth.uid != null;
     }
     match /users/{user}/activeAppointments/{appt} {
       allow read: if request.auth.uid == user
@@ -274,13 +274,13 @@ service cloud.firestore {
 	|| request.auth.uid == resource.data.attendees[1].uid;
     }
     match /locations/{location}/rejectedClockIns/{clockIn} {
-      allow read: if request.auth.uid == resource.data.sentBy.uid;
+      allow read: if request.auth.uid != null;
     }
     match /locations/{location}/clockOuts/{clockOut} {
       allow read: if location in request.auth.token.locations;
     }
     match /locations/{location}/approvedClockOuts/{clockOut} {
-      allow read: if request.auth.uid == resource.data.sentBy.uid;
+      allow read: if request.auth.uid != null;
     }
     match /users/{user}/pastAppointments/{appt} {
       allow read: if request.auth.uid == user
@@ -293,7 +293,7 @@ service cloud.firestore {
 	&& location in request.auth.token.locations;
     }
     match /locations/{location}/rejectedClockOuts/{clockOut} {
-      allow read: if request.auth.uid == resource.data.sentBy.uid;
+      allow read: if request.auth.uid != null;
     }
 
     // [PAYMENTS]

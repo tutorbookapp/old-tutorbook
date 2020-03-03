@@ -304,8 +304,11 @@ class ActiveAppt extends Event {
                     'clock-out request.');
                 window.app.snackbar.view('Sent clock-out request to ' +
                     res.recipient.name + '.');
-                // TODO: Add approval/rejection listener based on response 
-                // recipient Firestore reference path.
+                ViewApptDialog.listen(
+                    res.clockOut.approvedRef,
+                    res.clockOut.rejectedRef,
+                    'Clock-Out',
+                );
             },
         };
         this.renderSelf();

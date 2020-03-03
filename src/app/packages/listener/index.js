@@ -26,12 +26,12 @@ class Listener {
             remove: (doc) => {},
             display: (doc) => {
                 const data = doc.data();
-                const title = 'Approve Clock In?';
+                const title = 'Approve Clock-In?';
                 const summary = data.sentBy.name + ' clocked in at ' +
                     Utils.getTimeString(data.sentTimestamp) + ' for ' +
                     Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
                     Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
-                    data.for.time.from + '. Approve this clock-in?';
+                    data.for.time.from + '. Approve this clock-in request?';
                 new ConfirmationDialog(title, summary, async () => {
                     window.app.snackbar.view('Approving clock-in request...');
                     const [err, res] = await to(
@@ -73,12 +73,13 @@ class Listener {
             remove: (doc) => {},
             display: (doc) => {
                 const data = doc.data();
-                const title = 'Approve Clock Out?';
+                const title = 'Approve Clock-Out?';
                 const summary = data.sentBy.name + ' clocked out at ' +
                     Utils.getTimeString(data.sentTimestamp) + ' for ' +
                     Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
                     Utils.getOther(data.sentBy, data.for.attendees).name +
-                    ' ending at ' + data.for.time.to + '. Approve this clock-out?';
+                    ' ending at ' + data.for.time.to + '. Approve this clock-' +
+                    'out request?';
                 new ConfirmationDialog(title, summary, async () => {
                     window.app.snackbar.view('Approving clock-out request...');
                     const [err, res] = await to(

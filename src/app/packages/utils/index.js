@@ -352,6 +352,16 @@ class Utils {
         return attendees[0];
     }
 
+    /**
+     * Capitalizes every word in a string (i.e. the first letter of each set
+     * of characters separated by a space).
+     * @param {string} str - The string to capitalize.
+     * @return {string} The capitalized string.
+     * @example
+     * const original = 'the Rabbit ran across The road.';
+     * const changed = Utils.caps(original);
+     * assert(changed === 'The Rabbit Ran Across The Road.');
+     */
     static caps(str) {
         var str = str.split(' ');
         for (let i = 0, x = str.length; i < x; i++) {

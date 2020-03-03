@@ -5508,18 +5508,47 @@ var EditAvailabilityDialog = function () {
 
 ;
 
+/**
+ * Class that represents a dialog much like the 
+ * [ConfirmationDialog]{@link ConfirmationDialog} but instead of 'Yes' and 'No' 
+ * options, it just has one option for 'Ok'. Typically used to ensure that a 
+ * user knows about something (i.e. is **notified** about it) before they can
+ * continue using the app.
+ * @example
+ * const NotificationDialog = require('@tutorbook/dialogs').notify;
+ * const dialog = new NotificationDialog('Rejected Clock-In', 'Your clock-in ' +
+ *   'request was rejected by Pam Steward. If you think this is a mistake, ' +
+ *   'try again or contact Pam at psteward@pausd.org.', () => {});
+ * if (clockIn.rejected) dialog.view(); // Notify user if their clock-in request
+ * // was rejected.
+ */
+
 var NotificationDialog = function () {
 
-    // Renders the dialog with the given message and title
-    function NotificationDialog(title, message, action) {
+    /**
+     * Renders the dialog with the given message and title.
+     * @param {string} title - The title of the dialog.
+     * @param {string} message - The message or main content of the dialog.
+     * @param {actionCallback} [action=window.app.nav.back] - Callback for when 
+     * the dialog is closed.
+     */
+    function NotificationDialog(title, message) {
+        var action = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window.app.nav.back;
+
         _classCallCheck(this, NotificationDialog);
 
         this.title = title;
         this.message = message;
-        this.action = action || window.app.nav.back;
+        this.action = action;
         this.render = window.app.render;
         this.renderSelf();
     }
+
+    /**
+     * Renders the `dialog-notification` template with the given title and 
+     * message.
+     */
+
 
     _createClass(NotificationDialog, [{
         key: 'renderSelf',
@@ -5529,6 +5558,16 @@ var NotificationDialog = function () {
                 message: this.message
             });
         }
+
+        /**
+         * Views the notification dialog:
+         * 1. Prepends `this.el` to the document's `body`.
+         * 2. Sets some basic 
+         *    [`MDCDialog`]{@link https://material.io/develop/web/components/dialogs/} 
+         *    settings.
+         * 2. Opens the dialog.
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -5550,9 +5589,52 @@ var NotificationDialog = function () {
 
 ;
 
+/**
+ * Class that represents an **essential** item in any web app: the confirmation
+ * dialog (that asks users to confirm important or irreversible actions).
+ * @example
+ * const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+ * const dialog = new ConfirmationDialog('Approve Clock-In?', 'Nicholas ' +
+ *   'Chiang clocked in at 3:47 PM for his appointment with Bobby Tarantino ' +
+ *   'at 3:45 PM. Approve this clock-in request?', () => this.approve(), true,
+ *   () => this.reject());
+ * dialog.view(); // Ask the supervisor if they want to reject or approve Nick's
+ * // clock-in request (and force them to make a decision by setting 
+ * // `forceAction` to `true`).
+ * @example
+ * const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+ * const title = 'Delete Account?';
+ * const summary = 'You are about to permanently delete all of your account ' +
+ *   'data (including any appointments, lesson requests, or clocked hours you' +
+ *   ' may have). This action cannot be undone. Are you sure you want to ' +
+ *   'continue?';
+ * const action = () => Data.deleteUser(window.app.user);
+ * new ConfirmationDialog(title, summary, action).view();
+ */
+
 var ConfirmationDialog = function () {
 
-    // Renders the dialog with the given message and title
+    /**
+     * A callback function that does an (important) action.
+     * @callback actionCallback
+     */
+
+    /**
+     * Renders the dialog with the given message and title.
+     * @param {string} title - The title of the dialog. Typically phrased as a 
+     * question (e.g. 'Cancel Appointment?').
+     * @param {string} message - The main body or content of the dialog.
+     * Typically a summary of what the user is about to do.
+     * @param {actionCallback} action - The callback to do when the user clicks
+     * 'Yes' and confirms that they want to do whatever it is the dialog is
+     * asking them about.
+     * @param {bool} [forceAction=false] - Whether or not to force the user to 
+     * select an action listed in the dialog's action buttons (i.e. if you want 
+     * to disable the `Esc` button and scrim click cancel).
+     * @param {actionCallback} [noAction=function() {}] - The callback to do 
+     * when the user closes the dialog without clicking 'Yes' (e.g. if they 
+     * press 'Esc' or tap 'No').
+     */
     function ConfirmationDialog(title, message, action, forceAction, noAction) {
         _classCallCheck(this, ConfirmationDialog);
 
@@ -7359,10 +7441,51 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                     return window.app.snackbar.view('Could not send clock-' + 'in request.');
                 }
                 window.app.snackbar.view('Sent clock-in request to ' + res.recipient.name + '.');
-                // TODO: Add approval/rejection listener based on response 
-                // recipient Firestore reference path.
+                window.clockInRes = res;
+                ViewApptDialog.listen(res.clockIn.approvedRef, res.clockIn.rejectedRef, 'Clock-In', reset);
             }
         }
+
+        /**
+         * Function called when a clock-in or clock-out request is rejected that
+         * resets the UI as if the request was never sent.
+         * @callback resetCallback
+         */
+
+        /**
+         * Helper function that listens to the clock-in or clock-out request to see
+         * when it is approved or rejected.
+         * @param {string} approvedRef - The Firestore document reference path of
+         * where the approved clock-in or clock-out is going to be created.
+         * @param {string} rejectedRef - The Firestore document reference path of
+         * where the rejected clock-in or clock-out is going to be created.
+         * @param {string} name - Whether it is a clock-in or clock-out (used to set
+         * the [NotificationDialog]{@link NotificationDialog} summary and title).
+         * @param {resetCallback} [reset=function() {}] - Callback when the request 
+         * is rejected (that resets the UI as if the request was never sent).
+         * @example
+         * const to = require('await-to-js').default;
+         * const [err, res] = await to(Data.clockIn(this.appt, this.id));
+         * this.listen(
+         *   res.clockIn.approvedRef, 
+         *   res.clockIn.rejectedRef, 
+         *   'Clock-in',
+         *   reset,
+         * );
+         * @example
+         * const to = require('await-to-js').default;
+         * const [err, res] = await to(Data.clockOut(this.appt, this.id));
+         * this.listen(
+         *   res.clockOut.approvedRef, 
+         *   res.clockOut.rejectedRef, 
+         *   'Clock-out',
+         *   reset,
+         * );
+         */
+
+    }, {
+        key: 'clockOut',
+
 
         /**
          * Clocks the current user (i.e. the tutor of the appointment) out by
@@ -7373,9 +7496,6 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
          * request (i.e. a snackbar that tells the tutor if their request was
          * rejected or approved).
          */
-
-    }, {
-        key: 'clockOut',
         value: async function clockOut() {
             var _this30 = this;
 
@@ -7413,8 +7533,8 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                     return window.app.snackbar.view('Could not send clock-' + 'out request.');
                 }
                 window.app.snackbar.view('Sent clock-out request to ' + res.recipient.name + '.');
-                // TODO: Add approval/rejection listener based on response 
-                // recipient Firestore reference path.
+                window.clockOutRes = res;
+                ViewApptDialog.listen(res.clockOut.approvedRef, res.clockOut.rejectedRef, 'Clock-Out', reset);
             }
         }
 
@@ -7483,6 +7603,26 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
             }
 
             totalTimeDisplay.value = totalHours + ':' + totalMinutes + ':' + totalSeconds + '.' + totalMilli;
+        }
+    }], [{
+        key: 'listen',
+        value: function listen(approvedRef, rejectedRef, name) {
+            var reset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function () {};
+
+            var db = firebase.firestore();
+            Data.listen(db.doc(approvedRef), function (doc) {
+                if (doc.exists) return window.app.snackbar.view(Utils.caps(name.toLowerCase()) + ' request ' + 'approved by ' + doc.data().approvedBy.name + '.');
+            }, function (err) {
+                return console.error('[ERROR] Could not listen for approved ' + name.toLowerCase() + ' b/c of ', err);
+            });
+            Data.listen(db.doc(rejectedRef), function (doc) {
+                if (doc.exists) {
+                    reset();
+                    new NotificationDialog(name + ' Rejected', 'Your ' + name.toLowerCase() + ' request was rejected by ' + doc.data().rejectedBy.name + '. If you think this is ' + 'a mistake, try again or contact ' + doc.data().rejectedBy.name.split(' ')[0] + '.', function () {}).view();
+                }
+            }, function (err) {
+                return console.error('[ERROR] Could not listen for rejected ' + name.toLowerCase() + ' b/c of ', err);
+            });
         }
     }]);
 
@@ -19430,6 +19570,18 @@ var Utils = function () {
             }
             return attendees[0];
         }
+
+        /**
+         * Capitalizes every word in a string (i.e. the first letter of each set
+         * of characters separated by a space).
+         * @param {string} str - The string to capitalize.
+         * @return {string} The capitalized string.
+         * @example
+         * const original = 'the Rabbit ran across The road.';
+         * const changed = Utils.caps(original);
+         * assert(changed === 'The Rabbit Ran Across The Road.');
+         */
+
     }, {
         key: 'caps',
         value: function caps(str) {
@@ -24446,8 +24598,7 @@ var ActiveAppt = function (_Event7) {
 
                 if (err) return window.app.snackbar.view('Could not send ' + 'clock-out request.');
                 window.app.snackbar.view('Sent clock-out request to ' + res.recipient.name + '.');
-                // TODO: Add approval/rejection listener based on response 
-                // recipient Firestore reference path.
+                ViewApptDialog.listen(res.clockOut.approvedRef, res.clockOut.rejectedRef, 'Clock-Out');
             }
         };
         _this9.renderSelf();
@@ -25619,8 +25770,7 @@ Card.renderActiveApptCard = function (doc) {
 
             if (err) return window.app.snackbar.view('Could not send clock-' + 'out request.');
             window.app.snackbar.view('Sent clock-out request to ' + res.recipient.name + '.');
-            // TODO: Add approval/rejection listener based on response 
-            // recipient Firestore reference path.
+            ViewApptDialog.listen(res.clockOut.approvedRef, res.clockOut.rejectedRef, 'Clock-Out');
         };
     }
 
@@ -108033,8 +108183,8 @@ var Listener = function () {
                 remove: function remove(doc) {},
                 display: function display(doc) {
                     var data = doc.data();
-                    var title = 'Approve Clock In?';
-                    var summary = data.sentBy.name + ' clocked in at ' + Utils.getTimeString(data.sentTimestamp) + ' for ' + Utils.getPronoun(data.sentBy.gender) + ' appointment with ' + Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' + data.for.time.from + '. Approve this clock-in?';
+                    var title = 'Approve Clock-In?';
+                    var summary = data.sentBy.name + ' clocked in at ' + Utils.getTimeString(data.sentTimestamp) + ' for ' + Utils.getPronoun(data.sentBy.gender) + ' appointment with ' + Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' + data.for.time.from + '. Approve this clock-in request?';
                     new ConfirmationDialog(title, summary, async function () {
                         window.app.snackbar.view('Approving clock-in request...');
 
@@ -108080,8 +108230,8 @@ var Listener = function () {
                 remove: function remove(doc) {},
                 display: function display(doc) {
                     var data = doc.data();
-                    var title = 'Approve Clock Out?';
-                    var summary = data.sentBy.name + ' clocked out at ' + Utils.getTimeString(data.sentTimestamp) + ' for ' + Utils.getPronoun(data.sentBy.gender) + ' appointment with ' + Utils.getOther(data.sentBy, data.for.attendees).name + ' ending at ' + data.for.time.to + '. Approve this clock-out?';
+                    var title = 'Approve Clock-Out?';
+                    var summary = data.sentBy.name + ' clocked out at ' + Utils.getTimeString(data.sentTimestamp) + ' for ' + Utils.getPronoun(data.sentBy.gender) + ' appointment with ' + Utils.getOther(data.sentBy, data.for.attendees).name + ' ending at ' + data.for.time.to + '. Approve this clock-' + 'out request?';
                     new ConfirmationDialog(title, summary, async function () {
                         window.app.snackbar.view('Approving clock-out request...');
 
