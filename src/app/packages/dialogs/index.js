@@ -2835,7 +2835,28 @@ class NewPastApptDialog extends EditApptDialog {
     }
 };
 
+/**
+ * Class that represents the "Past Appointment" dialog in our web app.
+ * @extends ViewApptDialog
+ */
 class ViewPastApptDialog extends ViewApptDialog {
+    /**
+     * Creates and renders a new "Past Appointment" dialog by calling
+     * [this.updateRender]{@link ViewPastApptDialog#updateRender} when we
+     * finish our initial rendering.
+     */
+    constructor(appt, id) {
+        super(appt, id);
+        this.updateRender();
+    }
+
+    /**
+     * Renders the past appointment dialog by replacing the top app bar text.
+     * Note that much of the actual changes occur in 
+     * [this.updateRender]{@link ViewPastApptDialog#updateRender} when we know 
+     * that we have a `this.appt` [Appointment]{@link Appointment} object to 
+     * work with.
+     */
     async renderSelf() {
         await super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -2850,17 +2871,43 @@ class ViewPastApptDialog extends ViewApptDialog {
                         window.app.snackbar.view('Deleting past ' +
                             'appointment...');
                         window.app.nav.back();
-                        await Data.deletePastAppt(this.appt, this.id);
+                        const [err, res] = await to(
+                            Data.deletePastAppt(this.appt, this.id));
+                        if (err) return window.app.snackbar.view('Could not ' +
+                            'delete past appointment.');
                         window.app.snackbar.view('Deleted past appointment.');
                     }).view();
             },
         });
-        $(this.render.textFieldItem(
-            'Time clocked',
-            Utils.getDurationStringFromDates(
-                this.appt.clockIn.sentTimestamp.toDate(),
-                this.appt.clockOut.sentTimestamp.toDate()
-            ))).insertAfter($(this.main).find('#Current').parent());
+    }
+
+    /**
+     * Waits until we're sure that we have a `this.appt` object to work with
+     * before adding the "Time clocked" dialog section (that shows the times 
+     * clocked and is editable by supervisors) and removing any FABs.
+     */
+    async updateRender() {
+        if (this.appt.for.fromUser.name === 'Pupil Tutorbook')
+            window.viewPastApptDialog = this;
+        await this.rendering;
+        $(this.render.splitListItem(
+            this.render.textField(
+                'Actual duration',
+                Utils.getDurationStringFromDates(
+                    this.appt.clockIn.sentTimestamp.toDate(),
+                    this.appt.clockOut.sentTimestamp.toDate(),
+                )),
+            this.render.textField(
+                'Rounded duration',
+                Utils.getDurationStringFromDates(
+                    this.appt.clockIn.roundedTimestamp ?
+                    this.appt.clockIn.roundedTimestamp.toDate() :
+                    this.appt.clockIn.sentTimestamp.toDate(),
+                    this.appt.clockOut.roundedTimestamp ?
+                    this.appt.clockOut.roundedTimestamp.toDate() :
+                    this.appt.clockOut.sentTimestamp.toDate(),
+                )),
+        )).insertAfter($(this.main).find('#Current').parent());
         $(this.main).find('#Current').replaceWith($(this.render.textField(
                 'Clock-in',
                 this.appt.clockIn.sentTimestamp.toDate().toLocaleTimeString()
@@ -2871,8 +2918,16 @@ class ViewPastApptDialog extends ViewApptDialog {
             )).end().find('.mdc-fab').remove();
     }
 
+    /**
+     * Manages the view past appointment dialog by enabling supervisors to edit
+     * the clock-in and clock-out times (which changes the "Actual duration"
+     * accordingly).
+     * @todo Add duration editing (such that a supervisor can just direcly edit
+     * the duration and the dates are changed accordingly).
+     */
     manage() {
         super.manage();
+        if (window.app.user.type !== 'Supervisor') return;
         const parse = (val) => {
             const split = val.split(':');
             return {
@@ -2915,7 +2970,7 @@ class ViewPastApptDialog extends ViewApptDialog {
             if (!valid(v)) return setTimeout(() => t.valid = false, 50);
             update(v, date);
             window.app.snackbar.view('Updating past appointment...');
-            $(this.main).find('[id="Time clocked"] input').val(
+            $(this.main).find('[id="Actual duration"] input').val(
                 Utils.getDurationStringFromDates(
                     this.appt.clockIn.sentTimestamp,
                     this.appt.clockOut.sentTimestamp,
@@ -2934,7 +2989,7 @@ class ViewPastApptDialog extends ViewApptDialog {
             .focusout(async () => {
                 editClockingTime('Clock-out', this.appt.clockOut.sentTimestamp);
             }).end()
-            .find('[id="Time clocked"] input') // TODO: Add duration editing.
+            .find('[id="Actual duration"] input') // TODO: Add duration editing.
             .focusout(async () => {
                 console.log('[TODO] Add duration editing data handling.');
             });
