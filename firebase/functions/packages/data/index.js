@@ -865,8 +865,10 @@ class Data {
             ['sentTimestamp', 'approvedTimestamp'].forEach(time => {
                 if (typeof appt[key][time] === 'object') {
                     appt[key][time] = new admin.firestore.Timestamp(
-                        appt[key][time]._seconds,
-                        appt[key][time]._nanoseconds,
+                        appt[key][time]._seconds ||
+                        appt[key][time].seconds,
+                        appt[key][time]._nanoseconds ||
+                        appt[key][time].nanoseconds,
                     ).toDate();
                 } else {
                     appt[key][time] = new Date(appt[key][time]);
@@ -893,19 +895,22 @@ class Data {
 
     static async modifyPastAppt(apptData, id) {
         const db = global.db;
-        ['clockIn', 'clockOut'].forEach(ob => {
-            [
-                'sentTimestamp',
-                'roundedTimestamp',
-                'approvedTimestamp',
-            ].forEach(prop => {
-                if (typeof apptData[ob][prop] === 'object') {
-                    apptData[ob][prop] = new admin.firestore.Timestamp(
-                        apptData[ob][prop]._seconds,
-                        apptData[ob][prop]._nanoseconds,
+        ['clockIn', 'clockOut'].forEach(key => {
+            ['sent', 'approved', 'rounded'].forEach(time => {
+                time += 'Timestamp';
+                console.log('[DEBUG] Converting ' + key + ' ' + time + ' to ' +
+                    'time object...', apptData[key][time]);
+                if (typeof apptData[key][time] === 'object') {
+                    console.log('[DEBUG] Converting into Timestamp...');
+                    apptData[key][time] = new admin.firestore.Timestamp(
+                        apptData[key][time]._seconds ||
+                        apptData[key][time].seconds,
+                        apptData[key][time]._nanoseconds ||
+                        apptData[key][time].nanoseconds,
                     ).toDate();
                 } else {
-                    apptData[ob][prop] = new Date(apptData[ob][prop]);
+                    console.log('[DEBUG] Converting into Date...');
+                    apptData[key][time] = new Date(apptData[key][time]);
                 }
             });
         });

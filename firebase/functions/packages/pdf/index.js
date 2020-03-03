@@ -181,15 +181,22 @@ const addUserServiceHours = async (d, docDefinition, isTest, url) => {
     for (appt of appts) {
         a = appt.data();
         cIn = a.clockIn.sentTimestamp.toDate();
+        console.log('[DEBUG] Got clock-in time for past appt (' + appt.id +
+            '):', cIn);
         roundedCIn = a.clockIn.roundedTimestamp ?
             a.clockIn.roundedTimestamp.toDate() : cIn;
+        console.log('[DEBUG] Got rounded clock-in time for past appt (' +
+            appt.id + '):', roundedCIn);
         cInSplit = cIn.toLocaleString('en-US', timezone).split(', ');
         cOut = a.clockOut.sentTimestamp.toDate();
+        console.log('[DEBUG] Got clock-out time for past appt (' + appt.id +
+            '):', cOut);
         roundedCOut = a.clockOut.roundedTimestamp ?
             a.clockOut.roundedTimestamp.toDate() : cOut;
+        console.log('[DEBUG] Got rounded clock-out time for past appt (' +
+            appt.id + '):', roundedCOut);
         cOutSplit = cOut.toLocaleString('en-US', timezone).split(', ');
-        supervisor = (await db.collection('users').doc(a.supervisor)
-            .get()).data();
+        supervisor = a.clockIn.approvedBy || a.clockOut.approvedBy;
         duration = Utils.getDurationStringFromDates(roundedCIn, roundedCOut);
         runningTotal = Utils.addDurationStrings(runningTotal, duration);
         table.body.push([{
