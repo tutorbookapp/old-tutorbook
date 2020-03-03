@@ -417,8 +417,7 @@ class Data {
             .collection('clockIns').doc(id);
         clockIn = (await ref.get()).data(); // Don't trust the client (and this
         // will use the actual Timestamp() object for clockIn.sentTimestamp).
-        const rejectedClockIn = db.collection('locations').doc(clockIn.for
-            .location.id).collection('rejectedClockIns').doc();
+        const rejectedClockIn = admin.firestore().doc(clockIn.rejectedRef);
         const rejectedClockInData = Data.combineMaps(clockIn, {
             rejectedTimestamp: new Date(),
             rejectedBy: global.app.conciseUser,
@@ -437,8 +436,7 @@ class Data {
             .collection('clockIns').doc(id);
         clockIn = (await ref.get()).data(); // Don't trust the client (and this
         // will use the actual Timestamp() object for clockIn.sentTimestamp).
-        const approvedClockIn = db.collection('locations').doc(clockIn.for
-            .location.id).collection('approvedClockIns').doc();
+        const approvedClockIn = admin.firestore().doc(clockIn.approvedRef);
         const activeAppts = [
             db.collection('users').doc(clockIn.for.attendees[0].uid)
             .collection('activeAppointments')
@@ -548,8 +546,7 @@ class Data {
             rejectedBy: global.app.conciseUser,
         });
         const appt = Data.cloneMap(rejectedClockOutData.for);
-        const rejectedClockOut = db.collection('locations').doc(clockOutData.for
-            .location.id).collection('rejectedClockOuts').doc();
+        const rejectedClockOut = admin.firestore().doc(clockOutData.rejectedRef);
         const activeAppts = [
             db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
@@ -586,8 +583,7 @@ class Data {
         const appt = Data.cloneMap(approvedClockOutData.for);
         appt.clockOut = Data.cloneMap(approvedClockOutData);
 
-        const approvedClockOut = db.collection('locations').doc(appt.location
-            .id).collection('approvedClockOuts').doc();
+        const approvedClockOut = admin.firestore().doc(clockOutData.approvedRef);
         const activeAppts = [
             db.collection('users').doc(appt.attendees[0].uid)
             .collection('activeAppointments')
@@ -668,16 +664,20 @@ class Data {
     }
 
     static async clockIn(appt, id) {
+        const db = global.db;
+        const locationRef = db.collection('locations').doc(appt.location.id);
+        const ref = locationRef.collection('clockIns').doc(id);
+        const approvedRef = locationRef.collection('approvedClockIns').doc();
+        const rejectedRef = locationRef.collection('rejectedClockIns').doc();
+        const apptRef = db.collection('users').doc(appt.attendees[0].uid)
+            .collection('appointments').doc(id);
+
         const clockIn = {
             sentTimestamp: new Date(),
             sentBy: global.app.conciseUser,
+            approvedRef: approvedRef.path,
+            rejectedRef: rejectedRef.path,
         };
-
-        const db = global.db;
-        const ref = db.collection('locations').doc(appt.location.id)
-            .collection('clockIns').doc(id);
-        const apptRef = db.collection('users').doc(appt.attendees[0].uid)
-            .collection('appointments').doc(id);
 
         appt = (await apptRef.get()).data(); // Don't trust the client
         appt.clockIn = Data.cloneMap(clockIn);
@@ -690,7 +690,6 @@ class Data {
         return {
             recipient: {
                 name: 'the ' + appt.location.name + '\'s supervisors',
-                path: ref.path,
             },
             clockIn: clockIn,
             appt: appt,
@@ -699,16 +698,20 @@ class Data {
     }
 
     static async clockOut(appt, id) {
+        const db = global.db;
+        const locationRef = db.collection('locations').doc(appt.location.id);
+        const ref = locationRef.collection('clockOuts').doc(id);
+        const approvedRef = locationRef.collection('approvedClockOuts').doc();
+        const rejectedRef = locationRef.collection('rejectedClockOuts').doc();
+        const apptRef = db.collection('users').doc(appt.attendees[0].uid)
+            .collection('activeAppointments').doc(id);
+
         const clockOut = {
             sentTimestamp: new Date(),
             sentBy: global.app.conciseUser,
+            approvedRef: approvedRef.path,
+            rejectedRef: rejectedRef.path,
         };
-
-        const db = global.db;
-        const ref = db.collection('locations').doc(appt.location.id)
-            .collection('clockOuts').doc(id);
-        const apptRef = db.collection('users').doc(appt.attendees[0].uid)
-            .collection('activeAppointments').doc(id);
 
         appt = (await apptRef.get()).data(); // Don't trust the client
         appt.clockOut = Data.cloneMap(clockOut);
@@ -721,7 +724,6 @@ class Data {
         return {
             recipient: {
                 name: 'the ' + appt.location.name + '\'s supervisors',
-                path: ref.path,
             },
             clockOut: clockOut,
             appt: appt,
