@@ -893,16 +893,21 @@ class Data {
 
     static async modifyPastAppt(apptData, id) {
         const db = global.db;
-        ['clockIn', 'clockOut'].forEach(key => {
-            if (typeof apptData[key].sentTimestamp === 'object') {
-                apptData[key].sentTimestamp = new admin.firestore.Timestamp(
-                    apptData[key].sentTimestamp._seconds,
-                    apptData[key].sentTimestamp._nanoseconds,
-                ).toDate();
-            } else {
-                apptData[key].sentTimestamp = new Date(apptData[key]
-                    .sentTimestamp);
-            }
+        ['clockIn', 'clockOut'].forEach(ob => {
+            [
+                'sentTimestamp',
+                'roundedTimestamp',
+                'approvedTimestamp',
+            ].forEach(prop => {
+                if (typeof apptData[ob][prop] === 'object') {
+                    apptData[ob][prop] = new admin.firestore.Timestamp(
+                        apptData[ob][prop]._seconds,
+                        apptData[ob][prop]._nanoseconds,
+                    ).toDate();
+                } else {
+                    apptData[ob][prop] = new Date(apptData[ob][prop]);
+                }
+            });
         });
         apptData = Data.trimObject(apptData);
         const appts = [
