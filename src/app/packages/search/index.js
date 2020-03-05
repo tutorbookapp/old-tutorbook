@@ -492,7 +492,11 @@ class Search {
         return $(this.main).find('#results').empty();
     }
 
-    // Gets filtered users based on our filters
+    /**
+     * Gets the filtered users Firestore query based on our filters.
+     * @return {Query} The query that gets the users that match our currently
+     * selected filters (`this.filters`).
+     */
     getUsers() {
         if (firebase.auth().currentUser) {
             var query = window.app.db.collection('users')
@@ -583,16 +587,19 @@ class Search {
         return query.limit(500);
     }
 
-    // Helper function to cut off strings with a ...
+    /**
+     * Helper function to cut off strings with a `...`
+     * @param {string} str - The string to cut off with a `...`
+     * @param {int} length - The desired length of the string (including the
+     * `...`).
+     * @return {string} The `str` with length `length` cut off with a `...` (if
+     * it's bigger than `length`).
+     */
     shortenString(str, length) {
-        if (str.length <= length) {
-            return str;
-        }
+        if (str.length <= length) return str;
         var result = '';
         str.split('').forEach((chr) => {
-            if (result.length < length - 3) {
-                result += chr;
-            }
+            if (result.length < length - 3) result += chr;
         });
         result += '...';
         return result;

@@ -15,8 +15,39 @@ const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
 const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 
+/**
+ * Class that represents the filter dialog (in the 
+ * [primary search view]{@linkplain Search}) that enables users (primarily 
+ * pupils looking for tutors) to filter through Tutorbook's users.
+ */
 class FilterDialog {
+    /**
+     * A filters object that represents/stores the user's current search filters 
+     * (that are applied via [Firestore query parameters]{@link https://firebase.google.com/docs/firestore/query-data/queries}).
+     * @typedef {Object} Filters
+     * @property {string} [grade='Any'] - The desired user grade.
+     * @property {string[]} [subject='Any'] - The desired user subject.
+     * @property {string} [gender='Any'] - The desired user gender.
+     * @property {bool} [showBooked=false] - Whether to show booked users or
+     * free users (this only matters if the user has availability selected).
+     * @property {Time} [availability={}] - The desired available timeslot.
+     * @property {string} [location=window.app.location.name] - The desired
+     * primary user location.
+     * @property {string} [price=('Any'|'Free')] - The desired user price
+     * ('Free' or 'Paid').
+     * @property {string} [type='Tutor'] - The desired user type ('Tutor', 
+     * 'Pupil', or 'Supervisor').
+     * @property {string} [sort='Rating'] - The sorting of the search results 
+     * (either by 'Rating' or by the number of 'Reviews').
+     */
 
+    /**
+     * Creates and (optionally) renders the filter dialog given an optional set 
+     * of filters.
+     * @param {Filters} [filters] - The optional set of preset filters.
+     * @param {bool} [skipRender=false] - Whether to skip rendering the dialog 
+     * or not.
+     */
     constructor(filters, skipRender = false) {
         this.filters = filters || {
             grade: 'Any',
@@ -33,12 +64,20 @@ class FilterDialog {
         if (!skipRender) this.renderSelf();
     }
 
+    /**
+     * Prepends the dialog element to the document's `body`, manages it (if it 
+     * hasn't already been managed), and opens the dialog.
+     */
     view() {
         $('body').prepend(this.el);
         if (!this.managed) this.manage();
         this.dialog.open();
     }
 
+    /**
+     * Attaches the `MDCDialog` instance and adds `MDCRipple`s to the option
+     * list items.
+     */
     manage() {
         this.managed = true;
         this.dialog = MDCDialog.attachTo(this.el);
@@ -52,13 +91,28 @@ class FilterDialog {
         });
     }
 
+    /**
+     * Accepts the currently selected filters and views the (updated) search 
+     * results.
+     */
     accept() {
         window.app.search.viewResults();
     }
 
+    /**
+     * Renders the filter dialog by replacing all of the empty placeholder pages
+     * with the relevant subjects in `mdc-list` form.
+     */
     renderSelf() {
         this.el = this.render.template('dialog-filter');
+
         const pages = this.el.querySelectorAll('.page');
+        const r = (query, options, addAny) => Utils.replaceElement(
+            $(this.el).find('#' + query + '-list')[0],
+            this.render.template('dialog-filter-item-list', {
+                items: addAny ? ['Any'].concat(options) : options,
+            }),
+        );
 
         this.el.querySelector('#reset-button').addEventListener('click', () => {
             Object.entries({
@@ -79,115 +133,42 @@ class FilterDialog {
             this.renderInputAvailability()
         );
 
-        Utils.replaceElement(
-            this.el.querySelector('#grade-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(window.app.data.grades)
-            })
-        );
-
-        if (window.app.location.name === 'Any') {
-            Utils.replaceElement(
-                this.el.querySelector('#price-list'),
-                this.render.template('dialog-filter-item-list', {
-                    items: ['Any'].concat(Data.prices)
-                })
-            );
+        if (!window.app.id) {
+            r('price', Data.prices);
         } else {
             Utils.replaceElement(
                 this.el.querySelector('#price-list'),
-                'Due to PAUSD guidelines, we can only show free service-hour' +
+                'Due to school guidelines, we can only show free service-hour' +
                 ' peer tutors on this website. To filter by price and view ' +
                 'more professional tutors, go to the root partition at https:' +
                 '//tutorbook.app/app.'
             );
         }
 
-        Utils.replaceElement(
-            this.el.querySelector('#gender-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.genders)
-            })
-        );
+        r('grade', window.app.data.grades);
+        r('gender', Data.genders);
+        r('type', Data.types);
 
-        Utils.replaceElement(
-            this.el.querySelector('#type-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: ['Any'].concat(Data.types)
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#math-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.mathSubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#tech-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.techSubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#art-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.artSubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#science-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.scienceSubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#history-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.historySubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#language-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.languageSubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#english-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.englishSubjects
-            })
-        );
-
-        Utils.replaceElement(
-            this.el.querySelector('#life-skills-list'),
-            this.render.template('dialog-filter-item-list', {
-                items: Data.lifeSkills
-            })
-        );
+        r('math', Data.mathSubjects, false);
+        r('tech', Data.techSubjects, false);
+        r('art', Data.artSubjects, false);
+        r('science', Data.scienceSubjects, false);
+        r('history', Data.historySubjects, false);
+        r('language', Data.languageSubjects, false);
+        r('english', Data.englishSubjects, false);
+        r('life-skills', Data.lifeSkills, false);
 
         this.el.querySelectorAll('#page-subject .mdc-list-item').forEach((el) => {
             el.addEventListener('click', () => {
                 var id = el.id.split('-').slice(1).join('-');
-                if (id === 'page-all') {
-                    this.filters.subject = 'Any';
-                }
+                if (id === 'page-all') this.filters.subject = 'Any';
                 this.page(id);
             });
         });
 
         pages.forEach((sel) => {
             var key = sel.id.split('-')[1];
-            if (key === 'all' || key === 'subject') {
-                return;
-            }
+            if (key === 'all' || key === 'subject') return;
 
             sel.querySelectorAll('.mdc-list-item').forEach((el) => {
                 el.addEventListener('click', () => {
@@ -201,7 +182,7 @@ class FilterDialog {
                             'tech',
                             'art'
                         ].indexOf(key) >= 0) {
-                        this.filters['subject'] = el.innerText.trim();
+                        this.filters.subject = el.innerText.trim();
                         this.page('page-all');
                     } else if ('availability' === key) {
                         return;
@@ -227,11 +208,23 @@ class FilterDialog {
         this.page('page-all');
     }
 
+    /**
+     * Returns the filter availability string (for the `filters-all` summary
+     * list that shows all of the currently selected filters).
+     * @param {Time} data - The currently selected availability.
+     * @return {string} The availability in string form cut off at 20 characters
+     * (for the `filters-all` summary list that shows all of the currently 
+     * selected filters).
+     */
     getAvailabilityString(data) {
         const str = Utils.getAvailabilityString(data);
         return Utils.shortenString(str, 20);
     }
 
+    /**
+     * Updates the currently selected filters list by replacing it with a 
+     * re-rendered `all-filters-list`.
+     */
     renderAllList() {
         Utils.replaceElement(
             this.el.querySelector('#all-filters-list'),
@@ -246,9 +239,15 @@ class FilterDialog {
         });
     }
 
+    /**
+     * Helper function to get rid of the 'Any' selected option (by replacing it
+     * with an empty string: '') for better rendering.
+     * @see {@link FilterDialog#renderAllList}
+     * @param {Filters} [filters=this.filters] - The filters to replace 'Any' 
+     * with empty strings.
+     * @return {Filters} The filters with 'Any' options replaced with ''.
+     */
     clearFilters(filters = this.filters) {
-        // Helper function to get rid of the 'Any' selected option for
-        // better rendering.
         var result = {};
         for (var filter in filters) {
             if (filters[filter] !== 'Any' && Object.keys(filters[filter])
@@ -262,6 +261,11 @@ class FilterDialog {
         return result;
     }
 
+    /**
+     * Views a filter dialog page given the page ID (if it's a page all list, it
+     * updates the currently selected page view before showing it).
+     * @param {string} id - The ID of the page to view.
+     */
     page(id) {
         const pages = this.el.querySelectorAll('.page');
 
@@ -297,6 +301,12 @@ class FilterDialog {
     }
 };
 
+/**
+ * Class that represents the dialog that enables supervisors to create new
+ * announcement groups by filtering students to create student segments (e.g.
+ * all of the users who are booked for Mondays at 2:45 PM).
+ * @extends FilterDialog
+ */
 class NewGroupDialog extends FilterDialog {
 
     constructor(options = {}) {
