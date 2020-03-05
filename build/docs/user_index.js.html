@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Render - Documentation</title>
+    <title>user/index.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,380 +29,187 @@
 
 <div id="main">
     
-    <h1 class="page-title">Render</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        Render
-        </h2>
-        
-            <div class="class-description"><p>Class that contains commonly used rendering functions.</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Render"><span class="type-signature"></span>new Render<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Creates a new Render object and intializes it's
-<a href="Templates.html"><code>Templates</code></a> object.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line25">line 25</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="searchTextFieldItem"><span class="type-signature"></span>searchTextFieldItem<span class="signature">(label, val, search)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Renders a search text field item that is essentially a text field input
-proxying to a select (except a lot more functional as it searches an
-<a href="https://www.algolia.com/doc/api-reference/api-methods/search/">Algolia index</a> instead of a set list of select options).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line323">line 323</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://www.algolia.com/doc/api-reference/api-methods/search/">https://www.algolia.com/doc/api-reference/api-methods/search/</a></li>
-        
-            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>label</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The label for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>val</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The preset value for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>search</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#searchCallback">searchCallback</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>Function called when text field value
-changes (i.e. function that searches, renders, and show results).</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>HTMLElement</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The rendered (and managed) text field item that
-raises elevation and shows a search results list when focused/clicked and
-updates those search results as the user types.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">user/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {
+    MDCRipple
+} from '@material/ripple/index';
+import {
+    MDCTopAppBar
+} from '@material/top-app-bar/index';
+
+import $ from 'jquery';
+
+const NewRequestDialog = require('@tutorbook/dialogs').newRequest;
+const PaidRequestDialog = require('@tutorbook/dialogs').paidRequest;
+const StripeRequestDialog = require('@tutorbook/dialogs').stripeRequest;
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
+
+/** 
+ * Class that represents the user view in Tutorbook's web app.
+ * @todo Make this more like a CRM user view for supervisors (e.g. show all of
+ * the user's appointments, recent messages, pending requests, etc).
+ * @todo Make the user view check if anything has changed in it's `this.profile` 
+ * {@link User} object before viewing. If there has been changes, make sure to 
+ * re-render the user view to show them.
+ * @todo Finish documenting the rest of this class's methods.
+ */
+class User {
+
+    constructor(profile) {
+        this.render = app.render;
+        profile.availableTimes = Utils
+            .getAvailabilityStrings(profile.availability);
+        if (profile.payments.type === 'Paid') {
+            profile.paid = true;
+            profile.showAbout = true;
+            profile.showLocation = true;
+        } else {
+            profile.free = true;
+        }
+        this.profile = profile;
+        this.renderSelf();
+    }
+
+    static async viewUser(id) {
+        const users = window.app.search.users;
+        if (!users[id]) {
+            const p = await Data.getUser(id);
+            users[id] = new User(p);
+        }
+        return users[id].view();
+    }
+
+    renderSelf() {
+        this.main = this.render.template('user-view',
+            Utils.combineMaps(this.profile, {
+                rate: '$' + this.profile.payments.hourlyCharge,
+                paid: this.profile.payments.type === 'Paid',
+                free: this.profile.payments.type === 'Free',
+            })
+        );
+
+        this.header = this.render.header('header-back', {
+            title: 'View User',
+            showEdit: (window.app.user.type === 'Supervisor' &amp;&amp;
+                this.profile.payments.type === 'Free'),
+            edit: () => {
+                new window.app.EditProfile(this.profile).view();
+            },
+            showMatch: (window.app.user.type === 'Supervisor' &amp;&amp;
+                this.profile.payments.type === 'Free'),
+            match: () => {
+                Data.updateUser(Utils.combineMaps(this.profile, {
+                    proxy: [window.app.user.uid],
+                }));
+                new window.app.MatchingDialog(this.profile).view();
+            },
+        });
+    }
+
+    view() {
+        app.intercom.view(false);
+        app.view(
+            this.header,
+            this.main,
+            '/app/users/' + this.profile.uid
+        );
+        !this.managed ? this.manage() : null;
+    }
+
+    reView() {}
+
+    manage() {
+        this.managed = true;
+
+        // GOOGLE MAP
+        if (this.profile.payments.type === 'Paid') {
+            const first =
+                (Object.entries(this.profile.availability).length > 0) ?
+                Object.entries(this.profile.availability)[0][0] :
+                window.app.location.name;
+            if (Data.locations.indexOf(first) >= 0) {
+                var addr = Data.addresses[first];
+            } else {
+                var addr = first;
+            }
+            new google.maps.Geocoder().geocode({
+                address: addr,
+            }, (res, status) => {
+                if (status === 'OK') {
+                    const geo = res[0].geometry.location;
+                    var latLang = {
+                        lat: geo.lat(),
+                        lng: geo.lng(),
+                    };
+                } else { // Gunn Academic Center
+                    var latLang = {
+                        lat: 37.400222,
+                        lng: -122.132488
+                    };
+                }
+                const map = new google.maps.Map($(this.main).find('#map')[0], {
+                    zoom: 15,
+                    center: latLang,
+                }); // TODO: Add markers for all the user's locations
+                const marker = new google.maps.Marker({
+                    position: latLang,
+                    map: map,
+                    title: 'Tutors Here',
+                });
+            });
+        }
+
+        // SUBJECTS
+        this.main.querySelectorAll('#subjects .mdc-list-item').forEach((el) => {
+            MDCRipple.attachTo(el);
+            el.addEventListener('click', () => {
+                if (window.app.user.type === 'Supervisor')
+                    return new window.app.MatchingDialog(this.profile, {
+                        subject: el.innerText,
+                    }).view();
+                if (this.profile.payments.type === 'Paid')
+                    return new StripeRequestDialog(el.innerText, this.profile)
+                        .view();
+                return new NewRequestDialog(el.innerText, this.profile).view();
+            });
+        });
+
+        // MESSAGE FAB
+        const messageFab = this.main.querySelector('#message-button');
+        MDCRipple.attachTo(messageFab);
+        messageFab.addEventListener('click', async () => {
+            return (await window.app.chats.newWith(this.profile)).view();
+        });
+
+        // REQUEST FAB
+        const requestFab = this.main.querySelector('#request-button');
+        MDCRipple.attachTo(requestFab);
+        requestFab.addEventListener('click', () => {
+            if (this.profile.payments.type === 'Paid') {
+                return new StripeRequestDialog('', this.profile).view();
+            }
+            return new NewRequestDialog('', this.profile).view();
+        });
+
+        // HEADER
+        MDCTopAppBar.attachTo(this.header);
+    }
+
+};
+
+module.exports = User;</code></pre>
+        </article>
+    </section>
 
 
 

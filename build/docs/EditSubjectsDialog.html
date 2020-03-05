@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Render - Documentation</title>
+    <title>EditSubjectsDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Render</h1>
+    <h1 class="page-title">EditSubjectsDialog</h1>
     
 
     
@@ -42,10 +42,11 @@
 <header>
     
         <h2>
-        Render
+        EditSubjectsDialog
         </h2>
         
-            <div class="class-description"><p>Class that contains commonly used rendering functions.</p></div>
+            <div class="class-description"><p>Class that represents the dialog that enables users to edit the subjects for
+their (or another user's) profile.</p></div>
         
     
 </header>
@@ -61,7 +62,7 @@
     
 
     
-    <h4 class="name" id="Render"><span class="type-signature"></span>new Render<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="EditSubjectsDialog"><span class="type-signature"></span>new EditSubjectsDialog<span class="signature">(profile, update<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -69,8 +70,8 @@
 
 
 <div class="description">
-    <p>Creates a new Render object and intializes it's
-<a href="Templates.html"><code>Templates</code></a> object.</p>
+    <p>Creates the dialog that selects the subject to populate a given
+<a href="https://material.io/develop/web/components/input-controls/text-field/"><code>MDCTextField</code></a>.</p>
 </div>
 
 
@@ -106,7 +107,438 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line25">line 25</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line253">line 253</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Make it easier to select subjects in bulk.</li>
+        
+            <li>Add intelligent subject selection (e.g. if someone can tutor Calculus,
+they can probably tutor Algebra 1 and 2).</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>profile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="Profile.html">Profile</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The profile view to update the subjects for.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>update</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>bool</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>Whether to update the profile's Firestore
+document (i.e. for the regular profile view) or to just update the
+profile's subjects array locally.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>const EditSubjectsDialog = require('@tutorbook/dialogs').editSubject;
+const dialog = new EditSubjectsDialog(
+  $(this.main).find('#Subject').first()[0], 
+  this.profile,
+);
+dialog.view();</code></pre>
+
+</div>
+
+</div>
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="SubjectSelectDialog.html">SubjectSelectDialog</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id=".updateSubjects"><span class="type-signature">(async, static) </span>updateSubjects<span class="signature">(profile<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Updates the subjects of the given profile with the content of the
+currently viewed subject text fields.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line309">line 309</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>profile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="global.html#User">User</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    window.app.user
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The profile to put the subjects
+into (if it's not given, we default to <code>window.app.user</code> and update the
+user's Firestore document as well).</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Attaches MDC components and click listeners by:</p>
+<ol>
+<li>Creating a <code>MDCDialog</code> instance on <code>this.main</code> and listening for when
+it is closed (update the profile if the user clicked <code>Save</code> or reset the
+dialog if the user clicked <code>Cancel</code>).</li>
+<li>Adding <code>MDCRipple</code>s and click listeners to each <code>mdc-list-item</code> in the
+dialog's <code>page-all</code> that open the relevant page.</li>
+<li>Adding <code>MDCRipple</code>s, <code>MDCCheckbox</code>es and click listeners to each
+<code>mdc-list-item</code> in every other dialog page (clickers that update the
+selected subjects).</li>
+</ol>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#manage">SubjectSelectDialog#manage</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line66">line 66</a>
     </li></ul></dd>
     
 
@@ -144,24 +576,6 @@
 
 
 </div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
         
             
 <div class="section-method">
@@ -169,7 +583,7 @@
     
 
     
-    <h4 class="name" id="searchTextFieldItem"><span class="type-signature"></span>searchTextFieldItem<span class="signature">(label, val, search)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
+    <h4 class="name" id="renderList"><span class="type-signature"></span>renderList<span class="signature">(options)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
     
 
     
@@ -177,9 +591,8 @@
 
 
 <div class="description">
-    <p>Renders a search text field item that is essentially a text field input
-proxying to a select (except a lot more functional as it searches an
-<a href="https://www.algolia.com/doc/api-reference/api-methods/search/">Algolia index</a> instead of a set list of select options).</p>
+    <p>Renders an options list that enables the user to select multiple subjects
+at the same time (via <a href="https://material.io/develop/web/components/input-controls/checkboxes/"><code>MDCCheckboxes</code></a>).</p>
 </div>
 
 
@@ -194,6 +607,11 @@ proxying to a select (except a lot more functional as it searches an
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#renderList">SubjectSelectDialog#renderList</a>
+    </li></ul></dd>
     
 
     
@@ -215,21 +633,12 @@ proxying to a select (except a lot more functional as it searches an
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line323">line 323</a>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line296">line 296</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://www.algolia.com/doc/api-reference/api-methods/search/">https://www.algolia.com/doc/api-reference/api-methods/search/</a></li>
-        
-            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
-        </ul>
-    </dd>
     
 
     
@@ -268,13 +677,13 @@ proxying to a select (except a lot more functional as it searches an
 
         <tr>
             
-                <td class="name"><code>label</code></td>
+                <td class="name"><code>options</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>string</code></span>
+<span class="param-type"><code>Array.&lt;string></code></span>
 
 
             
@@ -285,60 +694,7 @@ proxying to a select (except a lot more functional as it searches an
             
 
             <td class="description last">
-                <p>The label for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>val</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The preset value for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>search</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#searchCallback">searchCallback</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>Function called when text field value
-changes (i.e. function that searches, renders, and show results).</p>
+                <p>The options that the user can select from.</p>
                 
             </td>
         </tr>
@@ -381,9 +737,8 @@ changes (i.e. function that searches, renders, and show results).</p>
 
 
 <div class="param-desc">
-    <p>The rendered (and managed) text field item that
-raises elevation and shows a search results list when focused/clicked and
-updates those search results as the user types.</p>
+    <p>The rendered checkbox list that enables users to
+select multiple subjects/options at the same time.</p>
 </div>
 
     
@@ -392,6 +747,774 @@ updates those search results as the user types.</p>
 
 
 
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders the subject selection dialog by replacing the subject lists in
+the <code>dialog-subjects</code> template.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#renderSelf">SubjectSelectDialog#renderSelf</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line209">line 209</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Templates.html"><code>Templates</code></a></li>
+        
+            <li><a href="Render.html"><code>Render</code></a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Resets the checked items to ensure that only selected subjects are
+checked (and resets <code>this.selected</code> to match <code>this.original</code>).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#reset">SubjectSelectDialog#reset</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line133">line 133</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="save"><span class="type-signature"></span>save<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Updates the profile view subject inputs to match the currently selected
+subjects.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#save">SubjectSelectDialog#save</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line265">line 265</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="section"><span class="type-signature"></span>section<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views a given dialog page/section.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#section">SubjectSelectDialog#section</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line180">line 180</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The ID attribute of the page/section to view.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-examples">
+<h5>Examples</h5>
+
+    <pre class="prettyprint"><code>this.section('page-all'); // View the subject categories page.</code></pre>
+
+    <pre class="prettyprint"><code>this.section('page-math'); // View the math subjects page.</code></pre>
+
+</div>
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="updateSelected"><span class="type-signature">(abstract) </span>updateSelected<span class="signature">(val, add<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Updates the selected subject.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#updateSelected">SubjectSelectDialog#updateSelected</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line167">line 167</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The new selected subject.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>add</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>bool</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>Whether to add (<code>true</code>) or remove (<code>false</code>)
+the given <code>val</code>.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-examples">
+<h5>Examples</h5>
+
+    <pre class="prettyprint"><code>this.updateSelected('Chemistry H'); // From within a subject select 
+// dialog instance (i.e. `this` is a `SubjectSelectDialog`).</code></pre>
+
+    <pre class="prettyprint"><code>this.updateSelected('Algebra 1', false); // Remove Algebra 1 from the
+// selected subjects.</code></pre>
+
+</div>
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Adds the dialog element to the DOM, opens it, and manages it.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="SubjectSelectDialog.html#view">SubjectSelectDialog#view</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>const SubjectSelectDialog = require('@tutorbook/dialogs').subject;
+const dialog = new SubjectSelectDialog();
+dialog.view();</code></pre>
+
+</div>
 
 </div>
         

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Render - Documentation</title>
+    <title>FilterDialog - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Render</h1>
+    <h1 class="page-title">FilterDialog</h1>
     
 
     
@@ -42,10 +42,12 @@
 <header>
     
         <h2>
-        Render
+        FilterDialog
         </h2>
         
-            <div class="class-description"><p>Class that contains commonly used rendering functions.</p></div>
+            <div class="class-description"><p>Class that represents the filter dialog (in the
+<a href="Search.html">primary search view</a>) that enables users (primarily
+pupils looking for tutors) to filter through Tutorbook's users.</p></div>
         
     
 </header>
@@ -61,7 +63,7 @@
     
 
     
-    <h4 class="name" id="Render"><span class="type-signature"></span>new Render<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="FilterDialog"><span class="type-signature"></span>new FilterDialog<span class="signature">(filters<span class="signature-attributes">opt</span>, skipRender<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -69,8 +71,8 @@
 
 
 <div class="description">
-    <p>Creates a new Render object and intializes it's
-<a href="Templates.html"><code>Templates</code></a> object.</p>
+    <p>Creates and (optionally) renders the filter dialog given an optional set
+of filters.</p>
 </div>
 
 
@@ -106,7 +108,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line25">line 25</a>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -123,6 +125,119 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="global.html#Filters">Filters</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The optional set of preset filters.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>skipRender</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>bool</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>Whether to skip rendering the dialog
+or not.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -169,7 +284,7 @@
     
 
     
-    <h4 class="name" id="searchTextFieldItem"><span class="type-signature"></span>searchTextFieldItem<span class="signature">(label, val, search)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
+    <h4 class="name" id="accept"><span class="type-signature"></span>accept<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -177,9 +292,8 @@
 
 
 <div class="description">
-    <p>Renders a search text field item that is essentially a text field input
-proxying to a select (except a lot more functional as it searches an
-<a href="https://www.algolia.com/doc/api-reference/api-methods/search/">Algolia index</a> instead of a set list of select options).</p>
+    <p>Accepts the currently selected filters and views the (updated) search
+results.</p>
 </div>
 
 
@@ -215,7 +329,97 @@ proxying to a select (except a lot more functional as it searches an
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line323">line 323</a>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line98">line 98</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="clearFilters"><span class="type-signature"></span>clearFilters<span class="signature">(filters<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="global.html#Filters">Filters</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Helper function to get rid of the 'Any' selected option (by replacing it
+with an empty string: '') for better rendering.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line250">line 250</a>
     </li></ul></dd>
     
 
@@ -225,11 +429,197 @@ proxying to a select (except a lot more functional as it searches an
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://www.algolia.com/doc/api-reference/api-methods/search/">https://www.algolia.com/doc/api-reference/api-methods/search/</a></li>
-        
-            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
+            <li><a href="FilterDialog.html#renderAllList"><code>FilterDialog#renderAllList</code></a></li>
         </ul>
     </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filters</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code><a href="global.html#Filters">Filters</a></code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    this.filters
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>The filters to replace 'Any'
+with empty strings.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code><a href="global.html#Filters">Filters</a></code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>The filters with 'Any' options replaced with ''.</p>
+</div>
+
+    
+</div>
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="getAvailabilityString"><span class="type-signature"></span>getAvailabilityString<span class="signature">(data)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Returns the filter availability string (for the <code>filters-all</code> summary
+list that shows all of the currently selected filters).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line219">line 219</a>
+    </li></ul></dd>
+    
+
+    
+
     
 
     
@@ -268,13 +658,13 @@ proxying to a select (except a lot more functional as it searches an
 
         <tr>
             
-                <td class="name"><code>label</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>string</code></span>
+<span class="param-type"><code><a href="global.html#Time">Time</a></code></span>
 
 
             
@@ -285,60 +675,7 @@ proxying to a select (except a lot more functional as it searches an
             
 
             <td class="description last">
-                <p>The label for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>val</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The preset value for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>search</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#searchCallback">searchCallback</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>Function called when text field value
-changes (i.e. function that searches, renders, and show results).</p>
+                <p>The currently selected availability.</p>
                 
             </td>
         </tr>
@@ -373,7 +710,7 @@ changes (i.e. function that searches, renders, and show results).</p>
     </dt>
     <dd>
         
-<span class="param-type"><code>HTMLElement</code></span>
+<span class="param-type"><code>string</code></span>
 
 
     </dd>
@@ -381,13 +718,515 @@ changes (i.e. function that searches, renders, and show results).</p>
 
 
 <div class="param-desc">
-    <p>The rendered (and managed) text field item that
-raises elevation and shows a search results list when focused/clicked and
-updates those search results as the user types.</p>
+    <p>The availability in string form cut off at 20 characters
+(for the <code>filters-all</code> summary list that shows all of the currently
+selected filters).</p>
 </div>
 
     
 </div>
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Attaches the <code>MDCDialog</code> instance and adds <code>MDCRipple</code>s to the option
+list items.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="page"><span class="type-signature"></span>page<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views a filter dialog page given the page ID (if it's a page all list, it
+updates the currently selected page view before showing it).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line269">line 269</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The ID of the page to view.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderAllList"><span class="type-signature"></span>renderAllList<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Updates the currently selected filters list by replacing it with a
+re-rendered <code>all-filters-list</code>.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line228">line 228</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders the filter dialog by replacing all of the empty placeholder pages
+with the relevant subjects in <code>mdc-list</code> form.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line106">line 106</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Prepends the dialog element to the document's <code>body</code>, manages it (if it
+hasn't already been managed), and opens the dialog.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="filters_index.js.html">filters/index.js</a>, <a href="filters_index.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

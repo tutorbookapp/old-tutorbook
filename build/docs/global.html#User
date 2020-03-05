@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Render - Documentation</title>
+    <title>User - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Render</h1>
+    <h1 class="page-title">User</h1>
     
 
     
@@ -42,10 +42,10 @@
 <header>
     
         <h2>
-        Render
+        User
         </h2>
         
-            <div class="class-description"><p>Class that contains commonly used rendering functions.</p></div>
+            <div class="class-description"><p>Class that represents the user view in Tutorbook's web app.</p></div>
         
     
 </header>
@@ -61,17 +61,12 @@
     
 
     
-    <h4 class="name" id="Render"><span class="type-signature"></span>new Render<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="User"><span class="type-signature"></span>new User<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
 
-
-<div class="description">
-    <p>Creates a new Render object and intializes it's
-<a href="Templates.html"><code>Templates</code></a> object.</p>
-</div>
 
 
 
@@ -106,7 +101,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line25">line 25</a>
+        <a href="user_index.js.html">user/index.js</a>, <a href="user_index.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -114,6 +109,20 @@
 
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Make this more like a CRM user view for supervisors (e.g. show all of
+the user's appointments, recent messages, pending requests, etc).</li>
+        
+            <li>Make the user view check if anything has changed in it's `this.profile` 
+<a href="global.html#User"><code>User</code></a> object before viewing. If there has been changes, make sure to 
+re-render the user view to show them.</li>
+        
+            <li>Finish documenting the rest of this class's methods.</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -160,242 +169,6 @@
     
 
     
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="searchTextFieldItem"><span class="type-signature"></span>searchTextFieldItem<span class="signature">(label, val, search)</span><span class="type-signature"> &rarr; {HTMLElement}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Renders a search text field item that is essentially a text field input
-proxying to a select (except a lot more functional as it searches an
-<a href="https://www.algolia.com/doc/api-reference/api-methods/search/">Algolia index</a> instead of a set list of select options).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="render_index.js.html">render/index.js</a>, <a href="render_index.js.html#line323">line 323</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://www.algolia.com/doc/api-reference/api-methods/search/">https://www.algolia.com/doc/api-reference/api-methods/search/</a></li>
-        
-            <li><a href="SearchHeader.html"><code>SearchHeader</code></a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>label</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The label for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>val</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The preset value for the text field item.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>search</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="global.html#searchCallback">searchCallback</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>Function called when text field value
-changes (i.e. function that searches, renders, and show results).</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>HTMLElement</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The rendered (and managed) text field item that
-raises elevation and shows a search results list when focused/clicked and
-updates those search results as the user types.</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-</div>
-        
-    
 
     
 
@@ -412,7 +185,7 @@ updates those search results as the user types.</p>
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Mar 04 2020 17:44:19 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Mar 04 2020 17:44:20 GMT-0800 (Pacific Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
