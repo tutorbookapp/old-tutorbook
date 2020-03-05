@@ -31,6 +31,40 @@ class Utils {
         this.data = window.app ? window.app.data || new Data() : new Data();
     }
 
+    /**
+     * Joins the array like the typicall `Array.join` function but adds the 
+     * `ending` concatenator between the last two items.
+     * @example
+     * const Utils = require('@tutorbook/utils');
+     * const subjects = ['Chemistry', 'Chemistry H', 'Algebra 1'];
+     * const str = Utils.join(subjects, 'or');
+     * assert(str === 'Chemistry, Chemistry H, or Algebra 1');
+     * @param {string[]} arr - The array of (typically) strings to concatenate.
+     * @param {string} ending - The concatenator to insert between the last two 
+     * items in the given `arr`.
+     * @return {string} The concatenated array in string form (with the given 
+     * `ending` between the last two items in the given `arr`).
+     */
+    static join(arr, ending) {
+        const lastItem = arr.pop();
+        const str = arr.join(', ');
+        return str + ', ' + ending + ' ' + lastItem;
+    }
+
+    /**
+     * Determine if an array contains one or more items from another array.
+     * @param {array} haystack - The array to search.
+     * @param {array} arr - The array providing items to check for in the 
+     * haystack.
+     * @return {boolean} true|false if haystack contains at least one item from 
+     * arr.
+     */
+    static arrayContainsAny(haystack, arr) {
+        return arr.some(function(v) {
+            return haystack.indexOf(v) >= 0;
+        });
+    }
+
     static visible(opts = {}) {
         if (!opts.el) return false;
 

@@ -15,23 +15,34 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
-const EditSubjectDialog = require('@tutorbook/dialogs').editSubject;
+const EditSubjectsDialog = require('@tutorbook/dialogs').editSubjects;
 const NotificationDialog = require('@tutorbook/dialogs').notify;
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 const User = require('@tutorbook/user');
 
-// Profile class that provides a profile view and header and manages all data
-// flow concering the user's profile.
+/**
+ * Class that provides a profile view and header and manages all data flow
+ * concerning the user's profile.
+ * @todo Finish documenting this class's methods and other properties.
+ */
 class Profile {
 
+    /**
+     * Creates and renders a new profile view.
+     * @param {User} profile - The profile to render as a profile view.
+     */
     constructor(profile) {
         this.render = window.app.render;
         this.profile = profile;
         this.renderSelf();
     }
 
+    /**
+     * Views the profile view and header (and hides the Intercom messenger).
+     * @see {@link Tutorbook#view}
+     */
     view() {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Profile';
@@ -39,11 +50,19 @@ class Profile {
         (!this.managed) ? this.manage(): this.reManage(); // Don't attach MDC twice
     }
 
+    /**
+     * Re-manages (or manages, if it hasn't already been managed) the profile
+     * view.
+     */
     reView() {
         this.managed ? this.reManage() : this.manage(); // Don't attach MDC twice
     }
 
-    reManage() { // MDC are already attached, just add textField listeners
+    /**
+     * Re-manages the profile view when the MDC components have already been
+     * attached (i.e. just add text field `focusout` listeners).
+     */
+    reManage() {
         const that = this;
         const p = this.profile;
         this.manageHeader();
@@ -82,6 +101,17 @@ class Profile {
         });
     }
 
+    /**
+     * Saves an image to be the profile's new photo by:
+     * 1. Changing the profile image to a loading icon that will get updated
+     * with the shared image.
+     * 2. Uploading the image to Cloud Storage.
+     * 3. Generating a public URL for the uploaded file.
+     * 4. Updating the chat message placeholder with the image's URL and 
+     * re-renders the profile view with the updated profile image.
+     * @param {File} file - The file to upload to Google Storage and set as the
+     * new profile photo (for `this.profile`).
+     */
     async saveImage(file) {
         // 1 - We change the profile image to a loading icon that will get updated 
         // with the shared image.
@@ -121,7 +151,12 @@ class Profile {
         this.manageHeader();
     }
 
-    manageHeader() { // Enables users to update their profile pic
+    /**
+     * Enables users to update their profile picture by clicking on the user
+     * header image.
+     * @see {@link Profile#saveImage}
+     */
+    manageHeader() {
         $(this.main).find('.profile-header .pic').mouseenter(() => {
             // Show the modify pic overlay
             $(this.main).find('.profile-header .pic').hide();
@@ -154,7 +189,12 @@ class Profile {
         });
     }
 
-    manage(dontUpdate) {
+    /**
+     * Manages the profile view.
+     * @param {bool} [dontUpdate=false] - Whether to update the profile every 
+     * time an input is updated (e.g. when a text field loses focus).
+     */
+    manage(dontUpdate = false) {
         this.managed = true;
         MDCTopAppBar.attachTo(this.header);
         $(this.header).find('.material-icons').each(function() {
@@ -162,39 +202,31 @@ class Profile {
         });
         this.manageHeader();
 
-        const that = this;
+        const subjectsDialog = this.subjectsDialog =
+            new EditSubjectsDialog(this, !dontUpdate);
         const p = this.profile;
-
-        function s(q) { // Attach and return MDCSelect
-            return Utils.attachSelect(that.main.querySelector(q));
-        };
-
-        function t(q, action) { // Attach and return MDCTextField
-            $(that.main).find(q + ' input').focusout(async () => {
+        const s = (q) => Utils.attachSelect($(this.main).find(q)[0]);
+        const t = (q, action) => {
+            $(this.main).find(q + ' input').focusout(async () => {
                 action();
                 Utils.updateSetupProfileCard(p);
                 if (dontUpdate) return;
                 await window.app.updateUser(p);
                 window.app.snackbar.view('Profile updated.');
             });
-            return MDCTextField.attachTo(that.main.querySelector(q));
+            return MDCTextField.attachTo($(this.main).find(q)[0]);
         };
-
-        function listen(s, action) { // Adds select listeners
-            s.listen('MDCSelect:change', async () => {
-                action();
-                Utils.updateSetupProfileCard(p);
-                if (dontUpdate) return;
-                await window.app.updateUser(p);
-                window.app.snackbar.view('Profile updated.');
-            });
-        };
+        const listen = (s, action) => s.listen('MDCSelect:change', async () => {
+            action();
+            Utils.updateSetupProfileCard(p);
+            if (dontUpdate) return;
+            await window.app.updateUser(p);
+            window.app.snackbar.view('Profile updated.');
+        });
 
         if (this.profile.payments.type !== 'Paid' &&
             this.profile.type !== 'Tutor') {
-            const bio = t('#Bio', () => {
-                p.bio = bio.value;
-            });
+            const bio = t('#Bio', () => p.bio = bio.value);
         }
         const typeCanBeChanged = $(this.main).find('#Type .mdc-menu').length;
         const type = (typeCanBeChanged) ? s('#Type') : t('#Type');
@@ -221,20 +253,16 @@ class Profile {
         });
         $(this.main).find('#Email input').attr('disabled', 'disabled');
         $(this.main).find('[id="Subject"]').each(function(i) {
-            const textField = MDCTextField.attachTo(this);
-            const dialog = new EditSubjectDialog(
-                this,
-                dontUpdate ? p : undefined,
-            );
-            this.addEventListener('click', () => dialog.view());
+            this.addEventListener('click', () => subjectsDialog.view());
+            MDCTextField.attachTo(this);
         });
         $(this.main).find('[id="Available"]').each(function(i) {
-            const textField = MDCTextField.attachTo(this);
             const dialog = new EditAvailabilityDialog(
                 this,
                 dontUpdate ? p : undefined,
             );
             this.addEventListener('click', () => dialog.view());
+            MDCTextField.attachTo(this);
         });
         if (dontUpdate) return;
         MDCRipple.attachTo($(this.main).find('[data-fir-click="delete"]')[0]);
@@ -253,10 +281,14 @@ class Profile {
         });
     }
 
+    /**
+     * Renders the profile view (with the global `window.app.render` object).
+     * @see {@link Render}
+     */
     renderSelf() {
         const profile = this.profile;
         this.header = this.render.header('header-main', {
-            'title': 'Profile'
+            'title': 'Profile',
         });
         this.main = this.render.template('profile');
         const that = this;
@@ -317,40 +349,47 @@ class Profile {
         }));
     }
 
+    /**
+     * Adds (and manages) a new split subject input list item to the profile 
+     * view.
+     */
     addSubjectInput() {
-        const that = this;
-        const profile = this.profile;
-
-        function add(e, el) { // Add split input item to profile
-            const sel = that.render.splitListItem(e, el);
+        const add = (e, el) => { // Adds a split list item to the profile view 
+            const sel = this.render.splitListItem(e, el);
             if ($('[id="Subject"]').length) {
                 $(sel).insertAfter($('[id="Subject"]').last().parent());
-            } else if (profile.type === '') {
+            } else if (this.profile.type === '') {
                 $(sel).insertAfter($('[id="User for"]'));
             } else {
-                $(sel).insertAfter($('[id="' + profile.type + ' for"]'));
+                $(sel).insertAfter($('[id="' + this.profile.type + ' for"]'));
             }
             sel.scrollIntoView();
-            $(e).click();
+            this.subjectsDialog.view();
         };
-
-        function t(l, v) { // Render and attach subject text field
-            const el = that.render.textField(l, v);
+        const t = (l, v) => { // Render and attach subject text field
+            const el = this.render.textField(l, v);
             MDCTextField.attachTo(el);
-            $(el).click(() => {
-                new EditSubjectDialog(el).view();
-            });
+            $(el).click(() => this.subjectsDialog.view());
             return el;
         };
 
         add(t('Subject', ''), t('Subject', '')); // Add empty inputs
     }
 
+    /**
+     * Removes a split subject list item and it's corresponding subject values
+     * from the (current user's) profile, the profile's Firestore document, and 
+     * the profile view.
+     * @see {@link EditSubjectsDialog#updateSubjects}
+     */
     async removeSubjectInput() {
         $(this.main).find('[id="Subject"]').last().parent().remove();
-        EditSubjectDialog.updateSubjects();
+        EditSubjectsDialog.updateSubjects();
     }
 
+    /**
+     * Adds (and manages) an availability input list item.
+     */
     addAvailabilityInput() {
         const el = this.render.textFieldItem('Available', '');
         const dialog = new EditAvailabilityDialog(el);
@@ -366,11 +405,20 @@ class Profile {
         $(el).click();
     }
 
+    /**
+     * Removes an availability input and it's corresponding availability from
+     * the profile and profile view.
+     * @see {@link EditAvailabilityDialog#updateAvailability}
+     */
     removeAvailabilityInput() {
         $(this.main).find('[id="Available"]').last().parent().remove();
         EditAvailabilityDialog.updateAvailability();
     }
 
+    /**
+     * Adds the initial (and pre-filled) availability inputs to the profile view
+     * based on `this.profile.availability`.
+     */
     addAvailabilityInputs() {
         const that = this;
         const availability = this.profile.availability;
@@ -412,6 +460,10 @@ class Profile {
         ); // Always render at least one empty textField
     }
 
+    /**
+     * Adds the initial (pre-filled) subject input list items based on the 
+     * subjects currently selected in `this.profile.subjects`.
+     */
     addSubjectInputs() {
         const that = this;
         const profile = this.profile;
@@ -433,12 +485,18 @@ class Profile {
     }
 };
 
-
+/**
+ * Class that represents the dialog that enables peer tutoring supervisors to
+ * create new user profiles.
+ * @extends Profile
+ */
 class NewProfile extends Profile {
-    constructor(profile) {
-        super(profile);
-    }
-
+    /**
+     * Renders the new profile view by replacing the text in the mdc top app bar
+     * title, adding the "Basic Info" section (for the user's name and email),
+     * adding the "Show profile" switch list item, and removing the "Delete
+     * Account" button.
+     */
     renderSelf() {
         super.renderSelf();
         this.header = this.render.header('header-action', {
@@ -505,12 +563,22 @@ class NewProfile extends Profile {
         $(this.main).find('[data-fir-click="delete"]').parent().remove();
     }
 
+    /**
+     * Views the new profile dialog (only thing that changes from the normal
+     * profile is that we don't change the user's app URL).
+     * @see {@link Profile#view}
+     */
     view() {
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
         (!this.managed) ? this.manage(): this.reManage(); // Don't attach MDC twice
     }
 
+    /**
+     * Manages the edit profile view.
+     * @todo Document exactly what MDC components and listeners this function
+     * attaches.
+     */
     manage() {
         super.manage(true);
         const main = this.main;
@@ -571,6 +639,11 @@ class NewProfile extends Profile {
         }];
     }
 
+    /**
+     * Styles the email input (makes the floating label float above).
+     * @todo Document why this is necessary to include (and where it is actually
+     * used).
+     */
     styleEmailInput() {
         $(this.main).find('#Email .mdc-floating-label').last()
             .addClass('mdc-floating-label--float-above');
@@ -579,39 +652,45 @@ class NewProfile extends Profile {
     }
 
     addSubjectInput() {
-        const that = this;
-        const profile = this.profile;
-
-        function add(e, el) { // Add split input item to profile
-            const sel = that.render.splitListItem(e, el);
+        const add = (e, el) => { // Add split input item to profile
+            const sel = this.render.splitListItem(e, el);
             if ($('[id="Subject"]').length) {
                 $(sel).insertAfter($('[id="Subject"]').last().parent());
-            } else if (profile.type === '') {
+            } else if (this.profile.type === '') {
                 $(sel).insertAfter($('[id="User for"]'));
             } else {
-                $(sel).insertAfter($('[id="' + profile.type + ' for"]'));
+                $(sel).insertAfter($('[id="' + this.profile.type + ' for"]'));
             }
             sel.scrollIntoView();
-            $(e).click();
+            this.subjectsDialog.view();
         };
-
-        function t(l, v) { // Render and attach subject text field
-            const el = that.render.textField(l, v);
+        const t = (l, v) => { // Render and attach subject text field
+            const el = this.render.textField(l, v);
             MDCTextField.attachTo(el);
-            $(el).click(() => {
-                new EditSubjectDialog(el, profile).view();
-            });
+            $(el).click(() => this.subjectsDialog.view());
             return el;
         };
 
         add(t('Subject', ''), t('Subject', '')); // Add empty inputs
     }
 
+    /**
+     * Removes the subject input and updates the profile's subjects locally
+     * (we override the original {@link Profile#removeSubjectInput} method to
+     * ensure that the profile's Firestore document isn't updated until the
+     * supervisor clicks 'Ok').
+     * @see {@link EditSubjectsDialog#updateSubjects}
+     */
     async removeSubjectInput() {
         $(this.main).find('[id="Subject"]').last().parent().remove();
-        EditSubjectDialog.updateSubjects(this.profile);
+        EditSubjectsDialog.updateSubjects(this.profile);
     }
 
+    /**
+     * Adds the availability input (we override the original 
+     * {@link Profile#addAvailabilityInput} method to ensure tat the profile's 
+     * Firestore document isn't updated until the supervisor clicks 'Ok').
+     */
     addAvailabilityInput() {
         const el = this.render.textFieldItem('Available', '');
         const dialog = new EditAvailabilityDialog(el, this.profile);
@@ -623,11 +702,22 @@ class NewProfile extends Profile {
         $(el).click();
     }
 
+    /**
+     * Removes the availability input and updates the profile's availability 
+     * locally (we override the original {@link Profile#removeAvailabilityInput} 
+     * method to ensure that the profile's Firestore document isn't updated 
+     * until the supervisor clicks 'Ok').
+     * @see {@link EditAvailabilityDialog#updateAvailability}
+     */
     removeAvailabilityInput() {
         $(this.main).find('[id="Available"]').last().parent().remove();
         EditAvailabilityDialog.updateAvailability(this.profile);
     }
 
+    /**
+     * Gets if the currently populated fields are valid or not.
+     * @return {bool} Whether the currently selected/inputted values are valid.
+     */
     get valid() {
         String.prototype.replaceAll = function(search, replacement) {
             var target = this;
@@ -642,6 +732,10 @@ class NewProfile extends Profile {
         return valid;
     }
 
+    /**
+     * Navigates back and creates a new profile with the currently selected 
+     * values.
+     */
     createProfile() {
         if (!this.valid) return;
         this.profile.location = window.app.location.name;
@@ -674,25 +768,38 @@ class NewProfile extends Profile {
     }
 };
 
-
+/**
+ * Class that represents the dialog view that enables supervisors to edit 
+ * profiles that already exist.
+ * @extends NewProfile
+ */
 class EditProfile extends NewProfile {
-
-    constructor(profile) {
-        super(profile);
-    }
-
+    /**
+     * Manages the profile view by attaching an mdc ripple to the delete user 
+     * button (in addition to everything that the 
+     * [NewProfile]{@link NewProfile#manage} already does).
+     */
     manage() {
         super.manage();
         MDCRipple.attachTo($(this.main).find('.delete-user-input button')[0]);
     }
 
+    /**
+     * Renders the edit profile view by:
+     * 1. Replacing the title (and submission action) of the mdc top app bar.
+     * 2. Styling the email input (see {@link NewProfile#styleEmailInput}).
+     * 3. Adding (and managing) the delete user button again.
+     * 4. Replacing the type text field with a type select (such that 
+     * supervisors are able to modify a user's type before matching them --> the 
+     * current workaround for those who are both pupil and tutor).
+     * 5. Replacing the text field search items with just normal text fields (we
+     * no longer care about duplicate accounts). 
+     */
     renderSelf() {
         super.renderSelf();
         this.header = this.render.header('header-action', {
             title: 'Edit Profile',
-            ok: () => {
-                this.updateProfile();
-            },
+            ok: () => this.updateProfile(),
         });
         this.styleEmailInput();
         $(this.main).append(this.render.template('delete-user-input', {
@@ -717,6 +824,9 @@ class EditProfile extends NewProfile {
             this.render.textFieldItem('Email', this.profile.email));
     }
 
+    /**
+     * Updates the profile with the currently selected items.
+     */
     updateProfile() {
         if (!this.valid) return;
         this.profile.id = this.profile.email;
@@ -732,13 +842,16 @@ class EditProfile extends NewProfile {
     }
 };
 
-
+/**
+ * Class that represents the profile that service hour tutors see in their
+ * "Profile" tab.
+ * @extends Profile
+ */
 class TutorProfile extends Profile {
-
-    constructor(profile) {
-        super(profile);
-    }
-
+    /**
+     * Renders the tutor profile view by replacing the bio field with a service 
+     * hours field (shows the tutor how many service hours they've tracked).
+     */
     renderSelf() {
         super.renderSelf();
         $(this.main).find('#Bio').replaceWith($(this.render.textField(

@@ -2,6 +2,14 @@
 @import "@material/form-field/mdc-form-field";
 @import "@material/checkbox/mdc-checkbox";
 
+.dialog-subjects .mdc-dialog__content {
+  padding: 0; 
+}
+
+.dialog-subjects .mdc-dialog__content .mdc-list-item {
+  padding-left: 27px;
+}
+
 .err-input-list-item {
   transition: 50ms all;
 }

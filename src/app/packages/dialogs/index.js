@@ -25,6 +25,7 @@ const Utils = require('@tutorbook/utils');
 
 /**
  * Class that represents the dialog that enables users to select subjects.
+ * @abstract
  */
 class SubjectSelectDialog {
 
@@ -33,7 +34,8 @@ class SubjectSelectDialog {
      */
     constructor() {
         this.render = window.app.render;
-        this.selected = '';
+        this.selected = [];
+        this.original = [];
         this.renderSelf();
     }
 
@@ -46,47 +48,125 @@ class SubjectSelectDialog {
      */
     view() {
         $('body').prepend(this.main);
-        this.manage();
+        if (!this.managed) this.manage();
         this.dialog.open();
     }
 
     /**
-     * Attaches MDC components and click listeners.
+     * Attaches MDC components and click listeners by:
+     * 1. Creating a `MDCDialog` instance on `this.main` and listening for when
+     * it is closed (update the profile if the user clicked `Save` or reset the
+     * dialog if the user clicked `Cancel`).
+     * 2. Adding `MDCRipple`s and click listeners to each `mdc-list-item` in the
+     * dialog's `page-all` that open the relevant page.
+     * 3. Adding `MDCRipple`s, `MDCCheckbox`es and click listeners to each
+     * `mdc-list-item` in every other dialog page (clickers that update the
+     * selected subjects).
      */
     manage() {
+        this.managed = true;
         this.dialog = MDCDialog.attachTo(this.main);
-
-        this.main.querySelectorAll('#page-all .mdc-list-item').forEach((el) => {
-            $(el).click(() => {
-                var id = el.id.split('-').slice(1).join('-');
-                this.section(id);
-            });
+        this.dialog.autoStackButtons = false;
+        this.dialog.listen('MDCDialog:closing', event => {
+            if (event.detail.action === 'save') return this.save();
+            this.reset();
         });
-
-        this.pages.forEach((sel) => {
-            var key = sel.id.split('-')[1];
-            if (key === 'all') return;
-            sel.querySelectorAll('.mdc-list-item').forEach((el) => {
-                el.addEventListener('click', () => {
-                    this.updateSelected(el.innerText.trim());
-                    this.dialog.close();
-                    $(this.main).remove();
-                });
-            });
-        });
-
         this.section('page-all');
+
+        const that = this;
+        const boxes = this.checkboxes = {};
+        const subjects = this.original;
+        const select = (v, a) => this.updateSelected(v, a);
+        const view = (id) => this.section(id.split('-').slice(1).join('-'));
+
+        $(document).keydown(event => {
+            if (event.keyCode === 16) this.shiftKeyPressed = true;
+        });
+        $(document).keyup(event => {
+            if (event.keyCode === 16) this.shiftKeyPressed = false;
+        });
+
+        $(this.main).find('#page-all .mdc-list-item').each(function() {
+            this.addEventListener('click', () => view(this.id));
+            MDCRipple.attachTo(this);
+        });
+        this.pages.forEach(sel => {
+            if (sel.id.split('-')[1] === 'all') return;
+            $(sel).find('.mdc-list-item').each(function() {
+                const val = $(this).find('label').text();
+                boxes[val] = new MDCCheckbox($(this).find('.mdc-checkbox')[0]);
+                boxes[val].checked = subjects.indexOf(val) >= 0;
+                this.addEventListener('click', event => {
+                    if (!$(event.target).closest('.mdc-checkbox').length)
+                        boxes[val].checked = !boxes[val].checked;
+                    const category = $(this).parent().parent().attr('id')
+                        .split('-')[0];
+                    const index = Data[category + 'Subjects'].indexOf(val);
+                    if (that.shiftKeyPressed &&
+                        that.lastClickedCategory === category &&
+                        that.lastClickedIndex !== index) {
+                        const start = that.lastClickedIndex > index ? index :
+                            that.lastClickedIndex;
+                        const end = that.lastClickedIndex < index ? index :
+                            that.lastClickedIndex;
+                        const selected = Data[category + 'Subjects']
+                            .slice(start, end + 1);
+                        selected.forEach(v => {
+                            boxes[v].checked = boxes[val].checked;
+                            select(v, boxes[v].checked);
+                        });
+                    } else {
+                        select(val, boxes[val].checked);
+                    }
+                    that.lastClickedIndex = index;
+                    that.lastClickedCategory = category;
+                });
+                MDCRipple.attachTo(this);
+            });
+        });
+    }
+
+    /**
+     * Resets the checked items to ensure that only selected subjects are
+     * checked (and resets `this.selected` to match `this.original`).
+     */
+    reset() {
+        const boxes = this.checkboxes;
+        const subjects = this.selected = this.original.map(i => i);
+
+        this.pages.forEach(sel => {
+            if (sel.id.split('-')[1] === 'all') return;
+            $(sel).find('.mdc-list-item').each(function() {
+                const val = $(this).find('label').text();
+                boxes[val].checked = subjects.indexOf(val) >= 0;
+            });
+        });
+    }
+
+    /**
+     * Should save the selected subjects to their desired destination.
+     * @abstract
+     */
+    save() {
+        this.original = this.selected.map(i => i);
     }
 
     /**
      * Updates the selected subject.
      * @param {string} val - The new selected subject.
+     * @param {bool} [add=true] - Whether to add (`true`) or remove (`false`)
+     * the given `val`.
      * @example
      * this.updateSelected('Chemistry H'); // From within a subject select 
      * // dialog instance (i.e. `this` is a `SubjectSelectDialog`).
+     * @example
+     * this.updateSelected('Algebra 1', false); // Remove Algebra 1 from the
+     * // selected subjects.
+     * @abstract
      */
-    updateSelected(val) {
-        this.selected = val;
+    updateSelected(val, add = true) {
+        if (add) return this.selected.push(val);
+        this.selected.splice(this.selected.indexOf(val), 1);
     }
 
     /**
@@ -109,6 +189,18 @@ class SubjectSelectDialog {
     }
 
     /**
+     * Renders the options list (to replace the placeholder pages).
+     * @param {string[]} options - The array of options that the user can select
+     * from (i.e. the options to be included in the rendered list).
+     * @return {HTMLElement} The rendered `dialog-filter-item-list`.
+     */
+    renderList(options) {
+        return this.render.template('dialog-filter-item-list', {
+            items: options,
+        });
+    }
+
+    /**
      * Renders the subject selection dialog by replacing the subject lists in 
      * the `dialog-subjects` template.
      * @see {@link Templates}
@@ -119,16 +211,9 @@ class SubjectSelectDialog {
             back: () => this.section('page-all'),
         });
         this.pages = this.main.querySelectorAll('.page');
-        const that = this;
 
-        function l(q, d) { // Replaces listEl (q) with (d) list
-            Utils.replaceElement(
-                that.main.querySelector(q),
-                that.render.template('dialog-filter-item-list', {
-                    items: d
-                })
-            );
-        };
+        const l = (q, d) => Utils.replaceElement($(this.main).find(q)[0], this
+            .renderList(d));
 
         l('#math-list', Data.mathSubjects);
         l('#science-list', Data.scienceSubjects);
@@ -144,34 +229,89 @@ class SubjectSelectDialog {
 /**
  * Class that represents the dialog that enables users to edit the subjects for 
  * their (or another user's) profile.
+ * @example
+ * const EditSubjectsDialog = require('@tutorbook/dialogs').editSubject;
+ * const dialog = new EditSubjectsDialog(
+ *   $(this.main).find('#Subject').first()[0], 
+ *   this.profile,
+ * );
+ * dialog.view();
  * @todo Make it easier to select subjects in bulk.
  * @todo Add intelligent subject selection (e.g. if someone can tutor Calculus,
  * they can probably tutor Algebra 1 and 2).
- * @todo Finish documenting this class's unique (overriden) methods.
  * @extends SubjectSelectDialog
  */
-class EditSubjectDialog extends SubjectSelectDialog {
-
-    constructor(textFieldEl, profile) {
+class EditSubjectsDialog extends SubjectSelectDialog {
+    /**
+     * Creates the dialog that selects the subject to populate a given 
+     * [`MDCTextField`]{@linkcode https://material.io/develop/web/components/input-controls/text-field/}.
+     * @param {Profile} profile - The profile view to update the subjects for.
+     * @param {bool} [update=true] - Whether to update the profile's Firestore
+     * document (i.e. for the regular profile view) or to just update the 
+     * profile's subjects array locally.
+     */
+    constructor(profile, update = true) {
         super();
-        this.selected = $(textFieldEl).find('input').val();
-        this.input = textFieldEl;
-        this.profile = profile;
+        this.selected = profile.profile.subjects;
+        this.original = profile.profile.subjects.map(i => i);
+        this.el = profile.main;
+        this.update = update;
     }
 
-    updateSelected(val) {
-        super.updateSelected();
-        $(this.input).find('input').val(val).focus(); // Update the text field
-        EditSubjectDialog.updateSubjects(this.profile);
+    /**
+     * Updates the profile view subject inputs to match the currently selected 
+     * subjects.
+     */
+    save() {
+        super.save();
+
+        $(this.el).find('[id="Subject"]').parent().remove();
+
+        const viewDialog = () => this.view();
+        const a = (e, el) => $(this.render.splitListItem(e, el)).insertBefore(
+            $(this.el).find('#Availability'));
+        const t = (l, v) => this.render.textField(l, v);
+
+        for (var i = 0; i < this.selected.length; i += 2) {
+            var subA = this.selected[i];
+            var subB = this.selected[i + 1] || '';
+            a(t('Subject', subA), t('Subject', subB));
+        }
+
+        $(this.el).find('[id="Subject"]').each(function() {
+            MDCTextField.attachTo(this);
+            this.addEventListener('click', () => viewDialog());
+        });
+
+        if (this.update) EditSubjectsDialog.updateSubjects();
     }
 
+    /**
+     * Renders an options list that enables the user to select multiple subjects
+     * at the same time (via [`MDCCheckboxes`]{@linkcode https://material.io/develop/web/components/input-controls/checkboxes/}).
+     * @param {string[]} options - The options that the user can select from.
+     * @return {HTMLElement} The rendered checkbox list that enables users to
+     * select multiple subjects/options at the same time.
+     */
+    renderList(options) {
+        return this.render.template('dialog-selection-item-list', {
+            items: options,
+        });
+    }
+
+    /**
+     * Updates the subjects of the given profile with the content of the
+     * currently viewed subject text fields.
+     * @param {User} [profile=window.app.user] - The profile to put the subjects 
+     * into (if it's not given, we default to `window.app.user` and update the
+     * user's Firestore document as well).
+     */
     static async updateSubjects(profile) {
         const user = profile || window.app.user;
         user.subjects = [];
         $('#Subject input').each(function(i) {
-            if (Data.subjects.indexOf($(this).val()) >= 0) {
+            if (Data.subjects.indexOf($(this).val()) >= 0)
                 user.subjects.push($(this).val());
-            }
         });
         Utils.updateSetupProfileCard(user);
         if (profile) return;
@@ -3066,7 +3206,7 @@ module.exports = {
     viewActiveAppt: ViewActiveApptDialog,
     viewCanceledAppt: ViewCanceledApptDialog,
     notify: NotificationDialog,
-    editSubject: EditSubjectDialog,
+    editSubjects: EditSubjectsDialog,
     selectSubject: SubjectSelectDialog,
     editAvailability: EditAvailabilityDialog,
     confirm: ConfirmationDialog,

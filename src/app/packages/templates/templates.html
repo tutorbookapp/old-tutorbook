@@ -282,6 +282,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">Cancel</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-math">
@@ -293,6 +294,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-art">
@@ -304,6 +306,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-tech">
@@ -315,6 +318,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-science">
@@ -326,6 +330,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-history">
@@ -337,6 +342,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-language">
@@ -348,6 +354,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-english">
@@ -359,6 +366,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
             <div class="mdc-dialog__surface page" id="page-lifeSkills">
@@ -370,6 +378,7 @@ user sees as they navigate throughout the app. -->
                 </div>
                 <footer class="mdc-dialog__actions">
                     <button data-fir-click="back" type="button" class="mdc-button mdc-dialog__button back-subjects">Back</button>
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="save">Save</button>
                 </footer>
             </div>
         </div>
@@ -835,8 +844,8 @@ user sees as they navigate throughout the app. -->
 </div>
 
 <!-- Selection Dialog Items List (e.g. for the subject select dialog) -->
-<div hidden class="template" id="dialog-filter-item-list">
-    <ul class="mdc-list">
+<div hidden class="template" id="dialog-selection-item-list">
+    <ul class="mdc-list" role="group">
         <li class="mdc-list-item" data-fir-foreach="items" role="checkbox">
             <span class="mdc-list-item__graphic">
                 <div class="mdc-checkbox">

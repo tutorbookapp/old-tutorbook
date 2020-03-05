@@ -4966,6 +4966,7 @@ var Utils = __webpack_require__(6);
 
 /**
  * Class that represents the dialog that enables users to select subjects.
+ * @abstract
  */
 
 var SubjectSelectDialog = function () {
@@ -4977,7 +4978,8 @@ var SubjectSelectDialog = function () {
         _classCallCheck(this, SubjectSelectDialog);
 
         this.render = window.app.render;
-        this.selected = '';
+        this.selected = [];
+        this.original = [];
         this.renderSelf();
     }
 
@@ -4994,12 +4996,20 @@ var SubjectSelectDialog = function () {
         key: 'view',
         value: function view() {
             (0, _jquery2.default)('body').prepend(this.main);
-            this.manage();
+            if (!this.managed) this.manage();
             this.dialog.open();
         }
 
         /**
-         * Attaches MDC components and click listeners.
+         * Attaches MDC components and click listeners by:
+         * 1. Creating a `MDCDialog` instance on `this.main` and listening for when
+         * it is closed (update the profile if the user clicked `Save` or reset the
+         * dialog if the user clicked `Cancel`).
+         * 2. Adding `MDCRipple`s and click listeners to each `mdc-list-item` in the
+         * dialog's `page-all` that open the relevant page.
+         * 3. Adding `MDCRipple`s, `MDCCheckbox`es and click listeners to each
+         * `mdc-list-item` in every other dialog page (clickers that update the
+         * selected subjects).
          */
 
     }, {
@@ -5007,42 +5017,127 @@ var SubjectSelectDialog = function () {
         value: function manage() {
             var _this = this;
 
+            this.managed = true;
             this.dialog = _index3.MDCDialog.attachTo(this.main);
+            this.dialog.autoStackButtons = false;
+            this.dialog.listen('MDCDialog:closing', function (event) {
+                if (event.detail.action === 'save') return _this.save();
+                _this.reset();
+            });
+            this.section('page-all');
 
-            this.main.querySelectorAll('#page-all .mdc-list-item').forEach(function (el) {
-                (0, _jquery2.default)(el).click(function () {
-                    var id = el.id.split('-').slice(1).join('-');
-                    _this.section(id);
+            var that = this;
+            var boxes = this.checkboxes = {};
+            var subjects = this.original;
+            var select = function select(v, a) {
+                return _this.updateSelected(v, a);
+            };
+            var view = function view(id) {
+                return _this.section(id.split('-').slice(1).join('-'));
+            };
+
+            (0, _jquery2.default)(document).keydown(function (event) {
+                if (event.keyCode === 16) _this.shiftKeyPressed = true;
+            });
+            (0, _jquery2.default)(document).keyup(function (event) {
+                if (event.keyCode === 16) _this.shiftKeyPressed = false;
+            });
+
+            (0, _jquery2.default)(this.main).find('#page-all .mdc-list-item').each(function () {
+                var _this2 = this;
+
+                this.addEventListener('click', function () {
+                    return view(_this2.id);
                 });
+                _index2.MDCRipple.attachTo(this);
+            });
+            this.pages.forEach(function (sel) {
+                if (sel.id.split('-')[1] === 'all') return;
+                (0, _jquery2.default)(sel).find('.mdc-list-item').each(function () {
+                    var _this3 = this;
+
+                    var val = (0, _jquery2.default)(this).find('label').text();
+                    boxes[val] = new _index6.MDCCheckbox((0, _jquery2.default)(this).find('.mdc-checkbox')[0]);
+                    boxes[val].checked = subjects.indexOf(val) >= 0;
+                    this.addEventListener('click', function (event) {
+                        if (!(0, _jquery2.default)(event.target).closest('.mdc-checkbox').length) boxes[val].checked = !boxes[val].checked;
+                        var category = (0, _jquery2.default)(_this3).parent().parent().attr('id').split('-')[0];
+                        var index = Data[category + 'Subjects'].indexOf(val);
+                        if (that.shiftKeyPressed && that.lastClickedCategory === category && that.lastClickedIndex !== index) {
+                            var start = that.lastClickedIndex > index ? index : that.lastClickedIndex;
+                            var end = that.lastClickedIndex < index ? index : that.lastClickedIndex;
+                            var selected = Data[category + 'Subjects'].slice(start, end + 1);
+                            selected.forEach(function (v) {
+                                boxes[v].checked = boxes[val].checked;
+                                select(v, boxes[v].checked);
+                            });
+                        } else {
+                            select(val, boxes[val].checked);
+                        }
+                        that.lastClickedIndex = index;
+                        that.lastClickedCategory = category;
+                    });
+                    _index2.MDCRipple.attachTo(this);
+                });
+            });
+        }
+
+        /**
+         * Resets the checked items to ensure that only selected subjects are
+         * checked (and resets `this.selected` to match `this.original`).
+         */
+
+    }, {
+        key: 'reset',
+        value: function reset() {
+            var boxes = this.checkboxes;
+            var subjects = this.selected = this.original.map(function (i) {
+                return i;
             });
 
             this.pages.forEach(function (sel) {
-                var key = sel.id.split('-')[1];
-                if (key === 'all') return;
-                sel.querySelectorAll('.mdc-list-item').forEach(function (el) {
-                    el.addEventListener('click', function () {
-                        _this.updateSelected(el.innerText.trim());
-                        _this.dialog.close();
-                        (0, _jquery2.default)(_this.main).remove();
-                    });
+                if (sel.id.split('-')[1] === 'all') return;
+                (0, _jquery2.default)(sel).find('.mdc-list-item').each(function () {
+                    var val = (0, _jquery2.default)(this).find('label').text();
+                    boxes[val].checked = subjects.indexOf(val) >= 0;
                 });
             });
+        }
 
-            this.section('page-all');
+        /**
+         * Should save the selected subjects to their desired destination.
+         * @abstract
+         */
+
+    }, {
+        key: 'save',
+        value: function save() {
+            this.original = this.selected.map(function (i) {
+                return i;
+            });
         }
 
         /**
          * Updates the selected subject.
          * @param {string} val - The new selected subject.
+         * @param {bool} [add=true] - Whether to add (`true`) or remove (`false`)
+         * the given `val`.
          * @example
          * this.updateSelected('Chemistry H'); // From within a subject select 
          * // dialog instance (i.e. `this` is a `SubjectSelectDialog`).
+         * @example
+         * this.updateSelected('Algebra 1', false); // Remove Algebra 1 from the
+         * // selected subjects.
+         * @abstract
          */
 
     }, {
         key: 'updateSelected',
         value: function updateSelected(val) {
-            this.selected = val;
+            var add = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+            if (add) return this.selected.push(val);
+            this.selected.splice(this.selected.indexOf(val), 1);
         }
 
         /**
@@ -5057,7 +5152,7 @@ var SubjectSelectDialog = function () {
     }, {
         key: 'section',
         value: function section(id) {
-            var _this2 = this;
+            var _this4 = this;
 
             this.pages.forEach(function (sel) {
                 if (sel.id === id) {
@@ -5065,7 +5160,22 @@ var SubjectSelectDialog = function () {
                 } else {
                     sel.style.display = 'none';
                 }
-                _this2.dialog.layout();
+                _this4.dialog.layout();
+            });
+        }
+
+        /**
+         * Renders the options list (to replace the placeholder pages).
+         * @param {string[]} options - The array of options that the user can select
+         * from (i.e. the options to be included in the rendered list).
+         * @return {HTMLElement} The rendered `dialog-filter-item-list`.
+         */
+
+    }, {
+        key: 'renderList',
+        value: function renderList(options) {
+            return this.render.template('dialog-filter-item-list', {
+                items: options
             });
         }
 
@@ -5079,21 +5189,17 @@ var SubjectSelectDialog = function () {
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this3 = this;
+            var _this5 = this;
 
             this.main = this.render.template('dialog-subjects', {
                 back: function back() {
-                    return _this3.section('page-all');
+                    return _this5.section('page-all');
                 }
             });
             this.pages = this.main.querySelectorAll('.page');
-            var that = this;
 
-            function l(q, d) {
-                // Replaces listEl (q) with (d) list
-                Utils.replaceElement(that.main.querySelector(q), that.render.template('dialog-filter-item-list', {
-                    items: d
-                }));
+            var l = function l(q, d) {
+                return Utils.replaceElement((0, _jquery2.default)(_this5.main).find(q)[0], _this5.renderList(d));
             };
 
             l('#math-list', Data.mathSubjects);
@@ -5115,43 +5221,118 @@ var SubjectSelectDialog = function () {
 /**
  * Class that represents the dialog that enables users to edit the subjects for 
  * their (or another user's) profile.
+ * @example
+ * const EditSubjectsDialog = require('@tutorbook/dialogs').editSubject;
+ * const dialog = new EditSubjectsDialog(
+ *   $(this.main).find('#Subject').first()[0], 
+ *   this.profile,
+ * );
+ * dialog.view();
  * @todo Make it easier to select subjects in bulk.
  * @todo Add intelligent subject selection (e.g. if someone can tutor Calculus,
  * they can probably tutor Algebra 1 and 2).
- * @todo Finish documenting this class's unique (overriden) methods.
  * @extends SubjectSelectDialog
  */
 
-var EditSubjectDialog = function (_SubjectSelectDialog) {
-    _inherits(EditSubjectDialog, _SubjectSelectDialog);
+var EditSubjectsDialog = function (_SubjectSelectDialog) {
+    _inherits(EditSubjectsDialog, _SubjectSelectDialog);
 
-    function EditSubjectDialog(textFieldEl, profile) {
-        _classCallCheck(this, EditSubjectDialog);
+    /**
+     * Creates the dialog that selects the subject to populate a given 
+     * [`MDCTextField`]{@linkcode https://material.io/develop/web/components/input-controls/text-field/}.
+     * @param {Profile} profile - The profile view to update the subjects for.
+     * @param {bool} [update=true] - Whether to update the profile's Firestore
+     * document (i.e. for the regular profile view) or to just update the 
+     * profile's subjects array locally.
+     */
+    function EditSubjectsDialog(profile) {
+        var update = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-        var _this4 = _possibleConstructorReturn(this, (EditSubjectDialog.__proto__ || Object.getPrototypeOf(EditSubjectDialog)).call(this));
+        _classCallCheck(this, EditSubjectsDialog);
 
-        _this4.selected = (0, _jquery2.default)(textFieldEl).find('input').val();
-        _this4.input = textFieldEl;
-        _this4.profile = profile;
-        return _this4;
+        var _this6 = _possibleConstructorReturn(this, (EditSubjectsDialog.__proto__ || Object.getPrototypeOf(EditSubjectsDialog)).call(this));
+
+        _this6.selected = profile.profile.subjects;
+        _this6.original = profile.profile.subjects.map(function (i) {
+            return i;
+        });
+        _this6.el = profile.main;
+        _this6.update = update;
+        return _this6;
     }
 
-    _createClass(EditSubjectDialog, [{
-        key: 'updateSelected',
-        value: function updateSelected(val) {
-            _get(EditSubjectDialog.prototype.__proto__ || Object.getPrototypeOf(EditSubjectDialog.prototype), 'updateSelected', this).call(this);
-            (0, _jquery2.default)(this.input).find('input').val(val).focus(); // Update the text field
-            EditSubjectDialog.updateSubjects(this.profile);
+    /**
+     * Updates the profile view subject inputs to match the currently selected 
+     * subjects.
+     */
+
+
+    _createClass(EditSubjectsDialog, [{
+        key: 'save',
+        value: function save() {
+            var _this7 = this;
+
+            _get(EditSubjectsDialog.prototype.__proto__ || Object.getPrototypeOf(EditSubjectsDialog.prototype), 'save', this).call(this);
+
+            (0, _jquery2.default)(this.el).find('[id="Subject"]').parent().remove();
+
+            var viewDialog = function viewDialog() {
+                return _this7.view();
+            };
+            var a = function a(e, el) {
+                return (0, _jquery2.default)(_this7.render.splitListItem(e, el)).insertBefore((0, _jquery2.default)(_this7.el).find('#Availability'));
+            };
+            var t = function t(l, v) {
+                return _this7.render.textField(l, v);
+            };
+
+            for (var i = 0; i < this.selected.length; i += 2) {
+                var subA = this.selected[i];
+                var subB = this.selected[i + 1] || '';
+                a(t('Subject', subA), t('Subject', subB));
+            }
+
+            (0, _jquery2.default)(this.el).find('[id="Subject"]').each(function () {
+                _index.MDCTextField.attachTo(this);
+                this.addEventListener('click', function () {
+                    return viewDialog();
+                });
+            });
+
+            if (this.update) EditSubjectsDialog.updateSubjects();
         }
+
+        /**
+         * Renders an options list that enables the user to select multiple subjects
+         * at the same time (via [`MDCCheckboxes`]{@linkcode https://material.io/develop/web/components/input-controls/checkboxes/}).
+         * @param {string[]} options - The options that the user can select from.
+         * @return {HTMLElement} The rendered checkbox list that enables users to
+         * select multiple subjects/options at the same time.
+         */
+
+    }, {
+        key: 'renderList',
+        value: function renderList(options) {
+            return this.render.template('dialog-selection-item-list', {
+                items: options
+            });
+        }
+
+        /**
+         * Updates the subjects of the given profile with the content of the
+         * currently viewed subject text fields.
+         * @param {User} [profile=window.app.user] - The profile to put the subjects 
+         * into (if it's not given, we default to `window.app.user` and update the
+         * user's Firestore document as well).
+         */
+
     }], [{
         key: 'updateSubjects',
         value: async function updateSubjects(profile) {
             var user = profile || window.app.user;
             user.subjects = [];
             (0, _jquery2.default)('#Subject input').each(function (i) {
-                if (Data.subjects.indexOf((0, _jquery2.default)(this).val()) >= 0) {
-                    user.subjects.push((0, _jquery2.default)(this).val());
-                }
+                if (Data.subjects.indexOf((0, _jquery2.default)(this).val()) >= 0) user.subjects.push((0, _jquery2.default)(this).val());
             });
             Utils.updateSetupProfileCard(user);
             if (profile) return;
@@ -5160,7 +5341,7 @@ var EditSubjectDialog = function (_SubjectSelectDialog) {
         }
     }]);
 
-    return EditSubjectDialog;
+    return EditSubjectsDialog;
 }(SubjectSelectDialog);
 
 ;
@@ -5211,7 +5392,7 @@ var EditAvailabilityDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this5 = this;
+            var _this8 = this;
 
             this.managed = true;
             var that = this;
@@ -5239,40 +5420,40 @@ var EditAvailabilityDialog = function () {
             });
             this.locationSelect = a('#Location', function (s) {
                 if (s.value === 'Custom') {
-                    (0, _jquery2.default)(_this5.main).find('#Location').replaceWith(_this5.render.locationInput(function (val) {
-                        _this5.val.location = val.formatted_address;
+                    (0, _jquery2.default)(_this8.main).find('#Location').replaceWith(_this8.render.locationInput(function (val) {
+                        _this8.val.location = val.formatted_address;
                     }));
                 } else {
-                    _this5.val.location = s.value;
-                    _this5.refreshDaysAndTimes();
+                    _this8.val.location = s.value;
+                    _this8.refreshDaysAndTimes();
                 }
             });
             this.daySelect = a('#Day', function (s) {
-                _this5.val.day = s.value;
-                _this5.refreshTimes();
+                _this8.val.day = s.value;
+                _this8.refreshTimes();
             });
             this.timeslotSelect = a('#Time', function (s) {
                 if (s.value.split(' to ').length > 1) {
-                    _this5.val.fromTime = s.value.split(' to ')[0];
-                    _this5.val.toTime = s.value.split(' to ')[1];
+                    _this8.val.fromTime = s.value.split(' to ')[0];
+                    _this8.val.toTime = s.value.split(' to ')[1];
                 } else {
-                    _this5.val.fromTime = s.value;
-                    _this5.val.toTime = s.value;
+                    _this8.val.fromTime = s.value;
+                    _this8.val.toTime = s.value;
                 }
-                _this5.val.time = s.value;
+                _this8.val.time = s.value;
             });
 
             if (this.val.location) this.refreshDaysAndTimes();
             if (!(0, _jquery2.default)(this.main).find('#ok-button').length) return;
 
             (0, _jquery2.default)(this.main).find('#ok-button')[0].addEventListener('click', function () {
-                if (_this5.valid) _this5.dialog.close('ok');
+                if (_this8.valid) _this8.dialog.close('ok');
             });
             this.dialog.listen('MDCDialog:closing', function (event) {
                 if (event.detail.action === 'ok') {
-                    (0, _jquery2.default)(_this5.input).find('input').val(Utils.getAvailabilityString(_this5.val)).focus();
-                    EditAvailabilityDialog.updateAvailability(_this5.profile);
-                    (0, _jquery2.default)(_this5.main).remove();
+                    (0, _jquery2.default)(_this8.input).find('input').val(Utils.getAvailabilityString(_this8.val)).focus();
+                    EditAvailabilityDialog.updateAvailability(_this8.profile);
+                    (0, _jquery2.default)(_this8.main).remove();
                 }
             });
         }
@@ -5568,14 +5749,14 @@ var NotificationDialog = function () {
     }, {
         key: 'view',
         value: function view() {
-            var _this6 = this;
+            var _this9 = this;
 
             (0, _jquery2.default)('body').prepend(this.el);
             this.dialog = _index3.MDCDialog.attachTo(this.el);
             this.dialog.autoStackButtons = false;
             this.dialog.listen('MDCDialog:closed', function (event) {
-                (0, _jquery2.default)(_this6.el).remove();
-                _this6.action();
+                (0, _jquery2.default)(_this9.el).remove();
+                _this9.action();
             });
             this.dialog.open();
         }
@@ -5655,7 +5836,7 @@ var ConfirmationDialog = function () {
     }, {
         key: 'view',
         value: function view() {
-            var _this7 = this;
+            var _this10 = this;
 
             (0, _jquery2.default)('body').prepend(this.el);
             this.dialog = _index3.MDCDialog.attachTo(this.el);
@@ -5665,8 +5846,8 @@ var ConfirmationDialog = function () {
                 this.dialog.escapeKeyAction = '';
             }
             this.dialog.listen('MDCDialog:closed', function (event) {
-                (0, _jquery2.default)(_this7.el).remove();
-                event.detail.action === 'yes' ? _this7.action() : _this7.noAction();
+                (0, _jquery2.default)(_this10.el).remove();
+                event.detail.action === 'yes' ? _this10.action() : _this10.noAction();
             });
             this.dialog.open();
         }
@@ -5709,7 +5890,7 @@ var ViewRequestDialog = function () {
     _createClass(ViewRequestDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this8 = this;
+            var _this11 = this;
 
             var that = this;
             var request = this.request;
@@ -5754,7 +5935,7 @@ var ViewRequestDialog = function () {
             var header = this.render.header('header-action', {
                 title: 'View Request',
                 edit: function edit() {
-                    return new EditRequestDialog(_this8.request, _this8.id).view();
+                    return new EditRequestDialog(_this11.request, _this11.id).view();
                 },
                 showEdit: true,
                 showApprove: window.app.user.email === this.request.toUser.email,
@@ -5762,7 +5943,7 @@ var ViewRequestDialog = function () {
                     window.app.nav.back();
                     window.app.snackbar.view('Approving request...');
 
-                    var _ref = await (0, _awaitToJs2.default)(Data.approveRequest(_this8.request, _this8.id)),
+                    var _ref = await (0, _awaitToJs2.default)(Data.approveRequest(_this11.request, _this11.id)),
                         _ref2 = _slicedToArray(_ref, 2),
                         err = _ref2[0],
                         res = _ref2[1];
@@ -5798,7 +5979,7 @@ var ViewRequestDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this9 = this;
+            var _this12 = this;
 
             _index4.MDCTopAppBar.attachTo(this.header);
             var dialog = this.main;
@@ -5806,7 +5987,7 @@ var ViewRequestDialog = function () {
             // do not render correctly.
             this.textFields = {};
             dialog.querySelectorAll('.mdc-text-field').forEach(function (el) {
-                _this9.textFields[el.id] = new _index.MDCTextField(el);
+                _this12.textFields[el.id] = new _index.MDCTextField(el);
             });
 
             // Disable all inputs
@@ -5837,10 +6018,10 @@ var ViewModifiedRequestDialog = function (_ViewRequestDialog) {
     function ViewModifiedRequestDialog(request) {
         _classCallCheck(this, ViewModifiedRequestDialog);
 
-        var _this10 = _possibleConstructorReturn(this, (ViewModifiedRequestDialog.__proto__ || Object.getPrototypeOf(ViewModifiedRequestDialog)).call(this, request.for));
+        var _this13 = _possibleConstructorReturn(this, (ViewModifiedRequestDialog.__proto__ || Object.getPrototypeOf(ViewModifiedRequestDialog)).call(this, request.for));
 
-        _this10.modifiedRequest = request;
-        return _this10;
+        _this13.modifiedRequest = request;
+        return _this13;
     }
 
     /**
@@ -5877,10 +6058,10 @@ var ViewCanceledRequestDialog = function (_ViewRequestDialog2) {
     function ViewCanceledRequestDialog(request) {
         _classCallCheck(this, ViewCanceledRequestDialog);
 
-        var _this11 = _possibleConstructorReturn(this, (ViewCanceledRequestDialog.__proto__ || Object.getPrototypeOf(ViewCanceledRequestDialog)).call(this, request.for));
+        var _this14 = _possibleConstructorReturn(this, (ViewCanceledRequestDialog.__proto__ || Object.getPrototypeOf(ViewCanceledRequestDialog)).call(this, request.for));
 
-        _this11.canceledRequest = request;
-        return _this11;
+        _this14.canceledRequest = request;
+        return _this14;
     }
 
     /**
@@ -5919,10 +6100,10 @@ var ViewRejectedRequestDialog = function (_ViewRequestDialog3) {
     function ViewRejectedRequestDialog(request) {
         _classCallCheck(this, ViewRejectedRequestDialog);
 
-        var _this12 = _possibleConstructorReturn(this, (ViewRejectedRequestDialog.__proto__ || Object.getPrototypeOf(ViewRejectedRequestDialog)).call(this, request.for));
+        var _this15 = _possibleConstructorReturn(this, (ViewRejectedRequestDialog.__proto__ || Object.getPrototypeOf(ViewRejectedRequestDialog)).call(this, request.for));
 
-        _this12.rejectedRequest = request;
-        return _this12;
+        _this15.rejectedRequest = request;
+        return _this15;
     }
 
     /**
@@ -5975,7 +6156,7 @@ var EditHourDialog = function () {
     _createClass(EditHourDialog, [{
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this13 = this;
+            var _this16 = this;
 
             this.main = this.render.template('dialog-form', {
                 title: 'Edit Hours'
@@ -5987,12 +6168,12 @@ var EditHourDialog = function () {
                 return (0, _jquery2.default)(content).append(el);
             };
             var addS = function addS(l, v, d) {
-                return add(_this13.render.selectItem(l, v, d));
+                return add(_this16.render.selectItem(l, v, d));
             };
             var addT = function addT(l, p) {
                 var v = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
-                add(_this13.render.textFieldWithErrItem(l, v));
+                add(_this16.render.textFieldWithErrItem(l, v));
                 (0, _jquery2.default)(content).find('#' + l + ' input').attr('placeholder', p);
             };
 
@@ -6024,12 +6205,12 @@ var EditHourDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this14 = this;
+            var _this17 = this;
 
             var t = function t(q, a) {
-                var t = new _index.MDCTextField((0, _jquery2.default)(_this14.main).find(q)[0]);
+                var t = new _index.MDCTextField((0, _jquery2.default)(_this17.main).find(q)[0]);
                 t.useNativeValidation = false;
-                (0, _jquery2.default)(_this14.main).find(q + ' input')[0].addEventListener('focusout', function () {
+                (0, _jquery2.default)(_this17.main).find(q + ' input')[0].addEventListener('focusout', function () {
                     return a(t);
                 });
                 return t;
@@ -6037,7 +6218,7 @@ var EditHourDialog = function () {
             var s = function s(q) {
                 var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
 
-                var s = Utils.attachSelect((0, _jquery2.default)(_this14.main).find(q)[0]);
+                var s = Utils.attachSelect((0, _jquery2.default)(_this17.main).find(q)[0]);
                 s.listen('MDCSelect:change', function () {
                     return a(s);
                 });
@@ -6046,21 +6227,21 @@ var EditHourDialog = function () {
 
             this.managed = true;
             this.daySelect = s('#Day', function (s) {
-                return _this14.updateDay(s);
+                return _this17.updateDay(s);
             });
             this.openTextField = t('#Open', function (t) {
-                return _this14.updateOpenTime(t);
+                return _this17.updateOpenTime(t);
             });
             this.closeTextField = t('#Close', function (t) {
-                return _this14.updateCloseTime(t);
+                return _this17.updateCloseTime(t);
             });
 
             (0, _jquery2.default)(this.main).find('#ok-button')[0].addEventListener('click', function () {
-                if (_this14.valid) _this14.dialog.close('ok');
+                if (_this17.valid) _this17.dialog.close('ok');
             });
             this.dialog.listen('MDCDialog:closing', function (event) {
-                if (event.detail.action === 'ok') _this14.textField.value = Utils.getHourString(_this14.val);
-                (0, _jquery2.default)(_this14.main).remove();
+                if (event.detail.action === 'ok') _this17.textField.value = Utils.getHourString(_this17.val);
+                (0, _jquery2.default)(_this17.main).remove();
             });
         }
 
@@ -6210,17 +6391,17 @@ var EditLocationDialog = function () {
     _createClass(EditLocationDialog, [{
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this15 = this;
+            var _this18 = this;
 
             this.header = this.render.header('header-action', {
                 ok: function ok() {
-                    return _this15.save();
+                    return _this18.save();
                 },
                 cancel: function cancel() {
-                    if (_this15.changed) return new ConfirmationDialog('Discard ' + 'Changes?', 'Are you sure that you want to discard your ' + 'changes to the ' + _this15.name + '? Save your changes by ' + 'clicking \'No\' or anywhere outside of this dialog.', function () {
-                        return _this15.reset();
+                    if (_this18.changed) return new ConfirmationDialog('Discard ' + 'Changes?', 'Are you sure that you want to discard your ' + 'changes to the ' + _this18.name + '? Save your changes by ' + 'clicking \'No\' or anywhere outside of this dialog.', function () {
+                        return _this18.reset();
                     }, false, function () {
-                        return _this15.save();
+                        return _this18.save();
                     }).view();
                     window.app.nav.back();
                 },
@@ -6229,22 +6410,22 @@ var EditLocationDialog = function () {
             this.main = this.render.template('dialog-input');
 
             var add = function add(e) {
-                return _this15.main.appendChild(e);
+                return _this18.main.appendChild(e);
             };
             var addD = function addD(label) {
-                return add(_this15.render.listDivider(label));
+                return add(_this18.render.listDivider(label));
             };
             var addActionD = function addActionD(l, a) {
-                return add(_this15.render.actionDivider(l, a));
+                return add(_this18.render.actionDivider(l, a));
             };
             var addS = function addS(l) {
                 var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var d = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-                return add(_this15.render.selectItem(l, v, Utils.concatArr(d, [v])));
+                return add(_this18.render.selectItem(l, v, Utils.concatArr(d, [v])));
             };
             var addT = function addT(l) {
                 var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-                return add(_this15.render.textFieldItem(l, v));
+                return add(_this18.render.textFieldItem(l, v));
             };
 
             addD('Basic info');
@@ -6256,10 +6437,10 @@ var EditLocationDialog = function () {
             addS('Round times to the nearest', this.config.hrs.timeThreshold, Data.timeThresholds);
             addActionD('Open hours', {
                 add: function add() {
-                    return _this15.addHourInput();
+                    return _this18.addHourInput();
                 },
                 remove: function remove() {
-                    return _this15.removeHourInput();
+                    return _this18.removeHourInput();
                 }
             });
             this.addHourInputs();
@@ -6273,11 +6454,11 @@ var EditLocationDialog = function () {
             add(this.render.template('delete-user-input', {
                 label: 'Delete Location',
                 delete: function _delete() {
-                    return new ConfirmationDialog('Delete Location?', 'You are' + ' about to permanently delete all ' + _this15.name + ' data. ' + 'This action cannot be undone. Please ensure to check with ' + 'your fellow supervisors before continuing.', async function () {
+                    return new ConfirmationDialog('Delete Location?', 'You are' + ' about to permanently delete all ' + _this18.name + ' data. ' + 'This action cannot be undone. Please ensure to check with ' + 'your fellow supervisors before continuing.', async function () {
                         window.app.nav.back();
                         window.app.snackbar.view('Deleting location...');
 
-                        var _ref3 = await (0, _awaitToJs2.default)(Data.deleteLocation(_this15.id)),
+                        var _ref3 = await (0, _awaitToJs2.default)(Data.deleteLocation(_this18.id)),
                             _ref4 = _slicedToArray(_ref3, 2),
                             err = _ref4[0],
                             res = _ref4[1];
@@ -6311,7 +6492,7 @@ var EditLocationDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this16 = this;
+            var _this19 = this;
 
             this.managed = true;
             _index4.MDCTopAppBar.attachTo(this.header);
@@ -6323,12 +6504,12 @@ var EditLocationDialog = function () {
             });
             var hourInputs = this.hourInputs = [];
             var t = function t(q) {
-                return new _index.MDCTextField((0, _jquery2.default)(_this16.main).find(q)[0]);
+                return new _index.MDCTextField((0, _jquery2.default)(_this19.main).find(q)[0]);
             };
             var s = function s(q) {
                 var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
 
-                var s = Utils.attachSelect((0, _jquery2.default)(_this16.main).find(q)[0]);
+                var s = Utils.attachSelect((0, _jquery2.default)(_this19.main).find(q)[0]);
                 s.listen('MDCSelect:change', function () {
                     return a(s);
                 });
@@ -6336,7 +6517,7 @@ var EditLocationDialog = function () {
             };
             var ts = function ts(q) {
                 var res = [];
-                (0, _jquery2.default)(_this16.main).find(q).each(function () {
+                (0, _jquery2.default)(_this19.main).find(q).each(function () {
                     res.push(new _index.MDCTextField(this));
                 });
                 return res;
@@ -6346,15 +6527,15 @@ var EditLocationDialog = function () {
             this.descriptionTextArea = t('#Description');
             this.roundingSelect = s('[id="Round service hours"]', function (s) {
                 if (Data.roundings.indexOf(s.value) < 0) return s.valid = false;
-                _this16.config.hrs.rounding = s.value;
+                _this19.config.hrs.rounding = s.value;
             });
             this.thresholdSelect = s('[id="To the nearest"]', function (s) {
                 if (Data.thresholds.indexOf(s.value) < 0) return s.valid = false;
-                _this16.config.hrs.threshold = s.value;
+                _this19.config.hrs.threshold = s.value;
             });
             this.timeThresholdSelect = s('[id="Round times to the nearest"]', function (s) {
                 if (Data.timeThresholds.indexOf(s.value) < 0) return s.valid = false;
-                _this16.config.hrs.timeThreshold = s.value;
+                _this19.config.hrs.timeThreshold = s.value;
             });
             this.supervisorTextFields = ts('[id="Supervisor"]');
             (0, _jquery2.default)(this.main).find('[id="Open"]').each(function () {
@@ -6447,11 +6628,11 @@ var EditLocationDialog = function () {
     }, {
         key: 'addHourInputs',
         value: function addHourInputs() {
-            var _this17 = this;
+            var _this20 = this;
 
             var add = function add() {
                 var t = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                return (0, _jquery2.default)(_this17.main).append(_this17.render.textFieldItem('Open', t));
+                return (0, _jquery2.default)(_this20.main).append(_this20.render.textFieldItem('Open', t));
             };
             Utils.getHourStrings(this.hours).forEach(function (timeslot) {
                 add(timeslot);
@@ -6478,14 +6659,14 @@ var EditLocationDialog = function () {
     }, {
         key: 'addSupervisorInputs',
         value: function addSupervisorInputs() {
-            var _this18 = this;
+            var _this21 = this;
 
             var add = function add(e, el) {
-                return (0, _jquery2.default)(_this18.main).append(_this18.render.splitListItem(e, el));
+                return (0, _jquery2.default)(_this21.main).append(_this21.render.splitListItem(e, el));
             };
             var t = function t() {
                 var v = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-                return _this18.render.textField('Supervisor', v);
+                return _this21.render.textField('Supervisor', v);
             };
             for (var i = 0; i < this.supervisors.length; i += 2) {
                 var supA = this.supervisors[i];
@@ -6755,7 +6936,7 @@ var EditRequestDialog = function () {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this20 = this;
+            var _this23 = this;
 
             this.managed = true;
             var availability = this.user.availability;
@@ -6812,7 +6993,7 @@ var EditRequestDialog = function () {
             var messageTextField = _index.MDCTextField.attachTo(messageEl);
 
             [locationSelect, daySelect, timeslotSelect, subjectSelect].forEach(function (input) {
-                return _this20.req.push({
+                return _this23.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -6835,7 +7016,7 @@ var EditRequestDialog = function () {
     }, {
         key: 'refreshDayAndTimeSelects',
         value: function refreshDayAndTimeSelects(request, a) {
-            var _this21 = this;
+            var _this24 = this;
 
             if (!a[request.location.name]) return; // Custom location
             var that = this;
@@ -6889,7 +7070,7 @@ var EditRequestDialog = function () {
                 return ['Day', 'Time'].indexOf(r.id) < 0;
             });
             [daySelect, timeslotSelect].forEach(function (input) {
-                _this21.req.push({
+                _this24.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -7018,12 +7199,12 @@ var NewRequestDialog = function (_EditRequestDialog) {
         }
 
         // No options for the user to select
-        if (locations.length < 1 && days.length < 1 && timeslots.length < 1) return _ret = window.app.snackbar.view(user.name + ' does not have any ' + 'availability.'), _possibleConstructorReturn(_this22, _ret);
+        if (locations.length < 1 && days.length < 1 && timeslots.length < 1) return _ret = window.app.snackbar.view(user.name + ' does not have any ' + 'availability.'), _possibleConstructorReturn(_this25, _ret);
 
-        var _this22 = _possibleConstructorReturn(this, (NewRequestDialog.__proto__ || Object.getPrototypeOf(NewRequestDialog)).call(this, request, Utils.genID()));
+        var _this25 = _possibleConstructorReturn(this, (NewRequestDialog.__proto__ || Object.getPrototypeOf(NewRequestDialog)).call(this, request, Utils.genID()));
 
-        _this22.user = user; // Cannot reference `this` until after super();
-        return _this22;
+        _this25.user = user; // Cannot reference `this` until after super();
+        return _this25;
     }
 
     _createClass(NewRequestDialog, [{
@@ -7038,7 +7219,7 @@ var NewRequestDialog = function (_EditRequestDialog) {
     }, {
         key: 'sendRequest',
         value: async function sendRequest() {
-            var _this23 = this;
+            var _this26 = this;
 
             // Override modify to create a new request
             window.app.nav.back();
@@ -7053,13 +7234,13 @@ var NewRequestDialog = function (_EditRequestDialog) {
             window.app.snackbar.view('Request sent to ' + this.request.toUser.email + '.', 'Undo', async function () {
                 window.app.snackbar.view('Canceling request...');
 
-                var _ref11 = await (0, _awaitToJs2.default)(Data.cancelRequest(_this23.request, res.id)),
+                var _ref11 = await (0, _awaitToJs2.default)(Data.cancelRequest(_this26.request, res.id)),
                     _ref12 = _slicedToArray(_ref11, 2),
                     err = _ref12[0],
                     response = _ref12[1];
 
                 if (err) return window.app.snackbar.view('Could not cancel ' + 'request. Go to your dashboard to try again.');
-                window.app.snackbar.view('Canceled request to ' + _this23.request.toUser.email + '.');
+                window.app.snackbar.view('Canceled request to ' + _this26.request.toUser.email + '.');
             });
         }
     }]);
@@ -7075,22 +7256,22 @@ var PaidRequestDialog = function (_NewRequestDialog) {
     function PaidRequestDialog(subject, user) {
         _classCallCheck(this, PaidRequestDialog);
 
-        var _this24 = _possibleConstructorReturn(this, (PaidRequestDialog.__proto__ || Object.getPrototypeOf(PaidRequestDialog)).call(this, subject, user));
+        var _this27 = _possibleConstructorReturn(this, (PaidRequestDialog.__proto__ || Object.getPrototypeOf(PaidRequestDialog)).call(this, subject, user));
 
         if (user.payments.type !== 'Paid') {
             console.warn('[WARNING] PaidRequestDialog was passed a user that ' + 'isn\'t supposed to be paid.');
         }
-        _this24.request.payment.type = 'Paid';
-        _this24.payment = {
-            to: _this24.request.toUser,
-            from: _this24.request.fromUser,
-            amount: _this24.getAmount(),
+        _this27.request.payment.type = 'Paid';
+        _this27.payment = {
+            to: _this27.request.toUser,
+            from: _this27.request.fromUser,
+            amount: _this27.getAmount(),
             timestamp: new Date(),
-            for: _this24.request,
-            id: _this24.id || '',
+            for: _this27.request,
+            id: _this27.id || '',
             method: 'PayPal'
         };
-        return _this24;
+        return _this27;
     }
 
     _createClass(PaidRequestDialog, [{
@@ -7195,19 +7376,19 @@ var StripeRequestDialog = function (_PaidRequestDialog) {
     function StripeRequestDialog(subject, user) {
         _classCallCheck(this, StripeRequestDialog);
 
-        var _this25 = _possibleConstructorReturn(this, (StripeRequestDialog.__proto__ || Object.getPrototypeOf(StripeRequestDialog)).call(this, subject, user));
+        var _this28 = _possibleConstructorReturn(this, (StripeRequestDialog.__proto__ || Object.getPrototypeOf(StripeRequestDialog)).call(this, subject, user));
 
-        _this25.request.payment.method = 'Stripe';
-        _this25.payment = {
-            to: _this25.request.toUser,
-            from: _this25.request.fromUser,
-            amount: _this25.getAmount(),
-            for: _this25.request,
+        _this28.request.payment.method = 'Stripe';
+        _this28.payment = {
+            to: _this28.request.toUser,
+            from: _this28.request.fromUser,
+            amount: _this28.getAmount(),
+            for: _this28.request,
             timestamp: new Date(),
             method: 'Stripe'
         };
-        _this25.stripe = Stripe(window.app.test ? 'pk_test_EhDaWOgtLwDUCGauIkrELrOu00J8OIBNuf' : 'pk_live_rospM71ihUDYWBArO9JKmanT00L5dZ36vA');
-        return _this25;
+        _this28.stripe = Stripe(window.app.test ? 'pk_test_EhDaWOgtLwDUCGauIkrELrOu00J8OIBNuf' : 'pk_live_rospM71ihUDYWBArO9JKmanT00L5dZ36vA');
+        return _this28;
     }
 
     _createClass(StripeRequestDialog, [{
@@ -7304,10 +7485,10 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     function ViewApptDialog(appt, id) {
         _classCallCheck(this, ViewApptDialog);
 
-        var _this26 = _possibleConstructorReturn(this, (ViewApptDialog.__proto__ || Object.getPrototypeOf(ViewApptDialog)).call(this, appt.for, id));
+        var _this29 = _possibleConstructorReturn(this, (ViewApptDialog.__proto__ || Object.getPrototypeOf(ViewApptDialog)).call(this, appt.for, id));
 
-        _this26.appt = appt;
-        return _this26;
+        _this29.appt = appt;
+        return _this29;
     }
 
     /**
@@ -7323,7 +7504,7 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     _createClass(ViewApptDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this27 = this;
+            var _this30 = this;
 
             await _get(ViewApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewApptDialog.prototype), 'renderSelf', this).call(this);
             if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
@@ -7342,7 +7523,7 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
             this.header = this.render.header('header-action', {
                 showEdit: true,
                 edit: function edit() {
-                    return new EditApptDialog(_this27.appt, _this27.id).view();
+                    return new EditApptDialog(_this30.appt, _this30.id).view();
                 },
                 title: 'Upcoming Appointment'
             });
@@ -7356,7 +7537,7 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this28 = this;
+            var _this31 = this;
 
             _get(ViewApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewApptDialog.prototype), 'manage', this).call(this);
             (0, _jquery2.default)(this.main).find('.mdc-fab').each(function () {
@@ -7367,22 +7548,22 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
                     (0, _jquery2.default)(this.main).find('.mdc-fab').click(async function () {
                         window.app.snackbar.view('Sending payment request...');
 
-                        var _ref13 = await (0, _awaitToJs2.default)(Data.requestPaymentFor(_this28.appt, _this28.id)),
+                        var _ref13 = await (0, _awaitToJs2.default)(Data.requestPaymentFor(_this31.appt, _this31.id)),
                             _ref14 = _slicedToArray(_ref13, 2),
                             err = _ref14[0],
                             res = _ref14[1];
 
                         if (err) return window.app.snackbar.view('Could not send ' + 'payment request. Please ensure this isn\'t a ' + 'duplicate request.');
-                        window.app.snackbar.view('Sent payment request to ' + Utils.getOther(_this28.appt.attendees).email + '.');
+                        window.app.snackbar.view('Sent payment request to ' + Utils.getOther(_this31.appt.attendees).email + '.');
                     });
                 } else {
                     (0, _jquery2.default)(this.main).find('.mdc-fab').click(function () {
-                        if (!_this28.timer) {
-                            _this28.clockIn();
-                            (0, _jquery2.default)(_this28.main).find('.mdc-fab__label').text('ClockOut');
+                        if (!_this31.timer) {
+                            _this31.clockIn();
+                            (0, _jquery2.default)(_this31.main).find('.mdc-fab__label').text('ClockOut');
                         } else {
-                            _this28.clockOut();
-                            (0, _jquery2.default)(_this28.main).find('.mdc-fab__label').text('ClockIn');
+                            _this31.clockOut();
+                            (0, _jquery2.default)(_this31.main).find('.mdc-fab__label').text('ClockIn');
                         }
                     });
                 }
@@ -7402,15 +7583,15 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
     }, {
         key: 'clockIn',
         value: async function clockIn() {
-            var _this29 = this;
+            var _this32 = this;
 
             var reset = function reset() {
-                clearInterval(_this29.timer);
-                _this29.timer = null;
-                (0, _jquery2.default)(_this29.main).find('.mdc-fab__label').text('ClockIn');
+                clearInterval(_this32.timer);
+                _this32.timer = null;
+                (0, _jquery2.default)(_this32.main).find('.mdc-fab__label').text('ClockIn');
             };
             this.timer = setInterval(function () {
-                _this29.update();
+                _this32.update();
             }, 10);
             if (window.app.user.type === 'Supervisor') {
                 window.app.snackbar.view('Clocking in for ' + this.appt.for.toUser.name.split(' ')[0] + '...');
@@ -7494,13 +7675,13 @@ var ViewApptDialog = function (_ViewRequestDialog4) {
          * rejected or approved).
          */
         value: async function clockOut() {
-            var _this30 = this;
+            var _this33 = this;
 
             var reset = function reset() {
-                _this30.timer = setInterval(function () {
-                    _this30.update();
+                _this33.timer = setInterval(function () {
+                    _this33.update();
                 }, 10);
-                (0, _jquery2.default)(_this30.main).find('.mdc-fab__label').text('ClockOut');
+                (0, _jquery2.default)(_this33.main).find('.mdc-fab__label').text('ClockOut');
             };
             clearInterval(this.timer);
             this.timer = null;
@@ -7640,10 +7821,10 @@ var EditApptDialog = function (_EditRequestDialog2) {
     function EditApptDialog(appt, id) {
         _classCallCheck(this, EditApptDialog);
 
-        var _this31 = _possibleConstructorReturn(this, (EditApptDialog.__proto__ || Object.getPrototypeOf(EditApptDialog)).call(this, appt.for, id));
+        var _this34 = _possibleConstructorReturn(this, (EditApptDialog.__proto__ || Object.getPrototypeOf(EditApptDialog)).call(this, appt.for, id));
 
-        _this31.appt = appt;
-        return _this31;
+        _this34.appt = appt;
+        return _this34;
     }
 
     _createClass(EditApptDialog, [{
@@ -7748,18 +7929,18 @@ var NewPastApptDialog = function (_EditApptDialog) {
     _createClass(NewPastApptDialog, [{
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this33 = this;
+            var _this36 = this;
 
             this.header = this.render.header('header-action', {
                 title: 'New Record',
                 ok: async function ok() {
-                    if (!_this33.valid) return;
-                    _this33.appt.time = Utils.cloneMap(_this33.request.time);
-                    _this33.appt.location = Utils.cloneMap(_this33.request.location);
+                    if (!_this36.valid) return;
+                    _this36.appt.time = Utils.cloneMap(_this36.request.time);
+                    _this36.appt.location = Utils.cloneMap(_this36.request.location);
                     window.app.nav.back();
                     window.app.snackbar.view('Creating past appointment...');
 
-                    var _ref25 = await (0, _awaitToJs2.default)(Data.newPastAppt(_this33.appt)),
+                    var _ref25 = await (0, _awaitToJs2.default)(Data.newPastAppt(_this36.appt)),
                         _ref26 = _slicedToArray(_ref25, 2),
                         err = _ref26[0],
                         res = _ref26[1];
@@ -7784,17 +7965,17 @@ var NewPastApptDialog = function (_EditApptDialog) {
              */
             var renderHit = function renderHit(hit, type) {
                 var user = Utils.filterProfile(hit);
-                var el = window.app.renderHit(hit, _this33.render).cloneNode(true);
+                var el = window.app.renderHit(hit, _this36.render).cloneNode(true);
                 (0, _jquery2.default)(el).find('button').remove();
                 el.addEventListener('click', function () {
-                    _this33.request[type === 'Tutor' ? 'toUser' : 'fromUser'] = user;
-                    _this33.appt.attendees = [Utils.cloneMap(_this33.request.toUser), Utils.cloneMap(_this33.request.fromUser)];
-                    (0, _jquery2.default)(_this33.main).find('#' + type).find('input').val(user.name);
-                    _this33.refreshData();
+                    _this36.request[type === 'Tutor' ? 'toUser' : 'fromUser'] = user;
+                    _this36.appt.attendees = [Utils.cloneMap(_this36.request.toUser), Utils.cloneMap(_this36.request.fromUser)];
+                    (0, _jquery2.default)(_this36.main).find('#' + type).find('input').val(user.name);
+                    _this36.refreshData();
                     window.setTimeout(function () {
                         var opp = type === 'Tutor' ? 'Pupil' : 'Location';
-                        (0, _jquery2.default)(_this33.main).find('#' + opp + ' input').click();
-                        if (opp !== 'Location') _this33[opp.toLowerCase() + 'TextField'].focus();
+                        (0, _jquery2.default)(_this36.main).find('#' + opp + ' input').click();
+                        if (opp !== 'Location') _this36[opp.toLowerCase() + 'TextField'].focus();
                     }, 50);
                 });
                 return el;
@@ -7851,24 +8032,24 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 });
             };
             var add = function add(e) {
-                _this33.main.appendChild(e);
+                _this36.main.appendChild(e);
             };
             var addD = function addD(label) {
-                add(_this33.render.listDivider(label));
+                add(_this36.render.listDivider(label));
             };
             var addST = function addST(label, val, search) {
-                add(_this33.render.searchTextFieldItem(label, val, search));
+                add(_this36.render.searchTextFieldItem(label, val, search));
             };
             var addS = function addS(l) {
                 var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                 var d = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
-                add(_this33.render.selectItem(l, v, Utils.concatArr([v], d)));
+                add(_this36.render.selectItem(l, v, Utils.concatArr([v], d)));
             };
             var t = function t(label) {
                 var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Date().toLocaleTimeString();
 
-                return _this33.render.textField(label, val);
+                return _this36.render.textField(label, val);
             };
 
             addD('Attendees');
@@ -7895,7 +8076,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
     }, {
         key: 'updateClockingTimes',
         value: function updateClockingTimes() {
-            var _this34 = this;
+            var _this37 = this;
 
             var timestring = function timestring(str) {
                 var split = str.split(' ');
@@ -7931,13 +8112,13 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 date.setSeconds(parsed.secs);
             };
             var editTime = async function editTime(t) {
-                var request = t.root_.id === 'Clock-in' ? _this34.appt.clockIn : _this34.appt.clockOut;
+                var request = t.root_.id === 'Clock-in' ? _this37.appt.clockIn : _this37.appt.clockOut;
                 if (!valid(t.value)) return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
                 update(t.value, request.sentTimestamp);
                 update(t.value, request.approvedTimestamp);
-                (0, _jquery2.default)(_this34.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this34.appt.clockIn.sentTimestamp, _this34.appt.clockOut.sentTimestamp));
+                (0, _jquery2.default)(_this37.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this37.appt.clockIn.sentTimestamp, _this37.appt.clockOut.sentTimestamp));
             };
 
             this.clockInTextField.value = timestring(this.request.time.from);
@@ -7954,11 +8135,11 @@ var NewPastApptDialog = function (_EditApptDialog) {
     }, {
         key: 'refreshData',
         value: function refreshData() {
-            var _this35 = this;
+            var _this38 = this;
 
             var s = function s(q) {
                 // Attach select based on query
-                return Utils.attachSelect((0, _jquery2.default)(_this35.main).find(q)[0]);
+                return Utils.attachSelect((0, _jquery2.default)(_this38.main).find(q)[0]);
             };
             var listen = function listen(s, action) {
                 // Add change listener
@@ -7976,7 +8157,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 (0, _jquery2.default)(el).find('.mdc-list-item').each(function () {
                     _index2.MDCRipple.attachTo(this);
                 });
-                (0, _jquery2.default)(_this35.main).find(q).replaceWith(el);
+                (0, _jquery2.default)(_this38.main).find(q).replaceWith(el);
                 return a(q, action);
             };
 
@@ -7989,18 +8170,18 @@ var NewPastApptDialog = function (_EditApptDialog) {
             this.locationSelect = r('#Location', this.render.select('Location', this.request.location.name, names), function (s) {
                 var locationIDs = window.app.data.locationsByName;
                 if (!locationIDs[s.value]) return s.valid = false;
-                _this35.request.location = {
+                _this38.request.location = {
                     name: s.value,
                     id: locationIDs[s.value]
                 };
-                _this35.refreshDayAndTimeSelects(_this35.request, _this35.availability);
+                _this38.refreshDayAndTimeSelects(_this38.request, _this38.availability);
             });
             if (names.length === 1 && !window.app.data.locationsByName[names[0]]) this.locationSelect.valid = false;
 
             this.subjects = Utils.concatArr(this.request.fromUser.subjects, this.request.toUser.subjects);
             if (this.subjects.length === 1) this.request.subject = this.subjects[0];
             this.subjectSelect = r('#Subject', this.render.select('Subject', this.request.subject, this.subjects), function (s) {
-                return _this35.request.subject = s.value;
+                return _this38.request.subject = s.value;
             });
 
             this.req = this.req.filter(function (r) {
@@ -8010,14 +8191,14 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 input: this.subjectSelect,
                 id: 'Subject',
                 valid: function valid() {
-                    return _this35.subjectSelect.value !== '';
+                    return _this38.subjectSelect.value !== '';
                 }
             });
             this.req.push({
                 input: this.locationSelect,
                 id: 'Location',
                 valid: function valid() {
-                    return window.app.data.locationsByName[_this35.locationSelect.value];
+                    return window.app.data.locationsByName[_this38.locationSelect.value];
                 }
             });
             this.refreshDayAndTimeSelects(this.request, this.availability);
@@ -8039,20 +8220,20 @@ var NewPastApptDialog = function (_EditApptDialog) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this36 = this;
+            var _this39 = this;
 
             var t = function t(q, action) {
                 var i = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'input';
 
-                var t = new _index.MDCTextField((0, _jquery2.default)(_this36.main).find(q).first()[0]);
-                (0, _jquery2.default)(_this36.main).find(q + ' ' + i).first().focusout(function () {
+                var t = new _index.MDCTextField((0, _jquery2.default)(_this39.main).find(q).first()[0]);
+                (0, _jquery2.default)(_this39.main).find(q + ' ' + i).first().focusout(function () {
                     return action(t);
                 });
                 return t;
             };
             var s = function s(q) {
                 // Attach select based on query
-                return Utils.attachSelect((0, _jquery2.default)(_this36.main).find(q)[0]);
+                return Utils.attachSelect((0, _jquery2.default)(_this39.main).find(q)[0]);
             };
             var listen = function listen(s, action) {
                 // Add change listener
@@ -8094,20 +8275,20 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 date.setSeconds(parsed.secs);
             };
             var editTime = async function editTime(t) {
-                var request = t.root_.id === 'Clock-in' ? _this36.appt.clockIn : _this36.appt.clockOut;
+                var request = t.root_.id === 'Clock-in' ? _this39.appt.clockIn : _this39.appt.clockOut;
                 if (!_valid(t.value)) return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
                 update(t.value, request.sentTimestamp);
                 update(t.value, request.approvedTimestamp);
-                (0, _jquery2.default)(_this36.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this36.appt.clockIn.sentTimestamp, _this36.appt.clockOut.sentTimestamp));
+                (0, _jquery2.default)(_this39.main).find('[id="Time clocked"] input').val(Utils.getDurationStringFromDates(_this39.appt.clockIn.sentTimestamp, _this39.appt.clockOut.sentTimestamp));
             };
             var editDate = function editDate(t) {
                 var newDate = new Date(t.value);
                 if (newDate.toString() === 'Invalid Date') return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
-                [_this36.appt.clockIn, _this36.appt.clockOut].forEach(function (oldDate) {
+                [_this39.appt.clockIn, _this39.appt.clockOut].forEach(function (oldDate) {
                     ['sentTimestamp', 'approvedTimestamp'].forEach(function (key) {
                         oldDate[key].setDate(newDate.getDate());
                         oldDate[key].setFullYear(newDate.getFullYear());
@@ -8130,14 +8311,14 @@ var NewPastApptDialog = function (_EditApptDialog) {
             // marked as invalid (as the result clicker hasn't updated our data).
             this.tutorTextField = t('#Tutor', function (t) {
                 return setTimeout(function () {
-                    if (!Object.keys(_this36.request.toUser).length) setTimeout(function () {
+                    if (!Object.keys(_this39.request.toUser).length) setTimeout(function () {
                         return t.valid = false;
                     }, 50);
                 }, 500);
             });
             this.pupilTextField = t('#Pupil', function (t) {
                 return setTimeout(function () {
-                    if (!Object.keys(_this36.request.fromUser).length) setTimeout(function () {
+                    if (!Object.keys(_this39.request.fromUser).length) setTimeout(function () {
                         return t.valid = false;
                     }, 50);
                 }, 500);
@@ -8145,31 +8326,31 @@ var NewPastApptDialog = function (_EditApptDialog) {
             this.locationSelect = a('#Location', function (s) {
                 var locationIDs = window.app.data.locationsByName;
                 if (!locationIDs[s.value]) return s.valid = false;
-                _this36.request.location = {
+                _this39.request.location = {
                     name: s.value,
                     id: locationIDs[s.value]
                 };
-                _this36.refreshDayAndTimeSelects(_this36.request, _this36.availability);
+                _this39.refreshDayAndTimeSelects(_this39.request, _this39.availability);
             });
             this.daySelect = a('#Day', function (s) {
-                _this36.val.day = s.value;
-                _this36.refreshTimeSelects(_this36.request, _this36.availability);
+                _this39.val.day = s.value;
+                _this39.refreshTimeSelects(_this39.request, _this39.availability);
             });
             this.timeslotSelect = a('#Time', function (s) {
                 if (s.value.split(' to ').length > 1) {
-                    _this36.request.time.from = s.value.split(' to ')[0];
-                    _this36.request.time.to = s.value.split(' to ')[1];
+                    _this39.request.time.from = s.value.split(' to ')[0];
+                    _this39.request.time.to = s.value.split(' to ')[1];
                 } else {
-                    _this36.request.time.from = s.value;
-                    _this36.request.time.to = s.value;
+                    _this39.request.time.from = s.value;
+                    _this39.request.time.to = s.value;
                 }
-                _this36.updateClockingTimes();
+                _this39.updateClockingTimes();
             });
             this.subjectSelect = a('#Subject', function (s) {
-                return _this36.request.subject = s.value;
+                return _this39.request.subject = s.value;
             });
             this.messageTextField = t('#Message', function (t) {
-                return _this36.request.message = t.value;
+                return _this39.request.message = t.value;
             }, 'textarea');
             this.dateTextField = t('#Date', function (t) {
                 return editDate(t);
@@ -8184,7 +8365,7 @@ var NewPastApptDialog = function (_EditApptDialog) {
             (0, _jquery2.default)(this.main).find('[id="Time clocked"] input').attr('disabled', true);
 
             [this.tutorTextField, this.pupilTextField, this.subjectSelect, this.daySelect, this.timeslotSelect].forEach(function (input) {
-                _this36.req.push({
+                _this39.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -8196,32 +8377,32 @@ var NewPastApptDialog = function (_EditApptDialog) {
                 input: this.locationSelect,
                 id: 'Location',
                 valid: function valid() {
-                    return window.app.data.locationsByName[_this36.locationSelect.value];
+                    return window.app.data.locationsByName[_this39.locationSelect.value];
                 }
             });
             this.req.push({
                 input: this.dateTextField,
                 id: 'Date',
                 valid: function valid() {
-                    return new Date(_this36.dateTextField.value).toString() !== 'Invalid Date';
+                    return new Date(_this39.dateTextField.value).toString() !== 'Invalid Date';
                 }
             });
             this.req.push({
                 input: this.tutorTextField,
                 id: 'Tutor',
                 valid: function valid() {
-                    return Object.keys(_this36.request.toUser).length;
+                    return Object.keys(_this39.request.toUser).length;
                 }
             });
             this.req.push({
                 input: this.pupilTextField,
                 id: 'Pupil',
                 valid: function valid() {
-                    return Object.keys(_this36.request.fromUser).length;
+                    return Object.keys(_this39.request.fromUser).length;
                 }
             });
             [this.clockInTextField, this.clockOutTextField].forEach(function (input) {
-                _this36.req.push({
+                _this39.req.push({
                     input: input,
                     id: input.root_.id,
                     valid: function valid() {
@@ -8253,10 +8434,10 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
     function ViewPastApptDialog(appt, id) {
         _classCallCheck(this, ViewPastApptDialog);
 
-        var _this37 = _possibleConstructorReturn(this, (ViewPastApptDialog.__proto__ || Object.getPrototypeOf(ViewPastApptDialog)).call(this, appt, id));
+        var _this40 = _possibleConstructorReturn(this, (ViewPastApptDialog.__proto__ || Object.getPrototypeOf(ViewPastApptDialog)).call(this, appt, id));
 
-        _this37.updateRender();
-        return _this37;
+        _this40.updateRender();
+        return _this40;
     }
 
     /**
@@ -8271,18 +8452,18 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
     _createClass(ViewPastApptDialog, [{
         key: 'renderSelf',
         value: async function renderSelf() {
-            var _this38 = this;
+            var _this41 = this;
 
             await _get(ViewPastApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewPastApptDialog.prototype), 'renderSelf', this).call(this);
             this.header = this.render.header('header-action', {
                 title: 'Past Appointment',
                 showDelete: true,
                 delete: function _delete() {
-                    return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment between ' + _this38.appt.attendees[0].name + ' and ' + _this38.appt.attendees[1].name + '? This action ' + 'cannot be undone.', async function () {
+                    return new ConfirmationDialog('Delete Past Appointment?', 'Are you sure you want to permanently delete this ' + 'past appointment between ' + _this41.appt.attendees[0].name + ' and ' + _this41.appt.attendees[1].name + '? This action ' + 'cannot be undone.', async function () {
                         window.app.snackbar.view('Deleting past ' + 'appointment...');
                         window.app.nav.back();
 
-                        var _ref27 = await (0, _awaitToJs2.default)(Data.deletePastAppt(_this38.appt, _this38.id)),
+                        var _ref27 = await (0, _awaitToJs2.default)(Data.deletePastAppt(_this41.appt, _this41.id)),
                             _ref28 = _slicedToArray(_ref27, 2),
                             err = _ref28[0],
                             res = _ref28[1];
@@ -8320,7 +8501,7 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this39 = this;
+            var _this42 = this;
 
             _get(ViewPastApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewPastApptDialog.prototype), 'manage', this).call(this);
             if (window.app.user.type !== 'Supervisor') return;
@@ -8355,19 +8536,19 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
             // TODO: Right now we only change the sentTimestamp. We want to change
             // the sentTimestamp and the approvedTimestamp relative to each other.
             var editClockingTime = async function editClockingTime(id) {
-                if (_this39.appt.clockIn.sentTimestamp.toDate) _this39.appt.clockIn.sentTimestamp = _this39.appt.clockIn.sentTimestamp.toDate();
-                if (_this39.appt.clockOut.sentTimestamp.toDate) _this39.appt.clockOut.sentTimestamp = _this39.appt.clockOut.sentTimestamp.toDate();
-                var date = id === 'Clock-in' ? _this39.appt.clockIn.sentTimestamp : _this39.appt.clockOut.sentTimestamp;
-                var t = _this39.textFields[id];
+                if (_this42.appt.clockIn.sentTimestamp.toDate) _this42.appt.clockIn.sentTimestamp = _this42.appt.clockIn.sentTimestamp.toDate();
+                if (_this42.appt.clockOut.sentTimestamp.toDate) _this42.appt.clockOut.sentTimestamp = _this42.appt.clockOut.sentTimestamp.toDate();
+                var date = id === 'Clock-in' ? _this42.appt.clockIn.sentTimestamp : _this42.appt.clockOut.sentTimestamp;
+                var t = _this42.textFields[id];
                 var v = t.value;
                 if (!valid(v)) return setTimeout(function () {
                     return t.valid = false;
                 }, 50);
                 update(v, date);
                 window.app.snackbar.view('Updating past appointment...');
-                (0, _jquery2.default)(_this39.main).find('[id="Actual duration"] input').val(Utils.getDurationStringFromDates(_this39.appt.clockIn.sentTimestamp, _this39.appt.clockOut.sentTimestamp));
+                (0, _jquery2.default)(_this42.main).find('[id="Actual duration"] input').val(Utils.getDurationStringFromDates(_this42.appt.clockIn.sentTimestamp, _this42.appt.clockOut.sentTimestamp));
 
-                var _ref29 = await (0, _awaitToJs2.default)(Data.modifyPastAppt(_this39.appt, _this39.id)),
+                var _ref29 = await (0, _awaitToJs2.default)(Data.modifyPastAppt(_this42.appt, _this42.id)),
                     _ref30 = _slicedToArray(_ref29, 2),
                     err = _ref30[0],
                     res = _ref30[1];
@@ -8376,9 +8557,9 @@ var ViewPastApptDialog = function (_ViewApptDialog) {
                 window.app.snackbar.view('Updated past appointment.');
             };
             (0, _jquery2.default)(this.main).find('[id="Clock-in"] input').removeAttr('disabled').focusout(async function () {
-                editClockingTime('Clock-in', _this39.appt.clockIn.sentTimestamp);
+                editClockingTime('Clock-in', _this42.appt.clockIn.sentTimestamp);
             }).end().find('[id="Clock-out"] input').removeAttr('disabled').focusout(async function () {
-                editClockingTime('Clock-out', _this39.appt.clockOut.sentTimestamp);
+                editClockingTime('Clock-out', _this42.appt.clockOut.sentTimestamp);
             }).end().find('[id="Actual duration"] input') // TODO: Add duration editing.
             .focusout(async function () {
                 console.log('[TODO] Add duration editing data handling.');
@@ -8433,7 +8614,7 @@ var ViewActiveApptDialog = function (_ViewApptDialog2) {
     }, {
         key: 'manage',
         value: function manage() {
-            var _this41 = this;
+            var _this44 = this;
 
             _get(ViewActiveApptDialog.prototype.__proto__ || Object.getPrototypeOf(ViewActiveApptDialog.prototype), 'manage', this).call(this);
             var clockIn = !(this.appt.clockIn.sentTimestamp instanceof Date) ? this.appt.clockIn.sentTimestamp.toDate() : this.appt.clockIn.sentTimestamp;
@@ -8441,7 +8622,7 @@ var ViewActiveApptDialog = function (_ViewApptDialog2) {
             var timeString = Utils.getDurationStringFromDates(clockIn, now);
             (0, _jquery2.default)(this.main).find('#Total input').val(timeString).end().find('#Current input').val(timeString).end();
             this.timer = setInterval(function () {
-                return _this41.update();
+                return _this44.update();
             }, 10);
         }
     }]);
@@ -8457,10 +8638,10 @@ var ViewCanceledApptDialog = function (_ViewApptDialog3) {
     function ViewCanceledApptDialog(appt) {
         _classCallCheck(this, ViewCanceledApptDialog);
 
-        var _this42 = _possibleConstructorReturn(this, (ViewCanceledApptDialog.__proto__ || Object.getPrototypeOf(ViewCanceledApptDialog)).call(this, appt.for));
+        var _this45 = _possibleConstructorReturn(this, (ViewCanceledApptDialog.__proto__ || Object.getPrototypeOf(ViewCanceledApptDialog)).call(this, appt.for));
 
-        _this42.canceledAppt = appt;
-        return _this42;
+        _this45.canceledAppt = appt;
+        return _this45;
     }
 
     _createClass(ViewCanceledApptDialog, [{
@@ -8497,7 +8678,7 @@ module.exports = {
     viewActiveAppt: ViewActiveApptDialog,
     viewCanceledAppt: ViewCanceledApptDialog,
     notify: NotificationDialog,
-    editSubject: EditSubjectDialog,
+    editSubjects: EditSubjectsDialog,
     selectSubject: SubjectSelectDialog,
     editAvailability: EditAvailabilityDialog,
     confirm: ConfirmationDialog,
@@ -18913,6 +19094,22 @@ var Utils = function () {
         this.data = window.app ? window.app.data || new Data() : new Data();
     }
 
+    /**
+     * Joins the array like the typicall `Array.join` function but adds the 
+     * `ending` concatenator between the last two items.
+     * @example
+     * const Utils = require('@tutorbook/utils');
+     * const subjects = ['Chemistry', 'Chemistry H', 'Algebra 1'];
+     * const str = Utils.join(subjects, 'or');
+     * assert(str === 'Chemistry, Chemistry H, or Algebra 1');
+     * @param {string[]} arr - The array of (typically) strings to concatenate.
+     * @param {string} ending - The concatenator to insert between the last two 
+     * items in the given `arr`.
+     * @return {string} The concatenated array in string form (with the given 
+     * `ending` between the last two items in the given `arr`).
+     */
+
+
     _createClass(Utils, [{
         key: 'getTimesBetween',
 
@@ -19243,6 +19440,30 @@ var Utils = function () {
             return times;
         }
     }], [{
+        key: 'join',
+        value: function join(arr, ending) {
+            var lastItem = arr.pop();
+            var str = arr.join(', ');
+            return str + ', ' + ending + ' ' + lastItem;
+        }
+
+        /**
+         * Determine if an array contains one or more items from another array.
+         * @param {array} haystack - The array to search.
+         * @param {array} arr - The array providing items to check for in the 
+         * haystack.
+         * @return {boolean} true|false if haystack contains at least one item from 
+         * arr.
+         */
+
+    }, {
+        key: 'arrayContainsAny',
+        value: function arrayContainsAny(haystack, arr) {
+            return arr.some(function (v) {
+                return haystack.indexOf(v) >= 0;
+            });
+        }
+    }, {
         key: 'visible',
         value: function visible() {
             var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -23258,17 +23479,25 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var EditAvailabilityDialog = __webpack_require__(2).editAvailability;
-var EditSubjectDialog = __webpack_require__(2).editSubject;
+var EditSubjectsDialog = __webpack_require__(2).editSubjects;
 var NotificationDialog = __webpack_require__(2).notify;
 var ConfirmationDialog = __webpack_require__(2).confirm;
 var Data = __webpack_require__(7);
 var Utils = __webpack_require__(6);
 var User = __webpack_require__(24);
 
-// Profile class that provides a profile view and header and manages all data
-// flow concering the user's profile.
+/**
+ * Class that provides a profile view and header and manages all data flow
+ * concerning the user's profile.
+ * @todo Finish documenting this class's methods and other properties.
+ */
 
 var Profile = function () {
+
+    /**
+     * Creates and renders a new profile view.
+     * @param {User} profile - The profile to render as a profile view.
+     */
     function Profile(profile) {
         _classCallCheck(this, Profile);
 
@@ -23276,6 +23505,12 @@ var Profile = function () {
         this.profile = profile;
         this.renderSelf();
     }
+
+    /**
+     * Views the profile view and header (and hides the Intercom messenger).
+     * @see {@link Tutorbook#view}
+     */
+
 
     _createClass(Profile, [{
         key: 'view',
@@ -23285,15 +23520,26 @@ var Profile = function () {
             window.app.view(this.header, this.main, '/app/profile');
             !this.managed ? this.manage() : this.reManage(); // Don't attach MDC twice
         }
+
+        /**
+         * Re-manages (or manages, if it hasn't already been managed) the profile
+         * view.
+         */
+
     }, {
         key: 'reView',
         value: function reView() {
             this.managed ? this.reManage() : this.manage(); // Don't attach MDC twice
         }
+
+        /**
+         * Re-manages the profile view when the MDC components have already been
+         * attached (i.e. just add text field `focusout` listeners).
+         */
+
     }, {
         key: 'reManage',
         value: function reManage() {
-            // MDC are already attached, just add textField listeners
             var that = this;
             var p = this.profile;
             this.manageHeader();
@@ -23330,6 +23576,19 @@ var Profile = function () {
                 }).view();
             });
         }
+
+        /**
+         * Saves an image to be the profile's new photo by:
+         * 1. Changing the profile image to a loading icon that will get updated
+         * with the shared image.
+         * 2. Uploading the image to Cloud Storage.
+         * 3. Generating a public URL for the uploaded file.
+         * 4. Updating the chat message placeholder with the image's URL and 
+         * re-renders the profile view with the updated profile image.
+         * @param {File} file - The file to upload to Google Storage and set as the
+         * new profile photo (for `this.profile`).
+         */
+
     }, {
         key: 'saveImage',
         value: async function saveImage(file) {
@@ -23382,12 +23641,18 @@ var Profile = function () {
             (0, _jquery2.default)(this.main).find('.profile-header').replaceWith(this.render.profileHeader(this.profile));
             this.manageHeader();
         }
+
+        /**
+         * Enables users to update their profile picture by clicking on the user
+         * header image.
+         * @see {@link Profile#saveImage}
+         */
+
     }, {
         key: 'manageHeader',
         value: function manageHeader() {
             var _this = this;
 
-            // Enables users to update their profile pic
             (0, _jquery2.default)(this.main).find('.profile-header .pic').mouseenter(function () {
                 // Show the modify pic overlay
                 (0, _jquery2.default)(_this.main).find('.profile-header .pic').hide();
@@ -23419,9 +23684,20 @@ var Profile = function () {
                 return that.saveImage(file);
             });
         }
+
+        /**
+         * Manages the profile view.
+         * @param {bool} [dontUpdate=false] - Whether to update the profile every 
+         * time an input is updated (e.g. when a text field loses focus).
+         */
+
     }, {
         key: 'manage',
-        value: function manage(dontUpdate) {
+        value: function manage() {
+            var _this2 = this;
+
+            var dontUpdate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
             this.managed = true;
             _index4.MDCTopAppBar.attachTo(this.header);
             (0, _jquery2.default)(this.header).find('.material-icons').each(function () {
@@ -23429,29 +23705,23 @@ var Profile = function () {
             });
             this.manageHeader();
 
-            var that = this;
+            var subjectsDialog = this.subjectsDialog = new EditSubjectsDialog(this, !dontUpdate);
             var p = this.profile;
-
-            function s(q) {
-                // Attach and return MDCSelect
-                return Utils.attachSelect(that.main.querySelector(q));
+            var s = function s(q) {
+                return Utils.attachSelect((0, _jquery2.default)(_this2.main).find(q)[0]);
             };
-
-            function t(q, action) {
-                // Attach and return MDCTextField
-                (0, _jquery2.default)(that.main).find(q + ' input').focusout(async function () {
+            var t = function t(q, action) {
+                (0, _jquery2.default)(_this2.main).find(q + ' input').focusout(async function () {
                     action();
                     Utils.updateSetupProfileCard(p);
                     if (dontUpdate) return;
                     await window.app.updateUser(p);
                     window.app.snackbar.view('Profile updated.');
                 });
-                return _index.MDCTextField.attachTo(that.main.querySelector(q));
+                return _index.MDCTextField.attachTo((0, _jquery2.default)(_this2.main).find(q)[0]);
             };
-
-            function listen(s, action) {
-                // Adds select listeners
-                s.listen('MDCSelect:change', async function () {
+            var listen = function listen(s, action) {
+                return s.listen('MDCSelect:change', async function () {
                     action();
                     Utils.updateSetupProfileCard(p);
                     if (dontUpdate) return;
@@ -23462,7 +23732,7 @@ var Profile = function () {
 
             if (this.profile.payments.type !== 'Paid' && this.profile.type !== 'Tutor') {
                 var bio = t('#Bio', function () {
-                    p.bio = bio.value;
+                    return p.bio = bio.value;
                 });
             }
             var typeCanBeChanged = (0, _jquery2.default)(this.main).find('#Type .mdc-menu').length;
@@ -23491,18 +23761,17 @@ var Profile = function () {
             });
             (0, _jquery2.default)(this.main).find('#Email input').attr('disabled', 'disabled');
             (0, _jquery2.default)(this.main).find('[id="Subject"]').each(function (i) {
-                var textField = _index.MDCTextField.attachTo(this);
-                var dialog = new EditSubjectDialog(this, dontUpdate ? p : undefined);
                 this.addEventListener('click', function () {
-                    return dialog.view();
+                    return subjectsDialog.view();
                 });
+                _index.MDCTextField.attachTo(this);
             });
             (0, _jquery2.default)(this.main).find('[id="Available"]').each(function (i) {
-                var textField = _index.MDCTextField.attachTo(this);
                 var dialog = new EditAvailabilityDialog(this, dontUpdate ? p : undefined);
                 this.addEventListener('click', function () {
                     return dialog.view();
                 });
+                _index.MDCTextField.attachTo(this);
             });
             if (dontUpdate) return;
             _index3.MDCRipple.attachTo((0, _jquery2.default)(this.main).find('[data-fir-click="delete"]')[0]);
@@ -23519,10 +23788,16 @@ var Profile = function () {
                 }).view();
             });
         }
+
+        /**
+         * Renders the profile view (with the global `window.app.render` object).
+         * @see {@link Render}
+         */
+
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this2 = this;
+            var _this3 = this;
 
             var profile = this.profile;
             this.header = this.render.header('header-main', {
@@ -23569,19 +23844,19 @@ var Profile = function () {
             add(t('Phone', profile.phone), t('Email', profile.email));
             addActionD((profile.type || 'User') + ' for', { // Subjects
                 add: function add() {
-                    _this2.addSubjectInput();
+                    _this3.addSubjectInput();
                 },
                 remove: function remove() {
-                    _this2.removeSubjectInput();
+                    _this3.removeSubjectInput();
                 }
             });
             this.addSubjectInputs();
             addActionD('Availability', {
                 add: function add() {
-                    _this2.addAvailabilityInput();
+                    _this3.addAvailabilityInput();
                 },
                 remove: function remove() {
-                    _this2.removeAvailabilityInput();
+                    _this3.removeAvailabilityInput();
                 }
             });
             this.addAvailabilityInputs();
@@ -23589,44 +23864,61 @@ var Profile = function () {
                 delete: function _delete() {}
             }));
         }
+
+        /**
+         * Adds (and manages) a new split subject input list item to the profile 
+         * view.
+         */
+
     }, {
         key: 'addSubjectInput',
         value: function addSubjectInput() {
-            var that = this;
-            var profile = this.profile;
+            var _this4 = this;
 
-            function add(e, el) {
-                // Add split input item to profile
-                var sel = that.render.splitListItem(e, el);
+            var add = function add(e, el) {
+                // Adds a split list item to the profile view 
+                var sel = _this4.render.splitListItem(e, el);
                 if ((0, _jquery2.default)('[id="Subject"]').length) {
                     (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="Subject"]').last().parent());
-                } else if (profile.type === '') {
+                } else if (_this4.profile.type === '') {
                     (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="User for"]'));
                 } else {
-                    (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="' + profile.type + ' for"]'));
+                    (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="' + _this4.profile.type + ' for"]'));
                 }
                 sel.scrollIntoView();
-                (0, _jquery2.default)(e).click();
+                _this4.subjectsDialog.view();
             };
-
-            function t(l, v) {
+            var t = function t(l, v) {
                 // Render and attach subject text field
-                var el = that.render.textField(l, v);
+                var el = _this4.render.textField(l, v);
                 _index.MDCTextField.attachTo(el);
                 (0, _jquery2.default)(el).click(function () {
-                    new EditSubjectDialog(el).view();
+                    return _this4.subjectsDialog.view();
                 });
                 return el;
             };
 
             add(t('Subject', ''), t('Subject', '')); // Add empty inputs
         }
+
+        /**
+         * Removes a split subject list item and it's corresponding subject values
+         * from the (current user's) profile, the profile's Firestore document, and 
+         * the profile view.
+         * @see {@link EditSubjectsDialog#updateSubjects}
+         */
+
     }, {
         key: 'removeSubjectInput',
         value: async function removeSubjectInput() {
             (0, _jquery2.default)(this.main).find('[id="Subject"]').last().parent().remove();
-            EditSubjectDialog.updateSubjects();
+            EditSubjectsDialog.updateSubjects();
         }
+
+        /**
+         * Adds (and manages) an availability input list item.
+         */
+
     }, {
         key: 'addAvailabilityInput',
         value: function addAvailabilityInput() {
@@ -23644,12 +23936,25 @@ var Profile = function () {
             el.scrollIntoView();
             (0, _jquery2.default)(el).click();
         }
+
+        /**
+         * Removes an availability input and it's corresponding availability from
+         * the profile and profile view.
+         * @see {@link EditAvailabilityDialog#updateAvailability}
+         */
+
     }, {
         key: 'removeAvailabilityInput',
         value: function removeAvailabilityInput() {
             (0, _jquery2.default)(this.main).find('[id="Available"]').last().parent().remove();
             EditAvailabilityDialog.updateAvailability();
         }
+
+        /**
+         * Adds the initial (and pre-filled) availability inputs to the profile view
+         * based on `this.profile.availability`.
+         */
+
     }, {
         key: 'addAvailabilityInputs',
         value: function addAvailabilityInputs() {
@@ -23688,6 +23993,12 @@ var Profile = function () {
             });
             that.main.appendChild(that.render.textFieldItem('Available', '')); // Always render at least one empty textField
         }
+
+        /**
+         * Adds the initial (pre-filled) subject input list items based on the 
+         * subjects currently selected in `this.profile.subjects`.
+         */
+
     }, {
         key: 'addSubjectInputs',
         value: function addSubjectInputs() {
@@ -23718,25 +24029,38 @@ var Profile = function () {
 
 ;
 
+/**
+ * Class that represents the dialog that enables peer tutoring supervisors to
+ * create new user profiles.
+ * @extends Profile
+ */
+
 var NewProfile = function (_Profile) {
     _inherits(NewProfile, _Profile);
 
-    function NewProfile(profile) {
+    function NewProfile() {
         _classCallCheck(this, NewProfile);
 
-        return _possibleConstructorReturn(this, (NewProfile.__proto__ || Object.getPrototypeOf(NewProfile)).call(this, profile));
+        return _possibleConstructorReturn(this, (NewProfile.__proto__ || Object.getPrototypeOf(NewProfile)).apply(this, arguments));
     }
 
     _createClass(NewProfile, [{
         key: 'renderSelf',
+
+        /**
+         * Renders the new profile view by replacing the text in the mdc top app bar
+         * title, adding the "Basic Info" section (for the user's name and email),
+         * adding the "Show profile" switch list item, and removing the "Delete
+         * Account" button.
+         */
         value: function renderSelf() {
-            var _this4 = this;
+            var _this6 = this;
 
             _get(NewProfile.prototype.__proto__ || Object.getPrototypeOf(NewProfile.prototype), 'renderSelf', this).call(this);
             this.header = this.render.header('header-action', {
                 title: 'New Profile',
                 ok: function ok() {
-                    _this4.createProfile();
+                    _this6.createProfile();
                 }
             });
             (0, _jquery2.default)(this.main).find('.profile-header').replaceWith(this.render.listDivider('Basic info'));
@@ -23745,7 +24069,7 @@ var NewProfile = function (_Profile) {
                     proxy: hit.proxy && hit.proxy.indexOf(window.app.user.uid) < 0 ? hit.proxy.concat([window.app.user.uid]) : !hit.proxy ? [window.app.user.uid] : hit.proxy
                 }));
                 var profile = new EditProfile(user);
-                var el = window.app.renderHit(hit, _this4.render);
+                var el = window.app.renderHit(hit, _this6.render);
                 (0, _jquery2.default)(el).find('[data-fir-click="edit"]').remove();
                 el.addEventListener('click', async function (event) {
                     if ((0, _jquery2.default)(event.target).closest('button').length) return;
@@ -23789,6 +24113,13 @@ var NewProfile = function (_Profile) {
             }, this.profile.config.showProfile)).insertAfter((0, _jquery2.default)(this.main).find('#Visibility'));
             (0, _jquery2.default)(this.main).find('[data-fir-click="delete"]').parent().remove();
         }
+
+        /**
+         * Views the new profile dialog (only thing that changes from the normal
+         * profile is that we don't change the user's app URL).
+         * @see {@link Profile#view}
+         */
+
     }, {
         key: 'view',
         value: function view() {
@@ -23796,10 +24127,17 @@ var NewProfile = function (_Profile) {
             window.app.view(this.header, this.main);
             !this.managed ? this.manage() : this.reManage(); // Don't attach MDC twice
         }
+
+        /**
+         * Manages the edit profile view.
+         * @todo Document exactly what MDC components and listeners this function
+         * attaches.
+         */
+
     }, {
         key: 'manage',
         value: function manage() {
-            var _this5 = this;
+            var _this7 = this;
 
             _get(NewProfile.prototype.__proto__ || Object.getPrototypeOf(NewProfile.prototype), 'manage', this).call(this, true);
             var main = this.main;
@@ -23813,7 +24151,7 @@ var NewProfile = function (_Profile) {
             };
             (0, _jquery2.default)(this.main).find('[id="Show profile"] .mdc-switch input')[0].addEventListener('click', function () {
                 p.config.showProfile = !p.config.showProfile;
-                (0, _jquery2.default)(_this5.main).find('[id="Show profile"] .mdc-list-item__secondary-text').text(p.config.showProfile ? d.on : d.off);
+                (0, _jquery2.default)(_this7.main).find('[id="Show profile"] .mdc-list-item__secondary-text').text(p.config.showProfile ? d.on : d.off);
             });
 
             function t(q, action) {
@@ -23853,6 +24191,13 @@ var NewProfile = function (_Profile) {
                 }
             }];
         }
+
+        /**
+         * Styles the email input (makes the floating label float above).
+         * @todo Document why this is necessary to include (and where it is actually
+         * used).
+         */
+
     }, {
         key: 'styleEmailInput',
         value: function styleEmailInput() {
@@ -23862,41 +24207,55 @@ var NewProfile = function (_Profile) {
     }, {
         key: 'addSubjectInput',
         value: function addSubjectInput() {
-            var that = this;
-            var profile = this.profile;
+            var _this8 = this;
 
-            function add(e, el) {
+            var add = function add(e, el) {
                 // Add split input item to profile
-                var sel = that.render.splitListItem(e, el);
+                var sel = _this8.render.splitListItem(e, el);
                 if ((0, _jquery2.default)('[id="Subject"]').length) {
                     (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="Subject"]').last().parent());
-                } else if (profile.type === '') {
+                } else if (_this8.profile.type === '') {
                     (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="User for"]'));
                 } else {
-                    (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="' + profile.type + ' for"]'));
+                    (0, _jquery2.default)(sel).insertAfter((0, _jquery2.default)('[id="' + _this8.profile.type + ' for"]'));
                 }
                 sel.scrollIntoView();
-                (0, _jquery2.default)(e).click();
+                _this8.subjectsDialog.view();
             };
-
-            function t(l, v) {
+            var t = function t(l, v) {
                 // Render and attach subject text field
-                var el = that.render.textField(l, v);
+                var el = _this8.render.textField(l, v);
                 _index.MDCTextField.attachTo(el);
                 (0, _jquery2.default)(el).click(function () {
-                    new EditSubjectDialog(el, profile).view();
+                    return _this8.subjectsDialog.view();
                 });
                 return el;
             };
 
             add(t('Subject', ''), t('Subject', '')); // Add empty inputs
         }
+
+        /**
+         * Removes the subject input and updates the profile's subjects locally
+         * (we override the original {@link Profile#removeSubjectInput} method to
+         * ensure that the profile's Firestore document isn't updated until the
+         * supervisor clicks 'Ok').
+         * @see {@link EditSubjectsDialog#updateSubjects}
+         */
+
     }, {
         key: 'removeSubjectInput',
         value: async function removeSubjectInput() {
             (0, _jquery2.default)(this.main).find('[id="Subject"]').last().parent().remove();
-            EditSubjectDialog.updateSubjects(this.profile);
+            EditSubjectsDialog.updateSubjects(this.profile);
         }
+
+        /**
+         * Adds the availability input (we override the original 
+         * {@link Profile#addAvailabilityInput} method to ensure tat the profile's 
+         * Firestore document isn't updated until the supervisor clicks 'Ok').
+         */
+
     }, {
         key: 'addAvailabilityInput',
         value: function addAvailabilityInput() {
@@ -23910,16 +24269,37 @@ var NewProfile = function (_Profile) {
             el.scrollIntoView();
             (0, _jquery2.default)(el).click();
         }
+
+        /**
+         * Removes the availability input and updates the profile's availability 
+         * locally (we override the original {@link Profile#removeAvailabilityInput} 
+         * method to ensure that the profile's Firestore document isn't updated 
+         * until the supervisor clicks 'Ok').
+         * @see {@link EditAvailabilityDialog#updateAvailability}
+         */
+
     }, {
         key: 'removeAvailabilityInput',
         value: function removeAvailabilityInput() {
             (0, _jquery2.default)(this.main).find('[id="Available"]').last().parent().remove();
             EditAvailabilityDialog.updateAvailability(this.profile);
         }
+
+        /**
+         * Gets if the currently populated fields are valid or not.
+         * @return {bool} Whether the currently selected/inputted values are valid.
+         */
+
     }, {
         key: 'createProfile',
+
+
+        /**
+         * Navigates back and creates a new profile with the currently selected 
+         * values.
+         */
         value: function createProfile() {
-            var _this6 = this;
+            var _this9 = this;
 
             if (!this.valid) return;
             this.profile.location = window.app.location.name;
@@ -23940,10 +24320,10 @@ var NewProfile = function (_Profile) {
             window.app.nav.back();
             window.app.snackbar.view('Creating profile...');
             Data.createUser(this.profile).then(function () {
-                window.app.snackbar.view('Created ' + _this6.profile.type.toLowerCase() + ' profile for ' + _this6.profile.name + '.');
+                window.app.snackbar.view('Created ' + _this9.profile.type.toLowerCase() + ' profile for ' + _this9.profile.name + '.');
             }).catch(function (err) {
-                console.error('[ERROR] While creating profile for ' + _this6.profile.email + ':', err);
-                window.app.snackbar.view('Could not create profile. ' + _this6.profile.name.split(' ')[0] + ' probably already has one.');
+                console.error('[ERROR] While creating profile for ' + _this9.profile.email + ':', err);
+                window.app.snackbar.view('Could not create profile. ' + _this9.profile.name.split(' ')[0] + ' probably already has one.');
             });
         }
     }, {
@@ -23966,40 +24346,65 @@ var NewProfile = function (_Profile) {
 
 ;
 
+/**
+ * Class that represents the dialog view that enables supervisors to edit 
+ * profiles that already exist.
+ * @extends NewProfile
+ */
+
 var EditProfile = function (_NewProfile) {
     _inherits(EditProfile, _NewProfile);
 
-    function EditProfile(profile) {
+    function EditProfile() {
         _classCallCheck(this, EditProfile);
 
-        return _possibleConstructorReturn(this, (EditProfile.__proto__ || Object.getPrototypeOf(EditProfile)).call(this, profile));
+        return _possibleConstructorReturn(this, (EditProfile.__proto__ || Object.getPrototypeOf(EditProfile)).apply(this, arguments));
     }
 
     _createClass(EditProfile, [{
         key: 'manage',
+
+        /**
+         * Manages the profile view by attaching an mdc ripple to the delete user 
+         * button (in addition to everything that the 
+         * [NewProfile]{@link NewProfile#manage} already does).
+         */
         value: function manage() {
             _get(EditProfile.prototype.__proto__ || Object.getPrototypeOf(EditProfile.prototype), 'manage', this).call(this);
             _index3.MDCRipple.attachTo((0, _jquery2.default)(this.main).find('.delete-user-input button')[0]);
         }
+
+        /**
+         * Renders the edit profile view by:
+         * 1. Replacing the title (and submission action) of the mdc top app bar.
+         * 2. Styling the email input (see {@link NewProfile#styleEmailInput}).
+         * 3. Adding (and managing) the delete user button again.
+         * 4. Replacing the type text field with a type select (such that 
+         * supervisors are able to modify a user's type before matching them --> the 
+         * current workaround for those who are both pupil and tutor).
+         * 5. Replacing the text field search items with just normal text fields (we
+         * no longer care about duplicate accounts). 
+         */
+
     }, {
         key: 'renderSelf',
         value: function renderSelf() {
-            var _this8 = this;
+            var _this11 = this;
 
             _get(EditProfile.prototype.__proto__ || Object.getPrototypeOf(EditProfile.prototype), 'renderSelf', this).call(this);
             this.header = this.render.header('header-action', {
                 title: 'Edit Profile',
                 ok: function ok() {
-                    _this8.updateProfile();
+                    return _this11.updateProfile();
                 }
             });
             this.styleEmailInput();
             (0, _jquery2.default)(this.main).append(this.render.template('delete-user-input', {
                 delete: function _delete() {
-                    return new ConfirmationDialog('Delete Account?', 'You are about to permanently delete ' + _this8.profile.name + '\'s account data. This action cannot be undone. Please ' + 'ensure to check with your fellow supervisors before ' + 'continuing.', async function () {
+                    return new ConfirmationDialog('Delete Account?', 'You are about to permanently delete ' + _this11.profile.name + '\'s account data. This action cannot be undone. Please ' + 'ensure to check with your fellow supervisors before ' + 'continuing.', async function () {
                         window.app.nav.back();
 
-                        var _ref11 = await (0, _awaitToJs2.default)(Data.deleteUser(_this8.profile.uid)),
+                        var _ref11 = await (0, _awaitToJs2.default)(Data.deleteUser(_this11.profile.uid)),
                             _ref12 = _slicedToArray(_ref11, 2),
                             err = _ref12[0],
                             res = _ref12[1];
@@ -24013,18 +24418,23 @@ var EditProfile = function (_NewProfile) {
             (0, _jquery2.default)(this.main).find('#Name').parent().parent().replaceWith(this.render.textFieldItem('Name', this.profile.name));
             (0, _jquery2.default)(this.main).find('#Email').first().parent().parent().replaceWith(this.render.textFieldItem('Email', this.profile.email));
         }
+
+        /**
+         * Updates the profile with the currently selected items.
+         */
+
     }, {
         key: 'updateProfile',
         value: function updateProfile() {
-            var _this9 = this;
+            var _this12 = this;
 
             if (!this.valid) return;
             this.profile.id = this.profile.email;
             window.app.nav.back();
             Data.updateUser(this.profile).then(function () {
-                window.app.snackbar.view('Updated ' + _this9.profile.name + '\'s ' + 'profile.');
+                window.app.snackbar.view('Updated ' + _this12.profile.name + '\'s ' + 'profile.');
             }).catch(function (err) {
-                console.error('[ERROR] While updating profile for ' + _this9.profile.email + ':', err);
+                console.error('[ERROR] While updating profile for ' + _this12.profile.email + ':', err);
                 window.app.snackbar.view('Could not update profile.');
             });
         }
@@ -24035,17 +24445,28 @@ var EditProfile = function (_NewProfile) {
 
 ;
 
+/**
+ * Class that represents the profile that service hour tutors see in their
+ * "Profile" tab.
+ * @extends Profile
+ */
+
 var TutorProfile = function (_Profile2) {
     _inherits(TutorProfile, _Profile2);
 
-    function TutorProfile(profile) {
+    function TutorProfile() {
         _classCallCheck(this, TutorProfile);
 
-        return _possibleConstructorReturn(this, (TutorProfile.__proto__ || Object.getPrototypeOf(TutorProfile)).call(this, profile));
+        return _possibleConstructorReturn(this, (TutorProfile.__proto__ || Object.getPrototypeOf(TutorProfile)).apply(this, arguments));
     }
 
     _createClass(TutorProfile, [{
         key: 'renderSelf',
+
+        /**
+         * Renders the tutor profile view by replacing the bio field with a service 
+         * hours field (shows the tutor how many service hours they've tracked).
+         */
         value: function renderSelf() {
             _get(TutorProfile.prototype.__proto__ || Object.getPrototypeOf(TutorProfile.prototype), 'renderSelf', this).call(this);
             (0, _jquery2.default)(this.main).find('#Bio').replaceWith((0, _jquery2.default)(this.render.textField('Service hours', Utils.getDurationStringFromSecs(this.profile.secondsTutored || 0))).attr('style', 'margin-right:20px;'));
@@ -24060,7 +24481,7 @@ var TutorProfile = function (_Profile2) {
     }, {
         key: 'renderServiceHourCard',
         value: function renderServiceHourCard() {
-            var _this11 = this;
+            var _this14 = this;
 
             var card = this.render.template('card-service-hours', {
                 title: window.app.onMobile ? 'Service' : 'Service Hours',
@@ -24080,8 +24501,8 @@ var TutorProfile = function (_Profile2) {
                 }
             });
             setTimeout(function () {
-                var tracked = new Number(Utils.getDurationStringFromSecs(_this11.profile.secondsTutored).split(':')[0]);
-                _this11.render.progressDoughnut({
+                var tracked = new Number(Utils.getDurationStringFromSecs(_this14.profile.secondsTutored).split(':')[0]);
+                _this14.render.progressDoughnut({
                     requirement: 15 - tracked,
                     tracked: tracked,
                     canvas: (0, _jquery2.default)(card).find('canvas')[0]
@@ -24155,7 +24576,7 @@ var PaidTutorProfile = function (_Profile3) {
     }, {
         key: 'reManage',
         value: function reManage() {
-            var _this13 = this;
+            var _this16 = this;
 
             _get(PaidTutorProfile.prototype.__proto__ || Object.getPrototypeOf(PaidTutorProfile.prototype), 'reManage', this).call(this);
             var that = this;
@@ -24169,7 +24590,7 @@ var PaidTutorProfile = function (_Profile3) {
             };
 
             var bio = t('[id="Background & Qualifications"]', function (input) {
-                _this13.profile.bio = input.val();
+                _this16.profile.bio = input.val();
             });
         }
     }]);
@@ -27145,8 +27566,15 @@ var StripeRequestDialog = __webpack_require__(2).stripeRequest;
 var Utils = __webpack_require__(6);
 var Data = __webpack_require__(7);
 
-// Class that creates it's view when called (such that mains are always
-// ready to go).
+/** 
+ * Class that represents the user view in Tutorbook's web app.
+ * @todo Make this more like a CRM user view for supervisors (e.g. show all of
+ * the user's appointments, recent messages, pending requests, etc).
+ * @todo Make the user view check if anything has changed in it's `this.profile` 
+ * {@link User} object before viewing. If there has been changes, make sure to 
+ * re-render the user view to show them.
+ * @todo Finish documenting the rest of this class's methods.
+ */
 
 var User = function () {
     function User(profile) {
@@ -96446,7 +96874,7 @@ module.exports = Templates;
 /* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<html>\n<!-- TEMPLATES: these are HTML templates for all of the objects that the \nuser sees as they navigate throughout the app. -->\n\n<div hidden class=\"template\" id=\"menu\">\n    <div data-fir-id=\"id\" class=\"mdc-menu mdc-menu-surface\">\n        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n            <li data-fir-foreach=\"options\" class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"~/action\">\n                <span class=\"mdc-list-item__text\" data-fir-content=\"~/label\"></span>\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Service Hour Tracking Card Template -->\n<div hidden class=\"template\" id=\"card-service-hours\">\n    <div id=\"service-hours-card\" priority=\"3\" class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"dashboard-card__primary-action\" id=\"primary\">\n            <div class=\"left\">\n                <canvas width=\"170px\" height=\"190px\"></canvas>\n            </div>\n            <div class=\"right\">\n                <div class=\"dashboard-card__primary\">\n                    <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                        <span data-fir-content=\"title\">Service Hours</span>\n                        <div class=\"mdc-menu-surface--anchor\">\n                            <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                            <div class=\"mdc-menu mdc-menu-surface\">\n                                <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"paid\">\n                                        <span class=\"mdc-list-item__text\">I'm paid</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"snooze\">\n                                        <span class=\"mdc-list-item__text\">Snooze</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"history\">\n                                        <span class=\"mdc-list-item__text\">Tracking</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"info\">\n                                        <span class=\"mdc-list-item__text\">About</span>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </h2>\n                    <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">Track your progress</h3>\n                </div>\n                <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Checkbox Input -->\n<div hidden class=\"template\" id=\"checkbox-input\">\n    <div class=\"mdc-form-field\" data-fir-id=\"id\">\n        <div class=\"mdc-checkbox\">\n            <input type=\"checkbox\" class=\"mdc-checkbox__native-control\" data-fir-id=\"inputId\" />\n            <div class=\"mdc-checkbox__background\">\n                <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n                    <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\" />\n                </svg>\n                <div class=\"mdc-checkbox__mixedmark\"></div>\n            </div>\n        </div>\n        <label data-fir-attr=\"for:inputId\" data-fir-content=\"label\">Label</label>\n    </div>\n</div>\n\n<!-- Ad Dialog -->\n<div hidden class=\"template\" id=\"ad-dialog\">\n    <aside class=\"ad-dialog mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <div class=\"mdc-dialog__content\">\n                    <h5 class=\"ad-dialog__subtitle\">\n                        Hire a Professional Paid Tutor\n                    </h5>\n                    <h2 class=\"ad-dialog__title\">\n                        Need More Flexiblity?\n                    </h2>\n                    <p class=\"ad-dialog__content\">\n                        Get ready to supercharge your studying with your own\n                        at-home private tutor.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Get help where and when you need it; paid tutors work\n                        flexible hours to fit perfectly within your schedule\n                        and can travel to where ever works best for you.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Work with the best when peers just won't cut it. Most\n                        of our paid tutors are skilled professors, teachers,\n                        and college students excited to share their knowledge.\n                    </p>\n                    <button class=\"mdc-button mdc-button--raised ad-dialog__button\">\n                        Yes, Find a Private Tutor!\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Appt Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-appt\">\n    <aside class=\"mdc-dialog mdc-dialog--scrollable\" id=\"dialog-appt\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Appointment Notifications\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"send\" id=\"send\">Send</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Delete User List Item -->\n<div hidden class=\"template\" id=\"delete-user-input\">\n    <div class=\"delete-user-input\">\n        <button class=\"mdc-button\" data-fir-click=\"delete\">\n            <i class=\"mdc-button__icon material-icons\">delete</i>\n            <span class=\"mdc-button__label\" data-fir-if-not=\"label\">Delete account</span>\n            <span class=\"mdc-button__label\" data-fir-if=\"label\" data-fir-content=\"label\">Delete account</span>\n        </button>\n    </div>\n</div>\n\n<!-- Stripe Elements Card Input -->\n<div hidden class=\"template\" id=\"stripe-card-input\">\n    <li id=\"Method\" class=\"input-list-item mdc-list-item\">\n        <div class=\"helper-wrapper\">\n            <div class=\"mdc-text-field mdc-text-field--textarea\">\n                <div id=\"card-input\">\n                    <!-- Stripe renders PCI compliant iFrame here -->\n                </div>\n                <div class=\"mdc-notched-outline mdc-notched-outline--notched\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label for=\"card-input\" class=\"mdc-floating-label mdc-floating-label--float-above\">Method</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n            <div class=\"mdc-text-field-helper-line\">\n                <div id=\"msg\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--persistent\">You will not be charged until after your lesson.</div>\n                <div id=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid payment method, try again.</div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Empty Snackbar -->\n<div hidden class=\"template\" id=\"snackbar-empty\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Labeled Snackbar -->\n<div hidden class=\"template\" id=\"snackbar\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button type=\"button\" class=\"mdc-button mdc-snackbar_action\" data-fir-content=\"label\" data-fir-click=\"action\">Undo</button>\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Code Signup Dialog -->\n<div hidden class=\"template\" id=\"dialog-code-signup\">\n    <aside class=\"dialog-code-signup mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" id=\"page-code\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Enter Verification Code\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"description\"></div>\n                    <div class=\"mdc-text-field mdc-text-field--outlined\" id=\"code-input\">\n                        <input type=\"text\" class=\"mdc-text-field__input\">\n                        <div class=\"mdc-notched-outline\">\n                            <div class=\"mdc-notched-outline__leading\"></div>\n                            <div class=\"mdc-notched-outline__notch\">\n                                <label class=\"mdc-floating-label\">Verification code</label>\n                            </div>\n                            <div class=\"mdc-notched-outline__trailing\"></div>\n                        </div>\n                    </div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" id=\"confirm-button\">Confirm</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Basic Empty Form Dialog -->\n<div hidden class=\"template\" id=\"dialog-form\">\n    <aside class=\"dialog-form mdc-dialog\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" style=\"min-width:50vw !important\">\n                <div class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Fillout Form\n                </div>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"ok\" id=\"ok-button\">Ok</button>\n                </footer>\n            </div>\n        </div>\n    </aside>\n</div>\n\n<!-- Subject Select Dialog -->\n<div hidden class=\"template\" id=\"dialog-subjects\">\n    <aside class=\"dialog-subjects mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Select Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-notification\">\n    <aside class=\"mdc-dialog dialog-notification\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"message\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"ok\">\n                        <span class=\"mdc-button__label\">Ok</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Filter Dialog -->\n<div hidden class=\"template\" id=\"dialog-filter\">\n    <aside id=\"dialog-filter\" class=\"mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Filter\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"all-filters-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" id=\"reset-button\">Reset</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Apply</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-type\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Type\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"type-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-availability\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Availability\n                </h2>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                    <div id=\"availability-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" id=\"ok-button\" class=\"mdc-button mdc-dialog__button\">Ok</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-price\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Price\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"price-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-grade\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Grade\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"grade-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-subject\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-all\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n                            <span>Any</span>\n                        </li>\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-gender\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Gender\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"gender-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-sort\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Sort By\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\">\n                            Rating\n                        </li>\n                        <li class=\"mdc-list-item\">\n                            Reviews\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Confirmation Dialog -->\n<div hidden class=\"template\" id=\"dialog-confirmation\">\n    <aside class=\"mdc-dialog dialog-confirmation\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"summary\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"no\">\n                        <span class=\"mdc-button__label\">No</span>\n                    </button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"yes\">\n                        <span class=\"mdc-button__label\">Yes</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Empty List Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-list\">\n    <aside class=\"dialog-list mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Title\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Ok</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- User View Template -->\n<div hidden class=\"template\" id=\"user-view\">\n    <div class=\"user-view mdc-list-group \">\n        <div id=\"user-header\">\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line mdc-list--avatar-list\">\n                <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n                    <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n                    <span class=\"mdc-list-item__text\">\n                        <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n                        <span class=\"mdc-list-item__secondary-text\">\n                            <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                            <span data-fir-content=\"type\"></span>\n                            <span>•</span>\n                            <span data-fir-if=\"paid\" class=\"rate\">\n                                <span class=\"charge\" data-fir-content=\"rate\"></span>\n                                <span class=\"hr\">/hr</span>\n                            </span>\n                            <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n                        </span>\n                    </span>\n                    <span class=\"mdc-list-item__meta\">\n                        <div class=\"rating__meta\">\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                        </div>\n                    </span>\n                </li>\n            </ul>\n        </div>\n        <div id=\"about-me\" data-fir-if=\"showAbout\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">About me</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div class=\"description\" data-fir-content=\"bio\">\n            </div>\n        </div>\n        <div id=\"basic-info\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Basic info</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\">\n                    <div class=\"mdc-list-item__text\">\n                        <div data-fir-if=\"paid\">\n                            <strong>Payments: </strong>\n                            <span style=\"white-space:initial!important;\" data-fir-content=\"payments/policy\"></span>\n                        </div>\n                        <strong>Gender: </strong>\n                        <span data-fir-content=\"gender\"></span>\n                        <strong>Type: </strong>\n                        <span data-fir-content=\"type\"></span>\n                        <strong>Grade: </strong>\n                        <span data-fir-content=\"grade\"></span>\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"subjects\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    <span data-fir-if-not=\"type\">User </span>\n                    <span data-fir-content=\"type\"></span> for\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense\">\n                <li class=\"subject-list-item mdc-list-item\" data-fir-foreach=\"subjects\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div data-fir-if=\"showLocation\" id=\"location\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Located at\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div id=\"map\"></div>\n        </div>\n        <div id=\"availability\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Available\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"availableTimes\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"reviews\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Reviews</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--dense\">\n            </ul>\n        </div>\n        <button id=\"request-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">send</span>\n            <span class=\"mdc-fab__label\">Request</span>\n        </button>\n        <button id=\"message-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">chat</span>\n            <span class=\"mdc-fab__label\">Message</span>\n        </button>\n    </div>\n</div>\n\n<!-- Filter Dialog List Template -->\n<div hidden class=\"template\" id=\"dialog-filter-list\">\n    <ul class=\"mdc-list mdc-list--avatar-list\">\n        <li id=\"show-page-subject\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n            <span data-fir-if-not=\"subject\">Any Subject</span>\n            <b data-fir-content=\"subject\"></b>\n        </li>\n        <li id=\"show-page-availability\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">schedule</i>\n            <span data-fir-if-not=\"availability\">Any Availability</span>\n            <b data-fir-content=\"availability\"></b>\n        </li>\n        <li id=\"show-page-type\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">people</i>\n            <span data-fir-if-not=\"type\">Any Type</span>\n            <b data-fir-content=\"type\"></b>\n        </li>\n        <li id=\"show-page-grade\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">school</i>\n            <span data-fir-if-not=\"grade\">Any Grade</span>\n            <b data-fir-content=\"grade\"></b>\n        </li>\n        <li id=\"show-page-gender\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">wc</i>\n            <span data-fir-if-not=\"gender\">Any Gender</span>\n            <b data-fir-content=\"gender\"></b>\n        </li>\n        <li id=\"show-page-price\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">attach_money</i>\n            <span data-fir-if-not=\"price\">Any Price</span>\n            <b data-fir-content=\"price\"></b>\n        </li>\n        <li id=\"show-page-sort\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">sort</i>\n            <b data-fir-content=\"sort\"></b>\n        </li>\n    </ul>\n</div>\n\n<!-- Selection Dialog Items List (e.g. for the subject select dialog) -->\n<div hidden class=\"template\" id=\"dialog-filter-item-list\">\n    <ul class=\"mdc-list\">\n        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" role=\"checkbox\">\n            <span class=\"mdc-list-item__graphic\">\n                <div class=\"mdc-checkbox\">\n                    <input type=\"checkbox\" data-fir-id=\"~\" class=\"mdc-checkbox__native-control\">\n                    <div class=\"mdc-checkbox__background\">\n                        <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n                            <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\" />\n                        </svg>\n                        <div class=\"mdc-checkbox__mixedmark\"></div>\n                    </div>\n                </div>\n            </span>\n            <label class=\"mdc-list-item__text\" for=\"~\" data-fir-content=\"~\"></label>\n        </li>\n    </ul>\n</div>\n\n<!-- Filter Dialog Items List -->\n<div hidden class=\"template\" id=\"dialog-filter-item-list\">\n    <ul class=\"mdc-list\">\n        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n    </ul>\n</div>\n\n<!-- Header Templates -->\n<!-- Welcome Header Template -->\n<div hidden class=\"template\" id=\"header-login\">\n    <div class=\"logo-header\">\n        <img src=\"/favicon/text-logo-bg.png\">\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"search-results-divider\">\n    <li role=\"separator\" class=\"mdc-list-divider\"></li>\n</div>\n\n<div hidden class=\"template\" id=\"header-search\">\n    <header id=\"search-app-bar\" class=\"header-search mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"title\" data-fir-content=\"title\">Tutorbook</span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"wordmark\">\n                    <img class=\"mdc-top-app-bar__wordmark\" src=\"" + __webpack_require__(468) + "\">\n                </span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"logo\">\n                    <img class=\"mdc-top-app-bar__logo\" src=\"" + __webpack_require__(469) + "\">\n                </span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-middle\">\n                <div class=\"search-box\">\n                    <i id=\"search-icon\" class=\"material-icons\">search</i>\n                    <input placeholder=\"Search users\" data-fir-attr=\"placeholder:placeholder\" type=\"text\" name=\"query\">\n                    <button id=\"info-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">info</i>\n                    </button>\n                    <button style=\"display:none;\" id=\"clear-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">clear</i>\n                    </button>\n                </div>\n                <div class=\"search-results\" style=\"display:none;\">\n                    <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n                    </ul>\n                </div>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-main\">\n    <header class=\"header-main mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                            <!--\n\t\t   -<li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"settings\">\n\t\t   -    <span class=\"mdc-list-item__text\">Settings</span>\n\t\t   -</li>\n\t\t   -->\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-back\">\n    <header class=\"mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"back\" class=\"button mdc-top-app-bar__navigation-icon\"><i class=\"material-icons\">arrow_back</i></a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Edit\">edit</i>\n                <i data-fir-if=\"showMatch\" data-fir-click=\"match\" id=\"match\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Match\">wc</i>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-action\">\n    <header class=\"header-action mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"cancel\" class=\"mdc-top-app-bar__navigation-icon material-icons\">close</a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">View</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showDelete\" data-fir-click=\"delete\" id=\"delete\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Delete\">delete</i>\n                <i data-fir-if=\"clockIn\" data-fir-click=\"clockIn\" id=\"clockIn\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Clock in for this appointment\">timer</i>\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Suggest edit\">create</i>\n                <i data-fir-if=\"print\" data-fir-click=\"print\" id=\"print\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Print request form\">print</i>\n                <i data-fir-if=\"showApprove\" data-fir-click=\"approve\" id=\"approve\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Approve request\">how_to_reg</i>\n                <i data-fir-if=\"ok\" data-fir-click=\"ok\" id=\"ok\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Save changes\">check</i>\n                <i data-fir-if=\"send\" data-fir-click=\"send\" id=\"send\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Send request\">send</i>\n            </section>\n        </div>\n    </header>\n</div>\n\n<!-- Filter Header Template -->\n<div hidden class=\"template\" id=\"header-filter\">\n    <header class=\"header-filter mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\" id=\"menu\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n        <div id=\"filters\">\n            <div class=\"mdc-layout-grid\">\n                <div id=\"show-filters\">\n                    <div id=\"active-filters\">\n                        <div id=\"filter\">\n                            <i class=\"material-icons\" id=\"filter-dialog-button\">filter_list</i>\n                            <span>You're seeing <b data-fir-content=\"filter_description\"></b></span>\n                        </div>\n                        <i class=\"material-icons\" id=\"clear\">close</i>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </header>\n</div>\n\n<!-- Nav Drawer Destinations Template (this has to be a template because it\nneeds to be rendered with a ton of click listeners.) -->\n<div hidden class=\"template\" id=\"nav-drawer-list\">\n    <div class=\"nav-drawer-list\">\n        <nav class=\"mdc-list\">\n            <a id=\"home\" class=\"mdc-list-item\" data-fir-click=\"showHome\" aria-selected=\"true\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">home</i>\n                <span class=\"mdc-list-item__text\">Home</span>\n            </a>\n            <a id=\"matching\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showMatching\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">wc</i>\n                <span class=\"mdc-list-item__text\">Matching</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"payments\" data-fir-if=\"payments\" class=\"mdc-list-item\" data-fir-click=\"showPayments\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">payment</i>\n                <span class=\"mdc-list-item__text\">Payments</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"search\" class=\"mdc-list-item\" data-fir-click=\"showSearch\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">search</i>\n                <span class=\"mdc-list-item__text\">Search</span>\n            </a>\n            <a id=\"tutors\" class=\"mdc-list-item\" data-fir-click=\"showTutors\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person</i>\n                <span class=\"mdc-list-item__text\">Tutors</span>\n            </a>\n            <a id=\"pupils\" class=\"mdc-list-item\" data-fir-click=\"showPupils\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person_outline</i>\n                <span class=\"mdc-list-item__text\">Pupils</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"profile\" class=\"mdc-list-item\" data-fir-click=\"showProfile\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">account_circle</i>\n                <span class=\"mdc-list-item__text\">Profile</span>\n            </a>\n            <a id=\"schedule\" class=\"mdc-list-item\" data-fir-click=\"showSchedule\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">calendar_today</i>\n                <span class=\"mdc-list-item__text\">Schedule</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if-not=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"config\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showConfig\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">settings</i>\n                <span class=\"mdc-list-item__text\">Configuration</span>\n            </a>\n        </nav>\n    </div>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab-labeled\">\n    <button data-fir-id=\"id\" class=\"mdc-fab mdc-fab--extended\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n        <span class=\"mdc-fab__label\" data-fir-content=\"label\" data-fir-if=\"label\"></span>\n    </button>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab\">\n    <button data-fir-id=\"id\" class=\"mdc-fab\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n    </button>\n</div>\n\n<!-- Welcome Screen Template -->\n<div hidden class=\"template\" id=\"login\">\n    <div class=\"login\">\n        <div class=\"logo-header\">\n            <img src=\"/favicon/text-logo-bg.png\">\n        </div>\n        <div id=\"page-login\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"signup-button\" data-fir-click=\"signup\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Signup\n                </button>\n                <button id=\"login-button\" data-fir-click=\"login\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Login\n                </button>\n            </div>\n        </div>\n        <div id=\"page-signup\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"pupil-button\" data-fir-click=\"pupil\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Pupil\n                </button>\n                <button id=\"tutor-button\" data-fir-click=\"tutor\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Peer Tutor\n                </button>\n                <button id=\"paid-tutor-button\" data-fir-click=\"paidTutor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Paid Tutor\n                </button>\n                <button id=\"expand-button\" data-fir-click=\"expand\" type=\"button\" class=\"mdc-icon-button\">\n                    <i class=\"material-icons mdc-icon-button__icon\">expand_more</i>\n                </button>\n                <div style=\"display:none\" id=\"expand\">\n                    <button id=\"supervisor-button\" data-fir-click=\"supervisor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                        Supervisor\n                    </button>\n                    <button id=\"collapse-button\" data-fir-click=\"collapse\" type=\"button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons mdc-icon-button__icon\">expand_less</i>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Setup Header Template -->\n<div hidden class=\"template\" id=\"header-welcome\">\n    <div data-fir-if=\"welcome\" class=\"header-welcome\">\n        <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n            Welcome back\n        </h1>\n        <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n            We missed you at Tutorbook\n        </h5>\n    </div>\n</div>\n\n<!-- Supervisor Setup Template -->\n<div hidden class=\"template\" id=\"setup\">\n    <div class=\"setup\">\n        <div data-fir-if=\"welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                Welcome back\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We missed you at Tutorbook\n            </h5>\n        </div>\n    </div>\n    <div class=\"\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"setup-cards\">\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n<!-- Empty Template -->\n<div hidden class=\"template\" id=\"empty\">\n    <!-- TODO: Make this actually look nice. -->\n</div>\n\n<!-- Input List Item Wrapper Template -->\n<div hidden class=\"template\" id=\"input-wrapper\">\n    <div class=\"input-wrapper mdc-list--non-interactive\">\n    </div>\n</div>\n\n<!-- Wrapper Template -->\n<div hidden class=\"template\" id=\"wrapper\">\n    <div>\n    </div>\n</div>\n\n<!-- Input Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-input\">\n    <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Profile Input Dialog Template -->\n<!-- This is exactly the same as the input dialog above, but has different\nstyling due to input el spacing. -->\n<div hidden class=\"template\" id=\"profile\">\n    <ul class=\"profile dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Search Text Field Input List Item Dialog Template -->\n<div hidden class=\"template\" id=\"search-input-list-item\">\n    <li data-fir-id=\"id\" class=\"search-input-list-item input-list-item mdc-list-item\">\n        <div class=\"search-box\">\n            <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n                <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n                <div class=\"mdc-notched-outline\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n        </div>\n        <div class=\"search-results\" style=\"display:none;\">\n            <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n            </ul>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Item Template -->\n<div hidden class=\"template\" id=\"input-list-item\">\n    <li class=\"input-list-item mdc-list-item\">\n    </li>\n</div>\n\n<!-- Payment List Item Template -->\n<div hidden class=\"template\" id=\"transaction-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-attr=\"timestamp:timestamp\" data-fir-click=\"go_to_transaction\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"meta_title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"meta_subtitle\">\n            </span>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"supervisor-appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserA\" data-fir-attr=\"src:photoA\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserB\" data-fir-attr=\"src:photoB\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\" data-fir-click=\"viewUser\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Divider Template w/ Action Buttons -->\n<div hidden class=\"template\" id=\"action-list-divider\">\n    <div data-fir-id=\"text\" class=\"action-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\">\n            <span data-fir-content=\"text\">Label</span>\n        </h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- MDC List Divider Action Button Template -->\n<div hidden class=\"template\" id=\"list-divider-btn\">\n    <button data-fir-click=\"action\" data-fir-content=\"label\" data-fir-id=\"label\" class=\"mdc-button mdc-button--unelevated\"></button>\n</div>\n\n<!-- MDC List Divider Template -->\n<div hidden class=\"template\" id=\"input-list-divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Dashboard Divider Template -->\n<div hidden class=\"template\" id=\"divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Mobile Schedule Divider Template -->\n<div hidden class=\"template\" id=\"mobile-date-list-divider\">\n    <div data-fir-attr=\"timestamp:timestamp\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"date\">Mon, 7/26</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Schedule Divider Template -->\n<div hidden class=\"template\" id=\"date-list-divider\">\n    <div data-fir-attr=\"timestamp:timestamp\" class=\"date-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <div class=\"date-label\" data-fir-content=\"date\">Mon, 7/26</div>\n    </div>\n</div>\n\n<!-- User Profile Header Template -->\n<div hidden class=\"template\" id=\"profile-header\">\n    <li class=\"mdc-list-item profile-header\">\n        <img class=\"mdc-list-item__graphic pic\" data-fir-attr=\"src:pic\">\n        <img class=\"mdc-list-item__graphic modify-pic\" style=\"display:none;\" src=\"/app/img/change_pic.png\">\n        <input id=\"media-capture\" type=\"file\" accept=\"image/*\" capture=\"camera\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"email\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- Matching User Header Template -->\n<div hidden class=\"template\" id=\"matching-user-header\">\n    <li class=\"mdc-list-item matching-user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- User Header Template -->\n<div hidden class=\"template\" id=\"user-header\">\n    <li class=\"mdc-list-item user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Empty (i.e. no need for val) MDC Select Template -->\n<div hidden class=\"template\" id=\"input-empty-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC Select Template -->\n<div hidden class=\"template\" id=\"input-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\" data-fir-content=\"val\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Input Stub Template -->\n<div hidden class=\"template\" id=\"input-stub\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"id\">\n        <input type=\"text\" class=\"mdc-text-field__input\" value=\"Stub\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" for=\"stub\">Stub</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"err-text-field\">\n    <div class=\"err-text-field\">\n        <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n            <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n            <div class=\"mdc-notched-outline\">\n                <div class=\"mdc-notched-outline__leading\"></div>\n                <div class=\"mdc-notched-outline__notch\">\n                    <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                </div>\n                <div class=\"mdc-notched-outline__trailing\"></div>\n            </div>\n        </div>\n        <div class=\"mdc-text-field-helper-line\">\n            <div id=\"err\" data-fir-content=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid response, try again.</div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"input-text-field\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n        <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextArea Template -->\n<div hidden class=\"template\" id=\"input-text-area\">\n    <div class=\"mdc-text-field mdc-text-field--textarea\" data-fir-id=\"label\">\n        <textarea class=\"mdc-text-field__input\" data-fir-content=\"text\" rows=\"8\" cols=\"40\"></textarea>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\"></label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Messages List Template -->\n<div hidden class=\"template\" id=\"chat\">\n    <div class=\"chat\" data-fir-id=\"id\">\n        <div id=\"messages\">\n        </div>\n        <div class=\"write\">\n            <input type=\"text\" data-fir-attr=\"placeholder:placeholder\" />\n            <button disabled=\"disabled\" data-fir-click=\"send\" class=\"mdc-icon-button material-icons\">send</button>\n        </div>\n    </div>\n</div>\n\n<!-- Message Template -->\n<div hidden class=\"template\" id=\"message\">\n    <div class=\"message you\" data-fir-attr=\"sender:sender,timestamp:timestamp\" data-fir-id=\"id\">\n        <img data-fir-if=\"img\" data-fir-attr=\"src:sentBy/photo\" class=\"message__img\">\n        <div data-fir-content=\"message\" class=\"message__bubble\">\n        </div>\n    </div>\n</div>\n\n<!-- Messages Time -->\n<div hidden class=\"template\" id=\"message-time\">\n    <div class=\"conversation-start\">\n        <span data-fir-content=\"time\">Today, 6:48 AM</span>\n    </div>\n</div>\n\n<!-- Person Template (part of codepen) -->\n<div hidden class=\"template\" id=\"chat-person-item\">\n    <li class=\"person\">\n        <img data-fir-attr=\"src:photo\" alt=\"\" />\n        <span class=\"name\" data-fir-content=\"name\">Thomas Bangalter</span>\n        <span class=\"time\" data-fir-content=\"time\">2:09 PM</span>\n        <span class=\"preview\" data-fir-content=\"preview\">I was wondering...</span>\n    </li>\n</div>\n\n<!-- Chats Interface from CodePen -->\n<!-- See: https://codepen.io/Momciloo/pen/bEdbxY -->\n<div hidden class=\"template\" id=\"codepen-chat\">\n    <div class=\"codepen-chat\">\n        <div class=\"wrapper\">\n            <div class=\"container\">\n                <div class=\"left\">\n                    <div class=\"top\">\n                        <input type=\"text\" placeholder=\"Search\" />\n                        <a href=\"javascript:;\" class=\"search\"></a>\n                    </div>\n                    <ul class=\"people\">\n                        <li class=\"person\" data-chat=\"person1\">\n                            <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg\" alt=\"\" />\n                            <span class=\"name\">Thomas Bangalter</span>\n                            <span class=\"time\">2:09 PM</span>\n                            <span class=\"preview\">I was wondering...</span>\n                        </li>\n                    </ul>\n                </div>\n                <div class=\"right\">\n                    <div class=\"top\"><span>To: <span class=\"name\">Dog Woofson</span></span></div>\n                    <div class=\"chat\" data-chat=\"person1\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:48 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello,\n                        </div>\n                        <div class=\"bubble you\">\n                            it's me.\n                        </div>\n                        <div class=\"bubble you\">\n                            I was wondering...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person2\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 5:38 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello, can you hear me?\n                        </div>\n                        <div class=\"bubble you\">\n                            I'm in California dreaming\n                        </div>\n                        <div class=\"bubble me\">\n                            ... about who we used to be.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            When we were younger and free...\n                        </div>\n                        <div class=\"bubble you\">\n                            I've forgotten how it felt before\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person3\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 3:38 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble you\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble me\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble you\">\n                            It’s not that bad...\n                        </div>\n                        <div class=\"bubble you\">\n                            But we’re probably gonna need a new carpet.\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person4\">\n                        <div class=\"conversation-start\">\n                            <span>Yesterday, 4:20 PM</span>\n                        </div>\n                        <div class=\"bubble me\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble me\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble you\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble you\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble me\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble me\">\n                            It’s not that bad...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person5\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:28 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup for the third time like is <br />you blind bitch\n                        </div>\n\n                    </div>\n                    <div class=\"chat\" data-chat=\"person6\">\n                        <div class=\"conversation-start\">\n                            <span>Monday, 1:27 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            So, how's your new phone?\n                        </div>\n                        <div class=\"bubble you\">\n                            You finally have a smartphone :D\n                        </div>\n                        <div class=\"bubble me\">\n                            Drake?\n                        </div>\n                        <div class=\"bubble me\">\n                            Why aren't you answering?\n                        </div>\n                        <div class=\"bubble you\">\n                            howdoyoudoaspace\n                        </div>\n                    </div>\n                    <div class=\"write\">\n                        <a href=\"javascript:;\" class=\"write-link attach\"></a>\n                        <input type=\"text\" />\n                        <a href=\"javascript:;\" class=\"write-link smiley\"></a>\n                        <a href=\"javascript:;\" class=\"write-link send\"></a>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Chats List Template -->\n<div hidden class=\"template\" id=\"chats-mobile\">\n    <div class=\"chats\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" style=\"width:0;height:0;\"></li>\n            <!--\n               -<li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n               -    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n               -        <a class=\"material-icons\">add</a>\n               -    </div>\n               -    <span class=\"mdc-list-item__text\">\n               -        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n               -        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n               -    </span>\n               -</li>\n\t       -->\n        </ul>\n    </div>\n</div>\n\n<!-- Supervisor Chat List Template -->\n<div hidden class=\"template\" id=\"supervisor-chats-list\">\n    <div id=\"supervisor-chats\" class=\"mdc-list-group\">\n        <h3 class=\"mdc-list-group__subheader\">Announcements</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"announcements\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-announcement\" class=\"chat-list-item mdc-list-item\" data-fir-click=\"newAnnouncement\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Announcement Group</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new announcement group to bulk message.</span>\n                </span>\n            </li>\n        </ul>\n        <h3 class=\"mdc-list-group__subheader\">Conversations</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" style=\"width:0;height:0;\"></li>\n            <!--\n               -<li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n               -    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n               -        <a class=\"material-icons\">add</a>\n               -    </div>\n               -    <span class=\"mdc-list-item__text\">\n               -        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n               -        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n               -    </span>\n               -</li>\n\t       -->\n        </ul>\n    </div>\n</div>\n\n<!-- Desktop Chat Interface Template -->\n<div hidden class=\"template\" id=\"chats-desktop\">\n    <div class=\"chats\">\n        <div class=\"chats-container\">\n            <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n                <li id=\"new-chat\" style=\"width:0;height:0;\"></li>\n                <!--\n                   -<li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                   -    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                   -        <a class=\"material-icons\">add</a>\n                   -    </div>\n                   -    <span class=\"mdc-list-item__text\">\n                   -        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                   -        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                   -    </span>\n                   -</li>\n\t\t   -->\n            </ul>\n        </div>\n        <div class=\"messages-container\">\n            <div class=\"centered-text mdc-typography mdc-typography--subtitle1\">\n                Select a chat to message.\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Search List Template -->\n<div hidden class=\"template\" id=\"search\">\n    <div class=\"search \">\n        <ul id=\"results\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <!-- Add empty list item that is hidden under filter view -->\n            <li class=\"mdc-list-item mdc-list-item--disabled\">\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Calendar Schedule View List Template -->\n<div hidden class=\"template\" id=\"schedule\">\n    <div class=\"schedule\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Appointments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"summary\">\n                View past tutoring sessions, clock out of active\n                meetings, and edit upcoming appointments.\n            </h5>\n        </div>\n        <ul data-fir-attr=\"style:scheduleStyling\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n        </ul>\n        <div class=\"delete-user-input\">\n            <button id=\"load-more\" class=\"mdc-button\">\n                <i class=\"mdc-button__icon material-icons\">expand_more</i>\n                <span class=\"mdc-button__label\">Load more</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Search List Item Template -->\n<div hidden class=\"template\" id=\"search-empty-list-item\">\n    <li class=\"mdc-list-item mdc-list-item--disabled\">\n    </li>\n</div>\n\n<!-- Rating Templates -->\n<div hidden class=\"template\" id=\"star-border-icon\">\n    <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n</div>\n<div hidden class=\"template\" id=\"star-icon\">\n    <i class=\"material-icons\" id=\"star-icon\">star</i>\n</div>\n\n<!-- Empty Result Template -->\n<div hidden class=\"template\" id=\"centered-text\">\n    <div class=\"centered-text mdc-typography mdc-typography--subtitle1\" data-fir-content=\"text\">\n        <!-- TODO: Center a \"No results.\" message -->\n    </div>\n</div>\n\n<!-- Past Appt List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-past-appt\">\n    <li class=\"search-result-past-appt mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"go_to_appt\">\n        <i class=\"mdc-list-item__graphic material-icons\">calendar_today</i>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"summary\">\n            </span>\n        </span>\n    </li>\n</div>\n\n<!-- Message Item Template -->\n<div hidden class=\"template\" id=\"message-list-item\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"view_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"message\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"name\">\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\" data-fir-content=\"sent\">\n        </span>\n    </li>\n</div>\n\n<!-- Chat Item Template -->\n<div hidden class=\"template\" id=\"chat-list-item\">\n    <li class=\"mdc-list-item chat-list-item\" data-fir-attr=\"index:index\" data-fir-id=\"id\" data-fir-click=\"open_chat\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"lastMessage/message\">\n            </span>\n        </span>\n        <div data-fir-if=\"showMenuBtn\" class=\"mdc-list-item__meta\">\n            <button id=\"menu-btn\" class=\"mdc-icon-button material-icons\">more_vert</button>\n        </div>\n    </li>\n</div>\n\n<!-- User List Item Search Hit Template (has expandable menu) -->\n<div hidden class=\"template\" id=\"search-hit-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-if=\"showHrs\" data-fir-click=\"hrs\">\n                <i class=\"material-icons\">insert_drive_file</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"chat\">\n                <i class=\"material-icons\">chat</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"match\">\n                <i class=\"material-icons\">wc</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"edit\">\n                <i class=\"material-icons\">edit</i>\n            </button>\n        </span>\n    </li>\n</div>\n\n<!-- User List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img id=\"photo\" class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <div id=\"checkmark\" class=\"mdc-list-item__graphic\">\n            <a class=\"material-icons\">check</a>\n        </div>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Service Hours Statistics Template -->\n<div hidden class=\"template\" id=\"stats\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                App Statistics\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Track service hours, watch leader boards, and stay on top of app\n                activity.\n            </h5>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Recent activity</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"activity\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Service hours</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"service-hrs\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Matching Template -->\n<div hidden class=\"template\" id=\"matching\">\n    <div class=\"matching\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"pupil-button\" data-fir-click=\"new_pupil\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person_outline</span>\n            <span class=\"mdc-fab__label\">Pupil</span>\n        </button>\n        <button id=\"tutor-button\" data-fir-click=\"new_tutor\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person</span>\n            <span class=\"mdc-fab__label\">Tutor</span>\n        </button>\n        <!--\n           -<button id=\"teacher-button\" data-fir-click=\"new_teacher\" class=\"mdc-fab mdc-fab--extended\">\n           -    <span class=\"mdc-fab__icon material-icons\">school</span>\n           -    <span class=\"mdc-fab__label\">Teacher</span>\n           -</button>\n\t   -->\n    </div>\n</div>\n\n<!-- Accounts Management Template -->\n<div hidden class=\"template\" id=\"account-manager\">\n    <div class=\"account-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Accounts\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can create and edit accounts for the tutors and\n                pupils who submit paper application forms.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Location Management Template -->\n<div hidden class=\"template\" id=\"location-manager\">\n    <div class=\" location-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Locations\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can edit your existing locations and apply for the\n                creation of new supervised locations.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Feedback Input Dialog Template -->\n<div hidden class=\"template\" id=\"feedback\">\n    <div class=\"feedback\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Help & Feedback\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Ask us any question, and we'll try to get back to you as\n                soon as we can.\n            </h5>\n        </div>\n        <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n        </ul>\n    </div>\n</div>\n\n<!-- Configuration Screen Template -->\n<div hidden class=\"template\" id=\"config\">\n    <div class=\"config\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Configuration\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage locations, available subjects and grades, and your\n                school's bell schedule.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Grid Template -->\n<div hidden class=\"template\" id=\"dashboard\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Welcome, <span data-fir-content=\"name\"></span>\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We're glad you're here. Below are some friendly suggestions for\n                what to do next.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Horz Scroller Card Grid Template -->\n<div hidden class=\"template\" id=\"horz-cards\">\n    <div class=\"horz-layout-grid\" data-fir-id=\"id\">\n        <button id=\"left\" style=\"display:none;\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_left\n        </button>\n        <button id=\"right\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_right\n        </button>\n        <div class=\"horz-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Card Grid Template -->\n<div hidden class=\"template\" id=\"cards\">\n    <div class=\"mdc-layout-grid\">\n        <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Payments Template (includes tutor business inputs and selects section, \npayment method MDC Cards section, and an MDC List payment history \nsection) -->\n<div hidden class=\"template\" id=\"payments\">\n    <div class=\"payments\">\n        <div data-fir-if=\"showWelcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"welcomeTitle\">\n                Payments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"welcomeSubtitle\">\n                Manage your payment methods, preferences, and history.\n            </h5>\n        </div>\n        <div id=\"settings\" data-fir-if=\"showSettings\">\n        </div>\n        <!--\n-<div id=\"methods\" data-fir-if=\"showMethods\" class=\"mdc-layout-grid\">\n-    <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n-    </div>\n-</div>\n-->\n        <div id=\"history\" data-fir-if=\"showHistory\">\n            <ul class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            </ul>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Dialog Button -->\n<div hidden class=\"template\" id=\"dialog-button\">\n    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-fir-click=\"action\" data-fir-content=\"label\">Label</button>\n</div>\n\n<!-- MDC Card Actions Template (for appending to the card-empty template below) -->\n<div hidden class=\"template\" id=\"card-button\">\n    <button data-fir-click=\"action\" data-fir-id=\"label\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n        <span class=\"mdc-button__label\" data-fir-content=\"label\">Label</span>\n    </button>\n</div>\n\n<!-- MDC Card Menu -->\n<div hidden class=\"template\" id=\"card-action\">\n    <li class=\"mdc-list-item\" data-fir-id=\"label\" role=\"menuitem\" data-fir-click=\"action\">\n        <span data-fir-content=\"label\" class=\"mdc-list-item__text\">Action</span>\n    </li>\n</div>\n\n<!-- Empty Dismissable Card Template -->\n<div hidden class=\"template\" id=\"card-empty\">\n    <div class=\"card-empty mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" id=\"primary\" data-fir-click=\"actions/primary\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                    <span data-fir-content=\"title\">Titling Title</span>\n                    <div data-fir-if=\"actions/options\" class=\"mdc-menu-surface--anchor\">\n                        <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                        <div class=\"mdc-menu mdc-menu-surface\">\n                            <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            </ul>\n                        </div>\n                    </div>\n                </h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">This is a subtitle</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n        </div>\n    </div>\n</div>\n\n<!-- Four-Day Schedule Card Template -->\n<div class=\"template\" id=\"card-schedule\">\n    <div class=\"card-schedule mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\">\n                <div id=\"monday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Monday</div>\n                <div id=\"tuesday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Tuesday</div>\n                <div id=\"wednesday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Wednesday</div>\n                <div id=\"thursday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Thursday</div>\n                <div id=\"friday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Friday</div>\n                <div id=\"monday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"tuesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"wednesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"thursday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"friday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n            </div>\n            <div id=\"loader\">\n                <div class=\"loader\">\n                    <svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\">\n                        <circle id=\"spinner\" cx=\"16\" cy=\"16\" r=\"14\" fill=\"none\"></circle>\n                    </svg>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Event Progress Bar -->\n<div hidden class=\"template\" id=\"event-progress\">\n    <div role=\"progressbar\" class=\"mdc-linear-progress\">\n        <div class=\"mdc-linear-progress__buffering-dots\"></div>\n        <div class=\"mdc-linear-progress__buffer\"></div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__primary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__secondary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n    </div>\n</div>\n\n<!-- Event Card Template -->\n<div hidden class=\"template\" id=\"card-event\">\n    <div data-fir-id=\"id\" data-fir-attr=\"type:type,index:index\" class=\"card-event mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"container\">\n            <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                <span data-fir-content=\"title\">Titling Title</span>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                        </ul>\n                    </div>\n                </div>\n            </h2>\n            <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\">\n                <span data-fir-content=\"subtitle\">This is a subtitle</span>\n            </h3>\n        </div>\n    </div>\n</div>\n\n<!-- Location Card Template -->\n<div hidden class=\"template\" id=\"card-location\">\n    <div class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-6-desktop location-card\">\n        <div class=\"location-card__primary\">\n            <h2 class=\"location-card__title mdc-typography mdc-typography--headline6\" data-fir-content=\"name\">Gunn Academic Center</h2>\n            <h3 class=\"location-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"city\">Palo Alto, CA</h3>\n        </div>\n        <div class=\"mdc-card__primary-action location-card__primary-action\" data-fir-click=\"go_to_location\" tabindex=\"0\">\n            <div class=\"mdc-card__media mdc-card__media--16-9 location-card__media\" data-fir-attr=\"style:image-url\"></div>\n        </div>\n        <div class=\"location-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"description\">\n            The Academic Center is an inclusive support center where all\n            Gunn students can receive tutoring, do homework, study, and work\n            collaboratively on projects. In the AC, students requesting\n            support in their academics can receive free tutoring.\n        </div>\n        <hr class=\"mdc-list-divider\">\n        <div class=\"location-card__hours\">\n            <h2 class=\"mdc-typography mdc-typography--subtitle1\">Hours</h2>\n            <div class=\"mdc-chip-set mdc-chip-set--choice\">\n                <div class=\"mdc-chip\" data-fir-foreach=\"todays-hours\" data-fir-id=\"~\">\n                    <div class=\"mdc-chip__text\" data-fir-content=\"~\">10:00 AM</div>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"edit\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Edit</span>\n            </button>\n            <button data-fir-click=\"delete\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Delete</span>\n            </button>\n            <!--\n   -<button data-fir-click=\"schedule\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Schedule</span>\n   -</button>\n   -->\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Card Templates -->\n<div hidden class=\"template\" id=\"card-appointment\">\n    <div class=\"card-appointments mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action location-card dashboard-card__primary-action\" data-fir-click=\"go_to_appt\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Upcoming Appointment</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">With Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You have a tutoring session with Nicholas Chiang at 2:00 PM today.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"go_to_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestOut\">\n    <div class=\"card-requestsOut mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" data-mdc-auto-outit=\"MDCRipple\" taboutdex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Pending Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">To Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You requested Nicholas Chiang as a tutor for AP Comp Sci A.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"go_to_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <!--\n   -<button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"edit_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Edit</span>\n   -</button>\n   -->\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestIn\">\n    <div class=\"card-requestsIn mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">New Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">From Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                Nicholas Chiang requested you as a tutor for AP Comp Sci P.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <div class=\"mdc-card__action-buttons\">\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"go_to_request\">\n                    <span class=\"mdc-button__label\">View</span>\n                </button>\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"reject_request\">\n                    <span class=\"mdc-button__label\">Reject</span>\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Settings Switch Template -->\n<div hidden class=\"template\" id=\"input-switch\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <div class=\"mdc-switch\">\n                <div class=\"mdc-switch__track\"></div>\n                <div class=\"mdc-switch__thumb-underlay\">\n                    <div class=\"mdc-switch__thumb\">\n                        <input type=\"checkbox\" class=\"mdc-switch__native-control\" role=\"switch\">\n                    </div>\n                </div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Settings Button Template -->\n<div hidden class=\"template\" id=\"input-setting\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-click=\"action\">\n                <i class=\"material-icons\">settings</i>\n            </button>\n        </div>\n    </li>\n</div>\n\n<!-- Settings List Divider -->\n<div hidden class=\"template\" id=\"settings-list-divider\">\n    <div data-fir-id=\"label\" class=\"settings-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"label\">Label</h4>\n    </div>\n</div>\n\n<!-- Settings View Template -->\n<div hidden class=\"template\" id=\"settings-view\">\n    <div class=\"settings-view\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                App Preferences\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage your notification preferences, calendar sync, and profile\n                visibility.\n            </h5>\n        </div>\n        <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line \">\n        </ul>\n    </div>\n</div>\n\n</html>";
+module.exports = "<html>\n<!-- TEMPLATES: these are HTML templates for all of the objects that the \nuser sees as they navigate throughout the app. -->\n\n<div hidden class=\"template\" id=\"menu\">\n    <div data-fir-id=\"id\" class=\"mdc-menu mdc-menu-surface\">\n        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n            <li data-fir-foreach=\"options\" class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"~/action\">\n                <span class=\"mdc-list-item__text\" data-fir-content=\"~/label\"></span>\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Service Hour Tracking Card Template -->\n<div hidden class=\"template\" id=\"card-service-hours\">\n    <div id=\"service-hours-card\" priority=\"3\" class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"dashboard-card__primary-action\" id=\"primary\">\n            <div class=\"left\">\n                <canvas width=\"170px\" height=\"190px\"></canvas>\n            </div>\n            <div class=\"right\">\n                <div class=\"dashboard-card__primary\">\n                    <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                        <span data-fir-content=\"title\">Service Hours</span>\n                        <div class=\"mdc-menu-surface--anchor\">\n                            <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                            <div class=\"mdc-menu mdc-menu-surface\">\n                                <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"paid\">\n                                        <span class=\"mdc-list-item__text\">I'm paid</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"snooze\">\n                                        <span class=\"mdc-list-item__text\">Snooze</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"history\">\n                                        <span class=\"mdc-list-item__text\">Tracking</span>\n                                    </li>\n                                    <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"info\">\n                                        <span class=\"mdc-list-item__text\">About</span>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </h2>\n                    <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">Track your progress</h3>\n                </div>\n                <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Checkbox Input -->\n<div hidden class=\"template\" id=\"checkbox-input\">\n    <div class=\"mdc-form-field\" data-fir-id=\"id\">\n        <div class=\"mdc-checkbox\">\n            <input type=\"checkbox\" class=\"mdc-checkbox__native-control\" data-fir-id=\"inputId\" />\n            <div class=\"mdc-checkbox__background\">\n                <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n                    <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\" />\n                </svg>\n                <div class=\"mdc-checkbox__mixedmark\"></div>\n            </div>\n        </div>\n        <label data-fir-attr=\"for:inputId\" data-fir-content=\"label\">Label</label>\n    </div>\n</div>\n\n<!-- Ad Dialog -->\n<div hidden class=\"template\" id=\"ad-dialog\">\n    <aside class=\"ad-dialog mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <div class=\"mdc-dialog__content\">\n                    <h5 class=\"ad-dialog__subtitle\">\n                        Hire a Professional Paid Tutor\n                    </h5>\n                    <h2 class=\"ad-dialog__title\">\n                        Need More Flexiblity?\n                    </h2>\n                    <p class=\"ad-dialog__content\">\n                        Get ready to supercharge your studying with your own\n                        at-home private tutor.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Get help where and when you need it; paid tutors work\n                        flexible hours to fit perfectly within your schedule\n                        and can travel to where ever works best for you.\n                    </p>\n                    <p class=\"ad-dialog__content\">\n                        Work with the best when peers just won't cut it. Most\n                        of our paid tutors are skilled professors, teachers,\n                        and college students excited to share their knowledge.\n                    </p>\n                    <button class=\"mdc-button mdc-button--raised ad-dialog__button\">\n                        Yes, Find a Private Tutor!\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Appt Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-appt\">\n    <aside class=\"mdc-dialog mdc-dialog--scrollable\" id=\"dialog-appt\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Appointment Notifications\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"send\" id=\"send\">Send</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Delete User List Item -->\n<div hidden class=\"template\" id=\"delete-user-input\">\n    <div class=\"delete-user-input\">\n        <button class=\"mdc-button\" data-fir-click=\"delete\">\n            <i class=\"mdc-button__icon material-icons\">delete</i>\n            <span class=\"mdc-button__label\" data-fir-if-not=\"label\">Delete account</span>\n            <span class=\"mdc-button__label\" data-fir-if=\"label\" data-fir-content=\"label\">Delete account</span>\n        </button>\n    </div>\n</div>\n\n<!-- Stripe Elements Card Input -->\n<div hidden class=\"template\" id=\"stripe-card-input\">\n    <li id=\"Method\" class=\"input-list-item mdc-list-item\">\n        <div class=\"helper-wrapper\">\n            <div class=\"mdc-text-field mdc-text-field--textarea\">\n                <div id=\"card-input\">\n                    <!-- Stripe renders PCI compliant iFrame here -->\n                </div>\n                <div class=\"mdc-notched-outline mdc-notched-outline--notched\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label for=\"card-input\" class=\"mdc-floating-label mdc-floating-label--float-above\">Method</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n            <div class=\"mdc-text-field-helper-line\">\n                <div id=\"msg\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--persistent\">You will not be charged until after your lesson.</div>\n                <div id=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid payment method, try again.</div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Empty Snackbar -->\n<div hidden class=\"template\" id=\"snackbar-empty\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Labeled Snackbar -->\n<div hidden class=\"template\" id=\"snackbar\">\n    <div class=\"mdc-snackbar\" data-fir-id=\"id\">\n        <div class=\"mdc-snackbar__surface\">\n            <div class=\"mdc-snackbar__label\" role=\"status\" aria-live=\"polite\">\n            </div>\n            <div class=\"mdc-snackbar__actions\">\n                <button type=\"button\" class=\"mdc-button mdc-snackbar_action\" data-fir-content=\"label\" data-fir-click=\"action\">Undo</button>\n                <button data-fir-if=\"close\" class=\"mdc-icon-button material-icons mdc-snackbar__dismiss\">close</button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Code Signup Dialog -->\n<div hidden class=\"template\" id=\"dialog-code-signup\">\n    <aside class=\"dialog-code-signup mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" id=\"page-code\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Enter Verification Code\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"description\"></div>\n                    <div class=\"mdc-text-field mdc-text-field--outlined\" id=\"code-input\">\n                        <input type=\"text\" class=\"mdc-text-field__input\">\n                        <div class=\"mdc-notched-outline\">\n                            <div class=\"mdc-notched-outline__leading\"></div>\n                            <div class=\"mdc-notched-outline__notch\">\n                                <label class=\"mdc-floating-label\">Verification code</label>\n                            </div>\n                            <div class=\"mdc-notched-outline__trailing\"></div>\n                        </div>\n                    </div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" id=\"confirm-button\">Confirm</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Basic Empty Form Dialog -->\n<div hidden class=\"template\" id=\"dialog-form\">\n    <aside class=\"dialog-form mdc-dialog\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\" style=\"min-width:50vw !important\">\n                <div class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Fillout Form\n                </div>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"ok\" id=\"ok-button\">Ok</button>\n                </footer>\n            </div>\n        </div>\n    </aside>\n</div>\n\n<!-- Subject Select Dialog -->\n<div hidden class=\"template\" id=\"dialog-subjects\">\n    <aside class=\"dialog-subjects mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Select Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button data-fir-click=\"back\" type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"save\">Save</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Notification Dialog -->\n<div hidden class=\"template\" id=\"dialog-notification\">\n    <aside class=\"mdc-dialog dialog-notification\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"message\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"ok\">\n                        <span class=\"mdc-button__label\">Ok</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Filter Dialog -->\n<div hidden class=\"template\" id=\"dialog-filter\">\n    <aside id=\"dialog-filter\" class=\"mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface page\" id=\"page-all\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Filter\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"all-filters-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" id=\"reset-button\">Reset</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Apply</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-type\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Type\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"type-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-availability\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Availability\n                </h2>\n                <div class=\"mdc-dialog__content dialog-form__content\">\n                    <div id=\"availability-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                    <button type=\"button\" id=\"ok-button\" class=\"mdc-button mdc-dialog__button\">Ok</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-price\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Price\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"price-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-grade\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Grade\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"grade-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-subject\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Subject\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list mdc-list--avatar-list\">\n                        <li id=\"show-page-all\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n                            <span>Any</span>\n                        </li>\n                        <li id=\"show-page-math\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">widgets</i>\n                            <span>Math</span>\n                        </li>\n                        <li id=\"show-page-science\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">spa</i>\n                            <span>Science</span>\n                        </li>\n                        <li id=\"show-page-history\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">history</i>\n                            <span>Social Studies</span>\n                        </li>\n                        <li id=\"show-page-language\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">translate</i>\n                            <span>Language</span>\n                        </li>\n                        <li id=\"show-page-english\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">library_books</i>\n                            <span>English</span>\n                        </li>\n                        <li id=\"show-page-tech\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">computer</i>\n                            <span>Technology</span>\n                        </li>\n                        <li id=\"show-page-art\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">color_lens</i>\n                            <span>Art</span>\n                        </li>\n                        <li id=\"show-page-lifeSkills\" class=\"mdc-list-item\">\n                            <i class=\"mdc-list-item__graphic material-icons\">accessibility_new</i>\n                            <span>Life Skills</span>\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-math\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Math Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"math-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-art\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Art Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"art-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-tech\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Tech Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"tech-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-science\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Science Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"science-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-history\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Social Studies Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"history-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-language\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    World Language Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"language-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-english\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    English Subjects\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"english-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-lifeSkills\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Life Skills\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"life-skills-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back-subjects\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-gender\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Gender\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <div id=\"gender-list\"></div>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n            <div class=\"mdc-dialog__surface page\" id=\"page-sort\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\">\n                    Sort By\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\">\n                            Rating\n                        </li>\n                        <li class=\"mdc-list-item\">\n                            Reviews\n                        </li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button back\">Back</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Confirmation Dialog -->\n<div hidden class=\"template\" id=\"dialog-confirmation\">\n    <aside class=\"mdc-dialog dialog-confirmation\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 class=\"mdc-dialog__title\" data-fir-content=\"title\">Confirm action?</h2>\n                <div class=\"mdc-dialog__content\" data-fir-content=\"summary\">\n                    Are you sure you want to continue this action?\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"no\">\n                        <span class=\"mdc-button__label\">No</span>\n                    </button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"yes\">\n                        <span class=\"mdc-button__label\">Yes</span>\n                    </button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- Empty List Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-list\">\n    <aside class=\"dialog-list mdc-dialog mdc-dialog--scrollable\">\n        <div class=\"mdc-dialog__container\">\n            <div class=\"mdc-dialog__surface\">\n                <h2 id=\"mdc-dialog-with-list-label\" class=\"mdc-dialog__title\" data-fir-content=\"title\">\n                    Title\n                </h2>\n                <div class=\"mdc-dialog__content\">\n                    <ul class=\"mdc-list\">\n                        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n                    </ul>\n                </div>\n                <footer class=\"mdc-dialog__actions\">\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-mdc-dialog-action=\"close\">Cancel</button>\n                    <button type=\"button\" class=\"mdc-button mdc-dialog__button mdc-dialog__button--default\" data-mdc-dialog-action=\"accept\">Ok</button>\n                </footer>\n            </div>\n        </div>\n        <div class=\"mdc-dialog__scrim\"></div>\n    </aside>\n</div>\n\n<!-- User View Template -->\n<div hidden class=\"template\" id=\"user-view\">\n    <div class=\"user-view mdc-list-group \">\n        <div id=\"user-header\">\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line mdc-list--avatar-list\">\n                <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n                    <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n                    <span class=\"mdc-list-item__text\">\n                        <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n                        <span class=\"mdc-list-item__secondary-text\">\n                            <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                            <span data-fir-content=\"type\"></span>\n                            <span>•</span>\n                            <span data-fir-if=\"paid\" class=\"rate\">\n                                <span class=\"charge\" data-fir-content=\"rate\"></span>\n                                <span class=\"hr\">/hr</span>\n                            </span>\n                            <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n                        </span>\n                    </span>\n                    <span class=\"mdc-list-item__meta\">\n                        <div class=\"rating__meta\">\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                            <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                        </div>\n                    </span>\n                </li>\n            </ul>\n        </div>\n        <div id=\"about-me\" data-fir-if=\"showAbout\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">About me</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div class=\"description\" data-fir-content=\"bio\">\n            </div>\n        </div>\n        <div id=\"basic-info\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Basic info</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\">\n                    <div class=\"mdc-list-item__text\">\n                        <div data-fir-if=\"paid\">\n                            <strong>Payments: </strong>\n                            <span style=\"white-space:initial!important;\" data-fir-content=\"payments/policy\"></span>\n                        </div>\n                        <strong>Gender: </strong>\n                        <span data-fir-content=\"gender\"></span>\n                        <strong>Type: </strong>\n                        <span data-fir-content=\"type\"></span>\n                        <strong>Grade: </strong>\n                        <span data-fir-content=\"grade\"></span>\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"subjects\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    <span data-fir-if-not=\"type\">User </span>\n                    <span data-fir-content=\"type\"></span> for\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense\">\n                <li class=\"subject-list-item mdc-list-item\" data-fir-foreach=\"subjects\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div data-fir-if=\"showLocation\" id=\"location\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Located at\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <div id=\"map\"></div>\n        </div>\n        <div id=\"availability\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">\n                    Available\n                </h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--dense mdc-list--non-interactive\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"availableTimes\" data-fir-id=\"~\">\n                    <div class=\"mdc-list-item__text\" data-fir-content=\"~\">\n                    </div>\n                </li>\n            </ul>\n        </div>\n        <div id=\"reviews\">\n            <div class=\"user-view-list-divider\">\n                <h4 class=\"mdc-list-group__subheader\">Reviews</h4>\n                <hr class=\"mdc-list-divider\">\n            </div>\n            <ul class=\"mdc-list mdc-list--non-interactive mdc-list--dense\">\n            </ul>\n        </div>\n        <button id=\"request-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">send</span>\n            <span class=\"mdc-fab__label\">Request</span>\n        </button>\n        <button id=\"message-button\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">chat</span>\n            <span class=\"mdc-fab__label\">Message</span>\n        </button>\n    </div>\n</div>\n\n<!-- Filter Dialog List Template -->\n<div hidden class=\"template\" id=\"dialog-filter-list\">\n    <ul class=\"mdc-list mdc-list--avatar-list\">\n        <li id=\"show-page-subject\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">book</i>\n            <span data-fir-if-not=\"subject\">Any Subject</span>\n            <b data-fir-content=\"subject\"></b>\n        </li>\n        <li id=\"show-page-availability\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">schedule</i>\n            <span data-fir-if-not=\"availability\">Any Availability</span>\n            <b data-fir-content=\"availability\"></b>\n        </li>\n        <li id=\"show-page-type\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">people</i>\n            <span data-fir-if-not=\"type\">Any Type</span>\n            <b data-fir-content=\"type\"></b>\n        </li>\n        <li id=\"show-page-grade\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">school</i>\n            <span data-fir-if-not=\"grade\">Any Grade</span>\n            <b data-fir-content=\"grade\"></b>\n        </li>\n        <li id=\"show-page-gender\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">wc</i>\n            <span data-fir-if-not=\"gender\">Any Gender</span>\n            <b data-fir-content=\"gender\"></b>\n        </li>\n        <li id=\"show-page-price\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">attach_money</i>\n            <span data-fir-if-not=\"price\">Any Price</span>\n            <b data-fir-content=\"price\"></b>\n        </li>\n        <li id=\"show-page-sort\" class=\"mdc-list-item\">\n            <i class=\"mdc-list-item__graphic material-icons\">sort</i>\n            <b data-fir-content=\"sort\"></b>\n        </li>\n    </ul>\n</div>\n\n<!-- Selection Dialog Items List (e.g. for the subject select dialog) -->\n<div hidden class=\"template\" id=\"dialog-selection-item-list\">\n    <ul class=\"mdc-list\" role=\"group\">\n        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" role=\"checkbox\">\n            <span class=\"mdc-list-item__graphic\">\n                <div class=\"mdc-checkbox\">\n                    <input type=\"checkbox\" data-fir-id=\"~\" class=\"mdc-checkbox__native-control\">\n                    <div class=\"mdc-checkbox__background\">\n                        <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n                            <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\" />\n                        </svg>\n                        <div class=\"mdc-checkbox__mixedmark\"></div>\n                    </div>\n                </div>\n            </span>\n            <label class=\"mdc-list-item__text\" for=\"~\" data-fir-content=\"~\"></label>\n        </li>\n    </ul>\n</div>\n\n<!-- Filter Dialog Items List -->\n<div hidden class=\"template\" id=\"dialog-filter-item-list\">\n    <ul class=\"mdc-list\">\n        <li class=\"mdc-list-item\" data-fir-foreach=\"items\" data-fir-content=\"~\"></li>\n    </ul>\n</div>\n\n<!-- Header Templates -->\n<!-- Welcome Header Template -->\n<div hidden class=\"template\" id=\"header-login\">\n    <div class=\"logo-header\">\n        <img src=\"/favicon/text-logo-bg.png\">\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"search-results-divider\">\n    <li role=\"separator\" class=\"mdc-list-divider\"></li>\n</div>\n\n<div hidden class=\"template\" id=\"header-search\">\n    <header id=\"search-app-bar\" class=\"header-search mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"title\" data-fir-content=\"title\">Tutorbook</span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"wordmark\">\n                    <img class=\"mdc-top-app-bar__wordmark\" src=\"" + __webpack_require__(468) + "\">\n                </span>\n                <span class=\"mdc-top-app-bar__title\" data-fir-if=\"logo\">\n                    <img class=\"mdc-top-app-bar__logo\" src=\"" + __webpack_require__(469) + "\">\n                </span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-middle\">\n                <div class=\"search-box\">\n                    <i id=\"search-icon\" class=\"material-icons\">search</i>\n                    <input placeholder=\"Search users\" data-fir-attr=\"placeholder:placeholder\" type=\"text\" name=\"query\">\n                    <button id=\"info-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">info</i>\n                    </button>\n                    <button style=\"display:none;\" id=\"clear-button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons\">clear</i>\n                    </button>\n                </div>\n                <div class=\"search-results\" style=\"display:none;\">\n                    <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n                    </ul>\n                </div>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-main\">\n    <header class=\"header-main mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"payments\">\n                                <span class=\"mdc-list-item__text\">Payments</span>\n                            </li>\n                            <!--\n\t\t   -<li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"settings\">\n\t\t   -    <span class=\"mdc-list-item__text\">Settings</span>\n\t\t   -</li>\n\t\t   -->\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-back\">\n    <header class=\"mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"back\" class=\"button mdc-top-app-bar__navigation-icon\"><i class=\"material-icons\">arrow_back</i></a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Edit\">edit</i>\n                <i data-fir-if=\"showMatch\" data-fir-click=\"match\" id=\"match\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Match\">wc</i>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n    </header>\n</div>\n\n<div hidden class=\"template\" id=\"header-action\">\n    <header class=\"header-action mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <a data-fir-click=\"cancel\" class=\"mdc-top-app-bar__navigation-icon material-icons\">close</a>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">View</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <i data-fir-if=\"showDelete\" data-fir-click=\"delete\" id=\"delete\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Delete\">delete</i>\n                <i data-fir-if=\"clockIn\" data-fir-click=\"clockIn\" id=\"clockIn\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Clock in for this appointment\">timer</i>\n                <i data-fir-if=\"showEdit\" data-fir-click=\"edit\" id=\"edit\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Suggest edit\">create</i>\n                <i data-fir-if=\"print\" data-fir-click=\"print\" id=\"print\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Print request form\">print</i>\n                <i data-fir-if=\"showApprove\" data-fir-click=\"approve\" id=\"approve\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Approve request\">how_to_reg</i>\n                <i data-fir-if=\"ok\" data-fir-click=\"ok\" id=\"ok\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Save changes\">check</i>\n                <i data-fir-if=\"send\" data-fir-click=\"send\" id=\"send\" class=\"mdc-top-app-bar__action-item material-icons\" aria-label=\"Send request\">send</i>\n            </section>\n        </div>\n    </header>\n</div>\n\n<!-- Filter Header Template -->\n<div hidden class=\"template\" id=\"header-filter\">\n    <header class=\"header-filter mdc-top-app-bar mdc-top-app-bar--fixed\">\n        <div class=\"mdc-top-app-bar__row\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start\">\n                <div class=\"button mdc-top-app-bar__navigation-icon\" data-fir-click=\"navigation\"><i class=\"material-icons\">menu</i></div>\n                <span class=\"mdc-top-app-bar__title\" data-fir-content=\"title\">Tutorbook</span>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end\" role=\"toolbar\">\n                <div class=\"mdc-menu-surface--anchor\">\n                    <div class=\"button mdc-top-app-bar__action-item\" data-fir-click=\"menu\"><i class=\"material-icons\">more_vert</i></div>\n                    <div class=\"mdc-menu mdc-menu-surface\" id=\"menu\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\" id=\"menu-list\">\n                            <li class=\"mdc-list-item\" role=\"menuitem\" data-fir-click=\"sign_out\">\n                                <span class=\"mdc-list-item__text\">Sign out</span>\n                            </li>\n                        </ul>\n                    </div>\n                </div>\n            </section>\n        </div>\n        <div id=\"filters\">\n            <div class=\"mdc-layout-grid\">\n                <div id=\"show-filters\">\n                    <div id=\"active-filters\">\n                        <div id=\"filter\">\n                            <i class=\"material-icons\" id=\"filter-dialog-button\">filter_list</i>\n                            <span>You're seeing <b data-fir-content=\"filter_description\"></b></span>\n                        </div>\n                        <i class=\"material-icons\" id=\"clear\">close</i>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </header>\n</div>\n\n<!-- Nav Drawer Destinations Template (this has to be a template because it\nneeds to be rendered with a ton of click listeners.) -->\n<div hidden class=\"template\" id=\"nav-drawer-list\">\n    <div class=\"nav-drawer-list\">\n        <nav class=\"mdc-list\">\n            <a id=\"home\" class=\"mdc-list-item\" data-fir-click=\"showHome\" aria-selected=\"true\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">home</i>\n                <span class=\"mdc-list-item__text\">Home</span>\n            </a>\n            <a id=\"matching\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showMatching\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">wc</i>\n                <span class=\"mdc-list-item__text\">Matching</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"payments\" data-fir-if=\"payments\" class=\"mdc-list-item\" data-fir-click=\"showPayments\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">payment</i>\n                <span class=\"mdc-list-item__text\">Payments</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"search\" class=\"mdc-list-item\" data-fir-click=\"showSearch\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">search</i>\n                <span class=\"mdc-list-item__text\">Search</span>\n            </a>\n            <a id=\"tutors\" class=\"mdc-list-item\" data-fir-click=\"showTutors\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person</i>\n                <span class=\"mdc-list-item__text\">Tutors</span>\n            </a>\n            <a id=\"pupils\" class=\"mdc-list-item\" data-fir-click=\"showPupils\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">person_outline</i>\n                <span class=\"mdc-list-item__text\">Pupils</span>\n            </a>\n            <hr class=\"mdc-list-divider\">\n            <a id=\"profile\" class=\"mdc-list-item\" data-fir-click=\"showProfile\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">account_circle</i>\n                <span class=\"mdc-list-item__text\">Profile</span>\n            </a>\n            <a id=\"schedule\" class=\"mdc-list-item\" data-fir-click=\"showSchedule\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">calendar_today</i>\n                <span class=\"mdc-list-item__text\">Schedule</span>\n            </a>\n            <a id=\"chats\" class=\"mdc-list-item\" data-fir-if-not=\"supervisor\" data-fir-click=\"showChats\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">chat</i>\n                <span class=\"mdc-list-item__text\">Messages</span>\n            </a>\n            <a id=\"config\" class=\"mdc-list-item\" data-fir-if=\"supervisor\" data-fir-click=\"showConfig\">\n                <i class=\"material-icons mdc-list-item__graphic\" aria-hidden=\"true\">settings</i>\n                <span class=\"mdc-list-item__text\">Configuration</span>\n            </a>\n        </nav>\n    </div>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab-labeled\">\n    <button data-fir-id=\"id\" class=\"mdc-fab mdc-fab--extended\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n        <span class=\"mdc-fab__label\" data-fir-content=\"label\" data-fir-if=\"label\"></span>\n    </button>\n</div>\n\n<!-- Floating Action Button Template -->\n<div hidden class=\"template\" id=\"fab\">\n    <button data-fir-id=\"id\" class=\"mdc-fab\">\n        <span class=\"mdc-fab__icon material-icons\" data-fir-content=\"icon\">info</span>\n    </button>\n</div>\n\n<!-- Welcome Screen Template -->\n<div hidden class=\"template\" id=\"login\">\n    <div class=\"login\">\n        <div class=\"logo-header\">\n            <img src=\"/favicon/text-logo-bg.png\">\n        </div>\n        <div id=\"page-login\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"signup-button\" data-fir-click=\"signup\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Signup\n                </button>\n                <button id=\"login-button\" data-fir-click=\"login\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Login\n                </button>\n            </div>\n        </div>\n        <div id=\"page-signup\" class=\"page\">\n            <div class=\"button-container\">\n                <button id=\"pupil-button\" data-fir-click=\"pupil\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Pupil\n                </button>\n                <button id=\"tutor-button\" data-fir-click=\"tutor\" type=\"button\" class=\"mdc-button mdc-button--raised\">\n                    Peer Tutor\n                </button>\n                <button id=\"paid-tutor-button\" data-fir-click=\"paidTutor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                    Paid Tutor\n                </button>\n                <button id=\"expand-button\" data-fir-click=\"expand\" type=\"button\" class=\"mdc-icon-button\">\n                    <i class=\"material-icons mdc-icon-button__icon\">expand_more</i>\n                </button>\n                <div style=\"display:none\" id=\"expand\">\n                    <button id=\"supervisor-button\" data-fir-click=\"supervisor\" type=\"button\" class=\"mdc-button mdc-button--outlined\">\n                        Supervisor\n                    </button>\n                    <button id=\"collapse-button\" data-fir-click=\"collapse\" type=\"button\" class=\"mdc-icon-button\">\n                        <i class=\"material-icons mdc-icon-button__icon\">expand_less</i>\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Setup Header Template -->\n<div hidden class=\"template\" id=\"header-welcome\">\n    <div data-fir-if=\"welcome\" class=\"header-welcome\">\n        <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n            Welcome back\n        </h1>\n        <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n            We missed you at Tutorbook\n        </h5>\n    </div>\n</div>\n\n<!-- Supervisor Setup Template -->\n<div hidden class=\"template\" id=\"setup\">\n    <div class=\"setup\">\n        <div data-fir-if=\"welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                Welcome back\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We missed you at Tutorbook\n            </h5>\n        </div>\n    </div>\n    <div class=\"\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"setup-cards\">\n            </div>\n        </div>\n    </div>\n</div>\n</div>\n\n<!-- Empty Template -->\n<div hidden class=\"template\" id=\"empty\">\n    <!-- TODO: Make this actually look nice. -->\n</div>\n\n<!-- Input List Item Wrapper Template -->\n<div hidden class=\"template\" id=\"input-wrapper\">\n    <div class=\"input-wrapper mdc-list--non-interactive\">\n    </div>\n</div>\n\n<!-- Wrapper Template -->\n<div hidden class=\"template\" id=\"wrapper\">\n    <div>\n    </div>\n</div>\n\n<!-- Input Dialog Template -->\n<div hidden class=\"template\" id=\"dialog-input\">\n    <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Profile Input Dialog Template -->\n<!-- This is exactly the same as the input dialog above, but has different\nstyling due to input el spacing. -->\n<div hidden class=\"template\" id=\"profile\">\n    <ul class=\"profile dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n    </ul>\n</div>\n\n<!-- Search Text Field Input List Item Dialog Template -->\n<div hidden class=\"template\" id=\"search-input-list-item\">\n    <li data-fir-id=\"id\" class=\"search-input-list-item input-list-item mdc-list-item\">\n        <div class=\"search-box\">\n            <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n                <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n                <div class=\"mdc-notched-outline\">\n                    <div class=\"mdc-notched-outline__leading\"></div>\n                    <div class=\"mdc-notched-outline__notch\">\n                        <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                    </div>\n                    <div class=\"mdc-notched-outline__trailing\"></div>\n                </div>\n            </div>\n        </div>\n        <div class=\"search-results\" style=\"display:none;\">\n            <ul id=\"results\" class=\"mdc-list mdc-list--avatar-list mdc-list--two-line\">\n            </ul>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Item Template -->\n<div hidden class=\"template\" id=\"input-list-item\">\n    <li class=\"input-list-item mdc-list-item\">\n    </li>\n</div>\n\n<!-- Payment List Item Template -->\n<div hidden class=\"template\" id=\"transaction-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-attr=\"timestamp:timestamp\" data-fir-click=\"go_to_transaction\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"meta_title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"meta_subtitle\">\n            </span>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"supervisor-appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserA\" data-fir-attr=\"src:photoA\">\n        <img class=\"mdc-list-item__graphic\" data-fir-click=\"viewUserB\" data-fir-attr=\"src:photoB\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- Event List Item Template -->\n<div hidden class=\"template\" id=\"appt-list-item\">\n    <li class=\"appt-list-item mdc-list-item\" data-fir-click=\"go_to_appt\" data-fir-attr=\"type:type,timestamp:timestamp\" data-fir-id=\"id\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\" data-fir-click=\"viewUser\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\">\n            </span>\n        </span>\n        <div data-fir-if=\"showAction\" class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"action\" class=\"mdc-button mdc-button--unelevated\" data-fir-content=\"actionLabel\">Action</button>\n        </div>\n    </li>\n</div>\n\n<!-- MDC List Divider Template w/ Action Buttons -->\n<div hidden class=\"template\" id=\"action-list-divider\">\n    <div data-fir-id=\"text\" class=\"action-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\">\n            <span data-fir-content=\"text\">Label</span>\n        </h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- MDC List Divider Action Button Template -->\n<div hidden class=\"template\" id=\"list-divider-btn\">\n    <button data-fir-click=\"action\" data-fir-content=\"label\" data-fir-id=\"label\" class=\"mdc-button mdc-button--unelevated\"></button>\n</div>\n\n<!-- MDC List Divider Template -->\n<div hidden class=\"template\" id=\"input-list-divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Dashboard Divider Template -->\n<div hidden class=\"template\" id=\"divider\">\n    <div data-fir-id=\"text\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"text\">Label</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Mobile Schedule Divider Template -->\n<div hidden class=\"template\" id=\"mobile-date-list-divider\">\n    <div data-fir-attr=\"timestamp:timestamp\" class=\"input-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"date\">Mon, 7/26</h4>\n        <hr class=\"mdc-list-divider\">\n    </div>\n</div>\n\n<!-- Schedule Divider Template -->\n<div hidden class=\"template\" id=\"date-list-divider\">\n    <div data-fir-attr=\"timestamp:timestamp\" class=\"date-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <div class=\"date-label\" data-fir-content=\"date\">Mon, 7/26</div>\n    </div>\n</div>\n\n<!-- User Profile Header Template -->\n<div hidden class=\"template\" id=\"profile-header\">\n    <li class=\"mdc-list-item profile-header\">\n        <img class=\"mdc-list-item__graphic pic\" data-fir-attr=\"src:pic\">\n        <img class=\"mdc-list-item__graphic modify-pic\" style=\"display:none;\" src=\"/app/img/change_pic.png\">\n        <input id=\"media-capture\" type=\"file\" accept=\"image/*\" capture=\"camera\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"email\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- Matching User Header Template -->\n<div hidden class=\"template\" id=\"matching-user-header\">\n    <li class=\"mdc-list-item matching-user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <div class=\"mdc-list-item__meta\">\n            <button data-fir-click=\"go_to_user\" class=\"mdc-button mdc-button--unelevated\">View</button>\n        </div>\n    </li>\n</div>\n\n<!-- User Header Template -->\n<div hidden class=\"template\" id=\"user-header\">\n    <li class=\"mdc-list-item user-header\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:pic\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Empty (i.e. no need for val) MDC Select Template -->\n<div hidden class=\"template\" id=\"input-empty-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC Select Template -->\n<div hidden class=\"template\" id=\"input-select\">\n    <div class=\"mdc-select mdc-select--outlined\" data-fir-id=\"label\">\n        <input type=\"hidden\" name=\"enhanced-select\">\n        <i class=\"mdc-select__dropdown-icon\"></i>\n        <div class=\"mdc-select__selected-text\" data-fir-content=\"val\"></div>\n        <div class=\"mdc-select__menu mdc-menu mdc-menu-surface\">\n            <ul class=\"mdc-list\">\n                <li class=\"mdc-list-item\" data-fir-foreach=\"vals\" data-fir-attr=\"data-value:~\" data-fir-content=\"~\"></li>\n            </ul>\n        </div>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Input Stub Template -->\n<div hidden class=\"template\" id=\"input-stub\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"id\">\n        <input type=\"text\" class=\"mdc-text-field__input\" value=\"Stub\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" for=\"stub\">Stub</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"err-text-field\">\n    <div class=\"err-text-field\">\n        <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n            <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n            <div class=\"mdc-notched-outline\">\n                <div class=\"mdc-notched-outline__leading\"></div>\n                <div class=\"mdc-notched-outline__notch\">\n                    <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n                </div>\n                <div class=\"mdc-notched-outline__trailing\"></div>\n            </div>\n        </div>\n        <div class=\"mdc-text-field-helper-line\">\n            <div id=\"err\" data-fir-content=\"err\" class=\"mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg\">Invalid response, try again.</div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextField Template -->\n<div hidden class=\"template\" id=\"input-text-field\">\n    <div class=\"mdc-text-field mdc-text-field--outlined\" data-fir-id=\"label\">\n        <input type=\"text\" class=\"mdc-text-field__input\" data-fir-attr=\"value:text\">\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\">Label</label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- MDC TextArea Template -->\n<div hidden class=\"template\" id=\"input-text-area\">\n    <div class=\"mdc-text-field mdc-text-field--textarea\" data-fir-id=\"label\">\n        <textarea class=\"mdc-text-field__input\" data-fir-content=\"text\" rows=\"8\" cols=\"40\"></textarea>\n        <div class=\"mdc-notched-outline\">\n            <div class=\"mdc-notched-outline__leading\"></div>\n            <div class=\"mdc-notched-outline__notch\">\n                <label class=\"mdc-floating-label\" data-fir-attr=\"for:label\" data-fir-content=\"label\"></label>\n            </div>\n            <div class=\"mdc-notched-outline__trailing\"></div>\n        </div>\n    </div>\n</div>\n\n<!-- Messages List Template -->\n<div hidden class=\"template\" id=\"chat\">\n    <div class=\"chat\" data-fir-id=\"id\">\n        <div id=\"messages\">\n        </div>\n        <div class=\"write\">\n            <input type=\"text\" data-fir-attr=\"placeholder:placeholder\" />\n            <button disabled=\"disabled\" data-fir-click=\"send\" class=\"mdc-icon-button material-icons\">send</button>\n        </div>\n    </div>\n</div>\n\n<!-- Message Template -->\n<div hidden class=\"template\" id=\"message\">\n    <div class=\"message you\" data-fir-attr=\"sender:sender,timestamp:timestamp\" data-fir-id=\"id\">\n        <img data-fir-if=\"img\" data-fir-attr=\"src:sentBy/photo\" class=\"message__img\">\n        <div data-fir-content=\"message\" class=\"message__bubble\">\n        </div>\n    </div>\n</div>\n\n<!-- Messages Time -->\n<div hidden class=\"template\" id=\"message-time\">\n    <div class=\"conversation-start\">\n        <span data-fir-content=\"time\">Today, 6:48 AM</span>\n    </div>\n</div>\n\n<!-- Person Template (part of codepen) -->\n<div hidden class=\"template\" id=\"chat-person-item\">\n    <li class=\"person\">\n        <img data-fir-attr=\"src:photo\" alt=\"\" />\n        <span class=\"name\" data-fir-content=\"name\">Thomas Bangalter</span>\n        <span class=\"time\" data-fir-content=\"time\">2:09 PM</span>\n        <span class=\"preview\" data-fir-content=\"preview\">I was wondering...</span>\n    </li>\n</div>\n\n<!-- Chats Interface from CodePen -->\n<!-- See: https://codepen.io/Momciloo/pen/bEdbxY -->\n<div hidden class=\"template\" id=\"codepen-chat\">\n    <div class=\"codepen-chat\">\n        <div class=\"wrapper\">\n            <div class=\"container\">\n                <div class=\"left\">\n                    <div class=\"top\">\n                        <input type=\"text\" placeholder=\"Search\" />\n                        <a href=\"javascript:;\" class=\"search\"></a>\n                    </div>\n                    <ul class=\"people\">\n                        <li class=\"person\" data-chat=\"person1\">\n                            <img src=\"https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg\" alt=\"\" />\n                            <span class=\"name\">Thomas Bangalter</span>\n                            <span class=\"time\">2:09 PM</span>\n                            <span class=\"preview\">I was wondering...</span>\n                        </li>\n                    </ul>\n                </div>\n                <div class=\"right\">\n                    <div class=\"top\"><span>To: <span class=\"name\">Dog Woofson</span></span></div>\n                    <div class=\"chat\" data-chat=\"person1\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:48 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello,\n                        </div>\n                        <div class=\"bubble you\">\n                            it's me.\n                        </div>\n                        <div class=\"bubble you\">\n                            I was wondering...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person2\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 5:38 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hello, can you hear me?\n                        </div>\n                        <div class=\"bubble you\">\n                            I'm in California dreaming\n                        </div>\n                        <div class=\"bubble me\">\n                            ... about who we used to be.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            When we were younger and free...\n                        </div>\n                        <div class=\"bubble you\">\n                            I've forgotten how it felt before\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person3\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 3:38 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble you\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble me\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble me\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble you\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble you\">\n                            It’s not that bad...\n                        </div>\n                        <div class=\"bubble you\">\n                            But we’re probably gonna need a new carpet.\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person4\">\n                        <div class=\"conversation-start\">\n                            <span>Yesterday, 4:20 PM</span>\n                        </div>\n                        <div class=\"bubble me\">\n                            Hey human!\n                        </div>\n                        <div class=\"bubble me\">\n                            Umm... Someone took a shit in the hallway.\n                        </div>\n                        <div class=\"bubble you\">\n                            ... what.\n                        </div>\n                        <div class=\"bubble you\">\n                            Are you serious?\n                        </div>\n                        <div class=\"bubble me\">\n                            I mean...\n                        </div>\n                        <div class=\"bubble me\">\n                            It’s not that bad...\n                        </div>\n                    </div>\n                    <div class=\"chat\" data-chat=\"person5\">\n                        <div class=\"conversation-start\">\n                            <span>Today, 6:28 AM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup\n                        </div>\n                        <div class=\"bubble you\">\n                            Wasup for the third time like is <br />you blind bitch\n                        </div>\n\n                    </div>\n                    <div class=\"chat\" data-chat=\"person6\">\n                        <div class=\"conversation-start\">\n                            <span>Monday, 1:27 PM</span>\n                        </div>\n                        <div class=\"bubble you\">\n                            So, how's your new phone?\n                        </div>\n                        <div class=\"bubble you\">\n                            You finally have a smartphone :D\n                        </div>\n                        <div class=\"bubble me\">\n                            Drake?\n                        </div>\n                        <div class=\"bubble me\">\n                            Why aren't you answering?\n                        </div>\n                        <div class=\"bubble you\">\n                            howdoyoudoaspace\n                        </div>\n                    </div>\n                    <div class=\"write\">\n                        <a href=\"javascript:;\" class=\"write-link attach\"></a>\n                        <input type=\"text\" />\n                        <a href=\"javascript:;\" class=\"write-link smiley\"></a>\n                        <a href=\"javascript:;\" class=\"write-link send\"></a>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Chats List Template -->\n<div hidden class=\"template\" id=\"chats-mobile\">\n    <div class=\"chats\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" style=\"width:0;height:0;\"></li>\n            <!--\n               -<li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n               -    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n               -        <a class=\"material-icons\">add</a>\n               -    </div>\n               -    <span class=\"mdc-list-item__text\">\n               -        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n               -        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n               -    </span>\n               -</li>\n\t       -->\n        </ul>\n    </div>\n</div>\n\n<!-- Supervisor Chat List Template -->\n<div hidden class=\"template\" id=\"supervisor-chats-list\">\n    <div id=\"supervisor-chats\" class=\"mdc-list-group\">\n        <h3 class=\"mdc-list-group__subheader\">Announcements</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"announcements\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-announcement\" class=\"chat-list-item mdc-list-item\" data-fir-click=\"newAnnouncement\">\n                <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                    <a class=\"material-icons\">add</a>\n                </div>\n                <span class=\"mdc-list-item__text\">\n                    <span class=\"mdc-list-item__primary-text\">New Announcement Group</span>\n                    <span class=\"mdc-list-item__secondary-text\">Create a new announcement group to bulk message.</span>\n                </span>\n            </li>\n        </ul>\n        <h3 class=\"mdc-list-group__subheader\">Conversations</h3>\n        <hr class=\"mdc-list-divider\">\n        <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <li id=\"new-chat\" style=\"width:0;height:0;\"></li>\n            <!--\n               -<li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n               -    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n               -        <a class=\"material-icons\">add</a>\n               -    </div>\n               -    <span class=\"mdc-list-item__text\">\n               -        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n               -        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n               -    </span>\n               -</li>\n\t       -->\n        </ul>\n    </div>\n</div>\n\n<!-- Desktop Chat Interface Template -->\n<div hidden class=\"template\" id=\"chats-desktop\">\n    <div class=\"chats\">\n        <div class=\"chats-container\">\n            <ul id=\"chats\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n                <li id=\"new-chat\" style=\"width:0;height:0;\"></li>\n                <!--\n                   -<li id=\"new-chat\" class=\"mdc-list-item\" data-fir-click=\"newChat\">\n                   -    <div id=\"checkmark\" style=\"display:inherit;\" class=\"mdc-list-item__graphic\">\n                   -        <a class=\"material-icons\">add</a>\n                   -    </div>\n                   -    <span class=\"mdc-list-item__text\">\n                   -        <span class=\"mdc-list-item__primary-text\">New Conversation</span>\n                   -        <span class=\"mdc-list-item__secondary-text\">Create a new one-on-one conversation.</span>\n                   -    </span>\n                   -</li>\n\t\t   -->\n            </ul>\n        </div>\n        <div class=\"messages-container\">\n            <div class=\"centered-text mdc-typography mdc-typography--subtitle1\">\n                Select a chat to message.\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Search List Template -->\n<div hidden class=\"template\" id=\"search\">\n    <div class=\"search \">\n        <ul id=\"results\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            <!-- Add empty list item that is hidden under filter view -->\n            <li class=\"mdc-list-item mdc-list-item--disabled\">\n            </li>\n        </ul>\n    </div>\n</div>\n\n<!-- Calendar Schedule View List Template -->\n<div hidden class=\"template\" id=\"schedule\">\n    <div class=\"schedule\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Appointments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"summary\">\n                View past tutoring sessions, clock out of active\n                meetings, and edit upcoming appointments.\n            </h5>\n        </div>\n        <ul data-fir-attr=\"style:scheduleStyling\" class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n        </ul>\n        <div class=\"delete-user-input\">\n            <button id=\"load-more\" class=\"mdc-button\">\n                <i class=\"mdc-button__icon material-icons\">expand_more</i>\n                <span class=\"mdc-button__label\">Load more</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Search List Item Template -->\n<div hidden class=\"template\" id=\"search-empty-list-item\">\n    <li class=\"mdc-list-item mdc-list-item--disabled\">\n    </li>\n</div>\n\n<!-- Rating Templates -->\n<div hidden class=\"template\" id=\"star-border-icon\">\n    <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n</div>\n<div hidden class=\"template\" id=\"star-icon\">\n    <i class=\"material-icons\" id=\"star-icon\">star</i>\n</div>\n\n<!-- Empty Result Template -->\n<div hidden class=\"template\" id=\"centered-text\">\n    <div class=\"centered-text mdc-typography mdc-typography--subtitle1\" data-fir-content=\"text\">\n        <!-- TODO: Center a \"No results.\" message -->\n    </div>\n</div>\n\n<!-- Past Appt List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-past-appt\">\n    <li class=\"search-result-past-appt mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"go_to_appt\">\n        <i class=\"mdc-list-item__graphic material-icons\">calendar_today</i>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"summary\">\n            </span>\n        </span>\n    </li>\n</div>\n\n<!-- Message Item Template -->\n<div hidden class=\"template\" id=\"message-list-item\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-click=\"view_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"message\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"name\">\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\" data-fir-content=\"sent\">\n        </span>\n    </li>\n</div>\n\n<!-- Chat Item Template -->\n<div hidden class=\"template\" id=\"chat-list-item\">\n    <li class=\"mdc-list-item chat-list-item\" data-fir-attr=\"index:index\" data-fir-id=\"id\" data-fir-click=\"open_chat\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"lastMessage/message\">\n            </span>\n        </span>\n        <div data-fir-if=\"showMenuBtn\" class=\"mdc-list-item__meta\">\n            <button id=\"menu-btn\" class=\"mdc-icon-button material-icons\">more_vert</button>\n        </div>\n    </li>\n</div>\n\n<!-- User List Item Search Hit Template (has expandable menu) -->\n<div hidden class=\"template\" id=\"search-hit-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-if=\"showHrs\" data-fir-click=\"hrs\">\n                <i class=\"material-icons\">insert_drive_file</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"chat\">\n                <i class=\"material-icons\">chat</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"match\">\n                <i class=\"material-icons\">wc</i>\n            </button>\n            <button class=\"mdc-icon-button\" data-fir-click=\"edit\">\n                <i class=\"material-icons\">edit</i>\n            </button>\n        </span>\n    </li>\n</div>\n\n<!-- User List Item Search Result Template -->\n<div hidden class=\"template\" id=\"search-result-user\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\" data-fir-attr=\"type:paymentType\" data-fir-click=\"go_to_user\">\n        <img id=\"photo\" class=\"mdc-list-item__graphic\" data-fir-attr=\"src:photo\">\n        <div id=\"checkmark\" class=\"mdc-list-item__graphic\">\n            <a class=\"material-icons\">check</a>\n        </div>\n        <span class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"name\"></span>\n            <span class=\"mdc-list-item__secondary-text\">\n                <i data-fir-if=\"paid\" class=\"paid-icon material-icons\">money</i>\n                <span data-fir-content=\"type\"></span>\n                <span>•</span>\n                <span data-fir-if=\"paid\" class=\"rate\">\n                    <span class=\"charge\" data-fir-content=\"rate\"></span>\n                    <span class=\"hr\">/hr</span>\n                </span>\n                <span data-fir-if=\"free\" data-fir-content=\"grade\"></span>\n            </span>\n        </span>\n        <span class=\"mdc-list-item__meta\">\n            <div class=\"rating__meta\">\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n                <i class=\"material-icons\" id=\"star-border-icon\">star_border</i>\n            </div>\n        </span>\n    </li>\n</div>\n\n<!-- Service Hours Statistics Template -->\n<div hidden class=\"template\" id=\"stats\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"title\">\n                App Statistics\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Track service hours, watch leader boards, and stay on top of app\n                activity.\n            </h5>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Recent activity</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"activity\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <div class=\"input-list-divider\">\n            <h4 class=\"mdc-list-group__subheader\">Service hours</h4>\n            <hr class=\"mdc-list-divider\">\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"service-hrs\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Matching Template -->\n<div hidden class=\"template\" id=\"matching\">\n    <div class=\"matching\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"pupil-button\" data-fir-click=\"new_pupil\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person_outline</span>\n            <span class=\"mdc-fab__label\">Pupil</span>\n        </button>\n        <button id=\"tutor-button\" data-fir-click=\"new_tutor\" class=\"mdc-fab mdc-fab--extended\">\n            <span class=\"mdc-fab__icon material-icons\">person</span>\n            <span class=\"mdc-fab__label\">Tutor</span>\n        </button>\n        <!--\n           -<button id=\"teacher-button\" data-fir-click=\"new_teacher\" class=\"mdc-fab mdc-fab--extended\">\n           -    <span class=\"mdc-fab__icon material-icons\">school</span>\n           -    <span class=\"mdc-fab__label\">Teacher</span>\n           -</button>\n\t   -->\n    </div>\n</div>\n\n<!-- Accounts Management Template -->\n<div hidden class=\"template\" id=\"account-manager\">\n    <div class=\"account-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Accounts\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can create and edit accounts for the tutors and\n                pupils who submit paper application forms.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Location Management Template -->\n<div hidden class=\"template\" id=\"location-manager\">\n    <div class=\" location-manager\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Manage Locations\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Here, you can edit your existing locations and apply for the\n                creation of new supervised locations.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n        <button id=\"new-button\" data-fir-click=\"new\" class=\"mdc-fab\">\n            <span class=\"mdc-fab__icon material-icons\">add</span>\n        </button>\n    </div>\n</div>\n\n<!-- Feedback Input Dialog Template -->\n<div hidden class=\"template\" id=\"feedback\">\n    <div class=\"feedback\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Help & Feedback\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Ask us any question, and we'll try to get back to you as\n                soon as we can.\n            </h5>\n        </div>\n        <ul class=\"dialog-input mdc-list mdc-list--avatar-list mdc-list--two-line mdc-list--non-interactive \">\n        </ul>\n    </div>\n</div>\n\n<!-- Configuration Screen Template -->\n<div hidden class=\"template\" id=\"config\">\n    <div class=\"config\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Configuration\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage locations, available subjects and grades, and your\n                school's bell schedule.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Grid Template -->\n<div hidden class=\"template\" id=\"dashboard\">\n    <div class=\"dashboard\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                Welcome, <span data-fir-content=\"name\"></span>\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"subtitle\">\n                We're glad you're here. Below are some friendly suggestions for\n                what to do next.\n            </h5>\n        </div>\n        <div class=\"mdc-layout-grid\" id=\"default\">\n            <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Horz Scroller Card Grid Template -->\n<div hidden class=\"template\" id=\"horz-cards\">\n    <div class=\"horz-layout-grid\" data-fir-id=\"id\">\n        <button id=\"left\" style=\"display:none;\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_left\n        </button>\n        <button id=\"right\" class=\"mdc-icon-button mdc-elevation--z4 material-icons\">\n            chevron_right\n        </button>\n        <div class=\"horz-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Card Grid Template -->\n<div hidden class=\"template\" id=\"cards\">\n    <div class=\"mdc-layout-grid\">\n        <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n        </div>\n    </div>\n</div>\n\n<!-- Payments Template (includes tutor business inputs and selects section, \npayment method MDC Cards section, and an MDC List payment history \nsection) -->\n<div hidden class=\"template\" id=\"payments\">\n    <div class=\"payments\">\n        <div data-fir-if=\"showWelcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\" data-fir-content=\"welcomeTitle\">\n                Payments\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\" data-fir-content=\"welcomeSubtitle\">\n                Manage your payment methods, preferences, and history.\n            </h5>\n        </div>\n        <div id=\"settings\" data-fir-if=\"showSettings\">\n        </div>\n        <!--\n-<div id=\"methods\" data-fir-if=\"showMethods\" class=\"mdc-layout-grid\">\n-    <div class=\"mdc-layout-grid__inner\" id=\"cards\">\n-    </div>\n-</div>\n-->\n        <div id=\"history\" data-fir-if=\"showHistory\">\n            <ul class=\"mdc-list mdc-list--two-line mdc-list--avatar-list\">\n            </ul>\n        </div>\n    </div>\n</div>\n\n<!-- Empty Dialog Button -->\n<div hidden class=\"template\" id=\"dialog-button\">\n    <button type=\"button\" class=\"mdc-button mdc-dialog__button\" data-fir-click=\"action\" data-fir-content=\"label\">Label</button>\n</div>\n\n<!-- MDC Card Actions Template (for appending to the card-empty template below) -->\n<div hidden class=\"template\" id=\"card-button\">\n    <button data-fir-click=\"action\" data-fir-id=\"label\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n        <span class=\"mdc-button__label\" data-fir-content=\"label\">Label</span>\n    </button>\n</div>\n\n<!-- MDC Card Menu -->\n<div hidden class=\"template\" id=\"card-action\">\n    <li class=\"mdc-list-item\" data-fir-id=\"label\" role=\"menuitem\" data-fir-click=\"action\">\n        <span data-fir-content=\"label\" class=\"mdc-list-item__text\">Action</span>\n    </li>\n</div>\n\n<!-- Empty Dismissable Card Template -->\n<div hidden class=\"template\" id=\"card-empty\">\n    <div class=\"card-empty mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" id=\"primary\" data-fir-click=\"actions/primary\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                    <span data-fir-content=\"title\">Titling Title</span>\n                    <div data-fir-if=\"actions/options\" class=\"mdc-menu-surface--anchor\">\n                        <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                        <div class=\"mdc-menu mdc-menu-surface\">\n                            <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                            </ul>\n                        </div>\n                    </div>\n                </h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">This is a subtitle</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n        </div>\n    </div>\n</div>\n\n<!-- Four-Day Schedule Card Template -->\n<div class=\"template\" id=\"card-schedule\">\n    <div class=\"card-schedule mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"mdc-layout-grid\">\n            <div class=\"mdc-layout-grid__inner\">\n                <div id=\"monday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Monday</div>\n                <div id=\"tuesday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Tuesday</div>\n                <div id=\"wednesday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Wednesday</div>\n                <div id=\"thursday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Thursday</div>\n                <div id=\"friday-header\" class=\"schedule-header-text mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">Friday</div>\n                <div id=\"monday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"tuesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"wednesday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"thursday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n                <div id=\"friday\" class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-2-phone mdc-layout-grid__cell--span-2-desktop\">\n                    <ul class=\"mdc-list schedule-list\">\n                    </ul>\n                </div>\n            </div>\n            <div id=\"loader\">\n                <div class=\"loader\">\n                    <svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\">\n                        <circle id=\"spinner\" cx=\"16\" cy=\"16\" r=\"14\" fill=\"none\"></circle>\n                    </svg>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Event Progress Bar -->\n<div hidden class=\"template\" id=\"event-progress\">\n    <div role=\"progressbar\" class=\"mdc-linear-progress\">\n        <div class=\"mdc-linear-progress__buffering-dots\"></div>\n        <div class=\"mdc-linear-progress__buffer\"></div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__primary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n        <div class=\"mdc-linear-progress__bar mdc-linear-progress__secondary-bar\">\n            <span class=\"mdc-linear-progress__bar-inner\"></span>\n        </div>\n    </div>\n</div>\n\n<!-- Event Card Template -->\n<div hidden class=\"template\" id=\"card-event\">\n    <div data-fir-id=\"id\" data-fir-attr=\"type:type,index:index\" class=\"card-event mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-12-desktop\">\n        <div class=\"container\">\n            <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">\n                <span data-fir-content=\"title\">Titling Title</span>\n                <div class=\"mdc-menu-surface--anchor\">\n                    <button id=\"menu\" class=\"mdc-icon-button material-icons\">more_vert</button>\n                    <div class=\"mdc-menu mdc-menu-surface\">\n                        <ul class=\"mdc-list\" role=\"menu\" aria-hidden=\"true\" aria-orientation=\"vertical\">\n                        </ul>\n                    </div>\n                </div>\n            </h2>\n            <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\">\n                <span data-fir-content=\"subtitle\">This is a subtitle</span>\n            </h3>\n        </div>\n    </div>\n</div>\n\n<!-- Location Card Template -->\n<div hidden class=\"template\" id=\"card-location\">\n    <div class=\"mdc-card mdc-card--outlined mdc-layout-grid__cell mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone mdc-layout-grid__cell--span-6-desktop location-card\">\n        <div class=\"location-card__primary\">\n            <h2 class=\"location-card__title mdc-typography mdc-typography--headline6\" data-fir-content=\"name\">Gunn Academic Center</h2>\n            <h3 class=\"location-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"city\">Palo Alto, CA</h3>\n        </div>\n        <div class=\"mdc-card__primary-action location-card__primary-action\" data-fir-click=\"go_to_location\" tabindex=\"0\">\n            <div class=\"mdc-card__media mdc-card__media--16-9 location-card__media\" data-fir-attr=\"style:image-url\"></div>\n        </div>\n        <div class=\"location-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"description\">\n            The Academic Center is an inclusive support center where all\n            Gunn students can receive tutoring, do homework, study, and work\n            collaboratively on projects. In the AC, students requesting\n            support in their academics can receive free tutoring.\n        </div>\n        <hr class=\"mdc-list-divider\">\n        <div class=\"location-card__hours\">\n            <h2 class=\"mdc-typography mdc-typography--subtitle1\">Hours</h2>\n            <div class=\"mdc-chip-set mdc-chip-set--choice\">\n                <div class=\"mdc-chip\" data-fir-foreach=\"todays-hours\" data-fir-id=\"~\">\n                    <div class=\"mdc-chip__text\" data-fir-content=\"~\">10:00 AM</div>\n                </div>\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"edit\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Edit</span>\n            </button>\n            <button data-fir-click=\"delete\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Delete</span>\n            </button>\n            <!--\n   -<button data-fir-click=\"schedule\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Schedule</span>\n   -</button>\n   -->\n        </div>\n    </div>\n</div>\n\n<!-- Dashboard Card Templates -->\n<div hidden class=\"template\" id=\"card-appointment\">\n    <div class=\"card-appointments mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action location-card dashboard-card__primary-action\" data-fir-click=\"go_to_appt\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Upcoming Appointment</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">With Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You have a tutoring session with Nicholas Chiang at 2:00 PM today.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-fir-click=\"go_to_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_appt\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestOut\">\n    <div class=\"card-requestsOut mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" data-mdc-auto-outit=\"MDCRipple\" taboutdex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">Pending Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">To Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                You requested Nicholas Chiang as a tutor for AP Comp Sci A.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"go_to_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">View</span>\n            </button>\n            <!--\n   -<button data-mdc-auto-outit=\"MDCRipple\" data-fir-click=\"edit_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n   -    <span class=\"mdc-button__label\">Edit</span>\n   -</button>\n   -->\n            <button data-fir-if=\"show_cancel\" data-fir-click=\"cancel_request\" class=\"mdc-button mdc-card__action mdc-card__action--button\">\n                <span class=\"mdc-button__label\">Cancel</span>\n            </button>\n        </div>\n    </div>\n</div>\n\n<div hidden class=\"template\" id=\"card-requestIn\">\n    <div class=\"card-requestsIn mdc-card mdc-card--outlined mdc-layout-grid__cell dashboard-card\">\n        <div class=\"mdc-card__primary-action dashboard-card__primary-action\" data-fir-click=\"go_to_request\" tabindex=\"0\">\n            <div class=\"dashboard-card__primary\">\n                <h2 class=\"dashboard-card__title mdc-typography mdc-typography--headline6\">New Request</h2>\n                <h3 class=\"dashboard-card__subtitle mdc-typography mdc-typography mdc-typography--subtitle2\" data-fir-content=\"subtitle\">From Nicholas Chiang</h3>\n            </div>\n            <div class=\"dashboard-card__secondary mdc-typography mdc-typography--body2\" data-fir-content=\"summary\">\n                Nicholas Chiang requested you as a tutor for AP Comp Sci P.\n            </div>\n        </div>\n        <div class=\"mdc-card__actions\">\n            <div class=\"mdc-card__action-buttons\">\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"go_to_request\">\n                    <span class=\"mdc-button__label\">View</span>\n                </button>\n                <button class=\"mdc-button mdc-card__action mdc-card__action--button\" data-fir-click=\"reject_request\">\n                    <span class=\"mdc-button__label\">Reject</span>\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n\n<!-- Settings Switch Template -->\n<div hidden class=\"template\" id=\"input-switch\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <div class=\"mdc-switch\">\n                <div class=\"mdc-switch__track\"></div>\n                <div class=\"mdc-switch__thumb-underlay\">\n                    <div class=\"mdc-switch__thumb\">\n                        <input type=\"checkbox\" class=\"mdc-switch__native-control\" role=\"switch\">\n                    </div>\n                </div>\n            </div>\n        </div>\n    </li>\n</div>\n\n<!-- Settings Button Template -->\n<div hidden class=\"template\" id=\"input-setting\">\n    <li class=\"mdc-list-item\" data-fir-id=\"id\">\n        <div class=\"mdc-list-item__text\">\n            <span class=\"mdc-list-item__primary-text\" data-fir-content=\"title\"></span>\n            <span class=\"mdc-list-item__secondary-text\" data-fir-content=\"subtitle\"></span>\n        </div>\n        <div class=\"mdc-list-item__meta\">\n            <button class=\"mdc-icon-button\" data-fir-click=\"action\">\n                <i class=\"material-icons\">settings</i>\n            </button>\n        </div>\n    </li>\n</div>\n\n<!-- Settings List Divider -->\n<div hidden class=\"template\" id=\"settings-list-divider\">\n    <div data-fir-id=\"label\" class=\"settings-list-divider\">\n        <hr class=\"mdc-list-divider\">\n        <h4 class=\"mdc-list-group__subheader\" data-fir-content=\"label\">Label</h4>\n    </div>\n</div>\n\n<!-- Settings View Template -->\n<div hidden class=\"template\" id=\"settings-view\">\n    <div class=\"settings-view\">\n        <div data-fir-if=\"welcome\" class=\"header-welcome\">\n            <h1 class=\"mdc-typography--headline1\">\n                App Preferences\n            </h1>\n            <h5 class=\"mdc-typography--subtitle1\">\n                Manage your notification preferences, calendar sync, and profile\n                visibility.\n            </h5>\n        </div>\n        <ul class=\"mdc-list mdc-list--non-interactive mdc-list--two-line \">\n        </ul>\n    </div>\n</div>\n\n</html>";
 
 /***/ }),
 /* 468 */
