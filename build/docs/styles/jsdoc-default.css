@@ -238,6 +238,26 @@ nav li {
   margin: 0;
 }
 
+.nav-search {
+  position: fixed;
+  width: 230px;
+}
+
+#search {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 0.25rem;
+  font-family: 'Source Sans Pro', Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.nav-home-link {
+  margin-top: 50px;
+}
+
 .nav-heading {
   margin-top: 10px;
   font-weight: bold;
@@ -438,7 +458,11 @@ footer {
    user-select: text;
 }
 
-.params, .props {
+.table-container {
+  overflow-y: scroll;
+}
+
+table {
   border-spacing: 0;
   border: 1px solid #ddd;
   border-collapse: collapse;
@@ -455,7 +479,7 @@ footer {
    font-size: 100%;
 }
 
-.params td, .params th, .props td, .props th {
+table td, table th {
    margin: 0px;
    text-align: left;
    vertical-align: top;
@@ -463,16 +487,24 @@ footer {
    display: table-cell;
 }
 
-.params td {
+table td {
    border-top: 1px solid #eee
 }
 
-.params thead tr, .props thead tr {
+.props td {
+   border-top: none;
+}
+
+.props thead {
+   border-bottom: 1px solid #eee
+}
+
+table thead tr {
    background-color: #fff;
    font-weight: bold;
 }
 
-.params .params thead tr, .props .props thead tr {
+table table thead tr {
    background-color: #fff;
    font-weight: bold;
 }
@@ -677,6 +709,10 @@ dl.param-type {
 
   footer {
     margin-left: 0;
+  }
+
+  table td, table th {
+    white-space: nowrap;
   }
 }
 

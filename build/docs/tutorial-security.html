@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Event - Tutorbook Docs</title>
+    <title>security - Tutorbook Docs</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -35,377 +35,93 @@
 
 <div id="main">
     
-    <h1 class="page-title">Event</h1>
+    <h1 class="page-title">security</h1>
     
 
-    
-
-
-
-
-<section>
+    <section>
 
 <header>
-    
-        <h2>
-        Event
-        </h2>
-        
-            <div class="class-description"><p>Class that represents the basic appt list item included in the user's primary
-schedule list view. Overridden by more specific appointment types (e.g. an
-active appointment v.s. a past appointment).</p></div>
-        
     
 </header>
 
 <article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="Event"><span class="type-signature">(abstract) </span>new Event<span class="signature">(doc)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Creates a new event list item from a given Firestore appt document.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-items_index.js.html">schedule-items/index.js</a>, <a href="schedule-items_index.js.html#line26">line 26</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<div class="table-container">
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>doc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>DocumentSnapshot</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The appt's Firestore document snapshot.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">(template<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Renders the appointment list item given a template string.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-items_index.js.html">schedule-items/index.js</a>, <a href="schedule-items_index.js.html#line42">line 42</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="Templates.html"><code>Templates</code></a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<div class="table-container">
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>template</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'appt-list-item'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The ID of the template to
-render for this appt list item (i.e. supervisor or normal).</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
+    <h1>Tutorbook's Data Security</h1>
+<p>This document is not Tutorbook's official legal policy (check out our <a href="https://tutorbook.app/legal#security">Security
+Policy</a> for that) but is rather meant to
+give developers and other engineers more detailed technical insights as to how
+we ensure our customer's data is secure.</p>
+<h2>Data Storage</h2>
+<p>We use <a href="https://firebase.google.com/docs/firestore/">Firestore</a> to store and
+distribute customer and user data. We suggest reading the Firestore
+documentation and getting an idea of Firestore's <a href="https://firebase.google.com/docs/firestore/data-model">data
+model</a> and
+<a href="https://firebase.google.com/docs/firestore/rtdb-vs-firestore#security">security</a>
+before continuing.</p>
+<p>The key to a secure Firestore database is to write good <a href="https://firebase.google.com/docs/firestore/security/get-started">Firestore
+rules</a> that use
+<a href="https://firebase.google.com/docs/auth/users#auth_tokens">Firebase Authentication
+tokens</a> (which are sent
+along with each database request) to restrict who can access what.</p>
+<p>We implemented our Firestore rules by adding <a href="https://firebase.google.com/docs/auth/admin/custom-claims">custom auth
+claims</a> designating:</p>
+<ul>
+<li>Who is a supervisor (controlled by a <code>supervisor</code> boolean property) and which
+locations they supervise/manage (controlled by a <code>locations</code> array property).
+Supervisors can:
+<ul>
+<li>Edit their location(s) configuration data (e.g. service hour rounding rules,
+when the location is open for tutoring).</li>
+<li>View, edit, and create profiles for users at their location(s).</li>
+<li>View, edit, and create appointments, lesson requests, etc. for users at
+their location(s).</li>
+</ul>
+</li>
+<li>Who goes to which school district (controlled by an <code>access</code> property). Users
+can only view data within their school district's <code>access</code>. Each Firestore
+document has an <code>access</code> property containing an array of <code>accessIds</code> (IDs of
+school district Firestore documents) that denote who can view it.</li>
+</ul>
+<h3>Access Restrictions</h3>
+<p>To ensure that each school district's student data is kept secure and can only
+be accessed by members of the school district, we add an <code>access</code> custom auth
+claim to each user's Firebase Authentication token. Note that restrictions are
+by district instead of by school to facilitate intradistrict tutoring
+coordination (e.g. high school students tutoring middle schoolers).</p>
+<p>Each school district has a Firestore document containing configuration data that
+includes:</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th style="text-align:center">Field</th>
+<th style="text-align:center">Datatype</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>name</code></td>
+<td style="text-align:center">string</td>
+<td style="text-align:left">The name of the school district.</td>
+<td style="text-align:left"><code>'Palo Alto Unified School District'</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>symbol</code></td>
+<td style="text-align:center">string</td>
+<td style="text-align:left">The abbreviated name (or symbol) of the school district.</td>
+<td style="text-align:left"><code>'PAUSD'</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>domains</code></td>
+<td style="text-align:center">string[]</td>
+<td style="text-align:left">An array of valid email domains that can sign into the district's partitions of Tutorbook's web app.</td>
+<td style="text-align:left"><code>['pausd.org', 'pausd.us']</code></td>
+</tr>
+</tbody>
+</table></div>
 </article>
 
 </section>
-
-
-
 
 </div>
 
