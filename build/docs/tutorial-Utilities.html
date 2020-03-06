@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ScheduleCard - Tutorbook Docs</title>
+    <title>Utilities - Tutorbook Docs</title>
 
     <!-- Meta variables from web app -->
     <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
@@ -62,400 +62,81 @@
 
 <div id="main">
     
-    <h1 class="page-title">ScheduleCard</h1>
+    <h1 class="page-title">Utilities</h1>
     
 
-    
-
-
-
-
-<section>
+    <section>
 
 <header>
-    
-        <h2>
-        ScheduleCard
-        </h2>
-        
-            <div class="class-description"><p>Class that represents the <strong>dashboard schedule</strong> (not to be confused with the
-<a href="Schedule.html"><strong>primary schedule</strong></a> view) card that shows the
-supervisor all of their weekly appointments. Is also used in our
-<code>MatchingDialog</code> to show a user's existing appointments
-(i.e. so supervisors don't match them for the same thing twice or double-book
-them).</p></div>
-        
     
 </header>
 
 <article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="ScheduleCard"><span class="type-signature"></span>new ScheduleCard<span class="signature">(queries<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Creates and renders a new dashboard schedule card.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line235">line 235</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<div class="table-container">
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>queries</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <p>The queries to recycle appt data from (to
-show on the dashboard card).</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Renders the schedule card template.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line247">line 247</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="viewAppts"><span class="type-signature">(async) </span>viewAppts<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Views the appointments at the given location.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="schedule-card_index.js.html">schedule-card/index.js</a>, <a href="schedule-card_index.js.html#line254">line 254</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
+    <h1>Utilities</h1>
+<p>We provide a large set of utilities in this repository under <code>utils/</code>. Outlined
+below are some of the more important ones.</p>
+<h2>Data Utilities</h2>
+<p>We provide a set of utilities for creating new locations, website configurations
+(for web app subdomains/partitions), users, and access configurations (i.e.
+school districts) in <code>utils/data/</code>.</p>
+<p><strong>Note:</strong> Each of these scripts accept array input as comma separated values
+(e.g. to populate a user's <code>subjects</code>, respond with <code>Chemistry H, Chemistry</code>).</p>
+<h3>Districts</h3>
+<p>To create a new school district (or <code>access</code> partition), run:</p>
+<pre class="prettyprint source"><code>$ node district.js
+</code></pre>
+<p>This will ask you a couple of questions to populate the district's Firestore
+document:</p>
+<ul>
+<li>What is the school district's name?</li>
+<li>What is it's symbol (typically an abbreviation of the name)?</li>
+<li>What email domains are allowed at this school district?</li>
+</ul>
+<h3>Websites</h3>
+<p>To create a new website configuration, run:</p>
+<pre class="prettyprint source"><code>$ node website.js
+</code></pre>
+<p>This will ask you a couple of questions to populate the location's Firestore
+document:</p>
+<ul>
+<li>What is the website's URL?</li>
+<li>What grades can be selected at this website?</li>
+<li>What locations are shown on this website?</li>
+<li>What district (or <code>access</code>) is this website a part of?</li>
+</ul>
+<h3>Locations</h3>
+<p>To create a new location, run:</p>
+<pre class="prettyprint source"><code>$ node location.js
+</code></pre>
+<p>This will ask you a couple of questions to populate the location's Firestore
+document:</p>
+<ul>
+<li>What is the location's name?</li>
+<li>What is it's description?</li>
+<li>When is it open?</li>
+<li>Who can supervise it (find users by name or email)?</li>
+<li>What is it's service hour rounding rules?</li>
+<li>What district (or <code>access</code>) is this location a part of?</li>
+</ul>
+<h3>Users</h3>
+<p>To create a new user (both their Firestore document and Firebase Authentication
+account), run:</p>
+<pre class="prettyprint source"><code>$ node user.js
+</code></pre>
+<p>This will ask you a couple of questions to populate the user's Firestore
+document (and Firebase Authentication account):</p>
+<ul>
+<li>What is this user's name?</li>
+<li>Is this user a supervisor, tutor, or pupil?</li>
+<li>What is their email? Phone? Gender? Grade?</li>
+<li>What subjects does this user have?</li>
+<li>When is this user available?</li>
+<li>Is this a paid user? If so, what is their hourly rate?</li>
+<li>What district (or <code>access</code>) is this user a part of?</li>
+</ul>
 </article>
 
 </section>
-
-
-
 
 </div>
 
