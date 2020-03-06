@@ -61,19 +61,40 @@ const createAndAuthMany = async (users, locations) => {
     }
 };
 
-createAndAuth({
-    name: 'Supervisor Tutorbook',
-    email: 'supervisor@tutorbook.app',
-    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
-}, [
-    'IVYL0RYSqXcLPxZoNGss',
-    'IchZg5QANcmrVDQemYU2',
-    'NJp0Y6wyMh2fDdxSuRSx',
-    'WfAGnrtG87CJsYRnOmwn',
-    'fcKWyRWy124H4M34mS1r',
-    'gh3jFbjry0DE8WcQqAGi',
-    'hnmaaoUbdM2QGtgyCPV8',
-]);
+auth.setCustomUserClaims('UP8Dt8t2MuMKQ5eAEwAWYHjYveK2', {
+    supervisor: true,
+    locations: ['dcMD4kqLw0Nbw8qZGm4A'],
+});
+
+auth.setCustomUserClaims('OAmavOtc6GcL2BuxFJu4sd5rwDu1', {
+    supervisor: true,
+    locations: [
+        'dcMD4kqLw0Nbw8qZGm4A',
+        'IVYL0RYSqXcLPxZoNGss',
+        'IchZg5QANcmrVDQemYU2',
+        'NJp0Y6wyMh2fDdxSuRSx',
+        'WfAGnrtG87CJsYRnOmwn',
+        'fcKWyRWy124H4M34mS1r',
+        'gh3jFbjry0DE8WcQqAGi',
+        'hnmaaoUbdM2QGtgyCPV8',
+    ],
+});
+/*
+ *createAndAuth({
+ *    name: 'Supervisor Tutorbook',
+ *    email: 'supervisor@tutorbook.app',
+ *    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+ *}, [
+ *    'dcMD4kqLw0Nbw8qZGm4A',
+ *    'IVYL0RYSqXcLPxZoNGss',
+ *    'IchZg5QANcmrVDQemYU2',
+ *    'NJp0Y6wyMh2fDdxSuRSx',
+ *    'WfAGnrtG87CJsYRnOmwn',
+ *    'fcKWyRWy124H4M34mS1r',
+ *    'gh3jFbjry0DE8WcQqAGi',
+ *    'hnmaaoUbdM2QGtgyCPV8',
+ *]);
+ */
 
 /*
  *createAndAuthMany([{
