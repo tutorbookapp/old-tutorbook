@@ -7,7 +7,7 @@ dev:
 	npm i src/site
 
 search:
-	sudo docker run -it --env-file=.env -e "CONFIG=$(cat ./.docsearch.json | jq -r tostring)" algolia/docsearch-scraper
+	sudo docker run -it --env-file=.env -e "CONFIG=$$(cat .docsearch.json | jq -r tostring)" algolia/docsearch-scraper
 
 clean:
 	rm -r ./*/node_modules/
