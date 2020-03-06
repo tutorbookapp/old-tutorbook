@@ -1,4 +1,4 @@
-# Tutorbook's Data Security
+# Data Security
 
 This document is not Tutorbook's official legal policy (check out our [Security
 Policy](https://tutorbook.app/legal#security) for that) but is rather meant to

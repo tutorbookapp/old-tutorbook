@@ -1,12 +1,10 @@
-# Tutorbook's branching workflow
+# Branching Workflow
 
 To ensure - as much as possible - the quality and correctness of our code, and
 to enable many contributors to work on our apps at the same time without getting
 in each other's way we use the GitFlow work flow [by Vincent Driessen](
 http://nvie.com/posts/a-successful-git-branching-model/ "Original Blog post
 'A successful Git branching model' by Vincent Driessen").
-
-![GitFlow Diagram](https://raw.githubusercontent.com/tutorbookapp/tutorbook/develop/tutorials/gitflow.png)
 
 ## Branches
 
