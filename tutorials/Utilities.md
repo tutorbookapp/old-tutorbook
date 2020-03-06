@@ -80,3 +80,9 @@ document (and Firebase Authentication account):
 - When is this user available?
 - Is this a paid user? If so, what is their hourly rate?
 - What district (or `access`) is this user a part of?
+
+## Migration Utilities
+
+The utilities included in `utils/migrate` are mostly for one-time-use to migrate
+older data structures to work with newer code (e.g. renaming a field or naming
+Firestore user documents by Firebase Authentication user ID instead of email).
