@@ -758,7 +758,7 @@ Data.emptyLocation = {
  * their Google account and unchangeable by them).
  * @property {string} [photo='https://tutorbook.app/app/img/male.png'] - The 
  * user's profile photo (also initially grabbed from their Google account but it 
- * is changeable from their [profile view]{@link Profile}).
+ * is changeable from their [profile view]{@linkplain Profile}).
  * @property {string} uid - Their unique Firebase Authentication user 
  * identifier.
  * @todo Finish adding all collected properties to this user object definition.
