@@ -1,0 +1,15 @@
+{
+  "index_name": "docs",
+  "start_urls": ["https://tutorbook.app/docs"],
+  "selectors": {
+    "default": {
+      "lvl0": "h1.page-title",
+      "lvl1": "section header h2,section article h1",
+      "lvl2": "section article h2",
+      "lvl3": "section article h3",
+      "lvl4": "section article h4",
+      "lvl5": "section article h5",
+      "text": "section article p,section article ul,section article table,section article pre code,section article pre ol"
+    }
+  }
+}
