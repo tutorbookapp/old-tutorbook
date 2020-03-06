@@ -457,10 +457,6 @@ footer {
    user-select: text;
 }
 
-.table-container {
-  overflow-y: scroll;
-}
-
 table {
   border-spacing: 0;
   border: 1px solid #ddd;
@@ -711,6 +707,11 @@ dl.param-type {
 
   table td, table th {
     white-space: nowrap;
+  }
+
+  .table-container {
+    overflow-y: scroll;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
 }
 
