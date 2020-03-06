@@ -80,6 +80,7 @@ const create = async (user = {}, partition = 'default') => {
         '). Creating Firestore user document...');
     user.uid = res.uid;
     user.created = user.updated = new Date();
+    user.authenticated = true;
     await partitions[partition].collection('users').doc(user.uid).set(user);
     console.log('[INFO] Created Firebase Authentication account and Firestore' +
         ' document for ' + user.name + ' (' + user.uid + ').');
