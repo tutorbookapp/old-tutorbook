@@ -111,7 +111,7 @@ class Tutorbook {
          * }
          * @memberof module:@tutorbook/app~Tutorbook#
          */
-        this.id = 'root';
+        this.id = 'QehxSoSwxaoLUv4zNnbT';
 
         /**
          * Whether or not the app refers to a test partition.
