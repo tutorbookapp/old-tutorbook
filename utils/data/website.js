@@ -19,3 +19,36 @@ const WEBSITE_FIELDS = [
     'locations',
     'access',
 ];
+
+const ARRAY_FIELDS = [
+    'grades',
+    'locations',
+    'access',
+];
+
+/**
+ * Creates a new website Firestore document based on command line input.
+ * @param {Object} [website={}] - The pre-selected or pre-filled options (i.e. 
+ * you can pre-fill options in this script such that you don't have to type them
+ * into the terminal `readline` prompt).
+ * @param {string} [partition='default'] - The database partition to create the
+ * website configuration document in.
+ * @return {Promise<undefined>} Promise that resolves when the website Firestore
+ * document has been successfully created.
+ */
+const create = async (website = {}, partition = 'default') => {
+    WEBSITE_FIELDS.forEach(field => {
+        if (website[field]) return;
+        website[field] = readline.question('What is the website\'s ' + field +
+            '? ');
+        if (ARRAY_FIELDS.indexOf(field) < 0) return;
+        website[field] = website[field].split(', ');
+    });
+    const ref = partitions[partition].collection('websites').doc();
+    website.created = website.updated = new Date();
+    await ref.set(website);
+    console.log('[INFO] Created website configuration (' + ref.id + ') in ' +
+        partition + ' database partition.');
+};
+
+create();

@@ -3,6 +3,9 @@
 A set of utilities for creating new locations, website configurations (for web
 app subdomains/partitions), users, and access configurations (i.e. districts).
 
+**Note:** Each of these scripts accept array input as comma separated values
+(e.g. to populate a user's `subjects`, respond with `Chemistry H, Chemistry`).
+
 ## Districts
 
 To create a new school district (or `access` partition), run:
