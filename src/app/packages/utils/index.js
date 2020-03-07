@@ -473,6 +473,7 @@ class Utils {
         return {
             'name': Utils.getName(profile),
             'uid': profile.uid || "",
+            'access': profile.access || [],
             'photo': profile.photoURL || profile.photo || "",
             'id': profile.email || "", // Use email as ID
             'email': profile.email || "",

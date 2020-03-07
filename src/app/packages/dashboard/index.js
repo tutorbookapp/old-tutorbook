@@ -40,9 +40,12 @@ const scheduleShortcut = require('@tutorbook/schedule').supervisor
     .renderShortcutCard;
 const trackingShortcut = require('@tutorbook/tracking').renderShortcutCard;
 
-// Class that manages the dashboard view (provides an API for other classes to
-// use to display cards) and a custom welcome message that chnages each time a 
-// user logs in.
+/**
+ * Class that manages the dashboard view (provides an API for other classes to
+ * use to display cards) and a custom welcome message that chnages each time a 
+ * user logs in.
+ * @todo Finish documentation for this class.
+ */
 class Dashboard {
 
     /**
@@ -121,7 +124,11 @@ class Dashboard {
         });
     }
 
-    // Views the default user cards for given userID
+    /**
+     * Views the default user cards for given userID.
+     * @param {string} [id=window.app.user.uid] - The Firebase Authentication
+     * user ID to view the default cards for.
+     */
     viewDefaultCards(id = window.app.user.uid) {
         this.emptyCards('default');
         Object.entries({

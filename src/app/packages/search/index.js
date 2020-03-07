@@ -244,7 +244,45 @@ class Search {
         this.renderSelf();
     }
 
-    // Checks if the profile should show up in search results
+    /**
+     * Checks if the given profile's subjects fit within our current filters.
+     * @param {Profile} profile - The profile to check.
+     * @return {bool} Whether the profile's subjects fit within our current 
+     * filters (`true` if it does, `false` if not).
+     */
+    matchesSubject(profile) {
+        if (this.filters.subject === 'Any') return true;
+        return profile.subjects.indexOf(this.filters.subject) >= 0;
+    }
+
+    /**
+     * Checks if the given profile's availability fits within our current 
+     * filters.
+     * @param {Profile} profile - The profile to check.
+     * @return {bool} Whether the profile's availability fits within our current 
+     * filters (`true` if it does, `false` if not).
+     */
+    matchesAvailability(profile) {
+        const len = (ob) => Object.keys(ob).length;
+        if (!len(this.filters.availability)) return true;
+        const a = profile.availability;
+        const f = this.filters.availability;
+        if (!a[f.location] || !len(a[f.location])) return false;
+        if (!a[f.location][f.day] || !a[f.location][f.day].length) return false;
+        if (a[f.location][f.day].findIndex(timeslot =>
+                timeslot.open === f.fromTime &&
+                timeslot.close === f.toTime &&
+                timeslot.booked === this.filters.showBooked
+            ) < 0) return false;
+        return true;
+    }
+
+    /**
+     * Checks if the given profile should show up in search results.
+     * @param {Profile} profile - The profile to check if it fits our filters.
+     * @return {bool} Whether the profile fits within our current filters 
+     * (`true` if it does, `false` if not).
+     */
     validResult(profile) {
         if (this.validGrades.indexOf(profile.grade) < 0) {
             return false;
@@ -252,9 +290,9 @@ class Search {
             return false;
         } else if (profile.type === '' || profile.type === undefined) {
             return false;
-        } else if (Object.keys(this.filters.availability).length !== 0 &&
-            this.filters.subject !== 'Any' &&
-            profile.subjects.indexOf(this.filters.subject) < 0) {
+        } else if (!this.matchesSubject(profile)) {
+            return false;
+        } else if (!this.matchesAvailability(profile)) {
             return false;
         }
         return true;
@@ -516,12 +554,9 @@ class Search {
      * selected filters (`this.filters`).
      */
     getUsers() {
-        if (firebase.auth().currentUser) {
-            var query = window.app.db.collection('users')
-                .where('config.showProfile', '==', true);
-        } else {
-            var query = window.app.db.collection('search');
-        }
+        var query = window.app.db.collection('users')
+            .where('access', 'array-contains-any', window.app.user.access)
+            .where('config.showProfile', '==', true);
 
         if (this.filters.location !== 'Any') {
             query = query.where('location', '==', this.filters.location);
@@ -539,43 +574,6 @@ class Search {
             query = query.where('type', '==', this.filters.type);
         }
 
-        if (Object.keys(this.filters.availability).length !== 0) {
-            // NOTE: User availability is stored in the Firestore database as:
-            // availability: {
-            // 	Gunn Academic Center: {
-            //     Friday: [
-            //       { open: '10:00 AM', close: '3:00 PM' },
-            //       { open: '10:00 AM', close: '3:00 PM' },
-            //     ],
-            //   },
-            //   Paly Tutoring Center: {
-            //   ...
-            //   },
-            // };
-            // And it is referenced here in the filters as:
-            // availability: {
-            //  	location: 'Gunn Academic Center',
-            //  	day: 'Monday',
-            //  	fromTime: 'A Period',
-            //  	toTime: 'B Period',
-            // };
-            var location = this.filters.availability.location;
-            var day = this.filters.availability.day;
-            var from = this.filters.availability.fromTime;
-            var to = this.filters.availability.toTime;
-            // TODO: Make this query accept values that are a larger range than
-            // the given value (e.g. user wants a timeslot from 4:00 PM to 4:30 PM
-            // but this filters out users with availability from 8:00 AM to 5:00 PM).
-            query = query.where(
-                'availability.' + location + '.' + day,
-                'array-contains', {
-                    open: from,
-                    close: to,
-                    booked: this.filters.showBooked || false,
-                }
-            );
-        }
-
         switch (this.filters.price) {
             case 'Any':
                 break;
@@ -586,15 +584,6 @@ class Search {
                 query = query.where('payments.type', '==', 'Paid');
                 break;
         };
-
-        if (this.filters.subject !== 'Any' &&
-            Object.keys(this.filters.availability).length === 0) {
-            // NOTE: We can only include one array-contains statement in any given
-            // Firestore query. So, to do this, we check if the users in the 
-            // resulting query have this subject (in the searchRecycler).
-            query = query
-                .where('subjects', 'array-contains', this.filters.subject);
-        }
 
         if (this.filters.sort === 'Rating') {
             query = query.orderBy('avgRating', 'desc');

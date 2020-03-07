@@ -320,7 +320,8 @@ class EditSubjectsDialog extends SubjectSelectDialog {
     /**
      * Updates the subjects of the given profile with the content of the
      * currently viewed subject text fields.
-     * @param {User} [profile=window.app.user] - The profile to put the subjects 
+     * @param {Profile} [profile=window.app.user] - The profile to put the 
+     * subjects 
      * into (if it's not given, we default to `window.app.user` and update the
      * user's Firestore document as well).
      */
@@ -354,7 +355,7 @@ class EditAvailabilityDialog {
      * [`MDCTextField`]{@link https://material.io/develop/web/components/input-controls/text-field/} 
      * element to get the currently selected value from (and to update when
      * the user finishes selecting their availability on the dialog).
-     * @param {User} profile - The user profile to update.
+     * @param {Profile} profile - The user profile to update.
      */
     constructor(textFieldEl, profile) {
         this.string = $(textFieldEl).find('input').val();
@@ -1530,7 +1531,7 @@ class EditRequestDialog {
     /**
      * The other user in a request or appointment (i.e. the user that does not
      * share a uID with our current app user).
-     * @typedef {User} OtherUser
+     * @typedef {Profile} OtherUser
      * @see {@link Utils#getOtherUser}
      */
 

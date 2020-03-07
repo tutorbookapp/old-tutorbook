@@ -359,12 +359,9 @@ class Data {
         if (!id) {
             throw new Error('Could not get user data b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('[WARNING] Using an email as a user ID is ' +
-                'deprecated.');
-            var ref = await window.app.db.collection('usersByEmail').doc(id).get();
-        } else {
-            var ref = await window.app.db.collection('users').doc(id).get();
+            throw new Error('Using an email as a user ID is deprecated.');
         }
+        const ref = await window.app.db.collection('users').doc(id).get();
         if (ref.exists) return ref.data();
         throw new Error('User (' + id + ') did not exist.');
     }
@@ -412,10 +409,7 @@ class Data {
         } else if (user.uid) {
             return window.app.db.collection('users').doc(user.uid).update(user);
         } else {
-            console.warn('[WARNING] Using an email as a user ID is ' +
-                'deprecated.');
-            return window.app.db.collection('usersByEmail').doc(user.id ||
-                user.email).update(user);
+            throw new Error('Using an email as a user ID is deprecated.');
         }
     }
 
@@ -423,12 +417,9 @@ class Data {
         if (!id) {
             throw new Error('Could not delete user b/c id was undefined.');
         } else if (id.indexOf('@') >= 0) {
-            console.warn('[WARNING] Using an email as a user ID is ' +
-                'deprecated.');
-            return window.app.db.collection('usersByEmail').doc(id).delete();
-        } else {
-            return window.app.db.collection('users').doc(id).delete();
+            throw new Error('Using an email as a user ID is deprecated.');
         }
+        return window.app.db.collection('users').doc(id).delete();
     }
 
     static createUser(user) {
@@ -770,8 +761,8 @@ Data.emptyLocation = {
 };
 
 /**
- * A user object that stores essential user data.
- * @typedef {Object} User
+ * A profile/user object that stores essential user data.
+ * @typedef {Object} Profile
  * @property {string} name - The user's full name (initially grabbed from 
  * their Google account and unchangeable by them).
  * @property {string} [photo='https://tutorbook.app/app/img/male.png'] - The 
@@ -779,6 +770,8 @@ Data.emptyLocation = {
  * is changeable from their [profile view]{@linkplain Profile}).
  * @property {string} uid - Their unique Firebase Authentication user 
  * identifier.
+ * @property {string[]} access - An array of `accessIds` (school district 
+ * Firestore document IDs) that denote what data this user has access to.
  * @todo Finish adding all collected properties to this user object definition.
  */
 
@@ -786,6 +779,7 @@ Data.emptyProfile = {
     name: '',
     uid: '',
     photo: '',
+    access: [],
     id: '', // Right now, we just use email for id
     email: '',
     phone: '',

@@ -36,7 +36,7 @@ const Data = require('@tutorbook/data');
  * @todo Make this more like a CRM user view for supervisors (e.g. show all of
  * the user's appointments, recent messages, pending requests, etc).
  * @todo Make the user view check if anything has changed in it's `this.profile` 
- * {@link User} object before viewing. If there has been changes, make sure to 
+ * {@link Profile} object before viewing. If there has been changes, make sure to 
  * re-render the user view to show them.
  * @todo Finish documenting the rest of this class's methods.
  */

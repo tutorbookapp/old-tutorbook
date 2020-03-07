@@ -139,6 +139,12 @@ class Listener {
 
     tutor() {}
 
+    /**
+     * Listens to payment requests (that paid tutors send to their clients after
+     * a good lesson).
+     * @todo Enable pupils to reject those payment requests and add a reason
+     * why (e.g. a review of some sort).
+     */
     pupil() {
         const payments = {
             remove: (doc) => {},
@@ -156,7 +162,7 @@ class Listener {
                     const [err, res] = await to(
                         Data.approvePayment(doc.data(), doc.id));
                     if (err) return window.app.snackbar.view('Could not ' +
-                        'approved payment.');
+                        'approve payment.');
                     window.app.snackbar.view('Approved and sent $' +
                         data.amount.toFixed(2) + ' to ' + data.to.email + '.');
                 }, true).view();
@@ -182,7 +188,6 @@ class Listener {
                 },
             }));
     }
-
 };
 
 

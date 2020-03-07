@@ -44,8 +44,11 @@ const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
 import to from 'await-to-js';
 import $ from 'jquery';
 
-// Class that enables supervisors to create tutor and pupil accounts and
-// manually match them together (i.e. create appointments).
+/** 
+ * Class that represents the screen that enables supervisors to create tutor and 
+ * pupil accounts and manually match them together (i.e. create appointments).
+ * @todo Finish documentation for this class.
+ */
 class Matching {
 
     constructor() {
@@ -338,10 +341,6 @@ class Matching {
                     });
                 },
             }));
-        // Shows pending matches (and approved/rejected matches).
-        // NOTE: We would also be able to do this without collectionGroup
-        // queries (by using the recycler to update a set of queries for
-        // each of the supervisor's proxy accounts).
     }
 
     addUserQuery(id) { // Starts listening for matches for the given user

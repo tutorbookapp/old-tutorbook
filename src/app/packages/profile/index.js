@@ -49,7 +49,7 @@ class Profile {
 
     /**
      * Creates and renders a new profile view.
-     * @param {User} profile - The profile to render as a profile view.
+     * @param {Profile} profile - The profile to render as a profile view.
      */
     constructor(profile) {
         this.render = window.app.render;
@@ -89,7 +89,9 @@ class Profile {
             $(that.main.querySelector(q + ' input')).focusout(async () => {
                 action($(that.main).find(q + ' input'));
                 Utils.updateSetupProfileCard(p);
-                await window.app.updateUser(that.profile);
+                const [e, res] = await to(window.app.updateUser(that.profile));
+                if (e) return window.app.snackbar.view('Could not update ' +
+                    'profile.');
                 window.app.snackbar.view('Profile updated.');
             });
         };
@@ -229,7 +231,9 @@ class Profile {
                 action();
                 Utils.updateSetupProfileCard(p);
                 if (dontUpdate) return;
-                await window.app.updateUser(p);
+                const [err, res] = await to(window.app.updateUser(p));
+                if (err) return window.app.snackbar.view('Could not update ' +
+                    'profile.');
                 window.app.snackbar.view('Profile updated.');
             });
             return MDCTextField.attachTo($(this.main).find(q)[0]);
@@ -238,7 +242,9 @@ class Profile {
             action();
             Utils.updateSetupProfileCard(p);
             if (dontUpdate) return;
-            await window.app.updateUser(p);
+            const [err, res] = await to(window.app.updateUser(p));
+            if (err) return window.app.snackbar.view('Could not update ' +
+                'profile.');
             window.app.snackbar.view('Profile updated.');
         });
 
@@ -962,7 +968,9 @@ class PaidTutorProfile extends Profile {
                 if (dontUpdate) {
                     return;
                 }
-                await window.app.updateUser(p);
+                const [err, res] = await to(window.app.updateUser(p));
+                if (err) return window.app.snackbar.view('Could not update ' +
+                    'profile.');
                 window.app.snackbar.view('Profile updated.');
             });
             return MDCTextField.attachTo($(main).find(q).first()[0]);
@@ -988,7 +996,9 @@ class PaidTutorProfile extends Profile {
         function t(q, action) {
             $(that.main.querySelector(q + ' textarea')).focusout(async () => {
                 action($(that.main).find(q + ' textarea'));
-                await window.app.updateUser(that.profile);
+                const [e, res] = await to(window.app.updateUser(that.profile));
+                if (e) return window.app.snackbar.view('Could not update ' +
+                    'profile.');
                 window.app.snackbar.view('Profile updated.');
             });
         };
