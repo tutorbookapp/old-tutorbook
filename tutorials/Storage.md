@@ -19,6 +19,10 @@ Firestore is organized almost like your traditional filesystem.
 [collections](https://firebase.google.com/docs/firestore/data-model#collections)
 (much like PDFs organized in the folders on your computer).
 
+<img src="https://firebase.google.com/docs/firestore/images/structure-data.png"
+     alt="Collections, Documents, and Data Image"
+     style="width: 250px;"/>
+
 Below is how we organize our Firestore collections:
 
 ```
