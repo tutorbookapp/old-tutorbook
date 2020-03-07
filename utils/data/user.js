@@ -80,7 +80,7 @@ const create = async (user = {}, partition = 'default') => {
     }));
     if (err) return console.error('[ERROR] Could not create Firebase ' +
         'Authentication account (and skipped creating the Firestore document)' +
-        ' b/c of ', err);
+        ' b/c of error: ' + err.message);
     console.log('[DEBUG] Created Firebase Authentication account (' + res.uid +
         '). Creating Firestore user document...');
     user.uid = res.uid;
