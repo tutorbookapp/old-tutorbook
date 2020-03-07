@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>NewLocationDialog - Tutorbook Docs</title>
+    <title>listener/index.js - Tutorbook Docs</title>
 
     <!-- Meta variables from web app -->
     <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
@@ -62,1048 +62,194 @@
 
 <div id="main">
     
-    <h1 class="page-title">NewLocationDialog</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        NewLocationDialog
-        </h2>
-        
-            <div class="class-description"><p>Class that represents the &quot;New Location&quot; dialog/view that enables tutoring
-supervisors to create new locations that students can tutor at (and be safely
-supervised) at.</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="NewLocationDialog"><span class="type-signature"></span>new NewLocationDialog<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Creates and renders the &quot;New Location&quot; dialog/view.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1479">line 1479</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Define what an empty location looks like and pass it into the
-<a href="EditLocationDialog.html"><code>parent</code></a>'s constructor.</li>
-        </ul>
-    </dd>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="EditLocationDialog.html">EditLocationDialog</a></li>
-    </ul>
-
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id="changed"><span class="type-signature"></span>changed<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Returns <code>true</code> if the currently inputted/selected values match our
-original <code>this.location</code> <a href="global.html#Location"><code>Location</code></a> object.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#changed">EditLocationDialog#changed</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1364">line 1364</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-</div>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id="valid"><span class="type-signature"></span>valid<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Checks and validates all currently inputted/selected values while:</p>
-<ul>
-<li>Updating location hours and description from their values within their
-corresponding text fields.</li>
-<li>Updating the service hour rounding rules.</li>
-</ul>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#valid">EditLocationDialog#valid</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1382">line 1382</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>if (this.valid) this.save(); // Save location changes if they're valid.</code></pre>
-
-
-</div>
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="addHourInput"><span class="type-signature"></span>addHourInput<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Adds (and manages) an &quot;Hour&quot; input to the dialog.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#addHourInput">EditLocationDialog#addHourInput</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1408">line 1408</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Attaches MDC Components and click listeners.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#manage">EditLocationDialog#manage</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1280">line 1280</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="removeHourInput"><span class="type-signature"></span>removeHourInput<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Removes an &quot;Hour&quot; input and it's corresponding open hours timeslot.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#removeHourInput">EditLocationDialog#removeHourInput</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1421">line 1421</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Renders the &quot;Edit Location&quot; dialog by adding:</p>
-<ol>
-<li>A &quot;Basic info&quot; list divider</li>
-<li>A &quot;Name&quot; text field</li>
-<li>A &quot;Description&quot; text area</li>
-<li>A &quot;Service hour rules&quot; list divider</li>
-<li>A &quot;Round service hours&quot; select</li>
-<li>A &quot;To the nearest&quot; select</li>
-<li>A &quot;Round times to the nearest&quot; select</li>
-<li>An &quot;Open hours&quot; list divider</li>
-<li>A bunch of &quot;Hour&quot; inputs (text fields that open up
-<a href="EditHourDialog.html"><code>EditHourDialog</code></a>s).</li>
-<li>A &quot;Delete Location&quot; button
-to the dialog's <code>this.main</code> <code>HTMLElement</code>.</li>
-</ol>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#renderSelf">EditLocationDialog#renderSelf</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1206">line 1206</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do:</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>Add supervisor search text field input items to designate who is 
-able to approve/reject clock-in/out requests.</li>
-        </ul>
-    </dd>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Resets the inputs on the dialog (used when the user doesn't click on the
-checkmark but instead just heads back).</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#reset">EditLocationDialog#reset</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1352">line 1352</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="save"><span class="type-signature">(async) </span>save<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Updates the location's data if all inputs are valid.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#save">EditLocationDialog#save</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1337">line 1337</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;undefined></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Promise that resolves once the location has
-been updated (or if we've encountered an error while updating it).</p>
-</div>
-
-    
-</div>
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>const EditLocationDialog = require('@tutorbook/dialogs').editLocation;
-const dialog = new EditLocationDialog(locationData, locationId);
-// Change the data in the dialog somehow.
-await dialog.save();</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Views (and subsequently manages) the &quot;Edit Location&quot; dialog and our
-Intercom Messenger.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="EditLocationDialog.html#view">EditLocationDialog#view</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="dialogs_index.js.html">dialogs/index.js</a>, <a href="dialogs_index.js.html#line1271">line 1271</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="Tutorbook.html#view"><code>Tutorbook#view</code></a></li>
-        
-            <li><a href="Help.html#view"><code>Help#view</code></a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">listener/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import to from 'await-to-js';
+
+const Utils = require('@tutorbook/utils'); // TODO: Only import these static classes once
+const Data = require('@tutorbook/data');
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+
+// Class that enables the client to listen to remote events (e.g. Firestore
+// database triggers or HTTP request responses).
+class Listener {
+
+    constructor() {
+        switch (window.app.user.type) {
+            case 'Supervisor':
+                return this.supervisor();
+            case 'Tutor':
+                return this.tutor();
+            case 'Pupil':
+                return this.pupil();
+        };
+    }
+
+    async supervisor() {
+        const locationDocs = await window.app.db.collection('locations')
+            .where('supervisors', 'array-contains', window.app.user.uid).get();
+        const clockIns = {
+            remove: (doc) => {},
+            display: (doc) => {
+                const data = doc.data();
+                const title = 'Approve Clock-In?';
+                const summary = data.sentBy.name + ' clocked in at ' +
+                    Utils.getTimeString(data.sentTimestamp) + ' for ' +
+                    Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
+                    Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
+                    data.for.time.from + '. Approve this clock-in request?';
+                new ConfirmationDialog(title, summary, async () => {
+                    window.app.snackbar.view('Approving clock-in request...');
+                    const [err, res] = await to(
+                        Data.approveClockIn(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'approve clock-in request.');
+                    window.app.snackbar.view('Approved clock-in request.');
+                }, true, async () => {
+                    window.app.snackbar.view('Rejecting clock-in request...');
+                    const [err, res] = await to(
+                        Data.rejectClockIn(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'reject clock-in request.');
+                    window.app.snackbar.view('Rejected clock-in request.');
+                }).view();
+            },
+        };
+        locationDocs.forEach(locationDoc => {
+            const db = locationDoc.ref;
+            window.app.listeners.push(db.collection('clockIns').onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not listen to clock-in ' +
+                        'requests. Reload to try again.');
+                    console.error('[ERROR] Couldn\'t get clock-ins b/c of ',
+                        err);
+                },
+                next: (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            clockIns.remove(change.doc);
+                        } else {
+                            clockIns.display(change.doc);
+                        }
+                    });
+                },
+            }));
+        });
+        const clockOuts = {
+            remove: (doc) => {},
+            display: (doc) => {
+                const data = doc.data();
+                const title = 'Approve Clock-Out?';
+                const summary = data.sentBy.name + ' clocked out at ' +
+                    Utils.getTimeString(data.sentTimestamp) + ' for ' +
+                    Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
+                    Utils.getOther(data.sentBy, data.for.attendees).name +
+                    ' ending at ' + data.for.time.to + '. Approve this clock-' +
+                    'out request?';
+                new ConfirmationDialog(title, summary, async () => {
+                    window.app.snackbar.view('Approving clock-out request...');
+                    const [err, res] = await to(
+                        Data.approveClockOut(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'approve clock-out request.');
+                    window.app.snackbar.view('Approved clock-out request.');
+                }, true, async () => {
+                    window.app.snackbar.view('Rejecting clock-out request...');
+                    const [err, res] = await to(
+                        Data.rejectClockOut(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'reject clock-out request.');
+                    window.app.snackbar.view('Rejected clock-out request.');
+                }).view();
+            },
+        };
+        locationDocs.forEach(locationDoc => {
+            const db = locationDoc.ref;
+            window.app.listeners.push(db.collection('clockOuts').onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not listen to clock-out ' +
+                        'requests. Reload to try again.');
+                    console.error('[ERROR] Couldn\'t get clock-outs b/c of ',
+                        err);
+                },
+                next: (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            clockOuts.remove(change.doc);
+                        } else {
+                            clockOuts.display(change.doc);
+                        }
+                    });
+                },
+            }));
+        });
+    }
+
+    tutor() {}
+
+    /**
+     * Listens to payment requests (that paid tutors send to their clients after
+     * a good lesson).
+     * @todo Enable pupils to reject those payment requests and add a reason
+     * why (e.g. a review of some sort).
+     */
+    pupil() {
+        const payments = {
+            remove: (doc) => {},
+            display: (doc) => {
+                const data = doc.data();
+                const title = 'Approve Payment?';
+                const summary = data.to.name + ' is requesting payment ($' +
+                    data.amount.toFixed(2) + ') for your tutoring lesson on ' +
+                    data.for.for.subject + ' on ' + data.for.time.day + ' at ' +
+                    data.for.time.from + '. Approve payment and send ' +
+                    data.to.name.split(' ')[0] + ' $' + data.amount.toFixed(2) +
+                    '?';
+                new ConfirmationDialog(title, summary, async () => {
+                    window.app.snackbar.view('Approving payment request...');
+                    const [err, res] = await to(
+                        Data.approvePayment(doc.data(), doc.id));
+                    if (err) return window.app.snackbar.view('Could not ' +
+                        'approve payment.');
+                    window.app.snackbar.view('Approved and sent $' +
+                        data.amount.toFixed(2) + ' to ' + data.to.email + '.');
+                }, true).view();
+            }
+        };
+        window.app.listeners.push(window.app.db.collection('users')
+            .doc(window.app.user.uid)
+            .collection('requestedPayments').onSnapshot({
+                error: (err) => {
+                    window.app.snackbar.view('Could not listen to requested ' +
+                        'payments. Reload to try again.');
+                    console.error('[ERROR] Could not listen to requested ' +
+                        'payments b/c of ', err);
+                },
+                next: (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'removed') {
+                            payments.remove(change.doc);
+                        } else {
+                            payments.display(change.doc);
+                        }
+                    });
+                },
+            }));
+    }
+};
+
+
+module.exports = Listener;</code></pre>
+        </article>
+    </section>
 
 
 

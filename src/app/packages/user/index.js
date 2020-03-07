@@ -41,7 +41,10 @@ const Data = require('@tutorbook/data');
  * @todo Finish documenting the rest of this class's methods.
  */
 class User {
-
+    /**
+     * Creates and renders a new user view for a given profile.
+     * @param {Profile} profile - The profile to render into a user view.
+     */
     constructor(profile) {
         this.render = app.render;
         profile.availableTimes = Utils
@@ -57,6 +60,13 @@ class User {
         this.renderSelf();
     }
 
+    /**
+     * Views a user based on a given user ID by:
+     * 1. Checks if our [search screen]{@linkplain Search} has already rendered
+     * a user view for the requested user and stored it in 
+     * `window.app.search.users`.
+     * 2. If so, we just view that. If not, we create a new user view.
+     */
     static async viewUser(id) {
         const users = window.app.search.users;
         if (!users[id]) {
@@ -66,6 +76,10 @@ class User {
         return users[id].view();
     }
 
+    /**
+     * Renders the user view (as usual, using the `window.app.render` instance).
+     * @see {@link Render}
+     */
     renderSelf() {
         this.main = this.render.template('user-view',
             Utils.combineMaps(this.profile, {
@@ -93,9 +107,13 @@ class User {
         });
     }
 
+    /**
+     * Views (and manages) the user view (and hides the Intercom Messenger).
+     * @see {Tutorbook#view}
+     */
     view() {
-        app.intercom.view(false);
-        app.view(
+        window.app.intercom.view(false);
+        window.app.view(
             this.header,
             this.main,
             '/app/users/' + this.profile.uid

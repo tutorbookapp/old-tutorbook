@@ -35,6 +35,9 @@ claims](https://firebase.google.com/docs/auth/admin/custom-claims) designating:
   document has an `access` property containing an array of `accessIds` (IDs of
   school district Firestore documents) that denote who can view it.
 
+Check them (our `firestore.rules`) out for yourself [on our open source GitHub
+repository](https://github.com/tutorbookapp/tutorbook/blob/develop/firebase/firestore.rules).
+
 ### Access Restrictions
 
 To ensure that each school district's student data is kept secure and can only
