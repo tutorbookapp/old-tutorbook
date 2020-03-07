@@ -1,3 +1,9 @@
+/**
+ * Command line script to create a new website configuration Firestore document.
+ * @todo Also create a new Firebase Hosting site, Git `*-app` branch, and add
+ * the site's subdomain to `tutorbook.app`'s Netlify DNS.
+ */
+
 const readline = require('readline-sync');
 const admin = require('firebase-admin');
 const serviceAccount = require('../admin-cred.json');

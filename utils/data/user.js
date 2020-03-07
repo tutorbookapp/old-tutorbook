@@ -1,3 +1,8 @@
+/**
+ * Command line script to create a new Firebase Authentication account and it's
+ * subsequent/corresponding Firestore user document.
+ */
+
 const to = require('await-to-js').default;
 const readline = require('readline-sync');
 const admin = require('firebase-admin');

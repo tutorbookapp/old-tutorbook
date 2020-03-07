@@ -1,3 +1,8 @@
+/**
+ * Command line script to create a new district (or `access`) Firestore
+ * document.
+ */
+
 const readline = require('readline-sync');
 const admin = require('firebase-admin');
 const serviceAccount = require('../admin-cred.json');
