@@ -8,6 +8,7 @@
  */
 
 const ProgressBar = require('progress');
+const to = require('await-to-js').default;
 const readline = require('readline-sync');
 const admin = require('firebase-admin');
 const serviceAccount = require('../admin-cred.json');
@@ -17,6 +18,7 @@ admin.initializeApp({
     databaseURL: 'https://tutorbook-779d8.firebaseio.com',
 });
 
+const auth = admin.auth();
 const firestore = admin.firestore();
 const db = firestore.collection('partitions').doc('default');
 
@@ -37,9 +39,19 @@ const COLLECTIONS = {
     'chats': [
         'messages',
     ],
-    'locations': {
-        'announcements': ['messages'],
-    },
+    'locations': [
+        'announcements',
+        'clockIns',
+        'approvedClockIns',
+        'rejectedClockIns',
+        'clockOuts',
+        'approvedClockOuts',
+        'rejectedClockOuts',
+        'appointments',
+        'modifiedAppointments',
+        'canceledAppointments',
+        'pastAppointments',
+    ],
     'websites': [],
     'access': [],
     'auth': [],
@@ -117,6 +129,10 @@ const addLocationsField = async () => {
 /**
  * Helper function that combines the two arrays (much like `concat` but it 
  * avoids duplicates).
+ * @param {Array} a - One of the two arrays to combine.
+ * @param {Array} b - One of the two arrays to combine.
+ * @return {Array} The array resulting from the combination of array `a` and
+ * array `b` (without duplicates).
  */
 const combine = (a, b) => {
     a.map(a => {
@@ -126,10 +142,36 @@ const combine = (a, b) => {
 };
 
 /**
+ * Updates every user's `access` custom auth claim based on what claims are
+ * specified in their Firestore document.
+ */
+const usersCustomAuth = async () => {
+    const users = (await db.collection('users').get()).docs.map(u => u.data());
+    const bar = new ProgressBar(':bar', {
+        total: users.length,
+    });
+    console.log('[INFO] Updating access custom auth claims for ' +
+        users.length + ' users...');
+    await Promise.all(users.map(async user => {
+        const [err, res] = await to(auth.setCustomUserClaims(user.uid, {
+            access: user.access,
+        }));
+        if (err) console.error('[ERROR] Could not add custom auth claims b/c ' +
+            'of error: ' + err.message);
+        bar.tick();
+    }));
+    console.log('[INFO] Updated access custom auth claims for ' + users.length +
+        ' users.');
+};
+
+/**
  * Populates every user at a given location with the location's `access` 
  * property. If a user has multiple locations (in their Firestore document's
  * `locations` field), their `access` property will be the combined `access`
  * properties of all of their locations.
+ *
+ * Note that this also populates each user's Firebase Authentication token (so
+ * it cannot be used for just testing purposes).
  */
 const users = async () => {
     await resetUserAccess();
@@ -150,6 +192,32 @@ const users = async () => {
     }
     console.log('[INFO] Populated ' + locations.length + ' locations\' users ' +
         'access.');
+    await usersCustomAuth();
 };
 
-users();
+/**
+ * Populates every document's `access` field (in every user's subcollections) to
+ * match it's user's `access` field.
+ */
+const propagateToSubcollections = async (collection = 'users') => {
+    const docs = (await db.collection(collection).get()).docs;
+    const collections = COLLECTIONS[collection];
+    const bar = new ProgressBar(':bar', {
+        total: docs.length * collections.length,
+    });
+    console.log('[INFO] Updating access on documents from ' + collections
+        .length + ' subcollections of ' + docs.length + ' ' + collection +
+        ' documents...');
+    await Promise.all(docs.map(d => Promise.all(collections.map(async sub => {
+        const docs = (await d.ref.collection(sub).get()).docs;
+        await Promise.all(docs.map(doc => doc.ref.update({
+            access: d.data().access,
+        })));
+        bar.tick();
+    }))));
+    console.log('[INFO] Updated access on documents from ' + collections
+        .length + ' subcollections of ' + docs.length + ' ' + collection +
+        ' documents.');
+};
+
+propagateToSubcollections('locations');
