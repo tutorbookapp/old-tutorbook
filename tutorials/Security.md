@@ -46,8 +46,8 @@ coordination (e.g. high school students tutoring middle schoolers).
 Each school district has a Firestore document containing configuration data that
 includes:
 
-| Field     | Datatype | Description                                                                                          | Example                               |
+| Field     | Type     | Description                                                                                          | Example                               |
 |:---------:|:--------:|:-----------------------------------------------------------------------------------------------------|:--------------------------------------|
-| `name`    | string   | The name of the school district.                                                                     | `'Palo Alto Unified School District'` |
-| `symbol`  | string   | The abbreviated name (or symbol) of the school district.                                             | `'PAUSD'`                             |
-| `domains` | string[] | An array of valid email domains that can sign into the district's partitions of Tutorbook's web app. | `['pausd.org', 'pausd.us']`           |
+| `name`    | `string` | The name of the school district.                                                                     | `'Palo Alto Unified School District'` |
+| `symbol`  | `string` | The abbreviated name (or symbol) of the school district.                                             | `'PAUSD'`                             |
+| `domains` |`string[]`| An array of valid email domains that can sign into the district's partitions of Tutorbook's web app. | `['pausd.org', 'pausd.us']`           |
