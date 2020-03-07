@@ -135,9 +135,7 @@ exports.processWeeklyPayouts = functions.https
 
 exports.getEmailFromPhone = functions.https.onRequest(Search.getEmailFromPhone);
 
-// user - When a newUser document is modified, check if they're a verified
-// supervisor and if so, ensure that they have customAuth setup
-exports.updateCustomAuth = functions.firestore
+exports.updateAuthClaims = functions.firestore
     .document('/partitions/{partition}/users/{id}')
     .onWrite(Auth.update);
 
