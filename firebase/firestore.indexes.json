@@ -699,6 +699,36 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "availability.`Fletcher Library`.Monday",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "config.showProfile",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "location",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "payments.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "availability.`Gunn Academic Center`.Friday",
           "arrayConfig": "CONTAINS"
         },
@@ -1040,6 +1070,36 @@
         },
         {
           "fieldPath": "config.showProfile",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "availability.`Pioneer High School`.Monday",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "config.showProfile",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "location",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "payments.type",
           "order": "ASCENDING"
         },
         {
