@@ -1,360 +1,252 @@
-// Revised Firestore Security Rules that *should* account for everything.
-
-rules_version = '2'; // For Firestore collectionGroup queries
+rules_version = '2'; // Enable Firestore `collectionGroup` queries. 
 
 service cloud.firestore {
   match /databases/{database}/documents/partitions/{partition} {
+    
+    function loggedIn() {
+      return request.auth.uid != null;
+    }
 
-    // [SPECIAL ACCESS]
+    function hasAccess() {
+      // TODO: Add iteration for an actual `array-contains-any`-like clause.
+      return loggedIn() && (
+        request.auth.token.access[0] in resource.data.access ||
+        request.auth.token.access[1] in resource.data.access ||
+        request.auth.token.access[2] in resource.data.access ||
+        request.auth.token.access[3] in resource.data.access);
+    }
+
+    function isSupervisor() {
+      return loggedIn() && request.auth.token.supervisor == true;
+    }
+
+    function isSupervisorFor(locationId) {
+      return isSupervisor() && locationId in request.auth.token.locations;
+    }
+
+    function isUser(uid) {
+      return loggedIn() && request.auth.uid == uid;
+    }
+
+    function isProxy(uid) {
+      // TODO: Find a way to wrap this `get()` function call.
+      return loggedIn() && request.auth.uid in get(/databases/$(database)/documents/partitions/$(partition)/users/$(uid)).data.proxy;
+    }
+
+    function isUserOrProxy(uid) {
+      return loggedIn() && (isUser(uid) || isProxy(uid));
+    }
+
+    function isChatter(chatId) {
+      // TODO: Find a way to wrap this `get()` function call.
+      return loggedIn() && request.auth.uid in get(/databases/$(database)/documents/partitions/$(partition)/chats/$(chatId)).data.chatterUIDs;
+    }
+
+    function isSender() {
+      return loggedIn() && request.auth.uid == resource.data.sentBy.uid;
+    }
+
     match /auth/{document=**} {
-      allow read: if request.auth.uid != null;
+      // TODO: Remove this and manually add each supervisor account.
+      allow read: if loggedIn();
     }
+
     match /locations/{location} {
-      allow read: if request.auth.uid != null;
-      allow update, delete: if request.auth.uid in resource.data.supervisors;
-      allow create: if request.auth.uid in request.resource.data.supervisors
-	&& request.auth.token.supervisor == true;
-      match /recentActions/{recentAction} {
-        allow read, delete: if location in request.auth.token.locations;
-      }
-      match /announcements/{announcement} {
-        allow read, write: if location in request.auth.token.locations;
-        match /messages/{message} {
-          allow read, create: if location in request.auth.token.locations;
-        }
-      }
+      allow read: if hasAccess();
     }
-    match /users/{supervisor}/dismissedCards/{card} {
-      // Workaround to enable supervisors to dismiss cards (as we don't want
-      // them deleting that actual document).
-      allow read, create: if request.auth.uid == supervisor;
+    
+    match /locations/{location}/recentActions/{recentAction} {
+      allow read, delete: if isSupervisorFor(location); 
     }
+    
+    match /locations/{location}/announcements/{announcement} {
+      // TODO: Move announcement group editing to our REST API.
+      allow read, write: if isSupervisorFor(location);
+    }
+    match /locations/{location}/announcements/{announcement}/messages/{message} {
+      // TODO: Implement message deletion and updation on the client side.
+      // TODO: Move this to REST API that checks if message content is clean.
+      allow read: if isSupervisorFor(location);
+      allow create: if isSupervisorFor(location) && isSender();
+    }
+
+    match /chats/{chat} {
+      allow read, write: if request.auth.uid in resource.data.chatterUIDs;
+      allow create: if request.auth.uid in request.resource.data.chatterUIDs;
+    }
+    match /chats/{chat}/messages/{message} {
+      // TODO: Implement message deletion and updation on the client side.
+      // TODO: Move this to REST API that checks if message content is clean.
+      allow read: if isChatter(chat);
+      allow create: if isChatter(chat) && isSender();
+    }
+    
     match /websites/{website} {
       allow read: if true;
     }
 
-    // [SEARCH]
-    match /search/{user} {
-      allow read: if true;
-    }
-    // [USER PROFILES]
-    match /usersByEmail/{userEmail} {
-      // TODO: Ensure that the client can't change the user.authenticated field
-      // to become an admin or supervisor without actually knowing the code.
-      allow read: if request.auth.uid != null;
-      allow create: if (request.auth.token.email == userEmail
-	|| request.auth.token.supervisor)
-	&& request.resource.data.payments.currentBalance == 0
-	&& request.resource.data.payments.currentBalanceString == "$0.00"
-	&& request.resource.data.secondsPupiled == 0
-	&& request.resource.data.secondsTutored == 0;
-      allow delete: if request.auth.token.email == userEmail
-	|| request.auth.uid in resource.data.proxy
-	|| request.auth.token.supervisor;
-      allow update: if (request.auth.token.email == userEmail
-	|| request.auth.uid in resource.data.proxy
-	|| request.auth.token.supervisor) // TODO: Check if this user is at one
-  	// of the supervisor's location(s)
-	&& (
-	  !("currentBalance" in request.resource.data.payments) 
-	  || ("currentBalance" in request.resource.data.payments && request.resource.data.payments.currentBalance == resource.data.payments.currentBalance)
-	)
-	&& (
-	  !("currentBalanceString" in request.resource.data.payments) 
-	  || ("currentBalanceString" in request.resource.data.payments && request.resource.data.payments.currentBalanceString == resource.data.payments.currentBalanceString)
-	)
-	&& (
-	  !("secondsPupiled" in request.resource.data) 
-	  || ("secondsPupiled" in request.resource.data && request.resource.data.secondsPupiled == resource.data.secondsPupiled)
-	)
-	&& (
-	  !("secondsTutored" in request.resource.data) 
-	  || ("secondsTutored" in request.resource.data && request.resource.data.secondsTutored == resource.data.secondsTutored)
-	);
-    }
     match /users/{user} {
       // TODO: Ensure that the client can't change the user.authenticated field
       // to become an admin or supervisor without actually knowing the code.
-      allow read: if request.auth.uid != null;
-      allow create: if (request.auth.uid == user
-	|| request.auth.token.supervisor)
+
+      function change() {
+        // Returns true if (and **only if**) the user's:
+        // - access
+        // - avgRating
+        // - numRatings
+        // - payments.currentBalance
+        // - payments.currentBalanceString
+        // - secondsTutored 
+        // Are exactly the same (or left unchanged in the case of an `update`).
+        return 
+          (request.resource.data.access == null ||
+          request.resource.data.access == resource.data.access) &&
+          (request.resource.data.avgRating == null ||
+          request.resource.data.avgRating == resource.data.avgRating) &&
+          (request.resource.data.numRatings == null ||
+          request.resource.data.numRatings == resource.data.numRatings) &&
+          (request.resource.data.payments.currentBalance == null ||
+          request.resource.data.payments.currentBalance == 
+            resource.data.payments.currentBalance) &&
+          (request.resource.data.payments.currentBalanceString == null ||
+          request.resource.data.payments.currentBalanceString == 
+            resource.data.payments.currentBalanceString) &&
+          (request.resource.data.secondsTutored == null ||
+          request.resource.data.secondsTutored == resource.data.secondsTutored);
+      }
+
+      allow read: if hasAccess();
+      allow create: if (isUser(user) || isSupervisor())
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.payments.currentBalanceString == "$0.00"
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
-      allow delete: if request.auth.uid == user
-	|| request.auth.uid in resource.data.proxy
-	|| request.auth.token.supervisor;
-      allow update: if (request.auth.uid == user
-	|| request.auth.uid in resource.data.proxy
-	|| request.auth.token.supervisor) // TODO: Check if this user is at one
-  	// of the supervisor's location(s)
-	&& (
-	  !("currentBalance" in request.resource.data.payments) 
-	  || ("currentBalance" in request.resource.data.payments && request.resource.data.payments.currentBalance == resource.data.payments.currentBalance)
-	)
-	&& (
-	  !("currentBalanceString" in request.resource.data.payments) 
-	  || ("currentBalanceString" in request.resource.data.payments && request.resource.data.payments.currentBalanceString == resource.data.payments.currentBalanceString)
-	)
-	&& (
-	  !("secondsPupiled" in request.resource.data) 
-	  || ("secondsPupiled" in request.resource.data && request.resource.data.secondsPupiled == resource.data.secondsPupiled)
-	)
-	&& (
-	  !("secondsTutored" in request.resource.data) 
-	  || ("secondsTutored" in request.resource.data && request.resource.data.secondsTutored == resource.data.secondsTutored)
-	);
+      allow delete, update: 
+        if change() && (isUserOrProxy(user) || (isSupervisor() && hasAccess()));
+    }
+    
+    match /users/{supervisor}/dismissedCards/{card} {
+      // TODO: Remove this workaround from our client-side implementation.
+      allow read, create: if isUser(supervisor) && isSupervisor();
     }
 
-    // [REQUESTS IN]
-    match /{path=**}/requestsIn/{requestIn} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.location.id in request.auth.token.locations; 
-    }
     match /users/{user}/requestsIn/{requestIn} {
-      allow read: if request.auth.uid == user
-	|| request.auth.uid == resource.data.fromUser.uid
-	|| (request.auth.uid in resource.data.fromUser.proxy
-	|| request.auth.uid in resource.data.toUser.proxy);
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
-    }
-    match /{path=**}/modifiedRequestsIn/{requestIn} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.for.location.id in request.auth.token.locations;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/modifiedRequestsIn/{requestIn} {
-      // fromUser creates this document and the toUser dismisses it
-      // Users should never need to update this document
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in resource.data.for.toUser.proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
+      allow read, delete: if isUserOrProxy(user);
     } 
-    match /{path=**}/canceledRequestsIn/{requestIn} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.for.location.id in request.auth.token.locations; 
-    }
     match /users/{user}/canceledRequestsIn/{requestIn} {
-      // fromUser creates this document and the toUser dismisses it
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in resource.data.for.toUser.proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
+      allow read, delete: if isUserOrProxy(user);
     }
 
-    // [REQUESTS OUT] 
-    match /{path=**}/requestsOut/{requestOut} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.location.id in request.auth.token.locations; 
-    }
     match /users/{user}/requestsOut/{requestOut} {
-      allow read: if request.auth.uid == user
-	|| request.auth.uid == resource.data.toUser.uid
-	|| (request.auth.uid in resource.data.fromUser.proxy
-	|| request.auth.uid in resource.data.toUser.proxy);
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
-    }
-    match /{path=**}/modifiedRequestsOut/{requestOut} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.for.location.id in request.auth.token.locations;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/modifiedRequestsOut/{requestOut} {
-      // toUser creates this document and the fromUser dismisses it
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
+      allow read, delete: if isUserOrProxy(user);
     } 
-    match /{path=**}/rejectedRequestsOut/{requestOut} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.for.location.id in request.auth.token.locations; 
-    }
     match /users/{user}/rejectedRequestsOut/{requestOut} {
-      // toUser creates this document and the fromUser dismisses it
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
+      allow read, delete: if isUserOrProxy(user);
     } 
-    match /{path=**}/approvedRequestsOut/{requestOut} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      allow read: if resource.data.for.location.id in request.auth.token.locations; 
-    }
     match /users/{user}/approvedRequestsOut/{requestOut} {
-      // toUser creates this document and the fromUser dismisses it
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in resource.data.for.fromUser.proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
+      allow read, delete: if isUserOrProxy(user);
     }
 
-    // [APPOINTMENTS]
     match /users/{user}/appointments/{appt} {
-      // We have to specify that the given user can read all of their appts b/c
-      // otherwise, we'd have to specify it in the query itself, which is too
-      // much of a hassle and leads to confusing code.
-      allow read: if request.auth.uid == user
-	|| request.auth.uid in
-	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
-	|| request.auth.uid in resource.data.attendees[0].proxy
-	|| request.auth.uid in resource.data.attendees[1].proxy
-	|| resource.data.location.id in request.auth.token.locations
-        || request.auth.token.supervisor;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
-    }
-    match /locations/{location}/appointments/{appt} {
-      allow read: if request.auth.uid in
-	[resource.data.attendees[0].uid, resource.data.attendees[1].uid]
-	|| request.auth.uid in resource.data.attendees[0].proxy
-	|| request.auth.uid in resource.data.attendees[1].proxy
-	|| location in request.auth.token.locations;
-    }
-    match /locations/{location}/modifiedAppointments/{appt} {
-      allow read, delete: if location in request.auth.token.locations;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/modifiedAppointments/{appt} {
-      // Either attendee can create and dismiss this card
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in
-	[resource.data.for.attendees[0].uid, resource.data.for.attendees[1].uid]
-	|| request.auth.uid in resource.data.for.attendees[0].proxy
-	|| request.auth.uid in resource.data.for.attendees[1].proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
-    }
-    match /{path=**}/canceledAppointments/{appt} {
-      // collectionGroup query rules for supervisors and admins
-      // Allow supervisors to read docs that are at their location
-      // Supervisors can also cancel appointments at their location
-      allow read: if resource.data.for.location.id in request.auth.token.locations;
+      allow read, delete: if isUserOrProxy(user);
     }
     match /users/{user}/canceledAppointments/{appt} {
-      // Either attendee can create and dismiss this card
-      allow read, delete: if request.auth.uid == user
-	|| request.auth.uid in
-	[resource.data.for.attendees[0].uid, resource.data.for.attendees[1].uid]
-	|| request.auth.uid in resource.data.for.attendees[0].proxy
-	|| request.auth.uid in resource.data.for.attendees[1].proxy;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
-    }
-    match /locations/{location}/canceledAppointments/{appt} {
-      // Only allow a user to create if they were already allowed to create a
-      // canceledAppt doc in the other user's.
-      allow read, delete: if location in request.auth.token.locations;
-    }
-
-    // [CLOCKINS AND CLOCKOUTS]
-    match /locations/{location}/clockIns/{clockIn} {
-      allow read: if location in request.auth.token.locations;
-    }
-    match /locations/{location}/approvedClockIns/{clockIn} {
-      allow read: if request.auth.uid != null;
+      allow read, delete: if isUserOrProxy(user);
     }
     match /users/{user}/activeAppointments/{appt} {
-      allow read: if request.auth.uid == user
-	|| resource.data.location.id in request.auth.token.locations;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
-    }
-    match /locations/{location}/activeAppointments/{appt} {
-      allow read: if location in request.auth.token.locations
-	|| request.auth.uid == resource.data.attendees[0].uid
-	|| request.auth.uid == resource.data.attendees[1].uid;
-    }
-    match /locations/{location}/rejectedClockIns/{clockIn} {
-      allow read: if request.auth.uid != null;
-    }
-    match /locations/{location}/clockOuts/{clockOut} {
-      allow read: if location in request.auth.token.locations;
-    }
-    match /locations/{location}/approvedClockOuts/{clockOut} {
-      allow read: if request.auth.uid != null;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/pastAppointments/{appt} {
-      allow read: if request.auth.uid == user
-	|| resource.data.location.id in request.auth.token.locations;
-      allow read: if request.auth.uid in
-	get(/databases/$(database)/documents/partitions/$(partition)/users/$(user)).data.proxy;
+      allow read: if isUserOrProxy(user);
+    }
+    
+    match /locations/{location}/appointments/{appt} {
+      allow read: if isSupervisorFor(location);
+    }
+    match /locations/{location}/modifiedAppointments/{appt} {
+      allow read, delete: if isSupervisorFor(location);
+    }
+    match /locations/{location}/canceledAppointments/{appt} {
+      allow read, delete: if isSupervisorFor(location);
+    }
+    match /locations/{location}/activeAppointments/{appt} {
+      allow read: if isSupervisorFor(location);
     }
     match /locations/{location}/pastAppointments/{appt} {
-      allow read: if request.auth.token.supervisor == true
-	&& location in request.auth.token.locations;
+      allow read: if isSupervisorFor(location);
+    }
+
+    match /locations/{location}/clockIns/{clockIn} {
+      allow read: if isSupervisorFor(location);
+    }
+    match /locations/{location}/approvedClockIns/{clockIn} {
+      // TODO: Right now, everyone can view everyone else's clocking requests. 
+      allow read: if hasAccess();
+    }
+    match /locations/{location}/rejectedClockIns/{clockIn} {
+      // TODO: Right now, everyone can view everyone else's clocking requests. 
+      allow read: if hasAccess();
+    }
+    
+    match /locations/{location}/clockOuts/{clockOut} {
+      allow read: if isSupervisorFor(location);
+    }
+    match /locations/{location}/approvedClockOuts/{clockOut} {
+      // TODO: Right now, everyone can view everyone else's clocking requests. 
+      allow read: if hasAccess();
     }
     match /locations/{location}/rejectedClockOuts/{clockOut} {
-      allow read: if request.auth.uid != null;
+      // TODO: Right now, everyone can view everyone else's clocking requests. 
+      allow read: if hasAccess();
     }
 
-    // [PAYMENTS]
-    match /users/{user}/approvedPayments/{payment} {
-      allow create: if request.auth.uid == user
-	|| request.auth.uid == request.resource.data.from.uid;
-      allow read: if request.auth.uid == resource.data.to.uid
-	|| request.auth.uid == resource.data.from.uid;
-    }
     match /stripeAccounts/{user} {
-      allow read: if request.auth.uid == user;
+      // TODO: Remove this and just create an API endpoint that can be used to
+      // check whether a paid tutor has a Stripe Connect Account yet.
+      allow read: if isUserOrProxy(user);
+    }
+    
+    match /users/{user}/approvedPayments/{payment} {
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/sentPayments/{payment} {
-      allow create: if request.auth.uid == user;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/requestedPayments/{payment} {
-      allow create: if request.auth.uid == 
-	request.resource.data.to.uid;
-      allow read, delete: if request.auth.uid == user;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/requestedPayouts/{payout} {
-      allow create, read: if request.auth.uid == user;
+      // TODO: Remove this as we don't support instant payouts yet.
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/deniedPayments/{payment} {
-      allow read: if request.auth.uid == user;
-      allow create: if request.auth.uid ==
-	request.resource.data.deniedBy.uid;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/approvedPayments/{payment} {
-      allow read: if request.auth.uid == user;
-      allow create: if request.auth.uid ==
-	request.resource.data.approvedBy.uid;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/authPayments/{payment} {
-      allow read: if request.auth.uid == user;
-      allow create: if request.auth.uid == request.resource.data.from.uid
-	|| request.auth.uid == request.resource.data.to.uid;
-      // When a request is canceled or rejected, client removes this document.
-      allow delete: if request.auth.uid == resource.data.from.uid
-	|| request.auth.uid == resource.data.to.uid;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/pastPayments/{payment} {
-      allow read: if request.auth.uid == user;
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/paidPayments/{payment} {
-      allow read: if request.auth.uid == user;
+      // TODO: Remove this as we don't support instant payouts yet (and we 
+      // haven't setup any webhooks for Stripe's daily payouts).
+      allow read: if isUserOrProxy(user);
     }
     match /users/{user}/invalidPayments/{payment} {
-      allow read: if request.auth.uid == user;
-    }
-
-    // [CHATS]
-    match /chats/{chat} {
-      allow read, write: if request.auth.uid in resource.data.chatterUIDs;
-      allow create: if request.auth.uid in request.resource.data.chatterUIDs;
-      match /messages/{message} {
-        allow read, create: if request.auth.uid in
-	  get(/databases/$(database)/documents/partitions/$(partition)/chats/$(chat)).data.chatterUIDs;
-        allow update, delete: if request.auth.uid == 
-	  resource.data.sentBy.uid;
-      }
+      allow read: if isUserOrProxy(user);
     }
   }
 }
