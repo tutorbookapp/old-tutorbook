@@ -1,4 +1,10 @@
 /**
+ * Package that depends on all the other custom Web Component packages (and, by
+ * definition, then defines all of those web components). This is the main 
+ * driver behind our [marketing website]{@link https://tutorbook.app}.
+ * @module @tutorbook/site
+ * @see {@link https://npmjs.com/package/@tutorbook/site}
+ * 
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -31,6 +37,9 @@ const FeatureAnnouncement = require('@tutorbook/feature-announcement');
 const EmailCapture = require('@tutorbook/email-capture');
 const Footer = require('@tutorbook/footer');
 
+/**
+ * Primary class that updates the header view if the user is signed in.
+ */
 class Site {
     constructor() {
         firebase.auth().onAuthStateChanged(user => {

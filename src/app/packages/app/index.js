@@ -80,11 +80,33 @@ class Tutorbook {
         this.logJobPost();
         this.version = '0.0.1'; // TODO: Each change released to production (via
         // CI) should have a corresponding GitHub tag & release denoted here.
+        /**
+         * The website configuration Firestore document ID.
+         * @const {string} id
+         * @example
+         * if (!window.app.id) {
+         *   showAllData(); // Don't restrict what the user can see.
+         * } else {
+         *   showSchoolData(); // Only show the school's data.
+         * }
+         * @memberof Tutorbook
+         * @instance
+         */
         this.id = 'JJ5BuGZ1za0eON81vdOh';
         this.test = false;
         this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
             'ns.net/';
+        /**
+         * The database partition to be used by the rest of the app.
+         * @const {external:CollectionReference} db
+         * @example
+         * const users = (await window.app.db.collection('users').get()).docs;
+         * @example
+         * const locations = await window.app.db.collection('locations').get();
+         * @memberof Tutorbook
+         * @instance
+         */
         this.db = (this.test) ? firebase.firestore().collection('partitions')
             .doc('test') : firebase.firestore().collection('partitions')
             .doc('default');

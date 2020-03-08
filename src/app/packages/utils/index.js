@@ -163,8 +163,8 @@ class Utils {
     /**
      * Opens up a new tab with the raw JSON data of the given Firestore document 
      * (and ID).
-     * @param {DocumentSnapshot} doc - The Firestore document to show the raw 
-     * data from.
+     * @param {external:DocumentSnapshot} doc - The Firestore document to show 
+     * the raw data from.
      */
     static viewRaw(doc) {
         const json = JSON.stringify({
@@ -274,7 +274,8 @@ class Utils {
      * Callback the displays new or updates existing views based on a given 
      * snapshot of Firestore data.
      * @callback displayCallback
-     * @param {DocumentSnapshot} doc - The updated Firestore document to display.
+     * @param {external:DocumentSnapshot} doc - The updated Firestore document 
+     * to display.
      * @param {string} type - The key of the query that this Firestore document 
      * came from (e.g. `appts` or `pastAppts`).
      * @param {int} [index=0] - The index of the query this Firestore document 
@@ -289,7 +290,8 @@ class Utils {
      * Callback the removes existing views based on a given snapshot of 
      * Firestore data.
      * @callback removeCallback
-     * @param {DocumentSnapshot} doc - The deleted Firestore document to remove.
+     * @param {external:DocumentSnapshot} doc - The deleted Firestore document 
+     * to remove.
      * @param {string} type - The key of the query that this Firestore document 
      * came from (e.g. `appts` or `pastAppts`).
      * @param {int} [index=0] - The index of the query this Firestore document 
@@ -328,7 +330,7 @@ class Utils {
      * Listens to the given queries and calls the recycler when those queries's 
      * data changes.
      * @param {Object} queries - A map of arrays (or just a map of) Firestore 
-     * `Query`s to listen to and subsequently recycle.
+     * [Query]{@link external:Query}s to listen to and subsequently recycle.
      * @param {Recycler} recycler - A recycler containing callbacks to display, 
      * remove, or empty different query data.
      * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}

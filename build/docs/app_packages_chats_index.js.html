@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>app/packages/chats/index.js - Tutorbook Docs</title>
+
+    <!-- Meta variables from web app -->
+    <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon/favicon-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black">
+    <meta name="apple-mobile-web-app-title" content="Tutorbook">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#6200EE">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Tutorbook">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="manifest" href="/favicon/manifest.json">
+
+    <!-- Add to homescreen for Windows -->
+    <link rel="shortcut icon" href="/favicon/favicon.ico">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-navbutton-color" content="#6200EE">
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2.6.3/dist/cdn/docsearch.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/docsearch.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-search">
+        <input id="search" placeholder="Search documentation..."> 
+    </li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Tutorials</li><li class="nav-item"><a href="tutorial-Gitflow.html">Gitflow</a></li><li class="nav-item"><a href="tutorial-Security.html">Security</a></li><li class="nav-item"><a href="tutorial-Storage.html">Storage</a></li><li class="nav-item"><a href="tutorial-Utilities.html">Utilities</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ActiveApptCard.html">ActiveAppt</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ActiveApptCard.html#clockOut">clockOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ActiveApptCard.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ActiveApptCard.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ApptCard.html">Appt</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ApptCard.html#clockIn">clockIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ApptCard.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ApptCard.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ApptListItem.html">Appt</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ApptListItem.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Chats.html">Chats</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Chats.html#viewChats">viewChats</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Config.html">Config</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#updateHrsConfig">updateHrsConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#view">view</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#viewCards">viewCards</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#viewConfigCards">viewConfigCards</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Config.html#viewLocationCards">viewLocationCards</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ConfirmationDialog.html">ConfirmationDialog</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Dashboard.html">Dashboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dashboard.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dashboard.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dashboard.html#view">view</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Dashboard.html#viewDefaultCards">viewDefaultCards</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Data.html">Data</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.algoliaIndex">algoliaIndex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.listen">listen</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.updateLocation">updateLocation</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#.updateUser">updateUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initGrades">initGrades</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initHourlyCharges">initHourlyCharges</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initLocations">initLocations</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initPeriods">initPeriods</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Data.html#initTimes">initTimes</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditApptDialog.html">EditApptDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditApptDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditAvailabilityDialog.html">EditAvailabilityDialog</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditHourDialog.html">EditHourDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditHourDialog.html#err">err</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditHourDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditHourDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditHourDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditLocationDialog.html">EditLocationDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#addHourInput">addHourInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#removeHourInput">removeHourInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#save">save</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditLocationDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditProfile.html">EditProfile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#addAvailabilityInput">addAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#addAvailabilityInputs">addAvailabilityInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#addSubjectInput">addSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#addSubjectInputs">addSubjectInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#createProfile">createProfile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#manageHeader">manageHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#reManage">reManage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#removeAvailabilityInput">removeAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#removeSubjectInput">removeSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#saveImage">saveImage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#styleEmailInput">styleEmailInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#updateProfile">updateProfile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditProfile.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditRequestDialog.html">EditRequestDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditRequestDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EditSubjectsDialog.html">EditSubjectsDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#.updateSubjects">updateSubjects</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#renderList">renderList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#save">save</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#section">section</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#updateSelected">updateSelected</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EditSubjectsDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EventCard.html">Event</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EventCard.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EventCard.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="EventListItem.html">Event</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="EventListItem.html#renderSelf">renderSelf</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="FilterDialog.html">FilterDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#accept">accept</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#clearFilters">clearFilters</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#getAvailabilityString">getAvailabilityString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#page">page</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#renderAllList">renderAllList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="FilterDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Help.html">Help</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Help.html#logout">logout</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Help.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="HorzScroller.html">HorzScroller</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Matching.html">Matching</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-@tutorbook_site-Site.html">Site</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NewGroupDialog.html">NewGroupDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#accept">accept</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#clearFilters">clearFilters</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#getAvailabilityString">getAvailabilityString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#page">page</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#renderAllList">renderAllList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewGroupDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NewLocationDialog.html">NewLocationDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#addHourInput">addHourInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#removeHourInput">removeHourInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#save">save</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewLocationDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NewPastApptDialog.html">NewPastApptDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#.renderHit">renderHit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#.searchPupils">searchPupils</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#.searchTutors">searchTutors</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#refreshData">refreshData</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewPastApptDialog.html#updateClockingTimes">updateClockingTimes</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NewProfile.html">NewProfile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#addAvailabilityInput">addAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#addAvailabilityInputs">addAvailabilityInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#addSubjectInput">addSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#addSubjectInputs">addSubjectInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#createProfile">createProfile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#manageHeader">manageHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#reManage">reManage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#removeAvailabilityInput">removeAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#removeSubjectInput">removeSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#saveImage">saveImage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#styleEmailInput">styleEmailInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NewProfile.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="NotificationDialog.html">NotificationDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NotificationDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="NotificationDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="global.html#Profile">Profile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#addAvailabilityInput">addAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#addAvailabilityInputs">addAvailabilityInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#addSubjectInput">addSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#addSubjectInputs">addSubjectInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#manageHeader">manageHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#reManage">reManage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#removeAvailabilityInput">removeAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#removeSubjectInput">removeSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#saveImage">saveImage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Profile#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Render.html">Render</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Render.html#searchTextFieldItem">searchTextFieldItem</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Schedule.html">Schedule</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#.getDayAndDateString">getDayAndDateString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#.getNextDateWithDay">getNextDateWithDay</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#.renderDateDivider">renderDateDivider</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#loadMore">loadMore</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#refresh">refresh</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#reViewAppts">reViewAppts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#view">view</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#viewAppt">viewAppt</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Schedule.html#viewAppts">viewAppts</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ScheduleCard.html">ScheduleCard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ScheduleCard.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ScheduleCard.html#viewAppts">viewAppts</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SearchHeader.html">SearchHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SearchHeader.html#search">search</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Snackbar.html">Snackbar</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Snackbar.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Stats.html">Stats</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Stats.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Stats.html#view">view</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Stats.html#viewCards">viewCards</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Stats.html#viewRecentActivityCards">viewRecentActivityCards</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Stats.html#viewServiceHourCards">viewServiceHourCards</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SubjectSelectDialog.html">SubjectSelectDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#renderList">renderList</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#reset">reset</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#save">save</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#section">section</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#updateSelected">updateSelected</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SubjectSelectDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SupervisorChats.html">SupervisorChats</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorChats.html#getAnnouncements">getAnnouncements</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorChats.html#renderAnnouncementItem">renderAnnouncementItem</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorChats.html#viewAnnouncements">viewAnnouncements</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorChats.html#viewChats">viewChats</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SupervisorSchedule.html">SupervisorSchedule</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#.renderShortcutCard">renderShortcutCard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#loadMore">loadMore</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#refresh">refresh</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#renderHit">renderHit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#reViewAppts">reViewAppts</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#view">view</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#viewAppt">viewAppt</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SupervisorSchedule.html#viewAppts">viewAppts</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Templates.html">Templates</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Tutorbook.html">Tutorbook</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initOnMobile">initOnMobile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initRootConfig">initRootConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initUser">initUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#initWebsiteConfig">initWebsiteConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#loader">loader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#login">login</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#logJobPost">logJobPost</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#preInit">preInit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#print">print</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#signOut">signOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#syncConfig">syncConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#updateUser">updateUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Tutorbook.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="TutorProfile.html">TutorProfile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#addAvailabilityInput">addAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#addAvailabilityInputs">addAvailabilityInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#addSubjectInput">addSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#addSubjectInputs">addSubjectInputs</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#manageHeader">manageHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#reManage">reManage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#removeAvailabilityInput">removeAvailabilityInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#removeSubjectInput">removeSubjectInput</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#reView">reView</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#saveImage">saveImage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="TutorProfile.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="User.html">User</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="User.html#.viewUser">viewUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="User.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="User.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Utils.html">Utils</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.arrayContainsAny">arrayContainsAny</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.attachHeader">attachHeader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.caps">caps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.filterApptData">filterApptData</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.getOtherUser">getOtherUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.join">join</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.parseHourString">parseHourString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.parseHourStrings">parseHourStrings</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.recycle">recycle</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Utils.html#.viewRaw">viewRaw</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html">ViewActiveApptDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html#clockIn">clockIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html#clockOut">clockOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html#update">update</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewActiveApptDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewApptDialog.html">ViewApptDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#.listen">listen</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#clockIn">clockIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#clockOut">clockOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#update">update</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewApptDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewCanceledRequestDialog.html">ViewCanceledRequestDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewCanceledRequestDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewCanceledRequestDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewCanceledRequestDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewModifiedRequestDialog.html">ViewModifiedRequestDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewModifiedRequestDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewModifiedRequestDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewModifiedRequestDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewPastApptDialog.html">ViewPastApptDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#clockIn">clockIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#clockOut">clockOut</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#update">update</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#updateRender">updateRender</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewPastApptDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewRejectedRequestDialog.html">ViewRejectedRequestDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewRejectedRequestDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewRejectedRequestDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewRejectedRequestDialog.html#view">view</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ViewRequestDialog.html">ViewRequestDialog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewRequestDialog.html#manage">manage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewRequestDialog.html#renderSelf">renderSelf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ViewRequestDialog.html#view">view</a></span></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_app.html">@tutorbook/app</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_dialogs.html">@tutorbook/dialogs</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_horz-scroller.html">@tutorbook/horz-scroller</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_intercom.html">@tutorbook/intercom</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_matching.html">@tutorbook/matching</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_navigation.html">@tutorbook/navigation</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_profile.html">@tutorbook/profile</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_render.html">@tutorbook/render</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_schedule-items.html">@tutorbook/schedule-items</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_search.html">@tutorbook/search</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_site.html">@tutorbook/site</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-@tutorbook_templates.html">@tutorbook/templates</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-CollectionReference.html">CollectionReference</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-DocumentReference.html">DocumentReference</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-DocumentSnapshot.html">DocumentSnapshot</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Query.html">Query</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-QuerySnapshot.html">QuerySnapshot</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Timestamp.html">Timestamp</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#app">app</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">app/packages/chats/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {
+    MDCRipple
+} from '@material/ripple/index';
+
+import $ from 'jquery';
+import to from 'await-to-js';
+
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+const Chat = require('@tutorbook/chat').default;
+const AnnouncementChat = require('@tutorbook/chat').announcement;
+const Utils = require('@tutorbook/utils');
+const Data = require('@tutorbook/data');
+const NewGroupDialog = require('@tutorbook/filters').group;
+const EditGroupDialog = require('@tutorbook/filters').editGroup;
+
+/**
+ * Class that provides a chat view and header and enables users to message one 
+ * another all within the app.
+ */
+class Chats {
+
+    constructor() {
+        this.chats = {}; // Store chat objects in cache for responsiveness
+        this.chatsByUID = {};
+        this.render = window.app.render;
+        this.recycler = {
+            remove: doc => $(this.main).find('#chats [id="doc-' + doc.id +
+                '"]').remove(),
+            display: doc => this.viewChat(this.renderChatItem(doc)),
+            empty: () => $(this.main).find('#chats .mdc-list-item:not([id="' +
+                'new-chat"])').empty().append(this.renderEmpty()),
+        };
+        this.renderSelf();
+    }
+
+    viewChat(listItem) {
+        const list = $(this.main).find('#chats');
+        const existing = $(list).find('#' + $(listItem).attr('id'));
+        if (existing.length) {
+            if (existing.hasClass('mdc-list-item--selected')) $(listItem)
+                .addClass('mdc-list-item--selected');
+            return existing.replaceWith(listItem);
+        }
+        list.append(listItem);
+    }
+
+    // View function that shows the user a mdc-list of their current chats
+    view(chat) {
+        window.app.intercom.view(true);
+        window.app.nav.selected = 'Messages';
+        const chats = $(this.main).find('.chats-container');
+        const scroll = chats.scrollTop();
+        if (!this.managed) this.manage();
+        if (!this.chatsViewed) this.viewChats();
+        if (chat) this.chats[chat.id] = chat;
+        window.visible = Utils.visible;
+        var viewingChat, attemptsToViewChat = 0;
+        const viewChat = () => {
+            if (attemptsToViewChat > 10 &amp;&amp; viewingChat) {
+                window.clearInterval(viewingChat);
+                window.app.snackbar.view('Could not open chat.');
+            }
+            attemptsToViewChat++;
+            try {
+                const scrolledInView = $(this.main)
+                    .find('.messages-container').empty().append(chat.main).end()
+                    .find('.mdc-list .mdc-list-item--selected')
+                    .removeClass('mdc-list-item--selected').end()
+                    .find('.mdc-list #' + chat.id)
+                    .addClass('mdc-list-item--selected')[0].offsetTop - 10;
+                window.app.view(this.header, this.main, '/app/messages/' +
+                    chat.id);
+                $(this.main).find('.chats-container').scrollTop(Utils.visible({
+                    el: $(this.main).find('#' + chat.id)[0],
+                    pageTop: scroll,
+                }) ? scroll : scrolledInView);
+                chat.viewMessages();
+                chat.manage();
+                if (viewingChat) window.clearInterval(viewingChat);
+            } catch (err) {
+                console.warn('[WARNING] Trying again to open chat b/c of', err);
+            }
+        };
+        if (chat &amp;&amp; $(this.main).find('#chats #' + chat.id).length) {
+            viewChat();
+        } else if (chat) {
+            viewingChat = window.setInterval(viewChat, 150);
+        } else if ($(this.main).find('.mdc-list-item--selected').length) {
+            this.chats[$(this.main).find('.mdc-list-item--selected')
+                .attr('id')].view();
+        } else if ($(this.main).find('.messages-container .chat').length) {
+            this.chats[$(this.main).find('.messages-container .chat')
+                .attr('id')].view();
+        } else {
+            window.app.view(this.header, this.main, '/app/messages');
+        }
+    }
+
+    reView() {
+        window.app.intercom.view(true);
+        window.app.nav.selected = 'Messages';
+        if (!this.managed) this.manage();
+        if (!this.chatsViewed) this.viewChats();
+    }
+
+    manage() {
+        this.managed = true;
+        Utils.attachHeader(this.header);
+        MDCRipple.attachTo($(this.main).find('#chats #new-chat')[0]);
+    }
+
+    async chat(id) {
+        if (!this.chats[id]) {
+            const [err, chat] = await to(this.getChat(id));
+            if (err) {
+                window.app.snackbar.view('Could not open chat.');
+                return this.view();
+            }
+            this.chats[id] = new Chat(id, chat.data());
+        }
+        this.chats[id].view();
+    }
+
+    // Render function that returns the chat view
+    renderSelf() {
+        this.main = window.app.onMobile ? this.render.template('chats-mobile', {
+            newChat: () => new NewChatDialog().view(),
+        }) : this.render.template('chats-desktop', {
+            newChat: () => new NewChatDialog().view(),
+        });
+        this.header = this.render.header('header-main', {
+            title: 'Messages',
+        });
+    }
+
+    /**
+     * View function that shows all the chats that the currentUser is a part of.
+     */
+    viewChats() {
+        this.chatsViewed = true;
+        $(this.main).find('#chats .mdc-list-item:not([id="new-chat"])').remove();
+        window.app.listeners.push(this.getChats().onSnapshot({
+            error: (err) => {
+                window.app.snackbar.view('Could not get chats.');
+                console.error('[ERROR] Could not get chats b/c of ', err);
+            },
+            next: (snapshot) => {
+                if (!snapshot.size) return this.recycler.empty();
+
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === 'removed') {
+                        this.recycler.remove(change.doc);
+                    } else {
+                        this.recycler.display(change.doc);
+                    }
+                });
+            },
+        }));
+    }
+
+    renderEmpty() {
+        return this.render.template('centered-text', {
+            text: 'No chats.',
+        });
+    }
+
+    // Function that returns the user's current chats (we will support filtering
+    // chats in the future).
+    getChats() {
+        return window.app.db.collection('chats')
+            .where('chatterUIDs', 'array-contains', window.app.user.uid)
+            .orderBy('lastMessage.timestamp', 'desc');
+    }
+
+    // Data action function that deletes the chat and TODO: sends out deleted 
+    // chat notifications to the other users on the chat.
+    deleteChat(chat, id) {
+        const db = window.app.db;
+        return db.collection('chats').doc(id).delete();
+    }
+
+    getChat(id) {
+        return window.app.db.collection('chats').doc(id).get();
+    }
+
+    // Render function that returns a chat list item
+    renderChatItem(doc) {
+
+        function getOther(UIDs) {
+            if (UIDs[0] !== window.app.user.uid) {
+                return UIDs[0];
+            }
+            return UIDs[1];
+        };
+
+        const chat = new Chat(doc.id, doc.data());
+        this.chats[doc.id] = chat;
+        this.chatsByUID[getOther(doc.data().chatterUIDs)] = chat;
+        const el = this.render.template('chat-list-item',
+            Utils.combineMaps(doc.data(), {
+                open_chat: () => {
+                    $(el).addClass('mdc-list-item--selected');
+                    chat.view();
+                },
+                id: doc.id,
+                photo: doc.data().photo || Utils.getOtherUser(
+                    doc.data().chatters[0],
+                    doc.data().chatters[1]
+                ).photo,
+                name: doc.data().name || Utils.getOtherUser(
+                    doc.data().chatters[0],
+                    doc.data().chatters[1]
+                ).name,
+            }));
+        MDCRipple.attachTo(el);
+        return el;
+    }
+
+    // Creates a new chat with the given user
+    async newWith(user) {
+        // First, check if we have a stored chat object for the given user
+        if (this.chatsByUID[user.uid]) return this.chatsByUID[user.uid];
+
+        // Second, check if the user already has a chat with the given user
+        const db = window.app.db;
+        const chats = await db.collection('chats')
+            .where('chatterUIDs', 'array-contains', window.app.user.uid)
+            .get();
+        const docs = [];
+        chats.forEach((chat) => {
+            docs.push(chat);
+        });
+        for (var i = 0; i &lt; docs.length; i++) {
+            if (docs[i].data().chatterUIDs.indexOf(user.uid) >= 0) {
+                return new Chat(docs[i].id, docs[i].data());
+            }
+        }
+
+        // If not, create a new chat group.
+        const conciseUser = Utils.filterRequestUserData(user);
+        const chat = {
+            lastMessage: {
+                message: 'No messages so far. Click to send the first one.',
+                sentBy: window.app.conciseUser,
+                timestamp: new Date(),
+            },
+            chatters: [
+                window.app.conciseUser,
+                conciseUser,
+            ],
+            chatterUIDs: [
+                window.app.user.uid,
+                user.uid,
+            ],
+            chatterEmails: [
+                window.app.user.email,
+                user.email,
+            ],
+            location: window.app.location,
+            createdBy: window.app.conciseUser,
+            name: '', // We just use the chatter name as the chat name
+            photo: '', // We just use the chatter photo as the chat photo
+        };
+        const ref = db.collection('chats').doc();
+        await ref.set(chat);
+        return new Chat(ref.id, chat);
+    }
+};
+
+/**
+ * Class that represents our 
+ * ["Messages"]{@link https://tutorbook.app/app/messages} app view for 
+ * supervisors (much like [Remind]{@link https://remind.com} but synced with 
+ * all of your tutoring data and with automatic messages).
+ * @extends Chats
+ */
+class SupervisorChats extends Chats {
+    constructor() {
+        super();
+        this.announcements = {};
+        this.announcementDialogs = {};
+    }
+
+    async chat(id) {
+        if (this.chats[id]) return this.chats[id].view();
+        if (this.announcements[id]) return this.announcements[id].view();
+        const [err, chat] = await to(this.getChat(id));
+        if (err) {
+            const attempt = this.getAnnouncement(id);
+            if (!attempt) return this.view();
+            const [e, announcement] = await to(attempt);
+            if (e) {
+                window.app.snackbar.view('Could not open chat.');
+                return this.view();
+            }
+            this.announcements[id] = new AnnouncementChat(announcement);
+            return this.announcements[id].view();
+        }
+        this.chats[id] = new Chat(id, chat.data());
+        this.chats[id].view();
+    }
+
+    async getAnnouncement(id) {
+        if (!window.app.location.id) return console.error('[ERROR] Couldn\'t ' +
+            'get announcement group chat (' + id + ') without location id.');
+        for (var location of (await Data.getLocations())) {
+            var doc = await location.collection('announcements').doc(id).get();
+            if (doc.exists) return doc;
+        } // TODO: Remove the below fallback.
+        return window.app.db.collection('locations').doc(window.app.location.id)
+            .collection('announcements').doc(id).get();
+    }
+
+    renderHit(hit) {
+        return this.renderChatItem({
+            data: () => Utils.filterChatData(hit),
+            id: hit.objectID,
+        });
+    }
+
+    renderSelf() {
+        super.renderSelf();
+        $(this.main).find('#chats').replaceWith(
+            this.render.template('supervisor-chats-list', {
+                newAnnouncement: () => new NewGroupDialog({
+                    groupNum: Object.values(this.announcements).length + 1,
+                }).view(),
+            }));
+        this.search = new window.app.SearchHeader({
+            title: 'Messages',
+            placeholder: 'Search your messages',
+            index: Data.algoliaIndex('chats'),
+            search: async (that) => {
+                const qry = $(that.el).find('.search-box input').val();
+                qry.length > 0 ? that.showClearButton() : that.showInfoButton();
+                const [err, res] = await to(that.index.search({
+                    query: qry,
+                    facetFilters: ['chatterUIDs:' + window.app.user.uid],
+                }));
+                if (err) return console.error('[ERROR] Could not search ' +
+                    'messages b/c of', err);
+                $(that.el).find('#results').empty();
+                res.hits.forEach((hit) => {
+                    try {
+                        $(that.el).find('#results').append(this.renderHit(hit));
+                    } catch (e) {
+                        console.warn('[ERROR] Could not render hit (' +
+                            hit.objectID + ') b/c of', e);
+                    }
+                });
+            },
+        });
+        this.header = this.search.el;
+    }
+
+    view(chat) {
+        super.view(chat);
+        this.search.manage();
+    }
+
+    reView() {
+        super.reView();
+        this.search.manage();
+    }
+
+    viewChats() {
+        super.viewChats();
+        this.viewAnnouncements();
+    }
+
+    manage() {
+        super.manage();
+        MDCRipple.attachTo($(this.main).find('#new-announcement')[0]);
+    }
+
+    viewAnnouncement(listItem) {
+        const list = $(this.main).find('#announcements');
+        const existing = $(list).find('#' + $(listItem).attr('id'));
+        if (existing.length) { // TODO: Why am I doing this?
+            if (existing.hasClass('mdc-list-item--selected')) $(listItem)
+                .addClass('mdc-list-item--selected');
+            return existing.replaceWith(listItem);
+        }
+        list.append(listItem);
+    }
+
+    /**
+     * Recycles the announcements stored at the web app's locations.
+     * @see {@link Utils#recycle}
+     */
+    viewAnnouncements() {
+        const recycler = {
+            display: (doc, _, index) => this.viewAnnouncement(
+                this.renderAnnouncementItem(doc, index)),
+            remove: (doc, _, index) => $(this.main).find('#announcements #' +
+                doc.id).remove(),
+            empty: (_, index) => $(this.main).find('#announcements').find('.' +
+                'mdc-list-item:not([id="new-announcement"])[index="' + index +
+                '"]').remove(),
+        };
+        $(this.main).find('#announcements').find('.mdc-list-item:not([id="new' +
+            '-announcement"])').remove();
+        Utils.recycle({
+            announcements: this.getAnnouncements(),
+        }, recycler);
+    }
+
+    /**
+     * Gets the announcement queries from the web app's locally stored locations.
+     * @return {external:Query[]} An array of Firestore 
+     * [Query]{@link external:Query} objects.
+     */
+    getAnnouncements() {
+        return window.app.data.locationIDs.map(id => window.app.db
+            .collection('locations').doc(id).collection('announcements')
+            .orderBy('lastMessage.timestamp', 'desc'));
+    }
+
+    /**
+     * Renders (and manages) an announcement list item.
+     * @see {@link SupervisorChats#viewAnnouncements}
+     * @param {external:DocumentSnapshot} doc - The announcement group's 
+     * Firestore document snapshot.
+     * @param {int} index - The index of the query from which this announcement 
+     * document came from. See {@link Utils#recycle} for more information.
+     * @return {HTMLElement} The rendered (and managed) `mdc-list-item`.
+     */
+    renderAnnouncementItem(doc, index) {
+        const chat = new AnnouncementChat(doc);
+        const dialog = new EditGroupDialog({
+            name: doc.data().name,
+            filters: doc.data().filters,
+            group: doc.data(),
+            ref: doc.ref,
+        });
+        this.announcements[doc.id] = chat;
+        this.announcementDialogs[doc.id] = dialog;
+        const el = this.render.template('chat-list-item',
+            Utils.combineMaps(doc.data(), {
+                open_chat: () => {
+                    if ($(event.target).closest('button').length) return;
+                    $(el).addClass('mdc-list-item--selected');
+                    chat.view();
+                },
+                showMenuBtn: true,
+                id: doc.id,
+                photo: doc.data().photo,
+                name: doc.data().name,
+                index: index,
+            }));
+        const confirmDeletionDialog = new ConfirmationDialog('Delete ' +
+            'Announcement Group?', 'You are about to permanantly delete all ' +
+            'of this announcement group\'s data (including any filters and ' +
+            'all past messages). Please check with your fellow supervisors ' +
+            'before deletion. Note that this will not delete messages ' +
+            'already relayed to your own DMs. Are you sure you want to ' +
+            'continue?', async () => {
+                const [err, res] = await to(doc.ref.delete());
+                if (err) return window.app.snackbar.view('Could not delete ' +
+                    'announcement group.');
+                window.app.snackbar.view('Deleted announcement group.');
+            }, () => {});
+        const menuEl = this.render.template('menu', {
+            options: [{
+                label: 'Edit',
+                action: () => dialog.view(),
+            }, {
+                label: 'Delete',
+                action: () => confirmDeletionDialog.view(),
+            }, {
+                label: 'Raw Data',
+                action: () => Utils.viewRaw(doc),
+            }],
+            id: Utils.genID(),
+        });
+        const menu = Utils.attachMenu(menuEl);
+        MDCRipple.attachTo(el);
+        MDCRipple.attachTo($(el).find('#menu-btn')[0]).unbounded = true;
+        $(el).find('#menu-btn')[0].addEventListener('click', () => {
+            const pos = $(el).find('#menu-btn').offset();
+            menu.setAbsolutePosition(pos.left, pos.top);
+            menu.open = true;
+        });
+        $('body #menus').prepend(menuEl);
+        return el;
+    }
+};
+
+module.exports = {
+    default: Chats,
+    supervisor: SupervisorChats,
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Mar 07 2020 18:57:43 GMT-0800 (Pacific Standard Time) using the <a href="https://github.com/tutorbookapp/minami">Minami theme</a>.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2.6.3/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    apiKey: '18e7a716d00373598f46dd8d9f012ef5',
+    indexName: 'docs',
+    appId: '9FGZL7GIJM',
+    inputSelector: '#search',
+    debug: false,
+  });
+</script>
+</body>
+</html>

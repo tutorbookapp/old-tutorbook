@@ -238,6 +238,10 @@ nav li {
   margin: 0;
 }
 
+nav li:last-child {
+  margin-bottom: 10px;
+}
+
 .nav-search {
   position: fixed;
 }
@@ -269,7 +273,6 @@ nav li {
 }
 
 .nav-item-type {
-  /* margin-left: 5px; */
   width: 18px;
   height: 18px;
   display: inline-block;
@@ -297,10 +300,14 @@ nav li {
 }
 
 .type-module {
-  background: #E1BEE7;
-  color: #7B1FA2;
+  background: #FFAACC;
+  color: #9D4064;
 }
 
+.type-external {
+  background: #FFE3C7;
+  color: #A75D46;
+}
 
 /** Footer **/
 footer {

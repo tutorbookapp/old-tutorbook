@@ -29,8 +29,8 @@ class Data {
     /**
      * Creates a new Data object that manages Firestore data flow for the
      * Tutorbook web app.
-     * @param {CollectionReference} [db=window.app.db] - The Firestore partition
-     * to fetch data from.
+     * @param {external:CollectionReference} [db=window.app.db] - The Firestore 
+     * partition to fetch data from.
      * @param {bool} [init=true] - Whether or not to initialize locations, 
      * grades, periods, times, hourlyCharges, etc.
      */
@@ -167,9 +167,72 @@ class Data {
     }
 
     /**
+     * A Firestore `QuerySnapshot` contains zero or more 
+     * [DocumentSnapshot]{@link external:DocumentSnapshot} objects representing 
+     * the results of a query. The documents can be accessed as an array via the 
+     * `docs` property or enumerated using the `forEach` method. The number of 
+     * documents can be determined via the `empty` and `size` properties.
+     * @external QuerySnapshot
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.firestore.QuerySnapshot}
+     */
+
+    /**
+     * A Firestore `Query` refers to a `Query` which you can read or listen to. 
+     * You can also construct refined Query objects by adding filters and 
+     * ordering.
+     * @external Query
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.firestore.Query}
+     */
+
+    /**
+     * A Firestore `DocumentSnapshot` contains data read from a document in your 
+     * Firestore database. The data can be extracted with `.data()` or
+     * `.get(<field>)` to get a specific field.
+     * @external DocumentSnapshot
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentSnapshot}
+     */
+
+    /**
+     * A Firestore `CollectionReference` object can be used for adding 
+     * documents, getting document references, and querying for documents 
+     * (using the methods inherited from `Query`).
+     * @external CollectionReference
+     * @extends external:Query
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.firestore.CollectionReference}
+     */
+
+    /**
+     * A Firestore `DocumentReference` refers to a document location in a 
+     * Firestore database and can be used to write, read, or listen to the 
+     * location. The document at the referenced location may or may not exist. A 
+     * `DocumentReference` can also be used to create a 
+     * [CollectionReference]{@link external:CollectionReference} to a 
+     * subcollection.
+     * @external DocumentReference
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.firestore.DocumentReference}
+     */
+
+    /**
+     * A `Timestamp` represents a point in time independent of any time zone 
+     * or calendar, represented as seconds and fractions of seconds at 
+     * nanosecond resolution in UTC Epoch time.
+     *
+     * It is encoded using the Proleptic Gregorian Calendar which extends the 
+     * Gregorian calendar backwards to year one. It is encoded assuming all 
+     * minutes are 60 seconds long, i.e. leap seconds are "smeared" so that no 
+     * leap second table is needed for interpretation. Range is from 
+     * `0001-01-01T00:00:00Z` to `9999-12-31T23:59:59.999999999Z`.
+     * 
+     * @external Timestamp
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.firestore.Timestamp}
+     * @see {@link https://github.com/google/protobuf/blob/master/src/google/protobuf/timestamp.proto}
+     */
+
+    /**
      * Handles a Firestore Query's snapshots.
      * @callback snapshotCallback
-     * @param {(QuerySnapshot|DocumentSnapshot)} - A query's snapshot.
+     * @param {(external:QuerySnapshot|external:DocumentSnapshot)} - A query's 
+     * snapshot.
      */
 
     /**
@@ -181,8 +244,8 @@ class Data {
     /**
      * Fetch and then listen to a Firestore query.
      * @see {@link https://firebase.google.com/docs/firestore/query-data/queries}
-     * @param {(Query|string[])} query - The query or Firestore path to listen 
-     * to.
+     * @param {(external:Query|string[])} query - The query or Firestore path to 
+     * listen to.
      * @param {snapshotCallback} next - Handles the query's snapshots.
      * @param {errorCallback} [error=() => {}] - Handles the query's errors.
      * @param {Object} 

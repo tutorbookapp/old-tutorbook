@@ -39,7 +39,8 @@ const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 class Event {
     /**
      * Creates a new event list item from a given Firestore appt document.
-     * @param {DocumentSnapshot} doc - The appt's Firestore document snapshot.
+     * @param {external:DocumentSnapshot} doc - The appt's Firestore document 
+     * snapshot.
      */
     constructor(doc) {
         Object.entries(doc.data()).forEach((entry) => {

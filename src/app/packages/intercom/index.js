@@ -16,7 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/** Class that inits and manages our Intercom integration. */
+/** 
+ * Class that inits and manages our Intercom integration. 
+ * @see {@link https://intercom.com}
+ */
 class Help {
 
     /**

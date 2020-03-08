@@ -151,7 +151,9 @@ class Chats {
         });
     }
 
-    // View function that shows all the chats that the currentUser is a part of
+    /**
+     * View function that shows all the chats that the currentUser is a part of.
+     */
     viewChats() {
         this.chatsViewed = true;
         $(this.main).find('#chats .mdc-list-item:not([id="new-chat"])').remove();
@@ -423,7 +425,8 @@ class SupervisorChats extends Chats {
 
     /**
      * Gets the announcement queries from the web app's locally stored locations.
-     * @return {Query[]} An array of Firestore [`Query`]{@link https://firebase.google.com/docs/reference/node/firebase.firestore.Query} objects.
+     * @return {external:Query[]} An array of Firestore 
+     * [Query]{@link external:Query} objects.
      */
     getAnnouncements() {
         return window.app.data.locationIDs.map(id => window.app.db
@@ -434,8 +437,8 @@ class SupervisorChats extends Chats {
     /**
      * Renders (and manages) an announcement list item.
      * @see {@link SupervisorChats#viewAnnouncements}
-     * @param {DocumentSnapshot} doc - The announcement group's Firestore 
-     * document snapshot.
+     * @param {external:DocumentSnapshot} doc - The announcement group's 
+     * Firestore document snapshot.
      * @param {int} index - The index of the query from which this announcement 
      * document came from. See {@link Utils#recycle} for more information.
      * @return {HTMLElement} The rendered (and managed) `mdc-list-item`.
