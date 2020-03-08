@@ -213,5 +213,5 @@ setup your machine (we do not include the `.env` file with our Algolia keys in
 this repository for obvious security reasons) and then run:
 
 ```
-$ sudo make docsearch
+$ sudo make search
 ```
