@@ -52,7 +52,9 @@ service cloud.firestore {
     }
 
     match /locations/{location} {
-      allow read: if hasAccess();
+      // TODO: The location's supervisors should always be in the location's 
+      // access (but we can't compound `array-contains` queries). 
+      allow read: if hasAccess() || isSupervisorFor(location);
     }
     
     match /locations/{location}/recentActions/{recentAction} {
@@ -108,14 +110,16 @@ service cloud.firestore {
           (request.resource.data.payments.currentBalance == null ||
           request.resource.data.payments.currentBalance == 
             resource.data.payments.currentBalance) &&
-          (request.resource.data.payments.currentBalanceString == null ||
-          request.resource.data.payments.currentBalanceString == 
-            resource.data.payments.currentBalanceString) &&
+          (request.resource.data.secondsPupiled == null ||
+          request.resource.data.secondsPupiled == 
+            resource.data.secondsPupiled) &&
           (request.resource.data.secondsTutored == null ||
           request.resource.data.secondsTutored == resource.data.secondsTutored);
       }
 
-      allow read: if hasAccess();
+      // TODO: The proxy should always be in the user's access (but we can't
+      // compound `array-contains` queries). 
+      allow read: if hasAccess() || isProxy(user);
       allow create: if (isUser(user) || isSupervisor())
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.payments.currentBalanceString == "$0.00"
