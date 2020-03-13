@@ -57,3 +57,25 @@ Below is how we organize our Firestore collections:
     │   └── websites
     └── test
 ```
+
+## Indexes
+
+Learn more about Firestore indexes at [their official
+documentation](https://firebase.google.com/docs/firestore/query-data/index-overview)
+before reading below (or, if you're already pretty familiar with the concept of
+database indexing, feel free to forge ahead).
+
+Our indexes are primarily [composite indexes](https://firebase.google.com/docs/firestore/query-data/index-overview#composite_indexes)
+that power the filter options in our app's [primary search
+view](https://tutorbook.app/app/search). Note that indexes do not (easily)
+support text based searches (instead, we use [Algolia](https://algolia.com)
+paired with Firebase Cloud Functions as described
+[here](https://firebase.google.com/docs/firestore/solutions/search)). You can
+view all of our indexes in `firebase/firestore.indexes.json` (and check out
+those Firebase Cloud Functions in `firebase/functions/index.js` and
+`firebase/functions/packages/algolia/index.js`).
+
+We also provide some useful Firestore index management utilities (e.g. you can
+batch delete indexes without having to manually click the 'Delete' option for
+**each index** in the Firebase console) in `utils/firestore` which are explained
+[here](https://tutorbook.app/docs/tutorial-Utilities.html).

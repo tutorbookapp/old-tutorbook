@@ -97,7 +97,8 @@ JSON).
 
 To delete all of our indexes via Firestore's [Google Cloud REST
 API](https://cloud.google.com/firestore/docs/reference/rest/v1beta1/projects.databases.indexes/list)
-run:
+first make sure to replace the `TODO` string constants (e.g. add the Google
+Cloud Platform OAuth 2.0 client information) in `delete-indexes.js`. Then, run:
 
 ```
 $ node delete-indexes.js
