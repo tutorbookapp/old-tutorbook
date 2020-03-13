@@ -1,2 +1,3 @@
 # Sensitive information on Firestore backups
 *.json
+*.csv
