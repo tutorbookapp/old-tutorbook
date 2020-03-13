@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `site-header` custom HTML Web Component.
+ * @module @tutorbook/header
+ * @see {@link https://npmjs.com/package/@tutorbook/header}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -20,6 +24,10 @@ const $ = require('jquery');
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `site-header` custom HTML Web Component that is used
+ * on every page of our marketing website.
+ */
 class Header extends HTMLElement {
     constructor() {
         super();

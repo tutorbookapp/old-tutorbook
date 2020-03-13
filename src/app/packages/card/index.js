@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -49,7 +49,10 @@ const User = require('@tutorbook/user');
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
 
-// Class this renders each card based on the given doc, queryID, and type
+/**
+ * Class this renders each card based on the given doc, queryID, and type.
+ * @todo Finish documentation.
+ */
 class Card {
 
     constructor(doc, queryID, type, priority = 5) {

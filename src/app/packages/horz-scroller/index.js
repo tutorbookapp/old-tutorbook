@@ -23,9 +23,9 @@ import {
 import $ from 'jquery';
 
 /**
- * Class that represents the horizontal scroller in the [configuration 
- * view]{@linkplain Configuration} and [supervisor dashboard 
- * view]{@linkplain SupervisorDashboard}.
+ * Class that represents the horizontal scroller in the 
+ * [configuration view]{@linkplain module:@tutorbook/config~Config} and 
+ * [supervisor dashboard view]{@linkplain SupervisorDashboard}.
  * @todo Finish documentation for this class.
  */
 class HorzScroller {

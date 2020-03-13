@@ -1,4 +1,9 @@
 /**
+ * Package that contains the navigation class that powers the user's navigation
+ * experience (e.g. the nav drawer, back navigation, etc).
+ * @module @tutorbook/navigation
+ * @see {@link https://npmjs.com/package/@tutorbook/navigation}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -30,7 +35,13 @@ const User = require('@tutorbook/user');
 const Utils = require('@tutorbook/utils');
 const Navigo = require('navigo');
 
-// Class that manages app URLs, the navigation drawer, and back navigation
+/**
+ * Class that manages app URLs, the navigation drawer, and back navigation.
+ * @todo Finish documentation.
+ * @todo Don't break the browser's built-in navigation (i.e. hitting the back 
+ * button in the browser should be the same as hitting the back button within 
+ * the PWA).
+ */
 class Navigation {
 
     constructor() {

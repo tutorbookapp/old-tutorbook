@@ -358,7 +358,7 @@ class Tutorbook {
     }
 
     /**
-     * Proxy function to Data's [updateUser]{@link Data#updateUser} method.
+     * Proxy function to Data's [updateUser]{@link Data.updateUser} method.
      * @example
      * await window.app.updateUser(); // Updates the current user's data.
      * await window.app.updateUser({ // Updates a subset of a specified user's
@@ -369,7 +369,7 @@ class Tutorbook {
      *   gender: 'Male',
      *   subjects: ['Chemistry H'],
      * });
-     * @see {@link Data#updateUser}
+     * @see {@link Data.updateUser}
      */
     updateUser(user = this.user) {
         return Data.updateUser(user);

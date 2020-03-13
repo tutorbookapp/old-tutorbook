@@ -1,4 +1,11 @@
 /**
+ * Package that contains the (currently **unused**) 
+ * [settings view]{@link https://tutorbook.app/app/settings}.
+ * @module @tutorbook/settings
+ * @see {@link https://npmjs.com/package/@tutorbook/settings}
+ * @todo Finish implementation and add a 'Settings' destination to the user's
+ * [navigation drawer]{@linkplain module:@tutorbook/navigation~Navigation}.
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -18,9 +25,12 @@
 
 const Data = require('@tutorbook/data');
 
-
-// Class that provides the settings screen and header and manages all data flow
-// relating to the user's config and settings objects.
+/**
+ * Class that provides the settings screen and header and manages all data flow
+ * relating to the user's config and settings objects.
+ * @todo Finish documentation (and implementation for that matter).
+ * @deprecated
+ */
 class Settings {
 
     constructor() {

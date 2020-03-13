@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `hero-email-capture` custom HTML Web Component.
+ * @module @tutorbook/hero-email-capture
+ * @see {@link https://npmjs.com/package/@tutorbook/hero-email-capture}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -20,6 +24,10 @@ const Checkmarks = require('@tutorbook/checkmarks');
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `hero-email-capture` custom HTML Web Component.
+ * @extends external:HTMLElement
+ */
 class HeroEmailCapture extends HTMLElement {
     constructor() {
         super();

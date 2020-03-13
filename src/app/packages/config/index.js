@@ -1,4 +1,10 @@
 /**
+ * Package that contains the 
+ * [configuration view]{@link https://tutorbook.app/app/config} class.
+ * @todo Finish documentation of what the configuration view actually does.
+ * @module @tutorbook/config
+ * @see {@link https://npmjs.com/package/@tutorbook/config}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +19,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {

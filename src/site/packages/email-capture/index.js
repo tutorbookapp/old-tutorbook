@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `email-capture` custom HTML Web Component.
+ * @module @tutorbook/email-capture
+ * @see {@link https://npmjs.com/package/@tutorbook/email-capture}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -21,6 +25,10 @@ const Checkmarks = require('@tutorbook/checkmarks');
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `email-capture` custom HTML Web Component.
+ * @todo Document attributes of the `email-capture` tag.
+ */
 class EmailCapture extends HTMLElement {
     constructor() {
         super();

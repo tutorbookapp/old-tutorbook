@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `heading-block` custom HTML Web Component.
+ * @module @tutorbook/heading-block
+ * @see {@link https://npmjs.com/package/@tutorbook/heading-block}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -19,6 +23,10 @@
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `heading-block` custom HTML Web Component.
+ * @extends external:HTMLElement
+ */
 class HeadingBlock extends HTMLElement {
     constructor() {
         super();

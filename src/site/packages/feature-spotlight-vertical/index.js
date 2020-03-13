@@ -1,4 +1,9 @@
 /**
+ * Package that defines the `feature-spotlight-vertical` custom HTML Web 
+ * Component.
+ * @module @tutorbook/feature-spotlight-vertical
+ * @see {@link https://npmjs.com/package/@tutorbook/feature-spotlight-vertical}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -19,6 +24,11 @@
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `feature-spotlight-vertical` custom HTML Web 
+ * Component.
+ * @extends external:HTMLElement
+ */
 class FeatureSpotlightVertical extends HTMLElement {
     constructor() {
         super();

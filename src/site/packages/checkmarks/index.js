@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `checkmarks-list` custom HTML Web Component.
+ * @module @tutorbook/checkmarks
+ * @see {@link https://npmjs.com/package/@tutorbook/checkmarks}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -21,6 +25,11 @@ const checkmarkHTML = require('./checkmark.html').toString();
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `checkmarks-list` custom HTML Web Component.
+ * @todo Document that `checkmarks-list` tag attributes and what they do (i.e.
+ * how does one create a list with different checkmark labels).
+ */
 class Checkmarks extends HTMLElement {
     constructor() {
         super();

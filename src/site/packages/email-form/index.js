@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `email-form` custom HTML Web Component.
+ * @module @tutorbook/email-form
+ * @see {@link https://npmjs.com/package/@tutorbook/email-form}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -20,6 +24,11 @@ const $ = require('jquery');
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `email-form` custom HTML Web Component.
+ * @todo Actually do something useful with the emails collected (i.e. instead of
+ * just redirecting the user to the Tutorbook app login screen).
+ */
 class EmailForm extends HTMLElement {
     constructor() {
         super();

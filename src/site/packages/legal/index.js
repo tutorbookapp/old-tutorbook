@@ -1,4 +1,10 @@
 /**
+ * Package that defines the `layered-legal` custom HTML Web Component and 
+ * contains useful utilities to convert our markdown legal documents (exported
+ * from [Notion]{@link https://notion.so}) into the final HTML Web Component.
+ * @module @tutorbook/legal
+ * @see {@link https://npmjs.com/package/@tutorbook/legal}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -22,6 +28,11 @@ const css = require('./index.scss').toString();
 
 const DEFAULT_POLICY = 'privacy';
 
+/**
+ * Class that defines the `layered-legal` custom HTML Web Component that
+ * contains all of our legalities in an easily navigatable layered format.
+ * @see {@link https://tutorbook.app/legal}
+ */
 class Legal extends HTMLElement {
     constructor() {
         super();

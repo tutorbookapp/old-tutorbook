@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `feature-spotlight` custom HTML Web Component.
+ * @module @tutorbook/feature-spotlight
+ * @see {@link https://npmjs.com/package/@tutorbook/feature-spotlight}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -20,6 +24,9 @@ const $ = require('jquery');
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `feature-spotlight` custom HTML Web Component.
+ */
 class FeatureSpotlight extends HTMLElement {
     constructor() {
         super();

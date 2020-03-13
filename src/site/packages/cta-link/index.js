@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `cta-link` custom HTML Web Component.
+ * @module @tutorbook/cta-link
+ * @see {@link https://npmjs.com/package/@tutorbook/cta-link}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -20,6 +24,10 @@ const $ = require('jquery');
 const html = require('./index.html');
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `cta-link` custom HTML Web Component.
+ * @todo Document the valid `cta-link` tag attributes and what they do.
+ */
 class CTALink extends HTMLElement {
     constructor() {
         super();

@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `logo-party` custom HTML Web Component.
+ * @module @tutorbook/logo-party
+ * @see {@link https://npmjs.com/package/@tutorbook/logo-party}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -21,6 +25,10 @@ const logoHTML = require('./logo.html').toString();
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the (currently **unused**) `logo-party` custom HTML Web
+ * Component.
+ */
 class LogoParty extends HTMLElement {
     constructor() {
         super();

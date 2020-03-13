@@ -1,4 +1,8 @@
 /**
+ * Package that manages our tracking dashboard and cards.
+ * @module @tutorbook/tracking
+ * @see {@link https://npmjs.com/package/@tutorbook/tracking}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +17,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 const Card = require('@tutorbook/card');
@@ -24,8 +28,11 @@ const axios = require('axios');
 import $ from 'jquery';
 import to from 'await-to-js';
 
-// Class that manages the "Service Hour Tracking" card in the supervisor's
-// dashboard view.
+/**
+ * Class that manages the "Service Hour Tracking" card in the supervisor's
+ * dashboard view.
+ * @todo Finish documentation.
+ */
 class Tracking {
 
     constructor() {}

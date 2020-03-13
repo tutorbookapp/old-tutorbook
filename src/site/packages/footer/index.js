@@ -1,4 +1,8 @@
 /**
+ * Package that defines the `site-footer` custom HTML Web Component.
+ * @module @tutorbook/footer
+ * @see {@link https://npmjs.com/package/@tutorbook/footer}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -19,6 +23,11 @@
 const html = require('./index.html').toString();
 const css = require('./index.scss').toString();
 
+/**
+ * Class that defines the `site-footer` custom HTML Web Component that is used
+ * at the bottom of every page of our marketing site.
+ * @extends external:HTMLElement
+ */
 class Footer extends HTMLElement {
     constructor() {
         super();

@@ -23,6 +23,8 @@ const algolia = require('algoliasearch')
 
 /**
  * Class that manages Firestore data flow along with any local app data.
+ * @todo Add documentation (`@memberof`) links to static attributes (e.g. 
+ * `Data.grades` doesn't point to anything right now but we know it exists).
  */
 class Data {
 
@@ -78,8 +80,8 @@ class Data {
     }
 
     /**
-     * Syncs grades with the web app configuration (or all of the [statically 
-     * defined grades]{@link Data#grades}).
+     * Syncs grades with the web app configuration (or all of the
+     * [statically defined grades]{@linkplain Data.grades}).
      * @param {string[]} [grades=window.app.config.grades] - The array of grades
      * to sync this data object with.
      */
