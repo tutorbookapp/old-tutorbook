@@ -70,16 +70,17 @@ const SUPERVISOR = {
 // DEPENDENCIES
 // =============================================================================
 
+const to = require('await-to-js').default;
 const assert = require('assert');
 const axios = require('axios');
 const firebaseApp = require('firebase').initializeApp({
-    "projectId": "tutorbook-779d8",
-    "databaseURL": "https://tutorbook-779d8.firebaseio.com",
-    "storageBucket": "tutorbook-779d8.appspot.com",
-    "locationId": "us-central",
-    "apiKey": "AIzaSyCNaEj1Mbi-79cGA0vW48iqZtrbtU-NTh4",
-    "authDomain": "tutorbook-779d8.firebaseapp.com",
-    "messagingSenderId": "488773238477"
+    projectId: "tutorbook-779d8",
+    databaseURL: "https://tutorbook-779d8.firebaseio.com",
+    storageBucket: "tutorbook-779d8.appspot.com",
+    locationId: "us-central",
+    apiKey: "AIzaSyCNaEj1Mbi-79cGA0vW48iqZtrbtU-NTh4",
+    authDomain: "tutorbook-779d8.firebaseapp.com",
+    messagingSenderId: "488773238477",
 });
 const firebase = require("@firebase/testing");
 const fs = require("fs");
@@ -93,6 +94,13 @@ const rules = fs.readFileSync("firestore.rules", "utf8");
 // UTILITY FUNCTIONS
 // =============================================================================
 
+/**
+ * Returns a Firestore database instance with the given authorization.
+ * @params {Object} auth - The authorization token to initialize the Firestore
+ * database with.
+ * @return {external:CollectionReference} The `default` partition of the 
+ * initialized Firestore database.
+ */
 function authedApp(auth) {
     return firebase.initializeTestApp({
         projectId,
@@ -100,28 +108,20 @@ function authedApp(auth) {
     }).firestore().collection("partitions").doc("default");
 }
 
-function to(promise) {
-    return promise.then(data => {
-            return [null, data];
-        })
-        .catch(err => [err]);
-};
-
-beforeEach(async () => {
-    // Clear the database simulator between tests
+beforeEach(async () => { // Clear the database simulator between tests.
     await firebase.clearFirestoreData({
         projectId
     });
 });
 
-before(async () => {
+before(async () => { // Load the Firestore rules before testing.
     await firebase.loadFirestoreRules({
         projectId,
         rules
     });
 });
 
-after(async () => {
+after(async () => { // Delete test app instances and log coverage info URL.
     await Promise.all(firebase.apps().map(app => app.delete()));
     console.log(`View rule coverage information at ${coverageUrl}\n`);
 });
