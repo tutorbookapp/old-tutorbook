@@ -254,13 +254,15 @@ class Dashboard {
     }
 };
 
-
-// Splits dashboard view into three sections (and adds "Create Profile" fabs):
-// 1) Actionable items (e.g. enable notifications, track service hours, edit
-// your location)
-// 2) Pending matches (e.g. pupil accounts that have not been matched yet or job
-// offers that have no responses)
-// 3) Everything else (e.g. cards w/ #s => "125 Tutors" or "56 Pupils")
+/**
+ * Class that splits dashboard view into three sections (and adds "Create 
+ * Profile" fabs):
+ * 1. Actionable items (e.g. enable notifications, track service hours, edit
+ * your location)
+ * 2. Pending matches (e.g. pupil accounts that have not been matched yet or job
+ * offers that have no responses)
+ * 3. Everything else (e.g. cards w/ #s => "125 Tutors" or "56 Pupils")
+ */
 class SupervisorDashboard extends Dashboard {
 
     renderSelf() {
@@ -387,11 +389,13 @@ class SupervisorDashboard extends Dashboard {
     viewEverythingElse() {
         const queries = {
             tutors: window.app.db.collection('users')
+                .where('access', 'array-contains-any', window.app.user.access)
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Tutor')
                 .where('payments.type', '==', 'Free')
                 .orderBy('name'),
             pupils: window.app.db.collection('users')
+                .where('access', 'array-contains-any', window.app.user.access)
                 .where('location', '==', window.app.location.name)
                 .where('type', '==', 'Pupil')
                 .where('payments.type', '==', 'Free')
@@ -549,8 +553,10 @@ class QueryDashboard extends Dashboard {
     }
 };
 
-
-// This works (and is very scalable) but we don't need it right now
+/**
+ * Class that works (and is very scalable) but we don't need it right now.
+ * @deprecated
+ */
 class SupervisorQueryDashboard extends QueryDashboard {
 
     constructor() {
@@ -578,8 +584,12 @@ class SupervisorQueryDashboard extends QueryDashboard {
                 name: 'Everything else',
                 queries: {
                     tutors: db.collection('users').where('type', '==', 'Tutor')
+                        .where('access', 'array-contains-any', window.app.user
+                            .access)
                         .where('location', '==', window.app.location.name),
                     pupils: db.collection('users').where('type', '==', 'Pupil')
+                        .where('access', 'array-contains-any', window.app.user
+                            .access)
                         .where('location', '==', window.app.location.name),
                 },
             },
