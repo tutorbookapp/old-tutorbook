@@ -4,10 +4,20 @@
 
 const FUNCTIONS_URL = 'http://localhost:5001/tutorbook-779d8/us-central1/';
 //const FUNCTIONS_URL = 'https://us-central1-tutorbook-779d8.cloudfunctions.net/';
+const ACCESS = {
+    id: 'H542qmTScoXfCDLtpM62',
+    name: 'Palo Alto Unified School District',
+    symbol: 'PAUSD',
+};
 const LOCATION = {
     name: 'Gunn Academic Center',
     id: 'NJp0Y6wyMh2fDdxSuRSx',
     url: 'https://gunn.tutorbook.app',
+};
+const WEBSITE = {
+    grades: ['Freshman', 'Sophomore', 'Junior', 'Senior'],
+    locations: [LOCATION.id],
+    url: 'https://gunn.tutorbook.app/',
 };
 const TUTOR = {
     name: 'Tutor Tutorbook',
@@ -27,6 +37,7 @@ const TUTOR = {
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
+    access: [ACCESS.id],
 };
 const PUPIL = {
     name: 'Pupil Tutorbook',
@@ -46,6 +57,7 @@ const PUPIL = {
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
+    access: [ACCESS.id],
 };
 const SUPERVISOR = {
     name: 'Supervisor Tutorbook',
@@ -64,6 +76,7 @@ const SUPERVISOR = {
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
+    access: [ACCESS.id],
 };
 
 // =============================================================================
@@ -132,86 +145,135 @@ after(async () => { // Delete test app instances and log coverage info URL.
 
 describe("Tutorbook", () => {
 
+    // =========================================================================
+    // USERs
+    // =========================================================================
     it("requires users to log in before creating a profile", async () => {
-        const db = authedApp(null);
-        await Promise.all([
-            db.collection("usersByEmail").doc(PUPIL.email),
-            db.collection("users").doc(PUPIL.uid),
-        ].map(async (profile) => {
-            await firebase.assertFails(profile.set({
-                type: PUPIL.type
-            }));
+        const db = authedApp();
+        const ref = db.collection("users").doc(PUPIL.uid);
+        await firebase.assertFails(profile.set({
+            type: PUPIL.type,
         }));
     });
 
-    it("does not let users change their balance or secondsTutored/Pupiled", async () => {
+    it("ensures users start w/out a balance and service hrs", async () => {
         const db = authedApp({
-            uid: PUPIL.uid,
-            email: PUPIL.email
-        });
-        await Promise.all([
-            db.collection("usersByEmail").doc(PUPIL.email),
-            db.collection("users").doc(PUPIL.uid),
-        ].map(async (profile) => {
-            await firebase.assertFails(profile.set({
-                type: PUPIL.type
-            }));
-            await firebase.assertSucceeds(
-                profile.set({
-                    type: PUPIL.type,
-                    payments: {
-                        currentBalance: 0,
-                        currentBalanceString: '$0.00',
-                    },
-                    secondsPupiled: 0,
-                    secondsTutored: 0,
-                })
-            );
-        }));
-    });
-
-    async function createProfiles() {
-        var db = authedApp({
-            uid: PUPIL.uid,
-            email: PUPIL.email
-        });
-        await Promise.all([
-            db.collection("usersByEmail").doc(PUPIL.email),
-            db.collection("users").doc(PUPIL.uid),
-        ].map(async (profile) => {
-            await firebase.assertSucceeds(profile.set({
-                name: PUPIL.name,
-                gender: PUPIL.gender,
-                type: PUPIL.type,
-                payments: {
-                    currentBalance: 0,
-                    currentBalanceString: '$0.00',
-                },
-                secondsPupiled: 0,
-                secondsTutored: 0,
-            }));
-        }));
-        db = authedApp({
-            uid: PUPIL.uid,
+            uid: TUTOR.uid,
             email: TUTOR.email
         });
-        await Promise.all([
-            db.collection("usersByEmail").doc(TUTOR.email),
-            db.collection("users").doc(TUTOR.uid),
-        ].map(async (profile) => {
-            await firebase.assertSucceeds(profile.set({
-                name: TUTOR.name,
-                gender: TUTOR.gender,
-                type: TUTOR.type,
-                payments: {
-                    currentBalance: 0,
-                    currentBalanceString: '$0.00',
-                },
-                secondsPupiled: 0,
-                secondsTutored: 0,
-            }));
+        const ref = db.collection("users").doc(TUTOR.uid);
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+        }));
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+            secondsPupiled: 0,
+        }));
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+            secondsTutored: 0,
+        }));
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+            secondsPupiled: 0,
+            secondsTutored: 0,
+        }));
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+            payments: {
+                currentBalance: 0,
+            },
+        }));
+        await firebase.assertSucceeds(ref.set({
+            type: TUTOR.type,
+            payments: {
+                currentBalance: 0,
+            },
+            secondsPupiled: 0,
+            secondsTutored: 0,
+        }));
+    });
+
+    function createProfile(profile) {
+        const db = authedApp({
+            uid: profile.uid,
+            email: profile.email
+        });
+        const ref = db.collection("users").doc(profile.uid);
+        return firebase.assertSucceeds(ref.set({
+            name: profile.name,
+            gender: profile.gender,
+            type: profile.type,
+            payments: {
+                currentBalance: 0,
+                currentBalanceString: '$0.00',
+            },
+            secondsPupiled: 0,
+            secondsTutored: 0,
         }));
     };
+
+    it("prevents users from changing their access level", async () => {
+        await createProfile(TUTOR);
+        const db = authedApp({
+            uid: TUTOR.uid,
+            email: TUTOR.email
+        });
+        const ref = db.collection("users").doc(TUTOR.uid);
+        await firebase.assertFails(ref.update({
+            access: [ACCESS.id],
+        }));
+    });
+
+    it("prevents users from changing their num of ratings", async () => {
+        await createProfile(TUTOR);
+        const db = authedApp({
+            uid: TUTOR.uid,
+            email: TUTOR.email
+        });
+        const ref = db.collection("users").doc(TUTOR.uid);
+        await firebase.assertFails(ref.update({
+            numRatings: 10,
+        }));
+    });
+
+    it("prevents users from changing their avg rating", async () => {
+        await createProfile(TUTOR);
+        const db = authedApp({
+            uid: TUTOR.uid,
+            email: TUTOR.email
+        });
+        const ref = db.collection("users").doc(TUTOR.uid);
+        await firebase.assertFails(ref.update({
+            avgRating: 5,
+        }));
+    });
+
+    it("prevents (free) tutors from changing their service hrs", async () => {
+        await createProfile(TUTOR);
+        const db = authedApp({
+            uid: TUTOR.uid,
+            email: TUTOR.email
+        });
+        const ref = db.collection("users").doc(TUTOR.uid);
+        await firebase.assertFails(ref.update({
+            secondsTutored: 2400,
+        }));
+    });
+
+    it("prevents (paid) tutors from changing their balance", async () => {
+        await createProfile(TUTOR);
+        const db = authedApp({
+            uid: TUTOR.uid,
+            email: TUTOR.email
+        });
+        const ref = db.collection("users").doc(TUTOR.uid);
+        await firebase.assertFails(ref.update({
+            payments: {
+                currentBalance: 200,
+            },
+        }));
+    });
 
     async function createSupervisorProfile() {
         const db = authedApp({
