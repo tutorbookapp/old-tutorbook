@@ -395,7 +395,7 @@ class SupervisorSchedule extends Schedule {
      * Renders the supervisor schedule view by changing the default header to 
      * that of a search bar and by adding a "New Record" FAB that opens a
      * [NewPastApptDialog]{@link NewPastApptDialog} when clicked.
-     * @see {@link SearchHeader}
+     * @see {@link module:@tutorbook/search~SearchHeader}
      */
     renderSelf() {
         super.renderSelf();
@@ -447,7 +447,7 @@ class SupervisorSchedule extends Schedule {
 
     /**
      * Views the schedule and manages the search header.
-     * @see {@link SearchHeader}
+     * @see {@link module:@tutorbook/search~SearchHeader}
      */
     view() {
         super.view();
@@ -456,7 +456,7 @@ class SupervisorSchedule extends Schedule {
 
     /**
      * Re-views the schedule and manages the search header.
-     * @see {@link SearchHeader}
+     * @see {@link module:@tutorbook/search~SearchHeader}
      */
     reView() {
         super.reView();

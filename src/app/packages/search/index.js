@@ -1,4 +1,8 @@
 /**
+ * Package that contains the search views and utilities used throughout the app.
+ * @module @tutorbook/search
+ * @see {@link https://npmjs.com/package/@tutorbook/search}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +17,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -204,9 +208,11 @@ class SearchHeader {
     }
 }
 
-
-// Class that manages the Tutorbook search screen and results. See: 
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+/**
+ * Class that manages the Tutorbook search screen and results. 
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes}
+ * @todo Finish documentation.
+ */
 class Search {
 
     constructor() {

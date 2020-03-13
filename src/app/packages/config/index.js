@@ -51,7 +51,7 @@ const HrsConfig = require('@tutorbook/hrs-config');
 class Config {
     /**
      * Creates and renders a new configuration main screen and search header.
-     * @see {@link SearchHeader}
+     * @see {@link module:@tutorbook/search~SearchHeader}
      */
     constructor() {
         this.render = window.app.render;

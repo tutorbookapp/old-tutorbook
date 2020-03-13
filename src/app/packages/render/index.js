@@ -329,7 +329,7 @@ class Render {
      * proxying to a select (except a lot more functional as it searches an
      * [Algolia index]{@link https://www.algolia.com/doc/api-reference/api-methods/search/} instead of a set list of select options).
      * @see {@link https://www.algolia.com/doc/api-reference/api-methods/search/}
-     * @see {@link SearchHeader}
+     * @see {@link module:@tutorbook/search~SearchHeader}
      * @param {string} label - The label for the text field item.
      * @param {string} val - The preset value for the text field item.
      * @param {searchCallback} search - Function called when text field value 
