@@ -36,3 +36,49 @@
 
 const INPUT = './default.json';
 const OUTPUT = './test.json';
+
+const fs = require('fs');
+
+/**
+ * Returns a given database with a `lim` maximum number of documents in  every
+ * collection (and subcollection).
+ * @param {Map} database - The JSON backup form of the Firestore database.
+ * @param {int} [lim=10] - The maximum number of documents that are left under
+ * each collection.
+ * @return {Map} The limited JSON database backup.
+ */
+const limit = (database, lim = 10) => {
+    const limited = {};
+    Object.entries(database).forEach(([collection, documents]) => {
+        limited[collection] = {};
+        const docs = Object.entries(documents);
+        for (var count = 0; count < docs.length && count < lim; count++) {
+            docs[count][1]['__collections__'] =
+                limit(docs[count][1]['__collections__'], lim);
+            limited[collection][docs[count][0]] = docs[count][1];
+        }
+    });
+    return limited;
+};
+
+/**
+ * Reads in an `input` JSON database backup file, ensures that each collection 
+ * only contains a maximum of 10 documents (removes documents over the `limit`),
+ * and writes the output back into the JSON backup file or into a specified 
+ * `output` file.
+ * @param {string} input - The filename of the input JSON database backup file.
+ * @param {string} [output=input] - The filename of the output JSON database
+ * backup file (defaults to the input file).
+ * @param {int} [lim=10] - The maximum number of documents that are left under
+ * each collection.
+ */
+const limitJSON = (input, output = input, lim = 10) => {
+    if (!fs.existsSync(input)) throw new Error('Input file must exist.');
+    const original = JSON.parse(fs.readFileSync(input))['__collections__'];
+    const limited = limit(original, lim);
+    fs.writeFileSync(output, JSON.stringify({
+        '__collections__': limited,
+    }, null, 2));
+};
+
+limitJSON(INPUT, OUTPUT);
