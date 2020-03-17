@@ -36,7 +36,6 @@
     "notifications": "file:./packages/notifications",
     "payments": "file:./packages/payments",
     "pdf": "file:./packages/pdf",
-    "search": "file:./packages/search",
     "sheet": "file:./packages/sheet",
     "sms": "file:./packages/sms",
     "stats": "file:./packages/stats",

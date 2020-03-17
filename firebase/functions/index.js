@@ -10,7 +10,6 @@ const Auth = require('auth');
 const Data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
-const Search = require('search');
 const Stats = require('stats');
 
 // ============================================================================
@@ -39,12 +38,6 @@ exports.roundHours = functions.firestore
 // ============================================================================
 // SEARCH (VIA ALGOLIA) 
 // ============================================================================
-
-exports.updateSearch = functions.firestore
-    .document('/partitions/{partition}/users/{id}')
-    .onWrite(Search.update);
-
-exports.search = functions.https.onRequest(Search.get);
 
 exports.algoliaUserUpdate = functions.firestore
     .document('/partitions/{partition}/users/{id}')
@@ -132,8 +125,6 @@ exports.processWeeklyPayouts = functions.https
 // ============================================================================
 // OTHER
 // ============================================================================
-
-exports.getEmailFromPhone = functions.https.onRequest(Search.getEmailFromPhone);
 
 exports.updateAuthClaims = functions.firestore
     .document('/partitions/{partition}/users/{id}')
