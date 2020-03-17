@@ -513,7 +513,7 @@ describe('Tutorbook\'s REST API', () => {
                 pupils: true,
             },
         }).then((res) => {
-            res.data.pipe(fs.createWriteStream('exports/backup.pdf'));
+            res.data.pipe(fs.createWriteStream('./exports/backup.pdf'));
         });
     });
 
@@ -530,7 +530,7 @@ describe('Tutorbook\'s REST API', () => {
                 uid: TUTOR.uid,
             },
         }).then((res) => {
-            res.data.pipe(fs.createWriteStream('exports/ind-service-hrs.pdf'));
+            res.data.pipe(fs.createWriteStream('./exports/ind-hrs-log.pdf'));
         });
     });
 
@@ -546,7 +546,7 @@ describe('Tutorbook\'s REST API', () => {
                 test: false,
             },
         }).then((res) => {
-            res.data.pipe(fs.createWriteStream('exports/all-service-hrs.pdf'));
+            res.data.pipe(fs.createWriteStream('./exports/all-hrs-logs.pdf'));
         });
     });
 });
