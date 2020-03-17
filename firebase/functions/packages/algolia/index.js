@@ -5,19 +5,26 @@ const client = require('algoliasearch')(
 );
 
 class Algolia {
-    static update(change, context, indexID, settings) {
+    static async update(change, context, indexID, settings) {
+        const params = context.params;
         try {
-            const params = context.params;
             const index = client.initIndex(params.partition + '-' + indexID);
-            if (!change.after.exists) return index.deleteObject(params.id);
-            const object = change.after.data();
-            object.objectID = context.params.id; // TODO: Do we want the path?
-            object.ref = change.after.ref.path;
-            if (settings) index.setSettings(settings);
-            return index.saveObject(object);
+            if (!change.after.exists) {
+                console.log('[DEBUG] Deleting Algolia ' + indexID +
+                    ' object (' + params.id + ')...');
+                await index.deleteObject(params.id);
+            } else {
+                console.log('[DEBUG] Saving Algolia ' + indexID + ' object (' +
+                    params.id + ')...');
+                const object = change.after.data();
+                object.objectID = context.params.id; // TODO: Do we need this?
+                object.ref = change.after.ref.path;
+                if (settings) await index.setSettings(settings);
+                await index.saveObject(object);
+            }
         } catch (err) {
             console.error('[ERROR] While updating Algolia search index (' +
-                indexID + '): ' + err.message);
+                params.partition + '-' + indexID + '): ' + err.message);
         }
     }
 
