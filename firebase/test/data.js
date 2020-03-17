@@ -227,9 +227,10 @@ const APPROVED_REQUEST = {
 };
 const APPROVED_REQUEST_ID = REQUEST_ID;
 
-const APPT = {
+const APPT = { // TODO: Why do we have `access` fields on these documents?
+    attendees: [conciseUser(PUPIL), conciseUser(TUTOR)],
     for: cloneMap(REQUEST),
-    subject: REQUEST.subject,
+    location: cloneMap(REQUEST.location),
     time: cloneMap(REQUEST.time),
     timestamp: new Date(),
 };
