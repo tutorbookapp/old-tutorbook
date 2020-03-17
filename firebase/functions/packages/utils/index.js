@@ -6,9 +6,6 @@ const partitions = {
 };
 
 class Utils {
-
-    constructor() {}
-
     static combineMaps(mapA, mapB) {
         // NOTE: This function gives priority to mapB over mapA
         const result = {};
@@ -285,8 +282,8 @@ class Utils {
             .where('name', '==', locationName)
             .get()
         ).forEach((doc) => supervisorId = doc.data().supervisors[0]);
-        if (!supervisorId) return console.error('[ERROR] Could not get ' +
-            'supervisor for the ' + locationName + '.');
+        if (!supervisorId) throw new Error('Could not get supervisor for the ' +
+            locationName + ' (' + (isTest ? 'test' : 'default') + ').');
         return (await db
             .collection('users')
             .doc(supervisorId)

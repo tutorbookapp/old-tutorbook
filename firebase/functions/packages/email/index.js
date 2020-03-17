@@ -1,7 +1,11 @@
+// Dependencies
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 const to = require('await-to-js').default;
 const fs = require('fs');
+
+// Configuration constants
+const SKIP_EMAIL = functions.config().tests.SKIP_EMAIL;
 
 // Welcome email templates
 const tutorEmail = fs.readFileSync('./html/tutor.html').toString();
@@ -23,8 +27,8 @@ class Email {
 
     constructor(type, user, data) {
         this.user = user;
-        console.log('[DEBUG] Sending email to ' + user.name + ' (' + user.uid +
-            ')...');
+        console.log('[DEBUG] Sending ' + type + ' email to ' + user.name +
+            ' (' + user.uid + ')...');
         if (this.valid) {
             switch (type) {
                 case 'welcome':
@@ -48,12 +52,11 @@ class Email {
 
     get valid() {
         if (this.user.location === 'Paly Peer Tutoring Center') return console
-            .error('[ERROR] Cannot send emails to ' + this.user.location +
-                ' users.');
+            .error('[ERROR] Cannot send emails to Paly users.');
         if (!this.user || !this.user.email) return console.error('[ERROR] ' +
             'Cannot send email without a valid email address.');
-        if (functions.config().SKIP_EMAIL) return console.warn('[WARNING] ' +
-            'Skipping email b/c the SKIP_EMAIL configuration variable is set.');
+        if (SKIP_EMAIL) return console.warn('[WARNING] Skipping email b/c the' +
+            ' SKIP_EMAIL configuration variable is set.');
         return true;
     }
 

@@ -1,3 +1,4 @@
+// Dependencies
 const admin = require('firebase-admin'); // Initialized in ../index.js
 const functions = require('firebase-functions');
 const firestore = admin.firestore();
@@ -7,6 +8,9 @@ const partitions = {
 };
 const getSupervisor = require('utils').getSupervisorForLocation;
 const Message = require('message');
+
+// Configuration constants
+const SKIP_WEBPUSH = functions.config().tests.SKIP_WEBPUSH;
 
 class Webpush {
 
@@ -33,9 +37,8 @@ class Webpush {
             return console.error('[ERROR] Webpush must have a valid body.');
         if (this.isTest) return console.error('[ERROR] Cannot send test ' +
             'webpush notifications.');
-        if (functions.config().SKIP_WEBPUSH) return console.warn('[WARNING] ' +
-            'Skipping webpush notification b/c the SKIP_WEBPUSH configuration' +
-            ' variable is set.');
+        if (SKIP_WEBPUSH) return console.warn('[WARNING] Skipping webpush ' +
+            'notification b/c the SKIP_WEBPUSH configuration variable is set.');
         return true;
     }
 

@@ -1,3 +1,5 @@
+// Dependencies
+const to = require('await-to-js').default;
 const db = require('firebase-admin').firestore().collection('partitions')
     .doc('default');
 const functions = require('firebase-functions');
@@ -16,6 +18,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const Message = require('message');
 const Utils = require('utils');
 
+// Helper function(s)
 const getPronoun = (gender) => {
     switch (gender) {
         case 'Male':
@@ -27,6 +30,8 @@ const getPronoun = (gender) => {
     };
 };
 
+// Configuration constants
+const SKIP_SMS = functions.config().tests.SKIP_SMS;
 const ERR_MSG = 'Sorry, Tutorbook encountered an error and couldn\'t forward ' +
     'your message. Contact +16508612723 to get this resolved.';
 const WHO_TO_RELAY = new RegExp('^Do you want to forward your message to [\\w' +
@@ -59,14 +64,18 @@ class SMS {
             ' SMS messages to undefined phone numbers.');
         if (!this.message) return err('Cannot send empty SMS messages.');
         if (this.isTest) return err('Cannot send test SMS messages.');
-        if (functions.config().SKIP_SMS) return console.warn('[WARNING] ' +
-            'Skipping SMS b/c the SKIP_SMS configuration variable is set.');
+        if (SKIP_SMS) return console.warn('[WARNING] Skipping SMS b/c the ' +
+            'SKIP_SMS configuration variable is set.');
         return true;
     }
 
     async send() {
-        if (!this.sender) this.sender = await Utils.getSupervisorForLocation(
-            this.recipient.location, this.isTest);
+        if (!this.sender) {
+            const [err, sender] = await to(Utils.getSupervisorForLocation(
+                this.recipient.location, this.isTest));
+            if (err) return console.error('[ERROR] SMS must have a sender.');
+            this.sender = sender;
+        }
         if (!this.valid) return this.botOnFailure ? new Message({
             message: this.botMessage.replace('Sent', 'Could not send'),
             chats: this.botChats,

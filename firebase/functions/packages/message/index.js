@@ -1,3 +1,4 @@
+const to = require('await-to-js').default;
 const admin = require('firebase-admin');
 const firestore = admin.firestore();
 const partitions = {
@@ -27,7 +28,8 @@ class Message {
         const params = this.params;
         if (typeof params.isTest !== 'boolean') params.isTest === false;
         if (!params.to && !params.from) throw new Error('Message needs users.');
-        if (!params.to) params.to = [await getSupervisor(params.from.location)];
+        if (!params.to) params.to = await getSupervisor(params.from.location,
+            params.isTest);
         if (!(params.to instanceof Array)) params.to = [params.to];
         if (!params.from) params.from = [{
             name: 'Operator',
@@ -50,7 +52,9 @@ class Message {
     }
 
     async send() {
-        await this.initialization;
+        const [err, res] = await to(this.initialization);
+        if (err) return console.error('[ERROR] Could not send message b/c of ' +
+            err.message);
         console.log('[DEBUG] Sending message (' + this.message + ') from ' +
             this.from.map(u => u.name).join(', ') + ' to ' +
             this.to.map(u => u.name).join(', ') + '...');
