@@ -1325,9 +1325,7 @@ class Utils {
 
     static cloneMap(map) {
         const clone = {};
-        for (var i in map) {
-            clone[i] = Utils.clone(map[i]);
-        }
+        for (var i in map) clone[i] = Utils.clone(map[i]);
         return clone;
     }
 

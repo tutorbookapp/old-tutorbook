@@ -556,8 +556,8 @@ class Search {
 
     /**
      * Gets the filtered users Firestore query based on our filters.
-     * @return {Query} The query that gets the users that match our currently
-     * selected filters (`this.filters`).
+     * @return {external:Query} The query that gets the users that match our 
+     * currently selected filters (`this.filters`).
      */
     getUsers() {
         var query = window.app.db.collection('users')
