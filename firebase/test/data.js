@@ -257,10 +257,11 @@ const CLOCK_IN = {
 const CLOCK_IN_ID = APPT_ID;
 
 const ACTIVE_APPT = {
+    attendees: [conciseUser(PUPIL), conciseUser(TUTOR)],
     for: cloneMap(REQUEST),
-    subject: REQUEST.subject,
+    location: cloneMap(REQUEST.location),
     time: cloneMap(REQUEST.time),
-    timestamp: new Date(),
+    timestamp: new Date(APPT.timestamp),
     clockIn: cloneMap(CLOCK_IN),
 };
 const ACTIVE_APPT_ID = CLOCK_IN_ID;
@@ -286,10 +287,11 @@ const CLOCK_OUT = {
 const CLOCK_OUT_ID = ACTIVE_APPT_ID;
 
 const PAST_APPT = {
+    attendees: [conciseUser(PUPIL), conciseUser(TUTOR)],
     for: cloneMap(REQUEST),
-    subject: REQUEST.subject,
+    location: cloneMap(REQUEST.location),
     time: cloneMap(REQUEST.time),
-    timestamp: new Date(),
+    timestamp: new Date(ACTIVE_APPT.timestamp),
     clockIn: cloneMap(CLOCK_IN),
     clockOut: cloneMap(CLOCK_OUT),
 };
