@@ -5,7 +5,7 @@
 const {
     PROJECT_ID,
     COVERAGE_URL,
-    FIRESTORE_RULES,
+    FIRESTORE_RULES_FILE,
     USER_SUBCOLLECTIONS,
 } = require('./config.js');
 const {
@@ -14,6 +14,7 @@ const {
     SUPERVISOR,
     ACCESS,
     ACCESS_ID,
+    LOCATION,
 } = require('./data.js');
 
 const {
@@ -22,6 +23,7 @@ const {
 } = require('./utils.js');
 
 const firebase = require('@firebase/testing');
+const fs = require('fs');
 
 // =============================================================================
 // FIRESTORE RULES TESTS
@@ -36,7 +38,7 @@ beforeEach(async () => { // Clear the database simulator between tests.
 before(async () => { // Load the Firestore rules before testing.
     await firebase.loadFirestoreRules({
         projectId: PROJECT_ID,
-        rules: FIRESTORE_RULES,
+        rules: fs.readFileSync(FIRESTORE_RULES_FILE, 'utf8'),
     });
 });
 
@@ -280,4 +282,40 @@ describe('Tutorbook\'s Database Security', async () => {
     // =========================================================================
     // TODO: CHATs
     // =========================================================================
+
+    it('lets users send messages', async () => {
+        const db = authedApp({
+            uid: PUPIL.uid,
+            email: PUPIL.email,
+        });
+        const chat = db.collection('chats').doc();
+        await firebase.assertSucceeds(chat.set({
+            lastMessage: {
+                sentBy: PUPIL,
+                message: 'This is a test.',
+                timestamp: new Date(),
+            },
+            chatters: [
+                PUPIL,
+                SUPERVISOR,
+            ],
+            chatterUIDs: [
+                PUPIL.uid,
+                SUPERVISOR.uid,
+            ],
+            chatterEmails: [
+                PUPIL.email,
+                SUPERVISOR.email,
+            ],
+            location: LOCATION,
+            createdBy: PUPIL,
+            name: '', // We just use the chatter name as the chat name
+            photo: '', // We just use the chatter photo as the chat photo
+        }));
+        await firebase.assertSucceeds(chat.collection('messages').doc().set({
+            sentBy: PUPIL,
+            message: 'This is a test.',
+            timestamp: new Date(),
+        }));
+    });
 });

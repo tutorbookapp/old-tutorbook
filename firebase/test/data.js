@@ -1,11 +1,61 @@
 // =============================================================================
-// DEPENDENCIES
+// UTILITY FUNCTIONS
 // =============================================================================
 
-const {
-    cloneMap,
-    conciseUser,
-} = require('./utils.js');
+/**
+ * Clones a variety of different objects (`Array`, `Date`, `Object`) and 
+ * variable types.
+ * @param val - The value to clone.
+ * @return The cloned value (same type as the given `val`).
+ */
+const clone = (val) => {
+    return val instanceof Array ? cloneArr(val) :
+        val instanceof Date ? new Date(val) :
+        val instanceof Object ? cloneMap(val) : val;
+};
+
+/**
+ * Takes in a map (`map`) and returns a copy of it.
+ * @param {Map} map - The map to clone.
+ * @return {Map} The cloned map (exactly the same; but it doesn't (and none of
+ * it's constituents) point towards the same object).
+ */
+const cloneMap = (map) => {
+    const res = {};
+    for (var i in map) res[i] = clone(map[i]);
+    return res;
+};
+
+/**
+ * Takes in an array (`arr`) and returns a copy of it.
+ * @param {Array} arr - The array to clone.
+ * @return {Array} The cloned array (exactly the same; but it doesn't (and none 
+ * of it's constituents) point towards the same object).
+ */
+const cloneArr = (arr) => {
+    return arr.map(i => clone(i));
+};
+
+/**
+ * Takes in a profile/user object and returns the concise (filtered) version of
+ * it (that is stored in requests, appointments, clocking requests, etc).
+ */
+const conciseUser = (profile) => {
+    return {
+        name: profile.name,
+        email: profile.email,
+        uid: profile.uid,
+        id: profile.id,
+        photo: profile.photo,
+        type: profile.type,
+        grade: profile.grade,
+        gender: profile.gender,
+        hourlyCharge: profile.payments.hourlyCharge,
+        location: profile.location,
+        payments: profile.payments,
+        proxy: profile.proxy,
+    };
+};
 
 // =============================================================================
 // PLACEHOLDER DATA
@@ -35,6 +85,7 @@ const TUTOR = {
     email: 'tutor@tutorbook.app',
     id: 'tutor@tutorbook.app',
     uid: 'nuCqWin1KAcnAvOhlWYq5qWOj123',
+    photo: 'https://tutorbook.app/app/img/male.png',
     type: 'Tutor',
     gender: 'Male',
     grade: 'Sophomore',
@@ -43,13 +94,15 @@ const TUTOR = {
     },
     payments: {
         currentBalance: 0,
+        hourlyCharge: 0,
         type: 'Free',
     },
+    proxy: [],
     subjects: ['Marine Biology'],
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
-    access: [ACCESS.id],
+    access: [ACCESS_ID],
     avgRating: 0,
     numRatings: 0,
     availability: [{
@@ -68,6 +121,7 @@ const PUPIL = {
     email: 'pupil@tutorbook.app',
     id: 'pupil@tutorbook.app',
     uid: 'HBnt90xkbOW9GMZGJCacbqnK2hI3',
+    photo: 'https://tutorbook.app/app/img/male.png',
     type: 'Pupil',
     gender: 'Male',
     grade: 'Sophomore',
@@ -76,13 +130,15 @@ const PUPIL = {
     },
     payments: {
         currentBalance: 0,
+        hourlyCharge: 0,
         type: 'Free',
     },
+    proxy: [],
     subjects: ['Marine Biology'],
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
-    access: [ACCESS.id],
+    access: [ACCESS_ID],
     avgRating: 0,
     numRatings: 0,
     availability: [{
@@ -101,6 +157,7 @@ const SUPERVISOR = {
     email: 'supervisor@tutorbook.app',
     id: 'supervisor@tutorbook.app',
     uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+    photo: 'https://tutorbook.app/app/img/female.png',
     type: 'Supervisor',
     gender: 'Female',
     grade: 'Adult',
@@ -109,12 +166,14 @@ const SUPERVISOR = {
     },
     payments: {
         currentBalance: 0,
+        hourlyCharge: 0,
         type: 'Free',
     },
+    proxy: [],
     secondsPupiled: 0,
     secondsTutored: 0,
     location: LOCATION.name,
-    access: [ACCESS.id],
+    access: [ACCESS_ID],
     avgRating: 0,
     numRatings: 0,
     availability: [{
@@ -225,11 +284,15 @@ const PAST_APPT = {
 const PAST_APPT_ID = '31i0rJPYKH2Dm1V5laOS';
 
 module.exports = {
+    LOCATION,
+    LOCATION_ID,
+    ACCESS,
+    ACCESS_ID,
+    WEBSITE,
+    WEBSITE_ID,
     PUPIL,
     TUTOR,
     SUPERVISOR,
-    LOCATION,
-    LOCATION_ID,
     REQUEST,
     REQUEST_ID,
     APPROVED_REQUEST,

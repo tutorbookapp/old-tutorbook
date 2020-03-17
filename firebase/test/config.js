@@ -2,7 +2,6 @@
 // DEPENDENCIES
 // =============================================================================
 
-const fs = require('fs');
 const firebasePort = require('../../firebase.json').emulators.firestore.port;
 
 const {
@@ -27,7 +26,6 @@ const UNSUPPORTED_FILTERS = { // We use our one `array-contains` for `access`.
 const PROJECT_ID = 'tutorbook-779d8';
 const COVERAGE_URL = 'http://localhost:' + PORT + '/emulator/v1/projects/' +
     PROJECT_ID + ':ruleCoverage.html';
-const FIRESTORE_RULES = fs.readFileSync(FIRESTORE_RULES_FILE, 'utf8');
 const FUNCTIONS_URL = 'http://localhost:5001/' + PROJECT_ID + '/us-central1/';
 const FILTERS = {
     'grade': ['==', TUTOR.grade],
@@ -58,7 +56,7 @@ const USER_SUBCOLLECTIONS = [
 module.exports = {
     PROJECT_ID,
     COVERAGE_URL,
-    FIRESTORE_RULES,
+    FIRESTORE_RULES_FILE,
     FUNCTIONS_URL,
     FILTERS,
     SORTERS,

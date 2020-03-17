@@ -4,8 +4,7 @@
 
 const {
     PROJECT_ID,
-    COVERAGE_URL,
-    FIRESTORE_RULES,
+    FIRESTORE_RULES_FILE,
     FILTERS,
     SORTERS,
 } = require('./config.js');
@@ -19,6 +18,7 @@ const {
 } = require('./utils.js');
 
 const firebase = require('@firebase/testing');
+const fs = require('fs');
 
 // =============================================================================
 // FIRESTORE INDEXES TESTS
@@ -33,13 +33,12 @@ beforeEach(async () => { // Clear the database simulator between tests.
 before(async () => { // Load the Firestore rules before testing.
     await firebase.loadFirestoreRules({
         projectId: PROJECT_ID,
-        rules: FIRESTORE_RULES,
+        rules: fs.readFileSync(FIRESTORE_RULES_FILE, 'utf8'),
     });
 });
 
 after(async () => { // Delete test app instances and log coverage info URL.
     await Promise.all(firebase.apps().map(app => app.delete()));
-    console.log('View rule coverage information at ' + COVERAGE_URL + ' \n');
 });
 
 describe('Tutorbook\'s Database Indexing', async () => {

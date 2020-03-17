@@ -9,34 +9,11 @@ const {
     FILTERS,
 } = require('./data.js');
 
-debugger;
-
 const firebase = require('@firebase/testing');
 
 // =============================================================================
 // UTILITY FUNCTIONS
 // =============================================================================
-
-/**
- * Takes in a profile/user object and returns the concise (filtered) version of
- * it (that is stored in requests, appointments, clocking requests, etc).
- */
-const conciseUser = (profile) => {
-    return {
-        name: profile.name,
-        email: profile.email,
-        uid: profile.uid,
-        id: profile.id,
-        photo: profile.photo,
-        type: profile.type,
-        grade: profile.grade,
-        gender: profile.gender,
-        hourlyCharge: profile.payments ? profile.payments.hourlyCharge : 0,
-        location: profile.location,
-        payments: profile.payments,
-        proxy: profile.proxy,
-    };
-};
 
 /**
  * Returns if the array contains the same elements (regardless of order).
@@ -66,7 +43,6 @@ Array.prototype.equals = function(array) {
  * initialized Firestore database.
  */
 const authedApp = (auth, partition = 'default') => {
-    debugger;
     return firebase.initializeTestApp({
         projectId: PROJECT_ID,
         auth: auth,
@@ -82,11 +58,10 @@ const authedApp = (auth, partition = 'default') => {
  * database's data matches what was defined in the given `data` map.
  */
 const data = async (data, partition = 'default') => {
-    debugger;
     const db = firebase.initializeAdminApp({
         projectId: PROJECT_ID,
-    }).firestore().collection('partitions').doc(partition);
-    for (const key in data) await db.doc(key).set(data[key]);
+    }).firestore().collection('partitions');
+    for (const key in data) await db.doc(partition + '/' + key).set(data[key]);
 };
 
 /**
@@ -104,40 +79,6 @@ const combineMaps = (mapA, mapB) => {
     for (var i in mapA) result[i] = mapA[i];
     for (var i in mapB) result[i] = mapB[i];
     return result;
-};
-
-/**
- * Clones a variety of different objects (`Array`, `Date`, `Object`) and 
- * variable types.
- * @param val - The value to clone.
- * @return The cloned value (same type as the given `val`).
- */
-const clone = (val) => {
-    return val instanceof Array ? cloneArr(val) :
-        val instanceof Date ? new Date(val) :
-        val instanceof Object ? cloneMap(val) : val;
-};
-
-/**
- * Takes in a map (`map`) and returns a copy of it.
- * @param {Map} map - The map to clone.
- * @return {Map} The cloned map (exactly the same; but it doesn't (and none of
- * it's constituents) point towards the same object).
- */
-const cloneMap = (map) => {
-    const res = {};
-    for (var i in map) res[i] = clone(map[i]);
-    return res;
-};
-
-/**
- * Takes in an array (`arr`) and returns a copy of it.
- * @param {Array} arr - The array to clone.
- * @return {Array} The cloned array (exactly the same; but it doesn't (and none 
- * of it's constituents) point towards the same object).
- */
-const cloneArr = (arr) => {
-    return arr.map(i => clone(i));
 };
 
 /**
@@ -203,9 +144,7 @@ const removeDoubleArrayContains = (filters) => {
 
 module.exports = {
     combineMaps,
-    cloneMap,
     combinations,
-    conciseUser,
     authedApp,
     data,
 };

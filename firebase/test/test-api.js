@@ -4,8 +4,7 @@
 
 const {
     PROJECT_ID,
-    COVERAGE_URL,
-    FIRESTORE_RULES,
+    FIRESTORE_RULES_FILE,
     FUNCTIONS_URL,
 } = require('./config.js');
 const {
@@ -40,8 +39,6 @@ const {
     data,
 } = require('./utils.js');
 
-debugger;
-
 const fs = require('fs');
 const axios = require('axios');
 const firebaseApp = require('firebase').initializeApp({
@@ -68,13 +65,12 @@ beforeEach(async () => { // Clear the database simulator between tests.
 before(async () => { // Load the Firestore rules before testing.
     await firebase.loadFirestoreRules({
         projectId: PROJECT_ID,
-        rules: FIRESTORE_RULES,
+        rules: fs.readFileSync(FIRESTORE_RULES_FILE, 'utf8'),
     });
 });
 
 after(async () => { // Delete test app instances and log coverage info URL.
     await Promise.all(firebase.apps().map(app => app.delete()));
-    console.log('View rule coverage information at ' + COVERAGE_URL + ' \n');
 });
 
 describe('Tutorbook\'s REST API', () => {
@@ -126,43 +122,6 @@ describe('Tutorbook\'s REST API', () => {
         [TUTOR, PUPIL, SUPERVISOR].map(u => state['users/' + u.uid] = u);
         return data(state);
     };
-
-    it('lets users send messages', async () => {
-        await createUsers();
-        const db = authedApp({
-            uid: PUPIL.uid,
-            email: PUPIL.email,
-        });
-        const chat = db.collection('chats').doc();
-        await firebase.assertSucceeds(chat.set({
-            lastMessage: {
-                sentBy: PUPIL,
-                message: 'This is a test.',
-                timestamp: new Date(),
-            },
-            chatters: [
-                PUPIL,
-                SUPERVISOR,
-            ],
-            chatterUIDs: [
-                PUPIL.uid,
-                SUPERVISOR.uid,
-            ],
-            chatterEmails: [
-                PUPIL.email,
-                SUPERVISOR.email,
-            ],
-            location: LOCATION,
-            createdBy: PUPIL,
-            name: '', // We just use the chatter name as the chat name
-            photo: '', // We just use the chatter photo as the chat photo
-        }));
-        await firebase.assertSucceeds(chat.collection('messages').doc().set({
-            sentBy: PUPIL,
-            message: 'This is a test.',
-            timestamp: new Date(),
-        }));
-    });
 
     // =========================================================================
     // REQUESTs
