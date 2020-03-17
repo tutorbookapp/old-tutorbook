@@ -4,7 +4,7 @@
 
 const {
     PROJECT_ID,
-    FIRESTORE_RULES_FILE,
+    FIRESTORE_RULES,
     FILTERS,
     SORTERS,
 } = require('./config.js');
@@ -33,7 +33,7 @@ beforeEach(async () => { // Clear the database simulator between tests.
 before(async () => { // Load the Firestore rules before testing.
     await firebase.loadFirestoreRules({
         projectId: PROJECT_ID,
-        rules: fs.readFileSync(FIRESTORE_RULES_FILE, 'utf8'),
+        rules: FIRESTORE_RULES,
     });
 });
 

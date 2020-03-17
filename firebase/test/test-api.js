@@ -4,7 +4,7 @@
 
 const {
     PROJECT_ID,
-    FIRESTORE_RULES_FILE,
+    FIRESTORE_RULES,
     FUNCTIONS_URL,
 } = require('./config.js');
 const {
@@ -40,6 +40,7 @@ const {
 } = require('./utils.js');
 
 const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
 const firebaseApp = require('firebase').initializeApp({
     projectId: PROJECT_ID,
@@ -65,7 +66,7 @@ beforeEach(async () => { // Clear the database simulator between tests.
 before(async () => { // Load the Firestore rules before testing.
     await firebase.loadFirestoreRules({
         projectId: PROJECT_ID,
-        rules: fs.readFileSync(FIRESTORE_RULES_FILE, 'utf8'),
+        rules: FIRESTORE_RULES,
     });
 });
 
@@ -513,7 +514,8 @@ describe('Tutorbook\'s REST API', () => {
                 pupils: true,
             },
         }).then((res) => {
-            res.data.pipe(fs.createWriteStream('./exports/backup.pdf'));
+            const filename = path.resolve(__dirname, 'exports/backup.pdf');
+            res.data.pipe(fs.createWriteStream(filename));
         });
     });
 
@@ -530,7 +532,8 @@ describe('Tutorbook\'s REST API', () => {
                 uid: TUTOR.uid,
             },
         }).then((res) => {
-            res.data.pipe(fs.createWriteStream('./exports/ind-hrs-log.pdf'));
+            const filename = path.resolve(__dirname, 'exports/ind-hrs-log.pdf');
+            res.data.pipe(fs.createWriteStream(filename));
         });
     });
 
@@ -546,7 +549,8 @@ describe('Tutorbook\'s REST API', () => {
                 test: false,
             },
         }).then((res) => {
-            res.data.pipe(fs.createWriteStream('./exports/all-hrs-logs.pdf'));
+            const filename = path.resolve(__dirname, 'exports/all-hrs-log.pdf');
+            res.data.pipe(fs.createWriteStream(filename));
         });
     });
 });
