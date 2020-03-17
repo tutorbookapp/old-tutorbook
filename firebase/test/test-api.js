@@ -198,7 +198,8 @@ describe('Tutorbook\'s REST API', () => {
         });
     });
 
-    it('lets supervisors create requests', () => {
+    it('lets supervisors create requests', async () => {
+        await createUsers();
         return post(SUPERVISOR.email, 'newRequest', {
             request: REQUEST,
             payment: {}
@@ -385,6 +386,7 @@ describe('Tutorbook\'s REST API', () => {
     });
 
     it('lets supervisors modify past appointments', async () => {
+        await createLocation();
         const [appt, id] = await approveClockOut();
         return post(SUPERVISOR.email, 'modifyPastAppt', {
             appt: combineMaps(appt, {
@@ -448,57 +450,6 @@ describe('Tutorbook\'s REST API', () => {
         });
     });
 
-    it('lets supervisors send announcements', async () => {
-        await createUsers();
-        const [locationData, locationId] = await createLocation();
-        const db = authedApp({
-            uid: SUPERVISOR.uid,
-            email: SUPERVISOR.email,
-            locations: [LOCATION_ID],
-        });
-        const chat = db.collection('locations').doc(locationId)
-            .collection('announcements').doc();
-        await firebase.assertSucceeds(chat.set({
-            lastMessage: {
-                sentBy: SUPERVISOR,
-                message: 'This is a test.',
-                timestamp: new Date(),
-            },
-            chatters: [
-                PUPIL,
-                SUPERVISOR,
-            ],
-            chatterUIDs: [
-                PUPIL.uid,
-                SUPERVISOR.uid,
-            ],
-            chatterEmails: [
-                PUPIL.email,
-                SUPERVISOR.email,
-            ],
-            location: LOCATION,
-            createdBy: SUPERVISOR,
-            name: '', // We just use the chatter name as the chat name
-            photo: '', // We just use the chatter photo as the chat photo
-            filters: {
-                availability: {},
-                gender: 'Any',
-                grade: 'Any',
-                location: LOCATION.name,
-                price: 'Free',
-                showBooked: true,
-                sort: 'Rating',
-                subject: TUTOR.subjects[0],
-                type: 'Any',
-            },
-        }));
-        await firebase.assertSucceeds(chat.collection('messages').doc().set({
-            sentBy: SUPERVISOR,
-            message: 'This is a test.',
-            timestamp: new Date(),
-        }));
-    });
-
     it('lets supervisors download PDF backups of database', async () => {
         await approveRequest();
         await createLocation();
@@ -521,6 +472,7 @@ describe('Tutorbook\'s REST API', () => {
 
     it('lets supervisors download individual service hour logs', async () => {
         await approveClockOut();
+        await createLocation();
         return axios({
             method: 'get',
             url: FUNCTIONS_URL + 'serviceHoursAsPDF',
@@ -539,6 +491,7 @@ describe('Tutorbook\'s REST API', () => {
 
     it('lets supervisors download everyone\'s service hour logs', async () => {
         await approveClockOut();
+        await createLocation();
         return axios({
             method: 'get',
             url: FUNCTIONS_URL + 'serviceHoursAsPDF',

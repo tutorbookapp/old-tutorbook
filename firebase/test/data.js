@@ -70,6 +70,8 @@ const ACCESS_ID = 'H542qmTScoXfCDLtpM62';
 const SUPERVISOR_UID = 'OAmavOtc6GcL2BuxFJu4sd5rwDu1';
 const LOCATION = {
     name: 'Gunn Academic Center',
+    description: 'The Academic Center is a clean, well-lighted place for ' +
+        'students to study, do homework, print, tutor or be tutored.',
     url: 'https://gunn.tutorbook.app',
     supervisors: [SUPERVISOR_UID],
     hours: {
@@ -80,6 +82,13 @@ const LOCATION = {
             open: 'A Period',
             close: 'A Period',
         }],
+    },
+    config: {
+        hrs: {
+            rounding: 'Up',
+            threshold: '30 Minutes',
+            timeThreshold: '5 Minutes',
+        },
     },
 };
 const LOCATION_ID = 'NJp0Y6wyMh2fDdxSuRSx';
@@ -262,7 +271,7 @@ const ACTIVE_APPT = {
     location: cloneMap(REQUEST.location),
     time: cloneMap(REQUEST.time),
     timestamp: new Date(APPT.timestamp),
-    clockIn: cloneMap(CLOCK_IN),
+    clockIn: cloneMap(APPROVED_CLOCK_IN),
 };
 const ACTIVE_APPT_ID = CLOCK_IN_ID;
 
@@ -292,10 +301,61 @@ const PAST_APPT = {
     location: cloneMap(REQUEST.location),
     time: cloneMap(REQUEST.time),
     timestamp: new Date(ACTIVE_APPT.timestamp),
-    clockIn: cloneMap(CLOCK_IN),
-    clockOut: cloneMap(CLOCK_OUT),
+    clockIn: cloneMap(APPROVED_CLOCK_IN),
+    clockOut: cloneMap(APPROVED_CLOCK_OUT),
 };
 const PAST_APPT_ID = '31i0rJPYKH2Dm1V5laOS';
+
+const MESSAGE = {
+    sentBy: conciseUser(PUPIL),
+    message: 'This is a test.',
+    timestamp: new Date(),
+};
+
+const CHAT = {
+    lastMessage: cloneMap(MESSAGE),
+    chatters: [conciseUser(PUPIL), conciseUser(TUTOR)],
+    chatterUIDs: [PUPIL.uid, TUTOR.uid],
+    chatterEmails: [PUPIL.email, TUTOR.email],
+    location: {
+        id: LOCATION_ID,
+        name: LOCATION.name,
+    },
+    createdBy: conciseUser(PUPIL),
+    name: '', // We just use the chatter name as the chat name
+    photo: '', // We just use the chatter photo as the chat photo
+};
+
+const ANNOUNCEMENT_MSG = {
+    sentBy: conciseUser(SUPERVISOR),
+    message: 'This is a test.',
+    timestamp: new Date(),
+};
+
+const ANNOUNCEMENT_GROUP = {
+    lastMessage: cloneMap(ANNOUNCEMENT_MSG),
+    chatters: [conciseUser(PUPIL), conciseUser(SUPERVISOR)],
+    chatterUIDs: [PUPIL.uid, SUPERVISOR.uid],
+    chatterEmails: [PUPIL.email, SUPERVISOR.email],
+    location: {
+        id: LOCATION_ID,
+        name: LOCATION.name,
+    },
+    createdBy: conciseUser(SUPERVISOR),
+    name: '', // We just use the chatter name as the chat name
+    photo: '', // We just use the chatter photo as the chat photo
+    filters: {
+        availability: {},
+        gender: 'Any',
+        grade: 'Any',
+        location: LOCATION.name,
+        price: 'Free',
+        showBooked: true,
+        sort: 'Rating',
+        subject: TUTOR.subjects[0],
+        type: 'Any',
+    },
+};
 
 module.exports = {
     LOCATION,
@@ -325,4 +385,8 @@ module.exports = {
     CLOCK_OUT_ID,
     APPROVED_CLOCK_OUT,
     APPROVED_CLOCK_OUT_ID,
+    ANNOUNCEMENT_GROUP,
+    ANNOUNCEMENT_MSG,
+    CHAT,
+    MESSAGE,
 };

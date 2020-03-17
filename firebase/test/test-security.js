@@ -15,11 +15,17 @@ const {
     ACCESS,
     ACCESS_ID,
     LOCATION,
+    LOCATION_ID,
+    ANNOUNCEMENT_GROUP,
+    ANNOUNCEMENT_MSG,
+    CHAT,
+    MESSAGE,
 } = require('./data.js');
 
 const {
     combineMaps,
     authedApp,
+    data,
 } = require('./utils.js');
 
 const firebase = require('@firebase/testing');
@@ -108,6 +114,12 @@ describe('Tutorbook\'s Database Security', async () => {
         return firebase.assertSucceeds(ref.set(profile));
     };
 
+    function createLocation() {
+        const state = {};
+        state['locations/' + LOCATION_ID] = LOCATION;
+        return data(state);
+    };
+
     it('prevents users from changing their access/district', async () => {
         await createProfile(TUTOR);
         const db = authedApp({
@@ -169,29 +181,6 @@ describe('Tutorbook\'s Database Security', async () => {
             },
         }));
     });
-
-    async function createSupervisorProfile() {
-        const db = authedApp({
-            uid: SUPERVISOR.uid,
-            email: SUPERVISOR.email
-        });
-        await Promise.all([
-            db.collection('usersByEmail').doc(SUPERVISOR.email),
-            db.collection('users').doc(SUPERVISOR.uid),
-        ].map(async (profile) => {
-            await firebase.assertSucceeds(profile.set({
-                name: SUPERVISOR.name,
-                gender: SUPERVISOR.gender,
-                type: SUPERVISOR.type,
-                payments: {
-                    currentBalance: 0,
-                    currentBalanceString: '$0.00',
-                },
-                secondsPupiled: 0,
-                secondsTutored: 0,
-            }));
-        }));
-    };
 
     it('only lets users create their own profiles', async () => {
         const db = authedApp({
@@ -280,8 +269,23 @@ describe('Tutorbook\'s Database Security', async () => {
     });
 
     // =========================================================================
-    // TODO: CHATs
+    // CHATs (announcements, messages, etc)
     // =========================================================================
+
+    it('lets supervisors send announcements', async () => {
+        await createLocation();
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            email: SUPERVISOR.email,
+            locations: [LOCATION_ID],
+            supervisor: true,
+        });
+        const location = db.collection('locations').doc(LOCATION_ID);
+        const group = location.collection('announcements').doc();
+        const msg = group.collection('messages').doc();
+        await firebase.assertSucceeds(group.set(ANNOUNCEMENT_GROUP));
+        await firebase.assertSucceeds(msg.set(ANNOUNCEMENT_MSG));
+    });
 
     it('lets users send messages', async () => {
         const db = authedApp({
@@ -289,33 +293,8 @@ describe('Tutorbook\'s Database Security', async () => {
             email: PUPIL.email,
         });
         const chat = db.collection('chats').doc();
-        await firebase.assertSucceeds(chat.set({
-            lastMessage: {
-                sentBy: PUPIL,
-                message: 'This is a test.',
-                timestamp: new Date(),
-            },
-            chatters: [
-                PUPIL,
-                SUPERVISOR,
-            ],
-            chatterUIDs: [
-                PUPIL.uid,
-                SUPERVISOR.uid,
-            ],
-            chatterEmails: [
-                PUPIL.email,
-                SUPERVISOR.email,
-            ],
-            location: LOCATION,
-            createdBy: PUPIL,
-            name: '', // We just use the chatter name as the chat name
-            photo: '', // We just use the chatter photo as the chat photo
-        }));
-        await firebase.assertSucceeds(chat.collection('messages').doc().set({
-            sentBy: PUPIL,
-            message: 'This is a test.',
-            timestamp: new Date(),
-        }));
+        const msg = chat.collection('messages').doc();
+        await firebase.assertSucceeds(chat.set(CHAT));
+        await firebase.assertSucceeds(msg.set(MESSAGE));
     });
 });
