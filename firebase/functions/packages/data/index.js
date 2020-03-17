@@ -905,7 +905,10 @@ class Data {
                 time += 'Timestamp';
                 console.log('[DEBUG] Converting ' + key + ' ' + time + ' to ' +
                     'time object...', apptData[key][time]);
-                if (typeof apptData[key][time] === 'object') {
+                if (apptData[key][time] === undefined) {
+                    console.warn('[WARNING] ' + key + ' ' + time + ' was ' +
+                        'undefined, skipping conversion...');
+                } else if (typeof apptData[key][time] === 'object') {
                     console.log('[DEBUG] Converting into Timestamp...');
                     apptData[key][time] = new admin.firestore.Timestamp(
                         apptData[key][time]._seconds ||
@@ -919,7 +922,9 @@ class Data {
                 }
             });
         });
+        console.log('[DEBUG] Trimming past appt data...');
         apptData = Data.trimObject(apptData);
+        console.log('[DEBUG] Trimmed past appt data.');
         const appts = [
             db.collection('users').doc(apptData.attendees[0].uid)
             .collection('pastAppointments')
