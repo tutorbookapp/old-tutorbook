@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ViewModifiedRequestDialog - Tutorbook Docs</title>
+    <title>Login - Tutorbook Docs</title>
 
     <!-- Meta variables from web app -->
     <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
@@ -62,7 +62,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">ViewModifiedRequestDialog</h1>
+    <h1 class="page-title">Login</h1>
     
 
     
@@ -75,10 +75,12 @@
 <header>
     
         <h2>
-        ViewModifiedRequestDialog
+            <span class="ancestors"><a href="module-@tutorbook_login.html">@tutorbook/login</a>~</span>
+        
+        Login
         </h2>
         
-            <div class="class-description"><p>Class that represents the &quot;Modified Request&quot; view/dialog within our web app.</p></div>
+            <div class="class-description"><p>Class that handles new logins and user sign-ups.</p></div>
         
     
 </header>
@@ -94,7 +96,7 @@
     
 
     
-    <h4 class="name" id="ViewModifiedRequestDialog"><span class="type-signature"></span>new ViewModifiedRequestDialog<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Login"><span class="type-signature"></span>new Login<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -102,7 +104,8 @@
 
 
 <div class="description">
-    <p>Creates and renders a new &quot;Modified Request&quot; view/dialog.</p>
+    <p>Creates (and renders using <code>window.app.render</code>) a new login instance and
+resets the <code>window.app</code>'s user.</p>
 </div>
 
 
@@ -138,7 +141,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line944">line 944</a>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -146,6 +149,18 @@
 
     
 
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Finish documentation.</li>
+        
+            <li>Style this login screen like our landing pages and marketing site.</li>
+        
+            <li>Update the styling on the Google Login button to conform with their
+branding guidelines.</li>
+        </ul>
+    </dd>
     
 </dl>
 
@@ -180,17 +195,6 @@
     </div>
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="ViewRequestDialog.html">ViewRequestDialog</a></li>
-    </ul>
-
-
-    
 
     
 
@@ -212,7 +216,7 @@
     
 
     
-    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".signOut"><span class="type-signature">(static) </span>signOut<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -220,9 +224,7 @@
 
 
 <div class="description">
-    <p>Adds click listeners and attaches various
-<a href="https://material.io/develop/web/">MDC components</a> in the &quot;View
-Request&quot; view/dialog.</p>
+    <p>Helper function to sign the user out.</p>
 </div>
 
 
@@ -238,11 +240,6 @@ Request&quot; view/dialog.</p>
     
 
     
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="ViewRequestDialog.html#manage">ViewRequestDialog#manage</a>
-    </li></ul></dd>
-    
 
     
 
@@ -251,99 +248,7 @@ Request&quot; view/dialog.</p>
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line916">line 916</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="renderSelf"><span class="type-signature">(async) </span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Replaces the &quot;View Request&quot; top app bar title with &quot;Modified Request&quot;.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="ViewRequestDialog.html#renderSelf">ViewRequestDialog#renderSelf</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use <a href="module-@tutorbook_app-Tutorbook.html#signOut"><code>module:@tutorbook/app~Tutorbook#signOut</code></a> instead.</li></ul></dd>
     
 
     
@@ -357,101 +262,7 @@ Request&quot; view/dialog.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line952">line 952</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="view"><span class="type-signature">(async) </span>view<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Views the dialog and adds manager(s)</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="ViewRequestDialog.html#view">ViewRequestDialog#view</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line904">line 904</a>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line61">line 61</a>
     </li></ul></dd>
     
 

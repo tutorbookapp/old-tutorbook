@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ViewModifiedRequestDialog - Tutorbook Docs</title>
+    <title>@tutorbook/login - Tutorbook Docs</title>
 
     <!-- Meta variables from web app -->
     <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
@@ -62,7 +62,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">ViewModifiedRequestDialog</h1>
+    <h1 class="page-title">@tutorbook/login</h1>
     
 
     
@@ -74,11 +74,8 @@
 
 <header>
     
-        <h2>
-        ViewModifiedRequestDialog
-        </h2>
         
-            <div class="class-description"><p>Class that represents the &quot;Modified Request&quot; view/dialog within our web app.</p></div>
+            
         
     
 </header>
@@ -87,23 +84,16 @@
     <div class="container-overview">
     
         
+            <div class="description"><p>Package that contains our login/sign-up screen and basic onboarding process
+(where we ensure that user's are verified before letting them access a
+school's or school district's data).</p></div>
+        
+
+        
+            
 <div class="section-method">
 
-    
-    <h2>Constructor</h2>
-    
 
-    
-    <h4 class="name" id="ViewModifiedRequestDialog"><span class="type-signature"></span>new ViewModifiedRequestDialog<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Creates and renders a new &quot;Modified Request&quot; view/dialog.</p>
-</div>
 
 
 
@@ -132,18 +122,41 @@
     
 
     
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>Copyright (C) 2020 Tutorbook
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</li></ul></dd>
+    
 
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line944">line 944</a>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://npmjs.com/package/@tutorbook/login">https://npmjs.com/package/@tutorbook/login</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -176,24 +189,21 @@
 
 
 </div>
+        
     
     </div>
 
     
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li><a href="ViewRequestDialog.html">ViewRequestDialog</a></li>
-    </ul>
-
 
     
 
     
+        <h3 class="subsection-title">Classes</h3>
 
+        <dl>
+            <dt><a href="module-@tutorbook_login-Login.html">Login</a></dt>
+            <dd></dd>
+        </dl>
     
 
      
@@ -202,294 +212,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="manage"><span class="type-signature"></span>manage<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Adds click listeners and attaches various
-<a href="https://material.io/develop/web/">MDC components</a> in the &quot;View
-Request&quot; view/dialog.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="ViewRequestDialog.html#manage">ViewRequestDialog#manage</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line916">line 916</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="renderSelf"><span class="type-signature">(async) </span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Replaces the &quot;View Request&quot; top app bar title with &quot;Modified Request&quot;.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="ViewRequestDialog.html#renderSelf">ViewRequestDialog#renderSelf</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line952">line 952</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    
-    <h4 class="name" id="view"><span class="type-signature">(async) </span>view<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    <p>Views the dialog and adds manager(s)</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="ViewRequestDialog.html#view">ViewRequestDialog#view</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app_packages_dialogs_index.js.html">app/packages/dialogs/index.js</a>, <a href="app_packages_dialogs_index.js.html#line904">line 904</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
     
 
     
