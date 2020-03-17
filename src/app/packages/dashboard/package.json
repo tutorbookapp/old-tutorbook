@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/dashboard",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,18 +10,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.5.2",
-    "@tutorbook/data": "^0.5.1",
-    "@tutorbook/dialogs": "^0.5.2",
-    "@tutorbook/horz-scroller": "^0.5.0",
-    "@tutorbook/matching": "^0.5.2",
-    "@tutorbook/profile": "^0.5.2",
-    "@tutorbook/schedule": "^0.5.2",
-    "@tutorbook/schedule-card": "^0.5.2",
-    "@tutorbook/search": "^0.5.2",
-    "@tutorbook/tracking": "^0.5.2",
-    "@tutorbook/user": "^0.5.2",
-    "@tutorbook/utils": "^0.5.2"
+    "@tutorbook/card": "^0.5.3",
+    "@tutorbook/data": "^0.5.3",
+    "@tutorbook/dialogs": "^0.5.3",
+    "@tutorbook/horz-scroller": "^0.5.3",
+    "@tutorbook/matching": "^0.5.3",
+    "@tutorbook/profile": "^0.5.3",
+    "@tutorbook/schedule": "^0.5.3",
+    "@tutorbook/schedule-card": "^0.5.3",
+    "@tutorbook/search": "^0.5.3",
+    "@tutorbook/tracking": "^0.5.3",
+    "@tutorbook/user": "^0.5.3",
+    "@tutorbook/utils": "^0.5.3"
   },
   "repository": {
     "type": "git",
