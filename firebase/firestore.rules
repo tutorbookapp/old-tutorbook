@@ -43,7 +43,7 @@ service cloud.firestore {
     }
 
     function isSender() {
-      return loggedIn() && request.auth.uid == resource.data.sentBy.uid;
+      return loggedIn() && request.auth.uid == request.resource.data.sentBy.uid;
     }
 
     match /auth/{document=**} {
