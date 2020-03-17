@@ -54,7 +54,8 @@ service cloud.firestore {
     match /locations/{location} {
       // TODO: The location's supervisors should always be in the location's 
       // access (but we can't compound `array-contains` queries). 
-      allow read: if hasAccess() || isSupervisorFor(location);
+      // allow read: if hasAccess() || isSupervisorFor(location);
+      allow read: if true;
     }
     
     match /locations/{location}/recentActions/{recentAction} {
