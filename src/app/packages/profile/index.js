@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -59,7 +59,7 @@ class Profile {
 
     /**
      * Views the profile view and header (and hides the Intercom messenger).
-     * @see {@link Tutorbook#view}
+     * @see {@link module:@tutorbook/app~Tutorbook#view}
      */
     view() {
         window.app.intercom.view(false);

@@ -36,7 +36,7 @@ class Data {
      * @param {bool} [init=true] - Whether or not to initialize locations, 
      * grades, periods, times, hourlyCharges, etc.
      */
-    constructor(db = window.app.db, init = true) {
+    constructor(db = window.app ? window.app.db : undefined, init = true) {
         this.db = db;
         if (init) this.init();
     }
@@ -462,7 +462,7 @@ class Data {
      *   subjects: ['Chemistry H'],
      * });
      * @param {Object} user - The user to update.
-     * @see {@link Tutorbook#updateUser}
+     * @see {@link module:@tutorbook/app~Tutorbook#updateUser}
      */
     static async updateUser(user) {
         await Data.updateUserAvailability(user);

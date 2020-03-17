@@ -217,22 +217,13 @@ class Navigation {
     }
 
     start() {
-        const app = window.app;
-
-        // No redirect, show home
-        if (window.location.toString().indexOf('redirect') < 0) {
-            this.router.navigate('/app/home');
-            app.loader(false);
-        }
-
-        const data = window.location.toString().split('?');
-        data.forEach((pairs) => {
-            var key = pairs.split('=')[0];
-            var val = pairs.split('=')[1];
-            if (key === 'redirect') {
-                this.router.navigate('/app/' + val);
-                app.loader(false);
-            }
+        // a) No redirect, show home screen
+        if (window.location.toString().indexOf('redirect') < 0)
+            return this.router.navigate('/app/home');
+        // b) Redirect user to desired destination
+        const pairs = window.location.toString().split('?');
+        pairs.map(p => p.split('=')).map(([key, val]) => {
+            if (key === 'redirect') this.router.navigate('/app/' + val);
         });
     }
 

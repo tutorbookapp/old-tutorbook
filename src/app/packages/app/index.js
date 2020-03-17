@@ -1,4 +1,10 @@
 /**
+ * Package that contains the primary app class (`Tutorbook`) that depends on all 
+ * of our other app packages and creates an instance of each one depending on 
+ * the app user's and website's configuration.
+ * @module @tutorbook/app
+ * @see {@link https://npmjs.com/package/@tutorbook/app}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -67,19 +73,31 @@ class Tutorbook {
 
     /**
      * Creates a new Tutorbook object:
-     * 1. Initializes the website's configuration data.
+     * 1. Initializes the website's configuration data (**without** grabbing
+     * any location data).
      * 2. Signs in (or uses existing authentication cookies if the user has 
-     *    already signed in) the user with [Firebase Authentication]{@link 
-     *    https://firebase.google.com/docs/auth/web/start}.
-     * 3. Initializes all app views and packages and routes the user to their
-     *    desired destination (based on their URL) within the app.
+     * already signed in) the user with [Firebase Authentication]{@link 
+     * https://firebase.google.com/docs/auth/web/start}.
+     * 3. Initializes the rest of the app's local data (e.g. locations), all app 
+     * views and packages, and routes the user to their desired destination 
+     * (based on their URL) within the app.
      * @example
      * window.app = new Tutorbook(); // Creates a new global web app instance.
      */
     constructor() {
         this.logJobPost();
-        this.version = '0.0.1'; // TODO: Each change released to production (via
-        // CI) should have a corresponding GitHub tag & release denoted here.
+
+        /**
+         * The version of the app package. This should also match the versions
+         * of each subpackage (as they're managed with 
+         * [Lerna]{@link https://lerna.js.org}).
+         * @const {string} version
+         * @todo Each change released to production (via CI) should have a 
+         * corresponding GitHub tag & release denoted here.
+         * @memberof module:@tutorbook/app~Tutorbook#
+         */
+        this.version = 'v0.5.3';
+
         /**
          * The website configuration Firestore document ID.
          * @const {string} id
@@ -89,14 +107,37 @@ class Tutorbook {
          * } else {
          *   showSchoolData(); // Only show the school's data.
          * }
-         * @memberof Tutorbook
-         * @instance
+         * @memberof module:@tutorbook/app~Tutorbook#
          */
         this.id = 'JJ5BuGZ1za0eON81vdOh';
+
+        /**
+         * Whether or not the app refers to a test partition.
+         * @const {bool} test
+         * @memberof module:@tutorbook/app~Tutorbook#
+         */
         this.test = false;
-        this.listeners = []; // Unsubscribe to onSnapshot listeners on signOut
+
+        /**
+         * An array of Firestore query `unsubscribe` functions (returned from 
+         * calling `onSnapshot` on a [Query]{@link external:Query}). We `map` 
+         * through this array and unsubscribe from all of those listeners before 
+         * signing out (to avoid authentication errors).
+         * @const {Array<Function>} listeners
+         * @see {@link module:@tutorbook/app~Tutorbook#signOut}
+         * @memberof module:@tutorbook/app~Tutorbook#
+         */
+        this.listeners = [];
+
+        /**
+         * The URL of our REST API endpoint (hosted with [Google Cloud 
+         * Functions]{@link https://cloud.google.com/functions/}).
+         * @const {string} functionsURL
+         * @memberof module:@tutorbook/app~Tutorbook#
+         */
         this.functionsURL = 'https://us-central1-tutorbook-779d8.cloudfunctio' +
             'ns.net/';
+
         /**
          * The database partition to be used by the rest of the app.
          * @const {external:CollectionReference} db
@@ -104,19 +145,162 @@ class Tutorbook {
          * const users = (await window.app.db.collection('users').get()).docs;
          * @example
          * const locations = await window.app.db.collection('locations').get();
-         * @memberof Tutorbook
-         * @instance
+         * @memberof module:@tutorbook/app~Tutorbook#
          */
         this.db = (this.test) ? firebase.firestore().collection('partitions')
             .doc('test') : firebase.firestore().collection('partitions')
             .doc('default');
+
         if (this.test) document.title = '[Demo] ' + document.title;
-        this.preInit();
+
+        this.initialization = this.initWebsiteConfig();
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) return this.init();
+            return this.login();
+        });
+    }
+
+    /**
+     * Views the login screen after the website configuration has been fetched 
+     * and successfully initialized.
+     * @return {Promise} Promise that resolves after the website configuration
+     * has been initialized and the user is viewing the login screen.
+     */
+    async login() {
+        // Ensure that the website configuration is ready
+        await this.initialization;
+
+        // Helper packages
+        this.render = new Render();
+
+        // View the login/sign-up screen 
+        this.login = new Login();
+        this.loader(false);
+        this.login.view();
+    }
+
+    /**
+     * Creates and initializes the rest of the app views and packages (starts 
+     * the navigation router that routes the user to the desired destination 
+     * with the app based on their URL).
+     */
+    async init() {
+        // Ensure that the website configuration is ready
+        await this.initialization;
+        this.initOnMobile();
+        this.initURLParams();
+
+        // Dependency cycle workarounds
+        this.SearchHeader = SearchHeader;
+        this.EditProfile = EditProfile;
+        this.NotificationDialog = NotificationDialog;
+        this.MatchingDialog = MatchingDialog;
+        this.renderHit = renderHit;
+        this.renderCard = renderCard;
+
+        // Helper packages (only if they haven't already been initialized)
+        this.render = this.render instanceof Render ? this.render : new Render();
+        this.data = this.data instanceof Data ? this.data : new Data();
+        this.utils = this.utils instanceof Utils ? this.utils : new Utils();
+
+        // App packages
+        this.snackbar = new Snackbar();
+        this.notify = new Notify();
+        this.intercom = new Help(this.user);
+        this.cards = { // Store card actions & dialogs
+            requestsOut: {},
+            approvedRequestsOut: {},
+            rejectedRequestsOut: {},
+        };
+        this.nav = new Navigation();
+        this.listener = new Listener();
+        this.search = new Search(this);
+        if (this.user.payments.type === 'Paid') {
+            this.profile = new PaidProfile(this.user);
+        } else if (this.user.type === 'Tutor') {
+            this.profile = new TutorProfile(this.user);
+        } else {
+            this.profile = new Profile(this.user);
+        }
+        if (this.user.type === 'Supervisor') {
+            this.schedule = new SupervisorSchedule();
+            this.dashboard = new SupervisorDashboard();
+            this.matching = new Matching();
+            this.stats = new Stats();
+            this.config = new Config();
+            this.chats = new SupervisorChats();
+        } else {
+            this.schedule = new Schedule();
+            this.dashboard = new Dashboard();
+            this.chats = new Chats();
+        }
+        this.payments = new Payments();
+        this.feedback = new Feedback(this);
+        this.ads = new Ads();
+
+        this.loader(false);
+        this.nav.start();
+    }
+
+    /**
+     * Initializes app variables based on URL parameters.
+     * @todo Debug security issues b/c anyone can fake any URL parameters.
+     * @todo Actually use standard URL parameter syntax here (i.e. instead of 
+     * separating pairs with a `?` use an `&`).
+     * @return {Promise} Promise that resolves once the data has been synced 
+     * with the app and the current user's Firestore profile document.
+     */
+    async initURLParams() {
+        const pairs = window.location.toString().split('?');
+        return Promise.all(pairs.map(p => p.split('=')).map(([key, val]) => {
+            switch (key) {
+                case 'payments':
+                    this.user.config.showPayments = true;
+                    return this.user.payments.type = 'Paid';
+                case 'code':
+                    this.user.cards.setupStripe = false;
+                    this.redirectedFromStripe = true; // For payments
+                    this.snackbar.view('Connecting payments account...');
+                    return axios({
+                        method: 'GET',
+                        url: this.functionsURL + 'initStripeAccount',
+                        params: {
+                            code: val.replace('/', ''),
+                            id: firebase.auth().currentUser.uid,
+                            test: this.test,
+                        },
+                    }).then((res) => {
+                        this.snackbar.view(
+                            'Connected payments account.', 'View', () => {
+                                window.open(res.data.url); // Opens dashboard
+                            });
+                    }).catch((err) => {
+                        console.error('[ERROR] While initializing Stripe ' +
+                            'account:', err);
+                        this.snackbar.view('Could not connect payments ' +
+                            'account.', 'Retry', () => {
+                                window.location = this.payments.setupURL;
+                            });
+                    });
+                case 'type':
+                    return this.user.type = val.replace('/', '');
+                case 'auth':
+                    if (val.indexOf('false') >= 0)
+                        return this.user.authenticated = false;
+                    return this.user.authenticated = true;
+                case 'cards':
+                    return Data.setupCards.forEach((card) => {
+                        if (val.indexOf(card) >= 0)
+                            this.user.cards[card] = true;
+                    });
+            }
+        }));
     }
 
     /** 
      * Initializes Tutorbook's website configuration and location data before
      * initializing the rest of the helper packages and logging the user in.
+     * @deprecated
      */
     async preInit() {
         // Website configuration and locations
@@ -169,71 +353,25 @@ class Tutorbook {
     }
 
     /**
-     * Creates and initializes the rest of the app views and packages (starts 
-     * the navigation router that routes the user to the desired destination 
-     * with the app based on their URL).
-     */
-    init() {
-        // Dependency cycle workarounds
-        this.SearchHeader = SearchHeader;
-        this.EditProfile = EditProfile;
-        this.NotificationDialog = NotificationDialog;
-        this.MatchingDialog = MatchingDialog;
-        this.renderHit = renderHit;
-        this.renderCard = renderCard;
-
-        // App packages
-        this.notify = new Notify();
-        this.intercom = new Help(this.user);
-        this.cards = { // Store card actions & dialogs
-            requestsOut: {},
-            approvedRequestsOut: {},
-            rejectedRequestsOut: {},
-        };
-        this.nav = new Navigation();
-        this.listener = new Listener();
-        this.search = new Search(this);
-        if (this.user.payments.type === 'Paid') {
-            this.profile = new PaidProfile(this.user);
-        } else if (this.user.type === 'Tutor') {
-            this.profile = new TutorProfile(this.user);
-        } else {
-            this.profile = new Profile(this.user);
-        }
-        if (this.user.type === 'Supervisor') {
-            this.schedule = new SupervisorSchedule();
-            this.dashboard = new SupervisorDashboard();
-            this.matching = new Matching();
-            this.stats = new Stats();
-            this.config = new Config();
-            this.chats = new SupervisorChats();
-        } else {
-            this.schedule = new Schedule();
-            this.dashboard = new Dashboard();
-            this.chats = new Chats();
-        }
-        this.payments = new Payments();
-        this.feedback = new Feedback(this);
-        this.ads = new Ads();
-    }
-
-    /**
      * Fetches this website's configuration data and initializes it's location 
      * data.
+     * @todo Why are we using {@link Data.listen} here?
+     * @return {Promise} Promise that resolves once the configuration data has
+     * been fetched and initialized successfully.
      */
     initWebsiteConfig() {
-        if (!this.id) return this.initRootConfig();
+        if (!this.id) return this.config = Tutorbook.rootWebsiteConfig;
         return Data.listen(['websites', this.id], websiteConfigDoc => {
             if (!websiteConfigDoc.exists) {
                 console.warn('[WARNING] Website configuration (' + this.id +
                     ') did not exist, acting as if root partition...');
-                return this.initRootConfig();
+                return this.config = Tutorbook.rootWebsiteConfig;
             }
-            return this.syncConfig(websiteConfigDoc.data());
+            return this.config = websiteConfigDoc.data();
         }, error => {
             console.error('[ERROR] Could not get website configuration (' +
                 this.id + '), acting as if root partition...', error);
-            return this.initRootConfig();
+            return this.config = Tutorbook.rootWebsiteConfig;
         }, {
             db: this.db,
             listeners: this.listeners,
@@ -250,8 +388,7 @@ class Tutorbook {
      * configuration data changes (i.e. so one doesn't have to reload the web
      * app in order to see changes).
      */
-    syncConfig(config) {
-        this.config = config;
+    syncWebsiteConfig(config) {
         this.locations = this.data.locations = [];
         return Promise.all(this.config.locations.map(locationId => Data.listen([
             'locations',
@@ -283,7 +420,7 @@ class Tutorbook {
      * @todo Make this return a Promise that resolves the first time location
      * data is fetched and synced to local app data.
      */
-    initRootConfig() {
+    syncRootConfig() {
         Data.recycle({
             locations: this.db.collection('locations'),
         }, {
@@ -442,14 +579,6 @@ class Tutorbook {
     }
 
     /**
-     * Logs the user in via our [Login package]{@link Login}.
-     */
-    login() {
-        this.login = new Login();
-        this.login.view();
-    }
-
-    /**
      * Checks if the user is currently viewing the app on a mobile device
      * (with regex on the user agent and by checking the current window
      * viewport size).
@@ -476,7 +605,8 @@ class Tutorbook {
 
 window.onload = () => {
     /** 
-     * The `window`'s [Tutorbook]{@link Tutorbook} web app instance. 
+     * The `window`'s [Tutorbook]{@link module:@tutorbook/app~Tutorbook} web app 
+     * instance. 
      *
      * You can access any variables or objects stored in that web app class from 
      * anywhere in your code (e.g. `window.app.render` points to a 
@@ -495,7 +625,7 @@ window.onload = () => {
      * const timeSelect = window.app.render.select('Time', '', window.app.data
      *   .timeStrings); // Has an already initialized `Data` object too.
      * @global 
-     * @see {@link Tutorbook}
+     * @see {@link module:@tutorbook/app~Tutorbook}
      */
     window.app = new Tutorbook();
 };

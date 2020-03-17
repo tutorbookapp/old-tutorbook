@@ -52,7 +52,7 @@ class Stats {
 
     /**
      * Views the statistics page (using the global `window.app.view` function).
-     * @see {@link Tutorbook#view}
+     * @see {@link module:@tutorbook/app~Tutorbook#view}
      */
     view() {
         window.app.nav.selected = 'Stats';

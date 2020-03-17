@@ -46,6 +46,9 @@ module.exports = [{
                 path.resolve(__dirname, 'packages/app/styles/ads.scss'),
                 path.resolve(__dirname, 'packages/app/styles/dashboard.scss'),
                 path.resolve(__dirname, 'packages/app/styles/snackbar.scss'),
+                path.resolve(__dirname, 'packages/app/styles/login.scss'),
+                path.resolve(__dirname, 'packages/app/styles/cta-link.scss'),
+                path.resolve(__dirname, 'packages/app/styles/email-form.scss'),
 
                 // All other styling files are contained as CSS files
                 path.resolve(__dirname, 'packages/app/styles/loader.css'),

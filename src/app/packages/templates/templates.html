@@ -2,6 +2,7 @@
 <!-- TEMPLATES: these are HTML templates for all of the objects that the 
 user sees as they navigate throughout the app. -->
 
+<!-- MDC Menu template -->
 <div hidden class="template" id="menu">
     <div data-fir-id="id" class="mdc-menu mdc-menu-surface">
         <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
@@ -871,12 +872,7 @@ user sees as they navigate throughout the app. -->
 </div>
 
 <!-- Header Templates -->
-<!-- Welcome Header Template -->
-<div hidden class="template" id="header-login">
-    <div class="logo-header">
-        <img src="/favicon/text-logo-bg.png">
-    </div>
-</div>
+
 
 <div hidden class="template" id="search-results-divider">
     <li role="separator" class="mdc-list-divider"></li>
@@ -1113,40 +1109,82 @@ needs to be rendered with a ton of click listeners.) -->
     </button>
 </div>
 
-<!-- Welcome Screen Template -->
+<!-- Welcome Screen Template(s) -->
+
 <div hidden class="template" id="login">
     <div class="login">
-        <div class="logo-header">
-            <img src="/favicon/text-logo-bg.png">
-        </div>
-        <div id="page-login" class="page">
-            <div class="button-container">
-                <button id="signup-button" data-fir-click="signup" type="button" class="mdc-button mdc-button--raised">
-                    Signup
+        <header class="login__header">
+            <div class="header-nav-desktop__content-wrapper">
+                <a class="header-nav-desktop__logo-link" href="/" aria-label="Tutorbook Home">
+                    <div class="header-nav-desktop__wordmark">
+                        <img class="header-nav-desktop__wordmark-img" src="wordmark.svg">
+                    </div>
+                    <div class="header-nav-desktop__logo">
+                        <img class="header-nav-desktop__logo-img" src="logo.svg">
+                    </div>
+                </a>
+                <div class="header-nav-desktop__menu-right-container">
+                    <span class="header-nav-desktop__cta-link">
+                        <a class="cta-link cta-link--black-fill cta-link--small" target="" rel="" href="/app/signup">
+                            Get started
+                        </a>
+                    </span>
+                    <span class="header-nav-desktop__email-form-wrapper">
+                        <form class="email-form email-form--small" action="/app/signup">
+                            <div class="email-form__input-wrapper">
+                                <input type="email" id="email" class="email-form__input email-form__input--black-fill" autocapitalize="none" autocorrect="off" spellcheck="false" aria-required="true" aria-invalid="false" aria-describedby="signup-cta-error" placeholder="Your email address" value="">
+                            </div>
+                            <button class="email-form__submit email-form__submit--black-fill" type="submit">
+                                Get started
+                            </button>
+                            <span id="signup-cta-error" class="email-form__error-message"></span>
+                        </form>
+                    </span>
+                </div>
+            </div>
+        </header>
+        <h1 class="login__greeting">
+            Welcome.
+        </h1>
+        <div id="page-login" class="login__page">
+            <div class="login__button-container">
+                <button id="signup-button" data-fir-click="signup" type="button" class="mdc-button mdc-button--raised login__button google__button">
+                    <div class="google__logo"></div>
+                    Signup with Google
                 </button>
-                <button id="login-button" data-fir-click="login" type="button" class="mdc-button mdc-button--outlined">
-                    Login
+                <button id="login-button" data-fir-click="login" type="button" class="mdc-button mdc-button--outlined login__button google__button">
+                    <div class="google__logo"></div>
+                    Login with Google
                 </button>
+                <div class="login__helper-link">
+                    Want to learn more? <a href="https://tutorbook.app">Check our site</a>.
+                </div>
             </div>
         </div>
-        <div id="page-signup" class="page">
-            <div class="button-container">
-                <button id="pupil-button" data-fir-click="pupil" type="button" class="mdc-button mdc-button--raised">
-                    Pupil
+        <div id="page-signup" class="login__page">
+            <div class="login__button-container">
+                <button id="pupil-button" data-fir-click="pupil" type="button" class="mdc-button mdc-button--raised login__button">
+                    I need a tutor
                 </button>
-                <button id="tutor-button" data-fir-click="tutor" type="button" class="mdc-button mdc-button--raised">
-                    Peer Tutor
+                <button id="tutor-button" data-fir-click="tutor" type="button" class="mdc-button mdc-button--raised login__button">
+                    I am a tutor
                 </button>
-                <button id="paid-tutor-button" data-fir-click="paidTutor" type="button" class="mdc-button mdc-button--outlined">
-                    Paid Tutor
+                <button id="paid-tutor-button" data-fir-click="paidTutor" type="button" class="mdc-button mdc-button--outlined login__button">
+                    I'm a paid tutor
                 </button>
+                <div id="first-login-prompt" class="login__helper-link">
+                    Already using Tutorbook? <a href="#" data-fir-click="back">Login</a>.
+                </div>
                 <button id="expand-button" data-fir-click="expand" type="button" class="mdc-icon-button">
                     <i class="material-icons mdc-icon-button__icon">expand_more</i>
                 </button>
-                <div style="display:none" id="expand">
-                    <button id="supervisor-button" data-fir-click="supervisor" type="button" class="mdc-button mdc-button--outlined">
-                        Supervisor
+                <div style="display:none;" id="expand">
+                    <button id="supervisor-button" data-fir-click="supervisor" type="button" class="mdc-button mdc-button--outlined login__button">
+                        I'm a supervisor
                     </button>
+                    <div id="second-login-prompt" class="login__helper-link">
+                        Already using Tutorbook? <a href="#" data-fir-click="back">Login</a>.
+                    </div>
                     <button id="collapse-button" data-fir-click="collapse" type="button" class="mdc-icon-button">
                         <i class="material-icons mdc-icon-button__icon">expand_less</i>
                     </button>

@@ -1283,7 +1283,7 @@ class EditLocationDialog {
     /**
      * Views (and subsequently manages) the "Edit Location" dialog and our
      * Intercom Messenger.
-     * @see {@link Tutorbook#view}
+     * @see {@link module:@tutorbook/app~Tutorbook#view}
      * @see {@link Help#view}
      */
     view() {

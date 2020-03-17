@@ -617,64 +617,6 @@ class Utils {
         return select;
     }
 
-    static urlData() {
-        const data = window.location.toString().split('?');
-        data.forEach((pairs) => {
-            var key = pairs.split('=')[0];
-            var val = pairs.split('=')[1];
-            switch (key) {
-                case 'payments':
-                    window.app.user.config.showPayments = true;
-                    window.app.user.payments.type = 'Paid';
-                    break;
-                case 'code':
-                    window.app.user.cards.setupStripe = false;
-                    window.app.redirectedFromStripe = true; // For payments
-                    window.app.snackbar.view('Connecting payments account...');
-                    axios({
-                        method: 'GET',
-                        url: window.app.functionsURL + 'initStripeAccount',
-                        params: {
-                            code: val.replace('/', ''),
-                            id: firebase.auth().currentUser.uid,
-                            test: window.app.test,
-                        },
-                    }).then((res) => {
-                        window.app.snackbar.view(
-                            'Connected payments account.', 'View', () => {
-                                window.open(res.data.url); // Opens dashboard
-                            });
-                    }).catch((err) => {
-                        console.error('[ERROR] While initializing Stripe ' +
-                            'account:', err);
-                        window.app.snackbar.view('Could not connect payments ' +
-                            'account.', 'Retry', () => {
-                                window.location = window.app.payments.setupURL;
-                            });
-                    });
-                    break;
-                case 'type':
-                    window.app.user.type = val.replace('/', '');
-                    break;
-                case 'auth':
-                    if (val.indexOf('false') >= 0) {
-                        window.app.user.authenticated = false;
-                    } else {
-                        window.app.user.authenticated = true;
-                    }
-                    break;
-                case 'cards':
-                    Data.setupCards.forEach((card) => {
-                        if (val.indexOf(card) >= 0) {
-                            window.app.user.cards[card] = true;
-                        }
-                    });
-                    break;
-            }
-        });
-        window.app.updateUser();
-    }
-
     static parseAvailabilityStrings(strings) {
         // Then, convert those strings into individual parsed maps
         var maps = [];

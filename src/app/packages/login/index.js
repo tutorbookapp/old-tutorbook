@@ -1,4 +1,10 @@
 /**
+ * Package that contains our login/sign-up screen and basic onboarding process
+ * (where we ensure that user's are verified before letting them access a 
+ * school's or school district's data).
+ * @module @tutorbook/login
+ * @see {@link https://npmjs.com/package/@tutorbook/login}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +19,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -30,29 +36,42 @@ import $ from 'jquery';
 
 const Utils = require('@tutorbook/utils');
 
-// Class that handles new logins and user sign ups
+/**
+ * Class that handles new logins and user sign-ups.
+ * @todo Finish documentation.
+ * @todo Style this login screen like our landing pages and marketing site.
+ * @todo Update the styling on the Google Login button to conform with their
+ * branding guidelines.
+ */
 class Login {
-
+    /**
+     * Creates (and renders using `window.app.render`) a new login instance and 
+     * resets the `window.app`'s user.
+     */
     constructor() {
-        app.user = {};
+        window.app.user = {};
         this.render = window.app.render;
         this.renderSelf();
     }
 
-    // Helper function to sign the user out
+    /**
+     * Helper function to sign the user out.
+     * @deprecated Use {@link module:@tutorbook/app~Tutorbook#signOut} instead.
+     */
     static signOut() {
         firebase.auth().signOut();
         location = '/';
     };
 
     view() {
+        if (window.app.intercom) window.app.intercom.view(true);
         window.app.view(this.header, this.main, '/app/login');
         this.manage();
     };
 
     renderSelf() {
-        this.header = this.render.template('wrapper');
         this.main = this.render.template('login', {
+            back: () => displaySection('page-login'),
             login: () => {
                 Utils.url('/app/home'); // Don't redirect back to login page
                 Login.viewGoogleSignIn();
@@ -63,21 +82,25 @@ class Login {
             },
             expand: () => {
                 // TODO: Add animations to scroll these els in and out
-                this.main.querySelector('#expand-button').style.display = 'none';
+                this.main.querySelector('#expand-button').style.display =
+                    'none';
                 this.main.querySelector('#expand').style.display = 'inherit';
+                $(this.main).find('#first-login-prompt').hide();
             },
             collapse: () => {
                 this.main.querySelector('#expand').style.display = 'none';
                 // NOTE: Settings display to inline-block centers the button el
-                this.main.querySelector('#expand-button').style.display = 'inline-block';
+                this.main.querySelector('#expand-button').style.display =
+                    'inline-block';
+                $(this.main).find('#first-login-prompt').show();
             },
             pupil: () => {
                 // Show setup cards in the dashboard for:
                 // 1) Their profile (i.e. subjects, availability, locations)
                 // 2) Linking Google Calendar or iCal to their account
                 // 3) Setting up their first payment method
-                // We want them to set availability so that tutors can edit their
-                // requests as needed.
+                // We want them to set availability so that tutors can edit
+                // their requests as needed.
                 Utils.url('/app/home?cards=searchTutors+setupNotifications+' +
                     'setupAvailability?auth=true?type=Pupil');
                 Login.viewGoogleSignIn();
@@ -120,7 +143,7 @@ class Login {
                 Login.viewGoogleSignIn();
             },
         });
-        const pages = this.main.querySelectorAll('.page');
+        const pages = this.main.querySelectorAll('.login__page');
 
         function displaySection(id) {
             pages.forEach(function(sel) {
@@ -219,7 +242,6 @@ class Login {
             $(dialogEl).remove();
         });
     }
-
 };
 
 module.exports = Login;
