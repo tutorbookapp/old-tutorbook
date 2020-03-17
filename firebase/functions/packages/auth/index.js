@@ -54,7 +54,7 @@ const updateAuth = async (change, context) => {
 
     // 1) Check to see if the supervisor's id is in the codes collection.
     const codes = await db.collection('auth').doc('supervisors').get();
-    if (!codes.exists) throw new Error('Supervisor codes did not exist.');
+    if (!codes.exists) return console.error('[ERROR] Codes did not exist.');
     const validIDs = Object.keys(codes.data());
 
     // 2a) If the user is, add the supervisor custom auth claims.

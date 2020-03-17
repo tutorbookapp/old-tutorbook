@@ -23,6 +23,8 @@ class Email {
 
     constructor(type, user, data) {
         this.user = user;
+        console.log('[DEBUG] Sending email to ' + user.name + ' (' + user.uid +
+            ')...');
         if (this.valid) {
             switch (type) {
                 case 'welcome':

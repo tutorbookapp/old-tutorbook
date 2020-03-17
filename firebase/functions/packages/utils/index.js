@@ -285,8 +285,8 @@ class Utils {
             .where('name', '==', locationName)
             .get()
         ).forEach((doc) => supervisorId = doc.data().supervisors[0]);
-        if (!supervisorId) throw new Error('Could not get supervisor for the ' +
-            locationName);
+        if (!supervisorId) return console.error('[ERROR] Could not get ' +
+            'supervisor for the ' + locationName + '.');
         return (await db
             .collection('users')
             .doc(supervisorId)
