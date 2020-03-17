@@ -97,7 +97,6 @@ service cloud.firestore {
         // - avgRating
         // - numRatings
         // - payments.currentBalance
-        // - payments.currentBalanceString
         // - secondsTutored 
         // Are exactly the same (or left unchanged in the case of an `update`).
         return 
@@ -122,7 +121,6 @@ service cloud.firestore {
       allow read: if hasAccess() || isProxy(user);
       allow create: if (isUser(user) || isSupervisor())
 	&& request.resource.data.payments.currentBalance == 0
-	&& request.resource.data.payments.currentBalanceString == "$0.00"
 	&& request.resource.data.secondsPupiled == 0
 	&& request.resource.data.secondsTutored == 0;
       allow delete, update: 
