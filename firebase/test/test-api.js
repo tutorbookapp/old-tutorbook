@@ -136,7 +136,8 @@ describe('Tutorbook\'s REST API', () => {
         return [REQUEST, REQUEST_ID];
     };
 
-    it('lets authenticated users send requests', () => {
+    it('lets authenticated users send requests', async () => {
+        await createUsers();
         return post(PUPIL.email, 'newRequest', {
             request: REQUEST,
             payment: {}

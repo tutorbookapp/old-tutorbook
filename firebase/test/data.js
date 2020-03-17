@@ -67,9 +67,20 @@ const ACCESS = {
 };
 const ACCESS_ID = 'H542qmTScoXfCDLtpM62';
 
+const SUPERVISOR_UID = 'OAmavOtc6GcL2BuxFJu4sd5rwDu1';
 const LOCATION = {
     name: 'Gunn Academic Center',
     url: 'https://gunn.tutorbook.app',
+    supervisors: [SUPERVISOR_UID],
+    hours: {
+        'Monday': [{
+            open: '2:45 PM',
+            close: '3:45 PM',
+        }, {
+            open: 'A Period',
+            close: 'A Period',
+        }],
+    },
 };
 const LOCATION_ID = 'NJp0Y6wyMh2fDdxSuRSx';
 
@@ -156,7 +167,7 @@ const SUPERVISOR = {
     name: 'Supervisor Tutorbook',
     email: 'supervisor@tutorbook.app',
     id: 'supervisor@tutorbook.app',
-    uid: 'OAmavOtc6GcL2BuxFJu4sd5rwDu1',
+    uid: SUPERVISOR_UID,
     photo: 'https://tutorbook.app/app/img/female.png',
     type: 'Supervisor',
     gender: 'Female',
