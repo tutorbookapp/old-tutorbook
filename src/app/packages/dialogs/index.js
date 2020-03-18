@@ -1,4 +1,11 @@
 /**
+ * Package containing all of the app's dialog views (both full-screen dialogs
+ * like the [ViewRequestDialog]{@link module:@tutorbook/dialogs~ViewRequestDialog} 
+ * or pop-up dialogs like the 
+ * [ConfirmationDialog]{@link module:@tutorbook/dialogs~ConfirmationDialog}).
+ * @module @tutorbook/dialogs
+ * @see {@link https://npmjs.com/package/@tutorbook/dialogs}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +20,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -673,10 +680,10 @@ class EditAvailabilityDialog {
 
 /**
  * Class that represents a dialog much like the 
- * [ConfirmationDialog]{@link ConfirmationDialog} but instead of 'Yes' and 'No' 
- * options, it just has one option for 'Ok'. Typically used to ensure that a 
- * user knows about something (i.e. is **notified** about it) before they can
- * continue using the app.
+ * [ConfirmationDialog]{@link module:@tutorbook/dialogs~ConfirmationDialog} but 
+ * instead of 'Yes' and 'No' options, it just has one option for 'Ok'. Typically 
+ * used to ensure that a user knows about something (i.e. is **notified** about 
+ * it) before they can continue using the app.
  * @example
  * const NotificationDialog = require('@tutorbook/dialogs').notify;
  * const dialog = new NotificationDialog('Rejected Clock-In', 'Your clock-in ' +
@@ -1010,7 +1017,7 @@ class ViewRejectedRequestDialog extends ViewRequestDialog {
 /**
  * Class that represents the dialog that enables supervisors to edit their
  * location's open hours.
- * @see {@link EditAvailabilityDialog}
+ * @see {@link module:@tutorbook/dialogs~EditAvailabilityDialog}
  */
 class EditHourDialog {
     /**
@@ -1215,7 +1222,7 @@ class EditLocationDialog {
      * 7. A "Round times to the nearest" select
      * 8. An "Open hours" list divider
      * 9. A bunch of "Hour" inputs (text fields that open up 
-     * [EditHourDialog]{@link EditHourDialog}s).
+     * [EditHourDialog]{@link module:@tutorbook/dialogs~EditHourDialog}s).
      * 10. A "Delete Location" button
      * to the dialog's `this.main` `HTMLElement`.
      * @todo Add supervisor search text field input items to designate who is 
@@ -1492,7 +1499,7 @@ class NewLocationDialog extends EditLocationDialog {
     /**
      * Creates and renders the "New Location" dialog/view.
      * @todo Define what an empty location looks like and pass it into the
-     * [parent]{@link EditLocationDialog}'s constructor.
+     * [parent]{@link module:@tutorbook/dialogs~EditLocationDialog}'s constructor.
      */
     constructor() {
         const location = {};
@@ -2149,7 +2156,7 @@ class ViewApptDialog extends ViewRequestDialog {
     /**
      * Creates and renders a new "View Appointment" dialog (building off of what
      * has already been initialized and rendered in the "View Request" dialog).
-     * @see {@link ViewRequestDialog}
+     * @see {@link module:@tutorbook/dialogs~ViewRequestDialog}
      */
     constructor(appt, id) {
         super(appt.for, id);
@@ -2178,6 +2185,7 @@ class ViewApptDialog extends ViewRequestDialog {
                     this.render.textField('Total', '0:0:0.00')
                 )).insertAfter($(this.main).find('[id="Hours clocked"]'));
                 $(this.main).append(this.render.fab('clockIn'));
+                $(this.main).append(this.render.fab('requestTime'));
             }
         }
         if (window.app.user.type === 'Supervisor') {
@@ -2203,31 +2211,28 @@ class ViewApptDialog extends ViewRequestDialog {
         $(this.main).find('.mdc-fab').each(function() {
             MDCRipple.attachTo(this);
         });
-        if (['Tutor', 'Supervisor'].indexOf(window.app.user.type) >= 0) {
-            if (this.request.payment.type === 'Paid') {
-                $(this.main).find('.mdc-fab').click(async () => {
-                    window.app.snackbar.view('Sending payment request...');
-                    const [err, res] = await to(
-                        Data.requestPaymentFor(this.appt, this.id)
-                    );
-                    if (err) return window.app.snackbar.view('Could not send ' +
-                        'payment request. Please ensure this isn\'t a ' +
-                        'duplicate request.');
-                    window.app.snackbar.view('Sent payment request to ' +
-                        Utils.getOther(this.appt.attendees).email + '.');
-                });
+        $(this.main).find('#request-payment').click(async () => {
+            window.app.snackbar.view('Sending payment request...');
+            const [err, res] = await to(
+                Data.requestPaymentFor(this.appt, this.id)
+            );
+            if (err) return window.app.snackbar.view('Could not send ' +
+                'payment request. Please ensure this isn\'t a ' +
+                'duplicate request.');
+            window.app.snackbar.view('Sent payment request to ' +
+                Utils.getOther(this.appt.attendees).email + '.');
+        });
+        $(this.main).find('#clocking').click(() => {
+            if (!this.timer) {
+                this.clockIn();
+                $(this.main).find('.mdc-fab__label').text('ClockOut');
             } else {
-                $(this.main).find('.mdc-fab').click(() => {
-                    if (!this.timer) {
-                        this.clockIn();
-                        $(this.main).find('.mdc-fab__label').text('ClockOut');
-                    } else {
-                        this.clockOut();
-                        $(this.main).find('.mdc-fab__label').text('ClockIn');
-                    }
-                });
+                this.clockOut();
+                $(this.main).find('.mdc-fab__label').text('ClockIn');
             }
-        }
+        });
+        $(this.main).find('#request-time').click(() =>
+            console.log('[TODO] Implment requested time data flow.'));
     }
 
     /**
@@ -2292,7 +2297,9 @@ class ViewApptDialog extends ViewRequestDialog {
      * @param {string} rejectedRef - The Firestore document reference path of
      * where the rejected clock-in or clock-out is going to be created.
      * @param {string} name - Whether it is a clock-in or clock-out (used to set
-     * the [NotificationDialog]{@link NotificationDialog} summary and title).
+     * the 
+     * [NotificationDialog]{@link module:@tutorbook/dialogs~NotificationDialog} 
+     * summary and title).
      * @param {resetCallback} [reset=function() {}] - Callback when the request 
      * is rejected (that resets the UI as if the request was never sent).
      * @example

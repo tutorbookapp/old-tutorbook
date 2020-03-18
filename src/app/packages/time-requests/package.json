@@ -1,0 +1,12 @@
+{
+  "name": "@tutorbook/time-requests",
+  "version": "1.0.0",
+  "description": "Package that enables peer tutors to request service hrs via the Tutorbook web app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nicholas Chiang",
+  "license": "AGPL"
+}

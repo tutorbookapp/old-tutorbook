@@ -171,15 +171,21 @@ class Render {
                 });
             case 'clockIn':
                 return this.template('fab-labeled', {
-                    id: 'clockInButton',
+                    id: 'clocking',
                     icon: 'timer',
                     label: 'ClockIn',
                 });
             case 'requestPayment':
                 return this.template('fab-labeled', {
-                    id: 'requestPayment',
+                    id: 'request-payment',
                     icon: 'account_balance_wallet',
                     label: 'Request Payment',
+                });
+            case 'requestTime':
+                return this.template('fab-labeled', {
+                    id: 'request-time',
+                    icon: 'account_balance_wallet', // TODO: Find better icon.
+                    label: 'Request Time',
                 });
             case 'viewStripe':
                 return this.template('fab-labeled', {

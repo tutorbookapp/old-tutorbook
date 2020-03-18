@@ -175,7 +175,7 @@ class Config {
     /**
      * Recycles/views the locations cards (for locations the current user
      * supervises) in a horizontal scrolling view.
-     * @see {@link EditLocationDialog}
+     * @see {@link module:@tutorbook/dialogs~EditLocationDialog}
      * @see {@link Utils#recycle}
      * @see {@link Recycler}
      */
