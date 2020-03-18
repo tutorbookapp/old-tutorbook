@@ -24,6 +24,7 @@ const WEBSITE_FIELDS = [
     'grades',
     'locations',
     'access',
+    'name',
 ];
 
 const ARRAY_FIELDS = [

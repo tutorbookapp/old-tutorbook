@@ -37,6 +37,7 @@ document:
 - What locations are shown on this website?
 - What district (or `access`) is this website a part of?
 - What email domains are allowed to access this website?
+- What is the website's name (used in the login error prompts)?
 
 ## Locations
 
