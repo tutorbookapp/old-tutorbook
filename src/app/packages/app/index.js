@@ -101,7 +101,8 @@ class Tutorbook {
         this.version = 'v0.5.3';
 
         /**
-         * The website configuration Firestore document ID.
+         * The website configuration Firestore document ID. Empty if app is in
+         * root partition.
          * @const {string} id
          * @example
          * if (!window.app.id) {
@@ -111,7 +112,7 @@ class Tutorbook {
          * }
          * @memberof module:@tutorbook/app~Tutorbook#
          */
-        this.id = 'JJ5BuGZ1za0eON81vdOh';
+        this.id = '';
 
         /**
          * Whether or not the app refers to a test partition.
@@ -173,7 +174,7 @@ class Tutorbook {
         await this.initialization;
 
         // Helper packages
-        this.render = new Render();
+        this.render = this.render || new Render();
 
         // View the login/sign-up screen
         this.user = {};
@@ -188,6 +189,9 @@ class Tutorbook {
      * with the app based on their URL).
      */
     async startApp() {
+        // Helper packages (only if they haven't already been initialized)
+        this.render = this.render || new Render();
+
         // Ensure that the website configuration is ready
         await this.initialization;
         await this.initUser();
@@ -206,7 +210,6 @@ class Tutorbook {
         this.data = new Data();
         await this.data.initialization;
         this.utils = new Utils();
-        this.render = new Render();
 
         // App packages
         this.snackbar = new Snackbar();
@@ -537,8 +540,8 @@ class Tutorbook {
      * @see {@link https://firebase.google.com/docs/firestore/query-data/listen#detach_a_listener}
      */
     signOut() {
-        this.listeners.forEach(unsubscribe => unsubscribe());
-        this.intercom.logout();
+        (this.listeners || []).forEach(unsubscribe => unsubscribe());
+        if (this.intercom) this.intercom.logout();
         return firebase.auth().signOut();
     }
 
@@ -616,6 +619,21 @@ class Tutorbook {
         // If either return true, we assume the user is on mobile
         this.onMobile = userAgentCheck || screenSizeCheck;
     }
+};
+
+/**
+ * The root website configuration that shows all locations (that are publicly
+ * listed) and all grades.
+ * @const {WebsiteConfig} rootWebsiteConfig
+ * @memberof module:@tutorbook/app~Tutorbook.
+ */
+Tutorbook.rootWebsiteConfig = {
+    created: new Date(),
+    updated: new Date(),
+    domains: [],
+    grades: Data.grades,
+    locations: [],
+    url: 'https://tutorbook.app/app',
 };
 
 window.onload = () => {

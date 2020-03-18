@@ -6,11 +6,25 @@
   margin-top: -64px;
 }
 
+.login__prompt-title,
 .login__greeting {
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   font-size: 3.5rem;
   letter-spacing: -0.125rem;
+}
+
+.login__prompt-title {
+  margin-bottom: 0;
+}
+
+.login__prompt-description {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  max-width: 500px;
+  text-align: left;
+  margin: 15px auto 25px auto;
 }
 
 .login__helper-link {

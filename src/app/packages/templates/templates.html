@@ -1110,39 +1110,59 @@ needs to be rendered with a ton of click listeners.) -->
 </div>
 
 <!-- Welcome Screen Template(s) -->
+<div hidden class="template" id="login-header">
+    <header class="login__header">
+        <div class="header-nav-desktop__content-wrapper">
+            <a class="header-nav-desktop__logo-link" href="/" aria-label="Tutorbook Home">
+                <div class="header-nav-desktop__wordmark">
+                    <img class="header-nav-desktop__wordmark-img" src="wordmark.svg">
+                </div>
+                <div class="header-nav-desktop__logo">
+                    <img class="header-nav-desktop__logo-img" src="logo.svg">
+                </div>
+            </a>
+            <div class="header-nav-desktop__menu-right-container">
+                <span class="header-nav-desktop__cta-link">
+                    <a class="cta-link cta-link--black-fill cta-link--small" target="" rel="" href="/app/signup">
+                        Get started
+                    </a>
+                </span>
+                <span class="header-nav-desktop__email-form-wrapper">
+                    <form class="email-form email-form--small" action="/app/signup">
+                        <div class="email-form__input-wrapper">
+                            <input type="email" id="email" class="email-form__input email-form__input--black-fill" autocapitalize="none" autocorrect="off" spellcheck="false" aria-required="true" aria-invalid="false" aria-describedby="signup-cta-error" placeholder="Your email address" value="">
+                        </div>
+                        <button class="email-form__submit email-form__submit--black-fill" type="submit">
+                            Get started
+                        </button>
+                        <span id="signup-cta-error" class="email-form__error-message"></span>
+                    </form>
+                </span>
+            </div>
+        </div>
+    </header>
+</div>
+
+<div hidden class="template" id="login-prompt">
+    <div class="login">
+        <h1 class="login__prompt-title" data-fir-content="title">
+        </h1>
+        <h5 class="login__prompt-description" data-fir-content="description">
+        </h5>
+        <div class="login__button-container">
+            <button data-fir-content="primaryLabel" data-fir-click="primaryAction" type="button" class="mdc-button mdc-button--raised login__button">
+            </button>
+            <div class="login__helper-link">
+                <span data-fir-content="secondaryDescription"></span>
+                <a href="javascript:;" data-fir-content="secondaryLabel" data-fir-click="secondaryAction">
+                </a>.
+            </div>
+        </div>
+    </div>
+</div>
 
 <div hidden class="template" id="login">
     <div class="login">
-        <header class="login__header">
-            <div class="header-nav-desktop__content-wrapper">
-                <a class="header-nav-desktop__logo-link" href="/" aria-label="Tutorbook Home">
-                    <div class="header-nav-desktop__wordmark">
-                        <img class="header-nav-desktop__wordmark-img" src="wordmark.svg">
-                    </div>
-                    <div class="header-nav-desktop__logo">
-                        <img class="header-nav-desktop__logo-img" src="logo.svg">
-                    </div>
-                </a>
-                <div class="header-nav-desktop__menu-right-container">
-                    <span class="header-nav-desktop__cta-link">
-                        <a class="cta-link cta-link--black-fill cta-link--small" target="" rel="" href="/app/signup">
-                            Get started
-                        </a>
-                    </span>
-                    <span class="header-nav-desktop__email-form-wrapper">
-                        <form class="email-form email-form--small" action="/app/signup">
-                            <div class="email-form__input-wrapper">
-                                <input type="email" id="email" class="email-form__input email-form__input--black-fill" autocapitalize="none" autocorrect="off" spellcheck="false" aria-required="true" aria-invalid="false" aria-describedby="signup-cta-error" placeholder="Your email address" value="">
-                            </div>
-                            <button class="email-form__submit email-form__submit--black-fill" type="submit">
-                                Get started
-                            </button>
-                            <span id="signup-cta-error" class="email-form__error-message"></span>
-                        </form>
-                    </span>
-                </div>
-            </div>
-        </header>
         <h1 class="login__greeting">
             Welcome.
         </h1>
@@ -1173,7 +1193,7 @@ needs to be rendered with a ton of click listeners.) -->
                     I'm a paid tutor
                 </button>
                 <div id="first-login-prompt" class="login__helper-link">
-                    Already using Tutorbook? <a href="#" data-fir-click="back">Login</a>.
+                    Already using Tutorbook? <a href="javascript:;" data-fir-click="back">Login</a>.
                 </div>
                 <button id="expand-button" data-fir-click="expand" type="button" class="mdc-icon-button">
                     <i class="material-icons mdc-icon-button__icon">expand_more</i>
@@ -1183,7 +1203,7 @@ needs to be rendered with a ton of click listeners.) -->
                         I'm a supervisor
                     </button>
                     <div id="second-login-prompt" class="login__helper-link">
-                        Already using Tutorbook? <a href="#" data-fir-click="back">Login</a>.
+                        Already using Tutorbook? <a href="javascript:;" data-fir-click="back">Login</a>.
                     </div>
                     <button id="collapse-button" data-fir-click="collapse" type="button" class="mdc-icon-button">
                         <i class="material-icons mdc-icon-button__icon">expand_less</i>

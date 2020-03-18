@@ -90,11 +90,14 @@ class Data {
      * app in order to see changes).
      * @todo Remove dependencies to `window.app.location` and point them instead
      * to `window.app.data.location` or `window.app.data.locations[0]`.
+     * @todo Remove redundant fetches of Firestore data when in root partition.
      * @return {Promise} Promise that resolves once the locations have been
      * successfully fetched and synced with `this.locations`.
      */
-    getLocations() {
-        const locationIds = window.app.config.locations;
+    async getLocations() {
+        var locationIds = window.app.config.locations;
+        if (!locationIds.length) locationIds = (await window.app.db
+            .collection('locations').get()).docs.map(doc => doc.id);
         return Promise.all(locationIds.map(locationId => Data.listen([
             'locations',
             locationId,

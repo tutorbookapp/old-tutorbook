@@ -81,9 +81,9 @@ class Help {
     /**
      * Shows or hides the default Intercom Messenger launcher. Note that this 
      * does not close the messaging window if it is already open.
-     * @param {bool} show - Whether to show the launcher or hide it.
+     * @param {bool} [show=true] - Whether to show the launcher or hide it.
      */
-    view(show) {
+    view(show = true) {
         return console.warn('[WARNING] Intercom subscription has been paused.');
         window.intercomSettings.hide_default_launcher = !show;
         return window.Intercom('boot');

@@ -143,6 +143,7 @@ class Login {
                 Login.viewGoogleSignIn();
             },
         });
+        $(this.main).prepend(this.render.template('login-header'));
         const pages = this.main.querySelectorAll('.login__page');
 
         function displaySection(id) {
@@ -250,10 +251,49 @@ class Login {
  * b) Go to the [root website]{@link https://tutorbook.app/app} partition.
  */
 class GoToRootPrompt {
+    constructor() {
+        this.render = window.app.render;
+        this.renderSelf();
+    }
+
+    renderSelf() {
+        this.header = this.render.template('wrapper');
+        this.main = this.render.template('login-prompt', {
+            title: 'Unauthorized.',
+            description: 'Sorry, you must login with an @pausd.us or ' +
+                '@pausd.org email address to access Gunn\'s app.',
+            primaryLabel: 'Go to Tutorbook',
+            primaryAction: () => window.location = 'https://tutorbook.app/app',
+            secondaryDescription: 'Used the wrong email?',
+            secondaryLabel: 'Login again',
+            secondaryAction: () => window.app.signOut(),
+        });
+        $(this.main).prepend(this.render.template('login-header'));
+    }
+
+    /**
+     * Views the error prompt screen and doesn't resolve until the user has
+     * chosen an option.
+     * @return {Promise} Promise that resolves after the user has chosen an
+     * option.
+     */
     view() {
-        console.log('[TODO] View the error screen that asks the user to ' +
-            'return to the root partition (or request access to this ' +
-            'partition).');
+        if (window.app.intercom) window.app.intercom.view(true);
+        window.app.loader(false);
+        window.app.view(this.header, this.main);
+        return new Promise((res, rej) => this.wait(res, rej));
+    }
+
+    /**
+     * The tether function passed to the `Promise` returned by 
+     * {@link module:@tutorbook/login~GoToRootPrompt#view}.
+     * @param {Function} res - The `resolutionFunc` that resolves the `Promise`.
+     * @param {Function} rej - The `rejectionFunc` that rejects the `Promise`.
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise}
+     */
+    wait(res, rej) {
+        this.resolve = res;
+        this.reject = rej;
     }
 };
 
@@ -269,11 +309,50 @@ class GoToWebsitePrompt {
      * @param {WebsiteConfig} config - The website configuration to ask the user 
      * to go to.
      */
-    constructor(config) {}
+    constructor(config) {
+        this.config = config;
+        this.render = window.app.render;
+        this.renderSelf();
+    }
 
+    renderSelf() {
+        this.header = this.render.template('wrapper');
+        this.main = this.render.template('login-prompt', {
+            title: 'Gunn student?',
+            description: 'You\'re signed in with a Gunn email address, do you' +
+                ' want to go to their app?',
+            primaryLabel: 'Go to Gunn\'s app',
+            primaryAction: () => window.location = this.config.url,
+            secondaryDescription: 'Not part of Gunn?',
+            secondaryLabel: 'Continue to Tutorbook',
+            secondaryAction: () => this.resolve(),
+        });
+        $(this.main).prepend(this.render.template('login-header'));
+    }
+
+    /**
+     * Views the website prompt screen and doesn't resolve until the user has
+     * chosen an option.
+     * @return {Promise} Promise that resolves after the user has chosen an
+     * option.
+     */
     view() {
-        console.log('[TODO] View the prompt screen that asks the user to go ' +
-            'to their website.');
+        if (window.app.intercom) window.app.intercom.view(true);
+        window.app.loader(false);
+        window.app.view(this.header, this.main);
+        return new Promise((res, rej) => this.wait(res, rej));
+    }
+
+    /**
+     * The tether function passed to the `Promise` returned by 
+     * {@link module:@tutorbook/login~GoToWebsitePrompt#view}.
+     * @param {Function} res - The `resolutionFunc` that resolves the `Promise`.
+     * @param {Function} rej - The `rejectionFunc` that rejects the `Promise`.
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise}
+     */
+    wait(res, rej) {
+        this.resolve = res;
+        this.reject = rej;
     }
 };
 
