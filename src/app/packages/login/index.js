@@ -280,6 +280,9 @@ class GoToRootPrompt {
             secondaryAction: () => window.app.signOut(),
         });
         $(this.main).prepend(this.render.template('login-header'));
+        $(this.main).find('button').each(function() {
+            MDCRipple.attachTo(this);
+        });
     }
 
     /**
@@ -333,7 +336,7 @@ class GoToWebsitePrompt {
     renderSelf() {
         this.header = this.render.template('wrapper');
         this.main = this.render.template('login-prompt', {
-            title: this.config.name + ' student?',
+            title: this.config.name + ' User?',
             description: 'You\'re signed in with a ' + this.config.name +
                 ' email address but are accessing Tutorbook\'s root partition' +
                 '. Do you want to go to ' + this.config.name + '\'s app?',
@@ -344,6 +347,9 @@ class GoToWebsitePrompt {
             secondaryAction: () => this.resolve(),
         });
         $(this.main).prepend(this.render.template('login-header'));
+        $(this.main).find('button').each(function() {
+            MDCRipple.attachTo(this);
+        });
     }
 
     /**

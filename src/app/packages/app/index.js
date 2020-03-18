@@ -379,6 +379,8 @@ class Tutorbook {
      * website.
      * @property {string} url - The URL of the website's app partition (e.g.
      * `'https://gunn.tutorbook.app'` or `'https://woodside.tutorbook.app'`).
+     * @property {string} name - The name of the website configuration (used 
+     * when showing the user error messages about invalid login attempts).
      */
 
     /**
@@ -506,7 +508,7 @@ class Tutorbook {
                     // a) Go to that app's partition
                     // b) Continue in the root partition
                     if (user.email.endsWith(emailDomain))
-                        return showPromptScreen(config);
+                        return showPromptScreen(config.data());
             // If it doesn't, continue.
             return continueWithInit();
         }
