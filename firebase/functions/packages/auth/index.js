@@ -4,7 +4,11 @@ const cors = require('cors')({
     origin: true,
 });
 
-
+/**
+ * Creates a custom login token for testing purposes.
+ * @todo Finish documenting the necessary `req` params and what is actually sent
+ * in `res`.
+ */
 const customAuth = (req, res) => {
     return cors(req, res, async () => {
         const user = await admin.auth().getUserByEmail(req.query.user);
@@ -29,10 +33,10 @@ const customAuth = (req, res) => {
  * A change to a Firestore document containing snapshots of before and after the
  * change.
  * @typedef {Object} Change
- * @property {DocumentSnapshot} before - The document's snapshot before the 
- * change was enacted.
- * @property {DocumentSnapshot} after - The document's snapshot after the change
- * was enacted.
+ * @property {external:DocumentSnapshot} before - The document's snapshot before 
+ * the change was enacted.
+ * @property {external:DocumentSnapshot} after - The document's snapshot after 
+ * the change was enacted.
  */
 
 /**
