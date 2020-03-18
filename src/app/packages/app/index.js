@@ -155,8 +155,8 @@ class Tutorbook {
 
         this.initialization = this.initWebsiteConfig();
         firebase.auth().onAuthStateChanged(user => {
-            if (user) return this.init();
-            return this.login();
+            if (user) return this.startApp();
+            return this.startLogin();
         });
     }
 
@@ -166,15 +166,16 @@ class Tutorbook {
      * @return {Promise} Promise that resolves after the website configuration
      * has been initialized and the user is viewing the login screen.
      */
-    async login() {
+    async startLogin() {
         // Ensure that the website configuration is ready
         await this.initialization;
 
         // Helper packages
         this.render = new Render();
 
-        // View the login/sign-up screen 
-        this.login = new Login();
+        // View the login/sign-up screen
+        this.user = {};
+        this.login = this.login || new Login();
         this.loader(false);
         this.login.view();
     }
@@ -184,11 +185,12 @@ class Tutorbook {
      * the navigation router that routes the user to the desired destination 
      * with the app based on their URL).
      */
-    async init() {
+    async startApp() {
         // Ensure that the website configuration is ready
         await this.initialization;
+        await this.initUser();
+        await this.initURLParams();
         this.initOnMobile();
-        this.initURLParams();
 
         // Dependency cycle workarounds
         this.SearchHeader = SearchHeader;
@@ -199,12 +201,14 @@ class Tutorbook {
         this.renderCard = renderCard;
 
         // Helper packages (only if they haven't already been initialized)
-        this.render = this.render instanceof Render ? this.render : new Render();
-        this.data = this.data instanceof Data ? this.data : new Data();
-        this.utils = this.utils instanceof Utils ? this.utils : new Utils();
+        this.data = new Data();
+        await this.data.initialization;
+        this.utils = new Utils();
+        this.render = new Render();
 
         // App packages
         this.snackbar = new Snackbar();
+        this.login = this.login || new Login();
         this.notify = new Notify();
         this.intercom = new Help(this.user);
         this.cards = { // Store card actions & dialogs
@@ -375,80 +379,6 @@ class Tutorbook {
         }, {
             db: this.db,
             listeners: this.listeners,
-        });
-    }
-
-    /**
-     * Fetches and syncs local app data with locations specified in given 
-     * website configuration.
-     * @param {Object} config - The website configuration to fetch locations 
-     * for/from.
-     * @todo Store dialogs and other views dependent on this local location or
-     * configuration data in order to recreate them when that location or 
-     * configuration data changes (i.e. so one doesn't have to reload the web
-     * app in order to see changes).
-     */
-    syncWebsiteConfig(config) {
-        this.locations = this.data.locations = [];
-        return Promise.all(this.config.locations.map(locationId => Data.listen([
-            'locations',
-            locationId,
-        ], doc => {
-            const index = this.locations.findIndex(l => l.id === doc.id);
-            const locationData = Utils.combineMaps(doc.data(), {
-                id: doc.id,
-            });
-            if (index < 0) {
-                this.locations.push(locationData);
-            } else {
-                this.locations[index] = locationData;
-            }
-            this.data.locations = this.locations;
-            this.location = this.data.location = this.locations[0];
-        }, error => {
-            console.error('[ERROR] Could not get website configuration (' +
-                this.id + ') location (' + locationId + ').');
-        }, {
-            db: this.db,
-            listeners: this.listeners,
-        })));
-    }
-
-    /**
-     * Fetches and syncs local app data with all locations (for users at the 
-     * root partition).
-     * @todo Make this return a Promise that resolves the first time location
-     * data is fetched and synced to local app data.
-     */
-    syncRootConfig() {
-        Data.recycle({
-            locations: this.db.collection('locations'),
-        }, {
-            display: (doc) => {
-                const index = this.locations.findIndex(l => l.id === doc.id);
-                const locationData = Utils.combineMaps(doc.data(), {
-                    id: doc.id,
-                });
-                if (index < 0) {
-                    this.locations.push(locationData);
-                } else {
-                    this.locations[index] = locationData;
-                }
-                this.data.locations = this.locations;
-                this.location = this.data.location = this.locations[0];
-            },
-            remove: (doc) => {
-                const index = this.locations.findIndex(l => l.id === doc.id);
-                this.locations.splice(index, 1);
-                this.data.locations.splice(index, 1);
-                this.location = this.data.location = this.locations[0];
-                console.warn('[WARNING] Location (' + doc.id + ') was deleted.');
-            },
-            empty: () => {
-                this.locations = this.data.locations = [];
-                this.location = this.data.location = {};
-                console.error('[ERROR] There are no locations for tutoring.');
-            },
         });
     }
 

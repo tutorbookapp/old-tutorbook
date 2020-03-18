@@ -38,18 +38,8 @@
   font-weight: 700;
   letter-spacing: 0.2px;
   text-transform: none;
-  border: 2px solid #3700B3;
   @include mdc-button-outline-width(2px);
   @include mdc-button-shape-radius(20%);
-}
-
-.login__button.mdc-button--raised {
-  @include mdc-button-container-fill-color(#3700B3);
-}
-
-.login__button.mdc-button--outlined {
-  @include mdc-button-ink-color(#3700B3);
-  @include mdc-states(#3700B3);
 }
 
 .login__button.google__button {

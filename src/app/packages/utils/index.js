@@ -446,23 +446,33 @@ class Utils {
     }
 
     static getLocation(profile) {
-        // TODO: Bug here is that data.locationNames only includes name of the 
-        // current app location (unless partition is 'Any').
-        const valid = window.app.data.locationNames;
-        if (valid.indexOf(profile.location) >= 0) return profile.location;
-        // This uses the most recently added availability (i.e. the last key).
-        if (!profile.availability) return window.app.location.name || '';
-        for (var loc of Object.keys(profile.availability).reverse()) {
-            if (valid.indexOf(loc) >= 0) return loc;
+        try {
+            // TODO: Bug here is that data.locationNames only includes name of the 
+            // current app location (unless partition is 'Any').
+            const valid = window.app.data.locationNames;
+            if (valid.indexOf(profile.location) >= 0) return profile.location;
+            // This uses the most recently added availability (i.e. the last key).
+            if (!profile.availability) return window.app.location.name || '';
+            for (var loc of Object.keys(profile.availability).reverse()) {
+                if (valid.indexOf(loc) >= 0) return loc;
+            }
+            return window.app.location.name || '';
+        } catch (err) {
+            console.error('[ERROR] Could not get location for ' + profile.name +
+                ' (' + profile.uid + '), returning empty...');
+            return '';
         }
-        return window.app.location.name || '';
     }
 
     static getLocations(profile) {
-        return profile.availability ? Utils.concatArr(Object.keys(profile
-            .availability), [window.app.location.name]) : [window.app.location
-            .name
-        ];
+        console.log('[TODO] Update storage of each user\'s location.');
+        return [];
+        /*
+         *return profile.availability ? Utils.concatArr(Object.keys(profile
+         *    .availability), [window.app.location.name]) : [window.app.location
+         *    .name
+         *];
+         */
     }
 
     static getAuth(profile) {

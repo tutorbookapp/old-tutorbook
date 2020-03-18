@@ -9285,38 +9285,11 @@ svg.mdc-button__icon {
   font-weight: 700;
   letter-spacing: 0.2px;
   text-transform: none;
-  border: 2px solid #3700B3;
   padding: 0 14px 0 14px;
   border-width: 2px;
   border-radius: 7.2px; }
   .login__button.mdc-button--dense {
     border-radius: 6.4px; }
-
-.login__button.mdc-button--raised:not(:disabled) {
-  background-color: #3700B3; }
-
-.login__button.mdc-button--outlined:not(:disabled) {
-  color: #3700B3; }
-
-.login__button.mdc-button--outlined::before, .login__button.mdc-button--outlined::after {
-  background-color: #3700B3; }
-
-.login__button.mdc-button--outlined:hover::before {
-  opacity: 0.04; }
-
-.login__button.mdc-button--outlined.mdc-ripple-upgraded--background-focused::before, .login__button.mdc-button--outlined:not(.mdc-ripple-upgraded):focus::before {
-  transition-duration: 75ms;
-  opacity: 0.12; }
-
-.login__button.mdc-button--outlined:not(.mdc-ripple-upgraded)::after {
-  transition: opacity 150ms linear; }
-
-.login__button.mdc-button--outlined:not(.mdc-ripple-upgraded):active::after {
-  transition-duration: 75ms;
-  opacity: 0.12; }
-
-.login__button.mdc-button--outlined.mdc-ripple-upgraded {
-  --mdc-ripple-fg-opacity: 0.12; }
 
 .login__button.google__button {
   border: 2px solid #4285F4; }

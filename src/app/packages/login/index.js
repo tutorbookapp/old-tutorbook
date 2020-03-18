@@ -49,7 +49,6 @@ class Login {
      * resets the `window.app`'s user.
      */
     constructor() {
-        window.app.user = {};
         this.render = window.app.render;
         this.renderSelf();
     }
@@ -70,6 +69,7 @@ class Login {
     };
 
     renderSelf() {
+        this.header = this.render.template('wrapper');
         this.main = this.render.template('login', {
             back: () => displaySection('page-login'),
             login: () => {

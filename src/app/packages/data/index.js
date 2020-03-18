@@ -36,9 +36,9 @@ class Data {
      * @param {bool} [init=true] - Whether or not to initialize locations, 
      * grades, periods, times, hourlyCharges, etc.
      */
-    constructor(db = window.app ? window.app.db : undefined, init = true) {
-        this.db = db;
-        if (init) this.init();
+    constructor() {
+        this.db = window.app.db;
+        this.initialization = this.init();
     }
 
     /**
@@ -49,12 +49,12 @@ class Data {
      * @param {Object[]} [locations=window.app.locations] - The array of 
      * locations to sync this data object with.
      */
-    init(config = window.app.config, locations = window.app.locations) {
+    async init() {
         this.initTimes();
         this.initHourlyCharges();
-        this.initLocations(locations);
-        this.initPeriods(locations);
-        this.initGrades(config.grades || Data.grades);
+        await this.initLocations();
+        this.initPeriods();
+        this.initGrades();
     }
 
     /**
@@ -62,14 +62,16 @@ class Data {
      * @param {Object[]} [locations=window.app.locations] - The array of 
      * locations to sync this data object with.
      */
-    initLocations(locations = window.app.locations) {
+    async initLocations() {
+        this.locations = [];
+        await this.getLocations();
         this.locationsByName = {};
         this.locationsByID = {};
         this.locationDataByName = {};
         this.locationDataByID = {};
         this.locationNames = [];
         this.locationIDs = [];
-        locations.forEach(location => {
+        this.locations.forEach(location => {
             this.locationsByName[location.name] = location.id;
             this.locationDataByName[location.name] = location;
             this.locationsByID[location.id] = location.name;
@@ -80,13 +82,50 @@ class Data {
     }
 
     /**
+     * Fetches and syncs local app data with locations specified in given 
+     * website configuration.
+     * @todo Store dialogs and other views dependent on this local location or
+     * configuration data in order to recreate them when that location or 
+     * configuration data changes (i.e. so one doesn't have to reload the web
+     * app in order to see changes).
+     * @todo Remove dependencies to `window.app.location` and point them instead
+     * to `window.app.data.location` or `window.app.data.locations[0]`.
+     * @return {Promise} Promise that resolves once the locations have been
+     * successfully fetched and synced with `this.locations`.
+     */
+    getLocations() {
+        const locationIds = window.app.config.locations;
+        return Promise.all(locationIds.map(locationId => Data.listen([
+            'locations',
+            locationId,
+        ], doc => {
+            const locationData = Data.combineMaps(doc.data(), {
+                id: doc.id,
+            });
+            const index = this.locations.findIndex(l => l.id === doc.id);
+            if (index < 0) {
+                this.locations.push(locationData);
+            } else {
+                this.locations[index] = locationData;
+            }
+            this.location = window.app.location = this.locations[0];
+        }, error => {
+            console.error('[ERROR] Could not get website configuration (' +
+                window.app.id + ') location (' + locationId + ').');
+        }, {
+            db: window.app.db,
+            listeners: window.app.listeners,
+        })));
+    }
+
+    /**
      * Syncs grades with the web app configuration (or all of the
      * [statically defined grades]{@linkplain Data.grades}).
      * @param {string[]} [grades=window.app.config.grades] - The array of grades
      * to sync this data object with.
      */
-    initGrades(grades = window.app.config.grades) {
-        this.grades = grades || Data.grades;
+    initGrades() {
+        this.grades = window.app.config.grades || Data.grades;
     }
 
     /**
@@ -94,9 +133,9 @@ class Data {
      * @param {Object[]} [locations=window.app.locations] - The array of 
      * locations to get periods from.
      */
-    initPeriods(locations = window.app.locations) {
+    initPeriods() {
         const times = {};
-        locations.forEach(location => {
+        this.locations.forEach(location => {
             Object.entries(location.hours).forEach(([d, a]) => a.forEach(s => {
                 if (!times[d]) times[d] = [];
                 if (times[d].indexOf(s.open) < 0) times[d].push(s.open);
@@ -604,13 +643,9 @@ class Data {
 
     static combineMaps(mapA, mapB) { // Avoid dependency loops with Utils
         // NOTE: This function gives priority to mapB over mapA
-        var result = {};
-        for (var i in mapA) {
-            result[i] = mapA[i];
-        }
-        for (var i in mapB) {
-            result[i] = mapB[i];
-        }
+        const result = {};
+        for (var i in mapA) result[i] = mapA[i];
+        for (var i in mapB) result[i] = mapB[i];
         return result;
     }
 
