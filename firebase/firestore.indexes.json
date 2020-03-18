@@ -23,14 +23,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "numRatings",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "numRatings",
+      "order": "DESCENDING"
     },{
       "fieldPath": "grade",
       "order": "ASCENDING"
@@ -39,14 +39,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "numRatings",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "numRatings",
+      "order": "DESCENDING"
     },{
       "fieldPath": "gender",
       "order": "ASCENDING"
@@ -55,14 +55,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "numRatings",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "numRatings",
+      "order": "DESCENDING"
     },{
       "fieldPath": "type",
       "order": "ASCENDING"
@@ -71,14 +71,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "numRatings",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "numRatings",
+      "order": "DESCENDING"
     },{
       "fieldPath": "payments.type",
       "order": "ASCENDING"
@@ -87,14 +87,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "avgRating",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "avgRating",
+      "order": "DESCENDING"
     },{
       "fieldPath": "grade",
       "order": "ASCENDING"
@@ -103,14 +103,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "avgRating",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "avgRating",
+      "order": "DESCENDING"
     },{
       "fieldPath": "gender",
       "order": "ASCENDING"
@@ -119,14 +119,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "avgRating",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "avgRating",
+      "order": "DESCENDING"
     },{
       "fieldPath": "type",
       "order": "ASCENDING"
@@ -135,14 +135,14 @@
     "collectionGroup": "users",
     "queryScope": "COLLECTION",
     "fields": [{
-      "fieldPath": "avgRating",
-      "order": "DESCENDING"
-    },{
       "fieldPath": "access",
       "arrayConfig": "CONTAINS"
     },{
       "fieldPath": "config.showProfile",
       "order": "ASCENDING"
+    },{
+      "fieldPath": "avgRating",
+      "order": "DESCENDING"
     },{
       "fieldPath": "payments.type",
       "order": "ASCENDING"
