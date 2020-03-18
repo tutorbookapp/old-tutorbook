@@ -519,17 +519,8 @@ class Search {
             .text(this.filterDescription);
         this.emptyResults();
         window.app.listeners.push(this.getUsers().onSnapshot({
-            error: (err) => {
-                new NotificationDialog('Search Error', 'Sorry, but we can\'t ' +
-                    'seem to search with those filters. Tutorbook seems to ' +
-                    'have encountered this database error:\n\n' +
-                    Utils.wrap(err.message, 50) + '\n\n Try changing your ' +
-                    'filters or contact me with the above error message at ' +
-                    'nicholaschiang@tutorbook.app or (650) 861-2723.',
-                    () => {}).view();
-                console.error('[ERROR] Could not show search results b/c of ',
-                    err);
-            },
+            error: (err) => console.error('[ERROR] Could not show search ' +
+                'results b/c of ', err),
             next: (snapshot) => {
                 if (!snapshot.size) {
                     return that.recycler.empty();
