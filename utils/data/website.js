@@ -30,6 +30,7 @@ const ARRAY_FIELDS = [
     'grades',
     'locations',
     'access',
+    'domains',
 ];
 
 /**

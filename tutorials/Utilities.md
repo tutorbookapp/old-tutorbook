@@ -42,6 +42,7 @@ document:
 - What grades can be selected at this website?
 - What locations are shown on this website?
 - What district (or `access`) is this website a part of?
+- What email domains are allowed to access this website?
 
 ### Locations
 
