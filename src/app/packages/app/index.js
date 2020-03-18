@@ -362,6 +362,7 @@ class Tutorbook {
      * A website configuration that denotes who can access the website, what
      * locations are shown on the website, what grades can be selected on the
      * website, etc.
+     * @global
      * @typedef {Object} WebsiteConfig
      * @property {external:Timestamp} created - When the website was created.
      * @property {external:Timestamp} updated - The last time the website was 
@@ -370,10 +371,11 @@ class Tutorbook {
      * website (i.e. a user be logged in with an email that ends in one of these 
      * domains to be able to access this website configuration's app partition).
      * @property {string[]} grades - The grades that are shown (and thus can be 
-     * selected) on this website.
+     * selected) on this website (e.g. `['Freshman', 'Sophomore']`).
      * @property {string[]} locations - The IDs of the locations shown on this 
      * website.
-     * @property {string} url - The URL of the website's app partition.
+     * @property {string} url - The URL of the website's app partition (e.g.
+     * `'https://gunn.tutorbook.app'` or `'https://woodside.tutorbook.app'`).
      */
 
     /**

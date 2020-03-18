@@ -320,6 +320,7 @@ class Utils {
      * An recycler object containing `display`, `remove`, and `empty` callbacks 
      * to recycle/show updated Firestore data as it changes live.
      * @typedef {Object} Recycler
+     * @global
      * @property {displayCallback} display - Callback to display new or update 
      * existing data.
      * @property {removeCallback} remove - Callback to remove data.
@@ -1141,6 +1142,7 @@ class Utils {
      * A window of time (typically used in availability or open hour data
      * storage/processing).
      * @typedef {Object} Timeslot
+     * @global
      * @property {string} open - The opening time or period (e.g. '3:00 PM').
      * @property {string} close - The closing time or period.
      * @property {string} day - The day of the week (e.g. 'Friday').
@@ -1370,6 +1372,7 @@ class Utils {
      * A time object storing when appointments or lesson requests are supposed 
      * to happen.
      * @typedef {Object} Time
+     * @global
      * @property {string} day - The weekday of the appointment or lesson request 
      * (e.g. 'Monday').
      * @property {string} from - When the appointment or lesson starts (e.g. 
@@ -1381,6 +1384,7 @@ class Utils {
     /**
      * An appointment object storing relevant appointment data.
      * @typedef {Object} Appointment
+     * @global
      * @property {User[]} attendees - An array of the users attending the 
      * appointment.
      * @property {Time} time - A `Map` storing the time of the appointment.

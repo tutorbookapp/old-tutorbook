@@ -43,6 +43,7 @@ class FilterDialog {
      * A filters object that represents/stores the user's current search filters 
      * (that are applied via [Firestore query parameters]{@link https://firebase.google.com/docs/firestore/query-data/queries}).
      * @typedef {Object} Filters
+     * @global
      * @property {string} [grade='Any'] - The desired user grade.
      * @property {string[]} [subject='Any'] - The desired user subject.
      * @property {string} [gender='Any'] - The desired user gender.

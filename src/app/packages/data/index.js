@@ -824,6 +824,7 @@ Data.thresholds = ['Minute', '5 Minutes', '15 Minutes', '30 Minutes', 'Hour'];
  * An open hours object that represents/stores when a location is open for
  * tutoring.
  * @typedef {Object} Hours
+ * @global
  * @todo Add property definitions for the days of the week.
  * @todo Refactor this data storage object to allow for more flexibility in 
  * Firestore indexes/queries.
@@ -832,6 +833,7 @@ Data.thresholds = ['Minute', '5 Minutes', '15 Minutes', '30 Minutes', 'Hour'];
 /**
  * A location object that stores tutoring location configuration data.
  * @typedef {Object} Location
+ * @global
  * @property {string} name - The location's name (e.g. Gunn Academic Center).
  * @property {string} [description=''] - The location's description.
  * @property {string} [city='Palo Alto, CA'] - The location's city.
@@ -863,6 +865,7 @@ Data.emptyLocation = {
 /**
  * A profile/user object that stores essential user data.
  * @typedef {Object} Profile
+ * @global
  * @property {string} name - The user's full name (initially grabbed from 
  * their Google account and unchangeable by them).
  * @property {string} [photo='https://tutorbook.app/app/img/male.png'] - The 

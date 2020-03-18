@@ -1532,6 +1532,7 @@ class EditRequestDialog {
      * The other user in a request or appointment (i.e. the user that does not
      * share a uID with our current app user).
      * @typedef {Profile} OtherUser
+     * @global
      * @see {@link Utils#getOtherUser}
      */
 
