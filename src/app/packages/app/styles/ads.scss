@@ -41,26 +41,15 @@
   color: #888;
 }
 
-.ad-dialog__button {
-  text-transform: uppercase;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 0.1px;
-  font-weight: 700;
-  margin: 8px !important;
-  width: 300px;
-  height: 56px;
-  @include mdc-button-shape-radius(100%);
-}
-
 .ad-dialog .mdc-dialog__content {
-  background-image: url(/site/img/banner_bg.png);
+  background-image: url(/app/img/ad_wave.png);
   background-repeat: no-repeat;
   background-size: 112%;
   background-position: top right;
 }
 
 .ad-dialog .mdc-dialog__surface {
-  background-image: url(/app/img/pink_cropped_circle.png);
+  background-image: url(/app/img/ad_circle.png);
   background-repeat: no-repeat;
   background-size: 52%;
   background-position: bottom left;

@@ -244,4 +244,41 @@ class Login {
     }
 };
 
-module.exports = Login;
+/**
+ * Class that represents the error screen that prompts the user to:
+ * a) Request access to the website partition.
+ * b) Go to the [root website]{@link https://tutorbook.app/app} partition.
+ */
+class GoToRootPrompt {
+    view() {
+        console.log('[TODO] View the error screen that asks the user to ' +
+            'return to the root partition (or request access to this ' +
+            'partition).');
+    }
+};
+
+/**
+ * Class that represents the prompt screen that prompts the user to:
+ * a) Go to the given website's partition.
+ * b) Continue to the [root website]{@link https://tutorbook.app/app} partition.
+ */
+class GoToWebsitePrompt {
+    /**
+     * Creates a new prompt screen that prompts the user to go to the given 
+     * website's app partition.
+     * @param {WebsiteConfig} config - The website configuration to ask the user 
+     * to go to.
+     */
+    constructor(config) {}
+
+    view() {
+        console.log('[TODO] View the prompt screen that asks the user to go ' +
+            'to their website.');
+    }
+};
+
+module.exports = {
+    default: Login,
+    rootPrompt: GoToRootPrompt,
+    websitePrompt: GoToWebsitePrompt,
+};

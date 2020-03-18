@@ -46,7 +46,9 @@ const Snackbar = require('@tutorbook/snackbar');
 const Navigation = require('@tutorbook/navigation');
 const Help = require('@tutorbook/intercom');
 const Listener = require('@tutorbook/listener');
-const Login = require('@tutorbook/login');
+const Login = require('@tutorbook/login').default;
+const GoToRootPrompt = require('@tutorbook/login').rootPrompt;
+const GoToWebsitePrompt = require('@tutorbook/login').websitePrompt;
 const Matching = require('@tutorbook/matching').default;
 const MatchingDialog = require('@tutorbook/matching').dialog;
 const Config = require('@tutorbook/config');
@@ -357,6 +359,24 @@ class Tutorbook {
     }
 
     /**
+     * A website configuration that denotes who can access the website, what
+     * locations are shown on the website, what grades can be selected on the
+     * website, etc.
+     * @typedef {Object} WebsiteConfig
+     * @property {external:Timestamp} created - When the website was created.
+     * @property {external:Timestamp} updated - The last time the website was 
+     * updated.
+     * @property {string[]} domains - The email domains that can access this 
+     * website (i.e. a user be logged in with an email that ends in one of these 
+     * domains to be able to access this website configuration's app partition).
+     * @property {string[]} grades - The grades that are shown (and thus can be 
+     * selected) on this website.
+     * @property {string[]} locations - The IDs of the locations shown on this 
+     * website.
+     * @property {string} url - The URL of the website's app partition.
+     */
+
+    /**
      * Fetches this website's configuration data and initializes it's location 
      * data.
      * @todo Why are we using {@link Data.listen} here?
@@ -407,12 +427,23 @@ class Tutorbook {
     }
 
     /**
-     * Fetches the current user's (denoted by Firebase Auth) Firestore data or 
-     * creates a new Firestore document if one doesn't already exist.
+     * Initializes the app's user by:
+     * 1. Fetching the current user's (denoted by Firebase Auth) Firestore data.
+     * 2. Checking if the user fits within the current website configuration.
+     * 3. Creating a new Firestore document if one doesn't already exist.
+     * 4. Setting `window.app.user` equal to the whole profile, 
+     * `window.app.conciseUser` equal to the 
+     * [filtered]{@linkplain Utils.filterRequestUserData} profile, and 
+     * `window.app.userClaims` equal to the user's custom authentication claims.
+     * @see {@link module:@tutorbook/app~Tutorbook#checkConfigCompliance}
+     * @return {Promise} Promise that resolves once the app's user has 
+     * successfully been initialized (and is ready to be used at 
+     * `window.app.user`).
      */
     async initUser() {
         const user = firebase.auth().currentUser;
         const [err, profile] = await to(Data.getUser(user.uid));
+        await this.checkConfigCompliance(user, profile);
         if (err) {
             // No user doc, create new user doc
             await Data.createUser(Utils.filterProfile(user));
@@ -421,6 +452,58 @@ class Tutorbook {
             this.user = Utils.filterProfile(profile);
             this.conciseUser = Utils.filterRequestUserData(profile);
             this.userClaims = (await user.getIdTokenResult(true)).claims;
+        }
+    }
+
+    /**
+     * A Firebase `User` represents a user account and contains useful meta-data
+     * about that user (e.g. their `displayName`, `email`, `phoneNumber`, and
+     * `photoURL`).
+     * @external FirebaseUser
+     * @see {@link https://firebase.google.com/docs/reference/js/firebase.User}
+     */
+
+    /**
+     * Checks if the given `user` (the `firebase.auth().currentUser`) and the 
+     * user's `profile` (their Firestore document data) fits within the 
+     * website's configuration.
+     * @param {external:FirebaseUser} user - The `firebase.auth().currentUser` 
+     * to check compliance for.
+     * @param {Profile} [profile] - The `user`'s Firestore document data.
+     * @return {Promise} Promise that resolves when we should continue with
+     * the app's initialization (e.g. when we know the user fits within the
+     * website configuration or wants to continue anyways in the case of the 
+     * root website configuration).
+     */
+    async checkConfigCompliance(user, profile) {
+        const continueWithInit = () => true;
+        const showErrorScreen = () => new GoToRootPrompt().view();
+        const showPromptScreen = (config) => new GoToWebsitePrompt(config).view();
+        // If the website has a config (i.e. **not** root partition):
+        if (this.config && this.config !== Tutorbook.rootWebsiteConfig) {
+            // If profile has the current website ID in their profile, continue.
+            if (profile && profile.websites && profile.websites
+                .indexOf(this.id) >= 0) return continueWithInit();
+            // If they don't, see if their email fits within the website config.
+            for (const emailDomain of this.config.domains) // If it fits, continue.
+                if (user.email.endsWith(emailDomain)) return continueWithInit();
+            // If it doesn't, show error screen that prompts the user to:
+            // a) Request access
+            // b) Go to root partition
+            return showErrorScreen();
+        } else { // If the website doesn't have a config (i.e. root partition):
+            // Fetch all website config IDs and check if the user's email fits 
+            // within one of them.
+            const configs = (await this.db.collection('websites').get()).docs;
+            for (const config of configs)
+                for (const emailDomain of config.data().domains)
+                    // If it does, show prompt screen that prompts the user to:
+                    // a) Go to that app's partition
+                    // b) Continue in the root partition
+                    if (user.email.endsWith(emailDomain))
+                        return showPromptScreen(config);
+            // If it doesn't, continue.
+            return continueWithInit();
         }
     }
 
