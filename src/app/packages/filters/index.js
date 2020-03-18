@@ -73,7 +73,6 @@ class FilterDialog {
             gender: 'Any',
             showBooked: false,
             availability: {},
-            location: window.app.location.name,
             price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
             type: 'Tutor',
             sort: 'Rating'
@@ -125,7 +124,7 @@ class FilterDialog {
         this.el = this.render.template('dialog-filter');
 
         const pages = this.el.querySelectorAll('.page');
-        const r = (query, options, addAny) => Utils.replaceElement(
+        const r = (query, options, addAny = true) => Utils.replaceElement(
             $(this.el).find('#' + query + '-list')[0],
             this.render.template('dialog-filter-item-list', {
                 items: addAny ? ['Any'].concat(options) : options,
@@ -138,7 +137,6 @@ class FilterDialog {
                 subject: 'Any',
                 gender: 'Any',
                 availability: {},
-                location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'

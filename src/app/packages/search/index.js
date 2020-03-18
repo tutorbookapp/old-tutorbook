@@ -225,7 +225,6 @@ class Search {
             gender: 'Any',
             showBooked: false,
             availability: {},
-            location: window.app.location.name,
             price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
             type: 'Tutor',
             sort: 'Rating'
@@ -412,7 +411,6 @@ class Search {
                 gender: 'Any',
                 showBooked: false,
                 availability: {},
-                location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
@@ -476,7 +474,6 @@ class Search {
                 gender: 'Any',
                 showBooked: false,
                 availability: {},
-                location: window.app.location.name,
                 price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
@@ -564,8 +561,10 @@ class Search {
             .where('access', 'array-contains-any', window.app.user.access)
             .where('config.showProfile', '==', true);
 
-        if (this.filters.location !== 'Any') {
-            query = query.where('location', '==', this.filters.location);
+        if (this.filters.sort === 'Rating') {
+            query = query.orderBy('avgRating', 'desc');
+        } else if (this.filters.sort === 'Reviews') {
+            query = query.orderBy('numRatings', 'desc');
         }
 
         if (this.filters.grade !== 'Any') {
@@ -590,12 +589,6 @@ class Search {
                 query = query.where('payments.type', '==', 'Paid');
                 break;
         };
-
-        if (this.filters.sort === 'Rating') {
-            query = query.orderBy('avgRating', 'desc');
-        } else if (this.filters.sort === 'Reviews') {
-            query = query.orderBy('numRatings', 'desc');
-        }
 
         return query.limit(500);
     }
