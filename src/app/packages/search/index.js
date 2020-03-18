@@ -225,7 +225,7 @@ class Search {
             gender: 'Any',
             showBooked: false,
             availability: {},
-            price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
+            price: !window.app.id ? 'Any' : 'Free',
             type: 'Tutor',
             sort: 'Rating'
         };
@@ -411,7 +411,7 @@ class Search {
                 gender: 'Any',
                 showBooked: false,
                 availability: {},
-                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
+                price: !window.app.id ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             };
@@ -474,7 +474,7 @@ class Search {
                 gender: 'Any',
                 showBooked: false,
                 availability: {},
-                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
+                price: !window.app.id ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             };

@@ -74,7 +74,8 @@ class FilterDialog {
             gender: 'Any',
             showBooked: false,
             availability: {},
-            price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
+            price: !window.app.id ? 'Any' : 'Free',
+
             type: 'Tutor',
             sort: 'Rating'
         };
@@ -138,7 +139,7 @@ class FilterDialog {
                 subject: 'Any',
                 gender: 'Any',
                 availability: {},
-                price: (window.app.location.name === 'Any') ? 'Any' : 'Free',
+                price: !window.app.id ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             }).forEach((filter) => this.filters[filter[0]] = filter[1]);
