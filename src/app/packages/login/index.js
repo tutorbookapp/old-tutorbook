@@ -251,17 +251,28 @@ class Login {
  * b) Go to the [root website]{@link https://tutorbook.app/app} partition.
  */
 class GoToRootPrompt {
+    /**
+     * Creates (and renders) a new error screen using `window.app.config` as the
+     * website configuration in question and `window.app.render` to render the
+     * `login-prompt` template.
+     */
     constructor() {
+        this.config = window.app.config;
         this.render = window.app.render;
         this.renderSelf();
     }
 
+    /**
+     * Renders the error screen that asks the user if they want to go to the
+     * root app partition (using the `login-prompt` template).
+     */
     renderSelf() {
         this.header = this.render.template('wrapper');
         this.main = this.render.template('login-prompt', {
             title: 'Unauthorized.',
-            description: 'Sorry, you must login with an @pausd.us or ' +
-                '@pausd.org email address to access Gunn\'s app.',
+            description: 'Sorry, you must login with an ' +
+                Utils.join(this.config.domains, 'or', false) + ' email ' +
+                'address to access ' + this.config.name + '\'s app.',
             primaryLabel: 'Go to Tutorbook',
             primaryAction: () => window.location = 'https://tutorbook.app/app',
             secondaryDescription: 'Used the wrong email?',
@@ -304,8 +315,8 @@ class GoToRootPrompt {
  */
 class GoToWebsitePrompt {
     /**
-     * Creates a new prompt screen that prompts the user to go to the given 
-     * website's app partition.
+     * Creates (and renders) a new prompt screen that prompts the user to go to 
+     * the given website's app partition.
      * @param {WebsiteConfig} config - The website configuration to ask the user 
      * to go to.
      */
@@ -315,15 +326,20 @@ class GoToWebsitePrompt {
         this.renderSelf();
     }
 
+    /**
+     * Renders the prompt screen that asks the user if they want to login to
+     * their school's app partition (using the `login-prompt` template).
+     */
     renderSelf() {
         this.header = this.render.template('wrapper');
         this.main = this.render.template('login-prompt', {
-            title: 'Gunn student?',
-            description: 'You\'re signed in with a Gunn email address, do you' +
-                ' want to go to their app?',
-            primaryLabel: 'Go to Gunn\'s app',
+            title: this.config.name + ' student?',
+            description: 'You\'re signed in with a ' + this.config.name +
+                ' email address but are accessing Tutorbook\'s root partition' +
+                '. Do you want to go to ' + this.config.name + '\'s app?',
+            primaryLabel: 'Go to ' + this.config.name + '\'s app',
             primaryAction: () => window.location = this.config.url,
-            secondaryDescription: 'Not part of Gunn?',
+            secondaryDescription: 'Not part of ' + this.config.name + '?',
             secondaryLabel: 'Continue to Tutorbook',
             secondaryAction: () => this.resolve(),
         });

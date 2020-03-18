@@ -60,13 +60,15 @@ class Utils {
      * @param {string[]} arr - The array of (typically) strings to concatenate.
      * @param {string} ending - The concatenator to insert between the last two 
      * items in the given `arr`.
+     * @param {bool} [oxfordComma=true] - Whether or not to have the Oxford 
+     * comma before the last item.
      * @return {string} The concatenated array in string form (with the given 
      * `ending` between the last two items in the given `arr`).
      */
-    static join(arr, ending) {
+    static join(arr, ending, oxfordComma = true) {
         const lastItem = arr.pop();
         const str = arr.join(', ');
-        return str + ', ' + ending + ' ' + lastItem;
+        return str + (oxfordComma ? ', ' : ' ') + ending + ' ' + lastItem;
     }
 
     /**
