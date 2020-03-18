@@ -1,4 +1,6 @@
-const auth = require('googleapis').auth;
+const {
+    google,
+} = require('googleapis');
 const readline = require('readline-sync');
 const axios = require('axios');
 const sleep = require('sleep');
@@ -40,7 +42,7 @@ const COLLECTIONS = [
 const getOAuthTokens = async (scopes = SCOPES) => {
     if (fs.existsSync(TOKEN_FILE))
         return JSON.parse(fs.readFileSync(TOKEN_FILE));
-    const client = new auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
+    const client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
     const url = client.generateAuthUrl({
         access_type: 'offline',
         scope: scopes,
