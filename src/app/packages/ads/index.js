@@ -1,4 +1,10 @@
 /**
+ * Package that contains our ad dialog timers and such. Note that this is no
+ * longer used (but still contains some useful code).
+ * @deprecated
+ * @module @tutorbook/ads
+ * @see {@link https://npmjs.com/package/@tutorbook/ads}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +19,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {

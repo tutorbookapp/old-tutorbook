@@ -27,7 +27,6 @@ import $ from 'jquery';
 import to from 'await-to-js';
 
 // App packages
-const Ads = require('@tutorbook/ads');
 const Stats = require('@tutorbook/stats');
 const Dashboard = require('@tutorbook/dashboard').default;
 const SupervisorDashboard = require('@tutorbook/dashboard').supervisor;
@@ -245,7 +244,6 @@ class Tutorbook {
         }
         this.payments = new Payments();
         this.feedback = new Feedback(this);
-        this.ads = new Ads();
 
         this.loader(false);
         this.nav.start();
@@ -430,7 +428,6 @@ class Tutorbook {
 
         if (!url) return;
         Utils.url(url);
-        if (this.ads) this.ads.url(url);
     }
 
     /**

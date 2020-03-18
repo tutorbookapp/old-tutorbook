@@ -14,7 +14,6 @@
   "author": "Nicholas Chiang",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/ads": "^0.5.3",
     "@tutorbook/card": "^0.5.3",
     "@tutorbook/chats": "^0.5.3",
     "@tutorbook/config": "^0.5.3",
