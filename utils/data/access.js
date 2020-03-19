@@ -165,39 +165,105 @@ const usersCustomAuth = async () => {
 };
 
 /**
- * Populates every user at a given location with the location's `access` 
- * property. If a user has multiple locations (in their Firestore document's
- * `locations` field), their `access` property will be the combined `access`
- * properties of all of their locations.
+ * Populates each user's `access` field (and resets each `access`'s 
+ * `exceptions`) by:
+ * 1. Checking if the user's email fits within an `access`'s domain rules.
+ * 2. If it does, add that `access` to the user's profile and continue.
+ * 3. If it doesn't, check if the user has availability in one of the `access`'s
+ * locations.
+ * 4. If it does, ask if we should add the user as an exception to the `access`.
  *
- * Note that this also populates each user's Firebase Authentication token (so
- * it cannot be used for just testing purposes).
+ * @todo Perhaps don't add `root` access to each user's profile (because then
+ * they're viewable from the public app).
+ *
+ * @todo Why do we store location `access` in an array? Won't there only ever be
+ * one `access` per location?
  */
-const users = async () => {
-    await resetUserAccess();
-    await addLocationsField();
+const users = async (ask = false) => {
+    const grades = ['Freshman', 'Sophomore', 'Junior', 'Senior'];
     const locations = (await db.collection('locations').get()).docs;
+    const accesses = (await db.collection('access').get()).docs;
+    const users = (await db.collection('users').get()).docs;
+    console.log('[INFO] Updating access for ' + users.length + ' users...');
     const bar = new ProgressBar(':bar', {
-        total: locations.length,
+        total: users.length * accesses.length,
     });
-    console.log('[INFO] Populating ' + locations.length + ' locations\' users' +
-        ' access...');
-    for (location of locations) {
-        var users = (await db.collection('users').where('locations',
-            'array-contains', location.data().name).get()).docs;
-        await Promise.all(users.map(user => user.ref.update({
-            access: combine(user.data().access, location.data().access),
-        })));
-        bar.tick();
+    for (const user of users) {
+        const profile = user.data();
+        if (!profile.email) {
+            console.warn('[WARNING] Profile (' + user.id + ') did not have an' +
+                ' email, skipping...');
+            for (var i = 0; i < accesses.length; i++) bar.tick();
+            continue;
+        }
+        profile.access = [];
+        for (const access of accesses) {
+            for (const emailDomain of access.data().domains) {
+                if (profile.email.endsWith(emailDomain)) {
+                    profile.access.push(access.id);
+                    bar.tick();
+                    break;
+                }
+            }
+            if (profile.access.indexOf(access.id) >= 0) continue;
+            const exceptions = access.data().exceptions;
+            if (exceptions.indexOf(profile.email) >= 0) {
+                profile.access.push(access.id);
+                bar.tick();
+                continue;
+            }
+            for (const name of Object.keys(profile.availability || {})) {
+                const index = locations.findIndex(d => d.data().name === name);
+                if (index < 0) {
+                    console.warn('[WARNING] No location (' + name + '), ' +
+                        'skipping...');
+                    continue;
+                }
+                const accessId = locations[index].data().access[0];
+                if (accessId !== access.id) continue;
+                if (profile.email.endsWith('example.com')) {
+                    console.log('[DEBUG] Skipped example user.');
+                } else if (profile.payments.type === 'Paid') {
+                    console.log('[DEBUG] Skipped paid user.');
+                } else if (grades.indexOf(profile.grade) >= 0) {
+                    console.log('[DEBUG] Automatically added ' +
+                        profile.name + ' (' + profile.email + ') to ' +
+                        access.data().symbol + '\'s exceptions.');
+                    profile.access.push(access.id);
+                    exceptions.push(profile.email);
+                } else {
+                    console.log('[DEBUG] ' + profile.name + ' (' + profile.uid +
+                        ')\'s profile:', profile);
+                    const addToExceptions = readline.question('Add ' +
+                        profile.name + ' (' + profile.email + ') to ' +
+                        access.data().symbol + '\'s exceptions? (yes, no) ');
+                    if (addToExceptions === 'yes') {
+                        profile.access.push(access.id);
+                        exceptions.push(profile.email);
+                    }
+                }
+            }
+            if (exceptions !== access.data().exceptions) {
+                await access.ref.update({
+                    exceptions: exceptions,
+                });
+                accesses[accesses.indexOf(access)] = await access.ref.get();
+            }
+            bar.tick();
+        }
+        if (profile.access === user.data().access) continue;
+        await user.ref.update({
+            access: profile.access,
+        });
     }
-    console.log('[INFO] Populated ' + locations.length + ' locations\' users ' +
-        'access.');
-    await usersCustomAuth();
+    console.log('[INFO] Updated access for ' + users.length + ' users.');
 };
 
 /**
  * Populates every document's `access` field (in every user's subcollections) to
  * match it's user's `access` field.
+ * @deprecated We don't need this b/c our Firestore rules don't refer to 
+ * `access` for user subcollections.
  */
 const propagateToSubcollections = async (collection = 'users') => {
     const docs = (await db.collection(collection).get()).docs;
@@ -220,4 +286,4 @@ const propagateToSubcollections = async (collection = 'users') => {
         ' documents.');
 };
 
-propagateToSubcollections('locations');
+users();
