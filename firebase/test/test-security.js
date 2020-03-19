@@ -67,7 +67,7 @@ describe('Tutorbook\'s Database Security', async () => {
         }));
     });
 
-    it('ensures users start w/out a balance and service hrs', async () => {
+    it('ensures users start w/out hrs, balance, ratings, access', async () => {
         const db = authedApp({
             uid: TUTOR.uid,
             email: TUTOR.email
@@ -95,6 +95,18 @@ describe('Tutorbook\'s Database Security', async () => {
                 currentBalance: 0,
             },
         }));
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+            payments: {
+                currentBalance: 0,
+            },
+            avgRating: 0,
+            numRatings: 0,
+        }));
+        await firebase.assertFails(ref.set({
+            type: TUTOR.type,
+            access: [],
+        }));
         await firebase.assertSucceeds(ref.set({
             type: TUTOR.type,
             payments: {
@@ -102,16 +114,27 @@ describe('Tutorbook\'s Database Security', async () => {
             },
             secondsPupiled: 0,
             secondsTutored: 0,
+            avgRating: 0,
+            numRatings: 0,
+            access: [],
+        }));
+        await firebase.assertSucceeds(ref.set({
+            type: TUTOR.type,
+            payments: {
+                currentBalance: 0,
+            },
+            secondsPupiled: 0,
+            secondsTutored: 0,
+            avgRating: 0,
+            numRatings: 0,
+            access: ['root'],
         }));
     });
 
     function createProfile(profile) {
-        const db = authedApp({
-            uid: profile.uid,
-            email: profile.email
-        });
-        const ref = db.collection('users').doc(profile.uid);
-        return firebase.assertSucceeds(ref.set(profile));
+        const state = {};
+        state['users/' + profile.uid] = profile;
+        return data(state);
     };
 
     function createLocation() {
@@ -196,6 +219,9 @@ describe('Tutorbook\'s Database Security', async () => {
             },
             secondsPupiled: 0,
             secondsTutored: 0,
+            numRatings: 0,
+            avgRating: 0,
+            access: [],
         }));
         const tutor = db.collection('users').doc(TUTOR.uid);
         await firebase.assertFails(tutor.set({
@@ -206,6 +232,9 @@ describe('Tutorbook\'s Database Security', async () => {
             },
             secondsPupiled: 0,
             secondsTutored: 0,
+            numRatings: 0,
+            avgRating: 0,
+            access: [],
         }));
     });
 
