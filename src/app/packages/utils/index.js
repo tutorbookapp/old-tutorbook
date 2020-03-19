@@ -527,7 +527,8 @@ class Utils {
             'secondsTutored': profile.secondsTutored || 0,
             'secondsPupiled': profile.secondsPupiled || 0,
             'proxy': profile.proxy || [],
-            'created': profile.createdTimestamp || new Date(),
+            'created': profile.created || new Date(),
+            'updated': new Date(),
         };
     }
 

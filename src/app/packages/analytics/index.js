@@ -47,6 +47,37 @@ class Analytics {
             'for Firebase was not enabled.');
         return this.analytics.logEvent(eventName);
     }
+
+    /**
+     * Sets the current screen based on the URL.
+     * @param {string} url - The URL to update the current screen by.
+     */
+    url(url) {
+        const id = url.split('/')[2];
+        return this.analytics.setCurrentScreen(id);
+    }
+
+    /**
+     * Set the custom user properties.
+     * @param {Profile} user - The user to get the custom properties from.
+     */
+    user(user) {
+        return this.analytics.setUserProperties({
+            name: user.name,
+            uid: user.uid,
+            email: user.email,
+            phone: user.phone,
+            photo: user.photo,
+            gender: user.gender,
+            grade: user.grade,
+            type: user.type,
+            avgRating: user.avgRating,
+            numRatings: user.numRatings,
+            secondsTutored: user.secondsTutored,
+            secondsPupiled: user.secondsPupiled,
+            subjects: user.subjects,
+        });
+    }
 }
 
 module.exports = Analytics;

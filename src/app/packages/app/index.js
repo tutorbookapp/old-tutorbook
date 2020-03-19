@@ -192,7 +192,6 @@ class Tutorbook {
         // Helper packages (only if they haven't already been initialized)
         this.render = this.render || new Render();
         this.analytics = this.analytics || new Analytics();
-        this.analytics.log('login');
 
         // Ensure that the website configuration is ready
         await this.initialization;
@@ -431,6 +430,7 @@ class Tutorbook {
         window.scrollTo(0, 0);
 
         if (!url) return;
+        if (this.analytics) this.analytics.url(url);
         Utils.url(url);
     }
 
@@ -453,17 +453,21 @@ class Tutorbook {
         return Data.listen(['users', user.uid], async doc => {
             const profile = doc.data();
             if (!profile) {
+                this.analytics.log('sign_up');
                 await Data.createUser(Utils.filterProfile(user));
                 await window.app.initUser();
             } else {
+                this.analytics.log('login');
                 await this.checkConfigCompliance(user, profile);
                 this.user = Utils.filterProfile(profile);
                 this.conciseUser = Utils.filterRequestUserData(profile);
                 this.userClaims = (await user.getIdTokenResult(true)).claims;
+                this.analytics.user(this.user);
             }
         }, async err => { // No user doc, create new user doc
             console.warn('[WARNING] Error (' + err.message + ') while ' +
                 'initializing user, creating account...');
+            this.analytics.log('sign_up');
             await Data.createUser(Utils.filterProfile(user));
             await window.app.initUser();
         });
@@ -494,7 +498,8 @@ class Tutorbook {
         const showErrorScreen = (acc) => new GoToRootPrompt(acc).view();
         const showPromptScreen = (acc) => new GoToWebsitePrompt(acc).view();
         // If the website has a config (i.e. **not** root partition):
-        if (this.id !== 'root' && this.config) {
+        if (this.checked) {} else if (this.id !== 'root' && this.config) {
+            this.checked = true;
             // See if the user's email fits within the website config's access.
             const access = await this.db.collection('access').doc(this.config
                 .access).get();
@@ -507,6 +512,7 @@ class Tutorbook {
             // b) Go to root partition
             return showErrorScreen(access);
         } else { // If the website doesn't have a config (i.e. root partition):
+            this.checked = true;
             // Fetch all website config IDs and check if the user's email fits 
             // within one of them.
             const accesses = (await this.db.collection('access').get()).docs;
