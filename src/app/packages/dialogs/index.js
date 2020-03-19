@@ -1929,7 +1929,7 @@ class NewRequestDialog extends EditRequestDialog {
         const [err, res] = await to(Data.newRequest(this.request, this.payment));
         if (err) return window.app.snackbar.view('Could not send request.');
         window.app.snackbar.view(
-            'Request sent to ' + this.request.toUser.email + '.',
+            'Request sent to ' + this.request.toUser.name + '.',
             'Undo',
             async () => {
                 window.app.snackbar.view('Canceling request...');
