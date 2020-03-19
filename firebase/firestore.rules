@@ -51,6 +51,14 @@ service cloud.firestore {
       allow read: if loggedIn();
     }
 
+    match /access/{access} {
+      allow read: if true;
+    }
+    
+    match /websites/{website} {
+      allow read: if true;
+    }
+
     match /locations/{location} {
       // TODO: The location's supervisors should always be in the location's 
       // access (but we can't compound `array-contains` queries). 
@@ -83,10 +91,6 @@ service cloud.firestore {
       allow read: if isChatter(chat);
       allow create: if isChatter(chat) && isSender();
     }
-    
-    match /websites/{website} {
-      allow read: if true;
-    }
 
     match /users/{user} {
       // TODO: Ensure that the client can't change the user.authenticated field
@@ -99,31 +103,39 @@ service cloud.firestore {
         // - numRatings
         // - payments.currentBalance
         // - secondsTutored 
+        // - secondsPupiled 
         // Are exactly the same (or left unchanged in the case of an `update`).
         return 
           (request.resource.data.access == null ||
-          request.resource.data.access == resource.data.access) &&
+           request.resource.data.access == [] ||
+           request.resource.data.access == ['root'] ||
+           request.resource.data.access == resource.data.access) &&
           (request.resource.data.avgRating == null ||
-          request.resource.data.avgRating == resource.data.avgRating) &&
+           request.resource.data.avgRating == resource.data.avgRating) &&
           (request.resource.data.numRatings == null ||
-          request.resource.data.numRatings == resource.data.numRatings) &&
+           request.resource.data.numRatings == resource.data.numRatings) &&
           (request.resource.data.payments.currentBalance == null ||
-          request.resource.data.payments.currentBalance == 
-            resource.data.payments.currentBalance) &&
+           request.resource.data.payments.currentBalance == 
+           resource.data.payments.currentBalance) &&
           (request.resource.data.secondsPupiled == null ||
-          request.resource.data.secondsPupiled == 
-            resource.data.secondsPupiled) &&
+           request.resource.data.secondsPupiled == 
+           resource.data.secondsPupiled) &&
           (request.resource.data.secondsTutored == null ||
-          request.resource.data.secondsTutored == resource.data.secondsTutored);
+           request.resource.data.secondsTutored == 
+           resource.data.secondsTutored);
       }
 
       // TODO: The proxy should always be in the user's access (but we can't
       // compound `array-contains` queries). 
-      allow read: if hasAccess() || isProxy(user);
+      allow read: if isUser(user) || isProxy(user) || hasAccess();
       allow create: if (isUser(user) || isSupervisor())
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.secondsPupiled == 0
-	&& request.resource.data.secondsTutored == 0;
+	&& request.resource.data.secondsTutored == 0
+	&& request.resource.data.numRatings == 0
+	&& request.resource.data.avgRating == 0
+        && (request.resource.data.access == [] ||
+            request.resource.data.access == ['root']);
       allow delete, update: 
         if change() && (isUserOrProxy(user) || (isSupervisor() && hasAccess()));
     }
