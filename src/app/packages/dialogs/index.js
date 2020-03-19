@@ -2185,7 +2185,6 @@ class ViewApptDialog extends ViewRequestDialog {
                     this.render.textField('Total', '0:0:0.00')
                 )).insertAfter($(this.main).find('[id="Hours clocked"]'));
                 $(this.main).append(this.render.fab('clockIn'));
-                $(this.main).append(this.render.fab('requestTime'));
             }
         }
         if (window.app.user.type === 'Supervisor') {
@@ -2194,6 +2193,8 @@ class ViewApptDialog extends ViewRequestDialog {
             $(this.main).find('[id="To' + (this.request.toUser.type ? ' ' +
                 this.request.toUser.type.toLowerCase() : '') + '"] h4').text(
                 'Attendees');
+        } else if (window.app.user.type === 'Tutor') {
+            $(this.main).append(this.render.fab('requestTime'));
         }
         this.header = this.render.header('header-action', {
             showEdit: true,
