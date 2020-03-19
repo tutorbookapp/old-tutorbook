@@ -438,14 +438,29 @@ class Utils {
         return Utils.caps(name);
     }
 
-    static getType(type) {
-        if (type) return type;
-        if (location.toString().indexOf('type') >= 0) {
-            const pairs = location.toString().split('?');
-            const tPair = pairs[pairs.findIndex(p => p.indexOf('type') >= 0)];
-            return Utils.caps(tPair.split('=')[1].replace('/', ''));
-        }
-        return '';
+    /**
+     * Takes in a parameter key and returns it's value. Note that the value
+     * cannot contain a `/` because we trim off any slashes for consistency.
+     * @example
+     * window.location = '/app/?redirect=home?cards=searchTutors+setupProfile';
+     * assert(Utils.getURLParam('redirect') === 'home');
+     * @todo Actually use standard URL parameter syntax here (i.e. instead of 
+     * separating pairs with a `?` use an `&`).
+     * @param {string} param - The key of the URL parameter to return.
+     * @return {(string|undefined)} The value at the given `param` key 
+     * (`undefined` if the given `param` key wasn't in the URL).
+     */
+    static getURLParam(param) {
+        const pairs = location.toString().split('?').map(p => p.split('='));
+        if (pairs.findIndex(pair => pair[0] === param) < 0) return;
+        const raw = pairs[pairs.findIndex(pair => pair[0] === param)][1];
+        return raw.replace('/', '');
+    }
+
+    static getType(type = '') {
+        const urlSpecifiedType = Utils.getURLParam('type');
+        if (Data.types.indexOf(urlSpecifiedType) >= 0) return urlSpecifiedType;
+        return type;
     }
 
     static getLocation(profile) {
@@ -467,7 +482,7 @@ class Utils {
         }
     }
 
-    static getLocations(profile) {
+    static getLocations(profile = {}) {
         console.log('[TODO] Update storage of each user\'s location.');
         return [];
         /*
@@ -478,10 +493,44 @@ class Utils {
          */
     }
 
-    static getAuth(profile) {
+    static getAuth(profile = {}) {
         if (profile.authenticated) return profile.authenticated;
         if (['Pupil', 'Tutor'].indexOf(profile.type) >= 0) return true;
+        if (Utils.getURLParam('auth') === 'true') return true;
         return false;
+    }
+
+    static getCards(cards = {}) {
+        const urlSpecifiedCards = Utils.getURLParam('cards');
+        if (urlSpecifiedCards) {
+            const cardNames = urlSpecifiedCards.split('+');
+            cardNames.map(name => cards[name] = true);
+        }
+        return cards;
+    }
+
+    static getPayments(profile = {}) {
+        const defaultPayments = {
+            hourlyChargeString: '$25.00',
+            hourlyCharge: 25,
+            totalChargedString: '$0.00',
+            totalCharged: 0,
+            currentBalance: 0,
+            currentBalanceString: '$0.00',
+            type: 'Free',
+            policy: 'Hourly rate is $25.00 per hour. Will accept lesson ' +
+                'cancellations if given notice within 24 hours. No refunds ' +
+                'will be issued unless covered by a Tutorbook guarantee.',
+        };
+        const urlSpecifiedPayments = Utils.getURLParam('payments');
+        if (urlSpecifiedPayments === 'true') {
+            if (!profile.config) profile.config = {};
+            profile.config.showPayments = true;
+            return Utils.combineMaps(defaultPayments, {
+                type: 'Paid',
+            });
+        }
+        return profile.payments || defaultPayments;
     }
 
     static filterProfile(profile) {
@@ -500,25 +549,13 @@ class Utils {
             'avgRating': profile.avgRating || 0,
             'numRatings': profile.numRatings || 0,
             'subjects': profile.subjects || [],
-            'cards': profile.cards || {},
+            'cards': Utils.getCards(profile.cards),
             'settings': profile.settings || {},
+            'availability': profile.availability || {},
+            'payments': Utils.getPayments(profile),
             'config': profile.config || {
                 showPayments: false,
                 showProfile: true,
-            },
-            'availability': profile.availability || {},
-            'payments': profile.payments || {
-                hourlyChargeString: '$25.00',
-                hourlyCharge: 25,
-                totalChargedString: '$0.00',
-                totalCharged: 0,
-                currentBalance: 0,
-                currentBalanceString: '$0.00',
-                type: 'Free',
-                policy: 'Hourly rate is $25.00 per hour. Will accept ' +
-                    'lesson cancellations if given notice within 24 hours.' +
-                    ' No refunds will be issued unless covered by a Tutorbook ' +
-                    'guarantee.',
             },
             'authenticated': Utils.getAuth(profile),
             'location': Utils.getLocation(profile),

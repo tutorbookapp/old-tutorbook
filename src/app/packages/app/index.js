@@ -196,7 +196,7 @@ class Tutorbook {
         // Ensure that the website configuration is ready
         await this.initialization;
         await this.initUser();
-        await this.initURLParams();
+        this.initURLParams();
         this.initOnMobile();
 
         // Dependency cycle workarounds
@@ -259,13 +259,10 @@ class Tutorbook {
      * @return {Promise} Promise that resolves once the data has been synced 
      * with the app and the current user's Firestore profile document.
      */
-    async initURLParams() {
+    initURLParams() {
         const pairs = window.location.toString().split('?');
         return Promise.all(pairs.map(p => p.split('=')).map(([key, val]) => {
             switch (key) {
-                case 'payments':
-                    this.user.config.showPayments = true;
-                    return this.user.payments.type = 'Paid';
                 case 'code':
                     this.user.cards.setupStripe = false;
                     this.redirectedFromStripe = true; // For payments
@@ -290,17 +287,6 @@ class Tutorbook {
                             'account.', 'Retry', () => {
                                 window.location = this.payments.setupURL;
                             });
-                    });
-                case 'type':
-                    return this.user.type = val.replace('/', '');
-                case 'auth':
-                    if (val.indexOf('false') >= 0)
-                        return this.user.authenticated = false;
-                    return this.user.authenticated = true;
-                case 'cards':
-                    return Data.setupCards.forEach((card) => {
-                        if (val.indexOf(card) >= 0)
-                            this.user.cards[card] = true;
                     });
             }
         }));
@@ -443,6 +429,8 @@ class Tutorbook {
      * `window.app.conciseUser` equal to the 
      * [filtered]{@linkplain Utils.filterRequestUserData} profile, and 
      * `window.app.userClaims` equal to the user's custom authentication claims.
+     * @todo The analytics logging here is inaccurate as the profile document is
+     * updated without the user logging in or signing up.
      * @see {@link module:@tutorbook/app~Tutorbook#checkConfigCompliance}
      * @return {Promise} Promise that resolves once the app's user has 
      * successfully been initialized (and is ready to be used at 
