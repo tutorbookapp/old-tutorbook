@@ -249,6 +249,39 @@ describe('Tutorbook\'s Database Security', async () => {
         await firebase.assertSucceeds(ref.get());
     });
 
+    it('lets users list profiles in their access/district', async () => {
+        const db = authedApp({
+            uid: PUPIL.uid,
+            email: PUPIL.email,
+            access: PUPIL.access,
+        });
+        const query = db.collection('users')
+            .where('access', 'array-contains-any', PUPIL.access);
+        await firebase.assertSucceeds(query.get());
+    });
+
+    it('lets users list profiles they proxy for', async () => {
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            email: SUPERVISOR.email,
+        });
+        const query = db.collection('users')
+            .where('proxy', 'array-contains', SUPERVISOR.uid);
+        await firebase.assertSucceeds(query.get());
+    });
+
+    it('lets users read profiles they proxy for', async () => {
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            email: SUPERVISOR.email,
+        });
+        const ref = db.collection('users').doc(TUTOR.uid);
+        await createProfile(combineMaps(TUTOR, {
+            proxy: [SUPERVISOR.uid],
+        }));
+        await firebase.assertSucceeds(ref.get());
+    });
+
     it('contains users within their access/district', async () => {
         const db = authedApp({
             uid: PUPIL.uid,

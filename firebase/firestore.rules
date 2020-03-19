@@ -128,6 +128,7 @@ service cloud.firestore {
       // TODO: The proxy should always be in the user's access (but we can't
       // compound `array-contains` queries). 
       allow read: if isUser(user) || isProxy(user) || hasAccess();
+      allow list: if request.auth.uid in resource.data.proxy;
       allow create: if (isUser(user) || isSupervisor())
 	&& request.resource.data.payments.currentBalance == 0
 	&& request.resource.data.secondsPupiled == 0
