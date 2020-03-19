@@ -549,7 +549,7 @@ class Search {
      */
     getUsers() {
         var query = window.app.db.collection('users')
-            .where('access', 'array-contains-any', window.app.user.access)
+            .where('access', 'array-contains-any', window.app.userClaims.access)
             .where('config.showProfile', '==', true);
 
         if (this.filters.sort === 'Rating') {
