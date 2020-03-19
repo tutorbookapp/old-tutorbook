@@ -42,8 +42,12 @@ service cloud.firestore {
       return loggedIn() && request.auth.uid in get(/databases/$(database)/documents/partitions/$(partition)/chats/$(chatId)).data.chatterUIDs;
     }
 
-    function isSender() {
+    function isSenderOfRequest() {
       return loggedIn() && request.auth.uid == request.resource.data.sentBy.uid;
+    }
+
+    function isSenderOfResource() {
+      return loggedIn() && request.auth.uid == resource.data.sentBy.uid;
     }
 
     match /auth/{document=**} {
@@ -78,7 +82,7 @@ service cloud.firestore {
       // TODO: Implement message deletion and updation on the client side.
       // TODO: Move this to REST API that checks if message content is clean.
       allow read: if isSupervisorFor(location);
-      allow create: if isSupervisorFor(location) && isSender();
+      allow create: if isSupervisorFor(location) && isSenderOfRequest();
     }
 
     match /chats/{chat} {
@@ -89,7 +93,7 @@ service cloud.firestore {
       // TODO: Implement message deletion and updation on the client side.
       // TODO: Move this to REST API that checks if message content is clean.
       allow read: if isChatter(chat);
-      allow create: if isChatter(chat) && isSender();
+      allow create: if isChatter(chat) && isSenderOfRequest();
     }
 
     match /users/{user} {
@@ -205,24 +209,20 @@ service cloud.firestore {
       allow read: if isSupervisorFor(location);
     }
     match /locations/{location}/approvedClockIns/{clockIn} {
-      // TODO: Right now, everyone can view everyone else's clocking requests. 
-      allow read: if hasAccess();
+      allow read: if isSenderOfResource();
     }
     match /locations/{location}/rejectedClockIns/{clockIn} {
-      // TODO: Right now, everyone can view everyone else's clocking requests. 
-      allow read: if hasAccess();
+      allow read: if isSenderOfResource();
     }
     
     match /locations/{location}/clockOuts/{clockOut} {
       allow read: if isSupervisorFor(location);
     }
     match /locations/{location}/approvedClockOuts/{clockOut} {
-      // TODO: Right now, everyone can view everyone else's clocking requests. 
-      allow read: if hasAccess();
+      allow read: if isSenderOfResource();
     }
     match /locations/{location}/rejectedClockOuts/{clockOut} {
-      // TODO: Right now, everyone can view everyone else's clocking requests. 
-      allow read: if hasAccess();
+      allow read: if isSenderOfResource();
     }
 
     match /stripeAccounts/{user} {

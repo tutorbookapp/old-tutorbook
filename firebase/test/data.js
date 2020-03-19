@@ -246,12 +246,28 @@ const APPT = { // TODO: Why do we have `access` fields on these documents?
 const APPT_ID = REQUEST_ID;
 
 const APPROVED_CLOCK_IN_ID = '9OY6F7CZYifaA6Vio6Zj';
+const REJECTED_CLOCK_IN_ID = 'in6H94C8EJWJuRrdLlJc';
+
 const APPROVED_CLOCK_IN = {
     for: cloneMap(APPT),
     sentBy: conciseUser(TUTOR),
     sentTimestamp: new Date(),
     approvedBy: conciseUser(SUPERVISOR),
     approvedTimestamp: new Date(),
+    approvedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/approvedClockIns/' + APPROVED_CLOCK_IN_ID,
+    rejectedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/rejectedClockIns/' + REJECTED_CLOCK_IN_ID,
+};
+
+const REJECTED_CLOCK_IN = {
+    for: cloneMap(APPT),
+    sentBy: conciseUser(TUTOR),
+    sentTimestamp: new Date(),
+    rejectedBy: conciseUser(SUPERVISOR),
+    rejectedTimestamp: new Date(),
+    rejectedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/rejectedClockIns/' + REJECTED_CLOCK_IN_ID,
     approvedRef: 'partitions/default/locations/' + LOCATION_ID +
         '/approvedClockIns/' + APPROVED_CLOCK_IN_ID,
 };
@@ -262,6 +278,8 @@ const CLOCK_IN = {
     sentTimestamp: new Date(),
     approvedRef: 'partitions/default/locations/' + LOCATION_ID +
         '/approvedClockIns/' + APPROVED_CLOCK_IN_ID,
+    rejectedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/rejectedClockIns/' + REJECTED_CLOCK_IN_ID,
 };
 const CLOCK_IN_ID = APPT_ID;
 
@@ -276,12 +294,28 @@ const ACTIVE_APPT = {
 const ACTIVE_APPT_ID = CLOCK_IN_ID;
 
 const APPROVED_CLOCK_OUT_ID = 'fCiLTf2AY01W8G6n0SME';
+const REJECTED_CLOCK_OUT_ID = 'lWSPi8J5ayWSO2vRhgp1';
+
 const APPROVED_CLOCK_OUT = {
     for: cloneMap(ACTIVE_APPT),
     sentBy: conciseUser(TUTOR),
     sentTimestamp: new Date(),
     approvedBy: conciseUser(SUPERVISOR),
     approvedTimestamp: new Date(),
+    approvedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/approvedClockOuts/' + APPROVED_CLOCK_OUT_ID,
+    rejectedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/rejectedClockOuts/' + REJECTED_CLOCK_OUT_ID,
+};
+
+const REJECTED_CLOCK_OUT = {
+    for: cloneMap(ACTIVE_APPT),
+    sentBy: conciseUser(TUTOR),
+    sentTimestamp: new Date(),
+    rejectedBy: conciseUser(SUPERVISOR),
+    rejectedTimestamp: new Date(),
+    rejectedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/rejectedClockOuts/' + REJECTED_CLOCK_OUT_ID,
     approvedRef: 'partitions/default/locations/' + LOCATION_ID +
         '/approvedClockOuts/' + APPROVED_CLOCK_OUT_ID,
 };
@@ -292,6 +326,8 @@ const CLOCK_OUT = {
     sentTimestamp: new Date(),
     approvedRef: 'partitions/default/locations/' + LOCATION_ID +
         '/approvedClockOuts/' + APPROVED_CLOCK_OUT_ID,
+    rejectedRef: 'partitions/default/locations/' + LOCATION_ID +
+        '/rejectedClockOuts/' + REJECTED_CLOCK_OUT_ID,
 };
 const CLOCK_OUT_ID = ACTIVE_APPT_ID;
 
@@ -381,10 +417,14 @@ module.exports = {
     CLOCK_IN_ID,
     APPROVED_CLOCK_IN,
     APPROVED_CLOCK_IN_ID,
+    REJECTED_CLOCK_IN,
+    REJECTED_CLOCK_IN_ID,
     CLOCK_OUT,
     CLOCK_OUT_ID,
     APPROVED_CLOCK_OUT,
     APPROVED_CLOCK_OUT_ID,
+    REJECTED_CLOCK_OUT,
+    REJECTED_CLOCK_OUT_ID,
     ANNOUNCEMENT_GROUP,
     ANNOUNCEMENT_MSG,
     CHAT,

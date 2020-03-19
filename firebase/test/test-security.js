@@ -20,6 +20,14 @@ const {
     ANNOUNCEMENT_MSG,
     CHAT,
     MESSAGE,
+    APPROVED_CLOCK_IN,
+    APPROVED_CLOCK_IN_ID,
+    REJECTED_CLOCK_IN,
+    REJECTED_CLOCK_IN_ID,
+    APPROVED_CLOCK_OUT,
+    APPROVED_CLOCK_OUT_ID,
+    REJECTED_CLOCK_OUT,
+    REJECTED_CLOCK_OUT_ID,
 } = require('./data.js');
 
 const {
@@ -140,6 +148,34 @@ describe('Tutorbook\'s Database Security', async () => {
     function createLocation() {
         const state = {};
         state['locations/' + LOCATION_ID] = LOCATION;
+        return data(state);
+    };
+
+    function createApprovedClockIn() {
+        const state = {};
+        state['locations/' + LOCATION_ID + '/approvedClockIns/' +
+            APPROVED_CLOCK_IN_ID] = APPROVED_CLOCK_IN;
+        return data(state);
+    };
+
+    function createRejectedClockIn() {
+        const state = {};
+        state['locations/' + LOCATION_ID + '/rejectedClockIns/' +
+            REJECTED_CLOCK_IN_ID] = REJECTED_CLOCK_IN;
+        return data(state);
+    };
+
+    function createApprovedClockOut() {
+        const state = {};
+        state['locations/' + LOCATION_ID + '/approvedClockOuts/' +
+            APPROVED_CLOCK_OUT_ID] = APPROVED_CLOCK_OUT;
+        return data(state);
+    };
+
+    function createRejectedClockOut() {
+        const state = {};
+        state['locations/' + LOCATION_ID + '/rejectedClockOuts/' +
+            REJECTED_CLOCK_OUT_ID] = REJECTED_CLOCK_OUT;
         return data(state);
     };
 
@@ -358,5 +394,133 @@ describe('Tutorbook\'s Database Security', async () => {
         const msg = chat.collection('messages').doc();
         await firebase.assertSucceeds(chat.set(CHAT));
         await firebase.assertSucceeds(msg.set(MESSAGE));
+    });
+
+    // =========================================================================
+    // TODO: LOCATIONs (clock-ins, clock-outs, appointments, etc) 
+    // =========================================================================
+
+    it('lets supervisors read their location\'s clock-ins', async () => {
+        await createLocation();
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            supervisor: true,
+            locations: [LOCATION_ID],
+        });
+        const query = db.collection('locations').doc(LOCATION_ID)
+            .collection('clockIns');
+        await firebase.assertSucceeds(query.get());
+    });
+
+    it('lets supervisors read their location\'s clock-outs', async () => {
+        await createLocation();
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            supervisor: true,
+            locations: [LOCATION_ID],
+        });
+        const query = db.collection('locations').doc(LOCATION_ID)
+            .collection('clockOuts');
+        await firebase.assertSucceeds(query.get());
+    });
+
+    it('only lets supervisors read their location\'s clock-ins', async () => {
+        await createLocation();
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            supervisor: true,
+            locations: [],
+        });
+        const query = db.collection('locations').doc(LOCATION_ID)
+            .collection('clockIns');
+        await firebase.assertFails(query.get());
+    });
+
+    it('only lets supervisors read their location\'s clock-outs', async () => {
+        await createLocation();
+        const db = authedApp({
+            uid: SUPERVISOR.uid,
+            supervisor: true,
+            locations: [],
+        });
+        const query = db.collection('locations').doc(LOCATION_ID)
+            .collection('clockOuts');
+        await firebase.assertFails(query.get());
+    });
+
+    it('lets users read their approved clock-in requests', async () => {
+        await createApprovedClockIn();
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('approvedClockIns').doc(APPROVED_CLOCK_IN_ID);
+        await firebase.assertSucceeds(ref.get());
+    });
+
+    it('lets users read their rejected clock-in requests', async () => {
+        await createRejectedClockIn();
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('rejectedClockIns').doc(REJECTED_CLOCK_IN_ID);
+        await firebase.assertSucceeds(ref.get());
+    });
+
+    it('lets users read their approved clock-out requests', async () => {
+        await createApprovedClockOut();
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('approvedClockOuts').doc(APPROVED_CLOCK_OUT_ID);
+        await firebase.assertSucceeds(ref.get());
+    });
+
+    it('lets users read their rejected clock-out requests', async () => {
+        await createRejectedClockOut();
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('rejectedClockOuts').doc(REJECTED_CLOCK_OUT_ID);
+        await firebase.assertSucceeds(ref.get());
+    });
+
+    it('only lets users read their own approved clock-in requests', () => {
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('approvedClockIns').doc(APPROVED_CLOCK_IN_ID);
+        return firebase.assertFails(ref.get());
+    });
+
+    it('only lets users read their own rejected clock-in requests', () => {
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('rejectedClockIns').doc(REJECTED_CLOCK_IN_ID);
+        return firebase.assertFails(ref.get());
+    });
+
+    it('only lets users read their own approved clock-out requests', () => {
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('approvedClockOuts').doc(APPROVED_CLOCK_OUT_ID);
+        return firebase.assertFails(ref.get());
+    });
+
+    it('only lets users read their own rejected clock-out requests', () => {
+        const db = authedApp({
+            uid: TUTOR.uid,
+        });
+        const ref = db.collection('locations').doc(LOCATION_ID)
+            .collection('rejectedClockOuts').doc(REJECTED_CLOCK_OUT_ID);
+        return firebase.assertFails(ref.get());
     });
 });
