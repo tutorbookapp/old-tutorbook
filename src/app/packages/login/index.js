@@ -358,7 +358,7 @@ class GoToWebsitePrompt {
         ).docs.sort((a, b) => a.data().name.localeCompare(b.data().name))
             .map(website => {
                 const btn = this.render.template('login-prompt-btn', {
-                    label: website.data().name,
+                    label: 'Go to ' + website.data().name + '\'s app',
                     action: () => window.location = website.data().url,
                 });
                 MDCRipple.attachTo(btn);

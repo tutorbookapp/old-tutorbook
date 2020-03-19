@@ -240,9 +240,9 @@ class ActiveAppt extends Event {
  * Class that represents the **dashboard schedule** (not to be confused with the
  * [**primary schedule**]{@linkplain Schedule} view) card that shows the
  * supervisor all of their weekly appointments. Is also used in our 
- * [MatchingDialog]{@link MatchingDialog} to show a user's existing appointments
- * (i.e. so supervisors don't match them for the same thing twice or double-book
- * them).
+ * [MatchingDialog]{@link module:@tutorbook/matching~MatchingDialog} to show a 
+ * user's existing appointments (i.e. so supervisors don't match them for the 
+ * same thing twice or double-book them).
  */
 class ScheduleCard {
     /**
