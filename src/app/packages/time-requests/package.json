@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/time-requests",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Package that enables peer tutors to request service hrs via the Tutorbook web app.",
   "main": "index.js",
   "scripts": {
