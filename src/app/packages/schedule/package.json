@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/schedule",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,18 +10,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.5.3",
-    "@tutorbook/data": "^0.5.3",
-    "@tutorbook/dialogs": "^0.5.3",
-    "@tutorbook/schedule-items": "^0.5.3",
-    "@tutorbook/search": "^0.5.3",
-    "@tutorbook/user": "^0.5.3",
-    "@tutorbook/utils": "^0.5.3"
+    "@tutorbook/card": "^0.5.4",
+    "@tutorbook/data": "^0.5.4",
+    "@tutorbook/dialogs": "^0.5.4",
+    "@tutorbook/schedule-items": "^0.5.4",
+    "@tutorbook/search": "^0.5.4",
+    "@tutorbook/user": "^0.5.4",
+    "@tutorbook/utils": "^0.5.4"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/schedule"
   },
-  "gitHead": "b3940d1eea7797c7a47a3ec9a210656b08d72d59"
+  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
 }

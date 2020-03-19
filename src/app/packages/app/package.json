@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/app",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "The all-in-one peer tutoring platform.",
   "main": "index.js",
   "scripts": {
@@ -14,32 +14,32 @@
   "author": "Nicholas Chiang",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.5.3",
-    "@tutorbook/chats": "^0.5.3",
-    "@tutorbook/config": "^0.5.3",
-    "@tutorbook/dashboard": "^0.5.3",
-    "@tutorbook/data": "^0.5.3",
-    "@tutorbook/dialogs": "^0.5.3",
-    "@tutorbook/feedback": "^0.5.3",
-    "@tutorbook/intercom": "^0.5.3",
-    "@tutorbook/listener": "^0.5.3",
-    "@tutorbook/login": "^0.5.3",
-    "@tutorbook/matching": "^0.5.3",
-    "@tutorbook/navigation": "^0.5.3",
-    "@tutorbook/notify": "^0.5.3",
-    "@tutorbook/payments": "^0.5.3",
-    "@tutorbook/profile": "^0.5.3",
-    "@tutorbook/render": "^0.5.3",
-    "@tutorbook/schedule": "^0.5.3",
-    "@tutorbook/search": "^0.5.3",
-    "@tutorbook/snackbar": "^0.5.3",
-    "@tutorbook/stats": "^0.5.3",
-    "@tutorbook/utils": "^0.5.3"
+    "@tutorbook/card": "^0.5.4",
+    "@tutorbook/chats": "^0.5.4",
+    "@tutorbook/config": "^0.5.4",
+    "@tutorbook/dashboard": "^0.5.4",
+    "@tutorbook/data": "^0.5.4",
+    "@tutorbook/dialogs": "^0.5.4",
+    "@tutorbook/feedback": "^0.5.4",
+    "@tutorbook/intercom": "^0.5.4",
+    "@tutorbook/listener": "^0.5.4",
+    "@tutorbook/login": "^0.5.4",
+    "@tutorbook/matching": "^0.5.4",
+    "@tutorbook/navigation": "^0.5.4",
+    "@tutorbook/notify": "^0.5.4",
+    "@tutorbook/payments": "^0.5.4",
+    "@tutorbook/profile": "^0.5.4",
+    "@tutorbook/render": "^0.5.4",
+    "@tutorbook/schedule": "^0.5.4",
+    "@tutorbook/search": "^0.5.4",
+    "@tutorbook/snackbar": "^0.5.4",
+    "@tutorbook/stats": "^0.5.4",
+    "@tutorbook/utils": "^0.5.4"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/app"
   },
-  "gitHead": "b3940d1eea7797c7a47a3ec9a210656b08d72d59"
+  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
 }

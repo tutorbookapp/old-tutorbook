@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/email-capture",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/checkmarks": "^0.5.3",
-    "@tutorbook/email-form": "^0.5.3",
-    "@tutorbook/site-styles": "^0.5.0"
+    "@tutorbook/checkmarks": "^0.5.4",
+    "@tutorbook/email-form": "^0.5.4",
+    "@tutorbook/site-styles": "^0.5.4"
   },
-  "gitHead": "b3940d1eea7797c7a47a3ec9a210656b08d72d59"
+  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
 }
