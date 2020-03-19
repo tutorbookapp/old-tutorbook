@@ -4,6 +4,7 @@
 .login {
   text-align: center;
   margin-top: -64px;
+  margin-bottom: 64px;
 }
 
 .login__prompt-title,
@@ -22,6 +23,7 @@
   font-size: 0.85rem;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
+  width: 80vw;
   max-width: 500px;
   text-align: left;
   margin: 15px auto 25px auto;
@@ -37,7 +39,7 @@
 
 .login__button-container {
   margin: auto;
-  width: 80%;
+  width: 80vw;
   max-width: 500px;
 }
 
@@ -52,12 +54,16 @@
   font-weight: 700;
   letter-spacing: 0.2px;
   text-transform: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   @include mdc-button-outline-width(2px);
   @include mdc-button-shape-radius(20%);
+  padding: 0 20px;
 }
 
 .login__button.google__button {
   border: 2px solid #4285F4;
+  padding-left: calc(56px + 20px);
   @include mdc-button-outline-color(#4285F4);
 }
 
@@ -91,10 +97,15 @@
 }
 
 .header-nav-desktop__content-wrapper {
-  display: none;
   max-width: 1290px;
   margin: 0 auto;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-row: 1;
+  grid-column: content;
+  align-self: center;
 }
 
 .header-nav-desktop__logo-link[data-focus-visible-added] {
@@ -165,13 +176,15 @@
     grid-template-rows: 51px;
     margin-top: 20px;
   }
+}
 
-  .header-nav-desktop__content-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    grid-row: 1;
-    grid-column: content;
-    align-self: center;
+@media (max-width: 600px) {
+  .login #expand-button,
+  .login #collapse-button {
+    margin-top: 25px;
+  }
+
+  .login__prompt-title {
+    font-size: 2.5rem;
   }
 }

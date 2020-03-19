@@ -1143,6 +1143,11 @@ needs to be rendered with a ton of click listeners.) -->
     </header>
 </div>
 
+<div hidden class="template" id="login-prompt-btn">
+    <button data-fir-content="label" data-fir-click="action" type="button" class="mdc-button mdc-button--raised login__button">
+    </button>
+</div>
+
 <div hidden class="template" id="login-prompt">
     <div class="login">
         <h1 class="login__prompt-title" data-fir-content="title">
@@ -1150,8 +1155,6 @@ needs to be rendered with a ton of click listeners.) -->
         <h5 class="login__prompt-description" data-fir-content="description">
         </h5>
         <div class="login__button-container">
-            <button data-fir-content="primaryLabel" data-fir-click="primaryAction" type="button" class="mdc-button mdc-button--raised login__button">
-            </button>
             <div class="login__helper-link">
                 <span data-fir-content="secondaryDescription"></span>
                 <a href="javascript:;" data-fir-content="secondaryLabel" data-fir-click="secondaryAction">

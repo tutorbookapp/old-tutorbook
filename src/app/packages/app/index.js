@@ -100,8 +100,7 @@ class Tutorbook {
         this.version = 'v0.5.3';
 
         /**
-         * The website configuration Firestore document ID. Empty if app is in
-         * root partition.
+         * The website configuration Firestore document ID.          
          * @const {string} id
          * @example
          * if (!window.app.id) {
@@ -111,7 +110,7 @@ class Tutorbook {
          * }
          * @memberof module:@tutorbook/app~Tutorbook#
          */
-        this.id = '';
+        this.id = 'root';
 
         /**
          * Whether or not the app refers to a test partition.
@@ -389,18 +388,19 @@ class Tutorbook {
      * been fetched and initialized successfully.
      */
     initWebsiteConfig() {
-        if (!this.id) return this.config = Tutorbook.rootWebsiteConfig;
         return Data.listen(['websites', this.id], websiteConfigDoc => {
             if (!websiteConfigDoc.exists) {
                 console.warn('[WARNING] Website configuration (' + this.id +
                     ') did not exist, acting as if root partition...');
-                return this.config = Tutorbook.rootWebsiteConfig;
+                this.id = 'root';
+                return initWebsiteConfig();
             }
             return this.config = websiteConfigDoc.data();
         }, error => {
             console.error('[ERROR] Could not get website configuration (' +
                 this.id + '), acting as if root partition...', error);
-            return this.config = Tutorbook.rootWebsiteConfig;
+            this.id = 'root';
+            return initWebsiteConfig();
         }, {
             db: this.db,
             listeners: this.listeners,
@@ -481,33 +481,38 @@ class Tutorbook {
      */
     async checkConfigCompliance(user, profile) {
         const continueWithInit = () => true;
-        const showErrorScreen = () => new GoToRootPrompt().view();
-        const showPromptScreen = (config) => new GoToWebsitePrompt(config).view();
+        const showErrorScreen = (acc) => new GoToRootPrompt(acc).view();
+        const showPromptScreen = (acc) => new GoToWebsitePrompt(acc).view();
         // If the website has a config (i.e. **not** root partition):
-        if (this.config && this.config !== Tutorbook.rootWebsiteConfig) {
-            // If profile has the current website ID in their profile, continue.
-            if (profile && profile.websites && profile.websites
-                .indexOf(this.id) >= 0) return continueWithInit();
-            // If they don't, see if their email fits within the website config.
-            for (const emailDomain of this.config.domains) // If it fits, continue.
+        if (this.id !== 'root' && this.config) {
+            // See if the user's email fits within the website config's access.
+            const access = await this.db.collection('access').doc(this.config
+                .access).get();
+            for (const emailDomain of access.data().domains)
                 if (user.email.endsWith(emailDomain)) return continueWithInit();
+            for (const email of access.data().exceptions)
+                if (user.email === email) return continueWithInit();
             // If it doesn't, show error screen that prompts the user to:
             // a) Request access
             // b) Go to root partition
-            return showErrorScreen();
+            return showErrorScreen(access);
         } else { // If the website doesn't have a config (i.e. root partition):
             // Fetch all website config IDs and check if the user's email fits 
             // within one of them.
-            const configs = (await this.db.collection('websites').get()).docs;
-            for (const config of configs)
-                for (const emailDomain of config.data().domains)
-                    // If it does, show prompt screen that prompts the user to:
-                    // a) Go to that app's partition
-                    // b) Continue in the root partition
+            const accesses = (await this.db.collection('access').get()).docs;
+            for (const access of accesses) {
+                if (access.id === 'root') continue;
+                // If it does, show prompt screen that prompts the user to:
+                // a) Go to that app's partition
+                // b) Continue in the root partition
+                for (const emailDomain of access.data().domains)
                     if (user.email.endsWith(emailDomain))
-                        return showPromptScreen(config.data());
-            // If it doesn't, continue.
-            return continueWithInit();
+                        return showPromptScreen(access);
+                for (const email of access.data().exceptions)
+                    if (user.email === email)
+                        return showPromptScreen(access);
+            }
+            return continueWithInit(); // If it doesn't, continue.
         }
     }
 
@@ -618,21 +623,6 @@ class Tutorbook {
         // If either return true, we assume the user is on mobile
         this.onMobile = userAgentCheck || screenSizeCheck;
     }
-};
-
-/**
- * The root website configuration that shows all locations (that are publicly
- * listed) and all grades.
- * @const {WebsiteConfig} rootWebsiteConfig
- * @memberof module:@tutorbook/app~Tutorbook.
- */
-Tutorbook.rootWebsiteConfig = {
-    created: new Date(),
-    updated: new Date(),
-    domains: [],
-    grades: Data.grades,
-    locations: [],
-    url: 'https://tutorbook.app/app',
 };
 
 window.onload = () => {

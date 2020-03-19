@@ -9242,7 +9242,8 @@ svg.mdc-button__icon {
 
 .login {
   text-align: center;
-  margin-top: -64px; }
+  margin-top: -64px;
+  margin-bottom: 64px; }
 
 .login__prompt-title,
 .login__greeting {
@@ -9258,6 +9259,7 @@ svg.mdc-button__icon {
   font-size: 0.85rem;
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
+  width: 80vw;
   max-width: 500px;
   text-align: left;
   margin: 15px auto 25px auto; }
@@ -9271,7 +9273,7 @@ svg.mdc-button__icon {
 
 .login__button-container {
   margin: auto;
-  width: 80%;
+  width: 80vw;
   max-width: 500px; }
 
 .login__button {
@@ -9285,14 +9287,18 @@ svg.mdc-button__icon {
   font-weight: 700;
   letter-spacing: 0.2px;
   text-transform: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   padding: 0 14px 0 14px;
   border-width: 2px;
-  border-radius: 7.2px; }
+  border-radius: 7.2px;
+  padding: 0 20px; }
   .login__button.mdc-button--dense {
     border-radius: 6.4px; }
 
 .login__button.google__button {
-  border: 2px solid #4285F4; }
+  border: 2px solid #4285F4;
+  padding-left: calc(56px + 20px); }
   .login__button.google__button:not(:disabled) {
     border-color: #4285F4; }
 
@@ -9340,10 +9346,15 @@ svg.mdc-button__icon {
   max-width: 400px; }
 
 .header-nav-desktop__content-wrapper {
-  display: none;
   max-width: 1290px;
   margin: 0 auto;
-  position: relative; }
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-row: 1;
+  grid-column: content;
+  align-self: center; }
 
 .header-nav-desktop__logo-link[data-focus-visible-added] {
   position: relative; }
@@ -9394,14 +9405,14 @@ svg.mdc-button__icon {
 @media (min-width: 768px) {
   .login__header {
     grid-template-rows: 51px;
-    margin-top: 20px; }
-  .header-nav-desktop__content-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    grid-row: 1;
-    grid-column: content;
-    align-self: center; } }
+    margin-top: 20px; } }
+
+@media (max-width: 600px) {
+  .login #expand-button,
+  .login #collapse-button {
+    margin-top: 25px; }
+  .login__prompt-title {
+    font-size: 2.5rem; } }
 .cta-link {
   display: inline-block;
   border-radius: 6px;

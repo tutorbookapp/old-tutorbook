@@ -273,13 +273,12 @@ class Render {
     }
 
     profileHeader(user) {
-        const userView = new User(user);
         const userData = {
             'pic': user.photo || user.photoURL,
             'name': user.name || user.displayName,
             'email': user.email,
             'type': user.type || 'No type',
-            'go_to_user': () => userView.view(),
+            'go_to_user': () => User.viewUser(user.uid),
         };
         return this.template('profile-header', userData);
     }

@@ -252,12 +252,13 @@ class Login {
  */
 class GoToRootPrompt {
     /**
-     * Creates (and renders) a new error screen using `window.app.config` as the
-     * website configuration in question and `window.app.render` to render the
+     * Creates (and renders) a new error screen using the given district (or 
+     * `access`) configuration and `window.app.render` to render the 
      * `login-prompt` template.
      */
-    constructor() {
-        this.config = window.app.config;
+    constructor(access) {
+        this.access = access.data();
+        this.access.id = access.id;
         this.render = window.app.render;
         this.renderSelf();
     }
@@ -271,18 +272,20 @@ class GoToRootPrompt {
         this.main = this.render.template('login-prompt', {
             title: 'Unauthorized.',
             description: 'Sorry, you must login with an ' +
-                Utils.join(this.config.domains, 'or', false) + ' email ' +
-                'address to access ' + this.config.name + '\'s app.',
-            primaryLabel: 'Go to Tutorbook',
-            primaryAction: () => window.location = 'https://tutorbook.app/app',
+                Utils.join(this.access.domains.map(d => '@' + d), 'or', false) +
+                ' email address to access this ' + this.access.name + ' app. ' +
+                'Did you mean to go to our public web app?',
             secondaryDescription: 'Used the wrong email?',
             secondaryLabel: 'Login again',
             secondaryAction: () => window.app.signOut(),
         });
-        $(this.main).prepend(this.render.template('login-header'));
-        $(this.main).find('button').each(function() {
-            MDCRipple.attachTo(this);
+        const btn = this.render.template('login-prompt-btn', {
+            label: 'Go to public app',
+            action: () => window.location = 'https://tutorbook.app/app',
         });
+        MDCRipple.attachTo(btn);
+        $(this.main).find('.login__button-container').prepend(btn);
+        $(this.main).prepend(this.render.template('login-header'));
     }
 
     /**
@@ -320,36 +323,46 @@ class GoToWebsitePrompt {
     /**
      * Creates (and renders) a new prompt screen that prompts the user to go to 
      * the given website's app partition.
-     * @param {WebsiteConfig} config - The website configuration to ask the user 
-     * to go to.
+     * @param {AccessConfig} access - The district (or `access`) configuration 
+     * to ask the user to go to.
      */
-    constructor(config) {
-        this.config = config;
+    constructor(access) {
+        this.access = access.data();
+        this.access.id = access.id;
         this.render = window.app.render;
-        this.renderSelf();
+        this.rendering = this.renderSelf();
     }
 
     /**
      * Renders the prompt screen that asks the user if they want to login to
      * their school's app partition (using the `login-prompt` template).
      */
-    renderSelf() {
+    async renderSelf() {
         this.header = this.render.template('wrapper');
         this.main = this.render.template('login-prompt', {
-            title: this.config.name + ' User?',
-            description: 'You\'re signed in with a ' + this.config.name +
-                ' email address but are accessing Tutorbook\'s root partition' +
-                '. Do you want to go to ' + this.config.name + '\'s app?',
-            primaryLabel: 'Go to ' + this.config.name + '\'s app',
-            primaryAction: () => window.location = this.config.url,
-            secondaryDescription: 'Not part of ' + this.config.name + '?',
+            title: 'Part of ' + this.access.symbol + '?',
+            description: 'You\'re signed in with a ' + this.access.name +
+                ' email address but are accessing Tutorbook\'s public web app' +
+                '. Did you mean to go to one of ' + this.access.symbol +
+                '\'s apps?',
+            secondaryDescription: 'Not part of ' + this.access.symbol + '?',
             secondaryLabel: 'Continue to Tutorbook',
             secondaryAction: () => this.resolve(),
         });
         $(this.main).prepend(this.render.template('login-header'));
-        $(this.main).find('button').each(function() {
-            MDCRipple.attachTo(this);
-        });
+        (await window.app.db
+            .collection('websites')
+            .where('access', '==', this.access.id)
+            .get()
+        ).docs.sort((a, b) => a.data().name.localeCompare(b.data().name))
+            .map(website => {
+                const btn = this.render.template('login-prompt-btn', {
+                    label: website.data().name,
+                    action: () => window.location = website.data().url,
+                });
+                MDCRipple.attachTo(btn);
+                $(this.main).find('.login__button-container').prepend(btn);
+            });
     }
 
     /**
@@ -358,7 +371,8 @@ class GoToWebsitePrompt {
      * @return {Promise} Promise that resolves after the user has chosen an
      * option.
      */
-    view() {
+    async view() {
+        await this.rendering;
         if (window.app.intercom) window.app.intercom.view(true);
         window.app.loader(false);
         window.app.view(this.header, this.main);
