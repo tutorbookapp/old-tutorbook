@@ -21,17 +21,13 @@ const partitions = {
 
 const WEBSITE_FIELDS = [
     'url',
-    'grades',
-    'locations',
-    'access',
     'name',
+    'access',
 ];
 
 const ARRAY_FIELDS = [
     'grades',
     'locations',
-    'access',
-    'domains',
 ];
 
 /**
@@ -49,10 +45,15 @@ const create = async (website = {}, partition = 'default') => {
         if (website[field]) return;
         website[field] = readline.question('What is the website\'s ' + field +
             '? ');
-        if (ARRAY_FIELDS.indexOf(field) < 0) return;
-        website[field] = website[field].split(', ');
     });
-    const ref = partitions[partition].collection('websites').doc();
+    ARRAY_FIELDS.forEach(field => {
+        if (website[field]) return;
+        website[field] = readline.question('What is the website\'s ' + field +
+            '? ').split(', ');
+    });
+    const id = readline.question('What is the website\'s ID? ');
+    const ref = id ? partitions[partition].collection('websites').doc(id) :
+        partitions[partition].collection('websites').doc();
     website.created = website.updated = new Date();
     await ref.set(website);
     console.log('[INFO] Created website configuration (' + ref.id + ') in ' +

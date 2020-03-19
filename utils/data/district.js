@@ -21,11 +21,11 @@ const partitions = {
 const DISTRICT_FIELDS = [
     'name',
     'symbol',
-    'domains',
 ];
 
 const ARRAY_FIELDS = [
     'domains',
+    'exceptions',
 ];
 
 /**
@@ -43,10 +43,15 @@ const create = async (district = {}, partition = 'default') => {
         if (district[field]) return;
         district[field] = readline.question('What is the district\'s ' + field +
             '? ');
-        if (ARRAY_FIELDS.indexOf(field) < 0) return;
-        district[field] = district[field].split(', ');
     });
-    const ref = partitions[partition].collection('access').doc();
+    ARRAY_FIELDS.forEach(field => {
+        if (district[field]) return;
+        district[field] = readline.question('What is the district\'s ' + field +
+            '? ').split(', ');
+    });
+    const id = readline.question('What is the district\'s ID? ');
+    const ref = id ? partitions[partition].collection('access').doc(id) :
+        partitions[partition].collection('access').doc();
     district.created = district.updated = new Date();
     await ref.set(district);
     console.log('[INFO] Created district/access configuration (' + ref.id +
