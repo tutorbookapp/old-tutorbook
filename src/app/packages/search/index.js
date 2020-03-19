@@ -71,7 +71,7 @@ class SearchHeader {
         query.length > 0 ? that.showClearButton() : that.showInfoButton();
         const [err, res] = await to(that.index.search({
             query: query,
-            facetFilters: !window.app.id ? [] : [
+            facetFilters: window.app.id === 'root' ? [] : [
                 'payments.type:Free',
                 window.app.locations.map(l => 'location:' + l.name),
             ],
@@ -225,7 +225,7 @@ class Search {
             gender: 'Any',
             showBooked: false,
             availability: {},
-            price: !window.app.id ? 'Any' : 'Free',
+            price: window.app.id === 'root' ? 'Any' : 'Free',
             type: 'Tutor',
             sort: 'Rating'
         };
@@ -411,7 +411,7 @@ class Search {
                 gender: 'Any',
                 showBooked: false,
                 availability: {},
-                price: !window.app.id ? 'Any' : 'Free',
+                price: window.app.id === 'root' ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             };
@@ -474,7 +474,7 @@ class Search {
                 gender: 'Any',
                 showBooked: false,
                 availability: {},
-                price: !window.app.id ? 'Any' : 'Free',
+                price: window.app.id === 'root' ? 'Any' : 'Free',
                 type: 'Any',
                 sort: 'Rating'
             };
