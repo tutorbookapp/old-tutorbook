@@ -950,7 +950,7 @@ class PaidTutorProfile extends Profile {
             'Hourly rate',
             '$' + this.profile.payments.hourlyCharge.toFixed(2),
             window.app.data.payments.hourlyChargeStrings
-        )).attr('style', 'width:50%!important;margin-right:20px;'));
+        )).attr('style', 'margin-right:20px;'));
         $(this.render.textAreaItem(
             'Background & Qualifications',
             this.profile.bio
