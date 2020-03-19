@@ -184,8 +184,8 @@ class Render {
             case 'requestTime':
                 return this.template('fab-labeled', {
                     id: 'request-time',
-                    icon: 'account_balance_wallet', // TODO: Find better icon.
-                    label: 'Request Time',
+                    icon: 'event_note',
+                    label: 'Log Time',
                 });
             case 'viewStripe':
                 return this.template('fab-labeled', {

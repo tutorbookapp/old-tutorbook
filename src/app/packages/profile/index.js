@@ -141,7 +141,7 @@ class Profile {
         await window.app.updateUser(this.profile);
 
         // 2 - Upload the image to Cloud Storage.
-        var filePath = 'users/' + this.profile.email + '/profileImages/' + file.name;
+        var filePath = 'users/' + this.profile.uid + '/profileImages/' + file.name;
         var err;
         var fileSnapshot;
         [err, fileSnapshot] = await to(firebase.storage().ref(filePath).put(file));

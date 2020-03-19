@@ -1,9 +1,16 @@
+.second-fab {
+  bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
+}
+
 .matching #pupil-button {
   bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
 }
 
 @media(min-width: 1024px) {
   .matching #pupil-button {
+    bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
+  }
+  .second-fab {
     bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }
 }

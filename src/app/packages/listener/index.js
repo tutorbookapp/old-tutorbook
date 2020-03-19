@@ -1,4 +1,9 @@
 /**
+ * Package that contains our listener class that listens to events (e.g. 
+ * clock-in requests, payment requests, etc).
+ * @module @tutorbook/listener
+ * @see {@link https://npmjs.com/package/@tutorbook/listener}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,17 +18,20 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import to from 'await-to-js';
 
-const Utils = require('@tutorbook/utils'); // TODO: Only import these static classes once
+const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 
-// Class that enables the client to listen to remote events (e.g. Firestore
-// database triggers or HTTP request responses).
+/**
+ * Class that enables the client to listen to remote events (e.g. Firestore
+ * database triggers or HTTP request responses).
+ * @todo Finish documentation.
+ */
 class Listener {
 
     constructor() {

@@ -47,6 +47,7 @@ import to from 'await-to-js';
 
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
+const NewTimeRequestDialog = require('@tutorbook/time-requests').new;
 
 /**
  * Class that represents the dialog that enables users to select subjects.
@@ -912,7 +913,7 @@ class ViewRequestDialog {
         await this.rendering;
         window.app.intercom.view(false);
         window.app.view(this.header, this.main);
-        this.manage();
+        if (!this.managed) this.manage();
     }
 
     /**
@@ -921,22 +922,17 @@ class ViewRequestDialog {
      * Request" view/dialog.
      */
     manage() {
-        MDCTopAppBar.attachTo(this.header);
-        const dialog = this.main;
-        // NOTE: We have to attach MDC Components after the view is shown or they
-        // do not render correctly.
+        this.managed = true;
+        Utils.attachHeader(this.header);
         this.textFields = {};
-        dialog.querySelectorAll('.mdc-text-field').forEach((el) => {
+        this.main.querySelectorAll('.mdc-text-field').forEach((el) => {
             this.textFields[el.id] = new MDCTextField(el);
         });
 
-        // Disable all inputs
-        ['textarea', 'input'].forEach((input) => {
-            dialog.querySelectorAll(input)
-                .forEach((el) => {
-                    el.setAttribute('disabled', true);
-                });
-        });
+        ['textarea', 'input'].forEach((input) => $(this.main).find(input)
+            .each(function() { // Disable all inputs
+                this.setAttribute('disabled', true);
+            }));
     }
 };
 
@@ -1929,7 +1925,7 @@ class NewRequestDialog extends EditRequestDialog {
         const [err, res] = await to(Data.newRequest(this.request, this.payment));
         if (err) return window.app.snackbar.view('Could not send request.');
         window.app.snackbar.view(
-            'Request sent to ' + this.request.toUser.name + '.',
+            'Sent ' + this.request.toUser.name + ' request.',
             'Undo',
             async () => {
                 window.app.snackbar.view('Canceling request...');
@@ -2194,6 +2190,7 @@ class ViewApptDialog extends ViewRequestDialog {
                 this.request.toUser.type.toLowerCase() : '') + '"] h4').text(
                 'Attendees');
         } else if (window.app.user.type === 'Tutor') {
+            $(this.main).find('#clocking').addClass('second-fab');
             $(this.main).append(this.render.fab('requestTime'));
         }
         this.header = this.render.header('header-action', {
@@ -2212,7 +2209,11 @@ class ViewApptDialog extends ViewRequestDialog {
         $(this.main).find('.mdc-fab').each(function() {
             MDCRipple.attachTo(this);
         });
-        $(this.main).find('#request-payment').click(async () => {
+        const listen = (b, a) => b ? b.addEventListener('click', a) : null;
+        const paymentBtn = $(this.main).find('#request-payment')[0];
+        const clockInBtn = $(this.main).find('#clocking')[0];
+        const timeBtn = $(this.main).find('#request-time')[0];
+        listen(paymentBtn, async () => {
             window.app.snackbar.view('Sending payment request...');
             const [err, res] = await to(
                 Data.requestPaymentFor(this.appt, this.id)
@@ -2223,17 +2224,21 @@ class ViewApptDialog extends ViewRequestDialog {
             window.app.snackbar.view('Sent payment request to ' +
                 Utils.getOther(this.appt.attendees).email + '.');
         });
-        $(this.main).find('#clocking').click(() => {
+        listen(clockInBtn, () => {
             if (!this.timer) {
                 this.clockIn();
-                $(this.main).find('.mdc-fab__label').text('ClockOut');
+                $(this.main).find('#clocking .mdc-fab__label').text('ClockOut');
             } else {
                 this.clockOut();
-                $(this.main).find('.mdc-fab__label').text('ClockIn');
+                $(this.main).find('#clocking .mdc-fab__label').text('ClockIn');
             }
         });
-        $(this.main).find('#request-time').click(() =>
-            console.log('[TODO] Implment requested time data flow.'));
+        listen(timeBtn, () => new NewTimeRequestDialog({
+            pupils: [this.request.fromUser],
+            tutors: [this.request.toUser],
+            start: this.appt.time.from,
+            end: this.appt.time.to,
+        }).view());
     }
 
     /**
@@ -3212,9 +3217,10 @@ class ViewCanceledApptDialog extends ViewApptDialog {
         this.header = this.render.header('header-action', {
             title: 'Canceled Appointment',
         });
-        $(this.main).find('[id="Hours clocked"]').remove();
-        $(this.main).find('#Current').parent().remove();
-        $(this.main).find('.mdc-fab').remove();
+        $(this.main)
+            .find('[id="Hours clocked"]').remove().end()
+            .find('#Current').parent().remove().end()
+            .find('.mdc-fab').remove();
     }
 };
 

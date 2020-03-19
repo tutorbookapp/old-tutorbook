@@ -2,6 +2,73 @@
 @import "@material/form-field/mdc-form-field";
 @import "@material/checkbox/mdc-checkbox";
 
+.upload-input {
+  border: 1px solid #c2c2c2;
+  border-radius: 4px;
+  position: relative;
+  margin-top: 20px !important;
+}
+
+.upload-input--previews {
+  height: 186px;
+}
+
+.upload-input__input {
+  margin: 0;
+  opacity: 0;
+  height: 116px;
+  width: 100%;
+}
+
+.upload-input__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 25px;
+  width: calc(100% - 50px);
+}
+
+.upload-input__label-wrapper {
+  text-align: center;
+}
+
+.upload-input__icon {
+  font-size: 48px;
+  display: block;
+  color: rgba(0, 0, 0, 0.6) !important;
+  background: #fff !important;
+}
+
+.upload-input__icon-label {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.03125rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.upload-input__file-previews {
+  position: absolute;
+  top: 116px;
+  width: 100%;
+  overflow: hidden; // TODO: Do we want to scroll?
+  height: 70px;
+}
+
+.upload-input__file-preview {
+  border-radius: 4px;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  margin: 10px 0 10px 10px;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+}
+
+.upload-input__file-preview:last-child {
+  margin-right: 10px;
+}
+
 .dialog-subjects .mdc-dialog__content {
   padding: 0; 
 }

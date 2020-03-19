@@ -791,6 +791,12 @@ class Data {
             payment: payment,
         });
     }
+
+    static newTimeRequest(request) {
+        return Data.post('newTimeRequest', {
+            request: request,
+        });
+    }
 };
 
 Data.setupCards = [

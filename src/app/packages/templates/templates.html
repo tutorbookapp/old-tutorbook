@@ -639,6 +639,51 @@ user sees as they navigate throughout the app. -->
     </aside>
 </div>
 
+<!-- Empty Dialog Button -->
+<div hidden class="template" id="dialog-button">
+    <button type="button" class="mdc-button mdc-dialog__button" data-fir-click="action" data-fir-content="label">Label</button>
+</div>
+
+<!-- Uploaded File Preview -->
+<div hidden class="template" id="uploaded-file-preview">
+    <div class="upload-input__file-preview"></div>
+</div>
+
+<!-- Upload Files Input -->
+<div hidden class="template" id="upload-input">
+    <div class="upload-input">
+        <input id="upload" type="file" multiple data-fir-attr="accept:filetype" class="upload-input__input">
+        <label for="upload" class="upload-input__label">
+            <div class="upload-input__label-wrapper">
+                <span class="material-icons upload-input__icon">
+                    cloud_upload
+                </span>
+                <span class="upload-input__icon-label">
+                    Choose files
+                </span>
+            </div>
+        </label>
+        <div id="previews" class="upload-input__file-previews">
+        </div>
+    </div>
+</div>
+
+<!-- Popup Dialog -->
+<div hidden class="template" id="dialog-popup">
+    <aside class="mdc-dialog dialog-popup">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 class="mdc-dialog__title" data-fir-content="title"></h2>
+                <div class="mdc-dialog__content" data-fir-content="summary">
+                </div>
+                <footer class="mdc-dialog__actions">
+                </footer>
+            </div>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </aside>
+</div>
+
 <!-- Confirmation Dialog -->
 <div hidden class="template" id="dialog-confirmation">
     <aside class="mdc-dialog dialog-confirmation">
@@ -2203,22 +2248,11 @@ section) -->
         </div>
         <div id="settings" data-fir-if="showSettings">
         </div>
-        <!--
--<div id="methods" data-fir-if="showMethods" class="mdc-layout-grid">
--    <div class="mdc-layout-grid__inner" id="cards">
--    </div>
--</div>
--->
         <div id="history" data-fir-if="showHistory">
             <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list">
             </ul>
         </div>
     </div>
-</div>
-
-<!-- Empty Dialog Button -->
-<div hidden class="template" id="dialog-button">
-    <button type="button" class="mdc-button mdc-dialog__button" data-fir-click="action" data-fir-content="label">Label</button>
 </div>
 
 <!-- MDC Card Actions Template (for appending to the card-empty template below) -->

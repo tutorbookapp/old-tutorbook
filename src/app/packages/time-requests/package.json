@@ -9,5 +9,9 @@
   "keywords": [],
   "author": "Nicholas Chiang",
   "license": "AGPL",
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
+  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2",
+  "dependencies": {
+    "@tutorbook/data": "^0.5.5",
+    "@tutorbook/utils": "^0.5.5"
+  }
 }

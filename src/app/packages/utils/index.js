@@ -13,7 +13,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -47,6 +47,26 @@ class Utils {
      */
     constructor() {
         this.data = window.app ? window.app.data || new Data() : new Data();
+    }
+
+    /**
+     * Converts a timestring into a `Date` assuming that the day was today. If
+     * the time was a period (i.e. not actually one of `window.app.data
+     * .timeStrings`), this method defaults to returning `now`.
+     * @param {string} timestring - The time string to convert (e.g. '2:45 PM').
+     * @return {Date} The time string in date format (assuming that it was 
+     * today).
+     */
+    static timestringToDate(timestring) {
+        const now = new Date();
+        if (window.app.data.timeStrings.indexOf(timestring) < 0) return now;
+        const parts = timestring.split(':');
+        const hour = new Number(parts[1].split(' ')[0]);
+        const ampm = parts[1].split(' ')[1];
+        const min = parts[0];
+        now.setHours(ampm === 'PM' ? hour + 12 : hour);
+        now.setMinutes(min);
+        return now;
     }
 
     /**

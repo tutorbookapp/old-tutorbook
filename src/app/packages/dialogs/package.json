@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@tutorbook/data": "^0.5.5",
+    "@tutorbook/time-requests": "^0.5.5",
     "@tutorbook/utils": "^0.5.5"
   },
   "repository": {
