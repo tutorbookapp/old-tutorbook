@@ -286,7 +286,7 @@ class SupervisorDashboard extends Dashboard {
 
         addHorz('Recent activity');
         add('Schedule', 'schedule');
-        add('Everything else', 'everything');
+        //add('Everything else', 'everything');
     }
 
     view() {
@@ -305,7 +305,7 @@ class SupervisorDashboard extends Dashboard {
         this.viewShortcutCards();
         if (!this.viewedScheduleCards) this.viewScheduleCards();
         if (!this.viewedRecentActivityCards) this.viewRecentActivityCards();
-        this.viewEverythingElse();
+        //this.viewEverythingElse();
     }
 
     viewScheduleCards() {

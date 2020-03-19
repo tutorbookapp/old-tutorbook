@@ -63,7 +63,7 @@ class Data {
      * locations to sync this data object with.
      */
     async initLocations() {
-        this.locations = [];
+        this.locations = window.app.locations = [];
         await this.getLocations();
         this.locationsByName = {};
         this.locationsByID = {};

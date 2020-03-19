@@ -1560,7 +1560,7 @@ class Utils {
             type: user.type,
             grade: user.grade,
             gender: user.gender,
-            hourlyCharge: user.payments.hourlyCharge,
+            hourlyCharge: user.payments ? user.payments.hourlyCharge : 0,
             location: user.location,
             payments: user.payments,
             proxy: user.proxy,
