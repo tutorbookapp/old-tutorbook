@@ -51,6 +51,7 @@ const GoToWebsitePrompt = require('@tutorbook/login').websitePrompt;
 const Matching = require('@tutorbook/matching').default;
 const MatchingDialog = require('@tutorbook/matching').dialog;
 const Config = require('@tutorbook/config');
+const Analytics = require('@tutorbook/analytics');
 
 // Dependency cycle workarounds
 const SearchHeader = require('@tutorbook/search').header;
@@ -173,6 +174,7 @@ class Tutorbook {
 
         // Helper packages
         this.render = this.render || new Render();
+        this.analytics = this.analytics || new Analytics();
 
         // View the login/sign-up screen
         this.user = {};
@@ -189,6 +191,8 @@ class Tutorbook {
     async startApp() {
         // Helper packages (only if they haven't already been initialized)
         this.render = this.render || new Render();
+        this.analytics = this.analytics || new Analytics();
+        this.analytics.log('login');
 
         // Ensure that the website configuration is ready
         await this.initialization;
@@ -208,18 +212,18 @@ class Tutorbook {
         this.data = new Data();
         await this.data.initialization;
         this.utils = new Utils();
+        this.nav = new Navigation();
 
         // App packages
         this.snackbar = new Snackbar();
         this.login = this.login || new Login();
         this.notify = new Notify();
         this.intercom = new Help(this.user);
-        this.cards = { // Store card actions & dialogs
+        this.cards = { // TODO: Where is this actually used?
             requestsOut: {},
             approvedRequestsOut: {},
             rejectedRequestsOut: {},
         };
-        this.nav = new Navigation();
         this.listener = new Listener();
         this.search = new Search(this);
         if (this.user.payments.type === 'Paid') {
@@ -552,6 +556,7 @@ class Tutorbook {
     signOut() {
         (this.listeners || []).forEach(unsubscribe => unsubscribe());
         if (this.intercom) this.intercom.logout();
+        if (this.analytics) this.analytics.log('logout');
         return firebase.auth().signOut();
     }
 

@@ -1,0 +1,26 @@
+{
+  "name": "@tutorbook/analytics",
+  "version": "0.5.4",
+  "description": "Analytics wrapper for Tutorbook's use of Google Analytics for Firebase.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tutorbookapp/tutorbook.git"
+  },
+  "keywords": [
+    "Tutorbook",
+    "Analytics",
+    "Google",
+    "Analytics",
+    "Firebase"
+  ],
+  "author": "Nicholas Chiang",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/tutorbookapp/tutorbook/issues"
+  },
+  "homepage": "https://github.com/tutorbookapp/tutorbook#readme"
+}

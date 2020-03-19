@@ -58,6 +58,7 @@ class Login {
      * @deprecated Use {@link module:@tutorbook/app~Tutorbook#signOut} instead.
      */
     static signOut() {
+        window.app.analytics.log('logout');
         firebase.auth().signOut();
         location = '/';
     };
