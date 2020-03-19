@@ -117,6 +117,36 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "grade",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "access",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "config.showProfile",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "gender",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "numRatings",
           "order": "DESCENDING"
         }
@@ -166,6 +196,32 @@
         },
         {
           "fieldPath": "payments.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "access",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "config.showProfile",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "gender",
           "order": "ASCENDING"
         },
         {
@@ -266,6 +322,32 @@
         },
         {
           "fieldPath": "payments.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "avgRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "access",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "config.showProfile",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "grade",
           "order": "ASCENDING"
         },
         {
