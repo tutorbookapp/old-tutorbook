@@ -444,19 +444,25 @@ class Tutorbook {
      * successfully been initialized (and is ready to be used at 
      * `window.app.user`).
      */
-    async initUser() {
+    initUser() {
         const user = firebase.auth().currentUser;
-        const [err, profile] = await to(Data.getUser(user.uid));
-        await this.checkConfigCompliance(user, profile);
-        if (err) {
-            // No user doc, create new user doc
+        return Data.listen(['users', user.uid], async doc => {
+            const profile = doc.data();
+            if (!profile) {
+                await Data.createUser(Utils.filterProfile(user));
+                await window.app.initUser();
+            } else {
+                await this.checkConfigCompliance(user, profile);
+                this.user = Utils.filterProfile(profile);
+                this.conciseUser = Utils.filterRequestUserData(profile);
+                this.userClaims = (await user.getIdTokenResult(true)).claims;
+            }
+        }, async err => { // No user doc, create new user doc
+            console.warn('[WARNING] Error (' + err.message + ') while ' +
+                'initializing user, creating account...');
             await Data.createUser(Utils.filterProfile(user));
             await window.app.initUser();
-        } else {
-            this.user = Utils.filterProfile(profile);
-            this.conciseUser = Utils.filterRequestUserData(profile);
-            this.userClaims = (await user.getIdTokenResult(true)).claims;
-        }
+        });
     }
 
     /**
