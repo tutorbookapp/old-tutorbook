@@ -458,8 +458,7 @@ class Data {
                 });
             });
         });
-        user.availability = bookedAvailability;
-        return bookedAvailability;
+        return user.availability = bookedAvailability;
     }
 
     static async getUser(id) {
