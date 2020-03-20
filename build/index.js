@@ -315,7 +315,7 @@ eval("module.exports = \"<form class=\\\"email-form\\\" action=\\\"/app\\\">\\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<div class=\\\"spotlight\\\">\\n    <div class=\\\"spotlight__wrapper\\\">\\n        <div class=\\\"spotlight__content\\\">\\n            <p class=\\\"spotlight__heading\\\">\\n                The #1 Tutoring Platform for your school and it's students\\n            </p>\\n            <div class=\\\"spotlight__cta\\\">\\n                <cta-link color=\\\"black\\\">See why</cta-link>\\n            </div>\\n        </div>\\n        <div class=\\\"spotlight__lower-content\\\">\\n        </div>\\n    </div>\\n</div>\";\n\n//# sourceURL=webpack:///./packages/feature-spotlight-vertical/index.html?./node_modules/html-loader");
+eval("module.exports = \"<div class=\\\"spotlight\\\">\\n    <div class=\\\"spotlight__wrapper\\\">\\n        <div class=\\\"spotlight__content\\\">\\n            <p class=\\\"spotlight__heading\\\">\\n                Continue peer tutoring despite COVID-19 with Tutorbook.\\n            </p>\\n            <div class=\\\"spotlight__cta\\\">\\n                <cta-link color=\\\"black\\\" href=\\\"/covid-19\\\">See how</cta-link>\\n            </div>\\n        </div>\\n        <div class=\\\"spotlight__lower-content\\\">\\n        </div>\\n    </div>\\n</div>\";\n\n//# sourceURL=webpack:///./packages/feature-spotlight-vertical/index.html?./node_modules/html-loader");
 
 /***/ }),
 
@@ -370,7 +370,7 @@ eval("module.exports = \"<header class=\\\"site-header\\\">\\n    <div class=\\\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<div class=\\\"heading-block\\\">\\n    <h1 class=\\\"heading-block__heading\\\">\\n        Use Tutorbook to drive academic excellence through peer-to-peer tutoring.\\n    </h1>\\n</div>\";\n\n//# sourceURL=webpack:///./packages/heading-block/index.html?./node_modules/html-loader");
+eval("module.exports = \"<div class=\\\"heading-block\\\">\\n    <h1 class=\\\"heading-block__heading\\\">\\n        Use Tutorbook to drive academic excellence with peer-to-peer tutoring.\\n    </h1>\\n</div>\";\n\n//# sourceURL=webpack:///./packages/heading-block/index.html?./node_modules/html-loader");
 
 /***/ }),
 
@@ -381,7 +381,7 @@ eval("module.exports = \"<div class=\\\"heading-block\\\">\\n    <h1 class=\\\"h
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<section class=\\\"hero\\\">\\n    <div class=\\\"hero__wrapper-two-columns\\\">\\n        <div class=\\\"hero__wrapper\\\">\\n            <div class=\\\"hero__content\\\">\\n                <h1 class=\\\"hero__headline\\\">Peer tutoring starts here</h1>\\n                <div class=\\\"hero__subheading\\\">\\n                    Drive academic excellence and create service hours\\n                    opportunities with Tutorbook—the best all-in-one peer\\n                    tutoring platform.\\n                </div>\\n                <div class=\\\"hero__email-form\\\">\\n                    <email-form color=\\\"black-fill\\\"></email-form>\\n                </div>\\n                <div class=\\\"hero__checkmarks\\\">\\n                    <checkmarks-list>\\n                        Scheduling,\\n                        Messaging,\\n                        Service hour timers and more\\n                    </checkmarks-list>\\n                </div>\\n            </div>\\n        </div>\\n    </div>\\n</section>\";\n\n//# sourceURL=webpack:///./packages/hero-email-capture/index.html?./node_modules/html-loader");
+eval("module.exports = \"<section class=\\\"hero\\\">\\n    <div class=\\\"hero__wrapper-two-columns\\\">\\n        <div class=\\\"hero__wrapper\\\">\\n            <div class=\\\"hero__content\\\">\\n                <h1 class=\\\"hero__headline\\\">Peer tutoring starts here</h1>\\n                <div class=\\\"hero__subheading\\\">\\n                    Drive academic excellence and create service hours\\n                    opportunities with Tutorbook—the best way to manage peer\\n                    tutoring.\\n                </div>\\n                <div class=\\\"hero__email-form\\\">\\n                    <email-form color=\\\"black-fill\\\"></email-form>\\n                </div>\\n                <div class=\\\"hero__checkmarks\\\">\\n                    <checkmarks-list>\\n                        Scheduling,\\n                        Messaging,\\n                        Service hour timers and more\\n                    </checkmarks-list>\\n                </div>\\n            </div>\\n        </div>\\n    </div>\\n</section>\";\n\n//# sourceURL=webpack:///./packages/hero-email-capture/index.html?./node_modules/html-loader");
 
 /***/ }),
 
