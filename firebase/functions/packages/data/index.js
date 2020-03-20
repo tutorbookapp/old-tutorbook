@@ -81,6 +81,22 @@ class DataProxy {
             case 'createUser':
                 assert(token.uid === data.uid || token.supervisor);
                 return Data.createUser(data);
+                /*
+                 *case 'newTimeRequest':
+                 *    assert(data.request.tutors
+                 *        .findIndex(t => t.uid === token.uid) >= 0);
+                 *    assert(user.type === 'Tutor' && user.payments.type === 'Free');
+                 *    return Data.newTimeRequest(data.request);
+                 *case 'modifyTimeRequest':
+                 *    assert(token.supervisor);
+                 *    return Data.modifyTimeRequest(data.request, data.id);
+                 *case 'approveTimeRequest':
+                 *    assert(token.supervisor);
+                 *    return Data.approveTimeRequest(data.request, data.id);
+                 *case 'rejectTimeRequest':
+                 *    assert(token.supervisor);
+                 *    return Data.rejectTimeRequest(data.request, data.id);
+                 */
             case 'newRequest':
                 assert(token.uid === data.request.fromUser.uid ||
                     token.supervisor);
@@ -199,12 +215,54 @@ class DataProxy {
     }
 };
 
-
 class Data {
     constructor() {
         this.initTimes();
         this.initHourlyCharges();
         this.initLocations();
+    }
+
+    static async newTimeRequest(request) {
+        const loc = global.db.collection('locations').doc(request.locationId);
+        const ref = loc.collection('timeRequests').doc();
+        await ref.set(request);
+        const locName = (await loc.get()).data().name;
+        return {
+            recipient: {
+                name: 'the ' + locName + '\'s supervisors',
+            },
+            id: ref.id,
+        };
+    }
+
+    static async modifyTimeRequest(request, id) {
+        const loc = global.db.collection('locations').doc(request.locationId);
+        const ref = loc.collection('timeRequests').doc(id);
+        await ref.update(request);
+    }
+
+    static async rejectTimeRequest(request, id) {
+        const loc = global.db.collection('locations').doc(request.locationId);
+        const originalRef = loc.collection('timeRequests').doc(id);
+        const rejectedRef = loc.collection('rejectedTimeRequests').doc(id);
+        request = (await originalRef.get()).data();
+        await originalRef.delete();
+        await rejectedRef.set(Data.combineMaps(request, {
+            rejectedBy: global.app.conciseUser,
+            rejectedTimestamp: new Date(),
+        }));
+    }
+
+    static async approveTimeRequest(request, id) {
+        const loc = global.db.collection('locations').doc(request.locationId);
+        const originalRef = loc.collection('timeRequests').doc(id);
+        const approvedRef = loc.collection('approvedTimeRequests').doc(id);
+        request = (await originalRef.get()).data();
+        await originalRef.delete();
+        await approvedRef.set(Data.combineMaps(request, {
+            approvedBy: global.app.conciseUser,
+            approvedTimestamp: new Date(),
+        }));
     }
 
     static requestPayout() {
