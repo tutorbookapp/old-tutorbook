@@ -122,7 +122,7 @@ class Stats {
         const queries = {
             activity: [],
         };
-        (await Data.getLocations()).forEach(location => queries.activity
+        window.app.data.locations.forEach(location => queries.activity
             .push(window.app.db.collection('locations').doc(location.id)
                 .collection('recentActions').orderBy('timestamp').limit(10)));
         Utils.recycle(queries, recycler);

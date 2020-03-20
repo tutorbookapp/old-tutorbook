@@ -321,7 +321,7 @@ class SupervisorChats extends Chats {
     async getAnnouncement(id) {
         if (!window.app.location.id) return console.error('[ERROR] Couldn\'t ' +
             'get announcement group chat (' + id + ') without location id.');
-        for (var location of (await Data.getLocations())) {
+        for (var location of window.app.data.locations) {
             var doc = await location.collection('announcements').doc(id).get();
             if (doc.exists) return doc;
         } // TODO: Remove the below fallback.
