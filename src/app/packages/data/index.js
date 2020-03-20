@@ -328,11 +328,6 @@ class Data {
         });
     }
 
-    static async getLocations() {
-        return (await window.app.db.collection('locations').where('supervisors',
-            'array-contains', window.app.user.uid).get()).docs;
-    }
-
     static async getServiceHoursLog(params) {
         return axios({
             method: 'get',

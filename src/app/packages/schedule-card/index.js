@@ -326,7 +326,7 @@ class ScheduleCard {
             appts: [],
             activeAppts: [],
         };
-        (await Data.getLocations()).forEach(location => {
+        window.app.data.locations.forEach(location => {
             this.queries.appts.push(window.app.db.collection('locations')
                 .doc(location.id).collection('appointments')
                 .orderBy('time.from'));
