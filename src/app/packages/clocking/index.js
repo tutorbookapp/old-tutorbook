@@ -107,10 +107,12 @@ class ConfirmClockInDialog extends ConfirmDialog {
         this.addBtn('No', () => this.dialog.close('no'));
         this.addBtn('Yes', () => this.dialog.close('yes'));
         if (this.request.proof && this.request.proof.length) {
-            const content = $(this.el).find('.mdc-dialog__content');
-            content.append(data.sentBy.name + ' uploaded proof:\n\n');
-            this.request.proof.forEach(proof => content.append('- <a href="' +
-                proof.url + '">' + proof.name + '</a>\n'));
+            const content = $(this.el).find('.mdc-dialog__content')[0];
+            content.innerHTML = '<p>' + summary + '</p><p>' +
+                data.sentBy.name.split(' ')[0] + ' uploaded proof:</p>';
+            for (const proof of this.request.proof) content.innerHTML += '<li' +
+                '><a href="' + proof.url + '" target="_blank">' + proof.name +
+                '</a></li>';
         }
     }
 
@@ -159,6 +161,14 @@ class ConfirmClockOutDialog extends ConfirmDialog {
         });
         this.addBtn('No', () => this.dialog.close('no'));
         this.addBtn('Yes', () => this.dialog.close('yes'));
+        if (this.request.proof && this.request.proof.length) {
+            const content = $(this.el).find('.mdc-dialog__content')[0];
+            content.innerHTML = '<p>' + summary + '</p><p>' +
+                data.sentBy.name.split(' ')[0] + ' uploaded proof:</p>';
+            for (const proof of this.request.proof) content.innerHTML += '<li' +
+                '><a href="' + proof.url + '" target="_blank">' + proof.name +
+                '</a></li>';
+        }
     }
 
     async approve() {

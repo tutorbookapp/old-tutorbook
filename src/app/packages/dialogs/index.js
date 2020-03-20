@@ -2273,13 +2273,18 @@ class ViewApptDialog extends ViewRequestDialog {
             window.app.snackbar.view('Clocked in at ' + new Date(r.clockIn
                 .sentTimestamp).toLocaleTimeString() + '.');
         } else {
-            const proof = await new CaptureProofDialog().view();
-            window.app.snackbar.view('Sending request...');
-            const [er, res] = await to(Data.clockIn(this.appt, this.id, proof));
-            if (er) {
+            const [canceled, proof] = await to(new CaptureProofDialog().view());
+            if (canceled) {
                 reset();
-                return window.app.snackbar.view('Could not send clock-' +
-                    'in request.');
+                return window.app.snackbar.view('Canceled clock-in request.');
+            }
+            window.app.snackbar.view('Sending request...');
+            const [err, res] = await to(
+                Data.clockIn(this.appt, this.id, proof));
+            if (err) {
+                reset();
+                return window.app.snackbar.view('Could not send clock-in ' +
+                    'request.');
             }
             window.app.snackbar.view('Sent clock-in request to ' +
                 res.recipient.name + '.');
@@ -2381,12 +2386,18 @@ class ViewApptDialog extends ViewRequestDialog {
             window.app.snackbar.view('Clocked out at ' + new Date(r.clockOut
                 .sentTimestamp).toLocaleTimeString() + '.');
         } else {
+            const [canceled, proof] = await to(new CaptureProofDialog().view());
+            if (canceled) {
+                reset();
+                return window.app.snackbar.view('Canceled clock-out request.');
+            }
             window.app.snackbar.view('Sending request...');
-            const [err, res] = await to(Data.clockOut(this.appt, this.id));
+            const [err, res] = await to(
+                Data.clockOut(this.appt, this.id, proof));
             if (err) {
                 reset();
-                return window.app.snackbar.view('Could not send clock-' +
-                    'out request.');
+                return window.app.snackbar.view('Could not send clock-out ' +
+                    'request.');
             }
             window.app.snackbar.view('Sent clock-out request to ' +
                 res.recipient.name + '.');

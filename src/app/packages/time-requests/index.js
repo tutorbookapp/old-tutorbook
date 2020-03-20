@@ -65,9 +65,9 @@ class CaptureProofDialog {
         $('body').prepend(this.el);
         if (!this.managed) this.manage();
         this.dialog.open();
-        return new Promise((reject, resolve) => {
-            this.reject = reject;
+        return new Promise((resolve, reject) => {
             this.resolve = resolve;
+            this.reject = reject;
         });
     }
 
@@ -95,8 +95,9 @@ class CaptureProofDialog {
         this.managed = true;
         this.dialog = MDCDialog.attachTo(this.el);
         this.dialog.autoStackButtons = false;
-        this.dialog.listen('MDCDialog:closing', event => {
-            event.detail === 'ok' ? this.resolve(this.proof) : this.reject();
+        this.dialog.listen('MDCDialog:closing', e => {
+            e.detail.action === 'ok' ? this.resolve(this.proof) :
+                this.reject('canceled');
         });
         this.dialog.listen('MDCDialog:closed', () => $(this.el).remove());
         $(this.el)
