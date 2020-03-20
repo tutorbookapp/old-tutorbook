@@ -1,14 +1,14 @@
 {
   "name": "@tutorbook/hrs-config",
   "version": "0.5.5",
-  "description": "",
+  "description": "Package that contains the service hours configuration screen.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Nicholas Chiang",
+  "license": "AGPL-3.0-or-later",
   "dependencies": {
     "@tutorbook/data": "^0.5.5",
     "@tutorbook/utils": "^0.5.5"

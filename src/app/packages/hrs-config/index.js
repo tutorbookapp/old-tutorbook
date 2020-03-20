@@ -1,4 +1,8 @@
 /**
+ * Package that contains the service hours configuration screen.
+ * @module @tutorbook/hrs-config
+ * @see {@link https://npmjs.com/package/@tutorbook/hrs-config}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +17,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import $ from 'jquery';
@@ -22,11 +26,13 @@ import to from 'await-to-js';
 const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 
-// Configuration screen that enables supervisors to create and edit service hour
-// rounding rules:
-// - Round all service hours within the nearest minute/5 mins/15 mins/30 mins/hour
-// - Always round up/round down/round normally
-
+/**
+ * Class that represents the configuration screen that enables supervisors to 
+ * create and edit service hour rounding rules:
+ * - Round all service hours within the nearest minute/5 mins/15 mins/30 mins/hour
+ * - Always round up/round down/round normally
+ * @todo Finish documentation.
+ */
 class HrsConfig {
     constructor(rules = [{
         location: window.app.location,
