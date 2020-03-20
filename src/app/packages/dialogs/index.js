@@ -2273,11 +2273,10 @@ class ViewApptDialog extends ViewRequestDialog {
             window.app.snackbar.view('Clocked in at ' + new Date(r.clockIn
                 .sentTimestamp).toLocaleTimeString() + '.');
         } else {
-            const [err, proof] = await to(new CaptureProofDialog().view());
-            if (err) return;
+            const proof = await new CaptureProofDialog().view();
             window.app.snackbar.view('Sending request...');
-            const [e, res] = await to(Data.clockIn(this.appt, this.id, proof));
-            if (e) {
+            const [er, res] = await to(Data.clockIn(this.appt, this.id, proof));
+            if (er) {
                 reset();
                 return window.app.snackbar.view('Could not send clock-' +
                     'in request.');

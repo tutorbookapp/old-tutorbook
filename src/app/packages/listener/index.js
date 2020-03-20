@@ -26,6 +26,8 @@ import to from 'await-to-js';
 const Utils = require('@tutorbook/utils');
 const Data = require('@tutorbook/data');
 const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+const ConfirmClockInDialog = require('@tutorbook/clocking').in;
+const ConfirmClockOutDialog = require('@tutorbook/clocking').out;
 
 /**
  * Class that enables the client to listen to remote events (e.g. Firestore
@@ -50,30 +52,7 @@ class Listener {
             .where('supervisors', 'array-contains', window.app.user.uid).get();
         const clockIns = {
             remove: (doc) => {},
-            display: (doc) => {
-                const data = doc.data();
-                const title = 'Approve Clock-In?';
-                const summary = data.sentBy.name + ' clocked in at ' +
-                    Utils.getTimeString(data.sentTimestamp) + ' for ' +
-                    Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
-                    Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
-                    data.for.time.from + '. Approve this clock-in request?';
-                new ConfirmationDialog(title, summary, async () => {
-                    window.app.snackbar.view('Approving clock-in request...');
-                    const [err, res] = await to(
-                        Data.approveClockIn(doc.data(), doc.id));
-                    if (err) return window.app.snackbar.view('Could not ' +
-                        'approve clock-in request.');
-                    window.app.snackbar.view('Approved clock-in request.');
-                }, true, async () => {
-                    window.app.snackbar.view('Rejecting clock-in request...');
-                    const [err, res] = await to(
-                        Data.rejectClockIn(doc.data(), doc.id));
-                    if (err) return window.app.snackbar.view('Could not ' +
-                        'reject clock-in request.');
-                    window.app.snackbar.view('Rejected clock-in request.');
-                }).view();
-            },
+            display: (doc) => new ConfirmClockInDialog(doc).view(),
         };
         locationDocs.forEach(locationDoc => {
             const db = locationDoc.ref;
@@ -97,31 +76,7 @@ class Listener {
         });
         const clockOuts = {
             remove: (doc) => {},
-            display: (doc) => {
-                const data = doc.data();
-                const title = 'Approve Clock-Out?';
-                const summary = data.sentBy.name + ' clocked out at ' +
-                    Utils.getTimeString(data.sentTimestamp) + ' for ' +
-                    Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
-                    Utils.getOther(data.sentBy, data.for.attendees).name +
-                    ' ending at ' + data.for.time.to + '. Approve this clock-' +
-                    'out request?';
-                new ConfirmationDialog(title, summary, async () => {
-                    window.app.snackbar.view('Approving clock-out request...');
-                    const [err, res] = await to(
-                        Data.approveClockOut(doc.data(), doc.id));
-                    if (err) return window.app.snackbar.view('Could not ' +
-                        'approve clock-out request.');
-                    window.app.snackbar.view('Approved clock-out request.');
-                }, true, async () => {
-                    window.app.snackbar.view('Rejecting clock-out request...');
-                    const [err, res] = await to(
-                        Data.rejectClockOut(doc.data(), doc.id));
-                    if (err) return window.app.snackbar.view('Could not ' +
-                        'reject clock-out request.');
-                    window.app.snackbar.view('Rejected clock-out request.');
-                }).view();
-            },
+            display: (doc) => new ConfirmClockOutDialog(doc).view(),
         };
         locationDocs.forEach(locationDoc => {
             const db = locationDoc.ref;

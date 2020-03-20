@@ -1,5 +1,6 @@
 /**
- * Package that enables peer tutors to request service hrs via the Tutorbook web * app.
+ * Package that enables peer tutors to request service hrs via the Tutorbook web 
+ * app.
  * @module @tutorbook/time-requests
  * @see {@link https://npmjs.com/package/@tutorbook/time-requests}
  *
@@ -120,6 +121,7 @@ class CaptureProofDialog {
             const snap = await firebase.storage().ref(path).put(file);
             const url = await snap.ref.getDownloadURL();
             this.proof.push({
+                name: file.name,
                 type: file.type,
                 path: path,
                 url: url,

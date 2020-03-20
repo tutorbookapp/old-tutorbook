@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tutorbook/clocking": "^0.5.5",
     "@tutorbook/data": "^0.5.5",
     "@tutorbook/dialogs": "^0.5.5",
     "@tutorbook/utils": "^0.5.5"
