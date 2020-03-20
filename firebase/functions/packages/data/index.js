@@ -152,11 +152,11 @@ class DataProxy {
             case 'clockIn':
                 assert(user.type === 'Tutor' || token.supervisor);
                 if (!token.supervisor) await exists('appointments', data.id);
-                return Data.clockIn(data.appt, data.id);
+                return Data.clockIn(data.appt, data.id, data.proof);
             case 'clockOut':
                 assert(user.type === 'Tutor' || token.supervisor);
                 if (!token.supervisor) await exists('activeAppointments', data.id);
-                return Data.clockOut(data.appt, data.id);
+                return Data.clockOut(data.appt, data.id, data.proof);
             case 'approveRequest':
                 assert(token.uid === data.request.toUser.uid ||
                     token.supervisor);
@@ -721,7 +721,7 @@ class Data {
         // supervisor is actually active on the app right now?
     }
 
-    static async clockIn(appt, id) {
+    static async clockIn(appt, id, proof = []) {
         const db = global.db;
         const locationRef = db.collection('locations').doc(appt.location.id);
         const ref = locationRef.collection('clockIns').doc(id);
@@ -735,6 +735,7 @@ class Data {
             sentBy: global.app.conciseUser,
             approvedRef: approvedRef.path,
             rejectedRef: rejectedRef.path,
+            proof,
         };
 
         appt = (await apptRef.get()).data(); // Don't trust the client
@@ -755,7 +756,7 @@ class Data {
         };
     }
 
-    static async clockOut(appt, id) {
+    static async clockOut(appt, id, proof = []) {
         const db = global.db;
         const locationRef = db.collection('locations').doc(appt.location.id);
         const ref = locationRef.collection('clockOuts').doc(id);
@@ -769,6 +770,7 @@ class Data {
             sentBy: global.app.conciseUser,
             approvedRef: approvedRef.path,
             rejectedRef: rejectedRef.path,
+            proof: proof,
         };
 
         appt = (await apptRef.get()).data(); // Don't trust the client
