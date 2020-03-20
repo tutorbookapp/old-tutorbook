@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/tracking",
-  "version": "0.5.6-alpha.1",
+  "version": "0.5.6",
   "description": "Syncs Firestore data with a Google Sheet.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.5.6-alpha.1",
+    "@tutorbook/card": "^0.5.6",
     "@tutorbook/data": "^0.5.6-alpha.0",
     "@tutorbook/utils": "^0.5.6-alpha.0",
     "axios": "^0.19.0",
