@@ -53,8 +53,90 @@ const Utils = require('@tutorbook/utils');
  * @property {string} [url] - The URL of the proof.
  */
 
+class CaptureProofDialog {
+    constructor() {
+        this.proof = [];
+        this.render = window.app.render;
+        this.renderSelf();
+    }
+
+    view() {
+        $('body').prepend(this.el);
+        if (!this.managed) this.manage();
+        this.dialog.open();
+        return new Promise((reject, resolve) => {
+            this.reject = reject;
+            this.resolve = resolve;
+        });
+    }
+
+    renderSelf() {
+        this.el = this.render.template('dialog-popup', {
+            title: 'Upload Proof',
+            summary: 'Upload proof of your tutoring session and your peer ' +
+                'tutoring supervisor will review your request as soon as ' +
+                'possible.',
+        });
+        const addBtn = (l, a) => $(this.el).find('.mdc-dialog__actions')
+            .append(this.render.template('dialog-button', {
+                action: a,
+                label: l,
+            }));
+        addBtn('Cancel', () => this.dialog.close('cancel'));
+        addBtn('Ok', () => this.dialog.close('ok'));
+        $(this.el).find('.mdc-dialog__content').append(
+            this.render.template('upload-input', {
+                filetype: '*',
+            }));
+    }
+
+    manage() {
+        this.managed = true;
+        this.dialog = MDCDialog.attachTo(this.el);
+        this.dialog.autoStackButtons = false;
+        this.dialog.listen('MDCDialog:closing', event => {
+            event.detail === 'ok' ? this.resolve(this.proof) : this.reject();
+        });
+        this.dialog.listen('MDCDialog:closed', () => $(this.el).remove());
+        $(this.el)
+            .find('#previews').hide().end()
+            .find('#upload').change(async event => {
+                event.preventDefault();
+                window.app.snackbar.view('Uploading proof file(s)...');
+                const [err, res] = await to(this.saveFiles(event.target.files));
+                if (err) {
+                    console.error('[ERROR] While uploading proof files:', err);
+                    return window.app.snackbar.view('Could not upload file(s).');
+                }
+                window.app.snackbar.view('Uploaded proof file(s).');
+            });
+    }
+
+    saveFiles(fileList) {
+        const files = [];
+        for (var file of fileList) files.push(file);
+        return Promise.all(files.map(async file => {
+            const path = 'users/' + window.app.user.uid + '/proof/' + file.name;
+            const snap = await firebase.storage().ref(path).put(file);
+            const url = await snap.ref.getDownloadURL();
+            this.proof.push({
+                type: file.type,
+                path: path,
+                url: url,
+            });
+            const preview = this.render.template('uploaded-file-preview');
+            $(preview).css('background', 'url(' + url + ')');
+            $(this.el)
+                .find('.upload-input').addClass('upload-input--previews').end()
+                .find('#previews').show().prepend(preview);
+        }));
+    }
+}
+
+
 /**
  * Class that represents the dialog that enables tutors to send time requests.
+ * @deprecated
  */
 class NewTimeRequestDialog {
     /**
@@ -171,4 +253,5 @@ class ViewTimeRequestDialog {
 module.exports = {
     new: NewTimeRequestDialog,
     view: ViewTimeRequestDialog,
+    capture: CaptureProofDialog,
 };

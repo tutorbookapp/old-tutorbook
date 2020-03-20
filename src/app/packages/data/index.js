@@ -688,17 +688,19 @@ class Data {
         });
     }
 
-    static clockIn(appt, id) {
+    static clockIn(appt, id, proof) {
         return Data.post('clockIn', {
             appt: appt,
             id: id,
+            proof: proof,
         });
     }
 
-    static clockOut(appt, id) {
+    static clockOut(appt, id, proof) {
         return Data.post('clockOut', {
             appt: appt,
             id: id,
+            proof: proof,
         });
     }
 

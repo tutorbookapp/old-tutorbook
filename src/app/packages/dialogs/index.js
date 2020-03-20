@@ -47,6 +47,7 @@ import to from 'await-to-js';
 
 const Data = require('@tutorbook/data');
 const Utils = require('@tutorbook/utils');
+const CaptureProofDialog = require('@tutorbook/time-requests').capture;
 const NewTimeRequestDialog = require('@tutorbook/time-requests').new;
 
 /**
@@ -2190,8 +2191,10 @@ class ViewApptDialog extends ViewRequestDialog {
                 this.request.toUser.type.toLowerCase() : '') + '"] h4').text(
                 'Attendees');
         } else if (window.app.user.type === 'Tutor') {
-            $(this.main).find('#clocking').addClass('second-fab');
-            $(this.main).append(this.render.fab('requestTime'));
+            /*
+             *$(this.main).find('#clocking').addClass('second-fab');
+             *$(this.main).append(this.render.fab('requestTime'));
+             */
         }
         this.header = this.render.header('header-action', {
             showEdit: true,
@@ -2270,16 +2273,17 @@ class ViewApptDialog extends ViewRequestDialog {
             window.app.snackbar.view('Clocked in at ' + new Date(r.clockIn
                 .sentTimestamp).toLocaleTimeString() + '.');
         } else {
+            const [err, proof] = await to(new CaptureProofDialog().view());
+            if (err) return;
             window.app.snackbar.view('Sending request...');
-            const [err, res] = await to(Data.clockIn(this.appt, this.id));
-            if (err) {
+            const [e, res] = await to(Data.clockIn(this.appt, this.id, proof));
+            if (e) {
                 reset();
                 return window.app.snackbar.view('Could not send clock-' +
                     'in request.');
             }
             window.app.snackbar.view('Sent clock-in request to ' +
                 res.recipient.name + '.');
-            window.clockInRes = res;
             ViewApptDialog.listen(
                 res.clockIn.approvedRef,
                 res.clockIn.rejectedRef,
