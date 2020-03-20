@@ -251,6 +251,8 @@ const users = async (ask = false) => {
             }
             bar.tick();
         }
+        if (profile.access.length > 1)
+            profile.access.splice(profile.access.indexOf('root'), 1);
         if (profile.access === user.data().access) continue;
         await user.ref.update({
             access: profile.access,
