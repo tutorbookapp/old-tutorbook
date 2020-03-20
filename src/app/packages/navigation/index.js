@@ -98,7 +98,7 @@ class Navigation {
             case 'matching':
                 return window.app.matching.reView();
             case 'config':
-                return window.app.config.reView();
+                return window.app.configuration.reView();
             case 'schedule':
                 return window.app.schedule.reView();
             case 'payments':
@@ -256,7 +256,7 @@ class Navigation {
                 window.app.matching.view();
             },
             showConfig: () => {
-                window.app.config.view();
+                window.app.configuration.view();
             },
             showChats: function() {
                 window.app.chats.view();

@@ -91,7 +91,7 @@ class Config {
      * Views (and subsequently manages) the main configuration screen and 
      * header.
      * @example
-     * window.app.config.view(); // Views the configuration screen and URL.
+     * window.app.configuration.view(); // Views the configuration screen & URL.
      */
     view() {
         window.app.nav.selected = 'Config';

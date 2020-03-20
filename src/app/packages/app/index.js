@@ -237,7 +237,7 @@ class Tutorbook {
             this.dashboard = new SupervisorDashboard();
             this.matching = new Matching();
             this.stats = new Stats();
-            this.config = new Config();
+            this.configuration = new Config();
             this.chats = new SupervisorChats();
         } else {
             this.schedule = new Schedule();
