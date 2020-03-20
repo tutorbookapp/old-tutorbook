@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/filters",
-  "version": "0.5.5",
+  "version": "0.5.6-alpha.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.5.5",
-    "@tutorbook/dialogs": "^0.5.5",
-    "@tutorbook/templates": "^0.5.5",
-    "@tutorbook/utils": "^0.5.5"
+    "@tutorbook/data": "^0.5.6-alpha.0",
+    "@tutorbook/dialogs": "^0.5.6-alpha.0",
+    "@tutorbook/templates": "^0.5.6-alpha.0",
+    "@tutorbook/utils": "^0.5.6-alpha.0"
   },
   "repository": {
     "type": "git",
