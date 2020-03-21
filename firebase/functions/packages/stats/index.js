@@ -72,6 +72,29 @@ const failedDataAction = {
 
 // Stats triggered when a user completes a data action.
 const dataAction = {
+    newTimeRequest: async (user, data, res, isTest) => {
+        const r = data.request;
+        const a = r.appt;
+        const clockIn = a.clockIn.sentTimestamp.toLocaleTimeString('en-US', {
+            timeZone: 'America/Los_Angeles',
+        });
+        const clockOut = a.clockOut.sentTimestamp.toLocaleTimeString('en-US', {
+            timeZone: 'America/Los_Angeles',
+        });
+        const pupil = r.sentBy.uid !== a.attendees[0].uid ? a.attendees[0] :
+            a.attendees[1];
+        const stat = {
+            title: 'New Time Request',
+            subtitle: user.name.split(' ')[0] + ' logged service hours',
+            summary: r.sentBy.name + ' logged a tutoring session with ' +
+                pupil.name + ' from ' + clockIn + ' until ' + clockOut + '.',
+            timestamp: new Date(r.sentTimestamp),
+            data: Object.assign(r, {
+                id: res.id,
+            }),
+        };
+        return createStat(user, stat, isTest);
+    },
     newRequest: async (user, data, res, isTest) => {
         const r = data.request;
         const stat = {

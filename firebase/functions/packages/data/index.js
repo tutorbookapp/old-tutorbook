@@ -81,22 +81,20 @@ class DataProxy {
             case 'createUser':
                 assert(token.uid === data.uid || token.supervisor);
                 return Data.createUser(data);
-                /*
-                 *case 'newTimeRequest':
-                 *    assert(data.request.tutors
-                 *        .findIndex(t => t.uid === token.uid) >= 0);
-                 *    assert(user.type === 'Tutor' && user.payments.type === 'Free');
-                 *    return Data.newTimeRequest(data.request);
-                 *case 'modifyTimeRequest':
-                 *    assert(token.supervisor);
-                 *    return Data.modifyTimeRequest(data.request, data.id);
-                 *case 'approveTimeRequest':
-                 *    assert(token.supervisor);
-                 *    return Data.approveTimeRequest(data.request, data.id);
-                 *case 'rejectTimeRequest':
-                 *    assert(token.supervisor);
-                 *    return Data.rejectTimeRequest(data.request, data.id);
-                 */
+            case 'newTimeRequest':
+                assert(data.request.tutors
+                    .findIndex(t => t.uid === token.uid) >= 0);
+                assert(user.type === 'Tutor' && user.payments.type === 'Free');
+                return Data.newTimeRequest(data.request);
+            case 'modifyTimeRequest':
+                assert(token.supervisor);
+                return Data.modifyTimeRequest(data.request, data.id);
+            case 'approveTimeRequest':
+                assert(token.supervisor);
+                return Data.approveTimeRequest(data.request, data.id);
+            case 'rejectTimeRequest':
+                assert(token.supervisor);
+                return Data.rejectTimeRequest(data.request, data.id);
             case 'newRequest':
                 assert(token.uid === data.request.fromUser.uid ||
                     token.supervisor);
@@ -223,15 +221,16 @@ class Data {
     }
 
     static async newTimeRequest(request) {
-        const loc = global.db.collection('locations').doc(request.locationId);
-        const ref = loc.collection('timeRequests').doc();
-        await ref.set(request);
-        const locName = (await loc.get()).data().name;
+        const locationId = request.appt.location.id;
+        const locationRef = global.db.collection('locations').doc(locationId);
+        const locationName = (await locationRef.get()).data().name;
+        const timeRequestRef = locationRef.collection('timeRequests').doc();
+        await timeRequestRef.set(request);
         return {
             recipient: {
-                name: 'the ' + locName + '\'s supervisors',
+                name: 'the ' + locationName + '\'s supervisors',
             },
-            id: ref.id,
+            id: timeRequestRef.id,
         };
     }
 
@@ -242,9 +241,11 @@ class Data {
     }
 
     static async rejectTimeRequest(request, id) {
-        const loc = global.db.collection('locations').doc(request.locationId);
-        const originalRef = loc.collection('timeRequests').doc(id);
-        const rejectedRef = loc.collection('rejectedTimeRequests').doc(id);
+        const locationId = request.appt.location.id;
+        const locationRef = global.db.collection('locations').doc(locationId);
+        const originalRef = locationRef.collection('timeRequests').doc(id);
+        const rejectedRef = locationRef.collection('rejectedTimeRequests')
+            .doc(id);
         request = (await originalRef.get()).data();
         await originalRef.delete();
         await rejectedRef.set(Data.combineMaps(request, {
@@ -254,15 +255,37 @@ class Data {
     }
 
     static async approveTimeRequest(request, id) {
-        const loc = global.db.collection('locations').doc(request.locationId);
-        const originalRef = loc.collection('timeRequests').doc(id);
-        const approvedRef = loc.collection('approvedTimeRequests').doc(id);
+        const locationId = request.appt.location.id;
+        const locationRef = global.db.collection('locations').doc(locationId);
+        const originalRef = locationRef.collection('timeRequests').doc(id);
+        const approvedRef = locationRef.collection('approvedTimeRequests')
+            .doc(id);
+        const apptRefs = [locationRef.collection('pastAppointments').doc()];
         request = (await originalRef.get()).data();
+        request.appt.attendees.forEach(attendee => {
+            const ref = global.db.collection('users').doc(attendee.uid);
+            apptRefs.push(ref.collection('pastAppointments').doc(appts[0].id));
+        });
+        const pastAppt = Object.assign(request.appt, {
+            clockIn: Object.assign(request.appt.clockIn, {
+                approvedBy: global.app.conciseUser,
+                approvedTimestamp: new Date(),
+            }),
+            clockOut: Object.assign(request.appt.clockOut, {
+                approvedBy: global.app.conciseUser,
+                approvedTimestamp: new Date(),
+            }),
+        });
         await originalRef.delete();
         await approvedRef.set(Data.combineMaps(request, {
             approvedBy: global.app.conciseUser,
             approvedTimestamp: new Date(),
         }));
+        for (const apptRef of apptRefs) await apptRef.set(pastAppt);
+        return {
+            appt: pastAppt,
+            id: apptRefs[0].id,
+        };
     }
 
     static requestPayout() {
