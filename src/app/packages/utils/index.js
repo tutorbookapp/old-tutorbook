@@ -1521,7 +1521,7 @@ class Utils {
      * An appointment object storing relevant appointment data.
      * @typedef {Object} Appointment
      * @global
-     * @property {User[]} attendees - An array of the users attending the 
+     * @property {Profile[]} attendees - An array of the users attending the 
      * appointment.
      * @property {Time} time - A `Map` storing the time of the appointment.
      * @property {Request} for - The appointment's original lesson request.
