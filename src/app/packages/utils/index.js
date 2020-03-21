@@ -1185,7 +1185,8 @@ class Utils {
 
     /**
      * Combines the two given maps while giving priority to the second map over 
-     * the first.
+     * the first. **Note that setting `deep` to `true` will mess up any other
+     * objects in the map** (e.g. `Array`s will become a `Map`s).
      * @param {Map} mapA - The first map.
      * @param {Map} mapB - The second map (that gets priority).
      * @param {bool} [deep=false] - Whether to use recursive duplication or not.

@@ -158,7 +158,9 @@ class NewTimeRequestDialog {
             proof: [],
             sentBy: window.app.conciseUser,
             sentTimestamp: new Date(),
-        }, prefilled, true);
+        }, prefilled);
+        if (!this.request.appt.clockIn) this.request.appt.clockIn = {};
+        if (!this.request.appt.clockOut) this.request.appt.clockOut = {};
         this.renderSelf();
     }
 
