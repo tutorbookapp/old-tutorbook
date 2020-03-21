@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/hero-email-capture",
-  "version": "0.5.5",
+  "version": "0.5.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,5 +13,5 @@
     "@tutorbook/checkmarks": "^0.5.5",
     "@tutorbook/site-styles": "^0.5.5"
   },
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
+  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
 }

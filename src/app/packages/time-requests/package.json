@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/time-requests",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Package that enables peer tutors to request service hrs via the Tutorbook web app.",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "Nicholas Chiang",
   "license": "AGPL",
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2",
+  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8",
   "dependencies": {
     "@tutorbook/data": "^0.5.6-alpha.0",
     "@tutorbook/utils": "^0.5.6-alpha.0"

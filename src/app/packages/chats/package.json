@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/chats",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,8 +12,8 @@
   "dependencies": {
     "@tutorbook/chat": "^0.5.6-alpha.0",
     "@tutorbook/data": "^0.5.6-alpha.0",
-    "@tutorbook/dialogs": "^0.5.6",
-    "@tutorbook/filters": "^0.5.6",
+    "@tutorbook/dialogs": "^0.5.7",
+    "@tutorbook/filters": "^0.5.7",
     "@tutorbook/utils": "^0.5.6-alpha.0"
   },
   "repository": {
@@ -21,5 +21,5 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/chats"
   },
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
+  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
 }

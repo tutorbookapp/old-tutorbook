@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/snackbar",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/render": "^0.5.6"
+    "@tutorbook/render": "^0.5.7"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/snackbar"
   },
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
+  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
 }

@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/tracking",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "Syncs Firestore data with a Google Sheet.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.5.6",
+    "@tutorbook/card": "^0.5.7",
     "@tutorbook/data": "^0.5.6-alpha.0",
     "@tutorbook/utils": "^0.5.6-alpha.0",
     "axios": "^0.19.0",
@@ -21,5 +21,5 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/tracking"
   },
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
+  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
 }
