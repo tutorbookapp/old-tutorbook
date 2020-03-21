@@ -2191,10 +2191,8 @@ class ViewApptDialog extends ViewRequestDialog {
                 this.request.toUser.type.toLowerCase() : '') + '"] h4').text(
                 'Attendees');
         } else if (window.app.user.type === 'Tutor') {
-            /*
-             *$(this.main).find('#clocking').addClass('second-fab');
-             *$(this.main).append(this.render.fab('requestTime'));
-             */
+            $(this.main).find('#clocking').addClass('second-fab');
+            $(this.main).append(this.render.fab('requestTime'));
         }
         this.header = this.render.header('header-action', {
             showEdit: true,
@@ -2237,10 +2235,8 @@ class ViewApptDialog extends ViewRequestDialog {
             }
         });
         listen(timeBtn, () => new NewTimeRequestDialog({
-            pupils: [this.request.fromUser],
-            tutors: [this.request.toUser],
-            start: this.appt.time.from,
-            end: this.appt.time.to,
+            appt: this.appt,
+            apptId: this.id,
         }).view());
     }
 

@@ -61,12 +61,80 @@ class Utils {
         const now = new Date();
         if (window.app.data.timeStrings.indexOf(timestring) < 0) return now;
         const parts = timestring.split(':');
-        const hour = new Number(parts[1].split(' ')[0]);
+        const min = new Number(parts[1].split(' ')[0]);
         const ampm = parts[1].split(' ')[1];
-        const min = parts[0];
+        const hour = new Number(parts[0]);
         now.setHours(ampm === 'PM' ? hour + 12 : hour);
         now.setMinutes(min);
+        now.setSeconds(0);
         return now;
+    }
+
+    /**
+     * Converts a date into a timestring.
+     * @param {Date} date - The date to convert.
+     * @return {string} The date converted into a timestring (e.g. '2:45 PM').
+     */
+    static dateToTimestring(date) {
+        if (!(date instanceof Date)) date = new Date(date);
+        if (date.toString() === 'Invalid Date')
+            throw new Error('Invalid date passed to `dateToTimestring`.');
+        try {
+            const untrimmed = date.toLocaleTimeString();
+            const ampm = untrimmed.split(' ')[1];
+            const time = untrimmed.split(' ')[0];
+            const splitTime = time.split(':');
+            return splitTime[0] + ':' + splitTime[1] + ' ' + ampm;
+        } catch (err) {
+            throw new Error('Unsupported locale time string (' + untrimmed +
+                '):', err);
+        }
+    }
+
+    /**
+     * Checks if the given `clockIn` time string is valid. Optionally pass a 
+     * `clockOut` to confirm that the `clockIn` occurs before the `clockOut`.
+     * @param {string} clockIn - The clock-in time string to check.
+     * @param {(string|Date)} [clockOut] - The clock-out time to use when 
+     * checking if the clock-in occurs before the clock-out time.
+     * @return {bool} Whether the given `clockIn` time string is valid.
+     */
+    static validClockInTime(clockIn, clockOut) {
+        if (!Utils.validTimestring(clockIn)) return false;
+        if (!clockOut) return true;
+        if (clockOut instanceof Date) clockOut = Utils.dateToTimestring(clockOut);
+        const clockInIndex = window.app.data.timeStrings.indexOf(clockIn);
+        const clockOutIndex = window.app.data.timeStrings.indexOf(clockOut);
+        return clockInIndex < clockOutIndex;
+    }
+
+    /**
+     * Checks if the given `clockOut` time string is valid. Optionally pass a 
+     * `clockIn` to confirm that the `clockOut` occurs after the `clockIn`.
+     * @param {string} clockOut - The clock-in time string to check.
+     * @param {(string|Date)} [clockIn] - The clock-in time to use when 
+     * checking if the clock-out occurs after the clock-in time.
+     * @return {bool} Whether the given `clockOut` time string is valid.
+     */
+    static validClockOutTime(clockOut, clockIn) {
+        if (!Utils.validTimestring(clockOut)) return false;
+        if (!clockIn) return true;
+        if (clockIn instanceof Date) clockIn = Utils.dateToTimestring(clockIn);
+        const clockInIndex = window.app.data.timeStrings.indexOf(clockIn);
+        const clockOutIndex = window.app.data.timeStrings.indexOf(clockOut);
+        return clockInIndex < clockOutIndex;
+    }
+
+    /**
+     * Checks if the given `timestring` is contained in 
+     * `window.app.data.timeStrings`.
+     * @param {string} The time string to check.
+     * @return {bool} Whether the given `timestring` is valid.
+     */
+    static validTimestring(timestring) {
+        if (!window.app.data || !(window.app.data.timeStrings instanceof Array))
+            return false;
+        return window.app.data.timeStrings.indexOf(timestring) >= 0;
     }
 
     /**
@@ -1115,16 +1183,23 @@ class Utils {
         return times;
     }
 
-    static combineMaps(mapA, mapB) {
-        // NOTE: This function gives priority to mapB over mapA
-        const result = {};
-        for (var i in mapA) {
-            result[i] = mapA[i];
-        }
-        for (var i in mapB) {
-            result[i] = mapB[i];
-        }
-        return result;
+    /**
+     * Combines the two given maps while giving priority to the second map over 
+     * the first.
+     * @param {Map} mapA - The first map.
+     * @param {Map} mapB - The second map (that gets priority).
+     * @param {bool} [deep=false] - Whether to use recursive duplication or not.
+     * @return {Map} The combined maps.
+     */
+    static combineMaps(mapA, mapB, deep = false) {
+        const combined = {};
+        for (const i in mapA) combined[i] = deep && mapB ?
+            Utils.combineMaps(mapA[i], mapB[i], deep) :
+            mapA[i];
+        for (const i in mapB) combined[i] = deep && mapA ?
+            Utils.combineMaps(mapA[i], mapB[i], deep) :
+            mapB[i];
+        return combined;
     }
 
     static combineAvailability(availA, availB) {

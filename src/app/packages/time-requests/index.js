@@ -25,8 +25,8 @@ import {
     MDCDialog
 } from '@material/dialog/index';
 import {
-    MDCRipple
-} from '@material/ripple/index';
+    MDCTextField
+} from '@material/textfield/index';
 
 import $ from 'jquery';
 import to from 'await-to-js';
@@ -147,15 +147,18 @@ class NewTimeRequestDialog {
      * @param {TimeRequest} [prefilled] - A set of prefilled properties of a 
      * time request.
      */
-    constructor(prefilled) {
+    constructor(prefilled = {}) {
         this.render = window.app.render;
         this.request = Utils.combineMaps({
-            pupils: [],
-            tutors: [],
-            start: new Date(),
-            end: new Date(),
+            appt: {
+                clockIn: {},
+                clockOut: {},
+            },
+            apptId: '',
             proof: [],
-        }, prefilled);
+            sentBy: window.app.conciseUser,
+            sentTimestamp: new Date(),
+        }, prefilled, true);
         this.renderSelf();
     }
 
@@ -172,17 +175,25 @@ class NewTimeRequestDialog {
                 'tutoring supervisor will review your request as soon as ' +
                 'possible.',
         });
+        const t = (l, v) => this.render.textField(l, v);
+        const add = (el) => $(this.el).find('.mdc-dialog__content').append(el);
         const addBtn = (l, a) => $(this.el).find('.mdc-dialog__actions')
             .append(this.render.template('dialog-button', {
                 action: a,
                 label: l,
             }));
         addBtn('Cancel', () => this.dialog.close('cancel'));
-        addBtn('Send', () => this.dialog.close('send'));
-        $(this.el).find('.mdc-dialog__content').append(
-            this.render.template('upload-input', {
-                filetype: '*',
-            }));
+        addBtn('Send', () => {
+            if (!this.valid) return this.updateClocking(
+                this.clockInTextField.value,
+                this.clockOutTextField.value,
+            );
+            this.dialog.close('send');
+        });
+        add(this.render.splitInputItem(t('Clock-in', ''), t('Clock-out', '')));
+        add(this.render.template('upload-input', {
+            filetype: '*',
+        }));
     }
 
     manage() {
@@ -199,6 +210,18 @@ class NewTimeRequestDialog {
                 res.recipient.name + '.');
         });
         this.dialog.listen('MDCDialog:closed', () => $(this.el).remove());
+        const t = (q, action) => {
+            $(this.el).find(q + ' input').focusout(action);
+            const textField = MDCTextField.attachTo($(this.el).find(q)[0]);
+            textField.useNativeValidation = false;
+            return textField;
+        }; // @see {@link Profile#manage}
+        this.clockInTextField = t('#Clock-in', () => {
+            this.updateClocking(this.clockInTextField.value, undefined);
+        });
+        this.clockOutTextField = t('#Clock-out', () => {
+            this.updateClocking(undefined, this.clockOutTextField.value);
+        });
         $(this.el)
             .find('#previews').hide().end()
             .find('#upload').change(async event => {
@@ -211,6 +234,48 @@ class NewTimeRequestDialog {
                 }
                 window.app.snackbar.view('Uploaded proof file(s).');
             });
+    }
+
+    updateClocking(
+        clockIn = this.request.appt.clockIn.sentTimestamp,
+        clockOut = this.request.appt.clockOut.sentTimestamp,
+    ) {
+        if (typeof clockIn === 'string' && typeof clockOut === 'string') {
+            const valid =
+                Utils.validClockInTime(clockIn, clockOut) &&
+                Utils.validClockOutTime(clockOut, clockIn);
+            if (!valid) return setTimeout(() => this.invalidBoth(), 50);
+            clockIn = Utils.timestringToDate(clockIn);
+            clockOut = Utils.timestringToDate(clockOut);
+        } else if (typeof clockIn === 'string') {
+            const valid = Utils.validClockInTime(clockIn, clockOut);
+            if (!valid) return setTimeout(() => this.invalidClockIn(), 50);
+            clockIn = Utils.timestringToDate(clockIn);
+        } else if (typeof clockOut === 'string') {
+            const valid = Utils.validClockOutTime(clockOut, clockIn);
+            if (!valid) return setTimeout(() => this.invalidClockOut(), 50);
+            clockOut = Utils.timestringToDate(clockOut);
+        }
+        this.request.appt.clockIn.sentTimestamp = clockIn;
+        this.request.appt.clockOut.sentTimestamp = clockOut;
+        this.valid = this.clockInTextField.valid =
+            this.clockOutTextField.valid = true;
+    }
+
+    invalidBoth() {
+        this.valid = this.clockInTextField.valid =
+            this.clockOutTextField.valid = false;
+        this.clockInTextField.required = this.clockOutTextField.required = true;
+    }
+
+    invalidClockIn() {
+        this.valid = this.clockInTextField.valid = false;
+        this.clockInTextField.required = true;
+    }
+
+    invalidClockOut() {
+        this.valid = this.clockOutTextField.valid = false;
+        this.clockOutTextField.required = true;
     }
 
     saveFiles(fileList) {

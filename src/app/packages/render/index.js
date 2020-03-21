@@ -220,6 +220,12 @@ class Render {
         };
     }
 
+    splitInputItem(inputA, inputB) {
+        return $(this.template('input-item'))
+            .append(inputA)
+            .append(inputB)[0];
+    }
+
     splitListItem(inputA, inputB, inputC) {
         $(inputA).css('margin-right', '20px');
         if (inputC) $(inputB).css('margin-right', '20px');

@@ -2,11 +2,23 @@
 @import "@material/form-field/mdc-form-field";
 @import "@material/checkbox/mdc-checkbox";
 
+.input-item {
+  margin-top: 20px !important;
+}
+
+.input-item .mdc-text-field:first-child {
+  margin-right: 20px;
+}
+
+.input-item .mdc-text-field {
+  width: calc(50% - 10px);
+}
+
 .upload-input {
   border: 1px solid #c2c2c2;
   border-radius: 4px;
   position: relative;
-  margin-top: 20px !important;
+  margin-top: 20px;
 }
 
 .upload-input--previews {
