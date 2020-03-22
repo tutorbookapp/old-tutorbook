@@ -8,8 +8,10 @@ const cors = require('cors')({
 
 const Stats = require('stats');
 
-// Recieves a user, an action, and (optional) data. Performs requested action
-// (using the below `Data` class) and sends snackbar message response.
+/**
+ * Recieves a user, an action, and (optional) data. Performs requested action
+ * (using the below `Data` class) and sends snackbar message response.
+ */
 class DataProxy {
     constructor(user, token, action, data) {
         assert(token.email === user.email);
@@ -219,6 +221,12 @@ class Data {
     }
 
     static async newTimeRequest(request) {
+        request.appt.clockIn.sentTimestamp =
+            new Date(request.appt.clockIn.sentTimestamp);
+        request.appt.clockOut.sentTimestamp =
+            new Date(request.appt.clockOut.sentTimestamp);
+        request.appt.timestamp = new Date(request.appt.timestamp);
+        request.sentTimestamp = new Date(request.sentTimestamp);
         const locationId = request.appt.location.id;
         const locationRef = global.db.collection('locations').doc(locationId);
         const locationName = (await locationRef.get()).data().name;
@@ -233,9 +241,15 @@ class Data {
     }
 
     static async modifyTimeRequest(request, id) {
-        const loc = global.db.collection('locations').doc(request.locationId);
-        const ref = loc.collection('timeRequests').doc(id);
-        await ref.update(request);
+        request.appt.clockIn.sentTimestamp =
+            new Date(request.appt.clockIn.sentTimestamp);
+        request.appt.clockOut.sentTimestamp =
+            new Date(request.appt.clockOut.sentTimestamp);
+        request.appt.timestamp = new Date(request.appt.timestamp);
+        request.sentTimestamp = new Date(request.sentTimestamp);
+        const locationId = request.appt.location.id;
+        const locationRef = global.db.collection('locations').doc(locationId);
+        await locationRef.collection('timeRequests').doc(id).update(request);
     }
 
     static async rejectTimeRequest(request, id) {
