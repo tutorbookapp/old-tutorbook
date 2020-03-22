@@ -336,20 +336,55 @@ class SupervisorDashboard extends Dashboard {
         this.viewedRecentActivityCards = true;
         const renderCard = (doc, index) => {
             const action = doc.data();
+            const actions = {
+                dismiss: () => {
+                    $(card).remove();
+                    this.horz.update();
+                    return doc.ref.delete();
+                },
+            };
+            switch (action.type) {
+                case 'newTimeRequest':
+                    const actions = {
+                        reject: () => console.log('[TODO] Implement reject ' +
+                            'request data flow.'),
+                        view: () => console.log('[TODO] Implement view time ' +
+                            'request dialog.'),
+                    };
+                    break;
+                case 'newRequest':
+                    break;
+                case 'cancelRequest':
+                    break;
+                case 'rejectRequest':
+                    break;
+                case 'modifyRequest':
+                    break;
+                case 'approveRequest':
+                    break;
+                case 'cancelAppt':
+                    break;
+                case 'modifyAppt':
+                    break;
+                case 'modifyPastAppt':
+                    break;
+                case 'deletePastAppt':
+                    break;
+                case 'createLocation':
+                    break;
+                case 'updateLocation':
+                    break;
+                case 'deleteLocation':
+                    break;
+            };
             const card = Card.renderCard(
                 action.title,
                 action.subtitle,
-                action.summary, {
-                    dismiss: () => {
-                        $(card).remove();
-                        this.horz.update();
-                        return doc.ref.delete();
-                    },
-                },
+                action.summary,
+                actions,
             );
-            $(card).attr('id', doc.id).attr('index', index)
-                .attr('timestamp', action.timestamp);
-            return card;
+            return $(card).attr('id', doc.id).attr('index', index)
+                .attr('timestamp', action.timestamp)[0];
         };
         const recycler = {
             display: (doc, type, index) => {
@@ -402,7 +437,7 @@ class SupervisorDashboard extends Dashboard {
                 .orderBy('name'),
         };
         Object.entries(queries).forEach((entry) => {
-            var dashboard = new ProxyDashboard(
+            const dashboard = new ProxyDashboard(
                 window.app.location.name.split(' ')[0] + ' ' +
                 Utils.caps(entry[0]),
                 'Manually edit user profiles to set availability, update ' +
