@@ -32,6 +32,7 @@ const MatchingDialog = require('@tutorbook/matching').dialog;
 const ScheduleCard = require('@tutorbook/schedule-card');
 const SearchHeader = require('@tutorbook/search').header;
 const HorzScroller = require('@tutorbook/horz-scroller');
+const ViewTimeRequestDialog = require('@tutorbook/dialogs').viewTimeRequest;
 
 // Shortcut cards for SupervisorDashboard
 const matchingShortcut = require('@tutorbook/matching').default
@@ -336,7 +337,7 @@ class SupervisorDashboard extends Dashboard {
         this.viewedRecentActivityCards = true;
         const renderCard = (doc, index) => {
             const action = doc.data();
-            const actions = {
+            var actions = {
                 dismiss: () => {
                     $(card).remove();
                     this.horz.update();
@@ -345,11 +346,37 @@ class SupervisorDashboard extends Dashboard {
             };
             switch (action.type) {
                 case 'newTimeRequest':
-                    const actions = {
-                        reject: () => console.log('[TODO] Implement reject ' +
-                            'request data flow.'),
-                        view: () => console.log('[TODO] Implement view time ' +
-                            'request dialog.'),
+                    const r = action.data;
+                    const dialog = new ViewTimeRequestDialog(r, action.data.id);
+                    const other = Utils.getOther(r.sentBy, r.appt.attendees);
+                    const senderPronoun = Utils.getPronoun(r.sentBy.gender);
+                    const clockIn = r.appt.clockIn.sentTimestamp.toDate();
+                    const clockOut = r.appt.clockOut.sentTimestamp.toDate();
+                    const confirmTitle = 'Reject Time Request?';
+                    const confirmSummary = 'Reject service hours request ' +
+                        'from ' + r.sentBy.name + ' for ' + senderPronoun +
+                        ' tutoring session with ' + other.name + ' for ' +
+                        r.appt.for.subject + ' on ' +
+                        clockIn.toLocaleDateString() + ' from ' +
+                        clockIn.toLocaleTimeString() + ' to ' +
+                        clockOut.toLocaleTimeString() + '? This action cannot' +
+                        ' be undone.';
+                    const confirmAction = async () => {
+                        window.app.snackbar.view('Rejecting time request...');
+                        const [err, res] = await to(
+                            Data.rejectTimeRequest(r, action.data.id));
+                        if (err) return window.app.snackbar.view('Could not ' +
+                            'reject time request.');
+                        window.app.snackbar.view('Rejected time request.');
+                    };
+                    const confirmDialog = new ConfirmationDialog(
+                        confirmTitle,
+                        confirmSummary,
+                        confirmAction,
+                    );
+                    actions = {
+                        reject: () => confirmDialog.view(),
+                        view: () => dialog.view(),
                     };
                     break;
                 case 'newRequest':

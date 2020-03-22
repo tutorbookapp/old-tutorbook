@@ -1,6 +1,7 @@
 /**
  * Package containing all of the app's dialog views (both full-screen dialogs
- * like the [ViewRequestDialog]{@link module:@tutorbook/dialogs~ViewRequestDialog} 
+ * like the 
+ * [ViewRequestDialog]{@link module:@tutorbook/dialogs~ViewRequestDialog} 
  * or pop-up dialogs like the 
  * [ConfirmationDialog]{@link module:@tutorbook/dialogs~ConfirmationDialog}).
  * @module @tutorbook/dialogs
@@ -3177,6 +3178,23 @@ class ViewPastApptDialog extends ViewApptDialog {
 };
 
 /**
+ * Class that represents the "View Time Request" dialog in our web app that
+ * enables peer tutoring supervisors to:
+ * 1. Review time request proof.
+ * 2. Update the clock-in and clock-out times.
+ * 3. Approve the time request and log service hours.
+ */
+class ViewTimeRequestDialog extends ViewPastApptDialog {
+    constructor(request, id) {
+        super(request.appt, id);
+    }
+
+    manage() {
+        super.super.manage();
+    }
+};
+
+/**
  * Class that represents our "Active Appointment" dialog.
  * @extends ViewApptDialog
  */
@@ -3235,6 +3253,7 @@ class ViewCanceledApptDialog extends ViewApptDialog {
 };
 
 module.exports = {
+    viewTimeRequest: ViewTimeRequestDialog,
     viewRequest: ViewRequestDialog,
     viewModifiedRequest: ViewModifiedRequestDialog,
     viewCanceledRequest: ViewCanceledRequestDialog,

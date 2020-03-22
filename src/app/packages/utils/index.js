@@ -484,6 +484,12 @@ class Utils {
         return hour + ':' + min + ' ' + ampm;
     }
 
+    /**
+     * Gets the other attendee given the user to not return.
+     * @param {Profile} notThisUser - The user that you don't want to return.
+     * @param {Profile[]} attendees - The array of user's to look through.
+     * @return {Profile} The other user attendee.
+     */
     static getOther(notThisUser, attendees) {
         if (!notThisUser.email && !!notThisUser.length) {
             if (notThisUser[0].email === window.app.user.email) {
@@ -1419,6 +1425,11 @@ class Utils {
         return clone;
     }
 
+    /**
+     * Gets the user's gender pronoun (e.g. `his`, `her` or `their`).
+     * @param {string} gender - Gender (either `Male` or `Female`).
+     * @return {string} The user's gender pronoun.
+     */
     static getPronoun(gender) {
         switch (gender) {
             case 'Male':

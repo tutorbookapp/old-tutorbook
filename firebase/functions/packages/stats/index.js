@@ -75,12 +75,14 @@ const dataAction = {
     newTimeRequest: async (user, data, res, isTest) => {
         const r = data.request;
         const a = r.appt;
-        const clockIn = a.clockIn.sentTimestamp.toLocaleTimeString('en-US', {
-            timeZone: 'America/Los_Angeles',
-        });
-        const clockOut = a.clockOut.sentTimestamp.toLocaleTimeString('en-US', {
-            timeZone: 'America/Los_Angeles',
-        });
+        const clockIn = new Date(a.clockIn.sentTimestamp).toLocaleTimeString(
+            'en-US', {
+                timeZone: 'America/Los_Angeles',
+            });
+        const clockOut = new Date(a.clockOut.sentTimestamp).toLocaleTimeString(
+            'en-US', {
+                timeZone: 'America/Los_Angeles',
+            });
         const pupil = r.sentBy.uid !== a.attendees[0].uid ? a.attendees[0] :
             a.attendees[1];
         const stat = {
