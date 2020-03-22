@@ -92,6 +92,7 @@ const dataAction = {
             data: Object.assign(r, {
                 id: res.id,
             }),
+            type: 'newTimeRequest',
         };
         return createStat(user, stat, isTest);
     },
@@ -104,6 +105,7 @@ const dataAction = {
                 'be their ' + r.toUser.type.toLowerCase() + ' for ' +
                 r.subject + ' on ' + r.time.day + 's at ' + r.time.from + '.',
             timestamp: new Date(r.timestamp),
+            type: 'newRequest',
         };
         return createStat(user, stat, isTest);
     },
@@ -116,6 +118,7 @@ const dataAction = {
                 ' for ' + r.subject + ' on ' + r.time.day + 's at ' +
                 r.time.from + ' was canceled by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'cancelRequest',
         };
         return createStat(user, stat, isTest);
     },
@@ -128,6 +131,7 @@ const dataAction = {
                 r.toUser.name + ' for ' + r.subject + ' on ' + r.time.day +
                 's at ' + r.time.from + ' was rejected by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'rejectRequest',
         };
         return createStat(user, stat, isTest);
     },
@@ -140,6 +144,7 @@ const dataAction = {
                 r.toUser.name + ' for ' + r.subject + ' on ' + r.time.day +
                 's at ' + r.time.from + ' was modified by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'modifyRequest',
         };
         return createStat(user, stat, isTest);
     },
@@ -154,6 +159,7 @@ const dataAction = {
                 r.location.name + ' from ' + r.time.from + ' until ' +
                 r.time.to + '.',
             timestamp: new Date(),
+            type: 'approveRequest',
         };
         return createStat(user, stat, isTest);
     },
@@ -167,6 +173,7 @@ const dataAction = {
                 ' with ' + r.toUser.name + ' on ' + a.time.day + 's at ' +
                 a.time.from + ' was canceled by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'cancelAppt',
         };
         return createStat(user, stat, isTest);
     },
@@ -180,6 +187,7 @@ const dataAction = {
                 ' with ' + r.toUser.name + ' on ' + a.time.day + 's at ' +
                 a.time.from + ' was modified by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'modifyAppt',
         };
         return createStat(user, stat, isTest);
     },
@@ -194,6 +202,7 @@ const dataAction = {
                 a.for.subject + ' with ' + r.toUser.name + ' on ' + dateString +
                 ' was modified by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'modifyPastAppt',
         };
         return createStat(user, stat, isTest);
     },
@@ -210,6 +219,7 @@ const dataAction = {
                 a.for.subject + ' with ' + r.toUser.name + ' on ' +
                 clockIn.toDateString() + ' was deleted by ' + user.name + '.',
             timestamp: new Date(),
+            type: 'deletePastAppt',
         };
         return createStat(user, stat, isTest);
     },
@@ -224,6 +234,7 @@ const dataAction = {
                 .toDateString() + '. Contact +1 (650) 861-2723 for more ' +
                 'information.',
             timestamp: created,
+            type: 'createLocation',
         };
         return createStat(user, stat, isTest);
     },
@@ -236,6 +247,7 @@ const dataAction = {
                 'configuration data. Contact +1 (650) 861-2723 for more ' +
                 'information.',
             timestamp: new Date(),
+            type: 'updateLocation',
         };
         return createStat(user, stat, isTest);
     },
@@ -248,6 +260,7 @@ const dataAction = {
                 'configuration data. Contact +1 (650) 861-2723 for more ' +
                 'information.',
             timestamp: new Date(),
+            type: 'deleteLocation',
         };
         return createStat(user, stat, isTest);
     },
