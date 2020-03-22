@@ -32,6 +32,7 @@ const MatchingDialog = require('@tutorbook/matching').dialog;
 const ScheduleCard = require('@tutorbook/schedule-card');
 const SearchHeader = require('@tutorbook/search').header;
 const HorzScroller = require('@tutorbook/horz-scroller');
+const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
 const ViewTimeRequestDialog = require('@tutorbook/dialogs').viewTimeRequest;
 
 // Shortcut cards for SupervisorDashboard
@@ -358,9 +359,9 @@ class SupervisorDashboard extends Dashboard {
                         ' tutoring session with ' + other.name + ' for ' +
                         r.appt.for.subject + ' on ' +
                         clockIn.toLocaleDateString() + ' from ' +
-                        clockIn.toLocaleTimeString() + ' to ' +
-                        clockOut.toLocaleTimeString() + '? This action cannot' +
-                        ' be undone.';
+                        Utils.dateToTimestring(clockIn) + ' to ' +
+                        Utils.dateToTimestring(clockOut) + '? This action ' +
+                        'cannot be undone.';
                     const confirmAction = async () => {
                         window.app.snackbar.view('Rejecting time request...');
                         const [err, res] = await to(
@@ -368,6 +369,7 @@ class SupervisorDashboard extends Dashboard {
                         if (err) return window.app.snackbar.view('Could not ' +
                             'reject time request.');
                         window.app.snackbar.view('Rejected time request.');
+                        return doc.ref.delete();
                     };
                     const confirmDialog = new ConfirmationDialog(
                         confirmTitle,

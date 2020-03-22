@@ -794,6 +794,27 @@ class Data {
             request: request,
         });
     }
+
+    static rejectTimeRequest(request, id) {
+        return Data.post('rejectTimeRequest', {
+            request: request,
+            id: id,
+        });
+    }
+
+    static modifyTimeRequest(request, id) {
+        return Data.post('modifyTimeRequest', {
+            request: request,
+            id: id,
+        });
+    }
+
+    static approveTimeRequest(request, id) {
+        return Data.post('approveTimeRequest', {
+            request: request,
+            id: id,
+        });
+    }
 };
 
 Data.setupCards = [

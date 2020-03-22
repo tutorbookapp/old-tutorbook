@@ -86,8 +86,9 @@ class Utils {
             const splitTime = time.split(':');
             return splitTime[0] + ':' + splitTime[1] + ' ' + ampm;
         } catch (err) {
-            throw new Error('Unsupported locale time string (' + untrimmed +
-                '):', err);
+            console.warn('[WARNING] Unsupported locale time string (' +
+                untrimmed + '):', err);
+            return date.toLocaleTimeString();
         }
     }
 

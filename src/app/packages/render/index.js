@@ -44,6 +44,84 @@ class Render {
         this.templates = new Templates();
     }
 
+    /**
+     * Renders the proof carousel that enables peer tutoring supervisors to
+     * view previews and open the tutoring session proof uploaded by the peer
+     * tutors.
+     * @param {Proof[]} proof - The proof of the tutoring session.
+     * @return {external:HTMLElement} The rendered carousel.
+     */
+    proofCarouselItem(proof) {
+        const carousel = this.template('proof-carousel', {});
+        for (const proof of proof) $(carousel).append(this.carouselItem(proof));
+        const item = this.inputItem(carousel);
+        $(item).attr('style', 'height:50vh!important;');
+        return item;
+    }
+
+    /**
+     * Renders one of the items in the proof carousel. This is **not be to be 
+     * confused with the [proofCarouselItem]{@link Render#proofCarouselItem}** 
+     * which renders the actual carousel with all of it's items. This method 
+     * merely renders one of the items in that carousel.
+     * @param {Proof} proof - The proof to preview in this carousel item.
+     * @return {external:HTMLElement} The rendered preview carousel item.
+     */
+    carouselItem(proof) {
+        const item = this.template('carousel-item', {
+            id: proof.name,
+        });
+        switch (proof.type) {
+            case 'image/png':
+                $(item).css('background', 'url(' + proof.url + ')');
+                break;
+            case 'image/jpeg':
+                $(item).css('background', 'url(' + proof.url + ')');
+                break;
+            case 'image/gif':
+                $(item).css('background', 'url(' + proof.url + ')');
+                break;
+            case 'application/pdf':
+                $(item).append('<embed src="https://drive.google.com/viewerng' +
+                    '/viewer?embedded=true&url=' +
+                    encodeURIComponent(proof.url) + '">');
+                break;
+            case 'audio/mpeg':
+                $(item).append('<audio controls src="' + proof.url + '" type=' +
+                    '"' + proof.type + '">');
+                break;
+            case 'audio/ogg':
+                $(item).append('<audio controls src="' + proof.url + '" type=' +
+                    '"' + proof.type + '">');
+                break;
+            case 'audio/wav':
+                $(item).append('<audio controls src="' + proof.url + '" type=' +
+                    '"' + proof.type + '">');
+                break;
+            case 'video/mp4':
+                $(item).append('<video controls src="' + proof.url + '" type=' +
+                    '"' + proof.type + '">');
+                break;
+            case 'video/ogg':
+                $(item).append('<video controls src="' + proof.url + '" type=' +
+                    '"' + proof.type + '">');
+                break;
+            default:
+                $(item).append(this.template('carousel-item-link', {
+                    name: 'View ' + proof.name,
+                    url: proof.url,
+                }));
+                break;
+        }
+        return item;
+    }
+
+    /**
+     * Renders the service hour progress graph for peer tutor dashboards.
+     * @param {Object} options - A set of options.
+     * @return {external:HTMLElement} The rendered graph.
+     * @todo Actually complete this documentation.
+     */
     progressDoughnut(options) {
         new Chart(options.canvas, {
             type: 'pie',

@@ -3183,14 +3183,39 @@ class ViewPastApptDialog extends ViewApptDialog {
  * 1. Review time request proof.
  * 2. Update the clock-in and clock-out times.
  * 3. Approve the time request and log service hours.
+ * @see {@link module:@tutorbook/time-requests}
  */
 class ViewTimeRequestDialog extends ViewPastApptDialog {
     constructor(request, id) {
         super(request.appt, id);
+        this.timeRequest = request;
+        this.updateRenderAgain();
     }
 
-    manage() {
-        super.super.manage();
+    async renderSelf() {
+        await super.renderSelf();
+        this.header = this.render.header('header-action', {
+            title: 'Time Request',
+            approve: () => this.approveTimeRequest(),
+            showApprove: window.app.user.type === 'Supervisor',
+        });
+    }
+
+    async updateRenderAgain() {
+        await this.rendering;
+        $(this.render.listDivider('Proof')).insertBefore(
+            $(this.main).find('#At'));
+        $(this.render.proofCarouselItem(this.timeRequest.proof)).insertBefore(
+            $(this.main).find('#At'));
+    }
+
+    async approveTimeRequest() {
+        window.app.nav.back();
+        window.app.snackbar.view('Approving time request...');
+        const [err, res] = await to(
+            Data.approveTimeRequest(this.timeRequest, this.id));
+        if (err) return window.app.snackbar.view('Could not approve request.');
+        window.app.snackbar.view('Approved time request.');
     }
 };
 

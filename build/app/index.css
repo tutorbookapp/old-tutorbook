@@ -5490,7 +5490,7 @@ svg.mdc-button__icon {
   /* @alternate */
   background-color: var(--mdc-theme-secondary, #018786); }
 
-@keyframes mdc-checkbox-fade-in-background-u4aaf8637 {
+@keyframes mdc-checkbox-fade-in-background-ue3967a7f {
   0% {
     border-color: rgba(0, 0, 0, 0.54);
     background-color: transparent; }
@@ -5502,7 +5502,7 @@ svg.mdc-button__icon {
     /* @alternate */
     background-color: var(--mdc-theme-secondary, #018786); } }
 
-@keyframes mdc-checkbox-fade-out-background-u4aaf8637 {
+@keyframes mdc-checkbox-fade-out-background-ue3967a7f {
   0%,
   80% {
     border-color: #018786;
@@ -5516,10 +5516,10 @@ svg.mdc-button__icon {
     background-color: transparent; } }
 
 .mdc-checkbox--anim-unchecked-checked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-unchecked-indeterminate .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-in-background-u4aaf8637; }
+  animation-name: mdc-checkbox-fade-in-background-ue3967a7f; }
 
 .mdc-checkbox--anim-checked-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background, .mdc-checkbox--anim-indeterminate-unchecked .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
-  animation-name: mdc-checkbox-fade-out-background-u4aaf8637; }
+  animation-name: mdc-checkbox-fade-out-background-ue3967a7f; }
 
 .mdc-checkbox__native-control[disabled]:not(:checked):not(:indeterminate) ~ .mdc-checkbox__background {
   border-color: rgba(0, 0, 0, 0.26);
@@ -5809,6 +5809,54 @@ svg.mdc-button__icon {
 
 .mdc-ripple-upgraded--background-focused .mdc-checkbox__background::before {
   content: none; }
+
+.file-carousel {
+  height: calc(100% - 40px);
+  border: 1px solid #c2c2c2;
+  width: 100%;
+  border-radius: 4px;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin: 20px 0; }
+
+.file-carousel__item:first-child {
+  margin-left: 20px; }
+
+.file-carousel__item:last-child {
+  margin-right: 20px; }
+
+.file-carousel__item {
+  width: 25%;
+  display: inline-block;
+  height: calc(100% - 40px);
+  margin: 20px 10px;
+  border-radius: 4px;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background: #000;
+  overflow: hidden;
+  position: relative; }
+
+.file-carousel__item embed, video, audio {
+  width: 100%;
+  height: 100%; }
+
+.file-carousel__item-link {
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.file-carousel__item-link .material-icons {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 5px; }
 
 .input-item {
   margin-top: 20px !important; }

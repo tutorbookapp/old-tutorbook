@@ -37,6 +37,7 @@ const Utils = require('@tutorbook/utils');
 /**
  * A time request.
  * @typedef {Object} TimeRequest
+ * @global
  * @property {Profile[]} pupils - The pupil(s) that the tutor is requesting time 
  * with.
  * @property {Profile[]} tutors - The tutor(s) that are requesting the time.
@@ -49,6 +50,7 @@ const Utils = require('@tutorbook/utils');
 /**
  * A piece of proof for a time request.
  * @typedef {Object} Proof
+ * @global
  * @property {string} type - The type of the proof (typically just the file 
  * extension or filetype of the proof).
  * @property {string} [url] - The URL of the proof.
@@ -160,7 +162,7 @@ class NewTimeRequestDialog {
             sentTimestamp: new Date(),
         }, prefilled);
         if (this.request.appt.timestamp instanceof firebase.firestore.Timestamp)
-            this.request.appt.timestamp === this.request.appt.timestamp.toDate();
+            this.request.appt.timestamp = this.request.appt.timestamp.toDate();
         if (!this.request.appt.clockIn) this.request.appt.clockIn = {
             sentBy: window.app.conciseUser,
         };
@@ -295,6 +297,7 @@ class NewTimeRequestDialog {
             const snap = await firebase.storage().ref(path).put(file);
             const url = await snap.ref.getDownloadURL();
             this.request.proof.push({
+                name: file.name,
                 type: file.type,
                 path: path,
                 url: url,
@@ -308,26 +311,7 @@ class NewTimeRequestDialog {
     }
 }
 
-class ViewTimeRequestDialog {
-    constructor(request, id) {
-
-    }
-
-    view() {
-
-    }
-
-    renderSelf() {
-
-    }
-
-    manage() {
-
-    }
-}
-
 module.exports = {
     new: NewTimeRequestDialog,
-    view: ViewTimeRequestDialog,
     capture: CaptureProofDialog,
 };
