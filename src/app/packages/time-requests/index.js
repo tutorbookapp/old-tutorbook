@@ -159,8 +159,14 @@ class NewTimeRequestDialog {
             sentBy: window.app.conciseUser,
             sentTimestamp: new Date(),
         }, prefilled);
-        if (!this.request.appt.clockIn) this.request.appt.clockIn = {};
-        if (!this.request.appt.clockOut) this.request.appt.clockOut = {};
+        if (this.request.appt.timestamp instanceof firebase.firestore.Timestamp)
+            this.request.appt.timestamp === this.request.appt.timestamp.toDate();
+        if (!this.request.appt.clockIn) this.request.appt.clockIn = {
+            sentBy: window.app.conciseUser,
+        };
+        if (!this.request.appt.clockOut) this.request.appt.clockOut = {
+            sentBy: window.app.conciseUser,
+        };
         this.renderSelf();
     }
 
