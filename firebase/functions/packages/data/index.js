@@ -82,8 +82,6 @@ class DataProxy {
                 assert(token.uid === data.uid || token.supervisor);
                 return Data.createUser(data);
             case 'newTimeRequest':
-                assert(data.request.tutors
-                    .findIndex(t => t.uid === token.uid) >= 0);
                 assert(user.type === 'Tutor' && user.payments.type === 'Free');
                 return Data.newTimeRequest(data.request);
             case 'modifyTimeRequest':
