@@ -369,7 +369,6 @@ class SupervisorDashboard extends Dashboard {
                         if (err) return window.app.snackbar.view('Could not ' +
                             'reject time request.');
                         window.app.snackbar.view('Rejected time request.');
-                        return doc.ref.delete();
                     };
                     const confirmDialog = new ConfirmationDialog(
                         confirmTitle,

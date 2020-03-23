@@ -45,7 +45,7 @@ const getUserLocation = async (user, isTest) => {
 
 // Helper function that creates the recentAction document with the given stat 
 // data.
-const createStat = async (user, stat, isTest) => {
+const createStat = async (user, stat, isTest, id) => {
     console.log('[DEBUG] Creating ' + (isTest ? 'test' : 'live') + ' \'' + stat
         .title + '\' stat triggered by ' + user.name + ' (' + user.uid +
         ')...');
@@ -53,7 +53,12 @@ const createStat = async (user, stat, isTest) => {
     if (!isTest) notifyMe('[SUBTITLE] ' + stat.subtitle + ' \n[SUMMARY] ' +
         stat.summary, isTest);
     const locationID = await getUserLocation(user, isTest);
-    return locationID ? db
+    return locationID && id ? db
+        .collection('locations')
+        .doc(locationID)
+        .collection('recentActions')
+        .doc(id)
+        .set(stat) : locationID ? db
         .collection('locations')
         .doc(locationID)
         .collection('recentActions')
@@ -96,7 +101,7 @@ const dataAction = {
             }),
             type: 'newTimeRequest',
         };
-        return createStat(user, stat, isTest);
+        return createStat(user, stat, isTest, res.id);
     },
     newRequest: async (user, data, res, isTest) => {
         const r = data.request;

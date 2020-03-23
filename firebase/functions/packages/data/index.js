@@ -256,10 +256,12 @@ class Data {
         const locationId = request.appt.location.id;
         const locationRef = global.db.collection('locations').doc(locationId);
         const originalRef = locationRef.collection('timeRequests').doc(id);
+        const statRef = locationRef.collection('recentActions').doc(id);
         const rejectedRef = locationRef.collection('rejectedTimeRequests')
             .doc(id);
         request = (await originalRef.get()).data();
         await originalRef.delete();
+        await statRef.delete();
         await rejectedRef.set(Data.combineMaps(request, {
             rejectedBy: global.app.conciseUser,
             rejectedTimestamp: new Date(),
@@ -270,13 +272,14 @@ class Data {
         const locationId = request.appt.location.id;
         const locationRef = global.db.collection('locations').doc(locationId);
         const originalRef = locationRef.collection('timeRequests').doc(id);
+        const statRef = locationRef.collection('recentActions').doc(id);
         const approvedRef = locationRef.collection('approvedTimeRequests')
             .doc(id);
-        const apptRefs = [locationRef.collection('pastAppointments').doc()];
+        const appts = [locationRef.collection('pastAppointments').doc()];
         request = (await originalRef.get()).data();
         request.appt.attendees.forEach(attendee => {
             const ref = global.db.collection('users').doc(attendee.uid);
-            apptRefs.push(ref.collection('pastAppointments').doc(appts[0].id));
+            appts.push(ref.collection('pastAppointments').doc(appts[0].id));
         });
         const pastAppt = Object.assign(request.appt, {
             clockIn: Object.assign(request.appt.clockIn, {
@@ -289,14 +292,15 @@ class Data {
             }),
         });
         await originalRef.delete();
+        await statRef.delete();
         await approvedRef.set(Data.combineMaps(request, {
             approvedBy: global.app.conciseUser,
             approvedTimestamp: new Date(),
         }));
-        for (const apptRef of apptRefs) await apptRef.set(pastAppt);
+        for (const apptRef of appts) await apptRef.set(pastAppt);
         return {
             appt: pastAppt,
-            id: apptRefs[0].id,
+            id: appts[0].id,
         };
     }
 
