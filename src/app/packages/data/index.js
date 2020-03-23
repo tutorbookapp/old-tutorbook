@@ -1075,6 +1075,8 @@ Data.artSubjects = [
     'AP Art History',
     'Photography 1',
     'Video 1',
+    'AP Music Theory',
+    'Music Theory', // Paly
     'Yearbook', // JLS
     'Video Production',
     'Art 1A',
@@ -1178,6 +1180,8 @@ Data.englishSubjects = [
     'English 6', // JLS
     'English 7',
     'English 8',
+    'English 9', // Paly
+    'English 10',
 ];
 
 Data.lifeSkills = [
@@ -1210,6 +1214,8 @@ Data.subjects = [
     'Applied Math',
     'Geometry', // Paly
     'Calculus',
+    'English 9',
+    'English 10',
     'Pre-Algebra', // JLS
     'Math 6',
     'Math 7',
@@ -1236,6 +1242,8 @@ Data.subjects = [
     'AP Art History',
     'Photography 1',
     'Video 1',
+    'AP Music Theory',
+    'Music Theory', // Paly
     'Yearbook', // JLS
     'Video Production',
     'Art 1A',
