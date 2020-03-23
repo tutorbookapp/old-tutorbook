@@ -370,7 +370,7 @@ eval("module.exports = \"<header class=\\\"site-header\\\">\\n    <div class=\\\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = \"<div class=\\\"heading-block\\\">\\n    <h1 class=\\\"heading-block__heading\\\">\\n        Use Tutorbook to drive academic excellence with peer-to-peer tutoring.\\n    </h1>\\n</div>\";\n\n//# sourceURL=webpack:///./packages/heading-block/index.html?./node_modules/html-loader");
+eval("module.exports = \"<div class=\\\"heading-block\\\">\\n    <h1 class=\\\"heading-block__heading\\\">\\n        Use Tutorbook to manage, streamline, and scale peer tutoring programs.\\n    </h1>\\n</div>\";\n\n//# sourceURL=webpack:///./packages/heading-block/index.html?./node_modules/html-loader");
 
 /***/ }),
 
