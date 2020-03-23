@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/stats",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Statistics screen for the Tutorbook web app.",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,8 @@
     "directory": "src/app/packages/stats"
   },
   "dependencies": {
-    "@tutorbook/card": "^0.5.7",
-    "@tutorbook/utils": "^0.5.6-alpha.0"
+    "@tutorbook/card": "^0.5.8",
+    "@tutorbook/utils": "^0.5.8"
   },
   "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
 }

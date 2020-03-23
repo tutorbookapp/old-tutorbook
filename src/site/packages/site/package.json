@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/site",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,16 +10,16 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@tutorbook/cta-link": "^0.5.7",
-    "@tutorbook/email-capture": "^0.5.7",
-    "@tutorbook/email-form": "^0.5.7",
+    "@tutorbook/cta-link": "^0.5.8",
+    "@tutorbook/email-capture": "^0.5.8",
+    "@tutorbook/email-form": "^0.5.8",
     "@tutorbook/feature-announcement": "^0.5.5",
-    "@tutorbook/feature-spotlight-vertical": "^0.5.7",
-    "@tutorbook/features": "^0.5.7",
+    "@tutorbook/feature-spotlight-vertical": "^0.5.8",
+    "@tutorbook/features": "^0.5.8",
     "@tutorbook/footer": "^0.5.5",
     "@tutorbook/header": "^0.5.5",
-    "@tutorbook/heading-block": "^0.5.7",
-    "@tutorbook/hero-email-capture": "^0.5.7",
+    "@tutorbook/heading-block": "^0.5.8",
+    "@tutorbook/hero-email-capture": "^0.5.8",
     "@tutorbook/large-testimonial": "^0.5.5",
     "@tutorbook/legal": "^0.5.5",
     "@tutorbook/logo-party": "^0.5.5",
