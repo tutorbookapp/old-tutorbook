@@ -1,7 +1,7 @@
 {
   "name": "@tutorbook/schedule",
   "version": "0.5.7",
-  "description": "",
+  "description": "Package that contains the code backing Tutorbook's primary schedule (list-like) view.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

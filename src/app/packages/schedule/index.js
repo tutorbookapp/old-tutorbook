@@ -1,4 +1,9 @@
 /**
+ * Package that contains the code backing Tutorbook's **primary schedule** 
+ * (list-like) view.
+ * @module @tutorbook/schedule
+ * @see {@link https://npmjs.com/package/@tutorbook/schedule}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +18,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -221,10 +226,10 @@ class Schedule {
         });
         this.main = this.render.template('schedule', {
             welcome: !window.app.onMobile,
-            summary: (window.app.user.type === 'Supervisor' ? 'View all past, ' +
-                'upcoming, and active tutoring appointments at the locations ' +
-                'you supervise.' : 'View past tutoring sessions, clock ' +
-                'out of active meetings and edit upcoming appointments.'),
+            summary: (window.app.user.type === 'Supervisor' ? 'View all past,' +
+                ' upcoming, and active tutoring appointments at the locations' +
+                ' you supervise.' : 'View past tutoring sessions, clock ' +
+                'out of active meetings, and edit upcoming appointments.'),
         });
         if (window.app.onMobile) $(this.main).addClass('schedule--mobile');
     }
