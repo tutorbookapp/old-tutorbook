@@ -690,9 +690,7 @@ class Utils {
      * to `userA`).
      */
     static getOtherUser(userA, userB) {
-        if (userA.email === window.app.user.email) {
-            return userB;
-        }
+        if (userA.email === window.app.user.email) return userB;
         return userA; // Default is to return the first user
     }
 
