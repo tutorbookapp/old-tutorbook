@@ -22,13 +22,8 @@
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
-// Polyfills
-import 'core-js';
-import 'regenerator-runtime';
-
 // Dependencies
 import * as $ from 'jquery';
-import to from 'await-to-js';
 
 // App styling (Sass)
 import './styles/main.scss';
@@ -58,6 +53,15 @@ import './styles/history.css';
 import './styles/matching.css';
 import './styles/chats.css';
 import './styles/header.css';
+
+$('body').show(); // Only show `body` after styles have been loaded.
+
+// Polyfills
+import 'core-js';
+import 'regenerator-runtime';
+
+// Dependencies (cont.)
+import to from 'await-to-js';
 
 // App packages
 import {

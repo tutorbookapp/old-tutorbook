@@ -1,5 +1,13 @@
 const path = require('path');
 
+/**
+ * Our [webpack]{@link https://webpackjs.org} configuration.
+ * @see {@link https://webpack.js.org/loaders/html-loader/#minimize}
+ * @see {@link https://github.com/DanielRuf/html-minifier-terser}
+ * @see {@link https://www.npmjs.com/package/svg-url-loader}
+ * @see {@link https://webpack.js.org/loaders/babel-loader/}
+ * @see {@link https://babeljs.io}
+ */
 module.exports = (env, argv) => {
     return {
         watch: true,
@@ -12,13 +20,11 @@ module.exports = (env, argv) => {
         module: {
             rules: [{
                 test: /\.js$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/env'],
-                        minified: argv.mode === 'production',
-                        comments: argv.mode !== 'production',
-                    },
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/env'],
+                    minified: argv.mode === 'production',
+                    comments: argv.mode !== 'production',
                 },
             }, {
                 test: /\.s[ac]ss$/,
@@ -37,7 +43,27 @@ module.exports = (env, argv) => {
                 use: ['style-loader', 'css-loader'],
             }, {
                 test: /\.html$/,
-                use: 'html-loader',
+                loader: 'html-loader',
+                options: {
+                    esModule: true,
+                    minimize: argv.mode === 'production' ? {
+                        collapseBooleanAttributes: true,
+                        collapseWhitespace: true,
+                        decodeEntities: true,
+                        minifyCSS: true,
+                        minifyJS: true,
+                        quoteCharacter: '"',
+                        removeComments: true,
+                        removeOptionalTags: true,
+                        removeRedundantAttributes: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true,
+                        removeTagWhitespace: true,
+                        sortAttributes: true,
+                        sortClassName: true,
+                        useShortDoctype: true,
+                    } : false,
+                },
             }, {
                 test: /\.svg$/,
                 use: 'svg-url-loader',
