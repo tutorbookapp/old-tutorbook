@@ -1,9 +1,11 @@
 # [![Tutorbook Logo](https://tutorbook.app/favicon/text-logo.png)](https://tutorbook.app)
 
 [![Build Status](https://travis-ci.org/tutorbookapp/tutorbook.svg?branch=master)](https://travis-ci.org/tutorbookapp/tutorbook)
-[![NPM Version](https://badge.fury.io/js/%40tutorbook%2Fapp.svg)](https://badge.fury.io/js/%40tutorbook%2Fapp)
+[![Website Status](https://img.shields.io/website?down_color=lightgrey&down_message=down&up_color=brightgreen&up_message=up&url=https%3A%2F%2Ftutorbook.app)](https://tutorbook.app)
+[![NPM Version](https://badge.fury.io/js/%40tutorbook%2Fapp.svg)](https://npmjs.com/package/@tutorbook/app)
 [![Maintainability](https://api.codeclimate.com/v1/badges/dd8c901f0077521d8f21/maintainability)](https://codeclimate.com/github/nicholaschiang/tutorbook/maintainability)
-[![Coverage Status](https://coveralls.io/repos/github/nicholaschiang/tutorbook/badge.svg?branch=master)](https://coveralls.io/github/nicholaschiang/tutorbook?branch=master)
+[![Dependencies](https://david-dm.org/tutorbookapp/tutorbook/status.svg)](https://david-dm.org/tutorbookapp/tutorbook)
+[![License](https://img.shields.io/badge/license-CC%2FAGPL-blue)](https://github.com/tutorbookapp/tutorbook/blob/develop/LICENSE)
 [![Lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
 A PWA (Progressive Web App) designed to optimize the process required to get a
