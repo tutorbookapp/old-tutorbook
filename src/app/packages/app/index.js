@@ -26,6 +26,35 @@
 import $ from 'jquery';
 import to from 'await-to-js';
 
+// App styling (Sass)
+import './styles/main.scss';
+import './styles/cards.scss';
+import './styles/welcome.scss';
+import './styles/dialogs.scss';
+import './styles/settings.scss';
+import './styles/schedule.scss';
+import './styles/chat.scss';
+import './styles/profile.scss';
+import './styles/search.scss';
+import './styles/ads.scss';
+import './styles/dashboard.scss';
+import './styles/snackbar.scss';
+import './styles/login.scss';
+import './styles/cta-link.scss';
+import './styles/email-form.scss';
+
+// App styling (CSS)
+import './styles/loader.css';
+import './styles/payments.css';
+import './styles/clock.css';
+import './styles/user.css';
+import './styles/search.css';
+import './styles/filters.css';
+import './styles/history.css';
+import './styles/matching.css';
+import './styles/chats.css';
+import './styles/header.css';
+
 // App packages
 const Stats = require('@tutorbook/stats');
 const Dashboard = require('@tutorbook/dashboard').default;
