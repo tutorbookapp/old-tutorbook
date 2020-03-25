@@ -1,7 +1,7 @@
 {
   "name": "@tutorbook/intercom",
   "version": "0.5.5",
-  "description": "",
+  "description": "Package that contains a wrapper for Tutorbook's Intercom integration.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

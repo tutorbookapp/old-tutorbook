@@ -1,4 +1,9 @@
 /**
+ * Package that contains items supporting the schedule card in the 
+ * `SupervisorDashboard` within Tutorbook's web app.
+ * @module @tutorbook/schedule-card
+ * @see {@link https://npmjs.com/package/@tutorbook/schedule-card}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

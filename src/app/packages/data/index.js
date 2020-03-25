@@ -1,4 +1,9 @@
 /**
+ * Package that contains a wrapper for our data REST API (and other common data
+ * actions; such as updating a user's Firestore profile document directly).
+ * @module @tutorbook/data
+ * @see {@link https://npmjs.com/package/@tutorbook/data}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

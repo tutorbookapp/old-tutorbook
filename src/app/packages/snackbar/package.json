@@ -1,7 +1,7 @@
 {
   "name": "@tutorbook/snackbar",
   "version": "0.5.8",
-  "description": "",
+  "description": "Package that contains a class that manages the snackbars in Tutorbook's web app.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

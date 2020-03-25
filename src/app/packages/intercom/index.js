@@ -1,4 +1,8 @@
 /**
+ * Package that contains a wrapper for Tutorbook's Intercom integration.
+ * @module @tutorbook/intercom
+ * @see {@link https://npmjs.com/package/@tutorbook/intercom}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

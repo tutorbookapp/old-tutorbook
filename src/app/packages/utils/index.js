@@ -1,4 +1,9 @@
 /**
+ * Package that contains basic (and some very **not basic**) utilities used 
+ * across Tutorbook's web app.
+ * @module @tutorbook/utils
+ * @see {@link https://npmjs.com/package/@tutorbook/utils}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

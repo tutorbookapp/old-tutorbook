@@ -1,4 +1,9 @@
 /**
+ * Package that contains a class that manages the snackbars in Tutorbook's web 
+ * app.
+ * @module @tutorbook/snackbar
+ * @see {@link https://npmjs.com/package/@tutorbook/snackbar}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

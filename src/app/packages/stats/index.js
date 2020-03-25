@@ -1,4 +1,9 @@
 /**
+ * Package that contains a **deprecated** statistics page for the Tutorbook web
+ * app.
+ * @module @tutorbook/stats
+ * @see {@link https://npmjs.com/package/@tutorbook/stats}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

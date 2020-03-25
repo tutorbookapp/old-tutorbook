@@ -1,7 +1,7 @@
 {
   "name": "@tutorbook/schedule-card",
   "version": "0.5.8",
-  "description": "",
+  "description": "Package that contains items supporting the schedule card in the `SupervisorDashboard` within Tutorbook's web app.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

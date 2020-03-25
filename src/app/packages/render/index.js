@@ -1,4 +1,9 @@
 /**
+ * Package that contains a `Render` object used to render templates and other
+ * components commonly used across Tutorbook's web app.
+ * @module @tutorbook/render
+ * @see {@link https://npmjs.com/package/@tutorbook/render}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

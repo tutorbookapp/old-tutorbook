@@ -1,4 +1,8 @@
 /**
+ * Package that contains the user views from Tutorbook's web app.
+ * @module @tutorbook/user
+ * @see {@link https://npmjs.com/package/@tutorbook/user}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *

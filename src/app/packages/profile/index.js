@@ -1,4 +1,8 @@
 /**
+ * Package that contains the profile views from Tutorbook's web app.
+ * @module @tutorbook/profile
+ * @see {@link https://npmjs.com/package/@tutorbook/profile}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
