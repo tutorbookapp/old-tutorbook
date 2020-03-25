@@ -23,7 +23,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const Data = require('@tutorbook/data');
+import Data from '@tutorbook/data';
 
 /**
  * Class that provides the settings screen and header and manages all data flow
@@ -31,7 +31,7 @@ const Data = require('@tutorbook/data');
  * @todo Finish documentation (and implementation for that matter).
  * @deprecated
  */
-class Settings {
+export default class Settings {
 
     constructor() {
         this.render = window.app.render;
@@ -55,6 +55,3 @@ class Settings {
         });
     }
 };
-
-
-module.exports = Settings;

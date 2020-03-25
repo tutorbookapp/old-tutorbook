@@ -16,18 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const User = require('@tutorbook/user');
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
+import User from '@tutorbook/user';
 
-const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
-const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
-const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;
-const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+import {
+    ViewApptDialog,
+    ViewActiveApptDialog,
+    ViewCanceledApptDialog,
+    ViewPastApptDialog,
+    ConfirmationDialog,
+} from '@tutorbook/dialogs';
 
 /**
  * Class that represents the basic appt list item included in the user's primary
@@ -93,7 +95,7 @@ class Event {
  * @alias ApptListItem
  * @extends EventListItem
  */
-class Appt extends Event {
+export class Appt extends Event {
     constructor(doc) {
         super(doc);
         this.other = Utils.getOtherUser(this.attendees[0], this.attendees[1]);
@@ -132,7 +134,7 @@ class Appt extends Event {
     }
 };
 
-class SupervisorAppt extends Event {
+export class SupervisorAppt extends Event {
     constructor(doc) {
         super(doc);
         this.title = "Upcoming Appointment between " + this.attendees[0].name +
@@ -179,7 +181,7 @@ class SupervisorAppt extends Event {
     }
 };
 
-class CanceledAppt extends Event {
+export class CanceledAppt extends Event {
     constructor(doc) {
         super(doc);
         this.other = Utils.getOtherUser(this.for.attendees[0], this.for
@@ -206,7 +208,7 @@ class CanceledAppt extends Event {
     }
 };
 
-class SupervisorCanceledAppt extends Event {
+export class SupervisorCanceledAppt extends Event {
     constructor(doc) {
         super(doc);
         this.title = "Canceled Appointment between " + this.for.attendees[0].name +
@@ -240,7 +242,7 @@ class SupervisorCanceledAppt extends Event {
     }
 };
 
-class ModifiedAppt extends Event {
+export class ModifiedAppt extends Event {
     constructor(doc) {
         super(doc);
         this.other = Utils.getOtherUser(this.for.attendees[0], this.for
@@ -267,7 +269,7 @@ class ModifiedAppt extends Event {
     }
 };
 
-class SupervisorModifiedAppt extends Event {
+export class SupervisorModifiedAppt extends Event {
     constructor(doc) {
         super(doc);
         this.title = "Modified Appointment between " + this.for.attendees[0].name +
@@ -301,7 +303,7 @@ class SupervisorModifiedAppt extends Event {
     }
 };
 
-class ActiveAppt extends Event {
+export class ActiveAppt extends Event {
     constructor(doc) {
         super(doc);
         this.other = Utils.getOtherUser(this.attendees[0], this.attendees[1]);
@@ -334,7 +336,7 @@ class ActiveAppt extends Event {
     }
 };
 
-class SupervisorActiveAppt extends Event {
+export class SupervisorActiveAppt extends Event {
     constructor(doc) {
         super(doc);
         this.title = "Active Appointment between " + this.attendees[0].name +
@@ -372,7 +374,7 @@ class SupervisorActiveAppt extends Event {
     }
 };
 
-class PastAppt extends Event {
+export class PastAppt extends Event {
     constructor(doc) {
         super(doc);
         this.other = Utils.getOtherUser(this.attendees[0], this.attendees[1]);
@@ -416,7 +418,7 @@ class PastAppt extends Event {
     }
 };
 
-class SupervisorPastAppt extends Event {
+export class SupervisorPastAppt extends Event {
     constructor(doc) {
         super(doc);
         this.title = "Past Appointment between " + this.attendees[0].name +
@@ -467,19 +469,4 @@ class SupervisorPastAppt extends Event {
         };
         this.renderSelf('supervisor-appt-list-item');
     }
-};
-
-module.exports = {
-    appt: Appt,
-    active: ActiveAppt,
-    past: PastAppt,
-    canceled: CanceledAppt,
-    modified: ModifiedAppt,
-    supervisor: {
-        appt: SupervisorAppt,
-        active: SupervisorActiveAppt,
-        past: SupervisorPastAppt,
-        canceled: SupervisorCanceledAppt,
-        modified: SupervisorModifiedAppt,
-    },
 };

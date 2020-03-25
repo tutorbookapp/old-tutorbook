@@ -29,23 +29,25 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
-const EditSubjectsDialog = require('@tutorbook/dialogs').editSubjects;
-const NotificationDialog = require('@tutorbook/dialogs').notify;
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
-const User = require('@tutorbook/user');
+import {
+    EditAvailabilityDialog,
+    EditSubjectsDialog,
+    NotificationDialog,
+    ConfirmationDialog,
+} from '@tutorbook/dialogs';
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
+import User from '@tutorbook/user';
 
 /**
  * Class that provides a profile view and header and manages all data flow
  * concerning the user's profile.
  * @todo Finish documenting this class's methods and other properties.
  */
-class Profile {
+export class Profile {
 
     /**
      * Creates and renders a new profile view.
@@ -514,7 +516,7 @@ class Profile {
  * create new user profiles.
  * @extends Profile
  */
-class NewProfile extends Profile {
+export class NewProfile extends Profile {
     /**
      * Renders the new profile view by replacing the text in the mdc top app bar
      * title, adding the "Basic Info" section (for the user's name and email),
@@ -797,7 +799,7 @@ class NewProfile extends Profile {
  * profiles that already exist.
  * @extends NewProfile
  */
-class EditProfile extends NewProfile {
+export class EditProfile extends NewProfile {
     /**
      * Manages the profile view by attaching an mdc ripple to the delete user 
      * button (in addition to everything that the 
@@ -871,7 +873,7 @@ class EditProfile extends NewProfile {
  * "Profile" tab.
  * @extends Profile
  */
-class TutorProfile extends Profile {
+export class TutorProfile extends Profile {
     /**
      * Renders the tutor profile view by replacing the bio field with a service 
      * hours field (shows the tutor how many service hours they've tracked).
@@ -937,8 +939,11 @@ class TutorProfile extends Profile {
     }
 };
 
-
-class PaidTutorProfile extends Profile {
+/**
+ * Class representing the profile view that paid tutors see.
+ * @todo Finish documentation.
+ */
+export class PaidTutorProfile extends Profile {
 
     constructor(profile) {
         super(profile);
@@ -1007,13 +1012,4 @@ class PaidTutorProfile extends Profile {
             this.profile.bio = input.val();
         });
     }
-};
-
-
-module.exports = {
-    default: Profile,
-    new: NewProfile,
-    edit: EditProfile,
-    paid: PaidTutorProfile,
-    tutor: TutorProfile,
 };

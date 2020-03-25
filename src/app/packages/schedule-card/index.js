@@ -26,15 +26,17 @@ import {
     MDCMenu
 } from '@material/menu/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
-const EditApptDialog = require('@tutorbook/dialogs').editAppt;
-const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
-const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
+import {
+    EditApptDialog,
+    ViewApptDialog,
+    ViewActiveApptDialog,
+    ConfirmationDialog,
+} from '@tutorbook/dialogs';
 
 /**
  * Class that represents the schedule cards within the supervisor's dashboard
@@ -244,7 +246,7 @@ class ActiveAppt extends Event {
  * user's existing appointments (i.e. so supervisors don't match them for the 
  * same thing twice or double-book them).
  */
-class ScheduleCard {
+export default class ScheduleCard {
     /**
      * Creates and renders a new dashboard schedule card.
      * @param {Object} [queries] - The queries to recycle appt data from (to 
@@ -337,5 +339,3 @@ class ScheduleCard {
         Utils.recycle(this.queries, recycler);
     }
 };
-
-module.exports = ScheduleCard;

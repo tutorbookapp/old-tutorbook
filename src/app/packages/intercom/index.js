@@ -20,7 +20,7 @@
  * Class that inits and manages our Intercom integration. 
  * @see {@link https://intercom.com}
  */
-class Help {
+export default class Help {
 
     /**
      * Creates a new Help object by initializing the Intercom Messenger widget 
@@ -99,5 +99,3 @@ class Help {
         return window.Intercom('shutdown');
     }
 };
-
-module.exports = Help;

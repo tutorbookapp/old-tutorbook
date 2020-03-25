@@ -28,36 +28,38 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const SearchHeader = require('@tutorbook/search').header;
-const Card = require('@tutorbook/card');
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
+import {
+    SearchHeader,
+} from '@tutorbook/search';
+import Card from '@tutorbook/card';
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
 
-const NewPastApptDialog = require('@tutorbook/dialogs').newPastAppt;
+import {
+    NewPastApptDialog,
+} from '@tutorbook/dialogs';
 
-const Appt = require('@tutorbook/schedule-items').appt;
-const ActiveAppt = require('@tutorbook/schedule-items').active;
-const PastAppt = require('@tutorbook/schedule-items').past;
-const CanceledAppt = require('@tutorbook/schedule-items').canceled;
-const ModifiedAppt = require('@tutorbook/schedule-items').modified;
-const SupervisorAppt = require('@tutorbook/schedule-items').supervisor.appt;
-const SupervisorPastAppt = require('@tutorbook/schedule-items').supervisor.past;
-const SupervisorActiveAppt = require('@tutorbook/schedule-items').supervisor
-    .active;
-const SupervisorCanceledAppt = require('@tutorbook/schedule-items').supervisor
-    .canceled;
-const SupervisorModifiedAppt = require('@tutorbook/schedule-items').supervisor
-    .modified;
+import {
+    Appt,
+    ActiveAppt,
+    CanceledAppt,
+    ModifiedAppt,
+    SupervisorAppt,
+    SupervisorPastAppt,
+    SupervisorActiveAppt,
+    SupervisorCanceledAppt,
+    SupervisorModifiedAppt,
+} from '@tutorbook/schedule-items';
 
 /**
  * Class that provides a schedule view and header and manages all the data flow
  * concerning the user's appointments. Also provides an API to insert into the
  * schedule.
  */
-class Schedule {
+export class Schedule {
     /**
      * Creates (and renders) a new schedule view.
      */
@@ -378,7 +380,7 @@ Schedule.renderApptListItem = (doc) => {
  * Class that shows all of the appointments for the current app location.
  * @extends Schedule
  */
-class SupervisorSchedule extends Schedule {
+export class SupervisorSchedule extends Schedule {
     /**
      * Renders the search result hit for the appointments search header view.
      * @param {Object} hit - The Algolia search result data.
@@ -541,9 +543,4 @@ class SupervisorSchedule extends Schedule {
             .attr('priority', 10);
         return card;
     }
-};
-
-module.exports = {
-    default: Schedule,
-    supervisor: SupervisorSchedule,
 };

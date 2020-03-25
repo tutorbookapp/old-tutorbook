@@ -20,11 +20,11 @@
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
 
 /**
  * Class that represents the configuration screen that enables supervisors to 
@@ -33,7 +33,7 @@ const Data = require('@tutorbook/data');
  * - Always round up/round down/round normally
  * @todo Finish documentation.
  */
-class HrsConfig {
+export default class HrsConfig {
     constructor(rules = [{
         location: window.app.location,
         rounding: Data.roundings[0],
@@ -105,5 +105,3 @@ class HrsConfig {
             })));
     }
 }
-
-module.exports = HrsConfig;

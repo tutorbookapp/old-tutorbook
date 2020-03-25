@@ -23,37 +23,38 @@ import {
     MDCMenu
 } from '@material/menu/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
 // Dialogs
-const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
-const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
-const ViewModifiedRequestDialog = require('@tutorbook/dialogs')
-    .viewModifiedRequest;
-const ViewCanceledRequestDialog = require('@tutorbook/dialogs')
-    .viewCanceledRequest;
-const ViewRejectedRequestDialog = require('@tutorbook/dialogs')
-    .viewRejectedRequest;
-const ViewApptDialog = require('@tutorbook/dialogs').viewAppt;
-const ViewPastApptDialog = require('@tutorbook/dialogs').viewPastAppt;
-const ViewActiveApptDialog = require('@tutorbook/dialogs').viewActiveAppt;
-const ViewCanceledApptDialog = require('@tutorbook/dialogs').viewCanceledAppt;
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
+import {
+    EditRequestDialog,
+    ViewRequestDialog,
+    ViewModifiedRequestDialog,
+    ViewCanceledRequestDialog,
+    ViewRejectedRequestDialog,
+    ViewApptDialog,
+    ViewPastApptDialog,
+    ViewActiveApptDialog,
+    ViewCanceledApptDialog,
+    ConfirmationDialog,
+} from '@tutorbook/dialogs';
 
 // Users
-const EditProfile = require('@tutorbook/profile').edit;
-const User = require('@tutorbook/user');
+import {
+    EditProfile,
+} from '@tutorbook/profile';
+import User from '@tutorbook/user';
 
 // Dependencies
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
 
 /**
  * Class this renders each card based on the given doc, queryID, and type.
  * @todo Finish documentation.
  */
-class Card {
+export default class Card {
 
     constructor(doc, queryID, type, priority = 5) {
         this.render = app.render;
@@ -1145,6 +1146,3 @@ Card.prototype.removeCardDoc = function(type, id) {
             .collection(type).doc(id).delete();
     }
 };
-
-
-module.exports = Card;

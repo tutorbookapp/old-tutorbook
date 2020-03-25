@@ -20,22 +20,29 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
-const Chat = require('@tutorbook/chat').default;
-const AnnouncementChat = require('@tutorbook/chat').announcement;
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const NewGroupDialog = require('@tutorbook/filters').group;
-const EditGroupDialog = require('@tutorbook/filters').editGroup;
+import {
+    ConfirmationDialog,
+} from '@tutorbook/dialogs';
+import {
+    Chat,
+    AnnouncementChat,
+} from '@tutorbook/chat';
+import {
+    NewGroupDialog,
+    EditGroupDialog,
+} from '@tutorbook/filters';
+
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
 
 /**
  * Class that provides a chat view and header and enables users to message one 
  * another all within the app.
  */
-class Chats {
+export class Chats {
 
     constructor() {
         this.chats = {}; // Store chat objects in cache for responsiveness
@@ -292,7 +299,7 @@ class Chats {
  * all of your tutoring data and with automatic messages).
  * @extends Chats
  */
-class SupervisorChats extends Chats {
+export class SupervisorChats extends Chats {
     constructor() {
         super();
         this.announcements = {};
@@ -502,9 +509,4 @@ class SupervisorChats extends Chats {
         $('body #menus').prepend(menuEl);
         return el;
     }
-};
-
-module.exports = {
-    default: Chats,
-    supervisor: SupervisorChats,
 };

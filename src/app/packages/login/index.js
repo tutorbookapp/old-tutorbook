@@ -32,9 +32,9 @@ import {
     MDCTextField
 } from '@material/textfield/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const Utils = require('@tutorbook/utils');
+import Utils from '@tutorbook/utils';
 
 /**
  * Class that handles new logins and user sign-ups.
@@ -43,7 +43,7 @@ const Utils = require('@tutorbook/utils');
  * @todo Update the styling on the Google Login button to conform with their
  * branding guidelines.
  */
-class Login {
+export class Login {
     /**
      * Creates (and renders using `window.app.render`) a new login instance and 
      * resets the `window.app`'s user.
@@ -251,7 +251,7 @@ class Login {
  * a) Request access to the website partition.
  * b) Go to the [root website]{@link https://tutorbook.app/app} partition.
  */
-class GoToRootPrompt {
+export class GoToRootPrompt {
     /**
      * Creates (and renders) a new error screen using the given district (or 
      * `access`) configuration and `window.app.render` to render the 
@@ -320,7 +320,7 @@ class GoToRootPrompt {
  * a) Go to the given website's partition.
  * b) Continue to the [root website]{@link https://tutorbook.app/app} partition.
  */
-class GoToWebsitePrompt {
+export class GoToWebsitePrompt {
     /**
      * Creates (and renders) a new prompt screen that prompts the user to go to 
      * the given website's app partition.
@@ -391,10 +391,4 @@ class GoToWebsitePrompt {
         this.resolve = res;
         this.reject = rej;
     }
-};
-
-module.exports = {
-    default: Login,
-    rootPrompt: GoToRootPrompt,
-    websitePrompt: GoToWebsitePrompt,
 };

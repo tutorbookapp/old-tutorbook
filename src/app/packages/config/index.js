@@ -26,18 +26,22 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
-const SearchHeader = require('@tutorbook/search').header;
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
-const EditLocationDialog = require('@tutorbook/dialogs').editLocation;
-const NewLocationDialog = require('@tutorbook/dialogs').newLocation;
-const Card = require('@tutorbook/card');
-const HorzScroller = require('@tutorbook/horz-scroller');
-const HrsConfig = require('@tutorbook/hrs-config');
+import {
+    SearchHeader,
+} from '@tutorbook/search';
+import {
+    ConfirmationDialog,
+    EditLocationDialog,
+    NewLocationDialog,
+} from '@tutorbook/dialogs';
+import Card from '@tutorbook/card';
+import HorzScroller from '@tutorbook/horz-scroller';
+import HrsConfig from '@tutorbook/hrs-config';
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
 
 /**
  * Class that represents a configuration screen to manage all data unique to 
@@ -48,7 +52,7 @@ const HrsConfig = require('@tutorbook/hrs-config');
  * - Edit school schedule
  * - Define service hour rounding rules
  */
-class Config {
+export default class Config {
     /**
      * Creates and renders a new configuration main screen and search header.
      * @see {@link module:@tutorbook/search~SearchHeader}
@@ -239,5 +243,3 @@ class Config {
         Utils.recycle(queries, recycler);
     }
 }
-
-module.exports = Config;

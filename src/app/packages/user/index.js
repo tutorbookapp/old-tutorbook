@@ -23,13 +23,15 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const NewRequestDialog = require('@tutorbook/dialogs').newRequest;
-const PaidRequestDialog = require('@tutorbook/dialogs').paidRequest;
-const StripeRequestDialog = require('@tutorbook/dialogs').stripeRequest;
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
+import {
+    NewRequestDialog,
+    PaidRequestDialog,
+    StripeRequestDialog,
+} from '@tutorbook/dialogs';
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
 
 /** 
  * Class that represents the user view in Tutorbook's web app.
@@ -40,7 +42,7 @@ const Data = require('@tutorbook/data');
  * re-render the user view to show them.
  * @todo Finish documenting the rest of this class's methods.
  */
-class User {
+export default class User {
     /**
      * Creates and renders a new user view for a given profile.
      * @param {Profile} profile - The profile to render into a user view.
@@ -201,5 +203,3 @@ class User {
     }
 
 };
-
-module.exports = User;

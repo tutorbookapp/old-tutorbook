@@ -20,12 +20,12 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Utils = require('@tutorbook/utils');
+import Utils from '@tutorbook/utils';
 
-class Chat {
+export class Chat {
 
     constructor(id, chat) {
         this.id = id;
@@ -216,7 +216,7 @@ class Chat {
     }
 };
 
-class AnnouncementChat extends Chat {
+export class AnnouncementChat extends Chat {
     constructor(doc) {
         super(doc.id, doc.data());
         this.doc = doc;
@@ -242,9 +242,4 @@ class AnnouncementChat extends Chat {
             lastMessage: msg,
         });
     }
-};
-
-module.exports = {
-    default: Chat,
-    announcement: AnnouncementChat,
 };

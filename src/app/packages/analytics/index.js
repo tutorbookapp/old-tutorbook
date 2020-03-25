@@ -25,7 +25,7 @@
  * Wrapper class around Google Analytics for Firebase.
  * @see {@link https://firebase.google.com/docs/analytics/get-started?platform=web}
  */
-class Analytics {
+export default class Analytics {
     /**
      * Creates a new Google Analytics for Firebase object and stores it in 
      * `this.analytics`. If Google Analytics for Firebase was not enabled 
@@ -79,5 +79,3 @@ class Analytics {
         });
     }
 }
-
-module.exports = Analytics;

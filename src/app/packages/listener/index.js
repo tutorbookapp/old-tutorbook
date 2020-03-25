@@ -23,18 +23,22 @@
 
 import to from 'await-to-js';
 
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
-const ConfirmClockInDialog = require('@tutorbook/clocking').in;
-const ConfirmClockOutDialog = require('@tutorbook/clocking').out;
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
+import {
+    ConfirmationDialog,
+} from '@tutorbook/dialogs';
+import {
+    ConfirmClockInDialog,
+    ConfirmClockOutDialog,
+} from '@tutorbook/clocking';
 
 /**
  * Class that enables the client to listen to remote events (e.g. Firestore
  * database triggers or HTTP request responses).
  * @todo Finish documentation.
  */
-class Listener {
+export default class Listener {
 
     constructor() {
         switch (window.app.user.type) {
@@ -152,6 +156,3 @@ class Listener {
             }));
     }
 };
-
-
-module.exports = Listener;

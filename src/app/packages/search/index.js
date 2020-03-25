@@ -27,21 +27,28 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const EditProfile = require('@tutorbook/profile').edit;
-const User = require('@tutorbook/user');
-const FilterDialog = require('@tutorbook/filters').default;
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const NotificationDialog = require('@tutorbook/dialogs').notify;
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
+import User from '@tutorbook/user';
+
+import {
+    EditProfile,
+} from '@tutorbook/profile';
+import {
+    FilterDialog,
+} from '@tutorbook/filters';
+import {
+    NotificationDialog,
+} from '@tutorbook/dialogs';
 
 /**
  * Class that represents the `mdc-top-app-bar` with a Google-like search bar
  * that opens an elevated search results `mdc-list`.
  */
-class SearchHeader {
+export class SearchHeader {
 
     constructor(options = {}) {
         this.render = window.app.render;
@@ -213,7 +220,7 @@ class SearchHeader {
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes}
  * @todo Finish documentation.
  */
-class Search {
+export class Search {
 
     constructor() {
         this.users = {}; // Store user objects in cache for responsiveness
@@ -601,10 +608,4 @@ class Search {
         result += '...';
         return result;
     }
-};
-
-
-module.exports = {
-    default: Search,
-    header: SearchHeader,
 };

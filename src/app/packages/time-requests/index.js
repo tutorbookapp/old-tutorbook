@@ -28,11 +28,11 @@ import {
     MDCTextField
 } from '@material/textfield/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
 
 /**
  * A time request.
@@ -56,7 +56,7 @@ const Utils = require('@tutorbook/utils');
  * @property {string} [url] - The URL of the proof.
  */
 
-class CaptureProofDialog {
+export class CaptureProofDialog {
     constructor() {
         this.proof = [];
         this.render = window.app.render;
@@ -143,7 +143,7 @@ class CaptureProofDialog {
  * Class that represents the dialog that enables tutors to send time requests.
  * @deprecated
  */
-class NewTimeRequestDialog {
+export class NewTimeRequestDialog {
     /**
      * Creates a new time request dialog given optional time request params.
      * @param {TimeRequest} [prefilled] - A set of prefilled properties of a 
@@ -310,8 +310,3 @@ class NewTimeRequestDialog {
         }));
     }
 }
-
-module.exports = {
-    new: NewTimeRequestDialog,
-    capture: CaptureProofDialog,
-};

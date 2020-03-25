@@ -29,17 +29,18 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const phone = require('phone');
-const axios = require('axios');
-const Data = require('@tutorbook/data');
+import phone from 'phone';
+import axios from 'axios';
+
+import Data from '@tutorbook/data';
 
 /**
  * Class that contains basic (and some very **not basic**) utilities used across 
  * Tutorbook's web app.
  */
-class Utils {
+export default class Utils {
     /**
      * Creates a new utilities class by either using the already initialized 
      * `window.app.data` [Data]{@link Data} object or by creating a new 
@@ -1712,5 +1713,3 @@ class Utils {
     }
 
 };
-
-module.exports = Utils;

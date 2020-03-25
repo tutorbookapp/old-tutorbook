@@ -28,12 +28,12 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const Data = require('@tutorbook/data');
-const User = require('@tutorbook/user');
-const Utils = require('@tutorbook/utils');
-const Navigo = require('navigo');
+import Data from '@tutorbook/data';
+import User from '@tutorbook/user';
+import Utils from '@tutorbook/utils';
+import Navigo from 'navigo';
 
 /**
  * Class that manages app URLs, the navigation drawer, and back navigation.
@@ -42,7 +42,7 @@ const Navigo = require('navigo');
  * button in the browser should be the same as hitting the back button within 
  * the PWA).
  */
-class Navigation {
+export default class Navigation {
 
     constructor() {
         this.render = window.app.render;
@@ -201,12 +201,6 @@ class Navigation {
                 '/app/home': function() {
                     window.app.dashboard.view();
                 },
-                '/app/feedback': function() {
-                    app.feedback.view();
-                },
-                '/app/help': function() {
-                    app.feedback.view();
-                },
                 '/app': function() {
                     app.dashboard.view();
                 },
@@ -267,9 +261,6 @@ class Navigation {
             payments: window.app.user.config.showPayments || false,
             showPayments: () => {
                 window.app.payments.view();
-            },
-            showHelp: function() {
-                window.app.feedback.view();
             },
         }
 
@@ -338,9 +329,6 @@ class Navigation {
             case 'Profile':
                 $('#nav-drawer .mdc-list #profile').addClass(active);
                 break;
-            case 'Help & Feedback':
-                $('#nav-drawer .mdc-list #feedback').addClass(active);
-                break;
             default:
                 $('#nav-drawer .mdc-list #home').addClass(active);
         };
@@ -351,5 +339,3 @@ class Navigation {
     }
 
 };
-
-module.exports = Navigation;

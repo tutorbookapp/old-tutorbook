@@ -20,27 +20,33 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('@tutorbook/data');
-const Card = require('@tutorbook/card');
-const Utils = require('@tutorbook/utils');
-const User = require('@tutorbook/user');
-const EditProfile = require('@tutorbook/profile').edit;
-const MatchingDialog = require('@tutorbook/matching').dialog;
-const ScheduleCard = require('@tutorbook/schedule-card');
-const SearchHeader = require('@tutorbook/search').header;
-const HorzScroller = require('@tutorbook/horz-scroller');
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
-const ViewTimeRequestDialog = require('@tutorbook/dialogs').viewTimeRequest;
-
-// Shortcut cards for SupervisorDashboard
-const matchingShortcut = require('@tutorbook/matching').default
-    .renderShortcutCard;
-const scheduleShortcut = require('@tutorbook/schedule').supervisor
-    .renderShortcutCard;
-const trackingShortcut = require('@tutorbook/tracking').renderShortcutCard;
+import Data from '@tutorbook/data';
+import Card from '@tutorbook/card';
+import Utils from '@tutorbook/utils';
+import User from '@tutorbook/user';
+import ScheduleCard from '@tutorbook/schedule-card';
+import HorzScroller from '@tutorbook/horz-scroller';
+import Tracking from '@tutorbook/tracking';
+import {
+    EditProfile,
+} from '@tutorbook/profile';
+import {
+    Matching,
+    MatchingDialog,
+} from '@tutorbook/matching';
+import {
+    SearchHeader,
+} from '@tutorbook/search';
+import {
+    ConfirmationDialog,
+    ViewTimeRequestDialog,
+} from '@tutorbook/dialogs';
+import {
+    SupervisorSchedule,
+} from '@tutorbook/schedule';
 
 /**
  * Class that manages the dashboard view (provides an API for other classes to
@@ -48,7 +54,7 @@ const trackingShortcut = require('@tutorbook/tracking').renderShortcutCard;
  * user logs in.
  * @todo Finish documentation for this class.
  */
-class Dashboard {
+export class Dashboard {
 
     /**
      * Creates and renders (using the global [window.app.render]{@link Render}
@@ -265,7 +271,7 @@ class Dashboard {
  * offers that have no responses)
  * 3. Everything else (e.g. cards w/ #s => "125 Tutors" or "56 Pupils")
  */
-class SupervisorDashboard extends Dashboard {
+export class SupervisorDashboard extends Dashboard {
 
     renderSelf() {
         super.renderSelf();
@@ -325,9 +331,9 @@ class SupervisorDashboard extends Dashboard {
 
     viewShortcutCards() {
         const def = $(this.main).find('#default');
-        this.viewCard(scheduleShortcut(), def);
-        this.viewCard(matchingShortcut(), def);
-        this.viewCard(trackingShortcut(), def);
+        this.viewCard(SupervisorSchedule.renderShortcutCard(), def);
+        this.viewCard(Matching.renderShortcutCard(), def);
+        this.viewCard(Tracking.renderShortcutCard(), def);
     }
 
     /**
@@ -660,11 +666,4 @@ class SupervisorQueryDashboard extends QueryDashboard {
         super(title, subtitle, queries);
     }
 
-};
-
-
-module.exports = {
-    default: Dashboard,
-    supervisor: SupervisorDashboard,
-    query: QueryDashboard,
 };

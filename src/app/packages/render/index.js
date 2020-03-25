@@ -26,16 +26,19 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const Chart = require('chart.js');
-const User = require('@tutorbook/user');
-const Templates = require('@tutorbook/templates');
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
+import Chart from 'chart.js';
+import User from '@tutorbook/user';
+import Templates from '@tutorbook/templates';
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
 
-/** Class that contains commonly used rendering functions. */
-class Render {
+/** 
+ * Class that contains commonly used rendering functions. 
+ * @todo Finish documentation.
+ */
+export default class Render {
     /** 
      * Creates a new Render object and intializes it's 
      * [Templates]{@link Templates} object.
@@ -575,5 +578,3 @@ class Render {
         return content;
     }
 };
-
-module.exports = Render;

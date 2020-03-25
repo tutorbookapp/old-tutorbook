@@ -20,7 +20,7 @@ import {
     MDCRipple
 } from '@material/ripple/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
 /**
  * Class that represents the horizontal scroller in the 
@@ -28,7 +28,7 @@ import $ from 'jquery';
  * [supervisor dashboard view]{@linkplain SupervisorDashboard}.
  * @todo Finish documentation for this class.
  */
-class HorzScroller {
+export default class HorzScroller {
     constructor(id = 'horz-scroller', scroll = 0) {
         this.id = id;
         this.scroll = scroll;
@@ -106,5 +106,3 @@ class HorzScroller {
             .show();
     }
 };
-
-module.exports = HorzScroller;

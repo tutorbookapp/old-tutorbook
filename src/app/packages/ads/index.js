@@ -26,9 +26,9 @@ import {
     MDCDialog
 } from '@material/dialog/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const Data = require('@tutorbook/data');
+import Data from '@tutorbook/data';
 
 class AdBanner {};
 
@@ -63,7 +63,7 @@ class AdDialog {
 
 };
 
-class Ads {
+export default class Ads {
 
     constructor() {
         this.dialogs = {
@@ -115,5 +115,3 @@ class Ads {
         return passed;
     }
 };
-
-module.exports = Ads;

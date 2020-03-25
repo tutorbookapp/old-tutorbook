@@ -43,19 +43,21 @@ import {
     MDCCheckbox
 } from '@material/checkbox/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
-const CaptureProofDialog = require('@tutorbook/time-requests').capture;
-const NewTimeRequestDialog = require('@tutorbook/time-requests').new;
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
+import {
+    CaptureProofDialog,
+    NewTimeRequestDialog,
+} from '@tutorbook/time-requests';
 
 /**
  * Class that represents the dialog that enables users to select subjects.
  * @abstract
  */
-class SubjectSelectDialog {
+export class SubjectSelectDialog {
 
     /**
      * Creates and renders a new subject selection dialog.
@@ -269,7 +271,7 @@ class SubjectSelectDialog {
  * they can probably tutor Algebra 1 and 2).
  * @extends SubjectSelectDialog
  */
-class EditSubjectsDialog extends SubjectSelectDialog {
+export class EditSubjectsDialog extends SubjectSelectDialog {
     /**
      * Creates the dialog that selects the subject to populate a given 
      * [`MDCTextField`]{@linkcode https://material.io/develop/web/components/input-controls/text-field/}.
@@ -354,9 +356,9 @@ class EditSubjectsDialog extends SubjectSelectDialog {
  * when they are available for tutoring appointments.
  * @todo Make it faster to select larger windows of time across the week. We
  * want all availability selection to take less than five seconds.
- * @todo Finish documenting all of this class's methods.
+ * @todo Finish documenting all of this export class's methods.
  */
-class EditAvailabilityDialog {
+export class EditAvailabilityDialog {
 
     /**
      * Creates a new "Edit Availability" dialog that updates the given text
@@ -695,7 +697,7 @@ class EditAvailabilityDialog {
  * if (clockIn.rejected) dialog.view(); // Notify user if their clock-in request
  * // was rejected.
  */
-class NotificationDialog {
+export class NotificationDialog {
 
     /**
      * Renders the dialog with the given message and title.
@@ -765,7 +767,7 @@ class NotificationDialog {
  * const action = () => Data.deleteUser(window.app.user);
  * new ConfirmationDialog(title, summary, action).view();
  */
-class ConfirmationDialog {
+export class ConfirmationDialog {
 
     /**
      * A callback function that does an (important) action.
@@ -824,7 +826,7 @@ class ConfirmationDialog {
 /**
  * Class that represents the "View Request" view/dialog within our web app.
  */
-class ViewRequestDialog {
+export class ViewRequestDialog {
 
     /**
      * Creates and renders the dialog for the given request.
@@ -942,7 +944,7 @@ class ViewRequestDialog {
  * Class that represents the "Modified Request" view/dialog within our web app.
  * @extends ViewRequestDialog
  */
-class ViewModifiedRequestDialog extends ViewRequestDialog {
+export class ViewModifiedRequestDialog extends ViewRequestDialog {
     /**
      * Creates and renders a new "Modified Request" view/dialog.
      */
@@ -964,7 +966,7 @@ class ViewModifiedRequestDialog extends ViewRequestDialog {
  * Class that represents the "Canceled Request" view/dialog within our web app.
  * @extends ViewRequestDialog
  */
-class ViewCanceledRequestDialog extends ViewRequestDialog {
+export class ViewCanceledRequestDialog extends ViewRequestDialog {
     /**
      * Creates and renders the new "Canceled Request" view/dialog (stores the
      * entire canceled request data (i.e. who canceled the request and when) in 
@@ -990,7 +992,7 @@ class ViewCanceledRequestDialog extends ViewRequestDialog {
  * Class that represents the "Rejected Request" view/dialog within our web app.
  * @extends ViewRequestDialog
  */
-class ViewRejectedRequestDialog extends ViewRequestDialog {
+export class ViewRejectedRequestDialog extends ViewRequestDialog {
     /**
      * Creates and renders the new "Rejected Request" view/dialog (stores the
      * entire rejected request data (i.e. who rejected it and when) in 
@@ -1017,7 +1019,7 @@ class ViewRejectedRequestDialog extends ViewRequestDialog {
  * location's open hours.
  * @see {@link module:@tutorbook/dialogs~EditAvailabilityDialog}
  */
-class EditHourDialog {
+export class EditHourDialog {
     /**
      * Creates and renders a new edit hours dialog.
      * @param {MDCTextField} textField - The hour text field to get the initial 
@@ -1193,7 +1195,7 @@ class EditHourDialog {
  * @todo Change the supervisor inputs into 
  * [user search text fields]{@linkplain Render#searchTextFieldItem}.
  */
-class EditLocationDialog {
+export class EditLocationDialog {
     /**
      * Creates and renders a new "Edit Location" dialog.
      * @param {Location} location - The location data to edit.
@@ -1489,11 +1491,11 @@ class EditLocationDialog {
  * supervisors to create new locations that students can tutor at (and be safely
  * supervised) at.
  * @extends EditLocationDialog
- * @todo Implement this class, add a "New Location" FAB in the supervisor's 
+ * @todo Implement this export class, add a "New Location" FAB in the supervisor's 
  * ["Configuration" view]{@link https://tutorbook.app/app/config}, and roll the 
  * features out to production.
  */
-class NewLocationDialog extends EditLocationDialog {
+export class NewLocationDialog extends EditLocationDialog {
     /**
      * Creates and renders the "New Location" dialog/view.
      * @todo Define what an empty location looks like and pass it into the
@@ -1517,7 +1519,7 @@ class NewLocationDialog extends EditLocationDialog {
  * Class that represents an "Edit Request" dialog that enables users to edit
  * their inbound and/or outbound lesson requests.
  */
-class EditRequestDialog {
+export class EditRequestDialog {
     /**
      * Creates and renders the "Edit Request" dialog for the given request.
      * @param {Object} request - The request data to edit in this dialog.
@@ -1858,7 +1860,7 @@ class EditRequestDialog {
 };
 
 
-class NewRequestDialog extends EditRequestDialog {
+export class NewRequestDialog extends EditRequestDialog {
 
     // Creates editRequestDialog based on the given subject and toUser
     constructor(subject, user) {
@@ -1943,7 +1945,7 @@ class NewRequestDialog extends EditRequestDialog {
 };
 
 
-class PaidRequestDialog extends NewRequestDialog {
+export class PaidRequestDialog extends NewRequestDialog {
 
     constructor(subject, user) {
         super(subject, user);
@@ -2054,7 +2056,7 @@ class PaidRequestDialog extends NewRequestDialog {
 };
 
 
-class StripeRequestDialog extends PaidRequestDialog {
+export class StripeRequestDialog extends PaidRequestDialog {
 
     constructor(subject, user) {
         super(subject, user);
@@ -2150,7 +2152,7 @@ class StripeRequestDialog extends PaidRequestDialog {
  * Class that represents the "View Appointment" view/dialog in our web app.
  * @extends ViewRequestDialog
  */
-class ViewApptDialog extends ViewRequestDialog {
+export class ViewApptDialog extends ViewRequestDialog {
     /**
      * Creates and renders a new "View Appointment" dialog (building off of what
      * has already been initialized and rendered in the "View Request" dialog).
@@ -2480,7 +2482,7 @@ class ViewApptDialog extends ViewRequestDialog {
  * their upcoming appointments.
  * @extends EditRequestDialog
  */
-class EditApptDialog extends EditRequestDialog {
+export class EditApptDialog extends EditRequestDialog {
     constructor(appt, id) {
         super(appt.for, id);
         this.appt = appt;
@@ -2515,7 +2517,7 @@ class EditApptDialog extends EditRequestDialog {
  * enables supervisors and admins to record existing past appointments.
  * @extends EditApptDialog
  */
-class NewPastApptDialog extends EditApptDialog {
+export class NewPastApptDialog extends EditApptDialog {
     /**
      * Creates and renders a new `NewPastApptDialog`.
      */
@@ -3020,7 +3022,7 @@ class NewPastApptDialog extends EditApptDialog {
  * Class that represents the "Past Appointment" dialog in our web app.
  * @extends ViewApptDialog
  */
-class ViewPastApptDialog extends ViewApptDialog {
+export class ViewPastApptDialog extends ViewApptDialog {
     /**
      * Creates and renders a new "Past Appointment" dialog by calling
      * [this.updateRender]{@link ViewPastApptDialog#updateRender} when we
@@ -3185,7 +3187,7 @@ class ViewPastApptDialog extends ViewApptDialog {
  * 3. Approve the time request and log service hours.
  * @see {@link module:@tutorbook/time-requests}
  */
-class ViewTimeRequestDialog extends ViewPastApptDialog {
+export class ViewTimeRequestDialog extends ViewPastApptDialog {
     constructor(request, id) {
         super(request.appt, id);
         this.timeRequest = request;
@@ -3223,7 +3225,7 @@ class ViewTimeRequestDialog extends ViewPastApptDialog {
  * Class that represents our "Active Appointment" dialog.
  * @extends ViewApptDialog
  */
-class ViewActiveApptDialog extends ViewApptDialog {
+export class ViewActiveApptDialog extends ViewApptDialog {
     /**
      * Renders the "Active Appointment" dialog by:
      * - Replacing the "Appointment" header title with text that reads "Active
@@ -3259,7 +3261,7 @@ class ViewActiveApptDialog extends ViewApptDialog {
     }
 };
 
-class ViewCanceledApptDialog extends ViewApptDialog {
+export class ViewCanceledApptDialog extends ViewApptDialog {
     constructor(appt) {
         super(appt.for);
         this.canceledAppt = appt;
@@ -3275,29 +3277,4 @@ class ViewCanceledApptDialog extends ViewApptDialog {
             .find('#Current').parent().remove().end()
             .find('.mdc-fab').remove();
     }
-};
-
-module.exports = {
-    viewTimeRequest: ViewTimeRequestDialog,
-    viewRequest: ViewRequestDialog,
-    viewModifiedRequest: ViewModifiedRequestDialog,
-    viewCanceledRequest: ViewCanceledRequestDialog,
-    viewRejectedRequest: ViewRejectedRequestDialog,
-    editRequest: EditRequestDialog,
-    newRequest: NewRequestDialog,
-    paidRequest: PaidRequestDialog,
-    stripeRequest: StripeRequestDialog,
-    viewAppt: ViewApptDialog,
-    editAppt: EditApptDialog,
-    viewPastAppt: ViewPastApptDialog,
-    newPastAppt: NewPastApptDialog,
-    viewActiveAppt: ViewActiveApptDialog,
-    viewCanceledAppt: ViewCanceledApptDialog,
-    notify: NotificationDialog,
-    editSubjects: EditSubjectsDialog,
-    selectSubject: SubjectSelectDialog,
-    editAvailability: EditAvailabilityDialog,
-    confirm: ConfirmationDialog,
-    editLocation: EditLocationDialog,
-    newLocation: NewLocationDialog,
 };

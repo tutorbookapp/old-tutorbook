@@ -33,27 +33,33 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-const ScheduleCard = require('@tutorbook/schedule-card');
-const SearchHeader = require('@tutorbook/search').header;
-const Search = require('@tutorbook/search').default;
-const Card = require('@tutorbook/card');
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const NewProfile = require('@tutorbook/profile').new;
-const EditProfile = require('@tutorbook/profile').edit;
-const ConfirmationDialog = require('@tutorbook/dialogs').confirm;
-const EditRequestDialog = require('@tutorbook/dialogs').editRequest;
-const ViewRequestDialog = require('@tutorbook/dialogs').viewRequest;
+import {
+    Search,
+    SearchHeader,
+} from '@tutorbook/search';
+import {
+    NewProfile,
+    EditProfile,
+} from '@tutorbook/profile';
+import {
+    ConfirmationDialog,
+    EditRequestDialog,
+    ViewRequestDialog,
+} from '@tutorbook/dialogs';
+import ScheduleCard from '@tutorbook/schedule-card';
+import Card from '@tutorbook/card';
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
 
 import to from 'await-to-js';
-import $ from 'jquery';
+import * as $ from 'jquery';
 
 /** 
  * Class that represents the screen that enables supervisors to create tutor and 
  * pupil accounts and manually match them together (i.e. create appointments).
- * @todo Finish documentation for this class.
+ * @todo Finish documentation for this export class.
  */
-class Matching {
+export class Matching {
 
     constructor() {
         this.profiles = {}; // Store EditProfile objects
@@ -492,8 +498,11 @@ class Matching {
 };
 
 
-// Class that enables supervisors to create matches for pupils
-class MatchingDialog {
+/**
+ * Class that enables supervisors to create matches for pupils.
+ * @todo Finish documentation.
+ */
+export class MatchingDialog {
     constructor(profile, options = {}) {
         this.profile = profile;
         this.subject = options.subject || profile.subjects[0];
@@ -804,9 +813,4 @@ class ConfirmMatchDialog extends ConfirmationDialog {
 
         super(title, message, createMatches);
     }
-};
-
-module.exports = {
-    default: Matching,
-    dialog: MatchingDialog,
 };

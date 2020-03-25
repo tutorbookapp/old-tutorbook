@@ -16,8 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// Class that manages notifications (settings, webpush, etc) client side.
-class Notify {
+/**
+ * Class that manages notifications (settings, webpush, etc) client side.
+ * @todo Finish documentation.
+ */
+export default class Notify {
 
     constructor() {
         try {
@@ -101,5 +104,3 @@ class Notify {
         });
     }
 };
-
-module.exports = Notify;

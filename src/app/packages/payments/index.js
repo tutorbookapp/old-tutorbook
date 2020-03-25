@@ -26,22 +26,29 @@ import {
     MDCTopAppBar
 } from '@material/top-app-bar/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
+import axios from 'axios';
 
-const axios = require('axios');
-const Profile = require('@tutorbook/profile').default;
-const PaidProfile = require('@tutorbook/profile').paid;
-const TutorProfile = require('@tutorbook/profile').tutor;
-const NotificationDialog = require('@tutorbook/dialogs').notify;
-const Card = require('@tutorbook/card');
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const getDayAndDateString = require('@tutorbook/schedule').default.getDayAndDateString;
+import {
+    Profile,
+    PaidTutorProfile,
+    TutorProfile,
+} from '@tutorbook/profile';
+import {
+    NotificationDialog,
+} from '@tutorbook/dialogs';
+import Card from '@tutorbook/card';
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
+//import getDayAndDateString from '@tutorbook/schedule'.default.getDayAndDateString;
 
-// TODO: Class that provides the payments view and header and manages all data flow
-// concerning payment management (overrides the newRequest dialog).
-class Payments {
+/**
+ * Class that provides the payments view and header and manages all data flow
+ * concerning payment management (overrides the newRequest dialog).
+ * @todo Finish documentation (and, perhaps, implementation too).
+ */
+export default class Payments {
 
     constructor() {
         this.render = window.app.render;
@@ -266,7 +273,7 @@ class Payments {
                     new Profile(window.app.user);
                 disable(true);
             } else {
-                window.app.profile = new PaidProfile(window.app.user);
+                window.app.profile = new PaidTutorProfile(window.app.user);
                 this.initStripe();
                 disable(false);
             }
@@ -595,6 +602,3 @@ Payments.renderAuthPayment = function(doc) {
     $(listItem).attr('id', doc.id).attr('type', 'authPayments');
     return listItem;
 };
-
-
-module.exports = Payments;

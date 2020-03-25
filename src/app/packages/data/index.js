@@ -26,7 +26,7 @@ const algolia = require('algoliasearch')
  * @todo Add documentation (`@memberof`) links to static attributes (e.g. 
  * `Data.grades` doesn't point to anything right now but we know it exists).
  */
-class Data {
+export default class Data {
 
     /**
      * Creates a new Data object that manages Firestore data flow for the
@@ -1378,5 +1378,3 @@ Data.grades = [
     '1st Grade',
     'Kindergarten',
 ];
-
-module.exports = Data;

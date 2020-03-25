@@ -22,8 +22,12 @@
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
+// Polyfills
+import 'core-js';
+import 'regenerator-runtime';
+
 // Dependencies
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
 // App styling (Sass)
@@ -56,43 +60,57 @@ import './styles/chats.css';
 import './styles/header.css';
 
 // App packages
-const Stats = require('@tutorbook/stats');
-const Dashboard = require('@tutorbook/dashboard').default;
-const SupervisorDashboard = require('@tutorbook/dashboard').supervisor;
-const Search = require('@tutorbook/search').default;
-const Profile = require('@tutorbook/profile').default;
-const PaidProfile = require('@tutorbook/profile').paid;
-const TutorProfile = require('@tutorbook/profile').tutor;
-const Schedule = require('@tutorbook/schedule').default;
-const Chats = require('@tutorbook/chats').default;
-const SupervisorChats = require('@tutorbook/chats').supervisor;
-const SupervisorSchedule = require('@tutorbook/schedule').supervisor;
-const Payments = require('@tutorbook/payments');
-const Feedback = require('@tutorbook/feedback');
-const Notify = require('@tutorbook/notify');
-const Snackbar = require('@tutorbook/snackbar');
-const Navigation = require('@tutorbook/navigation');
-const Help = require('@tutorbook/intercom');
-const Listener = require('@tutorbook/listener');
-const Login = require('@tutorbook/login').default;
-const GoToRootPrompt = require('@tutorbook/login').rootPrompt;
-const GoToWebsitePrompt = require('@tutorbook/login').websitePrompt;
-const Matching = require('@tutorbook/matching').default;
-const MatchingDialog = require('@tutorbook/matching').dialog;
-const Config = require('@tutorbook/config');
-const Analytics = require('@tutorbook/analytics');
+import {
+    Dashboard,
+    SupervisorDashboard,
+} from '@tutorbook/dashboard';
+import {
+    Search,
+    SearchHeader,
+} from '@tutorbook/search';
+import {
+    Profile,
+    PaidTutorProfile,
+    TutorProfile,
+    EditProfile,
+} from '@tutorbook/profile';
+import {
+    Schedule,
+    SupervisorSchedule,
+} from '@tutorbook/schedule';
+import {
+    Chats,
+    SupervisorChats,
+} from '@tutorbook/chats';
+import {
+    Login,
+    GoToWebsitePrompt,
+    GoToRootPrompt,
+} from '@tutorbook/login';
+import {
+    Matching,
+    MatchingDialog,
+} from '@tutorbook/matching';
+import Stats from '@tutorbook/stats';
+import Config from '@tutorbook/config';
+import Analytics from '@tutorbook/analytics';
+import Payments from '@tutorbook/payments';
+import Notify from '@tutorbook/notify';
+import Snackbar from '@tutorbook/snackbar';
+import Navigation from '@tutorbook/navigation';
+import Help from '@tutorbook/intercom';
+import Listener from '@tutorbook/listener';
 
 // Dependency cycle workarounds
-const SearchHeader = require('@tutorbook/search').header;
-const EditProfile = require('@tutorbook/profile').edit;
-const NotificationDialog = require('@tutorbook/dialogs').notify;
-const renderHit = require('@tutorbook/search').header.renderHit;
-const renderCard = require('@tutorbook/card').renderCard;
+import {
+    NotificationDialog,
+} from '@tutorbook/dialogs';
+import Card from '@tutorbook/card';
 
 // Helper packages
-const Utils = require('@tutorbook/utils');
-const Render = require('@tutorbook/render');
-const Data = require('@tutorbook/data');
+import Utils from '@tutorbook/utils';
+import Render from '@tutorbook/render';
+import Data from '@tutorbook/data';
 
 /** 
  * Class that represents the uppermost level of our web app and holds all the 
@@ -100,7 +118,7 @@ const Data = require('@tutorbook/data');
  * drawer) as properties (e.g. `window.app.chats` points to the user's messages 
  * view). 
  */
-class Tutorbook {
+export default class Tutorbook {
 
     /**
      * Creates a new Tutorbook object:
@@ -233,8 +251,8 @@ class Tutorbook {
         this.EditProfile = EditProfile;
         this.NotificationDialog = NotificationDialog;
         this.MatchingDialog = MatchingDialog;
-        this.renderHit = renderHit;
-        this.renderCard = renderCard;
+        this.renderHit = SearchHeader.renderHit;
+        this.renderCard = Card.renderCard;
 
         // Helper packages (only if they haven't already been initialized)
         this.data = new Data();
@@ -255,7 +273,7 @@ class Tutorbook {
         this.listener = new Listener();
         this.search = new Search(this);
         if (this.user.payments.type === 'Paid') {
-            this.profile = new PaidProfile(this.user);
+            this.profile = new PaidTutorProfile(this.user);
         } else if (this.user.type === 'Tutor') {
             this.profile = new TutorProfile(this.user);
         } else {
@@ -274,7 +292,6 @@ class Tutorbook {
             this.chats = new Chats();
         }
         this.payments = new Payments();
-        this.feedback = new Feedback(this);
 
         this.loader(false);
         this.nav.start();
@@ -685,5 +702,3 @@ window.onload = () => {
      */
     window.app = new Tutorbook();
 };
-
-module.exports = Tutorbook;

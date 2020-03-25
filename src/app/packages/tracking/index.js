@@ -20,22 +20,20 @@
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
-const Card = require('@tutorbook/card');
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
-const axios = require('axios');
+import Card from '@tutorbook/card';
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
+import axios from 'axios';
 
 /**
  * Class that manages the "Service Hour Tracking" card in the supervisor's
  * dashboard view.
  * @todo Finish documentation.
  */
-class Tracking {
-
-    constructor() {}
+export default class Tracking {
 
     static renderShortcutCard() {
         const url = (window.app.location.name === 'Gunn Academic Center') ?
@@ -90,5 +88,3 @@ class Tracking {
         return card;
     }
 };
-
-module.exports = Tracking;

@@ -25,11 +25,11 @@ import {
     MDCDialog
 } from '@material/dialog/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const Data = require('@tutorbook/data');
-const Utils = require('@tutorbook/utils');
+import Data from '@tutorbook/data';
+import Utils from '@tutorbook/utils';
 
 /**
  * Class that contains code used in both approve/reject request dialogs.
@@ -86,7 +86,7 @@ class ConfirmDialog {
  * @extends ConfirmDialog
  * @todo Finish documentation.
  */
-class ConfirmClockInDialog extends ConfirmDialog {
+export class ConfirmClockInDialog extends ConfirmDialog {
     constructor(doc) {
         super(doc);
         this.renderSelf();
@@ -140,7 +140,7 @@ class ConfirmClockInDialog extends ConfirmDialog {
  * @extends ConfirmDialog
  * @todo Finish documentation.
  */
-class ConfirmClockOutDialog extends ConfirmDialog {
+export class ConfirmClockOutDialog extends ConfirmDialog {
     constructor(doc) {
         super(doc);
         this.renderSelf();
@@ -187,8 +187,3 @@ class ConfirmClockOutDialog extends ConfirmDialog {
         window.app.snackbar.view('Rejected clock-out request.');
     }
 }
-
-module.exports = {
-    in: ConfirmClockInDialog,
-    out: ConfirmClockOutDialog,
-};

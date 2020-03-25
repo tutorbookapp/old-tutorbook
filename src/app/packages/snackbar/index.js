@@ -23,15 +23,15 @@ import {
     MDCRipple
 } from "@material/ripple/index";
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const Render = require('@tutorbook/render');
+import Render from '@tutorbook/render';
 
 /**
  * Class that manages all of the app's snackbars.
  * @see {@link https://material.io/develop/web/components/snackbars/}
  */
-class Snackbar {
+export default class Snackbar {
     /**
      * Creates a new snackbar management class with the given 
      * [Render]{@link Render} object.
@@ -113,5 +113,3 @@ class Snackbar {
         }
     }
 };
-
-module.exports = Snackbar;

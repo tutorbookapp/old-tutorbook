@@ -16,17 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const Utils = require('@tutorbook/utils');
-const Card = require('@tutorbook/card');
+import Utils from '@tutorbook/utils';
+import Card from '@tutorbook/card';
 
 /**
  * Class that represents the statistics screen from which supervisors can track
  * users, app usage, service hours, etc.
  * @deprecated
  */
-class Stats {
+export default class Stats {
 
     /**
      * Creates and renders (using the global `window.app.render` object) a new 
@@ -134,5 +134,3 @@ class Stats {
      */
     viewServiceHourCards() {}
 }
-
-module.exports = Stats;

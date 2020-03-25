@@ -16,16 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 
-const templateString = require('./templates.html');
+import templateString from './templates.html';
 
 /**
  * Class that reads in a string of templates, stores the DOM Nodes in an easily
  * accessible array, and renders requested templates given a dictionary of 
  * values that map to `data-fir` modifiers in the requested template's HTML.
  */
-class Templates {
+export default class Templates {
     /**
      * Creates a new `Templates` class by reading the `templateString` from 
      * `templates.html` and adding it to a `div` tag created by the global 
@@ -181,5 +181,3 @@ class Templates {
         });
     }
 };
-
-module.exports = Templates;

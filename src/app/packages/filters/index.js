@@ -26,19 +26,21 @@ import {
     MDCTextField
 } from '@material/textfield/index';
 
-import $ from 'jquery';
+import * as $ from 'jquery';
 import to from 'await-to-js';
 
-const EditAvailabilityDialog = require('@tutorbook/dialogs').editAvailability;
-const Utils = require('@tutorbook/utils');
-const Data = require('@tutorbook/data');
+import {
+    EditAvailabilityDialog,
+} from '@tutorbook/dialogs';
+import Utils from '@tutorbook/utils';
+import Data from '@tutorbook/data';
 
 /**
  * Class that represents the filter dialog (in the 
  * [primary search view]{@linkplain Search}) that enables users (primarily 
  * pupils looking for tutors) to filter through Tutorbook's users.
  */
-class FilterDialog {
+export class FilterDialog {
     /**
      * A filters object that represents/stores the user's current search filters 
      * (that are applied via [Firestore query parameters]{@link https://firebase.google.com/docs/firestore/query-data/queries}).
@@ -325,7 +327,7 @@ class FilterDialog {
  * all of the users who are booked for Mondays at 2:45 PM).
  * @extends FilterDialog
  */
-class NewGroupDialog extends FilterDialog {
+export class NewGroupDialog extends FilterDialog {
 
     constructor(options = {}) {
         super(undefined, true);
@@ -397,7 +399,7 @@ class NewGroupDialog extends FilterDialog {
     }
 };
 
-class EditGroupDialog extends NewGroupDialog {
+export class EditGroupDialog extends NewGroupDialog {
 
     renderSelf() {
         super.renderSelf();
@@ -410,10 +412,4 @@ class EditGroupDialog extends NewGroupDialog {
         this.group.name = this.nameTextField.value || this.name;
         return this.ref.update(this.group);
     }
-};
-
-module.exports = {
-    default: FilterDialog,
-    group: NewGroupDialog,
-    editGroup: EditGroupDialog,
 };
