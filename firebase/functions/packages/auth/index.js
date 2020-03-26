@@ -7,31 +7,6 @@ const cors = require('cors')({
 const Utils = require('utils');
 
 /**
- * Creates a custom login token for testing purposes.
- * @todo Finish documenting the necessary `req` params and what is actually sent
- * in `res`.
- */
-const customAuth = (req, res) => {
-    return cors(req, res, async () => {
-        const user = await admin.auth().getUserByEmail(req.query.user);
-        if (req.query.token !== functions.config().tests.key) {
-            console.error('[ERROR] Token did not match functions config tests' +
-                ' key.');
-            return res.status(401).send('[ERROR] Token did not match ' +
-                'functions config tests key.');
-        }
-        return admin.auth().createCustomToken(user.uid).then((token) => {
-            console.log('[DEBUG] Created custom auth token for user (' +
-                user.uid + ').');
-            return res.status(200).json(token);
-        }).catch((err) => {
-            console.error('[ERROR] While creating custom auth token:', err);
-            return res.status(500).send('[ERROR] ' + err.message);
-        });
-    });
-};
-
-/**
  * A change to a Firestore document containing snapshots of before and after the
  * change.
  * @typedef {Object} Change
@@ -116,8 +91,4 @@ const updateAuth = async (change, context) => {
         '\'s account b/c of ' + e.message));
 };
 
-
-module.exports = {
-    update: updateAuth,
-    custom: customAuth,
-};
+module.exports = updateAuth;

@@ -42,6 +42,10 @@ const {
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const admin = require('firebase-admin').initializeApp({
+    credential: admin.credential.cert(require('./admin-cred.json')),
+    databaseURL: 'https://' + PROJECT_ID + '.firebaseio.com',
+});
 const firebaseApp = require('firebase').initializeApp({
     projectId: PROJECT_ID,
     databaseURL: 'https://' + PROJECT_ID + '.firebaseio.com',
@@ -76,18 +80,9 @@ after(async () => { // Delete test app instances and log coverage info URL.
 
 describe('Tutorbook\'s REST API', () => {
 
-    async function getToken(user) {
-        const res = await axios({
-            method: 'post',
-            url: 'https://us-central1-' + PROJECT_ID + '.cloudfunctions.net/auth',
-            params: {
-                user: user,
-                token: process.env.TUTORBOOK_TEST_GET_AUTH_TOKEN,
-            },
-        });
-        if (typeof res.data === 'string' && res.data.indexOf('ERROR') > 0)
-            throw new Error(res.data.replace('[ERROR] ', ''));
-        await firebaseApp.auth().signInWithCustomToken(res.data);
+    async function getToken(uid) {
+        const loginToken = await admin.auth().createCustomToken(uid);
+        await firebaseApp.auth().signInWithCustomToken(loginToken);
         const token = await firebaseApp.auth().currentUser.getIdToken(true);
         await firebaseApp.auth().signOut();
         return token;
@@ -104,7 +99,7 @@ describe('Tutorbook\'s REST API', () => {
             params: {
                 user: uid,
                 action: action,
-                token: (await getToken(user)),
+                token: (await getToken(uid)),
             },
             data: data,
         }).then((res) => {
@@ -458,7 +453,7 @@ describe('Tutorbook\'s REST API', () => {
             url: FUNCTIONS_URL + 'backupAsPDF',
             responseType: 'stream',
             params: {
-                token: (await getToken(SUPERVISOR.email)),
+                token: (await getToken(SUPERVISOR.uid)),
                 location: LOCATION_ID,
                 test: false,
                 tutors: true,
@@ -478,7 +473,7 @@ describe('Tutorbook\'s REST API', () => {
             url: FUNCTIONS_URL + 'serviceHoursAsPDF',
             responseType: 'stream',
             params: {
-                token: (await getToken(SUPERVISOR.email)),
+                token: (await getToken(SUPERVISOR.uid)),
                 location: LOCATION_ID,
                 test: false,
                 uid: TUTOR.uid,
@@ -497,7 +492,7 @@ describe('Tutorbook\'s REST API', () => {
             url: FUNCTIONS_URL + 'serviceHoursAsPDF',
             responseType: 'stream',
             params: {
-                token: (await getToken(SUPERVISOR.email)),
+                token: (await getToken(SUPERVISOR.uid)),
                 location: LOCATION_ID,
                 test: false,
             },

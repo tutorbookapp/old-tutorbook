@@ -2,11 +2,11 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin').initializeApp();
 
 const updateSheet = require('sheet');
+const updateAuth = require('auth');
 const Hours = require('hours');
 const PDF = require('pdf');
 const SMS = require('sms');
 const Algolia = require('algolia');
-const Auth = require('auth');
 const Data = require('data');
 const Notify = require('notifications');
 const Payments = require('payments');
@@ -128,9 +128,7 @@ exports.processWeeklyPayouts = functions.https
 
 exports.updateAuthClaims = functions.firestore
     .document('/partitions/{partition}/users/{id}')
-    .onWrite(Auth.update);
-
-exports.auth = functions.https.onRequest(Auth.custom);
+    .onWrite(updateAuth);
 
 exports.data = functions.https.onRequest(Data.onRequest);
 
