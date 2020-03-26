@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/render",
-  "version": "0.5.8",
+  "version": "0.6.0",
   "description": "Package that contains a `Render` object used to render templates and other components commonly used across Tutorbook's web app.",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.5.8",
-    "@tutorbook/templates": "^0.5.8",
-    "@tutorbook/user": "^0.5.8",
-    "@tutorbook/utils": "^0.5.8"
+    "@tutorbook/data": "^0.6.0",
+    "@tutorbook/templates": "^0.6.0",
+    "@tutorbook/user": "^0.6.0",
+    "@tutorbook/utils": "^0.6.0"
   },
   "repository": {
     "type": "git",

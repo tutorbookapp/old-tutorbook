@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/intercom",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "description": "Package that contains a wrapper for Tutorbook's Intercom integration.",
   "main": "index.js",
   "scripts": {
