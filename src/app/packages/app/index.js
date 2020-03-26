@@ -151,6 +151,17 @@ export default class Tutorbook {
         this.version = 'v0.5.3';
 
         /**
+         * The URL to view our source code. We must include clear links to view 
+         * application source code as we are using the AGPL V3 license (see 
+         * section 13) with the Commons Clause.
+         * @const {string} sourceURL
+         * @example
+         * window.open(window.app.sourceURL);
+         * @memberof module:@tutorbook/app~Tutorbook#
+         */
+        this.sourceURL = 'https://github.com/tutorbookapp/tutorbook';
+
+        /**
          * The website configuration Firestore document ID.          
          * @const {string} id
          * @example

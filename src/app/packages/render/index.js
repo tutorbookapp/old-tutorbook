@@ -486,31 +486,26 @@ export default class Render {
         return inputListItemEl;
     }
 
+    /**
+     * Renders and returns the given header with the given data.
+     * @param {string} id - The template ID of the desired header.
+     * @param {Map} data - The options (to combine with the defaults) that are 
+     * passed to `renderTemplate`.
+     * @return {HTMLElement} The rendered header element (typically an 
+     * `mdc-top-app-bar`).
+     */
     header(id, data) {
         const headerEl = this.template(id,
             Utils.combineMaps({
-                'cancel': () => {
-                    window.app.nav.back();
-                },
-                'back': () => {
-                    window.app.nav.back();
-                },
-                'navigation': () => {
-                    window.app.nav.viewDrawer();
-                },
-                'menu': () => {
-                    window.app.nav.viewMenu();
-                },
-                'sign_out': () => {
-                    window.app.signOut();
-                },
-                'payments': () => {
-                    Utils.showPayments();
-                },
-                'settings': () => {
-                    window.app.settings.view();
-                },
+                cancel: () => window.app.nav.back(),
+                back: () => window.app.nav.back(),
+                navigation: () => window.app.nav.viewDrawer(),
+                menu: () => window.app.nav.viewMenu(),
+                sign_out: () => window.app.signOut(),
+                payments: () => Utils.showPayments(),
+                settings: () => window.app.settings.view(),
                 print: () => window.app.print(),
+                view_source: () => window.open(window.app.sourceURL),
             }, data));
         return headerEl;
     }
