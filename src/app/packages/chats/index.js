@@ -358,8 +358,7 @@ export class SupervisorChats extends Chats {
             search: async (that) => {
                 const qry = $(that.el).find('.search-box input').val();
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();
-                const [err, res] = await to(that.index.search({
-                    query: qry,
+                const [err, res] = await to(that.index.search(qry, {
                     facetFilters: ['chatterUIDs:' + window.app.user.uid],
                 }));
                 if (err) return console.error('[ERROR] Could not search ' +

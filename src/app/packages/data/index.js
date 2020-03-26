@@ -23,7 +23,7 @@
 
 import to from 'await-to-js';
 import axios from 'axios';
-import algolia from 'algoliasearch';
+import algoliasearch from 'algoliasearch';
 
 /**
  * Class that manages Firestore data flow along with any local app data.
@@ -321,7 +321,7 @@ export default class Data {
      * @return {AlgoliaIndex} The initialized Algolia index.
      */
     static algoliaIndex(id) {
-        return algolia(
+        return algoliasearch(
             '9FGZL7GIJM',
             '9ebc0ac72bdf6b722d6b7985d3e83550',
         ).initIndex((window.app.test ? 'test' : 'default') + '-' + id);

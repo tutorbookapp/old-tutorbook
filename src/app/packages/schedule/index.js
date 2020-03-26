@@ -415,8 +415,7 @@ export class SupervisorSchedule extends Schedule {
             search: async (that) => {
                 const qry = $(that.el).find('.search-box input').val();
                 qry.length > 0 ? that.showClearButton() : that.showInfoButton();
-                const res = await that.index.search({
-                    query: qry,
+                const res = await that.index.search(qry, {
                     facetFilters: !window.app.id ? [] : [
                         window.app.locations.map(l => 'location.id:' + l.id),
                     ],

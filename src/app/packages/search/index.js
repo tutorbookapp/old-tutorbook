@@ -76,8 +76,7 @@ export class SearchHeader {
     async search(that) {
         const query = $(that.el).find('.search-box input').val();
         query.length > 0 ? that.showClearButton() : that.showInfoButton();
-        const [err, res] = await to(that.index.search({
-            query: query,
+        const [err, res] = await to(that.index.search(query, {
             facetFilters: window.app.id === 'root' ? [] : [
                 'payments.type:Free',
                 window.app.locations.map(l => 'location:' + l.name),

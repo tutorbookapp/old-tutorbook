@@ -2631,8 +2631,7 @@ export class NewPastApptDialog extends EditApptDialog {
          */
         const searchPupils = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
-            const res = await index.search({
-                query: query,
+            const res = await index.search(query, {
                 facetFilters: !window.app.id ? [] : [
                     'payments.type:Free', // TODO: Add `Type` facetFilter here.
                     window.app.locations.map(l => 'location:' + l.name),

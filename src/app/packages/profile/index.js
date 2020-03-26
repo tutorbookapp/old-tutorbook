@@ -561,8 +561,7 @@ export class NewProfile extends Profile {
         const index = Data.algoliaIndex('users');
         const search = async (textFieldItem) => {
             const query = $(textFieldItem).find('.search-box input').val();
-            const res = await index.search({
-                query: query,
+            const res = await index.search(query, {
                 facetFilters: !window.app.id ? [] : [
                     'payments.type:Free',
                     window.app.locations.map(l => 'location:' + l.name),
