@@ -71,7 +71,7 @@ export class Profile {
         window.app.intercom.view(false);
         window.app.nav.selected = 'Profile';
         window.app.view(this.header, this.main, '/app/profile');
-        (!this.managed) ? this.manage(): this.reManage(); // Don't attach MDC twice
+        this.managed ? this.reManage() : this.manage();
     }
 
     /**

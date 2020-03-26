@@ -753,7 +753,16 @@ export default class Utils {
         return MDCTopAppBar.attachTo(headerEl);
     }
 
+    /**
+     * Attaches the given select by:
+     * 1. Populating it's options with the options in the `mdc-list`.
+     * 2. Listening for `keydown` events that act as shortcuts to select an
+     * option (like most native `select` elements do).
+     * @param {HTMLElement} selectEl - The `mdc-select` element to attach.
+     * @return {external:MDCSelect} The attached `MDCSelect` instance.
+     */
     static attachSelect(selectEl) {
+        // Initialize select
         if (typeof selectEl === 'string') selectEl = $(selectEl)[0];
         const ops = [];
         $(selectEl).find('.mdc-list-item').each(function() {
@@ -762,8 +771,35 @@ export default class Utils {
         });
         const selected = $(selectEl).find('.mdc-select__selected-text').text();
         const select = MDCSelect.attachTo(selectEl);
-        // Render empty selects even when val is null, undefined, or false.
-        if (selected !== '') select.selectedIndex = ops.indexOf(selected);
+
+        // Helper functions
+        const lastClicked = []; // Last inputted shortcut keys
+        const selectOption = (op) => select.selectedIndex = ops.indexOf(op);
+        const listen = (event) => {
+            const justClicked = event.keyCode;
+            const possible = ops.filter(option => {
+                option = option.toUpperCase();
+                var i = 0;
+                for (i; i < lastClicked.length; i++)
+                    if (option.charCodeAt(i) !== lastClicked[i])
+                        return false;
+                return option.charCodeAt(i) === justClicked;
+            });
+            if (possible.length === 1) {
+                lastClicked.length = 0;
+                selectOption(possible[0]);
+            } else if (possible.length > 1) {
+                lastClicked.push(justClicked);
+            }
+        };
+
+        // Render empty selects even when val is null, undefined, or false
+        if (selected !== '') selectOption(selected);
+
+        // Listen for shortcut keys (when select is in focus)
+        $(selectEl).on('focusin', () => $(document).keydown(listen));
+        $(selectEl).on('focusout', () => $(document).off('keydown', listen));
+
         return select;
     }
 
