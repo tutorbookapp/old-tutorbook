@@ -42,7 +42,8 @@ const {
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const admin = require('firebase-admin').initializeApp({
+const admin = require('firebase-admin')
+admin.initializeApp({
     credential: admin.credential.cert(require('./admin-cred.json')),
     databaseURL: 'https://' + PROJECT_ID + '.firebaseio.com',
 });
