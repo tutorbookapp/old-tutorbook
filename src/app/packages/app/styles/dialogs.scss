@@ -244,3 +244,19 @@ them (or their floating labels) off short. */
 .dialog-form__surface {
   overflow: visible !important; // Don't hide `MDCSelect` menus.
 }
+
+#dialog-group .mdc-text-field {
+  width: 100% !important;
+}
+
+#dialog-group .text-field-wrapper {
+  margin: 15px 0;
+}
+
+#dialog-group #all-filters-list {
+  border: 1px solid #9e9e9e;
+  border-radius: 4px;
+  .mdc-list {
+    padding: 8px 0;
+  }
+}

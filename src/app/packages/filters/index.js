@@ -1,4 +1,9 @@
 /**
+ * Package that contains the filter and announcement group dialogs from 
+ * Tutorbook's web app.
+ * @module @tutorbook/filters
+ * @see {@link https://npmjs.com/package/@tutorbook/filters}
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -13,7 +18,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -325,7 +330,8 @@ export class FilterDialog {
  * Class that represents the dialog that enables supervisors to create new
  * announcement groups by filtering students to create student segments (e.g.
  * all of the users who are booked for Mondays at 2:45 PM).
- * @extends FilterDialog
+ * @extends module:@tutorbook/filters.FilterDialog
+ * @todo Finish documentation.
  */
 export class NewGroupDialog extends FilterDialog {
 
@@ -371,7 +377,9 @@ export class NewGroupDialog extends FilterDialog {
         const description = 'Filter users to create a new announcement group.' +
             ' Messages sent to this group will then be sent to all users who ' +
             'fit within the specified filters.';
-        const nameEl = this.render.textField('Name', this.name);
+        const nameTextFieldEl = this.render.textField('Name', this.name);
+        const nameEl = $(this.render.wrapper()).append(nameTextFieldEl)
+            .addClass('text-field-wrapper');
         $(this.el)
             .find('#show-page-availability span').text('Any Appointments').end()
             .find('#page-availability h2').text('Appointments').end()
@@ -399,6 +407,13 @@ export class NewGroupDialog extends FilterDialog {
     }
 };
 
+/**
+ * Class that represents the "Edit Group" dialog (in Tutorbook's web app) that 
+ * enables peer tutoring supervisors to edit their announcement groups (after 
+ * they've created them).
+ * @extends module:@tutorbook/filters.NewGroupDialog
+ * @todo Finish documentation.
+ */
 export class EditGroupDialog extends NewGroupDialog {
 
     renderSelf() {

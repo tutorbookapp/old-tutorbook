@@ -1,7 +1,7 @@
 {
   "name": "@tutorbook/filters",
   "version": "0.6.0",
-  "description": "",
+  "description": "Package that contains the filter and announcement group dialogs from Tutorbook's web app.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
