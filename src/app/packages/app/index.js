@@ -30,7 +30,6 @@ import './styles/main.scss';
 import './styles/cards.scss';
 import './styles/welcome.scss';
 import './styles/dialogs.scss';
-import './styles/settings.scss';
 import './styles/schedule.scss';
 import './styles/chat.scss';
 import './styles/profile.scss';

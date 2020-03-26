@@ -1,5 +1,10 @@
-@import "@material/ripple/mdc-ripple";
-@import "@material/button/mdc-button";
+// For component styling
+@use "@material/ripple/mdc-ripple";
+@use "@material/button/mdc-button";
+
+// For mixins
+@use "@material/ripple/_index.scss" as ripple; 
+@use "@material/button"; 
 
 .login {
   text-align: center;
@@ -56,24 +61,34 @@
   text-transform: none;
   text-overflow: ellipsis;
   white-space: nowrap;
-  @include mdc-button-outline-width(2px);
-  @include mdc-button-shape-radius(20%);
+  @include button.shape-radius(20%, 0);
   padding: 0 20px;
+}
+
+.login__button.mdc-button--outlined {
+  @include button.outline-width(2px);
+  @include button.outline-color(#6200EE);
 }
 
 .login__button.google__button {
   border: 2px solid #4285F4;
   padding-left: calc(56px + 20px);
-  @include mdc-button-outline-color(#4285F4);
+  overflow: hidden;
+  @include button.outline-color(#4285F4);
 }
 
 .login__button.google__button.mdc-button--raised {
-  @include mdc-button-container-fill-color(#4285F4);
+  @include button.filled-accessible(#4285F4);
+  .mdc-button__ripple {
+    overflow: visible;
+  }
 }
 
 .login__button.google__button.mdc-button--outlined {
-  @include mdc-button-ink-color(#4285F4);
-  @include mdc-states(#4285F4);
+  @include button.ink-color(#4285F4);
+  .mdc-button__ripple {
+    @include ripple.states-base-color(#4285F4);
+  }
 }
 
 .login__button.google__button .google__logo {

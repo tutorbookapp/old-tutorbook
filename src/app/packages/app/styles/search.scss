@@ -1,15 +1,20 @@
-@import "@material/top-app-bar/mdc-top-app-bar";
-@import "@material/icon-button/mdc-icon-button";
-@import "@material/elevation/mdc-elevation";
+// For component styling
+@use "@material/top-app-bar/mdc-top-app-bar";
+@use "@material/icon-button/mdc-icon-button";
+@use "@material/elevation/mdc-elevation";
+
+// For mixins
+@use "@material/top-app-bar/_index.scss" as top-app-bar;
+@use "@material/icon-button/_index.scss" as icon-button;
 
 .search-results li button {
   color: #5F6368 !important;
 }
 
 #search-app-bar { /* Emulate Google Drive's Top App Bar */
-  @include mdc-top-app-bar-fill-color(#FFF);
-  @include mdc-top-app-bar-ink-color(#5F6368); 
-  @include mdc-top-app-bar-icon-ink-color(#5F6368);
+  @include top-app-bar.fill-color(#FFF);
+  @include top-app-bar.ink-color(#5F6368); 
+  @include top-app-bar.icon-ink-color(#5F6368);
   border-bottom: 1px solid #E0E0E0;
   .search-results {
     position: absolute;
@@ -45,7 +50,7 @@
     }
     button {
       float: right;
-      @include mdc-icon-button-icon-size(24px, 24px, 2px);
+      @include icon-button.icon-size(24px, 24px, 2px);
     }
     input {
       vertical-align: middle;

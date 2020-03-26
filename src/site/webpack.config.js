@@ -1,6 +1,7 @@
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
-module.exports = env => [{
+module.exports = (env, argv) => [{
     entry: './packages/site/index.js',
     output: {
         filename: 'index.js',
@@ -18,7 +19,18 @@ module.exports = env => [{
             use: 'svg-url-loader',
         }],
     },
-    watch: env.development,
+    optimization: {
+        minimize: argv.mode === 'production',
+        minimizer: [new TerserPlugin({
+            extractComments: false,
+            terserOptions: {
+                output: {
+                    comments: false,
+                },
+            },
+        })],
+    },
+    watch: argv.mode === 'development',
 }, {
     entry: './packages/site/index.scss',
     output: {
@@ -42,5 +54,5 @@ module.exports = env => [{
             }],
         }],
     },
-    watch: env.development,
+    watch: argv.mode === 'development',
 }];

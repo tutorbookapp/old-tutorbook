@@ -1,6 +1,7 @@
-@import "@material/dialog/mdc-dialog";
-@import "@material/form-field/mdc-form-field";
-@import "@material/checkbox/mdc-checkbox";
+@use "@material/dialog/mdc-dialog";
+@use "@material/form-field/mdc-form-field";
+@use "@material/checkbox/mdc-checkbox";
+@use "@material/list/_index.scss" as list;
 
 .file-carousel {
   height: calc(100% - 40px);
@@ -169,7 +170,7 @@
   white-space: nowrap;
 }
 
-#dialog-appt h4 {
+.dialog-appt h4 {
   margin-left: 0;
   margin-bottom: 0;
 }
@@ -192,14 +193,28 @@
 them (or their floating labels) off short. */
 .input-list-item {
   height: 80px !important;
+  overflow: visible !important;
 }
 
 .input-list-item .mdc-select {
   width: 100% !important;
 }
 
+.input-list-item .mdc-select .mdc-select__anchor {
+  width: 100% !important;
+}
+
+.input-list-item .mdc-select .mdc-list-item {
+  height: list.$single-line-height;
+}
+
 .input-list-item .mdc-text-field {
   width: 100% !important;
+}
+
+.mdc-dialog .mdc-select .mdc-list {
+  // Reset `.mdc-dialog .mdc-list:first-child:last-child` rule.
+  padding: 8px 0 !important; 
 }
 
 .mdc-dialog .material-icons {
@@ -207,15 +222,11 @@ them (or their floating labels) off short. */
   color: #fff;
 }
 
-#dialog-form .mdc-dialog__surface {
-  min-width: 50vw !important;
-}
-
-#dialog-form .mdc-select {
+.dialog-form .mdc-select {
   width: 100% !important;
 }
 
-#dialog-form .mdc-text-field {
+.dialog-form .mdc-text-field {
   width: 100% !important;
 }
 
@@ -227,16 +238,9 @@ them (or their floating labels) off short. */
 .dialog-form__content {
   padding-left: 0px !important;
   padding-right: 0px !important;
+  overflow: visible !important;
 }
 
-#dialog-group #all-filters-list {
-  border: 1px solid #C2C2C2;
-  border-radius: 4px;
-  margin-top: 16px;
-  padding-bottom: 8px;
-}
-
-#dialog-group .mdc-text-field {
-  width: 100%;
-  margin-top: 16px;
+.dialog-form__surface {
+  overflow: visible !important; // Don't hide `MDCSelect` menus.
 }

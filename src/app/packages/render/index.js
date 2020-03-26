@@ -438,6 +438,7 @@ export default class Render {
     searchTextFieldItem(label, val, search) {
         const textFieldItem = this.template('search-input-list-item', {
             label: label,
+            labelId: label.toLowerCase() + '-label',
             text: val,
             id: label.toLowerCase() + '-list-item',
         });
@@ -526,6 +527,7 @@ export default class Render {
     textFieldWithErr(label, val = '', err = 'Invalid response, try again.') {
         return this.template('err-text-field', {
             label: label,
+            labelId: label.toLowerCase() + '-label',
             text: val,
             err: err,
         });
@@ -533,20 +535,22 @@ export default class Render {
 
     textField(label, val) {
         return this.template('input-text-field', {
-            'label': label,
+            label: label,
+            labelId: label.toLowerCase() + '-label',
             // NOTE: By adding this or statement, we can still render empty 
             // textFields even when val is null, undefined, or false.
-            'text': val || ''
+            text: val || '',
         });
     }
 
     select(label, val, vals) {
         return this.template('input-select', {
-            'label': label,
-            'vals': vals,
+            label: label,
+            labelId: label.toLowerCase() + '-label',
+            vals: vals,
             // NOTE: By adding this or statement, we can still render empty selects
             // even when val is null, undefined, or false.
-            'val': val || '',
+            val: val || '',
         });
     }
 

@@ -10,12 +10,15 @@ const path = require('path');
  */
 module.exports = (env, argv) => {
     return {
-        watch: true,
+        watch: argv.mode === 'development',
         devtool: argv.mode === 'development' ? 'eval-source-map' : 'none',
         entry: path.resolve(__dirname, 'packages/app/index.js'),
         output: {
             filename: 'index.js',
             path: path.resolve(__dirname, '../../build/app/'),
+        },
+        resolve: {
+            extensions: ['.scss', '.js'],
         },
         module: {
             rules: [{
@@ -34,7 +37,9 @@ module.exports = (env, argv) => {
                         implementation: require('sass'),
                         sassOptions: {
                             fiber: require('fibers'),
-                            includePaths: ['node_modules'],
+                            includePaths: [
+                                path.resolve(__dirname, 'node_modules'),
+                            ],
                         },
                     },
                 }],

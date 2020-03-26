@@ -1,4 +1,8 @@
-@import "@material/button/mdc-button";
+// For component styling
+@use "@material/button/mdc-button";
+
+// For mixins
+@use "@material/button";
 
 .delete-user-input {
   padding: 10px;
@@ -6,26 +10,8 @@
 }
 
 .delete-user-input button {
-  @include mdc-button-ink-color(#737374);
-  @include mdc-button-container-fill-color(#FFF);
-}
-
-.input-list-item .mdc-select {
-  /* NOTE: This fixes that styling error where the textField would scale
-   * correctly but the select would not. */
-  min-width: 0px !important;
-}
-
-.profile .mdc-menu {
-  width: 100% !important;
-}
-
-.profile .mdc-menu-surface {
-  width: 100% !important;
-}
-
-.profile .mdc-menu-surface--anchor {
-  width: 100% !important;
+  @include button.ink-color(#737374);
+  @include button.container-fill-color(#FFF);
 }
 
 #media-capture {

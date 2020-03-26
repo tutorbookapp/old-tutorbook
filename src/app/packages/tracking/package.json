@@ -13,8 +13,7 @@
     "@tutorbook/card": "^0.5.8",
     "@tutorbook/data": "^0.5.8",
     "@tutorbook/utils": "^0.5.8",
-    "axios": "^0.19.0",
-    "googleapis": "^39.2.0"
+    "axios": "^0.19.0"
   },
   "repository": {
     "type": "git",

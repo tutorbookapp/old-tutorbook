@@ -1,6 +1,6 @@
-@import "@material/list/mdc-list";
-@import "@material/layout-grid/mdc-layout-grid";
-@import "@material/linear-progress/mdc-linear-progress";
+@use "@material/list/mdc-list";
+@use "@material/layout-grid/mdc-layout-grid";
+@use "@material/linear-progress/mdc-linear-progress";
 
 .schedule--mobile .mdc-list-item {
   border-radius: 0 !important;

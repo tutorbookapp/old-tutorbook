@@ -5,8 +5,8 @@
   "description": "Landing page for Tutorbook mentor matching app.",
   "main": "index.js",
   "scripts": {
-    "pack": "webpack --env.development --mode development",
-    "prod": "webpack --env.production --mode production"
+    "dev": "webpack --mode development",
+    "prod": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -28,9 +28,8 @@
     "html-loader": "^0.5.5",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
-    "svg-inline-loader": "^0.8.0",
-    "svg-loader": "0.0.2",
     "svg-url-loader": "^3.0.3",
+    "terser-webpack-plugin": "^2.3.5",
     "to-string-loader": "^1.1.6",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"

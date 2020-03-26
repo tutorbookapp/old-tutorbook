@@ -1,15 +1,15 @@
-@import "@material/list/mdc-list";
-@import "@material/button/mdc-button";
-@import "@material/top-app-bar/mdc-top-app-bar";
-@import "@material/select/mdc-select";
-@import "@material/textfield/mdc-text-field";
-@import "@material/drawer/mdc-drawer";
-@import "@material/menu-surface/mdc-menu-surface";
-@import "@material/menu/mdc-menu";
-@import "@material/layout-grid/mdc-layout-grid";
+@use "@material/list/mdc-list";
+@use "@material/button/mdc-button";
+@use "@material/top-app-bar/mdc-top-app-bar";
+@use "@material/select/mdc-select";
+@use "@material/textfield/mdc-text-field";
+@use "@material/drawer/mdc-drawer";
+@use "@material/menu-surface/mdc-menu-surface";
+@use "@material/menu/mdc-menu";
+@use "@material/layout-grid/mdc-layout-grid";
 
-@import "@material/switch/mdc-switch";
-@import "@material/icon-button/mdc-icon-button";
+@use "@material/switch/mdc-switch";
+@use "@material/icon-button/mdc-icon-button";
 
 html,
 body {
