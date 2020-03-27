@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Gitflow - Tutorbook Docs</title>
+    <title>@tutorbook/filters - Tutorbook Docs</title>
 
     <!-- Meta variables from web app -->
     <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
@@ -62,90 +62,172 @@
 
 <div id="main">
     
-    <h1 class="page-title">Gitflow</h1>
+    <h1 class="page-title">@tutorbook/filters</h1>
     
 
-    <section>
+    
+
+
+
+
+<section>
 
 <header>
+    
+        
+            
+        
     
 </header>
 
 <article>
-    <h1>Branching Workflow</h1>
-<p>To ensure - as much as possible - the quality and correctness of our code, and
-to enable many contributors to work on our apps at the same time without getting
-in each other's way we use the GitFlow work flow <a href="http://nvie.com/posts/a-successful-git-branching-model/" title="Original Blog post
-'A successful Git branching model' by Vincent Driessen">by Vincent Driessen</a>.</p>
-<h2>Branches</h2>
-<p><strong>Unless explicitly stated otherwise (either here or by the branch's owner),
-only a branch's creator may push changes to it.</strong> Other developers may always
-create pull requests to submit changes to the branch.</p>
-<h3><code>develop</code></h3>
-<p><code>develop</code> is our main branch. It corresponds with the current work-in-progress
-state of the app, that we deal with most often as developers.</p>
-<p><code>develop</code> is a protected branch and no commits can be pushed to it directly. The
-only way to add features, fix bugs, and make other changes is through pull
-requests that pass review and automated tests.</p>
-<p><strong><code>develop</code> should always be stable and ready for release</strong>. Any features that
-are merged only partially must be disabled in code or using a pre-compiler
-directive so that they do not affect release builds.</p>
-<h3>Feature branches</h3>
-<p>Feature branches are branches created by developers based on <code>develop</code> which are
-used to create new features, fix bugs, and make other changes to the app.</p>
-<p>When a feature or change is done, it is merged into develop via a reviewed and
-tested pull request.</p>
-<h3><code>master</code></h3>
-<p><code>master</code> is the currently released state of the app. All changes to <code>master</code>
-always result in a new release tag.</p>
-<p><code>master</code> is a protected branch and no commits can be pushed to it directly. The
-only way to add features (merged from release branches), fix bugs (merged from
-hotfix branches), and make other changes is through pull requests that pass
-review and automated tests.</p>
-<h3>Release branches</h3>
-<p>Release branches are branched off of <code>develop</code> for the next release and tagged
-with that corresponding release tag. Release branches should only contain
-bugfixes that continously merged back into <code>develop</code>.</p>
-<p>After a release branch has been thoroughly tested (i.e. no bugs), it is merged
-into <code>master</code> and it's release tag becomes the currently released state of the
-app.</p>
-<h3>Hotfix branches</h3>
-<p>Hotfix branches are branched off of <code>master</code> (the currently released state of
-the app) for severe bug fixes (that are then merged back into <code>develop</code>).</p>
-<p>Hotfix branches are then merged back into <code>master</code>, resulting in a new
-maintenance version number.</p>
-<h2>Versioning</h2>
-<p>Our apps follows the following versioning scheme:</p>
-<pre><code>major.minor[.maintenance]
-</code></pre>
-<ul>
-<li>The <code>major</code> component is changed only upon special considerations.</li>
-<li>The <code>minor</code> component is incremented by one as the first commit of every release branch <strong>(and in no other case)</strong>. The same commit also removes the <code>maintenance</code> component.</li>
-<li>The <code>maintenance</code> is added and incremented by one as the first commit of every hot fix branch <strong>(and in no other case)</strong>.</li>
-</ul>
-<p>In addition, there is also the build number which is not visible to the public and only used to distinguish different builds internally. This number is incremented automatically for most of our apps. If it is not, it should be incremented for each created release tag.</p>
-<p>In essence, the versioning scheme can thus be thought of as:</p>
-<pre><code>major.release[.hot_fix]
-</code></pre>
-<h2>Releases</h2>
-<p>At any one time, there are three live states of the app: <code>gunn</code>, <code>paly</code>, and
-<code>master</code>. <code>master</code> is what is seen at <code>tutorbook.app</code> and <code>www.tutorbook.app</code>. <code>gunn</code> is a customized
-version of <code>master</code> for <a href="https://gunn.pausd.org">Henry M. Gunn Senior High School</a>.
-<code>paly</code> is a customized version of <code>master</code> for the <a href="https://paly.pausd.org">Palo Alto Senior High
-School</a>.</p>
-<p>During a release, changes from a feature branch (based off of <code>develop</code>) are
-merged into <code>master</code> after extensive testing and debugging. Once merged, those
-changes become live at <code>tutorbook.app</code> and <code>www.tutorbook.app</code>.</p>
-<p>We then take <code>master</code> and branch off to form two release branches to merge into
-<code>gunn</code> and <code>paly</code>. After all necessary changes have been made to the code from
-<code>master</code>, those release branches are merged into <code>gunn</code> and <code>paly</code>, resulting in
-new releases at <code>gunn.tutorbook.app</code> and <code>paly.tutorbook.app</code>.</p>
-<p>Thus, release tags are first seen in <code>master</code> after which they are transmuted to
-<code>gunn</code> and <code>paly</code> after necessary changes are made (e.g. payments are removed,
-supervisor code tweaked, etc).</p>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Package that contains the filter and announcement group dialogs from
+Tutorbook's web app.</p></div>
+        
+
+        
+            
+<div class="section-method">
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>Copyright (C) 2020 Tutorbook
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app_packages_filters_index.js.html">app/packages/filters/index.js</a>, <a href="app_packages_filters_index.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://npmjs.com/package/@tutorbook/filters">https://npmjs.com/package/@tutorbook/filters</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-@tutorbook_filters.EditGroupDialog.html">EditGroupDialog</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-@tutorbook_filters.FilterDialog.html">FilterDialog</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-@tutorbook_filters.NewGroupDialog.html">NewGroupDialog</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
 </article>
 
 </section>
+
+
+
 
 </div>
 
