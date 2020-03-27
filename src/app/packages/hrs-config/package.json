@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/hrs-config",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Package that contains the service hours configuration screen.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "license": "AGPL-3.0-or-later",
   "dependencies": {
     "@tutorbook/data": "^0.6.0",
-    "@tutorbook/utils": "^0.6.0"
+    "@tutorbook/utils": "^0.6.1"
   },
   "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
 }

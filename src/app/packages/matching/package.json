@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/matching",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,13 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.6.0",
+    "@tutorbook/card": "^0.6.1",
     "@tutorbook/data": "^0.6.0",
-    "@tutorbook/dialogs": "^0.6.0",
-    "@tutorbook/profile": "^0.6.0",
-    "@tutorbook/schedule-card": "^0.6.0",
-    "@tutorbook/search": "^0.6.0",
-    "@tutorbook/utils": "^0.6.0"
+    "@tutorbook/dialogs": "^0.6.1",
+    "@tutorbook/profile": "^0.6.1",
+    "@tutorbook/schedule-card": "^0.6.1",
+    "@tutorbook/search": "^0.6.1",
+    "@tutorbook/utils": "^0.6.1"
   },
   "repository": {
     "type": "git",

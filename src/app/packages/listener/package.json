@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/listener",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/clocking": "^0.6.0",
+    "@tutorbook/clocking": "^0.6.1",
     "@tutorbook/data": "^0.6.0",
-    "@tutorbook/dialogs": "^0.6.0",
-    "@tutorbook/utils": "^0.6.0"
+    "@tutorbook/dialogs": "^0.6.1",
+    "@tutorbook/utils": "^0.6.1"
   },
   "repository": {
     "type": "git",
