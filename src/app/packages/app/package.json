@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/app",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "The all-in-one peer tutoring platform.",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "@tutorbook/dialogs": "^0.6.1",
     "@tutorbook/intercom": "^0.6.0",
     "@tutorbook/listener": "^0.6.1",
-    "@tutorbook/login": "^0.6.1",
+    "@tutorbook/login": "^0.6.2",
     "@tutorbook/matching": "^0.6.1",
     "@tutorbook/navigation": "^0.6.1",
     "@tutorbook/notify": "^0.6.0",
