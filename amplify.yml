@@ -1,0 +1,22 @@
+version: 0.1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm i -g lerna
+        - cd src/app
+        - lerna bootstrap
+        - cd ../../src/site
+        - lerna bootstrap
+    build:
+      commands:
+        - npm run prod # We're still in the src/site folder.
+        - cd ../../src/app
+        - npm run prod
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
