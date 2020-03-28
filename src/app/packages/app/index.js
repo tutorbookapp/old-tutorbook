@@ -89,6 +89,7 @@ import {
     Login,
     GoToWebsitePrompt,
     GoToRootPrompt,
+    WebsiteConfigMissingPrompt,
 } from '@tutorbook/login';
 import {
     Matching,
@@ -162,19 +163,6 @@ export default class Tutorbook {
         this.sourceURL = 'https://github.com/tutorbookapp/tutorbook';
 
         /**
-         * The website configuration Firestore document ID.          
-         * @const {string} id
-         * @example
-         * if (window.app.id === 'root') {
-         *   showAllData(); // Don't restrict what the user can see.
-         * } else {
-         *   showSchoolData(); // Only show the school's data.
-         * }
-         * @memberof module:@tutorbook/app~Tutorbook#
-         */
-        this.id = 'root';
-
-        /**
          * Whether or not the app refers to a test partition.
          * @const {bool} test
          * @memberof module:@tutorbook/app~Tutorbook#
@@ -216,6 +204,7 @@ export default class Tutorbook {
 
         if (this.test) document.title = '[Demo] ' + document.title;
 
+        this.render = new Render();
         this.initialization = this.initWebsiteConfig();
         firebase.auth().onAuthStateChanged(user => {
             if (user) return this.startApp();
@@ -234,7 +223,6 @@ export default class Tutorbook {
         await this.initialization;
 
         // Helper packages
-        this.render = this.render || new Render();
         this.analytics = this.analytics || new Analytics();
 
         // View the login/sign-up screen
@@ -251,7 +239,6 @@ export default class Tutorbook {
      */
     async startApp() {
         // Helper packages (only if they haven't already been initialized)
-        this.render = this.render || new Render();
         this.analytics = this.analytics || new Analytics();
 
         // Ensure that the website configuration is ready
@@ -434,26 +421,35 @@ export default class Tutorbook {
      * data.
      * @todo Why are we using {@link Data.listen} here?
      * @return {Promise} Promise that resolves once the configuration data has
-     * been fetched and initialized successfully.
+     * been fetched and initialized successfully (i.e. is accessible at 
+     * `window.app.config`).
      */
     initWebsiteConfig() {
-        return Data.listen(['websites', this.id], websiteConfigDoc => {
-            if (!websiteConfigDoc.exists) {
-                console.warn('[WARNING] Website configuration (' + this.id +
-                    ') did not exist, acting as if root partition...');
-                this.id = 'root';
-                return initWebsiteConfig();
-            }
-            return this.config = websiteConfigDoc.data();
-        }, error => {
-            console.error('[ERROR] Could not get website configuration (' +
-                this.id + '), acting as if root partition...', error);
-            this.id = 'root';
-            return initWebsiteConfig();
-        }, {
-            db: this.db,
-            listeners: this.listeners,
-        });
+        return Data.listen(this.db
+            .collection('websites')
+            .where('hostnames', 'array-contains', window.location.hostname),
+            websiteConfigsSnapshot => {
+                const websiteConfigs = websiteConfigsSnapshot.docs;
+                if (websiteConfigs.length === 1) {
+                    this.config = websiteConfigs[0].data();
+                    this.id = websiteConfigs[0].id;
+                } else if (websiteConfigs.length > 1) {
+                    console.warn('[WARNING] There was more than one website ' +
+                        'config for ' + window.location + ', using first...');
+                    this.config = websiteConfigs[0].data();
+                    this.id = websiteConfigs[0].id;
+                } else {
+                    console.warn('[WARNING] There was no website config for ' +
+                        window.location + ', showing error screen...');
+                    return new WebsiteConfigMissingPrompt().view();
+                }
+            }, error => {
+                console.error('[ERROR] Could not get website configurations, ' +
+                    'acting as if root partition...', error);
+            }, {
+                db: this.db,
+                listeners: this.listeners,
+            });
     }
 
     /**

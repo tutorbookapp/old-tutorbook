@@ -392,3 +392,67 @@ export class GoToWebsitePrompt {
         this.reject = rej;
     }
 };
+
+/**
+ * Class that represents the "website configuration could not be found" error
+ * screen that triggers when there is no website configuration with the 
+ * website's URL yet. We then prompt the user to return to our public web app or
+ * contact support via phone/email.
+ */
+export class WebsiteConfigMissingPrompt {
+    /**
+     * Creates (and renders) a new error screen instance.
+     */
+    constructor() {
+        this.render = window.app.render;
+        this.renderSelf();
+    }
+
+    /**
+     * Views the error screen and returns a promise that never resolves (as it 
+     * resolves when the user is redirected to another page).
+     * @return {Promise} Promise that never resolves (as the user should not be 
+     * able to access a web app that lacks a configuration).
+     */
+    view() {
+        if (window.app.intercom) window.app.intercom.view(true);
+        window.app.loader(false);
+        window.app.view(this.header, this.main);
+        return new Promise((res, rej) => this.wait(res, rej));
+    }
+
+    /**
+     * Renders the error screen with the `window.app.render` 
+     * [Render]{@link module:@tutorbook/render} object.
+     */
+    renderSelf() {
+        this.header = this.render.template('wrapper');
+        this.main = this.render.template('login-prompt', {
+            title: 'Unknown Website',
+            description: 'We could not find the website configuration for ' +
+                window.location.hostname + '. Did you mean to go to our ' +
+                'public web app?',
+            secondaryDescription: 'Is this a mistake?',
+            secondaryLabel: 'Report an issue',
+            secondaryAction: () => {
+                window.open(window.app.sourceURL + '/issues/new');
+            },
+        });
+        $(this.main)
+            .prepend(this.render.template('login-header'))
+            .find('.login__button-container')
+            .prepend(this.render.template('login-prompt-btn', {
+                label: 'Go to public app',
+                action: () => window.location = 'https://tutorbook.app/app',
+            })).find('.mdc-button').each(function() {
+                MDCRipple.attachTo(this);
+            });
+    }
+
+    /**
+     * Stub function to create a `Promise` that never resolves.
+     * @param {Function} res - The `Promise`'s resolution callback.
+     * @param {Function} rej - The `Promise`'s rejection callback.
+     */
+    wait(res, rej) {}
+};
