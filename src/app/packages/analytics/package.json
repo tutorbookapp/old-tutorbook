@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/analytics",
-  "version": "0.6.0",
+  "version": "0.6.3",
   "description": "Analytics wrapper for Tutorbook's use of Google Analytics for Firebase.",
   "main": "index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/chat",
-  "version": "0.6.1",
+  "version": "0.6.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/utils": "^0.6.1"
+    "@tutorbook/utils": "^0.6.3"
   },
   "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
 }

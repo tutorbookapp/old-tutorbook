@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/stats",
-  "version": "0.6.1",
+  "version": "0.6.3",
   "description": "Package that contains a deprecated statistics page for the Tutorbook web app.",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,8 @@
     "directory": "src/app/packages/stats"
   },
   "dependencies": {
-    "@tutorbook/card": "^0.6.1",
-    "@tutorbook/utils": "^0.6.1"
+    "@tutorbook/card": "^0.6.3",
+    "@tutorbook/utils": "^0.6.3"
   },
   "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
 }

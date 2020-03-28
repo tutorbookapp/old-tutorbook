@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/dialogs",
-  "version": "0.6.1",
+  "version": "0.6.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.6.0",
-    "@tutorbook/time-requests": "^0.6.1",
-    "@tutorbook/utils": "^0.6.1"
+    "@tutorbook/data": "^0.6.3",
+    "@tutorbook/time-requests": "^0.6.3",
+    "@tutorbook/utils": "^0.6.3"
   },
   "repository": {
     "type": "git",
