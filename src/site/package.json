@@ -35,24 +35,6 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "@tutorbook/checkmarks": "file:packages/checkmarks",
-    "@tutorbook/cta-button": "file:packages/cta-button",
-    "@tutorbook/cta-link": "file:packages/cta-link",
-    "@tutorbook/email-capture": "file:packages/email-capture",
-    "@tutorbook/email-form": "file:packages/email-form",
-    "@tutorbook/feature-announcement": "file:packages/feature-announcement",
-    "@tutorbook/feature-spotlight": "file:packages/feature-spotlight",
-    "@tutorbook/feature-spotlight-vertical": "file:packages/feature-spotlight-vertical",
-    "@tutorbook/features": "file:packages/features",
-    "@tutorbook/footer": "file:packages/footer",
-    "@tutorbook/header": "file:packages/header",
-    "@tutorbook/heading-block": "file:packages/heading-block",
-    "@tutorbook/hero-email-capture": "file:packages/hero-email-capture",
-    "@tutorbook/large-testimonial": "file:packages/large-testimonial",
-    "@tutorbook/legal": "file:packages/legal",
-    "@tutorbook/logo-party": "file:packages/logo-party",
-    "@tutorbook/site": "file:packages/site",
-    "@tutorbook/site-styles": "file:packages/styles",
     "firebase": "^7.13.1",
     "normalize.css": "^8.0.1"
   }
