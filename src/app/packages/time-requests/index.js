@@ -31,6 +31,10 @@ import {
 import * as $ from 'jquery';
 import to from 'await-to-js';
 
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
+import 'firebase/firestore';
+
 import Data from '@tutorbook/data';
 import Utils from '@tutorbook/utils';
 

@@ -36,6 +36,9 @@ import {
 
 import * as $ from 'jquery';
 
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+
 import phone from 'phone';
 import axios from 'axios';
 

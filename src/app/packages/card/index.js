@@ -861,7 +861,7 @@ Card.renderRequestOutCard = function(doc) {
 Card.renderActiveApptCard = function(doc) {
     const appt = doc.data();
 
-    if (appt.attendees[0].email == firebase.auth().currentUser.email) {
+    if (appt.attendees[0].email == window.app.user.email) {
         var withUser = appt.attendees[1];
     } else {
         var withUser = appt.attendees[0];
@@ -909,7 +909,7 @@ Card.renderActiveApptCard = function(doc) {
 Card.renderApptCard = function(doc) {
     const appt = doc.data();
 
-    if (appt.attendees[0].email == firebase.auth().currentUser.email) {
+    if (appt.attendees[0].email == window.app.user.email) {
         var withUser = appt.attendees[1];
     } else {
         var withUser = appt.attendees[0];

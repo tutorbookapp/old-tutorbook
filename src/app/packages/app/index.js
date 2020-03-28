@@ -62,6 +62,11 @@ import 'regenerator-runtime';
 // Dependencies (cont.)
 import to from 'await-to-js';
 
+// Firebase
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
 // App packages
 import {
     Dashboard,
@@ -139,6 +144,7 @@ export default class Tutorbook {
      */
     constructor() {
         this.logJobPost();
+        this.initFirebase();
 
         /**
          * The version of the app package. This should also match the versions
@@ -209,6 +215,23 @@ export default class Tutorbook {
         firebase.auth().onAuthStateChanged(user => {
             if (user) return this.startApp();
             return this.startLogin();
+        });
+    }
+
+    /**
+     * Initializes Firebase using the Firebase web app configuration.
+     * @see {@link https://firebase.google.com/docs/web/setup#config-object}
+     */
+    initFirebase() {
+        firebase.initializeApp({
+            apiKey: 'AIzaSyC1BOKCrCkDOpAkyqtesQbel66dwa_7G5s',
+            authDomain: 'tutorbook-779d8.firebaseapp.com',
+            databaseURL: 'https://tutorbook-779d8.firebaseio.com',
+            projectId: 'tutorbook-779d8',
+            storageBucket: 'tutorbook-779d8.appspot.com',
+            messagingSenderId: '488773238477',
+            appId: '1:488773238477:web:2208dcb53cf7cd25f83384',
+            measurementId: 'G-13845PV7P1',
         });
     }
 

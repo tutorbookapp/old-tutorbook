@@ -25,6 +25,9 @@ import to from 'await-to-js';
 import axios from 'axios';
 import algoliasearch from 'algoliasearch';
 
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 /**
  * Class that manages Firestore data flow along with any local app data.
  * @todo Add documentation (`@memberof`) links to static attributes (e.g. 

@@ -21,6 +21,9 @@
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
+import * as firebase from 'firebase/app';
+import 'firebase/analytics';
+
 /**
  * Wrapper class around Google Analytics for Firebase.
  * @see {@link https://firebase.google.com/docs/analytics/get-started?platform=web}

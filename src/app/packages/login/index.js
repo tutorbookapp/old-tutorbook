@@ -34,6 +34,9 @@ import {
 
 import * as $ from 'jquery';
 
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 import Utils from '@tutorbook/utils';
 
 /**

@@ -16,6 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import * as firebase from 'firebase/app';
+import 'firebase/messaging';
+
 /**
  * Class that manages notifications (settings, webpush, etc) client side.
  * @todo Finish documentation.
