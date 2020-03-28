@@ -53,6 +53,7 @@
     "@tutorbook/logo-party": "file:packages/logo-party",
     "@tutorbook/site": "file:packages/site",
     "@tutorbook/site-styles": "file:packages/styles",
+    "firebase": "^7.13.1",
     "normalize.css": "^8.0.1"
   }
 }
