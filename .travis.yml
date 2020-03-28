@@ -1,5 +1,7 @@
 notifications:
-  slack: tutorbookapp:TO4yyYMKazQGLZ0isrytycru
+  slack:
+  - tutorbookapp:TO4yyYMKazQGLZ0isrytycru
+  - globalcovidhackathon:XyAVZ1KAta2D1T5ob9ANaEmf
 branches:
   only:
   - master
