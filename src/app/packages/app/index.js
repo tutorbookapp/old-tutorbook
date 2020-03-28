@@ -165,7 +165,7 @@ export default class Tutorbook {
          * The website configuration Firestore document ID.          
          * @const {string} id
          * @example
-         * if (!window.app.id) {
+         * if (window.app.id === 'root') {
          *   showAllData(); // Don't restrict what the user can see.
          * } else {
          *   showSchoolData(); // Only show the school's data.
