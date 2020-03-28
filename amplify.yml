@@ -6,8 +6,10 @@ frontend:
         - npm i -g lerna
         - cd src/app
         - lerna bootstrap
+        - npm i
         - cd ../../src/site
         - lerna bootstrap
+        - npm i
     build:
       commands:
         - npm run prod # We're still in the src/site folder.
