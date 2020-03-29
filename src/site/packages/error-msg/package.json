@@ -1,0 +1,30 @@
+{
+  "name": "@tutorbook/error-msg",
+  "version": "0.6.3",
+  "description": "Custom HTTP error message screen.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tutorbookapp/tutorbook.git"
+  },
+  "keywords": [
+    "Tutorbook",
+    "PWA",
+    "HTTP",
+    "Errors"
+  ],
+  "author": "Nicholas Chiang",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/tutorbookapp/tutorbook/issues"
+  },
+  "homepage": "https://github.com/tutorbookapp/tutorbook#readme",
+  "dependencies": {
+    "@material/animation": "^5.1.0",
+    "@material/button": "^5.1.0",
+    "@material/ripple": "^5.1.0"
+  }
+}

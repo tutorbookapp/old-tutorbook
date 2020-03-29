@@ -1,0 +1,111 @@
+// For component styling
+@use "@material/ripple/mdc-ripple";
+@use "@material/button/mdc-button";
+
+// For mixins
+@use "@material/ripple/_index.scss" as ripple; 
+@use "@material/button"; 
+
+.error {
+  text-align: center;
+  margin: 70px 0;
+}
+
+.error__prompt-title,
+.error__greeting {
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: -0.125rem;
+}
+
+.error__prompt-title {
+  margin-bottom: 0;
+}
+
+.error__prompt-description {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  width: 80vw;
+  max-width: 500px;
+  text-align: left;
+  margin: 15px auto 25px auto;
+}
+
+.error__helper-link {
+  position: absolute;
+  margin-left: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+.error__button-container {
+  margin: auto;
+  width: 80vw;
+  max-width: 500px;
+}
+
+.error__button {
+  font-size: 105%;
+  text-transform: revert;
+  width: 100%;
+  height: 60px;
+  display: block;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  @include button.shape-radius(20%, 0);
+  padding: 0 20px;
+}
+
+.error__button.mdc-button--outlined {
+  @include button.outline-width(2px);
+  @include button.outline-color(#6200EE);
+}
+
+.hr {
+  height: 1px;
+  width: 100%;
+  display: block;
+  border: none;
+  border-bottom-color: currentcolor;
+  border-bottom-style: none;
+  border-bottom-width: medium;
+  border-bottom: 1px solid #dde5ed;
+}
+
+.sp__1 {
+  display: block;
+  height: 10px;
+}
+
+.sp__2 {
+  display: block;
+  height: 20px;
+}
+
+.sp__4 {
+  display: block;
+  height: 40px;
+}
+
+.sp__5 {
+  display: block;
+  height: 50px;
+}
+
+.sp__6 {
+  display: block;
+  height: 60px;
+}
+
+.sp__9 {
+  display: block;
+  height: 90px;
+}

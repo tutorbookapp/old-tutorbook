@@ -27,6 +27,7 @@ import './index.scss';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
+const ErrorMsg = require('@tutorbook/error-msg');
 const Legal = require('@tutorbook/legal');
 const EmailForm = require('@tutorbook/email-form');
 const CTALink = require('@tutorbook/cta-link');
