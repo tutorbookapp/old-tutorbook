@@ -16,10 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class FeatureAnnouncement extends HTMLElement {
+export class FeatureAnnouncement extends HTMLElement {
 
 }
 
 window.customElements.define('feature-announcement', FeatureAnnouncement);
-
-module.exports = FeatureAnnouncement;

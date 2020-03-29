@@ -20,15 +20,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const $ = require('jquery');
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
-
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 /**
  * Class that defines the `site-header` custom HTML Web Component that is used
  * on every page of our marketing website.
  */
-class Header extends HTMLElement {
+export class Header extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
@@ -64,5 +63,3 @@ class Header extends HTMLElement {
 }
 
 window.customElements.define('site-header', Header);
-
-module.exports = Header;

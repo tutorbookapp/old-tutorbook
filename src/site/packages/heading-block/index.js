@@ -20,14 +20,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `heading-block` custom HTML Web Component.
  * @extends external:HTMLElement
  */
-class HeadingBlock extends HTMLElement {
+export class HeadingBlock extends HTMLElement {
     constructor() {
         super();
         const text = this.innerText;
@@ -41,5 +41,3 @@ class HeadingBlock extends HTMLElement {
 }
 
 window.customElements.define('heading-block', HeadingBlock);
-
-module.exports = HeadingBlock;

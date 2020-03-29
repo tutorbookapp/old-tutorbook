@@ -21,15 +21,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `feature-spotlight-vertical` custom HTML Web 
  * Component.
  * @extends external:HTMLElement
  */
-class FeatureSpotlightVertical extends HTMLElement {
+export class FeatureSpotlightVertical extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
@@ -41,5 +41,3 @@ class FeatureSpotlightVertical extends HTMLElement {
 
 window.customElements.define('feature-spotlight-vertical',
     FeatureSpotlightVertical);
-
-module.exports = FeatureSpotlightVertical;

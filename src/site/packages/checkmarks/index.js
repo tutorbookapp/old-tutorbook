@@ -20,17 +20,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const $ = require('jquery');
-const checkmarkHTML = require('./checkmark.html').toString();
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import * as checkmarkHTML from './checkmark.html';
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `checkmarks-list` custom HTML Web Component.
  * @todo Document that `checkmarks-list` tag attributes and what they do (i.e.
  * how does one create a list with different checkmark labels).
  */
-class Checkmarks extends HTMLElement {
+export class Checkmarks extends HTMLElement {
     constructor() {
         super();
         const items = this.innerHTML.split(',');
@@ -53,5 +53,3 @@ class Checkmarks extends HTMLElement {
 }
 
 window.customElements.define('checkmarks-list', Checkmarks);
-
-module.exports = Checkmarks;

@@ -20,15 +20,15 @@
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
-const $ = require('jquery');
-const html = require('./index.html');
-const css = require('./index.scss').toString();
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `cta-link` custom HTML Web Component.
  * @todo Document the valid `cta-link` tag attributes and what they do.
  */
-class CTALink extends HTMLElement {
+export class CTALink extends HTMLElement {
     constructor() {
         super();
         const text = this.innerText;
@@ -71,5 +71,3 @@ class CTALink extends HTMLElement {
 }
 
 window.customElements.define('cta-link', CTALink);
-
-module.exports = CTALink;

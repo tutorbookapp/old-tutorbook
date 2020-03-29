@@ -20,15 +20,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const FeatureSpotlight = require('@tutorbook/feature-spotlight');
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import {
+    FeatureSpotlight
+} from '@tutorbook/feature-spotlight';
 
+import * as html from './index.html';
+import * as css from './index.scss';
 /**
  * Class that defines the `spotlight-features` custom HTML Web Component.
  * @extends external:HTMLElement
  */
-class Features extends HTMLElement {
+export class Features extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
@@ -39,5 +41,3 @@ class Features extends HTMLElement {
 }
 
 window.customElements.define('spotlight-features', Features);
-
-module.exports = Features;

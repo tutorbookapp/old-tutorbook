@@ -22,9 +22,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const $ = require('jquery');
-const html = require('./index.html');
-const css = require('./index.scss').toString();
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 
 const DEFAULT_POLICY = 'privacy';
 
@@ -33,7 +33,7 @@ const DEFAULT_POLICY = 'privacy';
  * contains all of our legalities in an easily navigatable layered format.
  * @see {@link https://tutorbook.app/legal}
  */
-class Legal extends HTMLElement {
+export class Legal extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
@@ -92,5 +92,3 @@ class Legal extends HTMLElement {
 }
 
 window.customElements.define('layered-legal', Legal);
-
-module.exports = Legal;

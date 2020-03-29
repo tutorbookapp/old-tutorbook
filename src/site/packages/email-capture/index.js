@@ -20,16 +20,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const EmailForm = require('@tutorbook/email-form');
-const Checkmarks = require('@tutorbook/checkmarks');
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import {
+    EmailForm
+} from '@tutorbook/email-form';
 
+import {
+    Checkmarks
+} from '@tutorbook/checkmarks';
+
+import * as html from './index.html';
+import * as css from './index.scss';
 /**
  * Class that defines the `email-capture` custom HTML Web Component.
  * @todo Document attributes of the `email-capture` tag.
  */
-class EmailCapture extends HTMLElement {
+export class EmailCapture extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
@@ -40,5 +45,3 @@ class EmailCapture extends HTMLElement {
 }
 
 window.customElements.define('email-capture', EmailCapture);
-
-module.exports = EmailCapture;

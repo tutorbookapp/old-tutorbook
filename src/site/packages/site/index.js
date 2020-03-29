@@ -27,25 +27,60 @@ import './index.scss';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-const Legal = require('@tutorbook/legal');
-const EmailForm = require('@tutorbook/email-form');
-const CTALink = require('@tutorbook/cta-link');
-const Header = require('@tutorbook/header');
-const HeroEmailCapture = require('@tutorbook/hero-email-capture');
-const LogoParty = require('@tutorbook/logo-party');
-const FeatureSpotlightVertical = require('@tutorbook/feature-spotlight-' +
-    'vertical');
-const Features = require('@tutorbook/features');
-const LargeTestimonial = require('@tutorbook/large-testimonial');
-const HeadingBlock = require('@tutorbook/heading-block');
-const FeatureAnnouncement = require('@tutorbook/feature-announcement');
-const EmailCapture = require('@tutorbook/email-capture');
-const Footer = require('@tutorbook/footer');
+import {
+    Legal
+} from '@tutorbook/legal';
+import {
+    EmailForm
+} from '@tutorbook/email-form';
+import {
+    CTALink
+} from '@tutorbook/cta-link';
+
+import {
+    Header
+} from '@tutorbook/header';
+
+import {
+    HeroEmailCapture
+} from '@tutorbook/hero-email-capture';
+
+import {
+    LogoParty
+} from '@tutorbook/logo-party';
+
+import {
+    FeatureSpotlightVertical
+} from '@tutorbook/feature-spotlight-vertical';
+
+import {
+    Features
+} from '@tutorbook/features';
+
+import {
+    LargeTestimonial
+} from '@tutorbook/large-testimonial';
+
+import {
+    HeadingBlock
+} from '@tutorbook/heading-block';
+
+import {
+    FeatureAnnouncement
+} from '@tutorbook/feature-announcement';
+
+import {
+    EmailCapture
+} from '@tutorbook/email-capture';
+
+import {
+    Footer
+} from '@tutorbook/footer';
 
 /**
  * Primary class that updates the header view if the user is signed in.
  */
-class Site {
+export class Site {
     constructor() {
         this.initFirebase();
         firebase.auth().onAuthStateChanged(user => {
@@ -72,5 +107,3 @@ class Site {
 }
 
 window.onload = () => window.site = new Site();
-
-module.exports = Site;

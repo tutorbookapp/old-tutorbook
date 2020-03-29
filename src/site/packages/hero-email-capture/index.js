@@ -20,15 +20,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const Checkmarks = require('@tutorbook/checkmarks');
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import {
+    Checkmarks
+} from '@tutorbook/checkmarks';
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `hero-email-capture` custom HTML Web Component.
  * @extends external:HTMLElement
  */
-class HeroEmailCapture extends HTMLElement {
+export class HeroEmailCapture extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
@@ -39,5 +41,3 @@ class HeroEmailCapture extends HTMLElement {
 }
 
 window.customElements.define('hero-email-capture', HeroEmailCapture);
-
-module.exports = HeroEmailCapture;

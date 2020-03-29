@@ -20,14 +20,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const $ = require('jquery');
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `feature-spotlight` custom HTML Web Component.
  */
-class FeatureSpotlight extends HTMLElement {
+export class FeatureSpotlight extends HTMLElement {
     constructor() {
         super();
         const color = this.getAttribute('color');
@@ -76,5 +76,3 @@ class FeatureSpotlight extends HTMLElement {
 }
 
 window.customElements.define('feature-spotlight', FeatureSpotlight);
-
-module.exports = FeatureSpotlight;

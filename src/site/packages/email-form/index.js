@@ -20,16 +20,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const $ = require('jquery');
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 
 /**
  * Class that defines the `email-form` custom HTML Web Component.
  * @todo Actually do something useful with the emails collected (i.e. instead of
  * just redirecting the user to the Tutorbook app login screen).
  */
-class EmailForm extends HTMLElement {
+export class EmailForm extends HTMLElement {
     constructor() {
         super();
         const color = this.getAttribute('color');
@@ -49,5 +49,3 @@ class EmailForm extends HTMLElement {
 }
 
 window.customElements.define('email-form', EmailForm);
-
-module.exports = EmailForm;

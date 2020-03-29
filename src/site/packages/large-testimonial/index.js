@@ -16,10 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-class LargeTestimonial extends HTMLElement {
+export class LargeTestimonial extends HTMLElement {
 
 }
 
 window.customElements.define('large-testimonial', LargeTestimonial);
-
-module.exports = LargeTestimonial;

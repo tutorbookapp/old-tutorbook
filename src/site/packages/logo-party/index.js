@@ -20,16 +20,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const $ = require('jquery');
-const logoHTML = require('./logo.html').toString();
-const html = require('./index.html').toString();
-const css = require('./index.scss').toString();
-
+import * as logoHTML from './logo.html';
+import * as $ from 'jquery';
+import * as html from './index.html';
+import * as css from './index.scss';
 /**
  * Class that defines the (currently **unused**) `logo-party` custom HTML Web
  * Component.
  */
-class LogoParty extends HTMLElement {
+export class LogoParty extends HTMLElement {
     constructor() {
         super();
         const logos = ['gunn', 'gunn', 'gunn'];
@@ -48,5 +47,3 @@ class LogoParty extends HTMLElement {
 }
 
 window.customElements.define('logo-party', LogoParty);
-
-module.exports = LogoParty;
