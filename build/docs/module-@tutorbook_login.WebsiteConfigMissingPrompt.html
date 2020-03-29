@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>LargeTestimonial - Tutorbook Docs</title>
+    <title>WebsiteConfigMissingPrompt - Tutorbook Docs</title>
 
     <!-- Meta variables from web app -->
     <meta name="description" content="Documentation for web app that enables schools to manage (online and in-person) peer tutoring like never before.">
@@ -62,7 +62,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">LargeTestimonial</h1>
+    <h1 class="page-title">WebsiteConfigMissingPrompt</h1>
     
 
     
@@ -75,8 +75,15 @@
 <header>
     
         <h2>
-        LargeTestimonial
+            <span class="ancestors"><a href="module-@tutorbook_login.html">@tutorbook/login</a>.</span>
+        
+        WebsiteConfigMissingPrompt
         </h2>
+        
+            <div class="class-description"><p>Class that represents the &quot;website configuration could not be found&quot; error
+screen that triggers when there is no website configuration with the
+website's URL yet. We then prompt the user to return to our public web app or
+contact support via phone/email.</p></div>
         
     
 </header>
@@ -88,14 +95,20 @@
 <div class="section-method">
 
     
-
-    
-    <h4 class="name" id="LargeTestimonial"><span class="type-signature"></span>new LargeTestimonial<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h2>Constructor</h2>
     
 
     
+    <h4 class="name" id="WebsiteConfigMissingPrompt"><span class="type-signature"></span>new WebsiteConfigMissingPrompt<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
+
+<div class="description">
+    <p>Creates (and renders) a new error screen instance.</p>
+</div>
 
 
 
@@ -124,29 +137,13 @@
     
 
     
-    <dt class="tag-license">License:</dt>
-    <dd class="tag-license"><ul class="dummy"><li>Copyright (C) 2020 Tutorbook
-
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU Affero General Public License as published by the Free
-Software Foundation, either version 3 of the License, or (at your option) any
-later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
-FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
-details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.</li></ul></dd>
-    
 
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="site_packages_large-testimonial_index.js.html">site/packages/large-testimonial/index.js</a>, <a href="site_packages_large-testimonial_index.js.html#line19">line 19</a>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line409">line 409</a>
     </li></ul></dd>
     
 
@@ -199,6 +196,385 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.</li></ul>
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="renderSelf"><span class="type-signature"></span>renderSelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Renders the error screen with the <code>window.app.render</code>
+<a href="module-@tutorbook_render.html"><code>Render</code></a> object.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line431">line 431</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="view"><span class="type-signature"></span>view<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Views the error screen and returns a promise that never resolves (as it
+resolves when the user is redirected to another page).</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line420">line 420</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>Promise that never resolves (as the user should not be
+able to access a web app that lacks a configuration).</p>
+</div>
+
+    
+</div>
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    
+    <h4 class="name" id="wait"><span class="type-signature"></span>wait<span class="signature">(res, rej)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    <p>Stub function to create a <code>Promise</code> that never resolves.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app_packages_login_index.js.html">app/packages/login/index.js</a>, <a href="app_packages_login_index.js.html#line460">line 460</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<div class="table-container">
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>function</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The <code>Promise</code>'s resolution callback.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rej</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>function</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>The <code>Promise</code>'s rejection callback.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
     
 
     

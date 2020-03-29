@@ -1,4 +1,4 @@
-# [![Tutorbook Logo](https://tutorbook.app/favicon/text-logo.png)](https://tutorbook.app)
+# [![Tutorbook Logo](https://github.com/tutorbookapp/tutorbook/blob/develop/build/favicon/text-logo.png)](https://tutorbook.app)
 
 [![Build Status](https://travis-ci.org/tutorbookapp/tutorbook.svg?branch=master)](https://travis-ci.org/tutorbookapp/tutorbook)
 [![Website Status](https://img.shields.io/website?down_color=lightgrey&down_message=down&up_color=brightgreen&up_message=up&url=https%3A%2F%2Ftutorbook.app)](https://tutorbook.app)
