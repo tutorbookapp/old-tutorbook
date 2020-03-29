@@ -44,6 +44,8 @@ jobs:
     - npm run prod
     - cd ../../src/app/
     - npm run prod
+    before_deploy:
+    - cd ../../
     deploy:
       provider: s3
       access_key_id: AKIAR5YZA5UV7TFT2Q5L
