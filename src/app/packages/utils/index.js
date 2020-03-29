@@ -711,6 +711,12 @@ export default class Utils {
         return '_' + Math.random().toString(36).substr(2, 9);
     }
 
+    /**
+     * Updates the currently viewed URL without changing the history at all.
+     * @todo Don't break the user's browser navigation. Clicking back on the
+     * browser nav should be the same as clicking back on the app nav.
+     * @param {string} url - The new URL.
+     */
     static url(url) {
         history.pushState({}, null, url);
     }
