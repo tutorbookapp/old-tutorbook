@@ -61,12 +61,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   @include button.shape-radius(20%, 0);
+  @include button.filled-accessible(#3700B3);
   padding: 0 20px;
 }
 
 .error__button.mdc-button--outlined {
   @include button.outline-width(2px);
-  @include button.outline-color(#6200EE);
+  @include button.outline-color(#3700B3);
+  @include button.ink-color(#3700B3);
 }
 
 .hr {
