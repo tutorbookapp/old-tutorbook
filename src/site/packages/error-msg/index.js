@@ -52,7 +52,9 @@ export default class ErrorMsg extends HTMLElement {
             case '403':
                 title = 'Forbidden';
                 message = 'It looks like you\'re not authorized to access ' +
-                    'this page. Did you mean to go to our homepage instead?';
+                    'this page. Try adding a trailing slash to your URL (e.g.' +
+                    ' tutorbook.app/app/ instead of tutorbook.app/app). Or, ' +
+                    'you can head to our homepage which you do have access to:';
                 break;
             case '404':
                 title = 'Not Found';
