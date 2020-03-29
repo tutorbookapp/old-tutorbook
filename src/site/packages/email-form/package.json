@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/email-form",
-  "version": "0.6.0",
+  "version": "0.6.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,5 +13,5 @@
     "@tutorbook/site-styles": "^0.6.0",
     "jquery": "^3.4.1"
   },
-  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
 }

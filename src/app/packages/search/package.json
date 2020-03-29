@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/search",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.6.3",
-    "@tutorbook/dialogs": "^0.6.3",
-    "@tutorbook/filters": "^0.6.3",
-    "@tutorbook/profile": "^0.6.3",
-    "@tutorbook/user": "^0.6.3",
-    "@tutorbook/utils": "^0.6.3"
+    "@tutorbook/data": "^0.6.4",
+    "@tutorbook/dialogs": "^0.6.4",
+    "@tutorbook/filters": "^0.6.4",
+    "@tutorbook/profile": "^0.6.4",
+    "@tutorbook/user": "^0.6.4",
+    "@tutorbook/utils": "^0.6.4"
   },
   "description": "",
   "repository": {
@@ -22,5 +22,5 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/search"
   },
-  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
 }

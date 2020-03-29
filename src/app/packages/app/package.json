@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/app",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "The all-in-one peer tutoring platform.",
   "main": "index.js",
   "scripts": {
@@ -15,31 +15,31 @@
   "license": "ISC",
   "dependencies": {
     "@tutorbook/analytics": "^0.6.3",
-    "@tutorbook/card": "^0.6.3",
-    "@tutorbook/chats": "^0.6.3",
-    "@tutorbook/config": "^0.6.3",
-    "@tutorbook/dashboard": "^0.6.3",
-    "@tutorbook/data": "^0.6.3",
-    "@tutorbook/dialogs": "^0.6.3",
+    "@tutorbook/card": "^0.6.4",
+    "@tutorbook/chats": "^0.6.4",
+    "@tutorbook/config": "^0.6.4",
+    "@tutorbook/dashboard": "^0.6.4",
+    "@tutorbook/data": "^0.6.4",
+    "@tutorbook/dialogs": "^0.6.4",
     "@tutorbook/intercom": "^0.6.0",
-    "@tutorbook/listener": "^0.6.3",
-    "@tutorbook/login": "^0.6.3",
-    "@tutorbook/matching": "^0.6.3",
-    "@tutorbook/navigation": "^0.6.3",
+    "@tutorbook/listener": "^0.6.4",
+    "@tutorbook/login": "^0.6.4",
+    "@tutorbook/matching": "^0.6.4",
+    "@tutorbook/navigation": "^0.6.4",
     "@tutorbook/notify": "^0.6.3",
-    "@tutorbook/payments": "^0.6.3",
-    "@tutorbook/profile": "^0.6.3",
-    "@tutorbook/render": "^0.6.3",
-    "@tutorbook/schedule": "^0.6.3",
-    "@tutorbook/search": "^0.6.3",
-    "@tutorbook/snackbar": "^0.6.3",
-    "@tutorbook/stats": "^0.6.3",
-    "@tutorbook/utils": "^0.6.3"
+    "@tutorbook/payments": "^0.6.4",
+    "@tutorbook/profile": "^0.6.4",
+    "@tutorbook/render": "^0.6.4",
+    "@tutorbook/schedule": "^0.6.4",
+    "@tutorbook/search": "^0.6.4",
+    "@tutorbook/snackbar": "^0.6.4",
+    "@tutorbook/stats": "^0.6.4",
+    "@tutorbook/utils": "^0.6.4"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/app"
   },
-  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
 }
