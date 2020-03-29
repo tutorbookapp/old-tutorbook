@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/filters",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Package that contains the filter and announcement group dialogs from Tutorbook's web app.",
   "main": "index.js",
   "scripts": {
@@ -10,15 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.6.3",
-    "@tutorbook/dialogs": "^0.6.3",
-    "@tutorbook/templates": "^0.6.1",
-    "@tutorbook/utils": "^0.6.3"
+    "@tutorbook/data": "^0.6.4",
+    "@tutorbook/dialogs": "^0.6.4",
+    "@tutorbook/templates": "^0.6.4",
+    "@tutorbook/utils": "^0.6.4"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/filters"
   },
-  "gitHead": "9613db82d906831bff1ffcdff0aa531103b2f5b8"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
 }

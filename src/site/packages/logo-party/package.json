@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/logo-party",
-  "version": "0.6.0",
+  "version": "0.6.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,5 +13,5 @@
     "@tutorbook/site-styles": "^0.6.0",
     "jquery": "^3.4.1"
   },
-  "gitHead": "c278360928fb6d99f9e39a6f65886fac5c0bc9a2"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
 }
