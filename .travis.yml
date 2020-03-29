@@ -5,7 +5,6 @@ notifications:
 branches:
   only:
   - master
-  - /-app\Z/
 language: node_js
 node_js:
 - '10.10'
@@ -16,12 +15,11 @@ jobs:
   include:
   - stage: test
     before_install:
-    - openssl aes-256-cbc -K $encrypted_0607468b5ea1_key -iv
-      $encrypted_0607468b5ea1_iv -in firebase/functions/.runtimeconfig.json.enc
-      -out firebase/functions/.runtimeconfig.json -d
-    - openssl aes-256-cbc -K $encrypted_5ad453433b3d_key -iv
-      $encrypted_5ad453433b3d_iv -in firebase/test/admin-cred.json.enc
-      -out firebase/test/admin-cred.json -d
+    - openssl aes-256-cbc -K $encrypted_0607468b5ea1_key -iv $encrypted_0607468b5ea1_iv
+      -in firebase/functions/.runtimeconfig.json.enc -out firebase/functions/.runtimeconfig.json
+      -d
+    - openssl aes-256-cbc -K $encrypted_5ad453433b3d_key -iv $encrypted_5ad453433b3d_iv
+      -in firebase/test/admin-cred.json.enc -out firebase/test/admin-cred.json -d
     install:
     - npm install -g firebase-tools
     - cd firebase/
@@ -29,15 +27,28 @@ jobs:
     - cd functions/
     - npm i
     before_script:
-    - firebase emulators:start --only firestore,functions --project
-      tutorbook-779d8 &>/dev/null &
+    - firebase emulators:start --only firestore,functions --project tutorbook-779d8
+      &>/dev/null &
     - sleep 5
     - cd ../
     script:
     - npm test
   - stage: deploy
     install:
-    - npm install -g firebase-tools
+    - npm i -g lerna
+    - cd src/app/
+    - npm i && lerna bootstrap
+    - cd ../../src/site/
+    - npm i && lerna bootstrap
     script:
-    - firebase deploy --project tutorbook-779d8 --except functions --token
-      "$FIREBASE_TOKEN" --message "$TRAVIS_COMMIT_MESSAGE"
+    - npm run prod
+    - cd ../../src/app/
+    - npm run prod
+    deploy:
+      provider: s3
+      access_key_id: AKIAR5YZA5UV7TFT2Q5L
+      secret_access_key:
+        secure: qpWzRhAjX/1WmwbHg6a1II4Ll+5mDmNRk8CWOB7C37hEIvhIo8pHyA6DPR4ApYgRBxACUh5iVtQmu88/9EmrzDEoTZgG332+r2ZCSVucnOJyUiIyFN+Lh5w8j+57CsD+FN8805+ogKiWvs1NoDa6epm2ITWv4V23mhKf/Xg3obE3g8FK1t+vu1GmPlPClKTvwJQVm9qjwoN0wekxccveQKhflv7lCnpL1y7aQ5CDJ0xQOx6kdbr9yrQflhkoljQ6uinU3nEMyvN6U5s9Al39W/ENWvSFoKkRP3t4ryW3yCuDZDi326ba7AJAIFqfqiQukCBRp6725SqKTBU4ZqtqII98a19RYULvSU1bv0HQKNNi1LHuSQ5AUkBCABTOchHBzWZytQnNolVYtSdygwPtuBmwV6XzTXS6N1JklFgiMo1MSr7YdIYO76Nb9vzsu7hw6JVcGlmPt+b3SLHDrp/APJ9BfKZbZT4a3/Gv39TkPWUFgS95VWctw5KpCNxTxOtbRYlKD5sajvz9Q8sHL6rvp+DIuMjYLp+qKpNCHjcuRGdfunOr7HVxwgiOSObeopGMD6KOB8A6h6c9QJHiaXBoT+yrZWsJk/uCR9xkbrd2zLI6uaGzW0gT0Ke1iqpx90JeLAavVOFMZwfDdAHWsljT81qDoh3H408+jYZM6RKjYhw=
+      bucket: tutorbookapp
+      skip_cleanup: true
+      local_dir: build
