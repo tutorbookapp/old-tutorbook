@@ -23,11 +23,12 @@
 import * as $ from 'jquery';
 import * as html from './index.html';
 import * as css from './index.scss';
+
 /**
  * Class that defines the `site-header` custom HTML Web Component that is used
  * on every page of our marketing website.
  */
-export class Header extends HTMLElement {
+export default class Header extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({

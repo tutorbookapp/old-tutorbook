@@ -28,7 +28,7 @@ import * as css from './index.scss';
  * Class that defines the `cta-link` custom HTML Web Component.
  * @todo Document the valid `cta-link` tag attributes and what they do.
  */
-export class CTALink extends HTMLElement {
+export default class CTALink extends HTMLElement {
     constructor() {
         super();
         const text = this.innerText;

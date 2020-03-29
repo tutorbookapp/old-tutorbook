@@ -27,7 +27,7 @@ import * as css from './index.scss';
  * Class that defines the `heading-block` custom HTML Web Component.
  * @extends external:HTMLElement
  */
-export class HeadingBlock extends HTMLElement {
+export default class HeadingBlock extends HTMLElement {
     constructor() {
         super();
         const text = this.innerText;

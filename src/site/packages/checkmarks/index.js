@@ -30,7 +30,7 @@ import * as css from './index.scss';
  * @todo Document that `checkmarks-list` tag attributes and what they do (i.e.
  * how does one create a list with different checkmark labels).
  */
-export class Checkmarks extends HTMLElement {
+export default class Checkmarks extends HTMLElement {
     constructor() {
         super();
         const items = this.innerHTML.split(',');

@@ -30,7 +30,7 @@ import * as css from './index.scss';
  * Class that defines the `hero-email-capture` custom HTML Web Component.
  * @extends external:HTMLElement
  */
-export class HeroEmailCapture extends HTMLElement {
+export default class HeroEmailCapture extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({

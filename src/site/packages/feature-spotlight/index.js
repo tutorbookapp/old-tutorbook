@@ -27,7 +27,7 @@ import * as css from './index.scss';
 /**
  * Class that defines the `feature-spotlight` custom HTML Web Component.
  */
-export class FeatureSpotlight extends HTMLElement {
+export default class FeatureSpotlight extends HTMLElement {
     constructor() {
         super();
         const color = this.getAttribute('color');

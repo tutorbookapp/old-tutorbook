@@ -1,6 +1,6 @@
 /**
  * Package that defines the `layered-legal` custom HTML Web Component and 
- * contains useful utilities to convert our markdown legal documents (exported
+ * contains useful utilities to convert our markdown legal documents (export defaulted
  * from [Notion]{@link https://notion.so}) into the final HTML Web Component.
  * @module @tutorbook/legal
  * @see {@link https://npmjs.com/package/@tutorbook/legal}
@@ -33,7 +33,7 @@ const DEFAULT_POLICY = 'privacy';
  * contains all of our legalities in an easily navigatable layered format.
  * @see {@link https://tutorbook.app/legal}
  */
-export class Legal extends HTMLElement {
+export default class Legal extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({

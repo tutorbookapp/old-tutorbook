@@ -26,11 +26,12 @@ import {
 
 import * as html from './index.html';
 import * as css from './index.scss';
+
 /**
  * Class that defines the `spotlight-features` custom HTML Web Component.
  * @extends external:HTMLElement
  */
-export class Features extends HTMLElement {
+export default class Features extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({

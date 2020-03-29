@@ -30,11 +30,12 @@ import {
 
 import * as html from './index.html';
 import * as css from './index.scss';
+
 /**
  * Class that defines the `email-capture` custom HTML Web Component.
  * @todo Document attributes of the `email-capture` tag.
  */
-export class EmailCapture extends HTMLElement {
+export default class EmailCapture extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({

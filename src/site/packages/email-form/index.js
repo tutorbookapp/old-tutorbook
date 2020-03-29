@@ -29,7 +29,7 @@ import * as css from './index.scss';
  * @todo Actually do something useful with the emails collected (i.e. instead of
  * just redirecting the user to the Tutorbook app login screen).
  */
-export class EmailForm extends HTMLElement {
+export default class EmailForm extends HTMLElement {
     constructor() {
         super();
         const color = this.getAttribute('color');

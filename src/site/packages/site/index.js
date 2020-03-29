@@ -27,60 +27,25 @@ import './index.scss';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
-import {
-    Legal
-} from '@tutorbook/legal';
-import {
-    EmailForm
-} from '@tutorbook/email-form';
-import {
-    CTALink
-} from '@tutorbook/cta-link';
-
-import {
-    Header
-} from '@tutorbook/header';
-
-import {
-    HeroEmailCapture
-} from '@tutorbook/hero-email-capture';
-
-import {
-    LogoParty
-} from '@tutorbook/logo-party';
-
-import {
-    FeatureSpotlightVertical
-} from '@tutorbook/feature-spotlight-vertical';
-
-import {
-    Features
-} from '@tutorbook/features';
-
-import {
-    LargeTestimonial
-} from '@tutorbook/large-testimonial';
-
-import {
-    HeadingBlock
-} from '@tutorbook/heading-block';
-
-import {
-    FeatureAnnouncement
-} from '@tutorbook/feature-announcement';
-
-import {
-    EmailCapture
-} from '@tutorbook/email-capture';
-
-import {
-    Footer
-} from '@tutorbook/footer';
+import ErrorMsg from '@tutorbook/error-msg';
+import Legal from '@tutorbook/legal';
+import EmailForm from '@tutorbook/email-form';
+import CTALink from '@tutorbook/cta-link';
+import Header from '@tutorbook/header';
+import HeroEmailCapture from '@tutorbook/hero-email-capture';
+import LogoParty from '@tutorbook/logo-party';
+import FeatureSpotlightVertical from '@tutorbook/feature-spotlight-vertical';
+import Features from '@tutorbook/features';
+import LargeTestimonial from '@tutorbook/large-testimonial';
+import HeadingBlock from '@tutorbook/heading-block';
+import FeatureAnnouncement from '@tutorbook/feature-announcement';
+import EmailCapture from '@tutorbook/email-capture';
+import Footer from '@tutorbook/footer';
 
 /**
  * Primary class that updates the header view if the user is signed in.
  */
-export class Site {
+export default class Site {
     constructor() {
         this.initFirebase();
         firebase.auth().onAuthStateChanged(user => {

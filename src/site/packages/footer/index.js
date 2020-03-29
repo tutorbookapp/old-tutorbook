@@ -22,12 +22,13 @@
 
 import * as html from './index.html';
 import * as css from './index.scss';
+
 /**
  * Class that defines the `site-footer` custom HTML Web Component that is used
  * at the bottom of every page of our marketing site.
  * @extends external:HTMLElement
  */
-export class Footer extends HTMLElement {
+export default class Footer extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({

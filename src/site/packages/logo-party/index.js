@@ -24,11 +24,12 @@ import * as logoHTML from './logo.html';
 import * as $ from 'jquery';
 import * as html from './index.html';
 import * as css from './index.scss';
+
 /**
  * Class that defines the (currently **unused**) `logo-party` custom HTML Web
  * Component.
  */
-export class LogoParty extends HTMLElement {
+export default class LogoParty extends HTMLElement {
     constructor() {
         super();
         const logos = ['gunn', 'gunn', 'gunn'];

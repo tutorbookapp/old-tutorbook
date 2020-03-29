@@ -29,7 +29,7 @@ import * as css from './index.scss';
  * Component.
  * @extends external:HTMLElement
  */
-export class FeatureSpotlightVertical extends HTMLElement {
+export default class FeatureSpotlightVertical extends HTMLElement {
     constructor() {
         super();
         const shadow = this.attachShadow({
