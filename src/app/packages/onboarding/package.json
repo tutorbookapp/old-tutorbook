@@ -1,0 +1,32 @@
+{
+  "name": "@tutorbook/onboarding",
+  "version": "0.6.4",
+  "description": "Package that contains the onboarding flow for new schools.",
+  "keywords": [
+    "Tutorbook",
+    "PWA",
+    "Onboarding",
+    "Ed-Tech"
+  ],
+  "author": "Nicholas Chiang <nicholas.h.chiang@gmail.com>",
+  "homepage": "https://github.com/tutorbookapp/tutorbook/tree/master/app/packages/onboarding#readme",
+  "license": "AGPL-3.0-or-later",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tutorbookapp/tutorbook.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/tutorbookapp/tutorbook/issues"
+  },
+  "dependencies": {
+    "@material/elevation": "^5.1.0",
+    "@tutorbook/view": "^0.6.4"
+  }
+}

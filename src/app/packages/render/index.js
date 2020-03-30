@@ -18,7 +18,7 @@
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
 import {
@@ -50,6 +50,29 @@ export default class Render {
      */
     constructor() {
         this.templates = new Templates();
+    }
+
+    /**
+     * Renders a `login__button` styled (see `@tutorbook/app/styles/login.scss`) 
+     * button.
+     * @param {string} label - The text that is inside labeling the button.
+     * @param {Function} action - The function that is called when the button is 
+     * clicked.
+     * @param {Map} [options] - Options that specify other attributes about the 
+     * button.
+     * @todo Add support for `google` (to render a Google Logo with the button) 
+     * and `arrow` (to render an arrow that moves `onhover` like our marketing 
+     * site CTAs) `boolean` options.
+     * @return {HTMLElement} The rendered (and managed) button element that 
+     * triggers `action` when it is clicked (note that this function does 
+     * **not** attach the [MDCRipple]{@link external:MDCRipple}; you have to do 
+     * that yourself).
+     */
+    button(label, action, options) {
+        return this.template('login-prompt-btn', {
+            label: label,
+            action: action,
+        });
     }
 
     /**
@@ -471,6 +494,48 @@ export default class Render {
         return textFieldItem;
     }
 
+    /**
+     * Renders a divided text field list item element where the `end` parameter 
+     * refers to the text visually appended to the inputted text.
+     * @param {string} label - The label of the text field.
+     * @param {string} [val] - The current value of the text field.
+     * @param {string} end - The text that is visually appended to the inputted 
+     * text on the right side of the split text field.
+     * @todo Actually finish implementation.
+     * @return {HTMLElement} The rendered split text field list item element.
+     */
+    splitTextFieldItem(label, val, end) {
+        return this.inputItem(this.splitTextField(label, val, end));
+    }
+
+    /**
+     * Renders a divided text field element where the `end` parameter refers to 
+     * the text visually appended to the inputted text.
+     * @param {string} label - The label of the text field.
+     * @param {string} [val] - The current value of the text field.
+     * @param {string} end - The text that is visually appended to the inputted 
+     * text on the right side of the split text field.
+     * @todo Actually finish implementation.
+     * @return {HTMLElement} The rendered split text field element.
+     */
+    splitTextField(label, val, end) {
+        return this.template('input-split-text-field', {
+            label: label,
+            value: val,
+            rightValue: end,
+        });
+    }
+
+    /**
+     * Renders a text field input list item.
+     * @param {string} label - The label of the text field.
+     * @param {string} [val] - The pre-filled value of the text field. Note that 
+     * this function **does not** properly style pre-filled text fields. You 
+     * have to make sure to initialize them correctly after they are viewed in 
+     * the DOM to move the floating label up and such.
+     * @todo Properly style pre-filled text fields.
+     * @return {HTMLElement} The rendered `MDCTextField` element.
+     */
     textFieldItem(label, val) {
         return this.inputItem(this.textField(label, val));
     }

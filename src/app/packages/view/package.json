@@ -1,0 +1,28 @@
+{
+  "name": "@tutorbook/view",
+  "version": "0.6.4",
+  "description": "Package that contains the base view class for Tutorbook's web app.",
+  "keywords": [
+    "Tutorbook",
+    "Ed-Tech",
+    "View",
+    "PWA"
+  ],
+  "author": "Nicholas Chiang <nicholas.h.chiang@gmail.com>",
+  "homepage": "https://github.com/tutorbookapp/tutorbook/tree/master/app/packages/view#readme",
+  "license": "AGPL-3.0-or-later",
+  "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tutorbookapp/tutorbook.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/tutorbookapp/tutorbook/issues"
+  }
+}

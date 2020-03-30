@@ -29,11 +29,11 @@ import {
 } from '@material/ripple/index';
 
 import * as $ from 'jquery';
+import Navigo from 'navigo';
 
 import Data from '@tutorbook/data';
 import User from '@tutorbook/user';
 import Utils from '@tutorbook/utils';
-import Navigo from 'navigo';
 
 /**
  * Class that manages app URLs, the navigation drawer, and back navigation.

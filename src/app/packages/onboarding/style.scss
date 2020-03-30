@@ -1,0 +1,11 @@
+@use "@material/elevation";
+
+.onboarding {
+}
+
+.onboarding__page {
+  margin: 60px auto;
+  max-width: 80vw;
+  min-width: 400px;
+  @include elevation.elevation(4);
+}
