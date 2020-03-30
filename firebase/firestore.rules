@@ -264,5 +264,12 @@ service cloud.firestore {
     match /users/{user}/invalidPayments/{payment} {
       allow read: if isUserOrProxy(user);
     }
+
+    match /covidPupils/{pupil} {
+      allow create: if true;
+    }
+    match /covidTutors/{tutor} {
+      allow create: if true;
+    }
   }
 }
