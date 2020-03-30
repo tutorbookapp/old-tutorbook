@@ -109,6 +109,7 @@ import Snackbar from '@tutorbook/snackbar';
 import Navigation from '@tutorbook/navigation';
 import Help from '@tutorbook/intercom';
 import Listener from '@tutorbook/listener';
+import Onboarding from '@tutorbook/onboarding';
 
 // Dependency cycle workarounds
 import {
@@ -316,6 +317,7 @@ export default class Tutorbook {
             this.chats = new Chats();
         }
         this.payments = new Payments();
+        this.onboarding = new Onboarding();
 
         this.loader(false);
         this.nav.start();

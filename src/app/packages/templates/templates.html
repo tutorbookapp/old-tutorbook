@@ -2,29 +2,51 @@
 <!-- TEMPLATES: these are HTML templates for all of the objects that the 
 user sees as they navigate throughout the app. -->
 
+<!-- Onboarding Google Signup Btn -->
+<div hidden class="template" id="onboarding-signup-btn">
+    <button id="signup-button" data-fir-click="signup" type="button" class="mdc-button mdc-button--raised login__button google__button">
+        <div class="mdc-button__ripple"></div>
+        <div class="google__logo"></div>
+        <span class="mdc-button__label">Finish setup with Google
+            <svg class="cta-link__arrow" focusable="false" width="13" height="10" xmlns="http://w3.org/2000/svg">
+                <path fill="currentColor" d="M13 5.053c0-.316-.1-.526-.403-.737l-.806-.526-.706-.316L9.07 2.21s-.101 0-.101-.106l-.605-.21-.504-.421-.1-.105-.706-.316L6.45.632 5.744.105C5.442-.105 4.938 0 4.736.316c-.201.316-.201.842.202 1.053l.705.526.807.526.705.316.403.421.1.105.706.316 1.008.632h-.604l-.706.105H6.45l-1.714-.105-2.317.105-.807-.105H.806c-.504 0-.806.316-.806.737 0 .42.302.842.705.842h.706l.806.105h.1l2.319-.105 1.612.105h2.016l.705-.105h.504L7.76 6.842l-.706.421-.705.421s-.1 0-.1.106l-.606.42-.705.317c-.403.21-.504.736-.302 1.052.201.316.403.421.705.421.1 0 .202 0 .403-.105l.706-.421.604-.421.706-.421.604-.421 1.411-.737.706-.421 1.31-.842.504-.316c.201 0 .302-.21.403-.316.201-.21.302-.316.302-.526z"></path>
+            </svg>
+        </span>
+    </button>
+</div>
+
 <!-- Onboarding Wrapper Template -->
-<div hidden class="template" id="onboarding-wrapper">
-    <div class="onboarding">
+<div hidden class="template" id="onboarding-main">
+    <div class="onboarding__main">
+    </div>
+</div>
+
+<!-- Onboarding Header Template -->
+<div hidden class="template" id="onboarding-header">
+    <div class="onboarding__header">
     </div>
 </div>
 
 <!-- Onboarding Page Template -->
 <div hidden class="template" id="onboarding-page">
-    <div class="onboarding__page">
-    </div>
-</div>
-
-<!-- Onboarding Title Template -->
-<div hidden class="template" id="onboarding-title">
-    <div class="onboarding__title">
-        <h1 data-fir-content="title"></h1>
-    </div>
-</div>
-
-<!-- Onboarding Description Template -->
-<div hidden class="template" id="onboarding-description">
-    <div class="onboarding__description">
-        <p data-fir-content="description"></p>
+    <div class="onboarding">
+        <div class="onboarding__pane onboarding__pane--left">
+            <div class="onboarding__content">
+                <h1 data-fir-content="title"></h1>
+                <form class="email-form email-form--wide" id="onboarding-form">
+                    <div class="email-form__input-wrapper">
+                        <input id="onboarding-input" type="text" class="email-form__input email-form__input--black-fill" autocapitalize="words" autocorrect="off" spellcheck="false" aria-required="true" aria-invalid="false" aria-describedby="onboarding-error" data-fir-attr="placeholder:placeholder" value="">
+                    </div>
+                    <button data-fir-content="label" class="email-form__submit email-form__submit--black-fill" type="submit">
+                        Get started
+                    </button>
+                    <span id="onboarding-error" data-fir-content="error" class="email-form__error-message"></span>
+                </form>
+                <p id="onboarding-terms"></p>
+            </div>
+        </div>
+        <div class="onboarding__pane onboarding__pane--right">
+        </div>
     </div>
 </div>
 

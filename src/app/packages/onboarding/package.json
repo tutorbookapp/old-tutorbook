@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@material/elevation": "^5.1.0",
+    "@tutorbook/login": "^0.6.4",
     "@tutorbook/view": "^0.6.4"
   }
 }

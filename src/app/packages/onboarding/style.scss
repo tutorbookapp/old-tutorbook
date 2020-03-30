@@ -1,11 +1,110 @@
-@use "@material/elevation";
-
 .onboarding {
+  display: flex;
+  flex: 1 0 auto;
+  height: 100%;
+  width: 100%;
+  background: #FFF;
+  margin-top: -64px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.onboarding__page {
-  margin: 60px auto;
-  max-width: 80vw;
-  min-width: 400px;
-  @include elevation.elevation(4);
+.onboarding p,h1 {
+  margin: 0 0 1rem;
 }
+
+.onboarding a {
+  text-decoration: none;
+}
+
+.onboarding__pane {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.onboarding__pane--right {
+  background: #F8F8F8;
+  justify-content: flex-start;
+}
+
+.onboarding__pane--left {
+  background: #FFF;
+  justify-content: flex-end;
+  min-width: 500px;
+}
+
+.onboarding__pane--left .onboarding__content {
+  margin-left: 60px;
+  margin-right: 45px;
+  margin-bottom: 30px;
+}
+
+.onboarding__subdomain-form input {
+  text-align: right; 
+}
+
+.onboarding__subdomain-form button:hover {
+  background-color: #181818;
+  border: 2px solid #181818;
+  color: #FFF;
+}
+
+.onboarding__subdomain-form button {
+  cursor: text;
+}
+
+.onboarding__content {
+  max-width: 450px;
+  justify-content: center;
+}
+
+.onboarding__content h1 {
+  letter-spacing: -1px;
+  margin-bottom: 32px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #181818;
+  margin-top: 4px;
+  line-height: 1.2143;
+}
+
+.onboarding__content p {
+  color: #616061;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.38463;
+  margin-top: 1.5rem;
+}
+
+.onboarding__content code {
+  background: #F8F8F8;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.onboarding__content .login__button {
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+.onboarding__content .login__button .cta-link__arrow {
+  position: absolute;
+  top: 50%;
+  height: 10px;
+  margin-top: -5px;
+}
+
+.onboarding__content .login__button:hover .cta-link__arrow {
+  transform: translateX(4px);
+}
+
+@media only screen and (max-width: 768px) {
+  .onboarding__pane--right {
+    display: none;
+  }
+  .onboarding__pane--left {
+    min-width: initial;
+    justify-content: center;
+  }
+}  

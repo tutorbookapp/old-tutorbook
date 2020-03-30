@@ -166,11 +166,13 @@
 }
 
 .email-form__error-message {
-  background-color: #ec7965;
+  color: #FFF; 
+  background-color: #B00020;
   border-radius: 3px;
   padding: 8px;
   text-align: center;
-  display: none; 
+  display: none;
+  font-weight: 600;
 }
     
 .email-form__error-message--active {
@@ -215,7 +217,7 @@
     position: absolute;
     height: 10px;
     width: 10px;
-    background-color: #ec7965;
+    background-color: #B00020;
     border-radius: 2px;
     transform: translateY(50%);
     transform: rotate(45deg);

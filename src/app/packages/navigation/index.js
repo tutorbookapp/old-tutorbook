@@ -132,6 +132,7 @@ export default class Navigation {
         var app = window.app;
         this.router
             .on({
+                '/app/signup': () => window.app.onboarding.view(),
                 '/app/pupils': function() {
                     window.app.search.view({
                         type: 'Pupil'
