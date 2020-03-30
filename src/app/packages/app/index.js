@@ -326,42 +326,34 @@ export default class Tutorbook {
     /**
      * Initializes app variables based on URL parameters.
      * @todo Debug security issues b/c anyone can fake any URL parameters.
-     * @todo Actually use standard URL parameter syntax here (i.e. instead of 
-     * separating pairs with a `?` use an `&`).
      * @return {Promise} Promise that resolves once the data has been synced 
      * with the app and the current user's Firestore profile document.
      */
-    initURLParams() {
-        const pairs = window.location.toString().split('?');
-        return Promise.all(pairs.map(p => p.split('=')).map(([key, val]) => {
-            switch (key) {
-                case 'code':
-                    this.user.cards.setupStripe = false;
-                    this.redirectedFromStripe = true; // For payments
-                    this.snackbar.view('Connecting payments account...');
-                    return axios({
-                        method: 'GET',
-                        url: this.functionsURL + 'initStripeAccount',
-                        params: {
-                            code: val.replace('/', ''),
-                            id: firebase.auth().currentUser.uid,
-                            test: this.test,
-                        },
-                    }).then((res) => {
-                        this.snackbar.view(
-                            'Connected payments account.', 'View', () => {
-                                window.open(res.data.url); // Opens dashboard
-                            });
-                    }).catch((err) => {
-                        console.error('[ERROR] While initializing Stripe ' +
-                            'account:', err);
-                        this.snackbar.view('Could not connect payments ' +
-                            'account.', 'Retry', () => {
-                                window.location = this.payments.setupURL;
-                            });
-                    });
+    async initURLParams() {
+        for (const [key, val] of new URLSearchParams(window.location.search)) {
+            if (key !== 'code') continue;
+            this.user.cards.setupStripe = false;
+            this.redirectedFromStripe = true; // For payments
+            this.snackbar.view('Connecting payments account...');
+            const [err, res] = await to(axios({
+                method: 'GET',
+                url: this.functionsURL + 'initStripeAccount',
+                params: {
+                    code: val.replace('/', ''),
+                    id: firebase.auth().currentUser.uid,
+                    test: this.test,
+                },
+            }));
+            if (err) {
+                console.error('[ERROR] While init-ing Stripe:', err);
+                this.snackbar.view('Could not connect payments ' +
+                    'account.', 'Retry',
+                    () => window.location = this.payments.setupURL);
+            } else {
+                this.snackbar.view('Connected payments account.',
+                    'View', () => window.open(res.data.url));
             }
-        }));
+        }
     }
 
     /** 

@@ -216,10 +216,9 @@ export default class Navigation {
         if (window.location.toString().indexOf('redirect') < 0)
             return this.router.navigate('/app/home');
         // b) Redirect user to desired destination
-        const pairs = window.location.toString().split('?');
-        pairs.map(p => p.split('=')).map(([key, val]) => {
+        for (const [key, val] of new URLSearchParams(window.location.search)) {
             if (key === 'redirect') this.router.navigate('/app/' + val);
-        });
+        }
     }
 
     initDrawer() {

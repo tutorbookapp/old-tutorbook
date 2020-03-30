@@ -58,7 +58,7 @@ export default class Snackbar {
      * @param {string} [label] - The label for the snackbar's action button.
      * @param {actionCallback} action - What to do when the snackbar's action
      * button is clicked.
-     * @param {bool} showClose - Whether or not to show the `X` closing
+     * @param {bool} [showClose=true] - Whether or not to show the `X` closing
      * button.
      * @param {int} [timeout=5000] - The timeout (in milliseconds) for when the
      * snackbar should close automatically (must be between 4000 and 10000 or -1

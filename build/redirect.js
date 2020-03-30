@@ -1,10 +1,8 @@
 const subdomain = window.location.hostname.split('.').length > 2;
-const splitLocation = window.location.toString().split('/');
-if (splitLocation.indexOf('app') >= 0 || subdomain) {
-    var locationParameter = "/app/?redirect=";
-    splitLocation.forEach((str) => {
-        if (splitLocation.indexOf(str) > splitLocation.indexOf('app'))
-            locationParameter += str + '/';
-    });
-    window.location.replace(locationParameter);
+const pathnameParts = window.location.pathname.split('/').filter(part => part);
+if (pathnameParts.shift() === 'app' || subdomain) {
+    var newLocation = '/app/?redirect=' + pathnameParts.join('/');
+    for (const [key, value] of new URLSearchParams(window.location.search))
+        newLocation += '&' + key + '=' + window.encodeURIComponent(value);
+    window.location.replace(newLocation);
 }

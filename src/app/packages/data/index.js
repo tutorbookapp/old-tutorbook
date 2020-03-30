@@ -210,10 +210,19 @@ export default class Data {
         }
     }
 
+    /**
+     * Returns the Firestore document or collection reference given a reference 
+     * path in the form of an array.
+     * @param {string[]} path - The path through the Firestore database to the 
+     * desired resource.
+     * @param {external:CollectionReference} [ref=window.app.db] - The origin of 
+     * the path.
+     * @return {(external:CollectionReference|external:DocumentReference)} The 
+     * Firestore resource that the `path` leads us to from the origin (`ref`).
+     */
     static ref(path, ref = window.app.db) {
-        for (var i = 0; i < path.length; i++) {
+        for (var i = 0; i < path.length; i++)
             ref = i % 2 === 0 ? ref.collection(path[i]) : ref.doc(path[i]);
-        }
         return ref;
     }
 
@@ -474,6 +483,44 @@ export default class Data {
         const ref = await window.app.db.collection('users').doc(id).get();
         if (ref.exists) return ref.data();
         throw new Error('User (' + id + ') did not exist.');
+    }
+
+    /**
+     * Creates a new website configuration using our data REST API.
+     * @param {Website} website - The website to create.
+     * @return {Promise} Promise that resolves with the `res.data` once the 
+     * website has been created.
+     */
+    static createWebsite(website) {
+        return Data.post('createWebsite', {
+            website: website,
+        });
+    }
+
+    /**
+     * Updates a new website configuration using our data REST API.
+     * @param {Website} website - The website to update.
+     * @param {string} id - The ID of the website's Firestore document.
+     * @return {Promise} Promise that resolves with the `res.data` once the 
+     * website has been updated.
+     */
+    static updateWebsite(website, id) {
+        return Data.post('updateWebsite', {
+            website: website,
+            id: id,
+        });
+    }
+
+    /**
+     * Deletes a new website configuration using our data REST API.
+     * @param {string} id - The ID of the website's Firestore document.
+     * @return {Promise} Promise that resolves with the `res.data` once the 
+     * website has been deleted.
+     */
+    static deleteWebsite(id) {
+        return Data.post('deleteWebsite', {
+            id: id,
+        });
     }
 
     static deleteLocation(id) {
