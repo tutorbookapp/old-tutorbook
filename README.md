@@ -137,7 +137,8 @@ that define [Custom HTML Web Components](https://developer.mozilla.org/en-US/doc
 ### Developing
 
 To set up a development environment for and to contribute to the Tutorbook web
-app:
+app (and follow [these instructions](https://freshman.tech/vim-javascript/) on
+setting up [Vim](https://vim.org) for editing JavaScript):
 
 1. Follow [these instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
    to install `nvm` (our suggested way to use Node.js) on your
