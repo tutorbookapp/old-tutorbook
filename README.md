@@ -204,8 +204,9 @@ $ firebase serve --only hosting
 
 **Note** that you might get an error that says you are unauthorized to acces our
 Firebase project (`tutorbook-779d8`). If you do, that means that you haven't
-been added and that you should message Nicholas Chiang (@nicholaschiang on
-GitHub or via [email](mailto:nicholas.h.chiang@gmail.com)).
+been added and that you should message Nicholas Chiang ([@nicholaschiang on
+GitHub](https://github.com/nicholaschiang) or
+[via email](mailto:nicholas.h.chiang@gmail.com)).
 
 #### Build for Production
 
