@@ -1,4 +1,4 @@
-# [![Tutorbook Logo](https://github.com/tutorbookapp/tutorbook/blob/develop/build/favicon/text-logo.png)](https://tutorbook.app)
+# [![Tutorbook Logo](https://raw.githubusercontent.com/tutorbookapp/tutorbook/develop/build/favicon/text-logo.png)](https://tutorbook.app)
 
 [![Build Status](https://travis-ci.org/tutorbookapp/tutorbook.svg?branch=master)](https://travis-ci.org/tutorbookapp/tutorbook)
 [![Website Status](https://img.shields.io/website?down_color=lightgrey&down_message=down&up_color=brightgreen&up_message=up&url=https%3A%2F%2Ftutorbook.app)](https://tutorbook.app)
@@ -137,8 +137,7 @@ that define [Custom HTML Web Components](https://developer.mozilla.org/en-US/doc
 ### Developing
 
 To set up a development environment for and to contribute to the Tutorbook web
-app (and follow [these instructions](https://freshman.tech/vim-javascript/) on
-setting up [Vim](https://vim.org) for editing JavaScript):
+app:
 
 1. Follow [these instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
    to install `nvm` (our suggested way to use Node.js) on your
@@ -146,11 +145,14 @@ setting up [Vim](https://vim.org) for editing JavaScript):
 ```
 $ command -v nvm
 ```
-2. Run the following command to install Node.js v10.10.0 (our current version):
+2. Optionally (if you use [Vim](https://vim.org) as your preferred text editor),
+   follow [these instructions](https://freshman.tech/vim-javascript/) on setting
+   up [Vim](https://vim.org) for editing JavaScript.
+3. Run the following command to install Node.js v10.10.0 (our current version):
 ```
 $ nvm i 10.10
 ```
-3. Ensure that you have recent versions of Node.js and it's package manager
+4. Ensure that you have recent versions of Node.js and it's package manager
    `npm` by running:
 ```
 $ node -v
@@ -158,22 +160,22 @@ $ node -v
 $ npm -v
 6.13.3
 ```
-4. Make sure that you have [Lerna](https://lerna.js.org) installed by running:
+5. Make sure that you have [Lerna](https://lerna.js.org) installed by running:
 ```
 $ npm i -g lerna
 ```
-5. Clone and `cd` into this repository locally by running:
+6. Clone and `cd` into this repository locally by running:
 ```
 $ git clone https://github.com/tutorbookapp/tutorbook.git && cd tutorbook/
 ```
-6. Then, you'll most likely want to branch off of `develop` and `cd` into our
+7. Then, you'll most likely want to branch off of `develop` and `cd` into our
    [app packages](https://npmjs.com/org/tutorbook) by running:
 ```
 $ git checkout -b $my_branch && cd src/app/packages
 ```
-7. Follow the instructions included below to start a webpack development server
+8. Follow the instructions included below to start a webpack development server
    (to see your updates affect the app live).
-8. From there, `cd` into your desired package, make your changes, commit them to
+9. From there, `cd` into your desired package, make your changes, commit them to
    your branch off of `develop`, and open a PR on GitHub.
 
 #### Start a Development Server
@@ -203,7 +205,7 @@ $ firebase serve --only hosting
 **Note** that you might get an error that says you are unauthorized to acces our
 Firebase project (`tutorbook-779d8`). If you do, that means that you haven't
 been added and that you should message Nicholas Chiang (@nicholaschiang on
-GitHub or via [email](mailto:nicholas.h.chiang@gmail.com).
+GitHub or via [email](mailto:nicholas.h.chiang@gmail.com)).
 
 #### Build for Production
 
