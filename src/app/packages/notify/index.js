@@ -8,8 +8,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -24,86 +24,110 @@ import 'firebase/messaging';
  * @todo Finish documentation.
  */
 export default class Notify {
+  constructor() {
+    try {
+      firebase
+        .messaging()
+        .usePublicVapidKey(
+          'BIEVpGqO_n9HSS_sGWdfXoOUpv3dWwB5P2-zRkUBUZH' +
+            'OzvAvJ09nUL68hc5XpTjKZxb74_5DJlSs4oRdnJj8R4w'
+        );
+      const messaging = firebase.messaging();
 
-    constructor() {
-        try {
-            firebase.messaging().usePublicVapidKey(
-                'BIEVpGqO_n9HSS_sGWdfXoOUpv3dWwB5P2-zRkUBUZH' +
-                'OzvAvJ09nUL68hc5XpTjKZxb74_5DJlSs4oRdnJj8R4w'
+      messaging
+        .getToken()
+        .then((token) => {
+          if (token) {
+            window.app.notificationsEnabled = true;
+            window.app.user.cards.setupNotifications = false;
+            window.app.updateUser();
+            this.updateToken(token);
+          } else {
+            window.app.notificationsEnabled = false;
+            window.app.user.cards.setupNotifications = true;
+            window.app.updateUser();
+          }
+        })
+        .catch((err) => {
+          console.error('[ERROR] While retrieving token:', err);
+        });
+
+      messaging.onTokenRefresh(() => {
+        messaging
+          .getToken()
+          .then((token) => {
+            this.updateToken(token);
+          })
+          .catch((err) => {
+            console.error(
+              '[ERROR] Unable to retrieve refreshed token' + ' b/c of ',
+              err
             );
-            const messaging = firebase.messaging();
+          });
+      });
 
-            messaging.getToken().then((token) => {
-                if (token) {
-                    window.app.notificationsEnabled = true;
-                    window.app.user.cards.setupNotifications = false;
-                    window.app.updateUser();
-                    this.updateToken(token);
-                } else {
-                    window.app.notificationsEnabled = false;
-                    window.app.user.cards.setupNotifications = true;
-                    window.app.updateUser();
-                }
-            }).catch((err) => {
-                console.error('[ERROR] While retrieving token:', err);
-            });
-
-            messaging.onTokenRefresh(() => {
-                messaging.getToken().then((token) => {
-                    this.updateToken(token);
-                }).catch((err) => {
-                    console.error('[ERROR] Unable to retrieve refreshed token' +
-                        ' b/c of ', err);
-                });
-            });
-
-            messaging.onMessage((payload) => {
-                if (payload.notification.body === 'Authenticated account.')
-                    return firebase.auth().currentUser.getIdToken(true);
-                if (payload.notification.title.indexOf('Message from ') === 0)
-                    return window.app.snackbar.view(payload.notification.title
-                        .replace('Message from ', '') + ' says: ' + payload
-                        .notification.body);
-                window.app.snackbar.view(payload.notification.body);
-            });
-        } catch (e) {
-            console.error('[ERROR] While initializing Firebase messaging ' +
-                'token to manage webpush notifications:', e);
-        }
+      messaging.onMessage((payload) => {
+        if (payload.notification.body === 'Authenticated account.')
+          return firebase.auth().currentUser.getIdToken(true);
+        if (payload.notification.title.indexOf('Message from ') === 0)
+          return window.app.snackbar.view(
+            payload.notification.title.replace('Message from ', '') +
+              ' says: ' +
+              payload.notification.body
+          );
+        window.app.snackbar.view(payload.notification.body);
+      });
+    } catch (e) {
+      console.error(
+        '[ERROR] While initializing Firebase messaging ' +
+          'token to manage webpush notifications:',
+        e
+      );
     }
+  }
 
-    welcome() {
-        new Notification('Welcome, ' + window.app.user.name, {
-            body: 'This is how we\'ll notify you of important app activity.',
-            icon: 'https://tutorbook.app/favicon/webpush-icon.png',
-            badge: 'https://tutorbook.app/favicon/webpush-badge.png',
-        });
-    }
+  welcome() {
+    new Notification('Welcome, ' + window.app.user.name, {
+      body: "This is how we'll notify you of important app activity.",
+      icon: 'https://tutorbook.app/favicon/webpush-icon.png',
+      badge: 'https://tutorbook.app/favicon/webpush-badge.png',
+    });
+  }
 
-    getPermission() {
-        Notification.requestPermission().then(result => {
+  getPermission() {
+    Notification.requestPermission()
+      .then((result) => {
+        if (result === 'denied') return;
+        if (result === 'default') return;
 
-            if (result === 'denied') return;
-            if (result === 'default') return;
+        firebase
+          .messaging()
+          .getToken()
+          .then((token) => {
+            // Approved
+            window.app.user.cards.setupNotifications = false;
+            window.app.updateUser();
+            this.updateToken(token);
+            this.welcome();
+          });
+      })
+      .catch(function (err) {
+        console.error(
+          '[ERROR] While getting webpush notification ' + 'permission:',
+          err
+        );
+      });
+  }
 
-            firebase.messaging().getToken().then((token) => { // Approved
-                window.app.user.cards.setupNotifications = false;
-                window.app.updateUser();
-                this.updateToken(token);
-                this.welcome();
-            });
-
-        }).catch(function(err) {
-            console.error('[ERROR] While getting webpush notification ' +
-                'permission:', err);
-        });
-    }
-
-    updateToken(token) {
-        window.app.user.notificationToken = token;
-        window.app.updateUser().catch((err) => {
-            console.error('[ERROR] While sending notificationToken ' + token +
-                ' to Firestore Database:', err);
-        });
-    }
-};
+  updateToken(token) {
+    window.app.user.notificationToken = token;
+    window.app.updateUser().catch((err) => {
+      console.error(
+        '[ERROR] While sending notificationToken ' +
+          token +
+          ' to Firestore Database:',
+        err
+      );
+    });
+  }
+}

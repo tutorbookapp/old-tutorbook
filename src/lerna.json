@@ -1,7 +1,4 @@
 {
-  "packages": [
-    "app/packages/*",
-    "site/packages/*"
-  ],
+  "packages": ["app/packages/*", "site/packages/*"],
   "version": "0.6.5"
 }

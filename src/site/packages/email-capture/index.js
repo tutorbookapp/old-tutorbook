@@ -12,21 +12,17 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {
-    EmailForm
-} from '@tutorbook/email-form';
+import { EmailForm } from '@tutorbook/email-form';
 
-import {
-    Checkmarks
-} from '@tutorbook/checkmarks';
+import { Checkmarks } from '@tutorbook/checkmarks';
 
 import * as html from './index.html';
 import * as css from './index.scss';
@@ -36,13 +32,13 @@ import * as css from './index.scss';
  * @todo Document attributes of the `email-capture` tag.
  */
 export default class EmailCapture extends HTMLElement {
-    constructor() {
-        super();
-        const shadow = this.attachShadow({
-            mode: 'open',
-        });
-        shadow.innerHTML = '<style>' + css + '</style>' + html;
-    }
+  constructor() {
+    super();
+    const shadow = this.attachShadow({
+      mode: 'open',
+    });
+    shadow.innerHTML = '<style>' + css + '</style>' + html;
+  }
 }
 
 window.customElements.define('email-capture', EmailCapture);

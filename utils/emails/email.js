@@ -11,35 +11,35 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const send = async (params) => {
-    if (!(params.address && params.subject && params.email)) return;
-    const transporter = nodemailer.createTransport({
-        host: 'smtp-relay.gmail.com',
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'TODO: Add-Your-Email-Address-Here',
-            pass: 'TODO: Add-Your-SMTP-Relay-Password-Here',
-        },
-    });
+  if (!(params.address && params.subject && params.email)) return;
+  const transporter = nodemailer.createTransport({
+    host: 'smtp-relay.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'TODO: Add-Your-Email-Address-Here',
+      pass: 'TODO: Add-Your-SMTP-Relay-Password-Here',
+    },
+  });
 
-    transporter.verify((err, res) => {
-        if (err) return console.error('[ERROR] ' + err);
-        console.log('[DEBUG] Server is ready to take our message.');
-    });
+  transporter.verify((err, res) => {
+    if (err) return console.error('[ERROR] ' + err);
+    console.log('[DEBUG] Server is ready to take our message.');
+  });
 
-    const info = await transporter.sendMail({
-        from: '"Tutorbook" <notifications@tutorbook.app>',
-        to: params.address,
-        subject: params.subject,
-        html: params.email,
-    });
+  const info = await transporter.sendMail({
+    from: '"Tutorbook" <notifications@tutorbook.app>',
+    to: params.address,
+    subject: params.subject,
+    html: params.email,
+  });
 
-    console.log('[DEBUG] Message (' + info.messageId + ') sent.');
+  console.log('[DEBUG] Message (' + info.messageId + ') sent.');
 };
 
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
+String.prototype.replaceAll = function (search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
 };
 
 // =============================================================================
@@ -133,34 +133,38 @@ String.prototype.replaceAll = function(search, replacement) {
 // PITCH TO OTHER SCHOOLS EMAIL(S)
 // =============================================================================
 const EMAILS = {
-    'Fremont High School\'s "Students for Success"': {
-        subject: '[Tutorbook] Manage peer tutoring like never before.',
-        address: 'miao_carroll@fuhsd.org',
-        filename: 'pitches/fremont.html',
-    },
-    'Homestead High School\'s Academic Center': {
-        subject: '[Tutorbook] Manage peer tutoring like never before.',
-        address: 'claudia_ortiz@fuhsd.org',
-        filename: 'pitches/homestead.html',
-    },
-    'Los Altos High School\'s Tutorial Center': {
-        subject: '[Tutorbook] Manage peer tutoring like never before.',
-        address: 'quyen.nguyen@mvla.net',
-        filename: 'pitches/los-altos.html',
-    },
-    'Mountain View High School\'s Tutorial Center': {
-        subject: '[Tutorbook] Manage peer tutoring like never before.',
-        address: 'nancy.rafati@mvla.net',
-        filename: 'pitches/mtn-view.html',
-    },
+  'Fremont High School\'s "Students for Success"': {
+    subject: '[Tutorbook] Manage peer tutoring like never before.',
+    address: 'miao_carroll@fuhsd.org',
+    filename: 'pitches/fremont.html',
+  },
+  "Homestead High School's Academic Center": {
+    subject: '[Tutorbook] Manage peer tutoring like never before.',
+    address: 'claudia_ortiz@fuhsd.org',
+    filename: 'pitches/homestead.html',
+  },
+  "Los Altos High School's Tutorial Center": {
+    subject: '[Tutorbook] Manage peer tutoring like never before.',
+    address: 'quyen.nguyen@mvla.net',
+    filename: 'pitches/los-altos.html',
+  },
+  "Mountain View High School's Tutorial Center": {
+    subject: '[Tutorbook] Manage peer tutoring like never before.',
+    address: 'nancy.rafati@mvla.net',
+    filename: 'pitches/mtn-view.html',
+  },
 };
 
 const main = () => {
-    return Promise.all(Object.values(EMAILS).map(email => send({
+  return Promise.all(
+    Object.values(EMAILS).map((email) =>
+      send({
         address: 'nicholas.h.chiang@gmail.com',
         subject: email.subject,
         email: fs.readFileSync(email.filename).toString(),
-    })));
+      })
+    )
+  );
 };
 
 main();

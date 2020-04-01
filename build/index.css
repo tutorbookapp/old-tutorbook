@@ -1,24 +1,31 @@
 a {
-  text-decoration: none; }
+  text-decoration: none;
+}
 
-li, ul {
+li,
+ul {
   list-style: none;
-  display: flex; }
+  display: flex;
+}
 
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 * {
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
   font-weight: 700;
-  color: #181818; }
+  color: #181818;
+}
 
 body {
-  outline: 0; }
+  outline: 0;
+}
 
 main {
   overflow: hidden;
-  outline: 0; }
+  outline: 0;
+}

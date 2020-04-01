@@ -1,10 +1,10 @@
 /**
  * Package that depends on all the other custom Web Component packages (and, by
- * definition, then defines all of those web components). This is the main 
+ * definition, then defines all of those web components). This is the main
  * driver behind our [marketing website]{@link https://tutorbook.app}.
  * @module @tutorbook/site
  * @see {@link https://npmjs.com/package/@tutorbook/site}
- * 
+ *
  * @license
  * Copyright (C) 2020 Tutorbook
  *
@@ -14,8 +14,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -46,29 +46,29 @@ import Footer from '@tutorbook/footer';
  * Primary class that updates the header view if the user is signed in.
  */
 export default class Site {
-    constructor() {
-        this.initFirebase();
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) document.querySelector('site-header').setLoggedIn(true);
-        });
-    }
+  constructor() {
+    this.initFirebase();
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) document.querySelector('site-header').setLoggedIn(true);
+    });
+  }
 
-    /**
-     * Initializes Firebase using the Firebase web app configuration.
-     * @see {@link https://firebase.google.com/docs/web/setup#config-object}
-     */
-    initFirebase() {
-        firebase.initializeApp({
-            apiKey: 'AIzaSyC1BOKCrCkDOpAkyqtesQbel66dwa_7G5s',
-            authDomain: 'tutorbook-779d8.firebaseapp.com',
-            databaseURL: 'https://tutorbook-779d8.firebaseio.com',
-            projectId: 'tutorbook-779d8',
-            storageBucket: 'tutorbook-779d8.appspot.com',
-            messagingSenderId: '488773238477',
-            appId: '1:488773238477:web:2208dcb53cf7cd25f83384',
-            measurementId: 'G-13845PV7P1',
-        });
-    }
+  /**
+   * Initializes Firebase using the Firebase web app configuration.
+   * @see {@link https://firebase.google.com/docs/web/setup#config-object}
+   */
+  initFirebase() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyC1BOKCrCkDOpAkyqtesQbel66dwa_7G5s',
+      authDomain: 'tutorbook-779d8.firebaseapp.com',
+      databaseURL: 'https://tutorbook-779d8.firebaseio.com',
+      projectId: 'tutorbook-779d8',
+      storageBucket: 'tutorbook-779d8.appspot.com',
+      messagingSenderId: '488773238477',
+      appId: '1:488773238477:web:2208dcb53cf7cd25f83384',
+      measurementId: 'G-13845PV7P1',
+    });
+  }
 }
 
-window.onload = () => window.site = new Site();
+window.onload = () => (window.site = new Site());

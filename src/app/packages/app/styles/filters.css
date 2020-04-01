@@ -13,7 +13,9 @@
   cursor: pointer;
 }
 
-#show-filters:hover { box-shadow: rgba(0, 0, 0, 0.4) 3px 3px 2px; }
+#show-filters:hover {
+  box-shadow: rgba(0, 0, 0, 0.4) 3px 3px 2px;
+}
 
 #active-filters {
   color: #777;

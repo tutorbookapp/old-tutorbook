@@ -12,8 +12,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -31,25 +31,29 @@ import * as css from './index.scss';
  * how does one create a list with different checkmark labels).
  */
 export default class Checkmarks extends HTMLElement {
-    constructor() {
-        super();
-        const items = this.innerHTML.split(',');
-        const marginTop = this.getAttribute('margin-top') || 0;
-        const color = this.getAttribute('color');
-        this.innerHTML = '';
-        const shadow = this.attachShadow({
-            mode: 'open',
-        });
-        shadow.innerHTML = '<style>' + css + '</style>' + html;
-        items.forEach(item => $(shadow).find('ul').append(checkmarkHTML
-            .replace('{ text }', item)));
-        if (marginTop) $(shadow).find('ul').css('margin-top', marginTop);
-        if (['white', 'black'].indexOf(color) >= 0) $(shadow)
-            .find('.checkmark-item__icon').addClass('checkmark-item__icon--' +
-                color).end()
-            .find('.checkmark-item__text').addClass('checkmark-item__text--' +
-                color).end();
-    }
+  constructor() {
+    super();
+    const items = this.innerHTML.split(',');
+    const marginTop = this.getAttribute('margin-top') || 0;
+    const color = this.getAttribute('color');
+    this.innerHTML = '';
+    const shadow = this.attachShadow({
+      mode: 'open',
+    });
+    shadow.innerHTML = '<style>' + css + '</style>' + html;
+    items.forEach((item) =>
+      $(shadow).find('ul').append(checkmarkHTML.replace('{ text }', item))
+    );
+    if (marginTop) $(shadow).find('ul').css('margin-top', marginTop);
+    if (['white', 'black'].indexOf(color) >= 0)
+      $(shadow)
+        .find('.checkmark-item__icon')
+        .addClass('checkmark-item__icon--' + color)
+        .end()
+        .find('.checkmark-item__text')
+        .addClass('checkmark-item__text--' + color)
+        .end();
+  }
 }
 
 window.customElements.define('checkmarks-list', Checkmarks);

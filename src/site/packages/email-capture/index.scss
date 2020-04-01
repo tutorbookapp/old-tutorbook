@@ -1,4 +1,4 @@
-@import "@tutorbook/site-styles/general";
+@import '@tutorbook/site-styles/general';
 
 .email-capture {
   margin-bottom: 60px;
@@ -16,7 +16,7 @@
 
 .email-capture__background {
   display: grid;
-  background-color: #3700B3;
+  background-color: #3700b3;
   background-image: unset;
   background-size: cover;
   background-position: center center;
@@ -38,7 +38,7 @@
   font-size: 26px;
   font-weight: 700;
   line-height: 1.2;
-  color: #FFF;
+  color: #fff;
 }
 
 .email-capture__subheading {
@@ -49,7 +49,7 @@
   -ms-letter-spacing: 0.02em;
   letter-spacing: 0.02em;
   line-height: 1.4;
-  color: #FFF;
+  color: #fff;
 }
 
 .email-capture__form {
@@ -58,7 +58,6 @@
 }
 
 @media (min-width: 768px) {
-
   .email-capture {
     margin-top: 100px;
   }
@@ -75,7 +74,6 @@
 }
 
 @media (min-width: 1024px) {
-
   .email-capture__background {
     grid-column: content;
     padding: 100px 0;

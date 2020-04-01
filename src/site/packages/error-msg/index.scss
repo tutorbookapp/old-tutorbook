@@ -3,8 +3,8 @@
 @use "@material/button/mdc-button";
 
 // For mixins
-@use "@material/ripple/_index.scss" as ripple; 
-@use "@material/button"; 
+@use "@material/ripple/_index.scss" as ripple;
+@use "@material/button";
 
 .error {
   text-align: center;
@@ -61,14 +61,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   @include button.shape-radius(20%, 0);
-  @include button.filled-accessible(#3700B3);
+  @include button.filled-accessible(#3700b3);
   padding: 0 20px;
 }
 
 .error__button.mdc-button--outlined {
   @include button.outline-width(2px);
-  @include button.outline-color(#3700B3);
-  @include button.ink-color(#3700B3);
+  @include button.outline-color(#3700b3);
+  @include button.ink-color(#3700b3);
 }
 
 .hr {

@@ -1,19 +1,20 @@
-@import "@tutorbook/site-styles/general";
+@import '@tutorbook/site-styles/general';
 
 .email-form {
   display: flex;
   align-items: center;
   width: 100%;
-  position: relative; 
+  position: relative;
 }
 
-.email-form__input, .email-form__submit {
-  padding: 12px 21px; 
+.email-form__input,
+.email-form__submit {
+  padding: 12px 21px;
 }
 
 .email-form__input-wrapper {
   flex: 999 0 0;
-  width: 100%; 
+  width: 100%;
 }
 
 .email-form__submit {
@@ -27,11 +28,11 @@
   flex-shrink: 0;
   font-size: 15px;
   font-weight: 700;
-  position: relative; 
+  position: relative;
 }
-   
+
 .email-form__submit[data-focus-visible-added] {
-  position: relative; 
+  position: relative;
 }
 
 .email-form__submit[data-focus-visible-added]:after {
@@ -43,19 +44,19 @@
   bottom: -6px;
   left: -6px;
   border: 3px solid black;
-  border-radius: 10px; 
+  border-radius: 10px;
 }
-    
+
 .email-form__submit:focus {
-  outline: 0; 
+  outline: 0;
 }
-    
+
 .email-form__submit--small {
-  padding: 6px 24px; 
+  padding: 6px 24px;
 }
-    
+
 .email-form__submit--wide {
-  width: 100%; 
+  width: 100%;
 }
 
 .email-form__submit--white-fill {
@@ -63,47 +64,47 @@
   border: 2px solid #181818;
   color: #181818;
 }
-      
+
 .email-form__submit--white-fill:hover {
   background-color: #181818;
   border: 2px solid #181818;
-  color: #fff; 
+  color: #fff;
 }
-    
+
 .email-form__submit--black-fill {
   background-color: #181818;
   border: 2px solid #181818;
   color: #ffffff;
 }
-      
+
 .email-form__submit--black-fill:hover {
   background-color: #ffffff;
   border: 2px solid #181818;
-  color: #181818; 
+  color: #181818;
 }
-    
+
 .email-form__submit--black-outline {
   background-color: transparent;
   border: 2px solid #181818;
-  color: #181818; 
+  color: #181818;
 }
-      
+
 .email-form__submit--black-outline:hover {
   background-color: #181818;
   border: 2px solid #181818;
-  color: #ffffff; 
+  color: #ffffff;
 }
 
 .email-form__submit--white-outline {
   background-color: transparent;
   border: 2px solid #ffffff;
-  color: #ffffff; 
+  color: #ffffff;
 }
-      
+
 .email-form__submit--white-outline:hover {
   background-color: transparent;
   border: 2px solid #6afdef;
-  color: #6afdef; 
+  color: #6afdef;
 }
 
 .email-form__submit--link-only-black {
@@ -111,45 +112,45 @@
   border: 2px solid #181818;
   color: #181818;
 }
-      
+
 .email-form__submit--link-only-black:hover .cta-link__arrow {
-  transform: translateX(4px); 
+  transform: translateX(4px);
 }
-    
+
 .email-form__submit--black-fill-transparent-hover {
   background-color: #181818;
   border: 2px solid #181818;
-  color: #ffffff; 
+  color: #ffffff;
 }
-      
+
 .email-form__submit--black-fill-transparent-hover:hover {
   background-color: transparent;
   border: 2px solid #fff;
-  color: #fff; 
+  color: #fff;
 }
-      
+
 .email-form__submit--black-fill-transparent-hover .arrow {
-  fill: #ffffff; 
+  fill: #ffffff;
 }
-      
+
 .email-form__submit--black-fill-transparent-hover:hover .arrow,
 .email-form__submit--black-fill-transparent-hover:focus .arrow {
-  fill: #181818; 
+  fill: #181818;
 }
-    
+
 .email-form__submit__arrow {
   margin-left: 8px;
   transition: transform 200ms;
-  height: 10px; 
+  height: 10px;
 }
-    
+
 .email-form__submit__loading-indicator {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
 }
-  
+
 .email-form__input {
   width: 100%;
   outline: 0;
@@ -157,7 +158,7 @@
   color: #181818;
   border-radius: 6px;
   font-size: 15px;
-  line-height: unset; 
+  line-height: unset;
   font-weight: 500;
 }
 
@@ -170,43 +171,43 @@
   border-radius: 3px;
   padding: 8px;
   text-align: center;
-  display: none; 
+  display: none;
 }
-    
+
 .email-form__error-message--active {
-  display: block; 
+  display: block;
 }
 
 .email-form--small .email-form__input,
 .email-form--small .email-form__submit {
   padding: 6px 14px;
-  min-width: 186px; 
+  min-width: 186px;
 }
-  
+
 .email-form--error .email-form__input {
-  border-color: #ec7965; 
+  border-color: #ec7965;
 }
 
 .email-form--loading .email-form__submit__label {
-  opacity: 0; 
+  opacity: 0;
 }
-  
+
 @media (min-width: 756px) {
   .email-form__input {
     min-width: 210px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    border-right: 0; 
+    border-right: 0;
   }
   .email-form__submit {
     border-top-left-radius: 0;
-    border-bottom-left-radius: 0; 
+    border-bottom-left-radius: 0;
   }
   .email-form__error-message {
     position: absolute;
     top: calc(100% + 15px);
     left: 0;
-    right: 30%; 
+    right: 30%;
   }
   .email-form__error-message:before {
     bottom: 100%;
@@ -219,37 +220,37 @@
     border-radius: 2px;
     transform: translateY(50%);
     transform: rotate(45deg);
-    top: -4px; 
-  } 
+    top: -4px;
+  }
 }
 
 @media (max-width: 755px) {
   .email-form {
     flex-direction: column;
-    align-items: stretch; 
+    align-items: stretch;
   }
   .email-form > * + * {
     -webkit-margin-before: 10px;
-    margin-block-start: 10px; 
+    margin-block-start: 10px;
   }
-  .email-form__input::-webkit-input-placeholder, 
+  .email-form__input::-webkit-input-placeholder,
   .email-form__submit::-webkit-input-placeholder {
-    text-align: center; 
+    text-align: center;
   }
-  .email-form__input::-moz-placeholder, 
+  .email-form__input::-moz-placeholder,
   .email-form__submit::-moz-placeholder {
-    text-align: center; 
+    text-align: center;
   }
-  .email-form__input:-ms-input-placeholder, 
+  .email-form__input:-ms-input-placeholder,
   .email-form__submit:-ms-input-placeholder {
-    text-align: center; 
+    text-align: center;
   }
-  .email-form__input::-ms-input-placeholder, 
+  .email-form__input::-ms-input-placeholder,
   .email-form__submit::-ms-input-placeholder {
-    text-align: center; 
+    text-align: center;
   }
-  .email-form__input::placeholder, 
+  .email-form__input::placeholder,
   .email-form__submit::placeholder {
-    text-align: center; 
-  } 
+    text-align: center;
+  }
 }

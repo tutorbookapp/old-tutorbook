@@ -1,4 +1,4 @@
-@import "@tutorbook/site-styles/general";
+@import '@tutorbook/site-styles/general';
 
 .spotlight {
   margin-top: 80px;
@@ -13,7 +13,7 @@
   grid-template-rows: repeat(2, auto);
   grid-template-columns: [left-gutter] 2fr [content] 10fr [right-gutter] 2fr;
   text-align: center;
-  background-color: #3700B3;
+  background-color: #3700b3;
   padding: 100px 0;
   position: relative;
 }
@@ -28,8 +28,8 @@
   background-color: inherit;
   height: 18px;
   left: -3vw;
-  -webkit-mask-image: url("border.svg");
-  mask-image: url("border.svg");
+  -webkit-mask-image: url('border.svg');
+  mask-image: url('border.svg');
   -webkit-mask-repeat: repeat no-repeat;
   mask-repeat: repeat no-repeat;
   width: 106vw;
@@ -43,8 +43,8 @@
   background-color: inherit;
   height: 18px;
   left: -3vw;
-  -webkit-mask-image: url("border.svg");
-  mask-image: url("border.svg");
+  -webkit-mask-image: url('border.svg');
+  mask-image: url('border.svg');
   -webkit-mask-repeat: repeat no-repeat;
   mask-repeat: repeat no-repeat;
   width: 106vw;
@@ -61,7 +61,7 @@
   font-size: 36px;
   font-weight: 700;
   line-height: 1.2;
-  color: #FFF;
+  color: #fff;
 }
 
 .spotlight__cta {

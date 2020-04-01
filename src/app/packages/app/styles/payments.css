@@ -5,7 +5,7 @@
 .payments .mdc-list-item {
   border-top-left-radius: 36px;
   border-bottom-left-radius: 36px;
-};
+}
 
 .payments .mdc-list-item button {
   background-color: #fff;
@@ -34,7 +34,7 @@
   bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
 }
 
-@media(min-width: 1024px) {
+@media (min-width: 1024px) {
   .payments #withdraw {
     bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }

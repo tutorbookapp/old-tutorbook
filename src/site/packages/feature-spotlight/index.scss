@@ -1,4 +1,4 @@
-@import "@tutorbook/site-styles/general";
+@import '@tutorbook/site-styles/general';
 
 .spotlight {
   margin-top: 60px;
@@ -40,7 +40,8 @@
   width: 100%;
 }
 
-.feature-spotlight__background::before, .feature-spotlight__background::after {
+.feature-spotlight__background::before,
+.feature-spotlight__background::after {
   content: '';
   position: absolute;
   background-color: inherit;
@@ -152,10 +153,10 @@
 @media (min-width: 768px) {
   .feature-spotlight__heading {
     line-height: 1;
-  } 
-  
+  }
+
   .feature-spotlight {
-    grid-template-columns: [left-gutter] 1fr [content] 12fr [right-gutter] 1fr; 
+    grid-template-columns: [left-gutter] 1fr [content] 12fr [right-gutter] 1fr;
   }
 
   .feature-spotlight__background {

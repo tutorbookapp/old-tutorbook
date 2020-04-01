@@ -2,11 +2,7 @@
   "hosting": {
     "site": "tutorbook-779d8",
     "public": "build/",
-    "ignore": [
-      "**/*.log",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["**/*.log", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",

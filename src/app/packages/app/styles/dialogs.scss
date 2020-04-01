@@ -37,7 +37,9 @@
   position: relative;
 }
 
-.file-carousel__item embed,video,audio {
+.file-carousel__item embed,
+video,
+audio {
   width: 100%;
   height: 100%;
 }
@@ -138,7 +140,7 @@
 }
 
 .dialog-subjects .mdc-dialog__content {
-  padding: 0; 
+  padding: 0;
 }
 
 .dialog-subjects .mdc-dialog__content .mdc-list-item {
@@ -186,7 +188,7 @@
 }
 
 .dialog-input .action-list-divider button:disabled {
-  color: #9F9F9F;
+  color: #9f9f9f;
 }
 
 /* Ensures that input-list-items completely wrap around inputs and don't cut
@@ -214,7 +216,7 @@ them (or their floating labels) off short. */
 
 .mdc-dialog .mdc-select .mdc-list {
   // Reset `.mdc-dialog .mdc-list:first-child:last-child` rule.
-  padding: 8px 0 !important; 
+  padding: 8px 0 !important;
 }
 
 .mdc-dialog .material-icons {

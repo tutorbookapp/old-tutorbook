@@ -6,7 +6,7 @@
   bottom: calc(2rem + 48px) !important; /* Adjust for existing mdc-fab */
 }
 
-@media(min-width: 1024px) {
+@media (min-width: 1024px) {
   .matching #pupil-button {
     bottom: calc(2.5rem + 48px) !important; /* Adjust for existing mdc-fab */
   }
@@ -37,7 +37,7 @@
  *}
  */
 
-.dialog-input #results .mdc-list-item:first-child{
+.dialog-input #results .mdc-list-item:first-child {
   margin-top: 0 !important;
 }
 
@@ -47,8 +47,8 @@
 
 .mdc-list-item #checkmark {
   display: none;
-  background: #6200EE;
-  color: #FFF;
+  background: #6200ee;
+  color: #fff;
   text-align: center;
 }
 

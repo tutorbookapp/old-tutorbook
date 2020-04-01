@@ -3,8 +3,8 @@
 @use "@material/button/mdc-button";
 
 // For mixins
-@use "@material/ripple/_index.scss" as ripple; 
-@use "@material/button"; 
+@use "@material/ripple/_index.scss" as ripple;
+@use "@material/button";
 
 .login {
   text-align: center;
@@ -67,27 +67,27 @@
 
 .login__button.mdc-button--outlined {
   @include button.outline-width(2px);
-  @include button.outline-color(#6200EE);
+  @include button.outline-color(#6200ee);
 }
 
 .login__button.google__button {
-  border: 2px solid #4285F4;
+  border: 2px solid #4285f4;
   padding-left: calc(56px + 20px);
   overflow: hidden;
-  @include button.outline-color(#4285F4);
+  @include button.outline-color(#4285f4);
 }
 
 .login__button.google__button.mdc-button--raised {
-  @include button.filled-accessible(#4285F4);
+  @include button.filled-accessible(#4285f4);
   .mdc-button__ripple {
     overflow: visible;
   }
 }
 
 .login__button.google__button.mdc-button--outlined {
-  @include button.ink-color(#4285F4);
+  @include button.ink-color(#4285f4);
   .mdc-button__ripple {
-    @include ripple.states-base-color(#4285F4);
+    @include ripple.states-base-color(#4285f4);
   }
 }
 
