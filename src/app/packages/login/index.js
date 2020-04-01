@@ -1,6 +1,6 @@
 /**
  * Package that contains our login/sign-up screen and basic onboarding process
- * (where we ensure that user's are verified before letting them access a 
+ * (where we ensure that user's are verified before letting them access a
  * school's or school district's data).
  * @module @tutorbook/login
  * @see {@link https://npmjs.com/package/@tutorbook/login}
@@ -14,8 +14,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -48,7 +48,7 @@ import Utils from '@tutorbook/utils';
  */
 export class Login {
     /**
-     * Creates (and renders using `window.app.render`) a new login instance and 
+     * Creates (and renders using `window.app.render`) a new login instance and
      * resets the `window.app`'s user.
      */
     constructor() {
@@ -139,7 +139,7 @@ export class Login {
                  * Show setup cards in the dashboard for:
                  * 1) Their profile (i.e. subjects, availability, locations)
                  * 2) Linking Google Calendar or iCal to their account
-                 * 3) Setting up their first location or applying to be a 
+                 * 3) Setting up their first location or applying to be a
                  * supervisor for an existing location
                  */
                 Utils.url('/app/home?cards=' + window.encodeURIComponent([
@@ -257,8 +257,8 @@ export class Login {
  */
 export class GoToRootPrompt {
     /**
-     * Creates (and renders) a new error screen using the given district (or 
-     * `access`) configuration and `window.app.render` to render the 
+     * Creates (and renders) a new error screen using the given district (or
+     * `access`) configuration and `window.app.render` to render the
      * `login-prompt` template.
      */
     constructor(access) {
@@ -307,7 +307,7 @@ export class GoToRootPrompt {
     }
 
     /**
-     * The tether function passed to the `Promise` returned by 
+     * The tether function passed to the `Promise` returned by
      * {@link module:@tutorbook/login~GoToRootPrompt#view}.
      * @param {Function} res - The `resolutionFunc` that resolves the `Promise`.
      * @param {Function} rej - The `rejectionFunc` that rejects the `Promise`.
@@ -326,9 +326,9 @@ export class GoToRootPrompt {
  */
 export class GoToWebsitePrompt {
     /**
-     * Creates (and renders) a new prompt screen that prompts the user to go to 
+     * Creates (and renders) a new prompt screen that prompts the user to go to
      * the given website's app partition.
-     * @param {AccessConfig} access - The district (or `access`) configuration 
+     * @param {AccessConfig} access - The district (or `access`) configuration
      * to ask the user to go to.
      */
     constructor(access) {
@@ -385,7 +385,7 @@ export class GoToWebsitePrompt {
     }
 
     /**
-     * The tether function passed to the `Promise` returned by 
+     * The tether function passed to the `Promise` returned by
      * {@link module:@tutorbook/login~GoToWebsitePrompt#view}.
      * @param {Function} res - The `resolutionFunc` that resolves the `Promise`.
      * @param {Function} rej - The `rejectionFunc` that rejects the `Promise`.
@@ -399,7 +399,7 @@ export class GoToWebsitePrompt {
 
 /**
  * Class that represents the "website configuration could not be found" error
- * screen that triggers when there is no website configuration with the 
+ * screen that triggers when there is no website configuration with the
  * website's URL yet. We then prompt the user to return to our public web app or
  * contact support via phone/email.
  */
@@ -413,9 +413,9 @@ export class WebsiteConfigMissingPrompt {
     }
 
     /**
-     * Views the error screen and returns a promise that never resolves (as it 
+     * Views the error screen and returns a promise that never resolves (as it
      * resolves when the user is redirected to another page).
-     * @return {Promise} Promise that never resolves (as the user should not be 
+     * @return {Promise} Promise that never resolves (as the user should not be
      * able to access a web app that lacks a configuration).
      */
     view() {
@@ -426,7 +426,7 @@ export class WebsiteConfigMissingPrompt {
     }
 
     /**
-     * Renders the error screen with the `window.app.render` 
+     * Renders the error screen with the `window.app.render`
      * [Render]{@link module:@tutorbook/render} object.
      */
     renderSelf() {
@@ -447,7 +447,7 @@ export class WebsiteConfigMissingPrompt {
             .find('.login__button-container')
             .prepend(this.render.template('login-prompt-btn', {
                 label: 'Go to public app',
-                action: () => window.location = 'https://tutorbook.app/app',
+                action: () => window.location = 'https://tutorbook.app/app/',
             })).find('.mdc-button').each(function() {
                 MDCRipple.attachTo(this);
             });
