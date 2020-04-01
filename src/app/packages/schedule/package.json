@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/schedule",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Package that contains the code backing Tutorbook's primary schedule (list-like) view.",
   "main": "index.js",
   "scripts": {
@@ -10,13 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/card": "^0.6.4",
-    "@tutorbook/data": "^0.6.4",
-    "@tutorbook/dialogs": "^0.6.4",
-    "@tutorbook/schedule-items": "^0.6.4",
-    "@tutorbook/search": "^0.6.4",
-    "@tutorbook/user": "^0.6.4",
-    "@tutorbook/utils": "^0.6.4"
+    "@tutorbook/card": "^0.6.5",
+    "@tutorbook/data": "^0.6.5",
+    "@tutorbook/dialogs": "^0.6.5",
+    "@tutorbook/schedule-items": "^0.6.5",
+    "@tutorbook/search": "^0.6.5",
+    "@tutorbook/user": "^0.6.5",
+    "@tutorbook/utils": "^0.6.5"
   },
   "repository": {
     "type": "git",

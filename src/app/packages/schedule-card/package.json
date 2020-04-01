@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/schedule-card",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Package that contains items supporting the schedule card in the `SupervisorDashboard` within Tutorbook's web app.",
   "main": "index.js",
   "scripts": {
@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tutorbook/data": "^0.6.4",
-    "@tutorbook/dialogs": "^0.6.4",
-    "@tutorbook/utils": "^0.6.4"
+    "@tutorbook/data": "^0.6.5",
+    "@tutorbook/dialogs": "^0.6.5",
+    "@tutorbook/utils": "^0.6.5"
   },
   "repository": {
     "type": "git",

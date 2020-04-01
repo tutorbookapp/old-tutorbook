@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/view",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Package that contains the base view class for Tutorbook's web app.",
   "keywords": [
     "Tutorbook",

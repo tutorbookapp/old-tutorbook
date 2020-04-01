@@ -1,6 +1,6 @@
 {
   "name": "@tutorbook/error-msg",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Custom HTTP error message screen.",
   "main": "index.js",
   "scripts": {
