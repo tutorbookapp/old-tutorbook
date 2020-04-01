@@ -142,37 +142,49 @@ app:
 1. Follow [these instructions](https://github.com/nvm-sh/nvm#installing-and-updating)
    to install `nvm` (our suggested way to use Node.js) on your
    machine. Verify that `nvm` is installed by running:
+
 ```
 $ command -v nvm
 ```
+
 2. Optionally (if you use [Vim](https://vim.org) as your preferred text editor),
    follow [these instructions](https://freshman.tech/vim-javascript/) on setting
    up [Vim](https://vim.org) for editing JavaScript.
 3. Run the following command to install Node.js v10.10.0 (our current version):
+
 ```
 $ nvm i 10.10
 ```
+
 4. Ensure that you have recent versions of Node.js and it's package manager
    `npm` by running:
+
 ```
 $ node -v
 10.10.0
 $ npm -v
 6.13.3
 ```
+
 5. Make sure that you have [Lerna](https://lerna.js.org) installed by running:
+
 ```
 $ npm i -g lerna
 ```
+
 6. Clone and `cd` into this repository locally by running:
+
 ```
 $ git clone https://github.com/tutorbookapp/tutorbook.git && cd tutorbook/
 ```
+
 7. Then, you'll most likely want to branch off of `develop` and `cd` into our
    [app packages](https://npmjs.com/org/tutorbook) by running:
+
 ```
 $ git checkout -b $my_branch && cd src/app/packages
 ```
+
 8. Follow the instructions included below to start a webpack development server
    (to see your updates affect the app live).
 9. From there, `cd` into your desired package, make your changes, commit them to
@@ -217,6 +229,11 @@ our dependencies and such):
 ```
 $ npm run prod
 ```
+
+#### Code Format
+
+Tutorbook uses [Prettier](https://prettier.io/) to enforce consistent code formatting throughout the codebase.
+A pre-commit hook is used to format changed files found on commit, however it is still recommended to install the Prettier plugin in your code editor to ensure consistent code style.
 
 ## Documentation
 
