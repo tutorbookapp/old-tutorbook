@@ -11,11 +11,11 @@
   margin-top: -16px;
   right: 16px;
   left: initial;
-  transform: none
+  transform: none;
 }
 
 .onboarding__loading-button .loader #spinner {
-  stroke: #FFF;
+  stroke: #fff;
 }
 
 .onboarding {
@@ -23,12 +23,13 @@
   flex: 1 0 auto;
   height: 100%;
   width: 100%;
-  background: #FFF;
+  background: #fff;
   margin-top: -64px;
   font-family: 'Poppins', sans-serif;
 }
 
-.onboarding p,h1 {
+.onboarding p,
+h1 {
   margin: 0 0 1rem;
 }
 
@@ -44,12 +45,12 @@
 }
 
 .onboarding__pane--right {
-  background: #F8F8F8;
+  background: #f8f8f8;
   justify-content: flex-start;
 }
 
 .onboarding__pane--left {
-  background: #FFF;
+  background: #fff;
   justify-content: flex-end;
   min-width: 500px;
 }
@@ -61,13 +62,13 @@
 }
 
 .onboarding__subdomain-form input {
-  text-align: right; 
+  text-align: right;
 }
 
 .onboarding__subdomain-form button:hover {
   background-color: #181818;
   border: 2px solid #181818;
-  color: #FFF;
+  color: #fff;
 }
 
 .onboarding__subdomain-form button {
@@ -98,7 +99,7 @@
 }
 
 .onboarding__content code {
-  background: #F8F8F8;
+  background: #f8f8f8;
   padding: 0 4px;
   border-radius: 4px;
 }
@@ -127,4 +128,4 @@
     min-width: initial;
     justify-content: center;
   }
-}  
+}

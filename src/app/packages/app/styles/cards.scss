@@ -50,7 +50,8 @@
 .dashboard-card-shaped {
   border-radius: 24px 8px;
 }
-[dir=rtl] .dashboard-card-shaped, .dashboard-card-shaped[dir=rtl] {
+[dir='rtl'] .dashboard-card-shaped,
+.dashboard-card-shaped[dir='rtl'] {
   border-radius: 8px 24px;
 }
 
@@ -79,7 +80,8 @@
 .location-card-shaped {
   border-radius: 24px 8px;
 }
-[dir=rtl] .location-card-shaped, .location-card-shaped[dir=rtl] {
+[dir='rtl'] .location-card-shaped,
+.location-card-shaped[dir='rtl'] {
   border-radius: 8px 24px;
 }
 

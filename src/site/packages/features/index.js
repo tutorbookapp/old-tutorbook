@@ -12,17 +12,15 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {
-    FeatureSpotlight
-} from '@tutorbook/feature-spotlight';
+import { FeatureSpotlight } from '@tutorbook/feature-spotlight';
 
 import * as html from './index.html';
 import * as css from './index.scss';
@@ -32,13 +30,13 @@ import * as css from './index.scss';
  * @extends external:HTMLElement
  */
 export default class Features extends HTMLElement {
-    constructor() {
-        super();
-        const shadow = this.attachShadow({
-            mode: 'open',
-        });
-        shadow.innerHTML = '<style>' + css + '</style>' + html;
-    }
+  constructor() {
+    super();
+    const shadow = this.attachShadow({
+      mode: 'open',
+    });
+    shadow.innerHTML = '<style>' + css + '</style>' + html;
+  }
 }
 
 window.customElements.define('spotlight-features', Features);

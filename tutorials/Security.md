@@ -22,6 +22,7 @@ along with each database request) to restrict who can access what.
 
 We implemented our Firestore rules by adding [custom auth
 claims](https://firebase.google.com/docs/auth/admin/custom-claims) designating:
+
 - Who is a supervisor (controlled by a `supervisor` boolean property) and which
   locations they supervise/manage (controlled by a `locations` array property).
   Supervisors can:
@@ -49,8 +50,8 @@ coordination (e.g. high school students tutoring middle schoolers).
 Each school district has a Firestore document containing configuration data that
 includes:
 
-| Field     | Type     | Description                                                                                          | Example                               |
-|:---------:|:--------:|:-----------------------------------------------------------------------------------------------------|:--------------------------------------|
-| `name`    | `string` | The name of the school district.                                                                     | `'Palo Alto Unified School District'` |
-| `symbol`  | `string` | The abbreviated name (or symbol) of the school district.                                             | `'PAUSD'`                             |
-| `domains` |`string[]`| An array of valid email domains that can sign into the district's partitions of Tutorbook's web app. | `['pausd.org', 'pausd.us']`           |
+|   Field   |    Type    | Description                                                                                          | Example                               |
+| :-------: | :--------: | :--------------------------------------------------------------------------------------------------- | :------------------------------------ |
+|  `name`   |  `string`  | The name of the school district.                                                                     | `'Palo Alto Unified School District'` |
+| `symbol`  |  `string`  | The abbreviated name (or symbol) of the school district.                                             | `'PAUSD'`                             |
+| `domains` | `string[]` | An array of valid email domains that can sign into the district's partitions of Tutorbook's web app. | `['pausd.org', 'pausd.us']`           |

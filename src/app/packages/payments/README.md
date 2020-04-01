@@ -40,7 +40,7 @@ paid lesson requests as follows:
      subcollections and one document (that contains the Stripe Payment object)
      in the `stripeCustomer` `authPayments` subcollection.
    - Deletes the original `sentPayment` document.
-   - *Note:* If anything errors, the function deletes the `requestOut`,
+   - _Note:_ If anything errors, the function deletes the `requestOut`,
      `requestIn`, and `sentPayment` documents and sends an email to the
      `fromUser` asking for a valid form of payment.
 

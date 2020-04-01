@@ -1,5 +1,5 @@
 /**
- * Package that defines the `feature-spotlight-vertical` custom HTML Web 
+ * Package that defines the `feature-spotlight-vertical` custom HTML Web
  * Component.
  * @module @tutorbook/feature-spotlight-vertical
  * @see {@link https://npmjs.com/package/@tutorbook/feature-spotlight-vertical}
@@ -13,8 +13,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -25,19 +25,21 @@ import * as html from './index.html';
 import * as css from './index.scss';
 
 /**
- * Class that defines the `feature-spotlight-vertical` custom HTML Web 
+ * Class that defines the `feature-spotlight-vertical` custom HTML Web
  * Component.
  * @extends external:HTMLElement
  */
 export default class FeatureSpotlightVertical extends HTMLElement {
-    constructor() {
-        super();
-        const shadow = this.attachShadow({
-            mode: 'open',
-        });
-        shadow.innerHTML = '<style>' + css + '</style>' + html;
-    }
+  constructor() {
+    super();
+    const shadow = this.attachShadow({
+      mode: 'open',
+    });
+    shadow.innerHTML = '<style>' + css + '</style>' + html;
+  }
 }
 
-window.customElements.define('feature-spotlight-vertical',
-    FeatureSpotlightVertical);
+window.customElements.define(
+  'feature-spotlight-vertical',
+  FeatureSpotlightVertical
+);

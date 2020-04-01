@@ -1,4 +1,6 @@
-.chat *, *:before, *:after {
+.chat *,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
@@ -30,7 +32,7 @@
 
 .chat .you .message__bubble {
   background-color: #018782;
-  color: #FFF;
+  color: #fff;
   max-width: calc(100% - 42px);
 }
 
@@ -65,7 +67,8 @@
     font-size: 14px;
     display: inline-block;
     color: #999;
-    &:before,&:after {
+    &:before,
+    &:after {
       position: absolute;
       top: 10px;
       display: inline-block;
@@ -82,7 +85,7 @@
     }
   }
 }
-        
+
 .chat .write {
   position: fixed;
   bottom: 20px;
@@ -108,7 +111,7 @@
     padding: 0;
     float: right;
     :disabled {
-      color: #6E7EA5;
+      color: #6e7ea5;
     }
   }
 }

@@ -12,8 +12,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -25,41 +25,41 @@
  * @abstract
  */
 export default class View {
-    /**
-     * Creates (and renders) a new **view** in the Tutorbook web app.
-     * @param {bool} skip - If `skip` is `true`, this constructor won't actually
-     * do anything except point `this.render` to `window.app.render`.
-     */
-    constructor(skip = false) {
-        this.render = window.app.render;
-        if (!skip) this.renderSelf();
-    }
+  /**
+   * Creates (and renders) a new **view** in the Tutorbook web app.
+   * @param {bool} skip - If `skip` is `true`, this constructor won't actually
+   * do anything except point `this.render` to `window.app.render`.
+   */
+  constructor(skip = false) {
+    this.render = window.app.render;
+    if (!skip) this.renderSelf();
+  }
 
-    /**
-     * Views (and subsequently manages) the **view** with the `window.app.view` 
-     * method.
-     * @param {string} [url] - The URL to view (if any).
-     * @abstract
-     */
-    view(url) {
-        window.app.view(this.header, this.main, url);
-        this.managed ? this.manage() : this.reManage();
-    }
+  /**
+   * Views (and subsequently manages) the **view** with the `window.app.view`
+   * method.
+   * @param {string} [url] - The URL to view (if any).
+   * @abstract
+   */
+  view(url) {
+    window.app.view(this.header, this.main, url);
+    this.managed ? this.manage() : this.reManage();
+  }
 
-    /**
-     * Manages the **view** after it's been appended to the `main` and `header` 
-     * divs using the `window.app.view` method.
-     */
-    manage() {}
+  /**
+   * Manages the **view** after it's been appended to the `main` and `header`
+   * divs using the `window.app.view` method.
+   */
+  manage() {}
 
-    /**
-     * Re-manages the **view** if it has already been viewed (and managed).
-     */
-    reManage() {}
+  /**
+   * Re-manages the **view** if it has already been viewed (and managed).
+   */
+  reManage() {}
 
-    /**
-     * Renders the **view** by making `this.header` and `this.main` point to 
-     * `HTMLElement`s.
-     */
-    renderSelf() {}
+  /**
+   * Renders the **view** by making `this.header` and `this.main` point to
+   * `HTMLElement`s.
+   */
+  renderSelf() {}
 }

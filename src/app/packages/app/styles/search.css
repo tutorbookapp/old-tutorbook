@@ -2,18 +2,18 @@
   font-size: 18px;
 
   @media only screen and (max-width: 999px) {
-  /* rules that only apply for canvases narrower than 1000px */
-  font-size: 14px;
+    /* rules that only apply for canvases narrower than 1000px */
+    font-size: 14px;
   }
 
   @media only screen and (device-width: 768px) and (orientation: landscape) {
-  /* rules for iPad in landscape orientation */
-  font-size: 14px;
+    /* rules for iPad in landscape orientation */
+    font-size: 14px;
   }
 
-  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) { 
-  /* iPhone, Android rules here */
-  font-size: 14px;
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    /* iPhone, Android rules here */
+    font-size: 14px;
   }
 }
 
@@ -77,13 +77,13 @@
   max-height: 30vh;
   overflow-x: hidden;
   overflow-y: scroll;
-  background: #FFF;
+  background: #fff;
   border-radius: 0px 0px 7px 7px;
   width: calc(100% - 32px); /* Size of mdc-list minus list-item padding. */
   z-index: 1;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   li button {
-    color: #5F6368 !important;
+    color: #5f6368 !important;
   }
 }
 
@@ -105,11 +105,11 @@
 
 .search-input-list-item .search-box--elevated {
   border-radius: 7px 7px 0px 0px !important;
-  background: #FFF !important;
-  border-bottom: 1px solid #E0E0E0;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background: #fff !important;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
-  
+
 .search-input-list-item .search-box {
   border-radius: 7px;
   padding: 11px;

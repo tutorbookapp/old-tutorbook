@@ -1,5 +1,5 @@
 #supervisor-chats .mdc-list-group__subheader {
-  color: #5F6368;
+  color: #5f6368;
   font-weight: 500;
 }
 
@@ -8,7 +8,7 @@
   height: calc(100vh - 64px);
   min-width: 400px;
   max-width: 500px;
-  border-right: 1px solid #E0E0E0;
+  border-right: 1px solid #e0e0e0;
   overflow-y: scroll;
   position: relative;
 }
@@ -41,5 +41,5 @@
 }
 
 .chat-list-item .mdc-list-item__meta button {
-  color: #5F6368 !important;
+  color: #5f6368 !important;
 }

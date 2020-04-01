@@ -1,43 +1,84 @@
 <html lang="en">
-
-<head>
+  <head>
     <title>Tutorbook</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="description" content="Web app that enables schools to manage (online and in-person) peer tutoring like never before.">
-    <link rel="icon" type="image/png" sizes="512x512" href="/favicon/favicon-512x512.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/favicon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Web app that enables schools to manage (online and in-person) peer tutoring like never before."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/favicon/favicon-512x512.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/favicon/favicon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
 
     <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black">
-    <meta name="apple-mobile-web-app-title" content="Tutorbook">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#6200EE">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="translucent-black"
+    />
+    <meta name="apple-mobile-web-app-title" content="Tutorbook" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="mask-icon"
+      href="/favicon/safari-pinned-tab.svg"
+      color="#6200EE"
+    />
 
     <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Tutorbook">
-    <meta name="theme-color" content="#6200EE">
-    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Tutorbook" />
+    <meta name="theme-color" content="#6200EE" />
+    <link rel="manifest" href="/favicon/manifest.json" />
 
     <!-- Add to homescreen for Windows -->
-    <link rel="shortcut icon" href="/favicon/favicon.ico">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="msapplication-config" content="/favicon/browserconfig.xml">
-    <meta name="msapplication-TileColor" content="#FFFFFF">
-    <meta name="msapplication-navbutton-color" content="#6200EE">
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-navbutton-color" content="#6200EE" />
 
     <!-- Fonts and Icons -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:500,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+  </head>
 
-<body style="display:none;">
-
+  <body style="display: none;">
     <!--
    -Welcome to...
    -╔════╗╔╗─╔╗╔════╗╔═══╗╔═══╗╔══╗─╔═══╗╔═══╗╔╗╔═╗
@@ -53,21 +94,20 @@
 
     <!-- Circular Loader -->
     <div id="loader">
-        <div class="loader">
-            <svg viewBox="0 0 32 32" width="32" height="32">
-                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-            </svg>
-        </div>
+      <div class="loader">
+        <svg viewBox="0 0 32 32" width="32" height="32">
+          <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+        </svg>
+      </div>
     </div>
 
     <!-- These divs must be above everything else to function properly. -->
     <aside id="nav-drawer" class="mdc-drawer mdc-drawer--modal">
-        <div class="mdc-drawer__header">
-            <h3 class="mdc-drawer__title">Tutorbook</h3>
-            <h6 class="mdc-drawer__subtitle">Mentor Matching</h6>
-        </div>
-        <div class="mdc-drawer__content">
-        </div>
+      <div class="mdc-drawer__header">
+        <h3 class="mdc-drawer__title">Tutorbook</h3>
+        <h6 class="mdc-drawer__subtitle">Mentor Matching</h6>
+      </div>
+      <div class="mdc-drawer__content"></div>
     </aside>
     <div class="mdc-drawer-scrim"></div>
 
@@ -79,17 +119,19 @@
     <main id="main" class="main mdc-top-app-bar--fixed-adjust"></main>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1">
-    </script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-146872354-1"
+    ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
-        gtag('config', 'UA-146872354-1');
+      gtag('config', 'UA-146872354-1');
     </script>
 
     <!-- Stripe Payments Integration -->
@@ -103,11 +145,10 @@
 
     <!-- Intercom Integration -->
     <script>
-        window.intercomSettings = {
-            app_id: "faz7lcyb",
-            hide_default_launcher: true,
-        };
+      window.intercomSettings = {
+        app_id: 'faz7lcyb',
+        hide_default_launcher: true,
+      };
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,58 +1,96 @@
 <html lang="en">
-
-<head>
+  <head>
     <title>Tutorbook</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="description" content="Web app that enables schools to manage (online and in-person) peer tutoring like never before.">
-    <link rel="icon" type="image/png" sizes="512x512" href="/favicon/favicon-512x512.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/favicon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Web app that enables schools to manage (online and in-person) peer tutoring like never before."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/favicon/favicon-512x512.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/favicon/favicon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
 
     <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black">
-    <meta name="apple-mobile-web-app-title" content="Tutorbook">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#6200EE">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="translucent-black"
+    />
+    <meta name="apple-mobile-web-app-title" content="Tutorbook" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="mask-icon"
+      href="/favicon/safari-pinned-tab.svg"
+      color="#6200EE"
+    />
 
     <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Tutorbook">
-    <meta name="theme-color" content="#FFFFFF">
-    <link rel="manifest" href="/favicon/manifest.json">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Tutorbook" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="manifest" href="/favicon/manifest.json" />
 
     <!-- Add to homescreen for Windows -->
-    <link rel="shortcut icon" href="/favicon/favicon.ico">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="msapplication-config" content="/favicon/browserconfig.xml">
-    <meta name="msapplication-TileColor" content="#FFFFFF">
-    <meta name="msapplication-navbutton-color" content="#6200EE">
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-navbutton-color" content="#6200EE" />
 
     <!-- Redirect Script -->
     <script src="/redirect.js"></script>
 
     <!-- Fonts and Icons -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700"
+      rel="stylesheet"
+    />
 
     <!-- Site Styling -->
-    <link rel="stylesheet" href="/index.css" type="text/css">
+    <link rel="stylesheet" href="/index.css" type="text/css" />
 
     <!-- Pipedrive Lead Booster Integration -->
     <script>
-        window.pipedriveLeadboosterConfig = {
-            base: 'leadbooster-chat.pipedrive.com',
-            companyId: 7484155,
-            playbookUuid: 'fbeff894-a7d4-4a1e-aea3-e6dcf5f6fd17',
-            version: 2
-        };
+      window.pipedriveLeadboosterConfig = {
+        base: 'leadbooster-chat.pipedrive.com',
+        companyId: 7484155,
+        playbookUuid: 'fbeff894-a7d4-4a1e-aea3-e6dcf5f6fd17',
+        version: 2,
+      };
     </script>
-    <script src="https://leadbooster-chat.pipedrive.com/assets/loader.js" async></script>
-</head>
+    <script
+      src="https://leadbooster-chat.pipedrive.com/assets/loader.js"
+      async
+    ></script>
+  </head>
 
-<body>
-
+  <body>
     <!--
    -Welcome to...
    -╔════╗╔╗─╔╗╔════╗╔═══╗╔═══╗╔══╗─╔═══╗╔═══╗╔╗╔═╗
@@ -69,24 +107,20 @@
     <site-header></site-header>
 
     <main>
+      <hero-email-capture></hero-email-capture>
 
-        <hero-email-capture></hero-email-capture>
+      <feature-spotlight-vertical></feature-spotlight-vertical>
 
-        <feature-spotlight-vertical></feature-spotlight-vertical>
+      <heading-block></heading-block>
 
-        <heading-block></heading-block>
+      <spotlight-features></spotlight-features>
 
-        <spotlight-features></spotlight-features>
+      <email-capture></email-capture>
 
-        <email-capture></email-capture>
-
-        <site-footer></site-footer>
-
+      <site-footer></site-footer>
     </main>
 
     <!-- Site Script -->
     <script src="/index.js"></script>
-
-</body>
-
+  </body>
 </html>

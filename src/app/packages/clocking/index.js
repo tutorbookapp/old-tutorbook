@@ -1,5 +1,5 @@
 /**
- * Package that contains Tutorbook's clock-in and clock-out approval/rejection 
+ * Package that contains Tutorbook's clock-in and clock-out approval/rejection
  * dialogs.
  * @module @tutorbook/clocking
  * @see {@link https://npmjs.com/package/@tutorbook/clocking}
@@ -13,17 +13,15 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see {@link https://www.gnu.org/licenses/}.
  */
 
-import {
-    MDCDialog
-} from '@material/dialog/index';
+import { MDCDialog } from '@material/dialog/index';
 
 import * as $ from 'jquery';
 import to from 'await-to-js';
@@ -37,46 +35,46 @@ import Utils from '@tutorbook/utils';
  * @abstract
  */
 class ConfirmDialog {
-    constructor(doc) {
-        this.render = window.app.render;
-        this.request = doc.data();
-        this.id = doc.id;
-    }
+  constructor(doc) {
+    this.render = window.app.render;
+    this.request = doc.data();
+    this.id = doc.id;
+  }
 
-    manage() {
-        this.dialog = new MDCDialog(this.el);
-        this.dialog.autoStackButtons = false;
-        this.dialog.listen('MDCDialog:closing', event => {
-            event.detail.action === 'yes' ? this.approve() : this.reject();
-        });
-        this.dialog.listen('MDCDialog:closed', () => $(this.el).remove());
-    }
+  manage() {
+    this.dialog = new MDCDialog(this.el);
+    this.dialog.autoStackButtons = false;
+    this.dialog.listen('MDCDialog:closing', (event) => {
+      event.detail.action === 'yes' ? this.approve() : this.reject();
+    });
+    this.dialog.listen('MDCDialog:closed', () => $(this.el).remove());
+  }
 
-    view() {
-        $('body').prepend(this.el);
-        if (!this.managed) this.manage();
-        this.dialog.open();
-    }
+  view() {
+    $('body').prepend(this.el);
+    if (!this.managed) this.manage();
+    this.dialog.open();
+  }
 
-    addBtn(label, action) {
-        const btn = this.render.template('dialog-button', {
-            action: action,
-            label: label,
-        });
-        $(this.el).find('.mdc-dialog__actions').append(btn);
-    }
+  addBtn(label, action) {
+    const btn = this.render.template('dialog-button', {
+      action: action,
+      label: label,
+    });
+    $(this.el).find('.mdc-dialog__actions').append(btn);
+  }
 
-    /**
-     * Reject the clocking request. Called when the user clicks 'Yes'.
-     * @abstract
-     */
-    approve() {}
+  /**
+   * Reject the clocking request. Called when the user clicks 'Yes'.
+   * @abstract
+   */
+  approve() {}
 
-    /**
-     * Approve the clocking request. Called when the user clicks 'No'.
-     * @abstract
-     */
-    reject() {}
+  /**
+   * Approve the clocking request. Called when the user clicks 'No'.
+   * @abstract
+   */
+  reject() {}
 }
 
 /**
@@ -87,50 +85,69 @@ class ConfirmDialog {
  * @todo Finish documentation.
  */
 export class ConfirmClockInDialog extends ConfirmDialog {
-    constructor(doc) {
-        super(doc);
-        this.renderSelf();
-    }
+  constructor(doc) {
+    super(doc);
+    this.renderSelf();
+  }
 
-    renderSelf() {
-        const data = this.request;
-        const title = 'Approve Clock-In?';
-        const summary = data.sentBy.name + ' clocked in at ' +
-            Utils.getTimeString(data.sentTimestamp) + ' for ' +
-            Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
-            Utils.getOther(data.sentBy, data.for.attendees).name + ' at ' +
-            data.for.time.from + '. Approve this clock-in request?';
-        this.el = this.render.template('dialog-popup', {
-            title: title,
-            summary: summary,
-        });
-        this.addBtn('No', () => this.dialog.close('no'));
-        this.addBtn('Yes', () => this.dialog.close('yes'));
-        if (this.request.proof && this.request.proof.length) {
-            const content = $(this.el).find('.mdc-dialog__content')[0];
-            content.innerHTML = '<p>' + summary + '</p><p>' +
-                data.sentBy.name.split(' ')[0] + ' uploaded proof:</p>';
-            for (const proof of this.request.proof) content.innerHTML += '<li' +
-                '><a href="' + proof.url + '" target="_blank">' + proof.name +
-                '</a></li>';
-        }
+  renderSelf() {
+    const data = this.request;
+    const title = 'Approve Clock-In?';
+    const summary =
+      data.sentBy.name +
+      ' clocked in at ' +
+      Utils.getTimeString(data.sentTimestamp) +
+      ' for ' +
+      Utils.getPronoun(data.sentBy.gender) +
+      ' appointment with ' +
+      Utils.getOther(data.sentBy, data.for.attendees).name +
+      ' at ' +
+      data.for.time.from +
+      '. Approve this clock-in request?';
+    this.el = this.render.template('dialog-popup', {
+      title: title,
+      summary: summary,
+    });
+    this.addBtn('No', () => this.dialog.close('no'));
+    this.addBtn('Yes', () => this.dialog.close('yes'));
+    if (this.request.proof && this.request.proof.length) {
+      const content = $(this.el).find('.mdc-dialog__content')[0];
+      content.innerHTML =
+        '<p>' +
+        summary +
+        '</p><p>' +
+        data.sentBy.name.split(' ')[0] +
+        ' uploaded proof:</p>';
+      for (const proof of this.request.proof)
+        content.innerHTML +=
+          '<li' +
+          '><a href="' +
+          proof.url +
+          '" target="_blank">' +
+          proof.name +
+          '</a></li>';
     }
+  }
 
-    async approve() {
-        window.app.snackbar.view('Approving clock-in request...');
-        const [err, res] = await to(Data.approveClockIn(this.request, this.id));
-        if (err) return window.app.snackbar.view('Could not approve clock-in ' +
-            'request.');
-        window.app.snackbar.view('Approved clock-in request.');
-    }
+  async approve() {
+    window.app.snackbar.view('Approving clock-in request...');
+    const [err, res] = await to(Data.approveClockIn(this.request, this.id));
+    if (err)
+      return window.app.snackbar.view(
+        'Could not approve clock-in ' + 'request.'
+      );
+    window.app.snackbar.view('Approved clock-in request.');
+  }
 
-    async reject() {
-        window.app.snackbar.view('Rejecting clock-in request...');
-        const [err, res] = await to(Data.rejectClockIn(this.request, this.id));
-        if (err) return window.app.snackbar.view('Could not reject clock-in ' +
-            'request.');
-        window.app.snackbar.view('Rejected clock-in request.');
-    }
+  async reject() {
+    window.app.snackbar.view('Rejecting clock-in request...');
+    const [err, res] = await to(Data.rejectClockIn(this.request, this.id));
+    if (err)
+      return window.app.snackbar.view(
+        'Could not reject clock-in ' + 'request.'
+      );
+    window.app.snackbar.view('Rejected clock-in request.');
+  }
 }
 
 /**
@@ -141,49 +158,68 @@ export class ConfirmClockInDialog extends ConfirmDialog {
  * @todo Finish documentation.
  */
 export class ConfirmClockOutDialog extends ConfirmDialog {
-    constructor(doc) {
-        super(doc);
-        this.renderSelf();
-    }
+  constructor(doc) {
+    super(doc);
+    this.renderSelf();
+  }
 
-    renderSelf() {
-        const data = this.request;
-        const title = 'Approve Clock-Out?';
-        const summary = data.sentBy.name + ' clocked out at ' +
-            Utils.getTimeString(data.sentTimestamp) + ' for ' +
-            Utils.getPronoun(data.sentBy.gender) + ' appointment with ' +
-            Utils.getOther(data.sentBy, data.for.attendees).name +
-            ' ending at ' + data.for.time.to + '. Approve this clock-out ' +
-            'request?';
-        this.el = this.render.template('dialog-popup', {
-            title: title,
-            summary: summary,
-        });
-        this.addBtn('No', () => this.dialog.close('no'));
-        this.addBtn('Yes', () => this.dialog.close('yes'));
-        if (this.request.proof && this.request.proof.length) {
-            const content = $(this.el).find('.mdc-dialog__content')[0];
-            content.innerHTML = '<p>' + summary + '</p><p>' +
-                data.sentBy.name.split(' ')[0] + ' uploaded proof:</p>';
-            for (const proof of this.request.proof) content.innerHTML += '<li' +
-                '><a href="' + proof.url + '" target="_blank">' + proof.name +
-                '</a></li>';
-        }
+  renderSelf() {
+    const data = this.request;
+    const title = 'Approve Clock-Out?';
+    const summary =
+      data.sentBy.name +
+      ' clocked out at ' +
+      Utils.getTimeString(data.sentTimestamp) +
+      ' for ' +
+      Utils.getPronoun(data.sentBy.gender) +
+      ' appointment with ' +
+      Utils.getOther(data.sentBy, data.for.attendees).name +
+      ' ending at ' +
+      data.for.time.to +
+      '. Approve this clock-out ' +
+      'request?';
+    this.el = this.render.template('dialog-popup', {
+      title: title,
+      summary: summary,
+    });
+    this.addBtn('No', () => this.dialog.close('no'));
+    this.addBtn('Yes', () => this.dialog.close('yes'));
+    if (this.request.proof && this.request.proof.length) {
+      const content = $(this.el).find('.mdc-dialog__content')[0];
+      content.innerHTML =
+        '<p>' +
+        summary +
+        '</p><p>' +
+        data.sentBy.name.split(' ')[0] +
+        ' uploaded proof:</p>';
+      for (const proof of this.request.proof)
+        content.innerHTML +=
+          '<li' +
+          '><a href="' +
+          proof.url +
+          '" target="_blank">' +
+          proof.name +
+          '</a></li>';
     }
+  }
 
-    async approve() {
-        window.app.snackbar.view('Approving clock-out request...');
-        const [er, res] = await to(Data.approveClockOut(this.request, this.id));
-        if (er) return window.app.snackbar.view('Could not approve clock-out' +
-            ' request.');
-        window.app.snackbar.view('Approved clock-out request.');
-    }
+  async approve() {
+    window.app.snackbar.view('Approving clock-out request...');
+    const [er, res] = await to(Data.approveClockOut(this.request, this.id));
+    if (er)
+      return window.app.snackbar.view(
+        'Could not approve clock-out' + ' request.'
+      );
+    window.app.snackbar.view('Approved clock-out request.');
+  }
 
-    async reject() {
-        window.app.snackbar.view('Rejecting clock-out request...');
-        const [err, res] = await to(Data.rejectClockOut(this.request, this.id));
-        if (err) return window.app.snackbar.view('Could not reject clock-out ' +
-            'request.');
-        window.app.snackbar.view('Rejected clock-out request.');
-    }
+  async reject() {
+    window.app.snackbar.view('Rejecting clock-out request...');
+    const [err, res] = await to(Data.rejectClockOut(this.request, this.id));
+    if (err)
+      return window.app.snackbar.view(
+        'Could not reject clock-out ' + 'request.'
+      );
+    window.app.snackbar.view('Rejected clock-out request.');
+  }
 }

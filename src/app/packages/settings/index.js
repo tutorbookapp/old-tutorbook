@@ -1,5 +1,5 @@
 /**
- * Package that contains the (currently **unused**) 
+ * Package that contains the (currently **unused**)
  * [settings view]{@link https://tutorbook.app/app/settings}.
  * @module @tutorbook/settings
  * @see {@link https://npmjs.com/package/@tutorbook/settings}
@@ -15,8 +15,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -32,26 +32,27 @@ import Data from '@tutorbook/data';
  * @deprecated
  */
 export default class Settings {
+  constructor() {
+    this.render = window.app.render;
+    this.renderSelf();
+  }
 
-    constructor() {
-        this.render = window.app.render;
-        this.renderSelf();
-    }
+  view() {
+    window.app.intercom.view(true);
+    window.app.view(this.header, this.main, '/app/settings');
+    this.manage();
+  }
 
-    view() {
-        window.app.intercom.view(true);
-        window.app.view(this.header, this.main, '/app/settings');
-        this.manage();
-    }
-
-    manage() {
-        this.switches = {
-            showWelcome: new MDCSwitch($(this.main).find('[id="Show welcome messages"]')[0]),
-        };
-        Object.entries(this.switches).forEach((entry) => {
-            const key = entry[0];
-            const swtch = entry[1];
-            swtch.listen('MDCSwitch:change', () => {});
-        });
-    }
-};
+  manage() {
+    this.switches = {
+      showWelcome: new MDCSwitch(
+        $(this.main).find('[id="Show welcome messages"]')[0]
+      ),
+    };
+    Object.entries(this.switches).forEach((entry) => {
+      const key = entry[0];
+      const swtch = entry[1];
+      swtch.listen('MDCSwitch:change', () => {});
+    });
+  }
+}

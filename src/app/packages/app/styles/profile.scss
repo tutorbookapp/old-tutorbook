@@ -11,7 +11,7 @@
 
 .delete-user-input button {
   @include button.ink-color(#737374);
-  @include button.container-fill-color(#FFF);
+  @include button.container-fill-color(#fff);
 }
 
 #media-capture {

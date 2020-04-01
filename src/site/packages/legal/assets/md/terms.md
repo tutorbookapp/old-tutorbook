@@ -12,7 +12,7 @@ The Company reserves the right to modify the general terms of use at any time, n
 
 ## 1. Terms and Conditions of Use Purpose
 
-The Company is a startup which provides services through its technological platforms directly to educational institutions and to private users whose purpose is to connect students and tutors so that academic tutoring lessons are carried out instantly. 
+The Company is a startup which provides services through its technological platforms directly to educational institutions and to private users whose purpose is to connect students and tutors so that academic tutoring lessons are carried out instantly.
 
 Expert tutors in their teaching area have the possibility to share their knowledge, while students are those who seek to improve their academic performance or expand their knowledge and can find the ideal tutor quickly, safely and accessibly to learn.
 

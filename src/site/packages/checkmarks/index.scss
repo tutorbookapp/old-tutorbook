@@ -1,4 +1,4 @@
-@import "@tutorbook/site-styles/general";
+@import '@tutorbook/site-styles/general';
 
 .checkmarks {
   display: -webkit-box;
@@ -31,7 +31,7 @@
 }
 
 .checkmark-item__icon--white path {
-  fill: #FFF;
+  fill: #fff;
 }
 
 .checkmark-item__text {
@@ -45,7 +45,7 @@
 }
 
 .checkmark-item__text--white {
-  color: #FFF;
+  color: #fff;
 }
 
 @media (min-width: 768px) {

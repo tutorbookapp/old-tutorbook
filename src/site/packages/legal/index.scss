@@ -50,7 +50,8 @@
 }
 
 @media (max-width: 767px) {
-  .u__hidden--lg, .u__hidden--xlg {
+  .u__hidden--lg,
+  .u__hidden--xlg {
     display: inherit !important;
   }
 }
@@ -167,7 +168,7 @@
   font-size: 20px;
   margin-bottom: -14px;
   margin-top: 14px;
-  letter-spacing: -.65px;
+  letter-spacing: -0.65px;
   color: #1f8ceb;
 }
 
@@ -175,7 +176,7 @@
   font-weight: 700;
   font-size: 26px;
   margin-bottom: -14px;
-  letter-spacing: -.65px;
+  letter-spacing: -0.65px;
   color: #1f8ceb;
 }
 
@@ -251,7 +252,7 @@
   background: #f6fafd;
   padding: 15px 50px 15px 15px;
   font-size: 14px;
-  letter-spacing: .43px;
+  letter-spacing: 0.43px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   max-width: 330px;
@@ -343,7 +344,7 @@
   }
 
   .terms__mobile-nav-header .terms__nav-heading:after {
-    content: "";
+    content: '';
     display: inline-block;
     margin-left: 10px;
     position: relative;
@@ -406,7 +407,7 @@
 }
 
 .terms__content .terms__ordered-list-item:before {
-  content: counter(list, lower-alpha) ") ";
+  content: counter(list, lower-alpha) ') ';
   counter-increment: list;
 }
 
@@ -426,7 +427,7 @@
 .terms__policy-title {
   font-weight: 700;
   font-size: 30px;
-  letter-spacing: -.75px;
+  letter-spacing: -0.75px;
   color: #1f8ceb;
 }
 

@@ -3,16 +3,16 @@
  * Actually implement this script.
  *
  * @description
- * This script anonymizes the data backed up from the `default` database 
+ * This script anonymizes the data backed up from the `default` database
  * partition for use in the `test` database partition (during development). As
  * specified in our [Privacy Policy]{@link https://tutorbook.app/legal#privacy},
  * we **always** anonymize data for development purposes.
  *
  * @usage
- * First, change `INPUT` and `OUTPUT` to the filenames of your `default` 
+ * First, change `INPUT` and `OUTPUT` to the filenames of your `default`
  * database backup and the desired `test` database backup location respectively.
  * Then, just run (to generate your anonymized data for your `test` partition):
- * 
+ *
  * ```
  * $ node anonymize.js
  * ```
@@ -26,8 +26,8 @@
  * later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License
@@ -48,23 +48,25 @@ const fs = require('fs');
  * @return {Map} The limited JSON database backup.
  */
 const limit = (database, lim = 10) => {
-    const limited = {};
-    Object.entries(database).forEach(([collection, documents]) => {
-        limited[collection] = {};
-        const docs = Object.entries(documents);
-        for (var count = 0; count < docs.length && count < lim; count++) {
-            docs[count][1]['__collections__'] =
-                limit(docs[count][1]['__collections__'], lim);
-            limited[collection][docs[count][0]] = docs[count][1];
-        }
-    });
-    return limited;
+  const limited = {};
+  Object.entries(database).forEach(([collection, documents]) => {
+    limited[collection] = {};
+    const docs = Object.entries(documents);
+    for (var count = 0; count < docs.length && count < lim; count++) {
+      docs[count][1]['__collections__'] = limit(
+        docs[count][1]['__collections__'],
+        lim
+      );
+      limited[collection][docs[count][0]] = docs[count][1];
+    }
+  });
+  return limited;
 };
 
 /**
- * Reads in an `input` JSON database backup file, ensures that each collection 
+ * Reads in an `input` JSON database backup file, ensures that each collection
  * only contains a maximum of 10 documents (removes documents over the `limit`),
- * and writes the output back into the JSON backup file or into a specified 
+ * and writes the output back into the JSON backup file or into a specified
  * `output` file.
  * @param {string} input - The filename of the input JSON database backup file.
  * @param {string} [output=input] - The filename of the output JSON database
@@ -73,12 +75,19 @@ const limit = (database, lim = 10) => {
  * each collection.
  */
 const limitJSON = (input, output = input, lim = 10) => {
-    if (!fs.existsSync(input)) throw new Error('Input file must exist.');
-    const original = JSON.parse(fs.readFileSync(input))['__collections__'];
-    const limited = limit(original, lim);
-    fs.writeFileSync(output, JSON.stringify({
-        '__collections__': limited,
-    }, null, 2));
+  if (!fs.existsSync(input)) throw new Error('Input file must exist.');
+  const original = JSON.parse(fs.readFileSync(input))['__collections__'];
+  const limited = limit(original, lim);
+  fs.writeFileSync(
+    output,
+    JSON.stringify(
+      {
+        __collections__: limited,
+      },
+      null,
+      2
+    )
+  );
 };
 
 limitJSON(INPUT, OUTPUT);
