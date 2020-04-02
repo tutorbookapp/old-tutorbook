@@ -3,9 +3,6 @@
   "version": "0.6.5",
   "description": "The all-in-one peer tutoring platform.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "Tutorbook",
     "Peer Tutoring",
@@ -13,33 +10,15 @@
   ],
   "author": "Nicholas Chiang",
   "license": "ISC",
-  "dependencies": {
-    "@tutorbook/analytics": "^0.6.3",
-    "@tutorbook/card": "^0.6.5",
-    "@tutorbook/chats": "^0.6.5",
-    "@tutorbook/config": "^0.6.5",
-    "@tutorbook/dashboard": "^0.6.5",
-    "@tutorbook/data": "^0.6.5",
-    "@tutorbook/dialogs": "^0.6.5",
-    "@tutorbook/intercom": "^0.6.0",
-    "@tutorbook/listener": "^0.6.5",
-    "@tutorbook/login": "^0.6.5",
-    "@tutorbook/matching": "^0.6.5",
-    "@tutorbook/navigation": "^0.6.5",
-    "@tutorbook/notify": "^0.6.3",
-    "@tutorbook/payments": "^0.6.5",
-    "@tutorbook/profile": "^0.6.5",
-    "@tutorbook/render": "^0.6.5",
-    "@tutorbook/schedule": "^0.6.5",
-    "@tutorbook/search": "^0.6.5",
-    "@tutorbook/snackbar": "^0.6.5",
-    "@tutorbook/stats": "^0.6.5",
-    "@tutorbook/utils": "^0.6.5"
-  },
   "repository": {
     "type": "git",
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/app"
   },
-  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee",
+  "devDependencies": {
+    "husky": "4.2.3",
+    "prettier": "2.0.2",
+    "pretty-quick": "2.0.1"
+  }
 }

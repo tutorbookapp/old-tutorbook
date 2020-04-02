@@ -13,5 +13,9 @@
     "@tutorbook/data": "^0.6.5",
     "@tutorbook/utils": "^0.6.5"
   },
-  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee",
+  "devDependencies": {
+    "husky": "4.2.3",
+    "prettier": "2.0.2"
+  }
 }

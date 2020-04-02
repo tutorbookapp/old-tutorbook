@@ -24,5 +24,10 @@
   },
   "bugs": {
     "url": "https://github.com/tutorbookapp/tutorbook/issues"
+  },
+  "devDependencies": {
+    "husky": "4.2.3",
+    "prettier": "2.0.2",
+    "pretty-quick": "2.0.1"
   }
 }

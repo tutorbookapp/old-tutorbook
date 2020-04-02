@@ -20,5 +20,9 @@
     "url": "ssh://git@github.com/tutorbookapp/tutorbook.git",
     "directory": "src/app/packages/profile"
   },
-  "gitHead": "c821817b19749df02e7576228b77c793260109ee"
+  "gitHead": "c821817b19749df02e7576228b77c793260109ee",
+  "devDependencies": {
+    "prettier": "2.0.2",
+    "pretty-quick": "2.0.1"
+  }
 }
