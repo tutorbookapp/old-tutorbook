@@ -232,8 +232,12 @@ $ npm run prod
 
 #### Code Format
 
-Tutorbook uses [Prettier](https://prettier.io/) to enforce consistent code formatting throughout the codebase.
-A pre-commit hook is used to format changed files found on commit, however it is still recommended to install the Prettier plugin in your code editor to ensure consistent code style.
+Tutorbook uses [Prettier](https://prettier.io/) to enforce consistent code 
+formatting throughout the codebase.
+
+A pre-commit hook is used to format changed files found on commit, however it is 
+still recommended to install the Prettier plugin in your code editor to ensure 
+consistent code style.
 
 ## Documentation
 
